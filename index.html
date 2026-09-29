@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- Iconos y app instalable -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <meta name="theme-color" content="#050505" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="msapplication-TileColor" content="#050505" />
+    <meta name="apple-mobile-web-app-title" content="BAYONA" />
+
+    <!--
+      Tipografías SELF-HOSTED (Fase 12). Antes se cargaban desde el CDN de
+      Google con display=swap: el CSS externo era render-blocking y el swap
+      de Montserrat refluía los titulares (CLS 0,175 medido en desktop).
+      Ahora los woff2 viven en /fonts (solo latin + latin-ext) y los pesos
+      críticos del hero se hacen preload para que lleguen antes del primer
+      pintado — sin reflujo y sin request de terceros en el camino crítico.
+    -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/montserrat-normal-800-latin.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/montserrat-normal-900-latin.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-normal-400-latin.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-normal-500-latin.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-normal-600-latin.woff2" />
+
+    <!--
+      BLOQUE SEO — NO EDITAR A MANO ENTRE LOS MARCADORES "seo".
+      En `vite build`, el plugin vite/emitRouteHtml.js sustituye todo lo que hay
+      entre los dos marcadores de abajo para generar un HTML por ruta con sus
+      propios metadatos. Es lo que hace que compartir un enlace en WhatsApp
+      muestre la previsualización correcta de esa página: los bots de WhatsApp,
+      Facebook, Twitter y LinkedIn no ejecutan JavaScript, así que nunca verían
+      los metadatos que react-helmet-async aplica en cliente.
+      Lo que hay aquí abajo son los metadatos de la home.
+    -->
+    <!--seo-->
+    <title>BAYONA — Entrenamiento con método y acompañamiento real</title>
+    <meta
+      name="description"
+      content="Método de movimiento con dirección: plan mensual personalizado, seguimiento humano y cuatro niveles de acompañamiento. Sin humo ni promesas de resultado."
+    />
+    <link rel="canonical" href="https://bayona-jet.vercel.app/" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="Sebastián Bayona" />
+
+    <meta property="og:site_name" content="BAYONA" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content="https://bayona-jet.vercel.app/" />
+    <meta property="og:title" content="BAYONA — Entrenamiento con método y acompañamiento real" />
+    <meta
+      property="og:description"
+      content="Método de movimiento con dirección: plan mensual personalizado, seguimiento humano y cuatro niveles de acompañamiento. Sin humo ni promesas de resultado."
+    />
+    <meta property="og:image" content="https://bayona-jet.vercel.app/og/bayona-og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="BAYONA — Movimiento, ciencia y propósito humano." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BAYONA — Entrenamiento con método y acompañamiento real" />
+    <meta
+      name="twitter:description"
+      content="Método de movimiento con dirección: plan mensual personalizado, seguimiento humano y cuatro niveles de acompañamiento. Sin humo ni promesas de resultado."
+    />
+    <meta name="twitter:image" content="https://bayona-jet.vercel.app/og/bayona-og.jpg" />
+    <meta name="twitter:image:alt" content="BAYONA — Movimiento, ciencia y propósito humano." />
+    <!--/seo-->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

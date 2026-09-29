@@ -1,0 +1,167 @@
+/* BAYONA PROGRAMS · ART DIRECTION 2026-09-29 */
+
+body.premium-route--programs .breadcrumb {
+  display: none !important;
+}
+
+body.premium-route--programs .page-hero {
+  min-height: calc(100svh - 66px);
+}
+
+body.premium-route--programs .page-hero-content {
+  width: min(1320px, calc(100% - 72px)) !important;
+  max-width: 1320px !important;
+  margin-inline: auto;
+  padding-top: clamp(5rem,10vh,8rem);
+  padding-bottom: clamp(4rem,8vh,7rem);
+}
+
+body.premium-route--programs .page-hero-title {
+  width: min(100%, 1100px) !important;
+  max-width: 18ch !important;
+  font-family: var(--font-display) !important;
+  font-size: clamp(4.6rem,7vw,7.3rem) !important;
+  line-height: .88 !important;
+  letter-spacing: -.058em !important;
+  text-wrap: balance;
+}
+
+body.premium-route--programs .page-hero-content > p {
+  max-width: 44rem !important;
+  margin-top: 1.5rem !important;
+  color: rgba(247,247,243,.7) !important;
+  font-size: clamp(1rem,1.25vw,1.16rem) !important;
+  line-height: 1.62 !important;
+}
+
+body.premium-route--programs .page-hero-kicker {
+  margin-bottom: 1rem !important;
+  color: rgba(244,162,97,.8) !important;
+}
+
+body.premium-route--programs .page-hero .hero-cta {
+  margin-top: 1.6rem !important;
+  padding: .8rem 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(244,162,97,.55) !important;
+  background: transparent !important;
+  color: var(--bayona-orange,#f4a261) !important;
+}
+
+body.premium-route--programs .programs-choice-rail {
+  padding-top: clamp(5rem,8vw,8rem) !important;
+  padding-bottom: clamp(5rem,8vw,8rem) !important;
+}
+
+body.premium-route--programs .programs-choice-rail-heading h2 {
+  max-width: 14ch !important;
+  font-size: clamp(3.2rem,5.6vw,6.4rem) !important;
+  line-height: .9 !important;
+  letter-spacing: -.052em !important;
+}
+
+@media (max-width:760px) {
+  body.premium-route--programs .page-hero-content {
+    width: calc(100% - 32px) !important;
+    padding-top: 4rem;
+  }
+
+  body.premium-route--programs .page-hero-title {
+    max-width: 12.5ch !important;
+    font-size: clamp(3rem,12.6vw,4.6rem) !important;
+    line-height: .9 !important;
+  }
+
+  body.premium-route--programs .programs-choice-rail-heading h2 {
+    max-width: 11ch !important;
+    font-size: clamp(2.7rem,11vw,4rem) !important;
+  }
+}
+
+
+body.premium-route--programs .page-hero-title,
+body.premium-route--programs .page-hero-title.text-mask {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1100px !important;
+}
+
+@media (max-width:760px) {
+  body.premium-route--programs .page-hero-title,
+  body.premium-route--programs .page-hero-title.text-mask {
+    max-width: 100% !important;
+    font-size: clamp(2.85rem,11.2vw,4.2rem) !important;
+  }
+}
+
+
+/* PROGRAMS MOBILE · la semana se lee como secuencia, no como lista. */
+@media (max-width:760px) {
+  body.premium-route--programs .programs-visualization {
+    padding-inline: 0 !important;
+    overflow: hidden;
+  }
+
+  body.premium-route--programs .programs-visualization > :not(.programs-week) {
+    margin-inline: 16px;
+  }
+
+  body.premium-route--programs .programs-week {
+    display: flex !important;
+    gap: 0 !important;
+    width: 100%;
+    margin: 2rem 0 1.8rem !important;
+    padding: 0 16px 1rem !important;
+    overflow-x: auto;
+    overflow-y: visible;
+    border-top: 0 !important;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  body.premium-route--programs .programs-week::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.premium-route--programs .programs-week-item {
+    position: relative;
+    flex: 0 0 82vw;
+    min-height: 46svh;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1.1rem !important;
+    padding: 2rem 1.25rem 2rem 0 !important;
+    border-top: 1px solid rgba(247,247,243,.16);
+    border-bottom: 0 !important;
+    scroll-snap-align: start;
+  }
+
+  body.premium-route--programs .programs-week-item + .programs-week-item {
+    padding-left: 1.25rem !important;
+    border-left: 1px solid rgba(247,247,243,.12);
+  }
+
+  body.premium-route--programs .programs-week-marker {
+    margin-bottom: auto;
+    color: var(--bayona-orange,#f4a261);
+    font-family: var(--font-display);
+    font-size: clamp(4rem,18vw,6.8rem);
+    font-weight: 800;
+    line-height: .8;
+    letter-spacing: -.07em;
+  }
+
+  body.premium-route--programs .programs-week-item p {
+    max-width: 18ch;
+    color: #f7f7f3;
+    font-size: clamp(1.35rem,6vw,2rem);
+    line-height: 1.12;
+    letter-spacing: -.025em;
+  }
+
+  body.premium-route--programs .programs-visualization .method-value-statement {
+    margin-top: 1.4rem;
+    max-width: 28rem;
+  }
+}

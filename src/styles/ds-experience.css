@@ -1,0 +1,741 @@
+/* ==========================================================================
+   BAYONA · SISTEMA DE EXPERIENCIA (FASE 4 — 4.1)
+   --------------------------------------------------------------------------
+   Una sola capa para todo el sitio: convierte la web en «ARQUITECTURA DEL
+   MOVIMIENTO» sin crear un segundo sistema visual.
+
+   Tres reglas de fabricación:
+
+   1. CERO VALORES NUEVOS. Todo token de esta hoja es un ALIAS de un dueño
+      que ya existe: `--ds-*` (ds-tokens.css) para color, superficie, tipo,
+      espacio, radio, z y motion; `--bayona-*` (overrides.css) para la paleta
+      que ya consume la navegación; `--lab-*` (spatial-lab.css) para mineral
+      y hueso. Ningún color nuevo entra por aquí. Si un valor cambia, cambia
+      en su dueño y esta hoja lo refleja sola.
+
+   2. CERO `!important`, CERO `z-index` mágico. La escalera vertical es la
+      del sistema (`--ds-z-*`) y la competencia de selectores se resuelve por
+      orden de cascada: esta hoja va la última en main.jsx, así que matiza
+      sin gritar. Los toques globales sobre clases heredadas usan `:where()`
+      (especificidad cero) para poder ser corregidos por cualquier hoja de
+      página sin guerra de importancia.
+
+   3. JERARQUÍA PERCEPTIVA FIJA (BAYONA — ARQUITECTURA DEL MOVIMIENTO)
+      A · EDITORIAL (DOM)  ......... tipografía, número, hairline, espacio.
+      B · MOVIMIENTO .............. una idea por sección: reveal / shift /
+                                    scale / mask / spatial.
+      C · ESPACIO/PROFUNDIDAD ..... la capa C es CSS puro: superficie escalera
+                                    + niebla de profundidad + paralaje suave.
+                                    El WebGL es opcional y muere de pie.
+      D · COMERCIAL ............... CTA y precio siempre por encima del
+                                    espectáculo; esta hoja no los mueve.
+
+   Preferencias de movimiento: `prefers-reduced-motion` no es «animación a
+   cero». Cada revelado define su estado estático diseñado (opacidad 1,
+   desplazamiento 0, hairline completo) para que la página siga leyéndose
+   igual de bien sin una sola transición.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. TOKENES DE MARCA — alias, no valores
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color · espacio negativo y señal.
+     El negro de BAYONA no es un fondo: es el espacio tipográfico de la
+     página. El naranja es una señal de trazado, y como señal ocupa poco. */
+  --bayona-space-negative: var(--bayona-black, var(--black));
+  --bayona-graphite: var(--deep-blue);
+  --bayona-mineral: var(--lab-plane, #17181a);
+  --bayona-bone: var(--lab-bone, #ede7dc);
+  --bayona-warm: var(--orange);
+  --bayona-signal: var(--orange-fire);
+  --bayona-hairline-color: var(--bayona-line, var(--ds-border-color));
+
+  /* Superficies: la escalera perceptiva. 0 es el pozo, float lo que flota
+     sobre el texto, spatial el plano donde vive la profundidad (CSS). */
+  --bayona-surface-0: var(--ds-surface-background);
+  --bayona-surface-1: var(--ds-surface-deep);
+  --bayona-surface-2: var(--ds-surface-raised);
+  --bayona-surface-float: var(--ds-surface-overlay);
+  --bayona-surface-spatial: var(--lab-plane, #17181a);
+  --bayona-surface-content: var(--ds-surface-content);
+
+  /* Filete de 1px: el único borde que BAYONA usa para estructurar. */
+  --bayona-hairline: 1px solid var(--bayona-hairline-color);
+  --bayona-hairline-signal: 1px solid var(--bayona-line-strong, rgba(244, 162, 97, 0.45));
+
+  /* Radio: canto afilado por defecto; lo único redondo son controles y
+     capas flotantes, y eso ya lo decide el sistema. */
+  --bayona-radius-none: var(--ds-radius-sharp);
+  --bayona-radius-control: var(--ds-radius-control);
+  --bayona-radius-float: var(--ds-radius-float);
+
+  /* Tipografía del sistema de experiencia: familias y pasos del DS. */
+  --bayona-font-display: var(--ds-font-heading);
+  --bayona-font-body: var(--ds-font-body);
+  --bayona-font-label: var(--ds-font-mono);
+  --bayona-type-figure: clamp(3.25rem, 8.5vw, 8.5rem);
+  --bayona-type-figure-soft: clamp(2.5rem, 5.6vw, 5rem);
+  --bayona-type-title: var(--ds-fs-h2);
+  --bayona-type-step-title: clamp(1.5rem, 2.4vw, 2.4rem);
+  /* Figura de ruta: el número de sección cuando la lista ya existe y solo
+     necesita leerse como secuencia. Alias de un paso tipográfico del sistema,
+     no un tamaño nuevo. */
+  --bayona-type-figure-inline: var(--ds-fs-h3);
+  --bayona-type-label: var(--ds-fs-eyebrow);
+  --bayona-type-lead: var(--ds-fs-lead);
+  --bayona-measure: var(--ds-measure);
+
+  /* Espacio: retícula de 4px del DS; el aire de sección es elástico. */
+  --bayona-gap-hairline: var(--ds-space-3);
+  --bayona-gap-plate: var(--ds-space-5);
+  --bayona-gap-section: var(--ds-section-gap);
+  /* Ancho y callejón del marco: los mismos números de `.section-shell`, para
+     que el sistema no introduzca una retícula paralela a la de las páginas. */
+  --bayona-frame-inline: var(--ds-grid-gutter);
+  --bayona-frame-max: var(--ds-grid-max);
+  --bayona-shell-offset: 74px; /* alto de la barra fija (styles.css · .navbar) */
+
+  /* Movimiento: tres curvas vivas y los tiers del motor. No se añade
+     ninguna duración nueva; se exponen las del sistema para CSS puro. */
+  --bayona-ease-entrance: var(--ds-ease-entrance);
+  --bayona-ease-standard: var(--ds-ease-standard);
+  --bayona-ease-travel: var(--ds-ease-travel);
+  --bayona-dur-micro: var(--ds-dur-micro);
+  --bayona-dur-standard: var(--ds-dur-standard);
+  --bayona-dur-emphasis: var(--ds-dur-emphasis);
+  --bayona-dur-cinematic: var(--ds-dur-cinematic);
+  --bayona-dist-near: var(--ds-dist-near);
+  --bayona-dist-medium: var(--ds-dist-medium);
+  --bayona-dist-far: var(--ds-dist-far);
+
+  /* Marcas de línea del sistema: el guion que precede a cada etiqueta. Es el
+     mismo largo medido en `.eyebrow` (styles.css), no un valor nuevo. */
+  --bayona-rule-mark: 26px;
+  --bayona-rule-gap: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   2. CAPA A · EDITORIAL — primitivas de página
+   -------------------------------------------------------------------------- */
+
+/* Marco: el contenedor de todas las rutas. Mismo ancho que `.section-shell`
+   para que el sistema no introduzca una retícula paralela. */
+.ds-frame {
+  position: relative;
+  isolation: isolate;
+  z-index: var(--ds-z-content);
+  overflow-x: clip;
+  background: var(--bayona-surface-0);
+}
+
+.ds-frame > * {
+  position: relative;
+}
+
+/* Placa editorial: un bloque de texto que respira sobre el pozo negro, sin
+   caja, sin glassmorphism: filete superior + aire. */
+.ds-plate {
+  padding: var(--bayona-gap-plate) 0 0;
+  border-top: var(--bayona-hairline);
+}
+
+.ds-plate--tight {
+  padding-top: var(--bayona-gap-hairline);
+}
+
+.ds-plate--spaced {
+  padding-top: clamp(var(--ds-space-6), 4vw, var(--ds-space-8));
+}
+
+/* Kicker del sistema: etiqueta mono con filete. Equivale a `.eyebrow` y a
+   `SectionLabel`, pero expuesta como clase para poder usarse en CSS. */
+.ds-kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--bayona-rule-gap);
+  margin: 0 0 var(--ds-space-5);
+  color: var(--bayona-warm);
+  font: 500 var(--bayona-type-label)/1 var(--bayona-font-label);
+  letter-spacing: var(--ds-ls-eyebrow, 0.18em);
+  text-transform: uppercase;
+}
+
+.ds-kicker::before {
+  content: '';
+  inline-size: var(--bayona-rule-mark);
+  block-size: 1px;
+  background: currentColor;
+}
+
+/* Índice tipográfico: el número 01 / 02 / 03 como elemento gráfico de
+   página, no como chip. Vive en el margen y se apoya en el filete. */
+.ds-index {
+  display: block;
+  font-family: var(--bayona-font-display);
+  font-size: var(--bayona-type-figure);
+  font-weight: var(--ds-fw-heading);
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  color: var(--bayona-bone);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-index--soft {
+  color: var(--bayona-mineral);
+  -webkit-text-stroke: 1px var(--bayona-hairline-color);
+}
+
+.ds-rule {
+  block-size: 1px;
+  margin: var(--bayona-gap-plate) 0;
+  background: var(--bayona-hairline-color);
+  border: 0;
+}
+
+.ds-rule--signal {
+  background: var(--bayona-line-strong, var(--bayona-warm));
+}
+
+/* Fila de cierre comercial: CTA + nota, siempre alineada a la retícula. */
+.ds-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-4) var(--ds-space-5);
+}
+
+.ds-note {
+  max-inline-size: var(--bayona-measure);
+  color: var(--bayona-muted);
+  font: 300 var(--bayona-type-lead)/1.6 var(--bayona-font-body);
+}
+
+/* --------------------------------------------------------------------------
+   3. CAPA A/C · ESCALERA DE SUPERFICIES
+   -------------------------------------------------------------------------- */
+.ds-surface-0 { background: var(--bayona-surface-0); }
+.ds-surface-1 { background: var(--bayona-surface-1); }
+.ds-surface-2 { background: var(--bayona-surface-2); }
+.ds-surface-float { background: var(--bayona-surface-float); }
+
+/* Plano espacial en CSS: niebla de profundidad sobre el negro. Es lo que
+   queda cuando WebGL no existe (o está apagado): la página sigue teniendo
+   relieve. Mismo lenguaje cromático que el laboratorio. */
+.ds-surface-spatial {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 90% at 78% 8%, rgb(23 24 26 / 0.85) 0%, rgb(5 5 5 / 0) 62%),
+    linear-gradient(180deg, var(--bayona-surface-1) 0%, var(--bayona-surface-0) 78%);
+}
+
+.ds-surface-spatial::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: 1px;
+  background: linear-gradient(90deg,
+    rgb(255 255 255 / 0) 0%,
+    var(--bayona-hairline-color) 22%,
+    var(--bayona-hairline-color) 78%,
+    rgb(255 255 255 / 0) 100%);
+  z-index: var(--ds-z-base);
+  pointer-events: none;
+}
+
+/* Retícula de piso en perspectiva: puro CSS, cero WebGL. Solo decorativa y
+   solo en pantallas donde el espacio negativo lo pide. */
+.ds-depth-floor {
+  position: absolute;
+  inset-inline: -20%;
+  inset-block-end: 0;
+  block-size: clamp(140px, 22vh, 300px);
+  background-image:
+    repeating-linear-gradient(90deg, var(--bayona-hairline-color) 0 1px, rgb(0 0 0 / 0) 1px 96px),
+    repeating-linear-gradient(0deg, rgb(255 255 255 / 0.05) 0 1px, rgb(0 0 0 / 0) 1px 48px);
+  transform: perspective(420px) rotateX(62deg);
+  transform-origin: bottom center;
+  opacity: 0.5;
+  mask-image: linear-gradient(180deg, rgb(0 0 0 / 0) 0%, rgb(0 0 0 / 1) 72%);
+  z-index: var(--ds-z-base);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   4. CAPA B · MOVIMIENTO — cinco familias, una idea por sección
+   -------------------------------------------------------------------------- */
+
+/* REVEAL — entrada de bloque: opacidad + desplazamiento corto. Estado base
+   = diseñado (no depende de JS: sin script y sin motion la página ya está
+   en su posición final). */
+.ds-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ds-reveal {
+      animation: ds-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+
+    .ds-reveal--shift {
+      animation-name: ds-reveal-shift;
+      animation-range: entry 0% entry 70%;
+    }
+
+    .ds-reveal--mask {
+      animation-name: ds-reveal-mask;
+      animation-range: entry 0% cover 38%;
+    }
+
+    .ds-reveal--scale {
+      animation-name: ds-reveal-scale;
+      animation-range: entry 0% entry 48%;
+    }
+
+    /* SPATIAL — la superficie se asienta mientras el índice pasa. */
+    .ds-reveal--spatial {
+      animation-name: ds-reveal-spatial;
+      animation-range: entry 0% entry 30%;
+    }
+  }
+}
+
+@keyframes ds-reveal {
+  from { opacity: 0; transform: translate3d(0, var(--bayona-dist-near, 16px), 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes ds-reveal-shift {
+  from { opacity: 0; transform: translate3d(calc(var(--bayona-dist-medium, 48px) * -0.34), 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes ds-reveal-mask {
+  from { clip-path: inset(0 0 100% 0); opacity: 0.2; }
+  to { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+@keyframes ds-reveal-scale {
+  from { opacity: 0; transform: scale(0.965); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ds-reveal-spatial {
+  from { opacity: 0.65; transform: perspective(1200px) translate3d(0, var(--bayona-dist-near, 16px), 0) rotateX(2deg) scale(0.99); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Micro-interacciones del sistema: < 280 ms, una sola curva de entrada. */
+.ds-plate,
+.ds-method-step,
+.ds-cta-row > * {
+  transition:
+    border-color var(--bayona-dur-micro) var(--bayona-ease-standard),
+    background-color var(--bayona-dur-micro) var(--bayona-ease-standard),
+    color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+/*
+ * Respuesta al puntero en los botones de las rutas comerciales. Escrito con
+ * `:where()` a propósito: especificidad cero, así que cualquier hover o
+ * transición que la ruta ya tenga le gana y esta capa se limita a rellenar
+ * huecos. El hueco real medido era `.text-button` —cero reglas de
+ * hover/active/transition en todo el CSS—, que es el «COMPARAR LOS PLANES» de
+ * /programs y de la home: se pulsaba sin que pasara nada visible.
+ *
+ * Va con `translate`/`scale` y NO con `transform`. Motivo, medido: los CTA
+ * entran con `v2-cta-in`, que es una animación GOBERNADA POR EL SCROLL
+ * (`animation-timeline: view()`, rango entry 10%→46%) con `fill: both`. Una
+ * animación de timeline no «termina» como una de tiempo: mientras la página es
+ * scrolleable, la animación sigue siendo dueña de `transform` y del `opacity`,
+ * y en la cascada una animación gana a cualquier declaración normal —ni subiendo
+ * la especificidad se arregla: probado, ni una regla inyectada
+ * `.text-button:hover{transform:…}` lo conseguía—. `translate` y `scale` son
+ * propiedades independientes que se componen con `transform`, así que el ascenso
+ * del botón y su entrada por scroll conviven. `.community-button` y
+ * `.shop-add-to-cart`, que no tienen animación de entrada, respondían igual con
+ * las dos formas; esta es la que además sirve a los que sí la tienen.
+ */
+:where(.gold-button, .text-button, .community-button, .academy-action, .shop-add-to-cart, .primary-cta, .secondary-cta) {
+  transition:
+    translate var(--bayona-dur-micro) var(--bayona-ease-standard),
+    scale var(--bayona-dur-micro) var(--bayona-ease-standard),
+    box-shadow var(--bayona-dur-micro) var(--bayona-ease-standard),
+    border-color var(--bayona-dur-micro) var(--bayona-ease-standard),
+    background-color var(--bayona-dur-micro) var(--bayona-ease-standard),
+    color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+:where(.gold-button, .text-button, .community-button, .academy-action, .shop-add-to-cart, .primary-cta, .secondary-cta):hover {
+  translate: 0 -2px;
+}
+
+:where(.gold-button, .text-button, .community-button, .academy-action, .shop-add-to-cart, .primary-cta, .secondary-cta):active {
+  translate: 0 0;
+  scale: 0.98;
+}
+
+.ds-plate:hover,
+.ds-plate:focus-within {
+  border-top-color: var(--bayona-line-strong, var(--bayona-warm));
+}
+
+/* --------------------------------------------------------------------------
+   4.5 CAPA C · SUPERFICIES QUE RESPONDEN AL PUNTERO
+   Medido tarjeta por tarjeta (scripts/probe-hover.mjs, estilo calculado antes y
+   después de un hover real): /faq y /parkour-academy no respondían a nada, y en
+   /programs, / y /shop se quedaban mudas las filas del acordeón de planes, los
+   tramos de edad, las pruebas y los valores gratis. Son superficies de lectura
+   que parecen texto plano: sin respuesta, nadie entiende que se puede abrir.
+   Dos gramáticas, no una: la tarjeta que contiene algo se eleva; la fila que
+   esconde una respuesta se corre hacia ella. Mismo criterio que los CTA:
+   `translate`, nunca `transform`, para no pelear con los reveals por scroll ni
+   con el tilt de las tarjetas de plan. `:where()` a propósito: pesa cero en la
+   cascada, así que cualquier hover propio de una ruta sigue mandando.
+   -------------------------------------------------------------------------- */
+:where(.faq-contact-card, .academy-age, .academy-level, .experience-proof-card, .free-value,
+  .faq-accordion > button, .program-plan-header, .shop-pill-group button) {
+  transition:
+    translate var(--bayona-dur-micro) var(--bayona-ease-standard),
+    border-color var(--bayona-dur-micro) var(--bayona-ease-standard),
+    box-shadow var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+:where(.faq-contact-card, .academy-age, .academy-level, .experience-proof-card, .free-value,
+  .shop-pill-group button):hover {
+  border-color: var(--bayona-line-strong, var(--bayona-warm));
+  translate: 0 -3px;
+}
+
+:where(.faq-accordion > button, .program-plan-header):hover {
+  border-color: var(--bayona-line-strong, var(--bayona-warm));
+  translate: 5px 0;
+}
+
+/* Spatial refinement: independent `rotate` composes with reveal `transform`.
+   The engine marks only explicitly approved surfaces, on mouse entry. No
+   permanent will-change, canvas, idle animation or per-card render loop. */
+@media (hover: hover) and (pointer: fine) and (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+  :where(.values-grid, .resources-grid, .plan-presentation-bridge-grid,
+    .plan-showroom-signature, .entrar-vault, .os-vault__grid) {
+    perspective: 1200px;
+  }
+
+  .ds-frame [data-depth-surface] {
+    rotate: var(--surface-depth-rotation, 1 0 0 0deg);
+    transition:
+      rotate var(--bayona-dur-standard) var(--bayona-ease-entrance),
+      translate var(--bayona-dur-micro) var(--bayona-ease-standard),
+      transform var(--bayona-dur-standard) var(--bayona-ease-entrance),
+      border-color var(--bayona-dur-micro) var(--bayona-ease-standard),
+      box-shadow var(--bayona-dur-standard) var(--bayona-ease-standard);
+  }
+
+  :where(.ds-frame [data-depth-surface]):hover {
+    border-color: var(--bayona-line-strong, var(--bayona-warm));
+  }
+
+  .ds-frame [data-depth-surface]:focus-within {
+    rotate: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. 4.4 · EL MÉTODO COMO PATRÓN COMPARTIDO (01 / 02 / 03)
+   --------------------------------------------------------------------------
+   Secuencia editorial horizontal: número grande, filete que avanza, texto.
+   No son tres tarjetas: son tres tramos de un mismo recorrido, y el archivo
+   se entiende sin JavaScript y sin animación. */
+.ds-method {
+  display: grid;
+  gap: 0;
+  margin: var(--bayona-gap-plate) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: ds-method;
+  border-top: var(--bayona-hairline);
+}
+
+.ds-method-step {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  gap: clamp(var(--ds-space-4), 3vw, var(--ds-space-7));
+  align-items: start;
+  margin: 0;
+  padding: clamp(var(--ds-space-5), 3.4vw, var(--ds-space-8)) 0;
+  border-bottom: var(--bayona-hairline);
+}
+
+.ds-method-step__figure {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ds-space-4);
+  margin: 0;
+}
+
+.ds-method-step__marker {
+  font-family: var(--bayona-font-display);
+  font-size: var(--bayona-type-figure);
+  font-weight: var(--ds-fw-heading);
+  line-height: 0.8;
+  letter-spacing: -0.045em;
+  color: var(--bayona-bone);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-method-step__rail {
+  flex: 1;
+  block-size: 1px;
+  background: var(--bayona-hairline-color);
+  transition: background-color var(--bayona-dur-emphasis) var(--bayona-ease-travel);
+}
+
+.ds-method-step__body {
+  max-inline-size: 44ch;
+}
+
+.ds-method-step__title {
+  margin: 0 0 var(--ds-space-4);
+  font-family: var(--bayona-font-display);
+  font-size: var(--bayona-type-step-title);
+  font-weight: var(--ds-fw-heading);
+  letter-spacing: var(--ds-ls-title, -0.02em);
+  line-height: 1.04;
+  text-transform: uppercase;
+  color: var(--bayona-white, var(--white));
+}
+
+.ds-method-step__copy {
+  margin: 0;
+  color: var(--bayona-muted);
+  font: 300 var(--bayona-type-lead)/1.62 var(--bayona-font-body);
+}
+
+/* El paso activo se señala con la señal, no con un glow: filete naranja y
+   el marker sube de peso óptico. */
+.ds-method-step:is(:hover, :focus-within) .ds-method-step__rail,
+.ds-method-step[data-active='true'] .ds-method-step__rail {
+  background: var(--bayona-warm);
+}
+
+.ds-method-step:is(:hover, :focus-within) .ds-method-step__marker,
+.ds-method-step[data-active='true'] .ds-method-step__marker {
+  color: var(--bayona-warm);
+}
+
+/* Variante compacta (About, academia): el número en línea con el título. */
+.ds-method--compact .ds-method-step {
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: clamp(var(--ds-space-4), 2.4vw, var(--ds-space-6));
+}
+
+.ds-method--compact .ds-method-step__marker {
+  font-size: var(--bayona-type-figure-soft);
+}
+
+@media (max-width: 860px) {
+  .ds-method-step,
+  .ds-method--compact .ds-method-step {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--ds-space-4);
+  }
+
+  .ds-method-step__body {
+    max-inline-size: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. CAPA C · PROFUNDIDAD DEL SHELL (barra y pie comparten el universo)
+   -------------------------------------------------------------------------- */
+
+/* La barra es una línea de trazado, no una caja: gana su filete cuando el
+   documento empieza a moverse (SHIFT ligado a scroll, CSS puro, sin JS y sin
+   listeners). Sin soporte de `animation-timeline`, o con reduced motion, la
+   barra se queda exactamente como hoy: el degradado es la norma, la animación
+   es el extra. */
+:where(.navbar) {
+  border-block-end: 1px solid transparent;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    :where(.navbar) {
+      animation: ds-nav-rule linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 var(--bayona-shell-offset);
+    }
+  }
+
+  @keyframes ds-nav-rule {
+    from { border-block-end-color: transparent; }
+    to { border-block-end-color: var(--bayona-hairline-color); }
+  }
+}
+
+/* El pie cierra en el negro de la página: mismo pozo, sin segunda paleta.
+   La barra de navegación conserva su degradado y su subrayado de marca
+   (`.desktop-nav a.active:after`), que ya son la señal correcta: aquí no se
+   duplica ninguna indicación. */
+:where(.footer) {
+  background: var(--bayona-surface-0);
+}
+
+/* Foco del sistema: un solo dibujo en todo el sitio, siempre visible. */
+:where(.ds-frame a, .ds-cta-row a, .ds-method-step):focus-visible {
+  outline: 1px solid var(--bayona-warm);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   7. 4.5–4.12 · PROPAGACIÓN A LAS RUTAS DE MARCA
+   --------------------------------------------------------------------------
+   Qué se propaga y qué no: ritmo de capítulo, jerarquía tipográfica y
+   superficie. No se propaga nada que pueda mover un precio, una prestación o
+   un CTA. El marco no añade desplazamiento superior: cada ruta ya reserva el
+   alto de la barra fija en su propio héroe (`.home-content, .page-hero-content
+   { padding-top: 80px }`, `.checkout-page { padding: 145px 0 130px }`), así
+   que una herejía aquí sería un hueco de 74px en las 18 rutas. Especificidad
+   cero a propósito: cualquier página sigue pudiendo matizar sin guerras.
+
+   Ámbito: `data-experience-scope="brand"`. El playground interno del sistema
+   (que monta el laboratorio 3A en su bloque 17) queda fuera por decisión: ese
+   estado está congelado y su hoja `.lab-*` es su propia dueña. */
+:where(.ds-frame[data-experience-scope='brand']) :is(h1, h2) {
+  text-wrap: balance;
+}
+
+/* Cierre de capítulo: el filete mínimo entre bloques, solo donde las
+   secciones son hermanas directas del marco (Home y las rutas editoriales). */
+:where(.ds-frame[data-experience-scope='brand'] > section + section) {
+  border-block-start: var(--bayona-hairline);
+}
+
+/* Placa de lectura para los párrafos que no traen color propio: el gris
+   templado de la marca en lugar del blanco puro, con la medida del sistema. */
+:where(.ds-frame[data-experience-scope='brand'] > section > .section-shell > p) {
+  max-inline-size: var(--bayona-measure);
+  color: var(--bayona-copy, var(--muted));
+}
+
+/* --------------------------------------------------------------------------
+   8. FASE 4B · DISPOSITIVO COMPARTIDO — NUMERACIÓN SIN DOM
+   --------------------------------------------------------------------------
+   Hay listas que ya publican el contenido correcto y solo les falta la forma:
+   tres pasos que se leen como tarjetas sueltas. `.ds-sequence` les da el
+   dispositivo de la portada —filete, figura numerada en el margen, ritmo de
+   4px— sin tocar un elemento, sin copiar texto y sin depender de JS: el número
+   es `counter()` de CSS. Donde no hay lista, no se aplica.
+   ========================================================================== */
+.ds-sequence {
+  counter-reset: ds-sequence;
+  display: grid;
+  gap: 0;
+  margin-block-start: var(--bayona-gap-plate);
+  border-block-start: var(--bayona-hairline);
+}
+
+.ds-sequence > * {
+  counter-increment: ds-sequence;
+  position: relative;
+  padding-block: clamp(var(--ds-space-6), 3.6vw, var(--ds-space-8));
+  padding-inline-start: clamp(56px, 6vw, var(--ds-space-8));
+  border-block-end: var(--bayona-hairline);
+  transition: border-block-end-color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+.ds-sequence > *::after {
+  content: counter(ds-sequence, decimal-leading-zero);
+  position: absolute;
+  inset-block-start: clamp(var(--ds-space-6), 3.6vw, var(--ds-space-8));
+  inset-inline-start: 0;
+  font-family: var(--bayona-font-display);
+  font-size: var(--bayona-type-figure-inline);
+  font-weight: var(--ds-fw-heading);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--bayona-bone);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  transition: color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+.ds-sequence > *:hover::after,
+.ds-sequence > *:focus-within::after {
+  color: var(--bayona-warm);
+}
+
+.ds-sequence > *:hover {
+  border-block-end-color: var(--bayona-line-strong, var(--bayona-hairline-color));
+}
+
+@media (max-width: 600px) {
+  .ds-sequence > * {
+    padding-inline-start: 0;
+    padding-block-start: clamp(var(--ds-space-8), 12vw, var(--ds-space-9));
+  }
+
+  .ds-sequence > *::after {
+    inset-block-start: var(--ds-space-4);
+    inset-inline-start: 0;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   9. REDUCED MOTION — estado estático diseñado
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .ds-frame [data-depth-surface] {
+    rotate: none;
+    transition: none;
+  }
+
+  .ds-reveal,
+  .ds-reveal--shift,
+  .ds-reveal--mask,
+  .ds-reveal--scale,
+  .ds-reveal--spatial {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    animation: none;
+  }
+
+  .ds-depth-floor {
+    opacity: 0.4;
+    transform: perspective(420px) rotateX(62deg);
+  }
+
+  .ds-plate,
+  .ds-method-step,
+  .ds-cta-row > *,
+  .ds-method-step__rail,
+  .ds-sequence > *,
+  .ds-sequence > *::after {
+    transition: none;
+  }
+
+  /* Los CTA de ruta no levantan ni se encogen: el estado quieto es el diseñado. */
+  :where(.gold-button, .text-button, .community-button, .academy-action, .shop-add-to-cart, .primary-cta, .secondary-cta),
+  :where(.gold-button, .text-button, .community-button, .academy-action, .shop-add-to-cart, .primary-cta, .secondary-cta):hover,
+  :where(.gold-button, .text-button, .community-button, .academy-action, .shop-add-to-cart, .primary-cta, .secondary-cta):active {
+    translate: none;
+    scale: none;
+  }
+
+  /* Ídem para las superficies de lectura: sin elevación ni corrida lateral. */
+  :where(.faq-contact-card, .academy-age, .academy-level, .experience-proof-card, .free-value,
+    .faq-accordion > button, .program-plan-header, .shop-pill-group button),
+  :where(.faq-contact-card, .academy-age, .academy-level, .experience-proof-card, .free-value,
+    .shop-pill-group button):hover,
+  :where(.faq-accordion > button, .program-plan-header):hover {
+    translate: none;
+  }
+}

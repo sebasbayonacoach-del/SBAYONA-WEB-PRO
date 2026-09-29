@@ -1,0 +1,362 @@
+/*
+  BAYONA · DESIGN SYSTEM 2.0 — TOKENS GLOBALES (Fase 3)
+  ===========================================================================
+  Capa ADITIVA: solo declara custom properties en `:root` bajo el prefijo
+  `--ds-`. Ninguna regla de este archivo toca selectores existentes, así que
+  las 17 rutas públicas mantienen exactamente el mismo estado visual.
+
+  Principios:
+  · No se inventan valores. Cada token ALIAS a uno ya vivo en la cascada
+    (`styles.css` para color/tipografía base, `v2-surface.css` para cristal,
+    `v2-typography.css` para la escala tipográfica) o documenta uno medido
+    en el código (grid, z-index, breakpoints).
+  · El prefijo `--ds-` convive con `--v2-*` y las variables legacy: cuando una
+    hoja de página migre al Design System pedirá `var(--ds-…)`; hasta entonces
+    nada cambia.
+  · Los tokens de movimiento de este archivo son el ESPEJO CSS de
+    `src/engine/config/motionTokens.js` (fuente única de verdad en JavaScript,
+    verificada por la Property 7). Si cambia uno, cambia el otro.
+*/
+
+:root {
+  /* ---------------------------------------------------------------------
+     1. COLOR — acento y neutros (alias de styles.css / theme.js)
+     --------------------------------------------------------------------- */
+  --ds-color-accent: var(--orange);            /* #F4A261 · acento principal (R9.1) */
+  --ds-color-accent-fire: var(--orange-fire);  /* #E76F51 */
+  --ds-color-accent-deep: var(--orange-deep);  /* #D45D38 */
+  --ds-color-ink: var(--white);                /* texto principal */
+  --ds-color-muted: var(--muted);              /* #A3A3A3 · texto secundario */
+  --ds-color-dim: var(--gray-dim);             /* #6b6b6b · microcopy/apoyo */
+
+  /* ---------------------------------------------------------------------
+     2. SUPERFICIES — escalera de elevación por luminosidad.
+     La identidad sigue siendo oscura: la profundidad se logra con tono,
+     luz y textura, no con color (diagnóstico de v2-surface.css).
+     Orden: fondo de página → planos de contenido → superficies que flotan.
+     --------------------------------------------------------------------- */
+  --ds-surface-background: var(--black);        /* #050505 · fondo de página */
+  --ds-surface-deep: var(--deep-blue);          /* #0B0B0C · plano hundido */
+  --ds-surface-raised: var(--black-2);          /* #0c0c0d · plano elevado */
+  --ds-surface-content: var(--mediterranean);   /* #111111 · bloque de contenido */
+  --ds-surface-overlay: var(--black-3);         /* #141416 · capa superior */
+
+  /* Cristal (alias de v2-surface.css: la base ya tokenizada). */
+  --ds-surface-glass: var(--v2-glass-bg);
+  --ds-surface-glass-strong: var(--v2-glass-bg-strong);
+  --ds-surface-glass-blur: var(--v2-glass-blur);
+
+  /* ---------------------------------------------------------------------
+     3. BORDES Y SOMBRAS
+     --------------------------------------------------------------------- */
+  --ds-border-width: 1px;
+  --ds-border-color: var(--v2-glass-border);        /* rgba(255,255,255,0.1) */
+  --ds-border-color-hover: var(--v2-glass-border-hover); /* acento al 42 % */
+  --ds-border-hairline: var(--ds-border-width) solid var(--ds-border-color);
+
+  --ds-shadow-lift: var(--v2-lift);        /* contacto + caída larga */
+  --ds-shadow-lift-warm: var(--v2-lift-warm); /* elevación con brasa cálida */
+
+  /* ---------------------------------------------------------------------
+     4. RADIO DE BORDE — el canto afilado es identidad de marca (R9.5).
+     Cero es el valor por defecto; los radios suaves existen solo para las
+     superficies que flotan y para geometría deliberadamente circular.
+     --------------------------------------------------------------------- */
+  --ds-radius-sharp: 0px;                 /* defecto de marca */
+  --ds-radius-control: var(--v2-radius-sm); /* 10px · botones, inputs, chips */
+  --ds-radius-float: var(--v2-radius);      /* 16px · tarjetas y capas flotantes */
+  --ds-radius-round: 50%;                   /* avatares, cursor, órbitas */
+
+  /* ---------------------------------------------------------------------
+     5. TIPOGRAFÍA — escala semántica.
+     Los pasos display…label son alias de la escala v2 (v2-typography.css,
+     el reset por rol semántico sobre los 258 tamaños históricos). Aquí se
+     añaden los dos pasos que faltaban: CTA y numérico.
+     --------------------------------------------------------------------- */
+  --ds-fs-display: var(--fs-display);  /* portada: solo el h1 del héroe */
+  --ds-fs-h1: var(--fs-h1);            /* titular de página */
+  --ds-fs-h2: var(--fs-h2);            /* titular de sección */
+  --ds-fs-h3: var(--fs-h3);            /* subsección / tarjeta */
+  --ds-fs-h4: var(--fs-h4);            /* titulillo / acordeón */
+  --ds-fs-lead: var(--fs-lead);        /* párrafo de entrada */
+  --ds-fs-body: var(--fs-body);        /* cuerpo */
+  --ds-fs-body-small: var(--fs-meta);  /* apoyo, notas, microcopy */
+  --ds-fs-eyebrow: var(--fs-label);    /* etiqueta mono, fija a propósito */
+
+  /* Paso nuevo: texto de botón/CTA. Mayúsculas con tracking en el componente. */
+  --ds-fs-cta: clamp(0.78rem, 0.9vw, 0.88rem);
+
+  /* Paso nuevo: dato numérico (precios, métricas). DM Mono, no escala con
+     la mancha: el dato debe leerse igual en un hero y en una tarjeta. */
+  --ds-fs-numeric: clamp(1.3rem, 2vw, 1.9rem);
+
+  --ds-lh-display: var(--lh-display);
+  --ds-lh-heading: var(--lh-heading);
+  --ds-lh-title: var(--lh-title);
+  --ds-lh-body: var(--lh-body);
+
+  --ds-ls-display: var(--ls-display);
+  --ds-ls-heading: var(--ls-heading);
+  --ds-ls-title: var(--ls-title);
+  --ds-ls-body: var(--ls-body);
+  --ds-ls-eyebrow: 0.18em;  /* medido en v2-typography.css §9 */
+  --ds-ls-cta: 0.14em;
+
+  /* Familias y pesos (espejo de theme.js / R9.7). */
+  --ds-font-heading: "Montserrat", Arial, sans-serif;
+  --ds-font-body: "Inter", "Montserrat", Arial, sans-serif;
+  --ds-font-mono: "DM Mono", monospace;
+  --ds-fw-heading: 900;
+  --ds-fw-body-light: 300;
+  --ds-fw-body: 400;
+  --ds-fw-cta: 800;
+
+  /* Longitud máxima de línea de lectura (v2-typography.css §10). */
+  --ds-measure: 66ch;
+
+  /* ---------------------------------------------------------------------
+     6. ESPACIADO — escala de 4px. Cubre y ordena los valores en uso
+     (padding de shell 80px, gaps de retícula 24px, aire de sección 64–192px).
+     --------------------------------------------------------------------- */
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-5: 24px;
+  --ds-space-6: 32px;
+  --ds-space-7: 48px;
+  --ds-space-8: 64px;
+  --ds-space-9: 96px;
+  --ds-space-10: 128px;
+  --ds-space-11: 192px;
+
+  /* Aire vertical entre secciones editoriales. */
+  --ds-section-gap: clamp(var(--ds-space-8), 9vw, var(--ds-space-11));
+
+  /* ---------------------------------------------------------------------
+     7. RETÍCULA — medidas reales de .section-shell (styles.css):
+     ancho máximo 1240px con 40px de aire por lado (calc(100% - 80px)).
+     --------------------------------------------------------------------- */
+  --ds-grid-max: 1240px;
+  --ds-grid-gutter: 40px;
+  --ds-grid-gutter-mobile: 20px;
+  --ds-grid-columns: 12;
+  --ds-grid-gap: var(--ds-space-5);
+
+  /* ---------------------------------------------------------------------
+     8. Z-INDEX — escalera explícita. Ordena los valores ya vivos en la
+     cascada (medidos: 0–6 contenido, 100 familia navbar, 9997–12000 capas
+     fijas, cursor por encima del grano). Los componentes nuevos piden el
+     token; los legacy conservan sus valores hasta migrar.
+     --------------------------------------------------------------------- */
+  --ds-z-base: 0;        /* luz ambiente (body::before), fondos */
+  --ds-z-content: 1;     /* #root, contenido general */
+  --ds-z-raised: 10;     /* elementos apilados dentro de una sección */
+  --ds-z-sticky: 100;    /* navbar y barras fijas de sección */
+  --ds-z-overlay: 9997;  /* capas fijas: consent, ribbon, móvil-nav */
+  --ds-z-grain: 10000;   /* grano fílmico (GrainOverlay) */
+  --ds-z-cursor: 10001;  /* cursor personalizado, siempre encima del grano */
+  --ds-z-modal: 11000;   /* drawers y diálogos modales */
+  --ds-z-curtain: 12000; /* cortina de PageTransition */
+
+  /* ---------------------------------------------------------------------
+     9. MOVIMIENTO — espejo CSS de src/engine/config/motionTokens.js.
+     Cuatro niveles: micro (hover/tap), standard (reveals), emphasis
+     (movimientos amplios), cinematic (cortina de transición de página).
+     --------------------------------------------------------------------- */
+  --ds-dur-micro: 200ms;      /* motionTokens.duration.fast */
+  --ds-dur-standard: 400ms;   /* motionTokens.duration.base */
+  --ds-dur-emphasis: 800ms;   /* motionTokens.duration.slow */
+  --ds-dur-cinematic: 820ms;  /* motionTokens.duration.curtain */
+
+  --ds-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);   /* easing general */
+  --ds-ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);  /* entradas */
+  --ds-ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);  /* cortina */
+  /* Fase 5: curvas narrativas (espejo de motionTokens.ease). */
+  --ds-ease-exit: cubic-bezier(0.4, 0, 1, 1);         /* salidas */
+  --ds-ease-travel: cubic-bezier(0.45, 0, 0.55, 1);   /* desplazamiento/scrub */
+  --ds-ease-transform: cubic-bezier(0.65, 0, 0.35, 1); /* escala/forma */
+
+  /* Fase 5: distancias de desplazamiento (espejo de motionTokens.distance). */
+  --ds-dist-near: 16px;    /* micro-desplazamientos */
+  --ds-dist-medium: 48px;  /* reveals de bloque */
+  --ds-dist-far: 120px;    /* capas, parallax, pasos narrativos */
+
+  /* Transición tipo de los componentes del sistema. */
+  --ds-transition:
+    border-color var(--ds-dur-standard) var(--ds-ease-entrance),
+    background-color var(--ds-dur-standard) var(--ds-ease-entrance),
+    color var(--ds-dur-standard) var(--ds-ease-entrance),
+    transform var(--ds-dur-standard) var(--ds-ease-entrance),
+    box-shadow var(--ds-dur-standard) var(--ds-ease-entrance);
+
+  /* ---------------------------------------------------------------------
+     10. IMMERSIVE LUXURY (2026-09-15) — plan PLAN-IMMERSIVE-LUXURY.md.
+     Capa ADITIVA como el resto del archivo: solo custom properties.
+
+     a) FIGURA: el número arquitectónico (§18). No es decoración: es un
+        elemento estructural que ancla la escena. Escala propia, muy por
+        encima del display, con tracking negativo y tabular.
+     b) PLANOS DE COLOR: el ritmo dark → image → light → dark (§50) necesita
+        una escalera de superficies intermedias entre el negro de página y
+        el hueso editorial, para que las transiciones sean escena, no corte.
+     c) FILETE SEÑAL: el hairline de marca pasa a ser un token reutilizable
+        para line-draw (§30) y placas numeradas (§11).
+     --------------------------------------------------------------------- */
+  --ds-type-figure: clamp(6rem, 22vw, 20rem);
+  --ds-type-figure-soft: clamp(3rem, 7vw, 6rem);
+  --ds-type-figure-inline: clamp(1.6rem, 2.4vw, 2.2rem);
+
+  --ds-plane-void: #050505;
+  --ds-plane-coal: #08080a;
+  --ds-plane-graphite: #0d0d0f;
+  --ds-plane-bone: #e8e3dc;
+  /* Medido con probe-contraste a 4,15-4,40 sobre el fondo de las rutas (umbral
+     4,5 para rótulo pequeño). Era #b8b1a8; subido dentro del mismo hueso. */
+  --ds-plane-bone-dim: #c6c0b8;
+
+  --ds-hairline-color: rgba(255, 255, 255, 0.12);
+  --ds-hairline-signal: rgba(244, 162, 97, 0.55);
+  --ds-hairline: var(--ds-border-width) solid var(--ds-hairline-color);
+  --ds-hairline-signal-line: var(--ds-border-width) solid var(--ds-hairline-signal);
+
+  /* Medida de lectura para statements editoriales (más corta que el cuerpo:
+     una declaración debe cerrar antes de perder tensión). */
+  --ds-measure-statement: 34ch;
+
+  /* --- Raíl del dock inferior izquierdo ---------------------------------
+     Tres capas fijas comparten esquina y las tres pueden estar montadas a la
+     vez (en la home coexisten el acompañante y su orbe con el crédito). Cada
+     una declara su CASILLA y la casilla siguiente empieza donde termina la
+     altura de esta, así no pueden volver a solaparse. Antes: 20px / 82px /
+     104px a ojo — el orbe (82-126) y el crédito (desde 104) se montaban, y el
+     cuadrado naranja se comía el último dígito del precio en todas las rutas
+     de escritorio. */
+  --dock-left: 1.25rem;
+  /* Foso: aire que queda ENTRE el borde derecho del muelle y el borde izquierdo
+     del contenido editorial. Sin él, las dos geometrías se tocan justo en el
+     píxel y cualquier redondeo vuelve a montar el chip sobre el titular. */
+  --dock-foso: 1.5rem;
+  --dock-gap: 0.75rem;
+  --dock-companion-h: 3.25rem;
+  --dock-orb-h: 2.75rem;
+  --dock-slot-0: max(1.25rem, env(safe-area-inset-bottom)); /* acompañante */
+  --dock-slot-1: calc(
+    var(--dock-slot-0) + var(--dock-companion-h) + var(--dock-gap)
+  ); /* orbe */
+  --dock-slot-2: calc(
+    var(--dock-slot-1) + var(--dock-orb-h) + var(--dock-gap)
+  ); /* crédito */
+
+  /* ---------------------------------------------------------------------
+     11. ESCALA TIPOGRÁFICA NOMBRADA POR ROL (2026-09-19)
+     ---------------------------------------------------------------------
+     DIAGNÓSTICO DEL DUEÑO: «todos los títulos tienen distintos tamaños,
+     todos los títulos cambian, todo está totalmente distinto». Medido, la
+     causa no eran las 258 decisiones históricas (eso ya lo corrigió
+     v2-typography.css) sino dos derivas posteriores:
+
+       a) route-identity.css redefinía --fs-h1 / --fs-h2 por ruta, así que el
+          MISMO rol medía distinto en /programs, /resources y /parkour-academy.
+       b) cada hoja de página declaraba su propio clamp() para subtítulos,
+          rótulos y tarjetas, y esos sí ganaban la cascada.
+
+     ESTA CAPA es el vocabulario único por ROL. Nueve pasos de tamaño, tres
+     familias —y solo tres— y un juego de peso, tracking e interlineado por
+     rol. Regla de uso: una página pide el token del rol, nunca un número.
+     Si falta un paso, falta un paso en la escala, no una excepción.
+
+     No se inventan valores de tamaño: cada paso ALIAS al dueño vivo
+     (v2-typography.css, que además conserva la compresión de móvil). Lo que
+     esta capa añade es el NOMBRE del rol y la familia/peso/tracking que le
+     corresponden, para que el mismo rol se escriba igual en las seis rutas.
+
+     DIFERENCIACIÓN (PAGE-BLUEPRINTS TEST 4): las rutas se distinguen por
+     GEOMETRÍA, ENCUADRE, RITMO Y MOVIMIENTO. Nunca por tamaño de letra,
+     nunca por color ni por tema.
+     --------------------------------------------------------------------- */
+
+  /* Familias. Tres, y se acabó. */
+  --type-family-display: var(--ds-font-heading);   /* Montserrat · declaraciones */
+  --type-family-text: var(--ds-font-body);         /* Inter · lectura */
+  --type-family-mono: var(--ds-font-mono);         /* DM Mono · rótulos y dato */
+  --type-family-cta: var(--ds-font-heading);
+
+  /*
+    ESCALA TIPOGRÁFICA ÚNICA · progresión geométrica razón 1.16,
+    exponentes enteros desde -8 hasta 16 (0.31rem → 10.75rem).
+    Todo tamaño del sitio se ancla aquí. Elegir números sueltos es lo que
+    producía lo que describió el dueño: "todos los títulos tienen distintos
+    tamaños, todo tiene distinta tipografía".
+
+    No rompe la identidad de cada ruta: las rutas siguen abriendo en
+    escalones distintos. Lo que ya no existe es el tamaño inventado.
+  */
+  /* Suelo legible. Los seis primeros pasos de esta escalera estaban entre 5px y
+   * 10px: en un móvil de 390px eso no es tipografía, es textura, y lo consumían
+   * texto de verdad (la frase de una colección de la tienda a 7,68px, el rótulo
+   * de un plan a 8,8px). Los pasos retirados se quedan en el suelo para que
+   * nadie pueda pedir sin querer una medida ilegible; la escalera real empieza
+   * en 06. */
+  --type-size-00: 0.75rem;  /* 12px — paso retirado */
+  --type-size-01: 0.75rem;  /* 12px — paso retirado */
+  --type-size-02: 0.75rem;  /* 12px — paso retirado */
+  --type-size-03: 0.75rem;  /* 12px — paso retirado */
+  --type-size-04: 0.78rem;  /* 12.5px */
+  --type-size-05: 0.81rem;  /* 13px */
+  --type-size-06: 0.84rem;  /* 13.4px — sigue siendo menor que 07 (0.86) */
+  --type-size-07: 0.86rem;  /* 14px */
+  --type-size-08: 1rem;  /* 16px */
+  --type-size-09: 1.16rem;  /* 19px */
+  --type-size-10: 1.35rem;  /* 22px */
+  --type-size-11: 1.56rem;  /* 25px */
+  --type-size-12: 1.81rem;  /* 29px */
+  --type-size-13: 2.1rem;  /* 34px */
+  --type-size-14: 2.44rem;  /* 39px */
+  --type-size-15: 2.83rem;  /* 45px */
+  --type-size-16: 3.28rem;  /* 52px */
+  --type-size-17: 3.8rem;  /* 61px */
+  --type-size-18: 4.41rem;  /* 71px */
+  --type-size-19: 5.12rem;  /* 82px */
+  --type-size-20: 5.94rem;  /* 95px */
+  --type-size-21: 6.89rem;  /* 110px */
+  --type-size-22: 7.99rem;  /* 128px */
+  --type-size-23: 9.27rem;  /* 148px */
+  --type-size-24: 10.75rem;  /* 172px */       /* el botón habla en display */
+
+  /* Pesos. Todos salen de la escalera del sistema. */
+  --type-weight-display: var(--ds-fw-heading);     /* 900 */
+  --type-weight-cta: var(--ds-fw-cta);             /* 800 */
+  --type-weight-body: var(--ds-fw-body);           /* 400 */
+  --type-weight-body-soft: var(--ds-fw-body-light);/* 300 */
+  --type-weight-label: 500;
+
+  /* Pasos de tamaño por rol. */
+  --type-display: var(--fs-display);   /* declaración de portada */
+  --type-h1: var(--fs-h1);             /* titular de página */
+  --type-h2: var(--fs-h2);             /* titular de sección */
+  --type-h3: var(--fs-h3);             /* subsección y tarjeta */
+  --type-h4: var(--fs-h4);             /* titulillo y acordeón */
+  --type-lede: var(--fs-lead);         /* primer párrafo de una sección */
+  --type-body: var(--fs-body);         /* cuerpo */
+  --type-meta: var(--fs-meta);         /* apoyo y microcopia */
+  --type-eyebrow: var(--fs-label);     /* etiqueta mono de capítulo */
+  --type-label: var(--fs-label);       /* rótulo de interfaz (familia texto) */
+  --type-mono: var(--fs-meta);         /* dato numérico y nota técnica */
+  --type-cta: var(--ds-fs-cta);        /* texto de botón */
+
+  /* Interlineado por rol. */
+  --type-leading-display: var(--ds-lh-display);
+  --type-leading-heading: var(--ds-lh-heading);
+  --type-leading-title: var(--ds-lh-title);
+  --type-leading-body: var(--ds-lh-body);
+  --type-leading-eyebrow: 1.4;
+
+  /* Tracking por rol: a más tamaño, más cerrado. */
+  --type-tracking-display: var(--ds-ls-display);
+  --type-tracking-heading: var(--ds-ls-heading);
+  --type-tracking-title: var(--ds-ls-title);
+  --type-tracking-body: var(--ds-ls-body);
+  --type-tracking-eyebrow: var(--ds-ls-eyebrow);
+  --type-tracking-label: var(--ds-ls-cta);
+}

@@ -1,0 +1,333 @@
+const sharedDayTimeline = Object.freeze([
+  Object.freeze({
+    moment: 'Despiertas',
+    detail: 'Revisas tu plan del día en la app.',
+  }),
+  Object.freeze({
+    moment: 'Entrenas',
+    detail: 'Sabes exactamente qué hacer. Cada ejercicio, explicado.',
+  }),
+  Object.freeze({
+    moment: 'Durante el día',
+    detail: 'Tu entrenador responde tus dudas por WhatsApp.',
+  }),
+  Object.freeze({
+    moment: 'Terminas',
+    detail: 'Marcas tu progreso. Sabes que hoy avanzaste.',
+  }),
+])
+
+const createPresentation = (presentation) => Object.freeze({
+  ...presentation,
+  transformations: Object.freeze(presentation.transformations),
+  timeline: Object.freeze([
+    ...sharedDayTimeline,
+    Object.freeze({ moment: 'Cada semana', detail: presentation.followUp }),
+  ]),
+  valueStack: Object.freeze(presentation.valueStack.map(Object.freeze)),
+  testimonial: Object.freeze(presentation.testimonial),
+  faqs: Object.freeze(presentation.faqs.map(Object.freeze)),
+})
+
+export const planPresentations = Object.freeze({
+  RAIZ: createPresentation({
+    heroTitle: 'TU CUERPO EMPIEZA A ENTENDERTE.',
+    heroSubtitle: 'Dejas de improvisar. Cada día tiene una dirección y cada semana empieza a sentirse diferente.',
+    transformations: [
+      'De improvisar → a saber qué hacer cada día',
+      'De sentirte perdido → a sentirte guiado',
+      'De empezar cada lunes → a avanzar cada semana',
+    ],
+    followUp: 'Cada 2 semanas revisamos tu progreso y ajustamos el siguiente paso.',
+    valueStack: [
+      {
+        icon: 'calendar',
+        name: 'Plan de entrenamiento mensual personalizado',
+        benefit: 'Sabes qué hacer cada día. Sin adivinar.',
+        valueCop: 80000,
+      },
+      {
+        icon: 'nutrition',
+        name: 'Plan de alimentación simple',
+        benefit: 'Comes mejor sin volverte loco contando calorías.',
+        valueCop: 60000,
+      },
+      {
+        icon: 'progress',
+        name: 'Seguimiento quincenal con ajustes',
+        benefit: 'Alguien revisa tu progreso y ajusta cuando hace falta.',
+        valueCop: 50000,
+      },
+      {
+        icon: 'session',
+        name: '1 sesión virtual 1:1 al mes',
+        benefit: 'Entrenas directo con tu entrenador. Corrección real.',
+        valueCop: 35000,
+      },
+      {
+        icon: 'video',
+        name: 'Cada ejercicio explicado en video',
+        benefit: 'No te pierdes. Cada movimiento está explicado.',
+        valueCop: 40000,
+      },
+      {
+        icon: 'whatsapp',
+        name: 'Soporte por WhatsApp',
+        benefit: 'Tu duda, resuelta cuando la necesitas.',
+        valueCop: 30000,
+      },
+      {
+        icon: 'community',
+        name: 'Comunidad BAYONA',
+        benefit: 'No estás solo. Avanzas con personas como tú.',
+        valueCop: 20000,
+      },
+    ],
+    totalValueCop: 315000,
+    testimonial: {
+      initial: 'A',
+      name: 'Andrea',
+      age: 38,
+      countryCode: 'CO',
+      quote: 'Llevaba años sin entrenar. Por primera vez entiendo qué hacer.',
+      result: 'Volvió a entrenar con dirección y constancia.',
+    },
+    urgency: 'Tu primer paso. El más importante.',
+    faqs: [
+      { question: '¿Necesito equipo?', answer: 'No. Hay rutinas sin equipo.' },
+      { question: '¿Y si nunca he entrenado?', answer: 'Perfecto. RAÍZ es para empezar.' },
+      { question: '¿Puedo añadir clases después?', answer: 'Sí. Cuando quieras.' },
+    ],
+  }),
+  FUERZA: createPresentation({
+    heroTitle: 'ENTRENA CON ALGUIEN. NO SOLO.',
+    heroSubtitle: 'Tienes una persona al otro lado que corrige, responde y te empuja cuando tú bajarías el ritmo.',
+    transformations: [
+      'De entrenar solo → a entrenar con tu entrenador',
+      'De dudas → a respuestas claras en cada sesión',
+      'De estancamiento → a progreso visible',
+    ],
+    followUp: 'Cada semana ajustamos tu plan y tienes 2 sesiones en vivo contigo.',
+    valueStack: [
+      {
+        icon: 'calendar',
+        name: 'Plan de entrenamiento mensual personalizado',
+        benefit: 'Cada sesión responde a tu nivel, tu agenda y tu objetivo.',
+        valueCop: 70000,
+      },
+      {
+        icon: 'nutrition',
+        name: 'Plan de alimentación personalizado',
+        benefit: 'Comes para tu objetivo sin vivir a dieta.',
+        valueCop: 70000,
+      },
+      {
+        icon: 'progress',
+        name: 'Seguimiento semanal con ajustes',
+        benefit: 'Tu plan cambia contigo antes de que aparezca el estancamiento.',
+        valueCop: 60000,
+      },
+      {
+        icon: 'session',
+        name: '2 sesiones virtuales 1:1 al mes',
+        benefit: 'Entrenas en vivo. Te corrigen, te guían y te exigen.',
+        valueCop: 70000,
+      },
+      {
+        icon: 'coach',
+        name: 'Videollamada mensual con Sebastián',
+        benefit: 'Treinta minutos para ordenar dudas y acelerar decisiones.',
+        valueCop: 60000,
+      },
+      {
+        icon: 'video',
+        name: 'Biblioteca de ejercicios explicados',
+        benefit: 'Cada movimiento tiene una referencia clara.',
+        valueCop: 40000,
+      },
+      {
+        icon: 'whatsapp',
+        name: 'WhatsApp prioritario',
+        benefit: 'Tus dudas no se quedan esperando mientras pierdes impulso.',
+        valueCop: 40000,
+      },
+      {
+        icon: 'community',
+        name: 'Comunidad BAYONA',
+        benefit: 'La energía de otras personas también sostiene la tuya.',
+        valueCop: 20000,
+      },
+    ],
+    totalValueCop: 430000,
+    testimonial: {
+      initial: 'M',
+      name: 'Marco',
+      age: 35,
+      countryCode: 'ES',
+      quote: 'Las sesiones en vivo lo cambiaron todo. Alguien me guía de verdad.',
+      result: 'Recuperó motivación y progresión en sus entrenamientos.',
+    },
+    urgency: 'El equilibrio ideal. No esperes más.',
+    faqs: [
+      { question: '¿Las sesiones son grabadas?', answer: 'En vivo. Tú y tu entrenador.' },
+      { question: '¿Qué pasa si falto una semana?', answer: 'Se reprograma. Sin presión.' },
+      { question: '¿Puedo subir a RENDIMIENTO?', answer: 'Cuando quieras. Sin penalización.' },
+    ],
+  }),
+  RENDIMIENTO: createPresentation({
+    heroTitle: 'TU CUERPO CAMBIA. SEMANA A SEMANA.',
+    heroSubtitle: 'Cada dato, cada sesión y cada ajuste trabajan para que tu esfuerzo deje una señal visible.',
+    transformations: [
+      'De esfuerzo sin dirección → a cada semana con propósito',
+      'De cuerpo que no responde → a cuerpo que cambia',
+      'De genérico → a 100% personalizado para ti',
+    ],
+    followUp: 'Cada semana ajustamos; sumas 4 sesiones y una evaluación inicial completa.',
+    valueStack: [
+      {
+        icon: 'calendar',
+        name: 'Plan de entrenamiento de rendimiento',
+        benefit: 'Cada bloque tiene una intención y una progresión medible.',
+        valueCop: 80000,
+      },
+      {
+        icon: 'nutrition',
+        name: 'Alimentación avanzada con ajustes semanales',
+        benefit: 'Tu nutrición evoluciona al mismo ritmo que tu cuerpo.',
+        valueCop: 100000,
+      },
+      {
+        icon: 'session',
+        name: '4 sesiones virtuales 1:1 al mes',
+        benefit: 'Una corrección en vivo cada semana para no acumular errores.',
+        valueCop: 140000,
+      },
+      {
+        icon: 'assessment',
+        name: 'Evaluación biomecánica inicial',
+        benefit: 'Entendemos cómo te mueves antes de decidir cómo debes entrenar.',
+        valueCop: 110000,
+      },
+      {
+        icon: 'progress',
+        name: 'Seguimiento semanal con ajustes',
+        benefit: 'Lo que funciona se potencia. Lo que frena, se cambia.',
+        valueCop: 80000,
+      },
+      {
+        icon: 'science',
+        name: 'Protocolos de biohacking personalizados',
+        benefit: 'Recuperación, energía y hábitos alineados con tu objetivo.',
+        valueCop: 90000,
+      },
+      {
+        icon: 'whatsapp',
+        name: 'WhatsApp prioritario 24/7',
+        benefit: 'Cuando surge una duda, tu proceso no se detiene.',
+        valueCop: 70000,
+      },
+      {
+        icon: 'app',
+        name: 'Acceso anticipado a BAYONA+',
+        benefit: 'Tu plan y tu progreso viven siempre contigo.',
+        valueCop: 30000,
+      },
+      {
+        icon: 'video',
+        name: 'Ejercicios explicados en video',
+        benefit: 'Técnica clara incluso cuando entrenas por tu cuenta.',
+        valueCop: 20000,
+      },
+    ],
+    totalValueCop: 720000,
+    testimonial: {
+      initial: 'R',
+      name: 'Roberto',
+      age: 41,
+      countryCode: 'MX',
+      quote: 'Mi cuerpo cambió en 12 semanas. Sin improvisar.',
+      result: 'Convirtió constancia en cambios visibles y medibles.',
+    },
+    urgency: 'Vas en serio. Esto se nota.',
+    faqs: [
+      { question: '¿La evaluación es presencial?', answer: 'Virtual. Cómoda desde tu casa.' },
+      { question: '¿Qué es el biohacking?', answer: 'Protocolos de optimización basados en ciencia.' },
+      { question: '¿Incluye nutrición?', answer: 'Sí. Avanzada con ajustes semanales.' },
+    ],
+  }),
+  ELITE: createPresentation({
+    heroTitle: 'SEBASTIÁN ES TU ENTRENADOR. SOLO TUYO.',
+    heroSubtitle: 'El nivel de atención más alto de BAYONA: cada decisión, cada ajuste y cada detalle construido alrededor de ti.',
+    transformations: [
+      'De cliente → a persona con entrenador privado',
+      'De plan genérico → a cada detalle construido para ti',
+      'De transformación → a EVOLUCIÓN TOTAL',
+    ],
+    followUp: 'Seguimiento directo, 8 sesiones privadas y WhatsApp con Sebastián 24/7.',
+    valueStack: [
+      {
+        icon: 'session',
+        name: '8 sesiones privadas al mes',
+        benefit: 'Dos encuentros semanales con toda la atención puesta en ti.',
+        valueCop: 400000,
+      },
+      {
+        icon: 'coach',
+        name: 'Sebastián como entrenador directo',
+        benefit: 'No hay intermediarios. Tu estrategia se decide contigo.',
+        valueCop: 180000,
+      },
+      {
+        icon: 'science',
+        name: 'Plan 100% personalizado con biohacking',
+        benefit: 'Entrenamiento, recuperación y hábitos diseñados como un solo sistema.',
+        valueCop: 180000,
+      },
+      {
+        icon: 'nutrition',
+        name: 'Nutrición avanzada con ajustes semanales',
+        benefit: 'Cada ajuste acompaña lo que tu cuerpo necesita ahora.',
+        valueCop: 120000,
+      },
+      {
+        icon: 'assessment',
+        name: 'Evaluación biomecánica completa',
+        benefit: 'Cada decisión parte de cómo se mueve tu cuerpo de verdad.',
+        valueCop: 100000,
+      },
+      {
+        icon: 'vip',
+        name: 'Eventos privados VIP',
+        benefit: 'Acceso a experiencias reservadas para el círculo ELITE.',
+        valueCop: 120000,
+      },
+      {
+        icon: 'lifetime',
+        name: 'Acceso de por vida al contenido',
+        benefit: 'Todo el conocimiento se queda contigo.',
+        valueCop: 100000,
+      },
+      {
+        icon: 'whatsapp',
+        name: 'WhatsApp directo y seguimiento continuo',
+        benefit: 'Tu entrenador está cerca cuando una decisión no puede esperar.',
+        valueCop: 110000,
+      },
+    ],
+    totalValueCop: 1310000,
+    testimonial: {
+      initial: 'M',
+      name: 'Martín',
+      age: 50,
+      countryCode: 'AR',
+      quote: 'Tener a Sebastián para mí es otra liga. Resultados extraordinarios.',
+      result: 'Convirtió el acompañamiento privado en una evolución integral.',
+    },
+    urgency: 'Solo 10 cupos. ¿Serás uno?',
+    faqs: [
+      { question: '¿Las sesiones son con Sebastián?', answer: 'Sí. Todas.' },
+      { question: '¿Hay cupos disponibles?', answer: 'Máximo 10. Consulta disponibilidad.' },
+      { question: '¿Puedo cancelar?', answer: 'Sí. Cuando quieras. Sin permanencia.' },
+    ],
+  }),
+})

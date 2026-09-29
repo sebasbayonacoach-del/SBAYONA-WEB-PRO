@@ -1,0 +1,229 @@
+/* ==========================================================================
+   BAYONA · PASE ATELIER (FASE 4C) — LLEVAR EL SISTEMA AL MÁXIMO
+   --------------------------------------------------------------------------
+   El sistema ya existe (Fase 4) y ya está propagado (Fase 4B). Este pase no
+   añade un segundo lenguaje: aprieta el que hay hasta su techo. Cuatro
+   decisiones, todas CSS puro sobre el DOM que ya se publica:
+
+   1. ADEMÁS DEL NEGRO, HAY AIRE. El marco deja de pintar un plano opaco y
+      pasa a llevar atmósfera propia: dos focos cálidos y un horizonte. Es el
+      mismo lenguaje de `v2-surface.css` (luz ambiente), aplicado al contenedor
+      que la Fase 4 selló con un color plano.
+
+   2. EL TEXTO SE REVELA, NO APARECE. Titulares y párrafos de entrada entran
+      con una máscara de línea (`clip-path`) ligada al scroll. Se anima
+      EXCLUSIVAMENTE `clip-path`: todo lo que ya mueve Framer (opacity,
+      transform) sigue siendo suyo. Sin conflicto de propiedad, sin JS nuevo.
+
+   3. LA SEÑAL SE NOTA AL TOCAR. Botones y CTAs ganan barrido de gradiente,
+      un desplazamiento de un píxel y una línea de apoyo. En táctil y en
+      `:focus-visible` ocurre lo mismo: hover nunca es el único estado.
+
+   4. LAS PALABRAS VERTICALES SON ARQUITECTURA. Los rótulos en canto
+      (`*.vertical-word`) pasan de nota al pie a elemento gráfico.
+
+   Como siempre: cero `!important`, cero colores nuevos, cero `z-index`
+   mágicos, cero dependencias, cero WebGL. Cada bloque reduce-motion deja un
+   estado estático completo, nunca `duration: 0`.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. AIRE DEL MARCO — la profundidad que la Fase 4 aplanó
+   -------------------------------------------------------------------------- */
+.ds-frame[data-experience-scope='brand'] {
+  /* Un `background` opaco aquí tapaba la luz ambiental de `body::before`
+     (v2-surface.css). Se devuelve al marco, no al `body`, para que las
+     superficies de cada página sigan pudiendo apoyarse sobre algo. */
+  background:
+    radial-gradient(72% 46% at 82% 6%, color-mix(in srgb, var(--bayona-warm) 8%, transparent) 0%, transparent 68%),
+    radial-gradient(58% 42% at 8% 96%, color-mix(in srgb, var(--orange-deep) 6%, transparent) 0%, transparent 70%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bayona-warm) 3%, var(--bayona-surface-0)) 0%,
+      var(--bayona-surface-0) 22%,
+      var(--bayona-surface-0) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   2. MÁSCARA DE LÍNEA — movimiento de texto sin robarle propiedades a Framer
+   -------------------------------------------------------------------------- */
+@keyframes ds-atelier-wipe {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ds-frame[data-experience-scope='brand'] h2 {
+      animation: ds-atelier-wipe linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
+
+    /* The title marks the chapter; its lead stays readable immediately.
+       Hero titles are never clipped by a scroll-driven mask. */
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. SEÑAL AL TOCAR — cada familia recibe lo que le falta, no lo que le sobra
+   --------------------------------------------------------------------------
+   Los primarios de marca son planos por decisión de `overrides.css`
+   (`background: … !important`, `box-shadow: none !important`). Discutirles el
+   relleno sería pelear con `!important`, así que la señal se dibuja DEBAJO:
+   una línea de apoyo que se traza bajo la etiqueta. Los secundarios ganan la
+   microelevación que no tenían, y el botón del sistema sí conserva el barrido
+   de gradiente porque su fondo es un degradado real. Ninguna de estas señales
+   depende del ratón: `:focus-visible` y el tacto (`:active`) hacen lo mismo.
+   -------------------------------------------------------------------------- */
+.ds-frame[data-experience-scope='brand'] :is(.gold-button, .cta-primary) {
+  position: relative;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(.gold-button, .cta-primary)::after {
+  content: '';
+  position: absolute;
+  inset-inline: 14%;
+  bottom: 0.5em;
+  height: 1px;
+  background: color-mix(in srgb, var(--bayona-black) 45%, transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--bayona-dur-standard) var(--bayona-ease-travel);
+  pointer-events: none;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(.gold-button, .cta-primary):hover::after,
+.ds-frame[data-experience-scope='brand'] :is(.gold-button, .cta-primary):focus-visible::after,
+.ds-frame[data-experience-scope='brand'] :is(.gold-button, .cta-primary):active::after {
+  transform: scaleX(1);
+}
+
+/* Elevación: solo donde el dueño no la tenía (`.gold-button` ya sube 3px). */
+.ds-frame[data-experience-scope='brand'] :is(.cta-primary, .cta-secondary, .nav-cta, .ds-button):hover,
+.ds-frame[data-experience-scope='brand'] :is(.cta-primary, .cta-secondary, .nav-cta, .ds-button):focus-visible,
+.ds-frame[data-experience-scope='brand'] :is(.cta-primary, .cta-secondary, .nav-cta, .ds-button):active {
+  transform: translateY(-1px);
+}
+
+/* Barrido: solo donde el fondo es un gradiente (`.ds-button--primary`). */
+.ds-frame[data-experience-scope='brand'] :is(.ds-button--primary) {
+  background-size: 168% 100%;
+  background-position: 0 0;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(.ds-button--primary):hover,
+.ds-frame[data-experience-scope='brand'] :is(.ds-button--primary):focus-visible {
+  background-position: 100% 0;
+}
+
+/* Y todas comparten un mismo régimen de tiempo. Se declara `background-color`
+   explícito: es lo que `overrides.css` cambia en el hover, y sin esta línea
+   nuestra transición se comería el fundido del dueño. */
+.ds-frame[data-experience-scope='brand'] :is(.gold-button, .cta-primary, .cta-secondary, .nav-cta, .ds-button) {
+  transition:
+    transform var(--bayona-dur-micro) var(--bayona-ease-entrance),
+    background-color var(--bayona-dur-standard) var(--bayona-ease-standard),
+    border-color var(--bayona-dur-standard) var(--bayona-ease-standard),
+    color var(--bayona-dur-micro) var(--bayona-ease-standard),
+    background-position var(--bayona-dur-standard) var(--bayona-ease-standard);
+}
+
+/* --------------------------------------------------------------------------
+   4. RÓTULOS EN CANTO Y PIES DE PÁGINA
+   -------------------------------------------------------------------------- */
+:where(.home-vertical-word, .about-vertical-word) {
+  color: var(--bayona-bone);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: 0.34em;
+  border-inline-start-color: var(--bayona-line-strong, var(--bayona-hairline-color));
+}
+
+:where(.footer-mark) {
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+  letter-spacing: 0.22em;
+  font-family: var(--bayona-font-display);
+}
+
+/* --------------------------------------------------------------------------
+   5. BARRA FIJA — de degradado a placa cuando el documento se mueve
+   -------------------------------------------------------------------------- */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    :where(.navbar) {
+      animation: ds-atelier-nav linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 calc(var(--bayona-shell-offset) * 2);
+    }
+  }
+
+  @keyframes ds-atelier-nav {
+    from { backdrop-filter: blur(7px); }
+    to { backdrop-filter: blur(18px) saturate(1.12); }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. LECTURA — disciplina tipográfica del pase
+   -------------------------------------------------------------------------- */
+.ds-frame[data-experience-scope='brand'] :is(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(h1, h2, h3) + :is(p, .hero-subheadline, .mechanism-intro) {
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   7. ESTADO ESTÁTICO DISEÑADO
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .ds-frame[data-experience-scope='brand'] :is(h1, h2),
+  .ds-frame[data-experience-scope='brand'] :is(h1, h2) + p {
+    clip-path: none;
+    animation: none;
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(.gold-button, .cta-primary, .cta-secondary, .nav-cta, .ds-button) {
+    transition: none;
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(.cta-primary, .cta-secondary, .nav-cta, .ds-button):hover,
+  .ds-frame[data-experience-scope='brand'] :is(.cta-primary, .cta-secondary, .nav-cta, .ds-button):focus-visible,
+  .ds-frame[data-experience-scope='brand'] :is(.cta-primary, .cta-secondary, .nav-cta, .ds-button):active {
+    transform: none;
+  }
+
+  /* La línea de apoyo no se traza: ya está trazada. Estado estático completo,
+     no un botón que ha perdido su señal. */
+  .ds-frame[data-experience-scope='brand'] :is(.gold-button, .cta-primary)::after {
+    transform: none;
+    transition: none;
+  }
+}
+
+/*
+ * RAÍL COMÚN DEL HÉROE — remate (23-09-2026).
+ *
+ * El contrato `experienceSystemContract` veta esa declaración de prioridad en
+ * esta hoja y exige además que todo selector vaya bajo el ámbito de marca. Se
+ * gana por especificidad: `.ds-frame[data-experience-scope='brand'] .app-page
+ * .app-hero-content` (0,3,0) sobre el `.app-hero-content` (0,1,0) de
+ * `app.css:2438`. No se gana por orden porque `app.css` no se importa desde
+ * `main.jsx` y su posición en la cascada no es fiable.
+ *
+ * Solo a partir de 1100px, donde `--layout-gutter` ya aporta el aire. Por
+ * debajo, ese padding es lo único que separa el texto del borde: medido a 390px
+ * todas las rutas están en x=16-18 y así se queda.
+ *
+ * Qué NO se ha tocado y por qué: `/onboarding` (x=408) y `/parkour-academy`
+ * (x=416) también entraron en el marco —bajaron de x=464 y subieron de x=210—,
+ * pero su desfase restante no es padding (la sonda da `pad=0px` en las dos), es
+ * la composición interna de sus propias escenas: un flujo por etapas y un
+ * escalafón de niveles, no páginas de marketing. Forzarlas a x=320 sería
+ * rediseñarlas, y se verían peor de lo que ya se ven.
+ */
+@media (min-width: 1100px) {
+  .ds-frame[data-experience-scope='brand'] .app-page .app-hero-content {
+    padding-inline: 0;
+  }
+}

@@ -1,0 +1,289 @@
+/* BAYONA · PUNTO DE PARTIDA COMO DISPOSITIVO DE DESBLOQUEO */
+
+.pain-unlock {
+  --pain-ink: #0a0a0a;
+  --pain-paper: #f5f1e8;
+  --pain-accent: var(--bayona-orange, #f4a261);
+  color: var(--pain-ink);
+}
+
+.pain-unlock-intro {
+  max-width: 980px;
+  padding: clamp(4.5rem, 8vw, 8rem) 0 clamp(2.2rem, 4vw, 4rem);
+}
+
+.pain-unlock-intro > p,
+.pain-unlock-copy__marker,
+.pain-unlock-visual__caption,
+.pain-unlock-lock__number {
+  font-family: var(--type-family-mono, monospace);
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.pain-unlock-intro > p {
+  margin: 0 0 1.2rem;
+  color: #a44f1c;
+  font-size: .68rem;
+  font-weight: 700;
+}
+
+.pain-unlock-intro h2 {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--pain-ink);
+  font-size: clamp(3.8rem, 7.1vw, 7.8rem);
+  font-weight: 900;
+  line-height: .88;
+  letter-spacing: -.058em;
+  text-wrap: balance;
+}
+
+.pain-unlock-intro > span {
+  display: block;
+  max-width: 43rem;
+  margin-top: 1.55rem;
+  color: rgba(10,10,10,.65);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.72;
+}
+
+.pain-unlock-stage {
+  margin-inline: calc(var(--prime-gutter, 24px) * -1);
+}
+
+.pain-unlock-stage .sticky-stage-viewport {
+  height: calc(100svh - 66px);
+  min-height: 620px;
+}
+
+.pain-unlock-viewport {
+  width: min(var(--prime-page-max, 1380px), calc(100vw - (var(--prime-gutter, 24px) * 2)));
+  height: 100%;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(340px, .8fr);
+  align-items: center;
+  gap: clamp(3rem, 7vw, 8rem);
+}
+
+.pain-unlock-visual {
+  position: relative;
+  min-width: 0;
+}
+
+.pain-unlock-visual__caption {
+  margin: 0 0 2.2rem;
+  color: rgba(10,10,10,.42);
+  font-size: .58rem;
+}
+
+.pain-unlock-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pain-unlock-lock {
+  position: relative;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: clamp(1rem, 2vw, 2rem);
+  color: rgba(10,10,10,.24);
+  transition: color .32s ease;
+}
+
+.pain-unlock-lock__number {
+  font-size: .64rem;
+}
+
+.pain-unlock-lock__icon {
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  color: currentColor;
+  transform: translateY(0) rotate(0);
+  transition:
+    color .36s ease,
+    transform .48s cubic-bezier(.16,1,.3,1);
+}
+
+.pain-unlock-lock__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(10,10,10,.16);
+}
+
+.pain-unlock-lock__line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 0;
+  height: 2px;
+  background: var(--pain-accent);
+  transition: width .42s cubic-bezier(.16,1,.3,1);
+}
+
+.pain-unlock-lock[data-past='true'] {
+  color: rgba(10,10,10,.58);
+}
+
+.pain-unlock-lock[data-past='true'] .pain-unlock-lock__line::after {
+  width: 100%;
+}
+
+.pain-unlock-lock[data-active='true'] {
+  color: var(--pain-accent);
+}
+
+.pain-unlock-lock[data-active='true'] .pain-unlock-lock__icon {
+  transform: translateY(-12px) rotate(-7deg) scale(1.12);
+}
+
+.pain-unlock-lock[data-active='true'] .pain-unlock-lock__line::after {
+  width: 58%;
+}
+
+.pain-unlock-axis {
+  position: relative;
+  height: 8px;
+  margin-top: 1.4rem;
+  background: rgba(10,10,10,.08);
+  overflow: hidden;
+}
+
+.pain-unlock-axis span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--unlock-progress, 25%);
+  background: linear-gradient(90deg, var(--pain-accent), #0a0a0a);
+  transition: width .42s cubic-bezier(.16,1,.3,1);
+}
+
+.pain-unlock-copy {
+  align-self: center;
+}
+
+.pain-unlock-copy__marker {
+  margin: 0 0 1.2rem;
+  color: #a44f1c;
+  font-size: .62rem;
+  font-weight: 700;
+}
+
+.pain-unlock-copy h3 {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--pain-ink);
+  font-size: clamp(2.8rem, 4.6vw, 5.4rem);
+  font-weight: 900;
+  line-height: .9;
+  letter-spacing: -.052em;
+  text-wrap: balance;
+}
+
+.pain-unlock-copy > p:last-child {
+  max-width: 31rem;
+  margin: 1.35rem 0 0;
+  color: rgba(10,10,10,.62);
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  line-height: 1.68;
+}
+
+@media (max-width: 760px) {
+  .pain-unlock-intro {
+    padding: 4.5rem 0 1.5rem;
+  }
+
+  .pain-unlock-intro h2 {
+    font-size: clamp(2.6rem, 12vw, 4.45rem);
+  }
+
+  .pain-unlock-stage .sticky-stage-viewport {
+    height: calc(100svh - 66px);
+    min-height: 0;
+  }
+
+  .pain-unlock-viewport {
+    width: min(100% - 32px, 620px);
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(220px, 35vh) auto;
+    gap: 1rem;
+    align-content: center;
+  }
+
+  .pain-unlock-visual__caption {
+    margin-bottom: 1rem;
+  }
+
+  .pain-unlock-lock {
+    min-height: 150px;
+    padding-right: .4rem;
+  }
+
+  .pain-unlock-lock__icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .pain-unlock-copy h3 {
+    max-width: 12ch;
+    font-size: clamp(2.2rem, 9.5vw, 3.5rem);
+  }
+
+  .pain-unlock-copy > p:last-child {
+    margin-top: .8rem;
+    font-size: .96rem;
+    line-height: 1.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pain-unlock-stage {
+    margin-inline: 0;
+  }
+
+  .pain-unlock-stage .sticky-stage-frame {
+    padding: 3rem 0;
+    border-top: 1px solid rgba(10,10,10,.14);
+  }
+
+  .pain-unlock-lock,
+  .pain-unlock-lock__icon,
+  .pain-unlock-lock__line::after,
+  .pain-unlock-axis span {
+    transition: none !important;
+  }
+}
+
+.pain-section .pain-unlock-stage {
+  padding: 0 !important;
+  margin-inline: 0 !important;
+}
+
+
+/* La antigua Home imponía un plano oscuro a .pain-section. El capítulo nuevo
+   es deliberadamente papel/hueso + negro + naranja: nunca gris y nunca card. */
+.pain-section.home-editorial-light,
+.pain-section.chapter-handoff-light {
+  background: #f5f1e8 !important;
+  color: #0a0a0a !important;
+}
+
+.pain-section.home-editorial-light::before,
+.pain-section.home-editorial-light::after,
+.pain-section.chapter-handoff-light::before,
+.pain-section.chapter-handoff-light::after {
+  background: transparent !important;
+  opacity: 0 !important;
+}

@@ -1,0 +1,101 @@
+/* BAYONA · PANTALLA DE ERROR DE APLICACIÓN */
+
+.app-error {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 40px 0;
+  background:
+    radial-gradient(120% 120% at 30% 20%, rgba(231, 111, 81, 0.14), transparent 55%),
+    #050505;
+  color: #fff;
+  font-family: var(--type-family-display);
+}
+
+.app-error-inner {
+  width: min(860px, calc(100% - 48px));
+  margin: auto;
+}
+
+.app-error-kicker {
+  margin: 0 0 18px;
+  color: var(--gold, #f4a261);
+  font: 500 12px 'DM Mono', monospace;
+  letter-spacing: 0.18em;
+}
+
+.app-error h1 {
+  margin: 0;
+  font-size: clamp(42px, 7vw, 92px);
+  line-height: 0.85;
+  font-weight: 900;
+  letter-spacing: -0.055em;
+}
+
+.app-error h1 span {
+  color: var(--gold, #f4a261);
+}
+
+.app-error-copy {
+  max-width: 520px;
+  margin: 26px 0 0;
+  color: #a3a3a3;
+  font-size: var(--type-size-07);
+  line-height: 1.7;
+}
+
+.app-error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.app-error-reload {
+  padding: 15px 20px;
+  border: 1px solid var(--gold, #f4a261);
+  background: var(--gold, #f4a261);
+  color: #070707;
+  font-size: var(--type-size-05);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.app-error-reload:hover {
+  background: #e76f51;
+  border-color: #e76f51;
+}
+
+.app-error-help {
+  color: #d5d0c8;
+  font-size: var(--type-size-05);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.app-error-help:hover {
+  color: var(--gold, #f4a261);
+}
+
+.app-error-reload:focus-visible,
+.app-error-help:focus-visible {
+  outline: 2px solid var(--gold, #f4a261);
+  outline-offset: 3px;
+}
+
+.app-error-detail {
+  margin: 30px 0 0;
+  color: #6b6b6b;
+  font: 12px/1.7 'DM Mono', monospace;
+  word-break: break-word;
+}
+
+.app-error-detail code {
+  color: #a3a3a3;
+  font-family: var(--type-family-mono);
+}

@@ -1,0 +1,18 @@
+/* 
+ * PLAN PRESENTATION FINAL - Solo bloque "¿Estás listo?"
+ * Sin modificar estructura ni layout
+ */
+
+/* 1. Botón principal más dominante visualmente */
+.plan-presentation-final-cta a.plan-presentation-button {
+  font-size: var(--type-size-08) !important;
+  padding: 18px 32px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 20px rgba(244, 162, 97, 0.2);
+}
+
+/* 2. Hover más marcado */
+.plan-presentation-final-cta a.plan-presentation-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 32px rgba(244, 162, 97, 0.35);
+}

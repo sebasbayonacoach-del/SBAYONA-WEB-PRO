@@ -1,0 +1,229 @@
+/*
+  BAYONA · PLAYGROUND DEL DESIGN SYSTEM (Fase 3)
+  ===========================================================================
+  Hoja de la ruta interna /design-system. Se importa desde la propia página,
+  así que viaja en su chunk lazy: ninguna ruta pública la descarga.
+  Solo usa clases prefijadas `.dsp-` (playground) sobre componentes `.ds-`.
+*/
+
+.dsp-page {
+  padding-top: 120px; /* aire bajo la navbar fija */
+  background: var(--ds-surface-background);
+}
+
+.dsp-intro {
+  padding-block: var(--ds-space-8) var(--ds-space-6);
+}
+
+.dsp-intro .ds-title-1 {
+  margin-bottom: var(--ds-space-4);
+}
+
+.dsp-notice {
+  display: inline-block;
+  margin-top: var(--ds-space-5);
+  padding: var(--ds-space-2) var(--ds-space-3);
+  border: var(--ds-border-hairline);
+  color: var(--ds-color-dim);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-body-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Bloque de muestra: título de grupo + contenido. */
+.dsp-block {
+  padding-block: var(--ds-space-7);
+  border-top: var(--ds-border-hairline);
+}
+
+.dsp-block > .ds-eyebrow {
+  margin-bottom: var(--ds-space-6);
+}
+
+/* Muestras de color y superficie. */
+.dsp-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--ds-grid-gap);
+}
+
+.dsp-swatch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+}
+
+.dsp-swatch__chip {
+  height: 72px;
+  border: var(--ds-border-hairline);
+}
+
+.dsp-swatch b {
+  color: var(--ds-color-ink);
+  font-size: var(--ds-fs-body);
+}
+
+.dsp-swatch span {
+  color: var(--ds-color-dim);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-body-small);
+}
+
+/* Escala de espaciado: barras proporcionales. */
+.dsp-space-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  align-items: center;
+  gap: var(--ds-space-3);
+  margin-bottom: var(--ds-space-2);
+}
+
+.dsp-space-row span {
+  color: var(--ds-color-dim);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-body-small);
+}
+
+.dsp-space-bar {
+  height: 12px;
+  background: var(--ds-color-accent);
+  opacity: 0.75;
+}
+
+/* Muestras de componentes en fila. */
+.dsp-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-4);
+  margin-bottom: var(--ds-space-5);
+}
+
+/* Tablas de tokens (motion, 3D, z-index, breakpoints). */
+.dsp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ds-fs-body);
+}
+
+.dsp-table th,
+.dsp-table td {
+  padding: var(--ds-space-3) var(--ds-space-4);
+  border-bottom: var(--ds-border-hairline);
+  text-align: left;
+  color: var(--ds-color-muted);
+}
+
+.dsp-table th {
+  color: var(--ds-color-accent);
+  font-family: var(--ds-font-mono);
+  font-weight: 500;
+  font-size: var(--ds-fs-body-small);
+  letter-spacing: var(--ds-ls-eyebrow);
+  text-transform: uppercase;
+}
+
+.dsp-table td:first-child {
+  color: var(--ds-color-ink);
+  font-family: var(--ds-font-mono);
+}
+
+/* Zona de demostración de movimiento. */
+.dsp-motion-stage {
+  padding: var(--ds-space-6);
+  border: var(--ds-border-hairline);
+  background: var(--ds-surface-deep);
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dsp-motion-stage * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   BLOQUES 10-16 · MOTION ENGINE 2.0 (Fase 5)
+   Demos de scroll storytelling: marquee, TextMask, StickyStage,
+   HorizontalPassage, handoff 3D y recetas. Solo existen en esta ruta.
+   --------------------------------------------------------------------- */
+
+/* 11 · Marquee: lineas editoriales compactas. */
+.dsp-marquee-item {
+  padding: var(--ds-space-2) var(--ds-space-4);
+  border: var(--ds-border-hairline);
+  color: var(--ds-color-muted);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-body-small);
+  letter-spacing: var(--ds-ls-eyebrow);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* 12 · TextMask: lineas pequenas y legibles. */
+.dsp-mask-demo {
+  padding: var(--ds-space-6);
+  border: var(--ds-border-hairline);
+  background: var(--ds-surface-deep);
+  color: var(--ds-color-ink);
+  font-size: var(--ds-fs-body);
+  line-height: 1.6;
+}
+
+/* 13 · StickyStage: estados A/B/C del escenario. */
+.dsp-stage-state {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-6);
+  border: var(--ds-border-hairline);
+  background: var(--ds-surface-deep);
+}
+
+.dsp-stage-index {
+  color: var(--ds-color-accent);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-body-small);
+  letter-spacing: var(--ds-ls-eyebrow);
+  text-transform: uppercase;
+}
+
+.dsp-stage-copy {
+  color: var(--ds-color-muted);
+  font-size: var(--ds-fs-body);
+}
+
+/* 14 · HorizontalPassage: vagones compactos del rail. */
+.dsp-wagon {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+  width: min(320px, 72vw);
+  padding: var(--ds-space-6);
+  border: var(--ds-border-hairline);
+  background: var(--ds-surface-deep);
+  flex-shrink: 0;
+}
+
+.dsp-wagon-tag {
+  color: var(--ds-color-accent);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-body-small);
+  letter-spacing: var(--ds-ls-eyebrow);
+}
+
+.dsp-wagon-copy {
+  color: var(--ds-color-muted);
+  font-size: var(--ds-fs-body);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dsp-mask-demo *,
+  .dsp-stage-state *,
+  .dsp-wagon * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

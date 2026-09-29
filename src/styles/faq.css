@@ -1,0 +1,1248 @@
+.faq-page {
+  --faq-black: #050505;
+  --faq-black-2: #0c0c0d;
+  --faq-black-3: #141416;
+  --faq-white: #f5f5f5;
+  --faq-muted: var(--muted);
+  --faq-orange: #f4a261;
+  --faq-fire: #e76f51;
+  --faq-line: rgb(255 255 255 / 14%);
+  --faq-panel: rgb(255 255 255 / 4%);
+  --faq-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: clip;
+  color: var(--faq-white);
+  background:
+    radial-gradient(circle at 84% 7%, rgb(244 162 97 / 12%), transparent 29rem),
+    var(--faq-black);
+}
+
+.faq-page *,
+.faq-page *::before,
+.faq-page *::after {
+  border-radius: 0 !important;
+}
+
+.faq-page::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  content: '';
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.36'/%3E%3C/svg%3E");
+}
+
+.faq-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.faq-page button,
+.faq-contact-card a,
+.faq-journey a {
+  min-height: 48px;
+}
+
+.faq-page :focus-visible {
+  outline: 2px solid var(--faq-orange);
+  outline-offset: 4px;
+}
+
+.faq-hero {
+  position: relative;
+  min-height: min(84svh, 850px);
+  padding-top: clamp(9rem, 18vh, 13rem);
+  padding-bottom: clamp(5rem, 10vh, 8rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  isolation: isolate;
+}
+
+/*
+  Anotación 47 — el hero tenía DOS capas de imagen una encima de otra: este
+  cuadrado girado con borde y halo (z-index -1) quedaba tapado a medias por la
+  foto de escena pintada en `::after`, y su canto asomaba como un corte raro
+  cruzando la foto. Fuera el cuadrado y fuera también la línea vertical que
+  partía el titular: /faq es la ruta más calmada del itinerario y su identidad
+  es la ausencia de adorno. La foto queda como capa única, baja y pareja.
+*/
+.faq-hero::before {
+  position: absolute;
+  z-index: -1;
+  inset: auto 0 0;
+  height: 42%;
+  background: linear-gradient(180deg, transparent, rgb(5 5 5 / 68%));
+  content: '';
+  pointer-events: none;
+}
+
+.faq-hero-anchors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.6rem;
+  margin: clamp(1.8rem, 3.4vw, 2.8rem) 0 0;
+  padding: clamp(1rem, 1.6vw, 1.4rem) 0 0;
+  list-style: none;
+  border-top: 1px solid var(--faq-line);
+  color: var(--faq-muted);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.16em;
+}
+
+.faq-hero-anchors li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.faq-hero-anchors li::before {
+  width: 5px;
+  height: 5px;
+  background: var(--faq-orange);
+  content: '';
+}
+
+.faq-page .eyebrow {
+  color: var(--faq-orange);
+}
+
+.faq-page .eyebrow span {
+  background: var(--faq-orange);
+}
+
+.faq-hero h1,
+.faq-section h2,
+.faq-contact h2 {
+  margin: 0;
+  font-family: var(--type-family-display);
+  font-weight: 900;
+  letter-spacing: -0.065em;
+  line-height: 0.84;
+}
+
+.faq-hero h1 {
+  max-width: 1080px;
+  font-size: clamp(3.35rem, 9vw, 8.7rem);
+}
+
+.faq-hero h1 span,
+.faq-section h2 span,
+.faq-contact h2 span {
+  color: var(--faq-orange);
+}
+
+.faq-hero > p:not(.eyebrow) {
+  max-width: 660px;
+  margin: clamp(2rem, 4vw, 3.25rem) 0 0;
+  color: #cbc6be;
+  font: 300 clamp(0.9rem, 1.35vw, 1.08rem)/1.8 Inter, Arial, sans-serif;
+}
+
+.faq-section {
+  position: relative;
+  padding-top: clamp(5rem, 10vw, 8.5rem);
+  padding-bottom: clamp(5rem, 10vw, 8.5rem);
+  isolation: isolate;
+}
+
+.faq-section::before {
+  position: absolute;
+  z-index: -1;
+  inset: 5% 0 auto 38%;
+  height: min(62rem, 72%);
+  pointer-events: none;
+  content: '';
+  background:
+    linear-gradient(90deg, rgb(5 5 5 / 82%), rgb(5 5 5 / 42%) 48%, rgb(5 5 5 / 88%)),
+    url('/images/bayona-generated/bank-child-supported-vault-1672.webp') center / cover no-repeat;
+  opacity: 0.24;
+  filter: saturate(0.78);
+}
+
+.faq-section > h2,
+.faq-contact h2 {
+  font-size: clamp(3rem, 7vw, 6.8rem);
+}
+
+.faq-categories {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+  border-top: 1px solid var(--faq-line);
+}
+
+.faq-category {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.28fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  padding: clamp(2.4rem, 5vw, 4.5rem) 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--faq-line);
+  isolation: isolate;
+}
+
+.faq-category::before {
+  position: absolute;
+  z-index: -1;
+  top: -0.18em;
+  left: 0;
+  color: rgb(244 162 97 / 3%);
+  font: 500 clamp(8rem, 18vw, 15rem)/1 'DM Mono', monospace;
+  letter-spacing: -0.1em;
+  content: attr(data-category-number);
+  pointer-events: none;
+}
+
+.faq-category-title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: var(--faq-white);
+  font-style: normal;
+  font-weight: 900;
+  font-size: var(--type-size-05);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+}
+
+.faq-category-title span {
+  color: var(--faq-orange);
+}
+
+.faq-page .faq-list {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  border-top: 0;
+}
+
+.faq-page .faq-list article {
+  position: relative;
+  border-bottom: 1px solid var(--faq-line);
+  background: rgb(12 12 13 / 64%);
+  transition: background-color 320ms var(--faq-ease), border-color 320ms var(--faq-ease);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.faq-page .faq-list article:first-child {
+  border-top: 1px solid var(--faq-line);
+}
+
+.faq-page .faq-list article::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle 330px at 14% 0%, rgb(244 162 97 / 10%), transparent 70%);
+  content: '';
+  opacity: 0;
+  transition: opacity 360ms var(--faq-ease);
+}
+
+.faq-page .faq-list article:hover::before,
+.faq-page .faq-list article.open::before {
+  opacity: 1;
+}
+
+.faq-page .faq-list article.open {
+  border-color: rgb(244 162 97 / 52%);
+  background: linear-gradient(90deg, rgb(244 162 97 / 7%), rgb(12 12 13 / 78%) 68%);
+}
+
+.faq-page .faq-list button {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 78px;
+  padding: 1.1rem 0.85rem;
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr) 2rem;
+  gap: 0.8rem;
+  align-items: center;
+  border: 0;
+  color: var(--faq-white);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-question-number {
+  color: var(--faq-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+}
+
+.faq-question-text {
+  font-family: var(--type-family-display);
+  font-size: clamp(0.88rem, 1.35vw, 1.03rem);
+  font-weight: 700;
+  line-height: 1.45;
+  transition: color 260ms var(--faq-ease);
+}
+
+.faq-page .faq-list button:hover .faq-question-text,
+.faq-page .faq-list button:focus-visible .faq-question-text,
+.faq-page .faq-list article.open .faq-question-text {
+  color: var(--faq-orange);
+}
+
+.faq-question-icon {
+  width: 1.2rem;
+  justify-self: end;
+  color: var(--faq-orange);
+  transition: transform 420ms var(--faq-ease);
+}
+
+.faq-page .faq-list .open .faq-question-icon {
+  transform: rotate(180deg);
+}
+
+.faq-page .faq-answer {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.faq-answer-inner {
+  padding: 0.15rem 3.5rem 1.8rem 4.35rem;
+}
+
+.faq-answer-inner > p {
+  max-width: 820px;
+  margin: 0;
+  color: #bdb8b0;
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.85;
+  font-family: var(--type-family-text);
+}
+
+.faq-pricing {
+  margin-top: 2rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid rgb(244 162 97 / 32%);
+}
+
+.faq-pricing-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.4rem;
+}
+
+.faq-pricing-heading span {
+  color: var(--faq-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.13em;
+}
+
+.faq-pricing-heading h4 {
+  margin: 0;
+  color: var(--faq-white);
+  font: 900 clamp(1.65rem, 4vw, 3.2rem)/0.9 Montserrat, Arial, sans-serif;
+  letter-spacing: -0.055em;
+}
+
+.faq-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  background: var(--faq-line);
+}
+
+.faq-price-card {
+  position: relative;
+  min-height: 205px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.15rem;
+  overflow: hidden;
+  background: var(--faq-black-2);
+}
+
+.faq-price-card::after {
+  position: absolute;
+  top: -3rem;
+  right: -3rem;
+  width: 7rem;
+  aspect-ratio: 1;
+  border: 1px solid rgb(244 162 97 / 18%);
+  content: '';
+  transform: rotate(28deg);
+}
+
+.faq-price-card.is-featured {
+  background: linear-gradient(145deg, rgb(244 162 97 / 14%), var(--faq-black-2) 65%);
+  box-shadow: inset 0 3px 0 var(--faq-orange);
+}
+
+.faq-price-card.is-limited {
+  background: linear-gradient(145deg, rgb(231 111 81 / 10%), var(--faq-black-2) 66%);
+}
+
+.faq-price-card-header {
+  position: relative;
+  z-index: 1;
+  min-height: 27px;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.faq-price-card h5 {
+  margin: 0;
+  color: var(--faq-white);
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-06);
+  line-height: 1.25;
+  font-family: var(--type-family-display);
+  letter-spacing: 0.07em;
+}
+
+.faq-price-card-header span {
+  padding: 0.3rem 0.38rem;
+  border: 1px solid rgb(244 162 97 / 52%);
+  color: var(--faq-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.faq-price-main {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.35rem;
+  margin: auto 0 1.1rem;
+}
+
+.faq-price-main strong {
+  color: var(--faq-orange);
+  font: 800 clamp(1.35rem, 2.5vw, 2rem)/1 Montserrat, Arial, sans-serif;
+  letter-spacing: -0.05em;
+}
+
+.faq-price-main small {
+  color: #77736d;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.1em;
+}
+
+.faq-price-equivalents {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--faq-line);
+  color: #9c9790;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.25;
+  font-family: var(--type-family-mono);
+}
+
+.faq-price-microcopy {
+  margin: 1rem 0 0;
+  color: #918c84;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.6;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.04em;
+}
+
+.faq-contact {
+  padding-top: clamp(5rem, 10vw, 8.5rem);
+  padding-bottom: clamp(6rem, 12vw, 10rem);
+}
+
+.faq-contact-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.42fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+}
+
+.faq-contact-heading > p {
+  margin: 0 0 0.6rem;
+  color: #bbb5ad;
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.8;
+  font-family: var(--type-family-text);
+}
+
+.faq-contact-grid {
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  background: var(--faq-line);
+}
+
+.faq-contact-card {
+  position: relative;
+  min-height: 370px;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  background: linear-gradient(145deg, var(--faq-black-3), #080808);
+}
+
+.faq-contact-card::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle 280px at 12% 4%, rgb(244 162 97 / 12%), transparent 70%);
+  content: '';
+  opacity: 0.7;
+}
+
+.faq-contact-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.faq-contact-card > svg,
+.faq-free-mark {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--faq-orange);
+}
+
+.faq-free-mark {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--faq-orange);
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--type-size-06);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+}
+
+.faq-contact-meta {
+  display: block;
+  margin-top: 1.35rem;
+  color: var(--faq-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.09em;
+}
+
+.faq-contact-card h3 {
+  max-width: 18rem;
+  margin: auto 0 1rem;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  line-height: 1;
+}
+
+.faq-contact-card p {
+  margin: 0 0 2rem;
+  color: #aaa49c;
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.75;
+  font-family: var(--type-family-text);
+}
+
+.faq-contact-card a {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 0;
+  padding: 0.75rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgb(244 162 97 / 45%);
+  color: var(--faq-orange);
+  font-size: var(--type-size-05);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 260ms var(--faq-ease), border-color 260ms var(--faq-ease), background-color 260ms var(--faq-ease);
+}
+
+.faq-contact-card a:hover {
+  color: var(--faq-white);
+  border-color: var(--faq-white);
+}
+
+.faq-contact-card a svg {
+  width: 1rem;
+}
+
+.faq-contact-card--primary {
+  background:
+    linear-gradient(145deg, rgb(244 162 97 / 16%), transparent 60%),
+    var(--faq-black-2);
+  box-shadow: inset 0 3px 0 var(--faq-orange);
+}
+
+.faq-contact-card--primary a {
+  padding-inline: 0.9rem;
+  border: 1px solid var(--faq-orange);
+  background: var(--faq-orange);
+  color: var(--faq-black);
+}
+
+.faq-contact-card--primary a:hover,
+.faq-contact-card--primary a:focus-visible {
+  border-color: var(--faq-fire);
+  background: var(--faq-fire);
+  color: var(--faq-black);
+}
+
+.faq-contact-card--free {
+  background:
+    linear-gradient(145deg, rgb(244 162 97 / 11%), transparent 56%),
+    #0d0d0d;
+}
+
+.faq-founder-close {
+  display: grid;
+  gap: 1rem;
+  max-width: 1050px;
+  padding: clamp(2.5rem, 6vw, 5rem) 0 0;
+  margin: clamp(4rem, 9vw, 7rem) 0 0 auto;
+  border-top: 1px solid rgb(244 162 97 / 38%);
+  text-align: right;
+}
+
+.faq-founder-close p {
+  margin: 0;
+  color: var(--faq-white);
+  font: 900 clamp(1.8rem, 5vw, 4.4rem)/0.98 Montserrat, Arial, sans-serif;
+  letter-spacing: -0.055em;
+}
+
+.faq-founder-close cite {
+  color: var(--faq-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.13em;
+}
+
+.faq-closing-chrome {
+  border-top: 1px solid var(--faq-line);
+  border-bottom: 1px solid var(--faq-line);
+  background: #070707;
+}
+
+.faq-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.faq-marquee {
+  overflow: hidden;
+  border-bottom: 1px solid var(--faq-line);
+}
+
+.faq-marquee-track {
+  width: max-content;
+  display: flex;
+  animation: faq-marquee 34s linear infinite;
+}
+
+.faq-marquee:hover .faq-marquee-track,
+.faq-marquee:focus-within .faq-marquee-track {
+  animation-play-state: paused;
+}
+
+.faq-marquee-group {
+  display: flex;
+}
+
+.faq-marquee-group > span {
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 30px;
+  color: #b4afa8;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.faq-marquee-group > span::after {
+  width: 5px;
+  height: 5px;
+  margin-left: 30px;
+  background: var(--faq-orange);
+  content: '';
+}
+
+.faq-journey {
+  width: min(1240px, calc(100% - 80px));
+  padding: 48px 0;
+  margin: 0 auto;
+}
+
+.faq-journey-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 24px;
+}
+
+.faq-journey-heading span {
+  color: var(--faq-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.13em;
+}
+
+.faq-journey-heading strong {
+  font-size: clamp(1.35rem, 3vw, 2.3rem);
+}
+
+.faq-journey ol {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--faq-line);
+  border-left: 1px solid var(--faq-line);
+  list-style: none;
+}
+
+.faq-journey li {
+  border-right: 1px solid var(--faq-line);
+  border-bottom: 1px solid var(--faq-line);
+}
+
+.faq-journey a {
+  min-height: 96px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  gap: 0.7rem;
+  padding: 0.95rem;
+  color: #817c75;
+  transition: color 260ms var(--faq-ease), background-color 260ms var(--faq-ease);
+}
+
+.faq-journey a > span {
+  color: inherit;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+}
+
+.faq-journey a > strong {
+  align-self: end;
+  font-size: var(--type-size-05);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.faq-journey a > svg {
+  align-self: end;
+}
+
+.faq-journey a:hover,
+.faq-journey a:focus-visible,
+.faq-journey li.is-current a {
+  color: var(--faq-orange);
+  background: rgb(244 162 97 / 6%);
+}
+
+@keyframes faq-marquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 1050px) {
+  .faq-pricing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .faq-contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-contact-card {
+    min-height: 310px;
+  }
+
+  .faq-journey ol {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .faq-category {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+  }
+
+  .faq-category-title {
+    min-height: 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  .faq-hero {
+    min-height: 72svh;
+    padding-top: 8rem;
+  }
+
+  .faq-contact-heading,
+  .faq-pricing-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-contact-heading {
+    display: grid;
+  }
+
+  .faq-pricing-heading {
+    display: grid;
+    align-items: start;
+  }
+
+  .faq-page .faq-list button {
+    min-height: 68px;
+    grid-template-columns: 2rem minmax(0, 1fr) 1.5rem;
+    gap: 0.55rem;
+    padding-inline: 0.25rem;
+  }
+
+  .faq-answer-inner {
+    padding: 0.1rem 1.15rem 1.5rem 2.8rem;
+  }
+
+  .faq-answer-inner > p {
+    font-size: var(--type-size-07);
+  }
+
+  .faq-pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-price-card {
+    min-height: 190px;
+  }
+
+  .faq-contact-card {
+    min-height: 290px;
+  }
+
+  .faq-founder-close {
+    text-align: left;
+  }
+
+  .faq-journey {
+    width: calc(100% - 40px);
+  }
+
+  .faq-journey-heading {
+    display: grid;
+    align-items: start;
+  }
+
+  .faq-journey ol {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-journey a {
+    min-height: 58px;
+    grid-template-columns: 38px 1fr auto;
+    grid-template-rows: 1fr;
+    align-items: center;
+  }
+
+  .faq-journey a > strong,
+  .faq-journey a > svg {
+    align-self: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-page *,
+  .faq-page *::before,
+  .faq-page *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .faq-page .faq-list article::before {
+    display: none;
+  }
+
+  .faq-marquee-track {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .faq-marquee-group:nth-child(2) {
+    display: none;
+  }
+}
+
+
+/* ==========================================================================
+   FASE 4B · FAQ — LA RESPUESTA ANTES QUE EL EFECTO
+   --------------------------------------------------------------------------
+   El acordeón ya cumplía lo importante (botón real, `aria-expanded`,
+   `aria-controls`), así que no se le toca la lógica. Lo que se le da es la
+   forma del sistema: número de pregunta como figura, filete entre bloques, una
+   medida de lectura y un reveal de entrada que, con reduced motion, simplemente
+   no existe y el contenido ya está visible.
+   ========================================================================== */
+.faq-question-number {
+  font-family: var(--bayona-font-display);
+  font-size: var(--bayona-type-figure-inline);
+  font-weight: var(--ds-fw-heading);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  color: var(--bayona-bone);
+}
+
+.faq-list > * + *,
+.faq-accordion + .faq-accordion {
+  border-block-start: var(--bayona-hairline);
+}
+
+.faq-accordion:is(:hover, :focus-within) .faq-question-number {
+  color: var(--bayona-warm);
+}
+
+/* El botón del acordeón no tenía clase propia: se le da aire y alineación de
+   retícula sin tocar su comportamiento (aria-expanded / aria-controls ya
+   estaban bien). */
+.faq-accordion > button {
+  inline-size: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--ds-space-5);
+  text-align: start;
+}
+
+.faq-accordion > button:focus-visible {
+  outline: 1px solid var(--bayona-warm);
+  outline-offset: var(--ds-space-2);
+}
+
+.faq-category + .faq-category {
+  border-block-start: var(--bayona-hairline);
+}
+
+.faq-answer p {
+  max-inline-size: var(--bayona-measure);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-question-number {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   FASE 4C · ATELIER — FAQ: LA PREGUNTA COMO TÍTULO
+   Cada categoría abre como capítulo, la marca `00` del recurso gratuito se
+   convierte en figura y la respuesta mantiene la medida de lectura.
+   Todo sale de los tokens del sistema: cero `!important`, cero colores
+   nuevos, cero radios propios, cero `z-index` sueltos. Cero WebGL.
+   ========================================================================== */
+
+.faq-category-title {
+  font-family: var(--bayona-font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--ds-ls-title);
+}
+
+.faq-accordion {
+  border-block-end: var(--bayona-hairline);
+  transition: background-color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+.faq-accordion:hover {
+  background: var(--bayona-surface-1);
+}
+
+.faq-answer-inner {
+  max-inline-size: var(--bayona-measure);
+}
+
+.faq-free-mark {
+  font-family: var(--bayona-font-display);
+  font-size: var(--bayona-type-figure-soft);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  color: var(--bayona-bone);
+  font-variant-numeric: tabular-nums;
+}
+
+.faq-contact-card {
+  border: var(--bayona-hairline);
+}
+
+.faq-contact-card--primary {
+  border-color: var(--bayona-line-strong, var(--bayona-warm));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-accordion {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   VACÍO MEDIDO · /faq a 1440x900 (2026-09-21)
+   --------------------------------------------------------------------------
+   Banda negra a lo ancho de 320 px y hueco en la mitad derecha de 445 px en el
+   fotograma 3600, justo la costura entre el bloque de preguntas y «ELIGE TU
+   SIGUIENTE PASO». No falta contenido: sobra suelo reservado tres veces. La
+   última categoría ya baja con su `padding-bottom` (72 px a 1440) y encima
+   venían el pie de `.faq-section` (144) y la cabeza de `.faq-contact` (144):
+   72 + 144 + 144 = 360 px de negro antes del rótulo «02».
+   Las reglas llevan la clase de página por delante (0,2,0) para que el
+   resultado no dependa del orden en que el chunk de /faq se inyecta frente a
+   overrides.css, que ya pide `--route-section-space`. El aire de costura pasa
+   a ser UN token de ruta (86,4 px a 1440), repartido mitad y mitad: 0 + 43,2 +
+   43,2 = 86,4. Todo va dentro del breakpoint de escritorio para no pisar el
+   601-680 px ni el ≤600 px, que tienen su propio aire declarado.
+   ========================================================================== */
+@media (min-width: 681px) {
+  .faq-page .faq-section,
+  .faq-page .faq-contact {
+    padding-block: calc(var(--route-section-space, clamp(56px, 6vw, 96px)) / 2);
+  }
+
+  .faq-page .faq-category:last-child {
+    padding-block-end: 0;
+  }
+
+  /* Titular de cierre: dentro de su retícula la pista izquierda medía 840 px y
+     «SIGUIENTE PASO.» (~870 px al avance del 900 con -0,065em) saltaba a una
+     tercera línea. Con tres líneas de 84,7 px y un párrafo de ~86 px pegado al
+     pie de la pista derecha (353 px), la mitad del viewport (x ≥ 720) se
+     quedaba sin una sola letra durante ~168 px; a eso se suman los 88 px de
+     `margin-top` de la rejilla: 168 + 88 + una línea de titular ≈ 445 px.
+     Aligerando la pista derecha (0,42fr → 0,30fr) la izquierda pasa a 918 px,
+     «SIGUIENTE PASO.» entra en una sola línea y esa línea cruza x=720: el hueco
+     de la derecha baja a una línea de titular (~85 px). */
+  .faq-page .faq-contact-heading {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.3fr);
+  }
+
+  .faq-page .faq-contact-grid {
+    margin-top: var(--ds-space-7);
+  }
+}
+
+/* ==========================================================================
+   LANE C · 22-SEP — SALIDAS POR TRAMO (anotación 47 y §17)
+   --------------------------------------------------------------------------
+   La FAQ ya no devuelve al inicio: resuelve la objeción y te manda al punto del
+   recorrido que te toca. Cuatro piezas de una retícula limpia, con el mismo
+   sistema visual de la página (sin radios, mono para el rótulo, un solo
+   acento) y sin parecer un bloque de tarjetas genérico: el número grande y la
+   regla superior hacen de cabecera de expediente.
+   ========================================================================== */
+.faq-page .faq-exits {
+  position: relative;
+  padding-top: clamp(3.5rem, 7vw, 6rem);
+  padding-bottom: clamp(3.5rem, 7vw, 6rem);
+  border-block-start: 1px solid var(--faq-line);
+  isolation: isolate;
+}
+
+.faq-page .faq-exits::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0 48% 0 0;
+  pointer-events: none;
+  content: '';
+  background:
+    linear-gradient(90deg, rgb(5 5 5 / 48%), rgb(5 5 5 / 88%)),
+    url('/images/scenes/escena-playa.webp') center / cover no-repeat;
+  opacity: 0.26;
+  filter: saturate(0.78);
+}
+
+.faq-contact {
+  position: relative;
+  isolation: isolate;
+}
+
+.faq-contact::before {
+  position: absolute;
+  z-index: -1;
+  inset: 12% 0 6% 54%;
+  pointer-events: none;
+  content: '';
+  background:
+    linear-gradient(90deg, rgb(5 5 5 / 84%), rgb(5 5 5 / 38%) 52%, rgb(5 5 5 / 82%)),
+    url('/images/bayona-generated/bank-grandfather-child-vault-1672.webp') center / cover no-repeat;
+  opacity: 0.28;
+  filter: saturate(0.86);
+}
+
+.faq-page .faq-exits h2 {
+  font-family: var(--type-family-display);
+  font-size: clamp(2rem, 4.4vw, 3.6rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.faq-page .faq-exits h2 span {
+  color: var(--faq-orange);
+}
+
+.faq-exits-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  margin: clamp(2.2rem, 4vw, 3.6rem) 0 0;
+  padding: 0;
+  list-style: none;
+  background: var(--faq-line);
+}
+
+.faq-exits-grid > li {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  padding: clamp(1.4rem, 2.4vw, 2rem) 0;
+  background: var(--faq-black);
+  transition: background-color 260ms var(--faq-ease);
+}
+
+.faq-exits-grid > li:hover {
+  background: var(--faq-black-2);
+}
+
+.faq-exits-number {
+  color: rgb(244 162 97 / 45%);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.18em;
+}
+
+.faq-exits-grid h3 {
+  margin: 0;
+  color: var(--faq-white);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-08);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.faq-exits-grid p {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--faq-muted);
+  font-size: var(--type-size-07);
+  line-height: 1.65;
+}
+
+.faq-exits-grid a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-block-start: 0.35rem;
+  padding-block-end: 0.2rem;
+  border-block-end: 1px solid rgb(244 162 97 / 34%);
+  color: var(--faq-white);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 260ms var(--faq-ease), border-color 260ms var(--faq-ease);
+}
+
+.faq-exits-grid a:hover,
+.faq-exits-grid a:focus-visible {
+  color: var(--faq-orange);
+  border-color: var(--faq-orange);
+}
+
+@media (min-width: 760px) {
+  .faq-exits-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .faq-exits-grid > li {
+    padding-inline: clamp(1.2rem, 2vw, 1.8rem);
+  }
+
+  .faq-exits-grid > li:nth-child(odd) {
+    padding-inline-start: 0;
+  }
+
+  .faq-exits-grid > li:nth-child(even) {
+    padding-inline-end: 0;
+  }
+}
+

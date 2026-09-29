@@ -1,0 +1,801 @@
+/* ==========================================================================
+   BAYONA · ART DIRECTION PASS 2026-09-29
+   A tighter fitness + technology film: fewer visual resets, wider type,
+   one deliberate light showroom, and shorter chapter handoffs.
+   ========================================================================== */
+
+body.premium-route--home {
+  --home-film-black: #050505;
+  --home-film-ink: #f7f7f3;
+  --home-film-muted: rgba(247,247,243,.58);
+}
+
+/* HERO — thesis, not a vertical text tower. */
+body.premium-route--home .hero-layout {
+  width: min(1480px, calc(100% - 72px));
+  max-width: 1480px;
+}
+
+body.premium-route--home .hero-content {
+  width: min(1320px, 92vw);
+  max-width: 1320px;
+}
+
+body.premium-route--home #home-hero-title {
+  width: 100% !important;
+  max-width: 22ch !important;
+  font-family: var(--font-display) !important;
+  font-size: clamp(4.2rem, 6vw, 6.45rem) !important;
+  line-height: .9 !important;
+  letter-spacing: -.055em !important;
+  text-wrap: balance;
+}
+
+body.premium-route--home .hero-title-words {
+  display: flex !important;
+  flex-wrap: wrap;
+  width: 100%;
+  column-gap: .17em;
+  row-gap: 0;
+}
+
+body.premium-route--home #home-hero-title .hero-title-word {
+  color: #f7f7f3 !important;
+}
+
+body.premium-route--home #home-hero-title .hero-title-word:nth-child(3) {
+  color: var(--bayona-orange,#f4a261) !important;
+}
+
+body.premium-route--home .hero-subheadline {
+  max-width: 46rem;
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  line-height: 1.58;
+  color: rgba(247,247,243,.68) !important;
+}
+
+body.premium-route--home .hero-actions {
+  max-width: 600px;
+}
+
+/* Keep the film dark. The single light interruption belongs to commerce. */
+body.premium-route--home .pain-section.home-editorial-light {
+  background:
+    radial-gradient(circle at 72% 42%, rgba(244,162,97,.09), transparent 28%),
+    #050505 !important;
+  color: var(--home-film-ink) !important;
+}
+
+body.premium-route--home .pain-section.home-editorial-light::before {
+  background: linear-gradient(180deg, rgba(244,162,97,.055), transparent 70%) !important;
+}
+
+body.premium-route--home #problemas .pain-unlock-stage,
+body.premium-route--home #problemas .pain-unlock-stage.sticky-stage,
+body.premium-route--home #problemas .pain-unlock-stage .sticky-stage-viewport,
+body.premium-route--home #problemas .pain-unlock-viewport {
+  background: #050505 !important;
+  color: var(--home-film-ink) !important;
+}
+
+body.premium-route--home #problemas .pain-unlock-stage .sticky-stage-viewport::before {
+  background: linear-gradient(90deg, var(--bayona-orange,#f4a261), transparent) !important;
+}
+
+body.premium-route--home #problemas .pain-unlock-copy > p:last-child {
+  color: var(--home-film-muted) !important;
+}
+
+body.premium-route--home #problemas .pain-unlock-lock {
+  color: rgba(247,247,243,.24);
+}
+
+body.premium-route--home #problemas .pain-unlock-lock[data-active='true'] {
+  color: var(--bayona-orange,#f4a261);
+}
+
+/* Intro copy is context, not another hero. */
+body.premium-route--home :is(
+  .vision-shift-intro,
+  .pain-unlock-intro,
+  .community-immersive-intro,
+  .immersive-method-intro,
+  .benefits-orbit-intro,
+  .experience-story__intro,
+  .free-dossier-intro
+) {
+  padding-top: clamp(4rem,6vw,6.5rem);
+  padding-bottom: clamp(1.25rem,2vw,2rem);
+}
+
+body.premium-route--home :is(
+  .vision-shift-intro,
+  .pain-unlock-intro,
+  .community-immersive-intro,
+  .immersive-method-intro,
+  .benefits-orbit-intro,
+  .experience-story__intro,
+  .free-dossier-intro
+) h2 {
+  max-width: 12ch;
+  font-size: clamp(3.4rem,5.8vw,6.8rem);
+  line-height: .9;
+  letter-spacing: -.052em;
+}
+
+/* The free kit should feel like a product artifact, not foggy stock imagery. */
+body.premium-route--home .free-dossier.scene-bg.scene-bg--after::after {
+  opacity: .055 !important;
+  filter: saturate(.45) contrast(1.16) !important;
+}
+
+body.premium-route--home .free-dossier::before {
+  background:
+    radial-gradient(circle at 68% 42%, rgba(244,162,97,.10), transparent 22%),
+    linear-gradient(180deg, rgba(5,5,5,.9), #050505 82%) !important;
+}
+
+/* Social proof becomes the only full proof chapter on Home. */
+body.premium-route--home .experience-story__intro {
+  max-width: 1100px;
+}
+
+body.premium-route--home .experience-story__intro h2 {
+  max-width: 10ch;
+}
+
+/* Commerce is the single deliberate paper/showroom reset. */
+body.premium-route--home .home-memberships-section {
+  box-shadow: inset 0 1px rgba(10,10,10,.08), inset 0 -1px rgba(10,10,10,.08);
+}
+
+/* Final act — one decisive curtain, not another long chapter. */
+body.premium-route--home .home-about-bridge {
+  min-height: min(86svh, 820px);
+  padding-block: clamp(5rem,8vw,8rem) !important;
+}
+
+body.premium-route--home .home-about-bridge .final-curtain {
+  padding-bottom: 0;
+}
+
+body.premium-route--home .home-about-bridge h2 {
+  max-width: 11ch;
+  font-size: clamp(3.8rem,6.4vw,7rem);
+}
+
+body.premium-route--home .final-mark {
+  margin-top: clamp(3rem,5vw,5.5rem);
+  font-size: clamp(4rem,10vw,9rem);
+}
+
+/* Remove visual residue from old chapter-reset language. */
+body.premium-route--home .chapter-handoff-light::before {
+  opacity: .24;
+}
+
+@media (max-width:760px) {
+  body.premium-route--home .hero-layout {
+    width: calc(100% - 32px);
+  }
+
+  body.premium-route--home .hero-content {
+    width: 100%;
+  }
+
+  body.premium-route--home #home-hero-title {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: clamp(2.45rem,9.2vw,3.5rem) !important;
+    line-height: .9 !important;
+    letter-spacing: -.05em !important;
+  }
+
+  body.premium-route--home .hero-subheadline {
+    max-width: 31rem;
+    font-size: .96rem;
+  }
+
+  body.premium-route--home :is(
+    .vision-shift-intro,
+    .pain-unlock-intro,
+    .community-immersive-intro,
+    .immersive-method-intro,
+    .benefits-orbit-intro,
+    .experience-story__intro,
+    .free-dossier-intro
+  ) h2 {
+    max-width: 10ch;
+    font-size: clamp(2.55rem,11.5vw,4rem);
+  }
+
+  body.premium-route--home .home-about-bridge {
+    min-height: 72svh;
+    padding-block: 4.5rem !important;
+  }
+}
+
+
+/* MEMBERSHIPS — portada decide; /programs explica. */
+@media (min-width: 981px) {
+  body.premium-route--home .home-memberships-section .plan-explorer {
+    grid-template-columns: minmax(210px,.28fr) minmax(0,1fr) !important;
+    gap: clamp(3rem,5vw,6rem) !important;
+    align-items: start;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-selector {
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-tab {
+    padding: 1.4rem 0 !important;
+    border-bottom: 1px solid rgba(10,10,10,.14) !important;
+    background: transparent !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-tab-copy small,
+  body.premium-route--home .home-memberships-section .plan-showroom-tab em {
+    display: none !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-preview {
+    display: grid !important;
+    grid-template-columns: minmax(0,.78fr) minmax(420px,1.22fr) !important;
+    gap: clamp(3rem,5vw,6rem) !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-primary {
+    align-self: center;
+    max-width: 36rem;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-meta span:last-child,
+  body.premium-route--home .home-memberships-section .plan-summary-scope,
+  body.premium-route--home .home-memberships-section .plan-summary-value,
+  body.premium-route--home .home-memberships-section .plan-showroom-watermark,
+  body.premium-route--home .home-memberships-section .plan-showroom-signature-label,
+  body.premium-route--home .home-memberships-section .plan-showroom-facts,
+  body.premium-route--home .home-memberships-section .plan-showroom-inclusions,
+  body.premium-route--home .home-memberships-section .plan-disclosure-button {
+    display: none !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-canonical-name {
+    font-size: clamp(3.4rem,5vw,6.2rem) !important;
+    line-height: .88 !important;
+    letter-spacing: -.055em !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-summary-jtbd p {
+    max-width: 18ch;
+    font-size: clamp(1.45rem,1.8vw,2rem) !important;
+    line-height: 1.12 !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-signature {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-visual {
+    min-height: clamp(460px,48vw,650px) !important;
+    margin: 0 !important;
+  }
+}
+
+
+/* HERO / COMMERCE — una decisión principal y una secundaria, nada más. */
+body.premium-route--home .hero-reception {
+  display: none !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-preview :is(
+  .plan-eur,
+  .plan-usd,
+  .plan-price-separator,
+  .plan-presentation-link
+) {
+  display: none !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-card-actions {
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+}
+
+body.premium-route--home .home-memberships-section .plan-cta {
+  width: fit-content !important;
+}
+
+
+/* ==========================================================================
+   ART DIRECTION II · reducir UI, aumentar experiencia
+   ========================================================================== */
+
+/* HERO: una decisión principal y un atajo discreto. */
+body.premium-route--home .hero-reception {
+  margin-top: 1.15rem;
+}
+
+body.premium-route--home .hero-reception-note {
+  display: none;
+}
+
+body.premium-route--home .hero-shortcut {
+  width: fit-content;
+  min-height: 0;
+  padding: .5rem 0;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.2) !important;
+  background: transparent !important;
+  color: rgba(247,247,243,.46);
+}
+
+body.premium-route--home .hero-shortcut-text {
+  display: flex;
+  align-items: baseline;
+  gap: .65rem;
+}
+
+body.premium-route--home .hero-shortcut-text em {
+  color: rgba(247,247,243,.3);
+}
+
+body.premium-route--home .scroll-cue {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* COMUNIDAD: llenar el plano con profundidad, no con cajas. */
+body.premium-route--home .community-immersive-frame {
+  isolation: isolate;
+}
+
+body.premium-route--home .community-immersive-frame::before,
+body.premium-route--home .community-immersive-frame::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  transition:
+    transform .7s cubic-bezier(.16,1,.3,1),
+    opacity .45s ease;
+}
+
+body.premium-route--home .community-immersive-frame::before {
+  width: min(44vw, 680px);
+  aspect-ratio: 1;
+  right: 5vw;
+  top: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(244,162,97,.18);
+  box-shadow:
+    inset 0 0 0 18vw rgba(5,5,5,.16),
+    0 0 100px rgba(244,162,97,.05);
+  transform: translateY(-50%) scale(.86);
+  opacity: .62;
+}
+
+body.premium-route--home .community-immersive-frame::after {
+  width: min(25vw, 380px);
+  aspect-ratio: 1;
+  right: 14vw;
+  top: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(247,247,243,.12);
+  transform: translateY(-50%) rotate(18deg);
+  opacity: .5;
+}
+
+body.premium-route--home .community-immersive-frame[data-state='1']::before {
+  transform: translateY(-50%) scale(1.02) rotate(10deg);
+  opacity: .78;
+}
+
+body.premium-route--home .community-immersive-frame[data-state='2']::before {
+  transform: translateY(-50%) scale(1.14) rotate(-8deg);
+  opacity: .34;
+}
+
+body.premium-route--home .community-immersive-frame[data-state='2']::after {
+  transform: translateY(-50%) scale(.76) rotate(46deg);
+  opacity: .28;
+}
+
+body.premium-route--home .community-immersive-transcript {
+  width: min(1320px, calc(100% - 72px));
+}
+
+body.premium-route--home .community-immersive-line {
+  position: relative;
+  z-index: 3;
+}
+
+body.premium-route--home .community-immersive-line > p {
+  max-width: 15ch;
+}
+
+body.premium-route--home .community-immersive-line[data-side='member'] > p {
+  font-size: clamp(3rem,4.7vw,5.7rem);
+  line-height: .94;
+}
+
+body.premium-route--home .community-immersive-line[data-side='coach'] {
+  margin-right: clamp(2rem,7vw,7rem);
+}
+
+body.premium-route--home .community-immersive-decision {
+  position: relative;
+  z-index: 3;
+}
+
+/* CONFIGURADOR: ficha de decisión, no panel administrativo. */
+body.premium-route--home .home-services-configurator .extras-configurator {
+  grid-template-columns: minmax(0,1.25fr) minmax(300px,.48fr) !important;
+  gap: clamp(3.5rem,7vw,8rem) !important;
+  align-items: start;
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-fieldset legend,
+body.premium-route--home .home-services-configurator .extras-step-heading > p {
+  margin-bottom: 1rem;
+  color: rgba(247,247,243,.42);
+  font-family: var(--type-family-mono,monospace);
+  font-size: .61rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-options {
+  display: block !important;
+  border-top: 1px solid rgba(247,247,243,.14);
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-options label {
+  position: relative;
+  min-height: 0 !important;
+  padding: 1.15rem 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.13) !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-options label input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-options label > span {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: end;
+  gap: 1.25rem !important;
+  width: 100%;
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-options strong {
+  color: #f7f7f3;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem,2.4vw,2.8rem);
+  line-height: .95;
+  letter-spacing: -.035em;
+  transition:
+    color .3s ease,
+    transform .4s cubic-bezier(.16,1,.3,1);
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-options small {
+  max-width: 19rem;
+  text-align: right;
+  color: rgba(247,247,243,.34) !important;
+  font-size: .63rem;
+  line-height: 1.45;
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-options label.is-selected {
+  padding-left: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-options label.is-selected::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: min(38%,240px);
+  height: 2px;
+  background: var(--bayona-orange,#f4a261);
+}
+
+body.premium-route--home .home-services-configurator .extras-plan-options label.is-selected strong {
+  color: var(--bayona-orange,#f4a261);
+  transform: translateX(.35rem);
+}
+
+body.premium-route--home .home-services-configurator .extras-category-step {
+  margin-top: clamp(3rem,6vw,5.5rem);
+}
+
+body.premium-route--home .home-services-configurator .extras-step-heading > span {
+  max-width: 34rem;
+  color: rgba(247,247,243,.46);
+  line-height: 1.55;
+}
+
+body.premium-route--home .home-services-configurator .extras-category-navigation ul {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 0 !important;
+  margin-top: 1.2rem;
+  border-top: 1px solid rgba(247,247,243,.14);
+  border-bottom: 1px solid rgba(247,247,243,.14);
+}
+
+body.premium-route--home .home-services-configurator .extras-category-navigation button {
+  width: 100%;
+  min-height: 84px !important;
+  padding: 1rem 0 !important;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: clamp(1rem,1.4vw,1.35rem) !important;
+  letter-spacing: -.02em !important;
+}
+
+body.premium-route--home .home-services-configurator .persistent-summary {
+  position: sticky;
+  top: 100px;
+  padding: 1.25rem 0 0 !important;
+  border-top: 1px solid rgba(244,162,97,.65) !important;
+}
+
+body.premium-route--home .home-services-configurator .persistent-summary-selection {
+  min-height: 0 !important;
+  margin-top: 1rem !important;
+  padding: 1rem 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+}
+
+body.premium-route--home .home-services-configurator .persistent-summary-selection::before,
+body.premium-route--home .home-services-configurator .persistent-summary-selection::after {
+  display: none !important;
+}
+
+body.premium-route--home .home-services-configurator .persistent-summary-selection ul {
+  margin: 0;
+}
+
+body.premium-route--home .home-services-configurator .persistent-summary-selection li {
+  min-height: 0 !important;
+  padding: .55rem 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.1);
+  background: transparent !important;
+}
+
+body.premium-route--home .home-services-configurator .persistent-summary h3 {
+  color: #f7f7f3;
+  font-size: clamp(2rem,3vw,3.5rem);
+  line-height: .95;
+  letter-spacing: -.04em;
+}
+
+@media (max-width:760px) {
+  body.premium-route--home .hero-reception {
+    display: none;
+  }
+
+  body.premium-route--home .community-immersive-frame::before {
+    width: 88vw;
+    right: -36vw;
+  }
+
+  body.premium-route--home .community-immersive-frame::after {
+    width: 56vw;
+    right: -16vw;
+  }
+
+  body.premium-route--home .community-immersive-transcript {
+    width: calc(100% - 32px);
+  }
+
+  body.premium-route--home .community-immersive-line[data-side='member'] > p {
+    font-size: clamp(2rem,9vw,3.2rem);
+  }
+
+  body.premium-route--home .home-services-configurator .extras-configurator {
+    display: block !important;
+  }
+
+  body.premium-route--home .home-services-configurator .extras-plan-options label > span {
+    grid-template-columns: 1fr;
+    gap: .35rem !important;
+  }
+
+  body.premium-route--home .home-services-configurator .extras-plan-options small {
+    text-align: left;
+  }
+
+  body.premium-route--home .home-services-configurator .extras-category-navigation button {
+    min-height: 66px !important;
+    font-size: .78rem !important;
+  }
+
+  body.premium-route--home .home-services-configurator .persistent-summary {
+    position: static;
+    margin-top: 3.5rem;
+  }
+}
+
+
+/* COMUNIDAD · imagen como plano, no como wallpaper perdido. */
+@media (min-width:761px) {
+  body.premium-route--home .community-immersive.scene-bg.scene-bg--after::after {
+    opacity: .72 !important;
+    clip-path: inset(0 0 0 48%);
+    background-position: 68% 42% !important;
+    filter: saturate(.62) contrast(1.18) brightness(.74) !important;
+    transform: scale(1.035);
+  }
+
+  body.premium-route--home .community-immersive::before {
+    z-index: 1;
+    background:
+      linear-gradient(90deg,#050505 0%,#050505 38%,rgba(5,5,5,.78) 54%,rgba(5,5,5,.18) 82%,rgba(5,5,5,.5) 100%) !important;
+  }
+
+  body.premium-route--home .community-immersive-scrim {
+    opacity: .34;
+  }
+
+  body.premium-route--home .community-immersive-frame[data-state='1'] .community-immersive-scrim {
+    opacity: .48;
+  }
+
+  body.premium-route--home .community-immersive-frame[data-state='2'] .community-immersive-scrim {
+    opacity: .64;
+  }
+}
+
+/* PLANES · showroom de ancho completo. */
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom {
+  display: block !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-selector {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: clamp(1rem,2vw,2.4rem) !important;
+  margin-bottom: clamp(2rem,4vw,4rem) !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-selector .plan-comparison-item {
+  width: auto !important;
+  min-width: 0 !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab {
+  min-height: 112px !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(0,1fr) !important;
+  grid-template-rows: auto auto !important;
+  align-content: start;
+  padding: 1rem 0 1.1rem !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab-price {
+  grid-column: 2;
+  justify-self: start;
+  margin-top: .55rem;
+  color: rgba(10,10,10,.54) !important;
+  font-size: .74rem !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-stage {
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-preview {
+  width: 100% !important;
+  grid-template-columns: minmax(320px,.74fr) minmax(520px,1.26fr) !important;
+  gap: clamp(4rem,8vw,9rem) !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-primary {
+  padding: clamp(1rem,2vw,2rem) 0 !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-canonical-name {
+  font-size: clamp(4rem,6.4vw,7.3rem) !important;
+  line-height: .82 !important;
+  letter-spacing: -.06em !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-narrative {
+  margin-top: 1.8rem;
+}
+
+body.premium-route--home .home-memberships-section .plan-summary-jtbd p {
+  max-width: 16ch;
+  font-size: clamp(1.8rem,2.8vw,3.1rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -.035em;
+}
+
+body.premium-route--home .home-memberships-section .plan-summary-scope,
+body.premium-route--home .home-memberships-section .plan-summary-value {
+  max-width: 31rem;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-signature {
+  padding-top: 0 !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-visual {
+  min-height: clamp(440px,46vw,650px) !important;
+  transform: none !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-visual-title {
+  max-width: 7ch;
+  font-size: clamp(3rem,5vw,6rem) !important;
+  line-height: .86 !important;
+}
+
+@media (max-width:760px) {
+  body.premium-route--home .home-memberships-section .plan-showroom-selector {
+    display: flex !important;
+    gap: 1.2rem !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-selector .plan-comparison-item {
+    flex: 0 0 58vw;
+    scroll-snap-align: start;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-preview {
+    display: block !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-canonical-name {
+    font-size: clamp(3.3rem,16vw,5.3rem) !important;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-signature {
+    margin-top: 2rem;
+  }
+}
+
+
+/* RITMO · misma narrativa, menos scroll vacío. */
+body.premium-route--home .scroll-film {
+  height: 300svh !important;
+}
+
+@media (max-width:760px) {
+  body.premium-route--home .scroll-film {
+    height: 320svh !important;
+  }
+}

@@ -1,0 +1,467 @@
+/**
+ * ACOMPAÑANTE (drone de la recepción)
+ * ---------------------------------------------------------------------------
+ * Hoja propia porque el acompañante es una capa GLOBAL: se monta en la
+ * recepción ahora y acompañará el resto del recorrido después. Va prefijada
+ * `.companion` y no toca ningún selector ajeno.
+ *
+ * Reglas que se respetan aquí:
+ *  · Cero colores nuevos. Se reutiliza la paleta de la casa: negro #050505,
+ *    blanco #f5f5f5, gris #a3a3a3 y el acento #f4a261 / #e76f51.
+ *  · Cero `!important`.
+ *  · Una sola familia para el rótulo (Montserrat) y una para el habla (Inter),
+ *    las mismas dos que usa todo el sitio: el dueño se quejó con razón de que
+ *    cada pantalla parecía de otra marca.
+ *  · `prefers-reduced-motion` apaga rotores, halos y flotación, no el contenido.
+ */
+
+.companion {
+  --companion-ink: #f5f5f5;
+  --companion-muted: #a3a3a3;
+  --companion-accent: #f4a261;
+  --companion-fire: #e76f51;
+  --companion-shell: rgba(9, 9, 10, 0.82);
+  --companion-hairline: rgba(245, 245, 245, 0.14);
+  --companion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: fixed;
+  z-index: 70;
+  bottom: var(--dock-slot-0);
+  left: var(--dock-left);
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  max-width: min(28rem, calc(100vw - 2.5rem));
+  pointer-events: none;
+}
+
+/* --- El drone ------------------------------------------------------------ */
+
+.companion__drone {
+  position: relative;
+  flex: none;
+  width: 3.25rem;
+  height: 3.25rem;
+  animation: companion-float 6.4s var(--companion-ease) infinite;
+}
+
+.companion__hull {
+  position: absolute;
+  inset: 0.7rem 0.55rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--companion-hairline);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(245, 245, 245, 0.18), transparent 58%),
+    linear-gradient(160deg, #16161a, #060607);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+}
+
+.companion__lens {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff2e0, var(--companion-accent) 45%, var(--companion-fire) 100%);
+  box-shadow: 0 0 0.9rem rgba(244, 162, 97, 0.75);
+  animation: companion-pulse 2.6s ease-in-out infinite;
+}
+
+/* Dos brazos con rotor: la silueta se lee como drone, no como globo de chat. */
+.companion__rotor {
+  position: absolute;
+  top: 0.15rem;
+  width: 1.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--companion-hairline) 30%, var(--companion-hairline) 70%, transparent);
+}
+
+.companion__rotor::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -0.35rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: -0.375rem;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 245, 245, 0.22);
+  border-top-color: rgba(244, 162, 97, 0.55);
+  animation: companion-spin 0.9s linear infinite;
+}
+
+.companion__rotor--left { left: -0.1rem; }
+.companion__rotor--right { right: -0.1rem; }
+
+.companion__halo {
+  position: absolute;
+  inset: -0.5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 162, 97, 0.18), transparent 68%);
+  opacity: 0.7;
+  animation: companion-breathe 4.8s ease-in-out infinite;
+}
+
+/* --- El globo ------------------------------------------------------------ */
+
+.companion__bubble {
+  position: relative;
+  padding: 0.8rem 1rem 0.95rem;
+  /*
+   * La X de cerrar cuelga de ESTA caja (`position: absolute`, arriba-derecha) y
+   * mide 48x48 por la norma de área de toque mínima, no los 1.45rem del dibujo.
+   * Sin reserva, se sentaba sobre la última palabra de la primera línea: medido
+   * a 587px de ancho, la burbuja acababa en x=478 y el botón ocupaba 438..486,
+   * que es el «…aquí aba│io.» cortado de la captura. Se reserva el hueco aquí,
+   * que es la caja que el botón invade, y el área de toque se queda intacta.
+   */
+  padding-right: calc(1rem + 3rem);
+  border: 1px solid var(--companion-hairline);
+  background: var(--companion-shell);
+  backdrop-filter: blur(14px);
+  color: var(--companion-ink);
+  font-family: var(--type-family-text);
+  font-size: var(--type-size-07);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.005em;
+  min-height: 3.4rem;
+  animation: companion-rise 0.7s var(--companion-ease) both;
+}
+
+.companion__bubble::before {
+  content: '';
+  position: absolute;
+  left: -0.4rem;
+  bottom: 1.1rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-left: 1px solid var(--companion-hairline);
+  border-bottom: 1px solid var(--companion-hairline);
+  background: var(--companion-shell);
+  transform: rotate(45deg);
+}
+
+.companion__screen-reader {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.companion__typed {
+  display: block;
+}
+
+.companion__caret {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  margin-left: 0.15rem;
+  vertical-align: -0.15em;
+  background: var(--companion-accent);
+  animation: companion-blink 1s steps(2, start) infinite;
+}
+
+/* El cursor deja de latir cuando termina de escribir: señal de turno acabado. */
+.companion[data-speaking='no'] .companion__caret {
+  animation: none;
+  opacity: 0.25;
+}
+
+.companion__signature {
+  display: block;
+  margin-top: 0.55rem;
+  color: var(--companion-muted);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+/* --- Movimiento ---------------------------------------------------------- */
+
+@keyframes companion-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -0.45rem, 0); }
+}
+
+@keyframes companion-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes companion-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.86); opacity: 0.78; }
+}
+
+@keyframes companion-breathe {
+  0%, 100% { opacity: 0.42; transform: scale(0.94); }
+  50% { opacity: 0.85; transform: scale(1.06); }
+}
+
+@keyframes companion-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes companion-rise {
+  from { opacity: 0; transform: translate3d(0, 0.9rem, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- Acompañante global -------------------------------------------------- */
+
+/*
+ * La versión que recorre toda la web. Se levanta 82px, el mismo hueco que la
+ * cinta de recorrido le deja al botón de WhatsApp: las dos cosas viven en el
+ * borde inferior y una encima de la otra se anulan.
+ */
+.companion--global {
+  bottom: calc(82px + env(safe-area-inset-bottom));
+  max-width: min(24rem, calc(100vw - 2.5rem));
+}
+
+/* La X pliega el globo; el drone sigue flotando. Cerrar no es perder. */
+.companion__dismiss {
+  position: absolute;
+  top: -0.55rem;
+  right: -0.55rem;
+  display: grid;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  padding: 0;
+  border: 1px solid var(--companion-hairline);
+  border-radius: 50%;
+  background: var(--companion-shell);
+  color: var(--companion-muted);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: color 0.25s var(--companion-ease), border-color 0.25s var(--companion-ease);
+}
+
+.companion__dismiss:hover,
+.companion__dismiss:focus-visible {
+  color: var(--companion-accent);
+  border-color: rgba(244, 162, 97, 0.55);
+}
+
+/* --- Drone plegado ------------------------------------------------------- */
+
+/*
+ * Mientras la página se mueve, el orbe se aparta y suelta el puntero. Medido
+ * con probe-solapes: `elementFromPoint` sobre el precio de la ficha de plan
+ * devolvía este `<button>` — el orbe no solo tapaba «INVERSIÓN MENSUAL», dejaba
+ * de hecho intocable la zona. Ver `useRecedeWhileScrolling` en App.jsx.
+ */
+html.is-scrolling .companion-orb {
+  opacity: 0;
+  translate: 0 10px;
+  pointer-events: none;
+  transition:
+    opacity 0.16s ease,
+    translate 0.16s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.is-scrolling .companion-orb {
+    translate: none;
+  }
+}
+
+/*
+ * Hoja aparte para el acceso: ya no es `.companion`, así que repite las tres
+ * variables que usa. La cascara y la lente son las mismas del drone grande
+ * para que se lea como el mismo objeto, más pequeño.
+ */
+.companion-orb {
+  --companion-accent: #f4a261;
+  --companion-hairline: rgba(245, 245, 245, 0.14);
+  --companion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: fixed;
+  z-index: 70;
+  /* Casilla 1: el orbe va ENCIMA del acompañante, no en su hueco — en la home
+     están los dos montados a la vez. */
+  bottom: var(--dock-slot-1);
+  left: var(--dock-left);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--companion-hairline);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(245, 245, 245, 0.18), transparent 58%),
+    linear-gradient(160deg, #16161a, #060607);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  pointer-events: auto;
+  animation: companion-float 6.4s var(--companion-ease) infinite;
+  transition: border-color 0.3s var(--companion-ease), box-shadow 0.3s var(--companion-ease);
+}
+
+.companion-orb:hover,
+.companion-orb:focus-visible {
+  border-color: rgba(244, 162, 97, 0.55);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), 0 0 1.4rem rgba(244, 162, 97, 0.28);
+}
+
+/*
+ * La cara del acceso (comentario 15 del 22-09: «no me gusta ese botón … que sea
+ * él»). Una lente anónima se leía como adorno; una inicial con filete y su
+ * rótulo se leen como una persona. Mismo naranja de la casa, cero colores
+ * nuevos, y el rótulo SOLO en pantallas grandes: en móvil el dock ya va justo
+ * encima del botón de WhatsApp y un rótulo ahí tapa contenido.
+ */
+.companion-orb__face {
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border: 1px solid rgba(244, 162, 97, 0.6);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%, rgba(255, 242, 224, 0.9), var(--companion-accent) 46%, #e76f51 100%);
+  box-shadow: 0 0 0.9rem rgba(244, 162, 97, 0.55);
+  color: #070708;
+  font-family: var(--type-family-display, 'Montserrat', system-ui, sans-serif);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  animation: companion-pulse 2.6s ease-in-out infinite;
+}
+
+.companion-orb__plate {
+  position: absolute;
+  left: calc(100% + 0.55rem);
+  top: 50%;
+  display: none;
+  flex-direction: column;
+  gap: 0.05rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--companion-hairline);
+  background: rgba(6, 6, 7, 0.92);
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s var(--companion-ease);
+  white-space: nowrap;
+}
+
+.companion-orb__plate strong {
+  font-family: var(--type-family-display, 'Montserrat', system-ui, sans-serif);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #f5f5f5;
+}
+
+.companion-orb__plate small {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(163, 163, 163, 1);
+}
+
+@media (min-width: 42.01rem) {
+  .companion-orb__plate {
+    display: flex;
+  }
+
+  .companion-orb:hover .companion-orb__plate,
+  .companion-orb:focus-visible .companion-orb__plate {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 42rem) {
+  .companion {
+    left: 0.85rem;
+    right: 0.85rem;
+    max-width: none;
+    align-items: flex-end;
+  }
+
+  .companion__drone {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .companion__bubble {
+    font-size: 0.86rem;
+  }
+
+  /* La cinta apila sus paradas en móvil y crece: el acompañante sube con ella. */
+  .companion--global,
+  .companion-orb {
+    bottom: calc(9.5rem + env(safe-area-inset-bottom));
+  }
+
+  .companion-orb {
+    left: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .companion__drone,
+  .companion__lens,
+  .companion__halo,
+  .companion__rotor::before,
+  .companion__bubble,
+  .companion__caret,
+  .companion-orb,
+  .companion-orb__lens {
+    animation: none;
+  }
+
+  .companion__dismiss,
+  .companion-orb {
+    transition: none;
+  }
+}
+
+/* Puerta al chat desde el globo del acompañante. */
+.companion__ask {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  /* `.companion` es transparente al puntero (para no tapar la página con su
+     caja) y solo la burbuja lo reactiva. Fuera de la burbuja hay que
+     reactivarlo otra vez, si no el botón se ve pero el clic atraviesa. */
+  pointer-events: auto;
+  padding: 5px 9px;
+  color: var(--bayona-orange);
+  border: 1px solid var(--bayona-orange);
+  background: transparent;
+  font-size: var(--ds-fs-eyebrow);
+  font-family: var(--type-family-mono, monospace);
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition:
+    translate var(--bayona-dur-micro) var(--bayona-ease-standard),
+    background-color var(--bayona-dur-micro) var(--bayona-ease-standard),
+    color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+.companion__ask:hover {
+  color: var(--bayona-white);
+  background: var(--bayona-orange);
+  translate: 0 -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .companion__ask,
+  .companion__ask:hover {
+    translate: none;
+  }
+}

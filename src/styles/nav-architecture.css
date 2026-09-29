@@ -1,0 +1,228 @@
+/**
+ * BAYONA · ARQUITECTURA DE NAVEGACIÓN (FASE 4)
+ * ---------------------------------------------------------------------------
+ * Barra agrupada por intención, menú móvil agrupado y pie con entrada.
+ * Va después de overrides.css en la cascada (ver main.jsx): matiza las reglas
+ * existentes de .desktop-nav, .mobile-nav y .footer sin reescribirlas.
+ */
+
+/* --- Barra de escritorio: grupos por intención ---------------------------- */
+
+.desktop-nav {
+  gap: clamp(14px, 1.7vw, 28px);
+}
+
+.nav-group {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(10px, 1vw, 16px);
+}
+
+.nav-group + .nav-group {
+  padding-left: clamp(14px, 1.7vw, 28px);
+  border-left: 1px solid rgba(244, 162, 97, 0.18);
+}
+
+.nav-group-label {
+  color: rgba(167, 162, 155, 0.52);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-02);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* --- AR-005: puerta visible /entrar ("Mi cuenta") --------------------------
+   Enlace discreto de cabecera junto al carrito: misma voz mono que el pie,
+   sin competir con el CTA de recepción. Se oculta con la nav de escritorio
+   (≤1180px: luxury-system): en móvil la puerta vive en el menú numerado. */
+
+.nav-account {
+  color: #aaa59e;
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.nav-account:hover {
+  color: var(--bayona-orange);
+}
+
+@media (max-width: 1180px) {
+  .nav-account {
+    display: none;
+  }
+}
+
+/* --- Menú móvil: etiquetas de grupo y entrada destacada ------------------- */
+
+.mobile-nav-group-label {
+  margin: 0;
+  padding: 22px 0 4px 44px;
+  color: var(--bayona-muted);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mobile-nav a.mobile-nav-entry {
+  color: var(--bayona-orange);
+}
+
+/* --- Pie de página: columnas por grupo + bloque de entrada ---------------- */
+
+.footer {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr);
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(136px, 1fr));
+  gap: 24px;
+  align-self: start;
+}
+
+.footer-column {
+  display: grid;
+  gap: 0;
+  align-content: start;
+}
+
+.footer-column > p {
+  margin: 0 0 10px;
+  color: #6f6b65;
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.footer-column a {
+  width: fit-content;
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  color: #aaa59e;
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer-column a:hover {
+  padding-left: 8px;
+  color: var(--bayona-orange);
+}
+
+.footer-entry a {
+  color: var(--bayona-orange);
+}
+
+.footer-entry a:hover {
+  color: var(--bayona-white);
+}
+
+@media (max-width: 900px) {
+  .footer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .footer-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ==========================================================================
+   FASE 9.1-D — FOOTER "LA FIRMA" (cierre editorial quieto, H-91.5).
+   Se añade AQUÍ porque esta capa es la que matiza el pie por diseño (ver
+   comentario de import en main.jsx) y su .footer-column a (mono 9px, arriba)
+   es la referencia visual que estos estados refinan. Cambios: el tagline de
+   marca asciende a firma editorial (ya no microcopy 12px muted); el bloque
+   ENTRAR pasa de parrilla administrativa a CTA de cierre con presencia de
+   decisión; los grupos quedan en reposo legible. Footer quieto: 0 animación
+   nueva, 0 JS, el impacto es escala/espacio/tipografía.
+   ========================================================================== */
+
+.footer-top {
+  gap: 22px;
+}
+
+.footer-top p {
+  max-width: 460px;
+  color: var(--bayona-white);
+  font-family: var(--type-family-display);
+  font-size: clamp(16px, 1.6vw, 21px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+/* CTA de cierre: los 2 caminos existentes (recepción / humano) con presencia
+   de decisión. Selector con la doble clase real del JSX (.footer-column
+   .footer-entry) = (0,2,1): gana por ESPECIFICIDAD sobre .footer-column a,
+   sin importar el orden interno de esta capa. */
+.footer-column.footer-entry a {
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-07);
+  line-height: 1;
+  font-family: var(--type-family-display);
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--bayona-white);
+  border-bottom: 2px solid var(--bayona-orange);
+  padding-bottom: 6px;
+  transition: color 0.25s var(--luxury-ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.footer-column.footer-entry a:hover {
+  color: var(--bayona-orange);
+  padding-left: 0;
+}
+
+/* Grupos: orientan en reposo (10px mono, un escalón sobre los 9px base). */
+.footer-column a {
+  font-size: var(--type-size-05);
+}
+
+@media (max-width: 600px) {
+  /* Fase 9.1-F (QA móvil): el pie es zona de pulgar — cada enlace gana el
+     mínimo táctil recomendado (44px). Solo en móvil; el desktop conserva su
+     densidad editorial. Los 9 links medidos a 30px pasan a 44. */
+  .footer-column a {
+    min-height: 44px;
+  }
+
+  .footer-top p {
+    font-size: var(--type-size-08);
+  }
+
+  .footer-column.footer-entry a {
+    font-size: var(--type-size-06);
+  }
+
+  .footer-entry a + a {
+    margin-top: 8px;
+  }
+}

@@ -1,0 +1,96 @@
+/* BAYONA · BANNER DE CONSENTIMIENTO */
+
+.consent-banner {
+  position: fixed;
+  z-index: 60;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(244, 162, 97, 0.35);
+  background: rgba(6, 6, 6, 0.96);
+  backdrop-filter: blur(10px);
+}
+
+.consent-inner {
+  width: min(1240px, 100%);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.consent-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.consent-kicker {
+  margin: 0 0 6px;
+  color: var(--gold);
+  font: 500 12px 'DM Mono', monospace;
+  letter-spacing: 0.18em;
+}
+
+.consent-copy p:last-child {
+  margin: 0;
+  max-width: 720px;
+  font-size: var(--type-size-06);
+  line-height: 1.6;
+}
+
+.consent-actions {
+  flex: none;
+  display: flex;
+  gap: 10px;
+}
+
+/*
+  Aceptar y rechazar comparten estilo a propósito: la AEPD exige que rechazar
+  sea tan fácil y visible como aceptar.
+*/
+.consent-button {
+  padding: 12px 20px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  font-size: var(--type-size-05);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+
+.consent-button:hover {
+  background: var(--gold);
+  color: #050505;
+}
+
+.consent-button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .consent-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .consent-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .consent-button {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .consent-button {
+    transition: none;
+  }
+}

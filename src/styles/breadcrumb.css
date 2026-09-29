@@ -1,0 +1,85 @@
+/**
+ * BAYONA · MIGA DE PAN (FASE 4)
+ * ---------------------------------------------------------------------------
+ * Barra de posición: discreta, monoespaciada, siempre debajo de la barra fija.
+ * No compite con los héroes: orienta y desaparece.
+ */
+
+.breadcrumb {
+  position: relative;
+  z-index: 2;
+  /* El hueco se deriva del raíl del sitio, no de un número. Antes:
+     `max(24px, (100vw - 1240px)/2)`, clavado al marco de 1240px que ya no
+     existe — medido a 1920 dejaba la miga en x=340 mientras todos los héroes
+     estaban en 120, así que la primera línea de la página entraba 220px más
+     que el titular que tiene debajo. El suelo de 24px se conserva para el
+     móvil, donde `--layout-gutter` baja de esa cifra. */
+  padding: 86px max(24px, var(--layout-gutter)) 0;
+}
+
+.breadcrumb-trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  /* Era #8d8880: medido con probe-contraste daba 1,68-1,77 porque la miga no
+     vive sobre la navbar sólida sino sobre el héroe/foto de cada ruta (fondo
+     ~0,12 de luminancia). Con blanco al 85 % pasa el 4,5 en ese fondo y sigue
+     leyendo como elemento secundario. */
+  color: color-mix(in srgb, var(--white) 85%, transparent);
+  font-style: normal;
+  font-weight: 600;
+  /* El token --type-size-03 se encoge por debajo de 8px en pantallas estrechas
+     y la miga de pan quedaba ilegible (medido: 7,68px a 390px). Se le pone
+     suelo sin tocar el token, que comparten otras muchas piezas. */
+  /* --type-size-03 ya no baja de 12px (ver el suelo legible en ds-tokens.css),
+   * así que el parche del max() deja de hacer falta. */
+  font-size: var(--type-size-03);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: '/';
+  color: rgba(244, 162, 97, 0.55);
+}
+
+.breadcrumb-item a {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+}
+
+.breadcrumb-item a:hover,
+.breadcrumb-item a:focus-visible {
+  color: var(--bayona-orange);
+}
+
+.breadcrumb-item [aria-current='page'] {
+  color: var(--bayona-white);
+}
+
+@media (max-width: 800px) {
+  .breadcrumb {
+    padding-top: 78px;
+  }
+
+  /* Dedo, no puntero: el eslabón necesita una diana táctil de 40px aunque el
+     texto siga siendo pequeño. */
+  .breadcrumb-item a {
+    min-height: 40px;
+    padding-inline: 2px;
+  }
+}

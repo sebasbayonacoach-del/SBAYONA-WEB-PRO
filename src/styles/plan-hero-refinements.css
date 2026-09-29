@@ -1,0 +1,256 @@
+/* 
+ * PLAN PRESENTATION HERO - Solo refinamientos visuales
+ * Sin modificar estructura ni layout
+ */
+
+/* 1. Overlay izquierdo ligeramente más oscuro.
+ * Va declarado como capa extra DELANTE de la escena, no como `background`
+ * suelto: el atajo con !important se llevaba por delante el background-image
+ * de `.scene-bg--hero` y el héroe se quedaba en negro, sin el fondo de lujo.
+ * Tres clases igualan la especificidad del primitivo y ganan por orden.
+ */
+.plan-presentation-hero-shell.scene-bg:not(.scene-bg--after)::before {
+  background-image:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.86) 0%, rgba(5, 5, 5, 0.46) 62%, rgba(5, 5, 5, 0.3) 100%),
+    var(--scene-image);
+  background-position: center, var(--scene-position);
+  background-repeat: no-repeat;
+  background-size: cover, cover;
+}
+
+/* 2. Botón principal con hover scale 1.03 */
+.plan-presentation-button {
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.plan-presentation-button:hover {
+  transform: scale(1.03);
+}
+
+/* 3. Video card → dossier. El marco de vídeo vacío ya no existe en el DOM: el
+ *    mismo hueco lo ocupa la ficha del plan, con su escena y su PDF. */
+.plan-presentation-video,
+.plan-presentation-dossier {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================================================
+ * PASO 2026-09-22 · DIRECCIÓN §12 — FICHA DE PLAN COMPLETA
+ * Placa de precio, oferta con condición leída al lado, dossier en papel,
+ * «qué no incluye» y testimonio con escena real en vez de hueco vacío.
+ * ========================================================================= */
+
+/* 4. Precio: deja de ser un rectángulo de texto suelto y pasa a placa. */
+.plan-presentation-price {
+  display: grid;
+  gap: 4px;
+  padding: clamp(16px, 1.8vw, 24px) clamp(18px, 2vw, 28px);
+  border: 1px solid rgba(244, 162, 97, 0.3);
+  border-radius: var(--ds-radius-float);
+  background:
+    radial-gradient(120% 130% at 100% 0%, rgba(244, 162, 97, 0.18), transparent 60%),
+    rgba(5, 5, 5, 0.6);
+  box-shadow: var(--ds-shadow-lift);
+  backdrop-filter: blur(8px);
+}
+
+.plan-presentation-price > span:first-child {
+  color: var(--ds-color-dim);
+  font: 10px/1 'DM Mono', monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* 5. Segunda línea del héroe: la condición de la oferta, al mismo nivel que la
+ *    oferta, no como letra pequeña escondida. */
+.plan-presentation-hero-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  align-items: baseline;
+}
+
+.plan-presentation-hero-secondary em {
+  color: var(--ds-color-dim);
+  font-style: normal;
+  font-size: var(--ds-fs-body-small);
+}
+
+/* 6. Dossier: artefacto de papel sobre la placa oscura del héroe. */
+.plan-presentation-dossier-card {
+  display: grid;
+  gap: 14px;
+  padding: clamp(20px, 2.4vw, 30px);
+  border: 1px solid var(--ds-border-color);
+  border-radius: var(--ds-radius-float);
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 26px),
+    var(--ds-surface-deep);
+  box-shadow: var(--ds-shadow-lift);
+}
+
+.plan-presentation-dossier-card header span {
+  display: block;
+  color: var(--ds-color-accent);
+  font: 10px/1 'DM Mono', monospace;
+  letter-spacing: 0.2em;
+}
+
+.plan-presentation-dossier-card header strong {
+  display: block;
+  margin-top: 6px;
+  font-size: var(--ds-fs-h3);
+  letter-spacing: -0.02em;
+}
+
+.plan-presentation-dossier-card > p {
+  color: var(--ds-color-muted);
+  font-size: var(--ds-fs-body-small);
+  line-height: 1.6;
+}
+
+.plan-presentation-dossier-card dl { display: grid; gap: 7px; margin: 0; }
+
+.plan-presentation-dossier-card dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--ds-border-color);
+}
+
+.plan-presentation-dossier-card dt { color: var(--ds-color-dim); font-size: var(--ds-fs-body-small); }
+.plan-presentation-dossier-card dd { margin: 0; color: var(--ds-color-ink); font: 12px/1.4 'DM Mono', monospace; }
+
+.plan-presentation-dossier-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+  padding: 12px 18px;
+  border: 1px solid var(--ds-color-accent);
+  border-radius: var(--ds-radius-control);
+  color: var(--ds-color-accent);
+  font-size: var(--ds-fs-cta);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.plan-presentation-dossier-card a:hover { background: var(--ds-color-accent); color: var(--ds-surface-background); }
+
+.plan-presentation-dossier-card small { color: var(--ds-color-dim); font-size: var(--ds-fs-body-small); }
+
+.plan-presentation-dossier-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--ds-border-color);
+  color: var(--ds-color-muted);
+  font-size: var(--ds-fs-body-small);
+  text-decoration: none;
+}
+
+.plan-presentation-dossier-link:hover { color: var(--ds-color-accent); border-bottom-color: var(--ds-color-accent); }
+
+/* 7. Qué no entra en el plan. */
+.plan-presentation-not-included {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.6fr) minmax(0, 1.4fr);
+  gap: clamp(18px, 3vw, 40px);
+  align-items: start;
+  margin-top: clamp(24px, 3vw, 38px);
+  padding: clamp(20px, 2.4vw, 30px);
+  border: 1px dashed var(--ds-border-color);
+  border-radius: var(--ds-radius-float);
+  background: var(--ds-surface-deep);
+}
+
+.plan-presentation-not-included h3 {
+  margin: 6px 0 0;
+  font-size: var(--ds-fs-h3);
+  letter-spacing: -0.03em;
+  text-transform: none;
+}
+
+.plan-presentation-not-included ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plan-presentation-not-included li {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+  color: var(--ds-color-muted);
+  font-size: var(--ds-fs-body-small);
+  line-height: 1.5;
+}
+
+.plan-presentation-not-included li svg { margin-top: 3px; color: var(--ds-color-dim); }
+
+.plan-presentation-not-included > p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--ds-color-dim);
+  font-size: var(--ds-fs-body-small);
+  line-height: 1.6;
+}
+
+/* La cabecera del bloque («FUERA DE X» + «Lo que este plan no te da.») es la
+   primera columna de la retícula de arriba, pero no tenía ni una regla: el
+   `div` llegaba en su flujo por defecto, pegado al listado y sin separar las dos
+   columnas que el padre ya declara. Se le devuelve el papel de encabezado —
+   filete a pluma como el del propio cajón— y el `align-self` para que el filete
+   recorra todo el renglón, no solo el texto. En el repliegue a una columna el
+   corte pasa de vertical a horizontal. */
+.plan-presentation-not-included-head {
+  display: grid;
+  align-content: start;
+  align-self: stretch;
+  gap: 4px;
+  min-width: 0;
+  padding-inline-end: clamp(10px, 1.6vw, 22px);
+  border-inline-end: 1px dashed var(--ds-border-color);
+}
+
+.plan-presentation-not-included-head h3 {
+  margin: 0;
+}
+
+@media (max-width: 860px) {
+  .plan-presentation-not-included-head {
+    padding-inline-end: 0;
+    padding-block-end: 14px;
+    border-inline-end: 0;
+    border-block-end: 1px dashed var(--ds-border-color);
+  }
+}
+
+/* 8. Testimonio: la escena del plan sustituye al hueco de foto. */
+.plan-presentation-testimonial-photo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 220px;
+  padding: 16px;
+  border-radius: var(--ds-radius-control);
+  overflow: hidden;
+}
+
+.plan-presentation-testimonial-photo small {
+  position: relative;
+  z-index: 1;
+  color: var(--ds-color-ink);
+  font: 10px/1.4 'DM Mono', monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .plan-presentation-not-included { grid-template-columns: minmax(0, 1fr); }
+}

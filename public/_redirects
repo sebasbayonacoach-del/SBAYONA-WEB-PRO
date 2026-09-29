@@ -1,0 +1,12 @@
+# Rutas de la app que no llevan HTML pre-renderizado (el plugin de build solo
+# emite las que tienen hero de `siteMedia`). Sin estas líneas, abrirlas de
+# directo o recargarlas en un hosting estático devuelve 404.
+#
+# Se listan a propósito en vez de un `/*  /index.html  200`: el splat también
+# se tragaría los fallos de `/images/…` y una foto rota volvería HTML con
+# código 200, que es justo lo que las sondas de imágenes detectan por 404.
+/entrar /index.html 200
+/panel /index.html 200
+/checkout /index.html 200
+/order-confirmation /index.html 200
+/design-system /index.html 200

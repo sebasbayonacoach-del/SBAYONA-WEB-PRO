@@ -1,0 +1,283 @@
+/* BAYONA · PROGRAMS ROBUST EDITORIAL
+   No content depends on opacity/reveal observers. Panels become open rails. */
+
+body.premium-route--programs .programs-offer {
+  background:
+    radial-gradient(circle at 78% 12%, rgba(244,162,97,.07), transparent 28%),
+    #050505 !important;
+}
+
+/* Framer may write inline opacity:0 before whileInView. Never allow blank plans. */
+body.premium-route--programs .plan-accordion-item,
+body.premium-route--programs .plans-accordion > .program-plan-tilt-shell,
+body.premium-route--programs .programs-choice-rail,
+body.premium-route--programs .programs-method,
+body.premium-route--programs .programs-proof,
+body.premium-route--programs .programs-visualization,
+body.premium-route--programs .programs-comparison-section,
+body.premium-route--programs .programs-services {
+  opacity: 1 !important;
+}
+
+/* Los planes dejan de ser cuatro cajas negras. */
+body.premium-route--programs .plans-accordion {
+  gap: 0 !important;
+  border-top: 1px solid rgba(247,247,243,.15);
+}
+
+body.premium-route--programs .program-plan-tilt-shell {
+  border-bottom: 1px solid rgba(247,247,243,.14);
+}
+
+body.premium-route--programs .plan-accordion-item,
+body.premium-route--programs .plan-accordion-item.featured {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.premium-route--programs .program-plan-scene {
+  opacity: .38;
+  filter: saturate(.72) contrast(1.05);
+}
+
+body.premium-route--programs .program-plan-header {
+  padding-block: clamp(1.5rem,4vw,3rem);
+}
+
+body.premium-route--programs .program-plan-price {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--programs .program-plan-name {
+  font-size: clamp(2.1rem,5vw,5.5rem);
+  line-height: .9;
+  letter-spacing: -.055em;
+}
+
+body.premium-route--programs .program-plan-benefit {
+  max-width: 44rem;
+  color: rgba(247,247,243,.62);
+}
+
+body.premium-route--programs .program-plan-body {
+  border-top: 1px solid rgba(247,247,243,.1);
+}
+
+body.premium-route--programs .program-comparison-table.program-comparison-stagger:not(.is-comparison-visible) tbody tr {
+  opacity: 1 !important;
+}
+
+/* Comparison is a ledger, not a matrix of grey cells. */
+body.premium-route--programs .program-comparison-table :is(th,td) {
+  background: transparent !important;
+}
+
+@media (max-width: 768px) {
+  body.premium-route--programs .programs-offer {
+    padding-inline: 0 !important;
+  }
+
+  body.premium-route--programs .program-plan-tilt-shell {
+    transform: none !important;
+  }
+
+  body.premium-route--programs .plan-accordion-item {
+    margin: 0 !important;
+  }
+
+  body.premium-route--programs .program-plan-header {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  body.premium-route--programs .program-plan-price {
+    justify-self: start;
+    text-align: left;
+  }
+}
+
+
+/* ==========================================================================
+   BAYONA PROGRAMS · COMMERCIAL IMMERSION
+   El servicio y el configurador dejan de usar tarjetas/paneles. La selección
+   se expresa con líneas, ritmo y acento naranja.
+   ========================================================================== */
+
+body.premium-route--programs .program-service-grid {
+  grid-template-columns: minmax(0,1fr);
+  gap: 0;
+  padding: 0;
+  background: transparent;
+  border-top: 1px solid rgba(247,247,243,.15);
+}
+
+body.premium-route--programs .program-service-card {
+  min-height: 0;
+  padding: clamp(1.5rem,3vw,2.5rem) 0;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.15) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none;
+  transform: none !important;
+}
+
+body.premium-route--programs .program-service-card:is(:hover,:focus-within),
+body.premium-route--programs .program-service-card.is-added {
+  background: linear-gradient(90deg,rgba(244,162,97,.07),transparent 55%) !important;
+  border-bottom-color: rgba(244,162,97,.5) !important;
+}
+
+body.premium-route--programs .program-service-card-copy {
+  margin-top: clamp(1.5rem,3vw,2.4rem);
+}
+
+body.premium-route--programs .program-service-card-copy h4 {
+  max-width: 20ch;
+  font-size: clamp(2rem,4.5vw,4.8rem);
+  line-height: .92;
+  letter-spacing: -.05em;
+}
+
+body.premium-route--programs .program-service-card-scope span {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  color: rgba(247,247,243,.42);
+}
+
+body.premium-route--programs .program-service-card-footer {
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: end;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(247,247,243,.1);
+}
+
+body.premium-route--programs .program-service-card .program-service-cart {
+  min-width: 0;
+  min-height: 0;
+  padding: .7rem 0;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(244,162,97,.55) !important;
+  color: var(--bayona-orange,#f4a261);
+  background: transparent !important;
+}
+
+body.premium-route--programs .program-service-card .program-service-cart:is(:hover,:focus-visible) {
+  color: #f7f7f3;
+  border-bottom-color: #f7f7f3 !important;
+  transform: none;
+}
+
+body.premium-route--programs .program-service-showroom-note {
+  padding: 1.25rem 0;
+  background: transparent;
+  border-color: rgba(247,247,243,.14);
+}
+
+/* Configurador: ficha técnica lineal */
+body.premium-route--programs .calculator-fieldset {
+  padding: clamp(1.8rem,3vw,2.8rem) 0;
+  border: 0 !important;
+  border-top: 1px solid rgba(247,247,243,.16) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--programs .calculator-fieldset legend {
+  padding: 0;
+}
+
+body.premium-route--programs .calculator-recommendation {
+  padding: .9rem 0 .9rem 1rem;
+  border: 0 !important;
+  border-left: 2px solid var(--ds-color-accent) !important;
+  border-radius: 0;
+  background: transparent;
+}
+
+body.premium-route--programs :is(
+  .calculator-plan-options label,
+  .calculator-quantity-list label,
+  .calculator-extra-list label,
+  .calculator-extra-group label
+) {
+  padding: 1rem 0;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.14) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--programs :is(
+  .calculator-plan-options label,
+  .calculator-quantity-list label,
+  .calculator-extra-list label
+).is-selected {
+  padding-left: .75rem;
+  color: var(--ds-color-accent);
+  border-bottom-color: rgba(244,162,97,.58) !important;
+  background: linear-gradient(90deg,rgba(244,162,97,.07),transparent 55%) !important;
+}
+
+body.premium-route--programs .calculator-extra-group {
+  padding: 1.4rem 0;
+  border: 0 !important;
+  border-top: 1px solid rgba(247,247,243,.14) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--programs .calculator-group-media {
+  border: 0;
+  border-radius: 0;
+}
+
+body.premium-route--programs .calculator-extra-toggle,
+body.premium-route--programs .calculator-qty-stepper button,
+body.premium-route--programs .calculator-select-wrap select {
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--programs .calculator-summary.receipt {
+  padding: 1.4rem 0 0;
+  border: 0 !important;
+  border-top: 2px solid var(--ds-color-accent) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+body.premium-route--programs .receipt-perf {
+  display: none;
+}
+
+body.premium-route--programs .calculator-summary-breakdown > div {
+  padding: .75rem 0;
+  border-bottom: 1px solid rgba(247,247,243,.14);
+}
+
+body.premium-route--programs .calculator-credit-line {
+  padding: .9rem 0 .9rem 1rem;
+  border: 0 !important;
+  border-left: 1px solid rgba(244,162,97,.5) !important;
+  border-radius: 0 !important;
+}
+
+body.premium-route--programs .calculator-whatsapp {
+  border-radius: 0;
+}
+
+@media (max-width:760px) {
+  body.premium-route--programs .program-service-card-footer {
+    grid-template-columns: 1fr;
+  }
+
+  body.premium-route--programs .program-service-card-copy h4 {
+    font-size: clamp(2rem,10vw,3.4rem);
+  }
+}

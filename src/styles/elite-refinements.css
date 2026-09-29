@@ -1,0 +1,257 @@
+/*
+  BAYONA · REFINAMIENTOS DE ACABADO
+  ===========================================================================
+  Se carga en último lugar. No redefine el diseño: corrige los detalles que
+  separan una web buena de una que se siente cara.
+
+  Regla de oro de este archivo: nada que cambie una maquetación. Solo tipografía
+  óptica, foco, superficie y comportamiento de scroll. Si una regla puede mover
+  una caja de sitio, no va aquí.
+*/
+
+/* ---------------------------------------------------------------------------
+   1. SCROLL BAJO LA BARRA FIJA
+   La barra mide 74px y es `position: fixed`, pero no había `scroll-padding`.
+   Cualquier enlace a un ancla dejaba el titular escondido detrás de la barra:
+   pasaba en /resources y en el enlace a #reto-30-dias de la confirmación.
+   --------------------------------------------------------------------------- */
+html {
+  scroll-padding-top: 96px;
+}
+
+@media (max-width: 600px) {
+  html {
+    /* La barra baja a 62px en móvil. */
+    scroll-padding-top: 82px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   2. TIPOGRAFÍA ÓPTICA
+   --------------------------------------------------------------------------- */
+body {
+  /* Trazo más limpio en pantallas de alta densidad. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+}
+
+/*
+  `balance` reparte las líneas de un titular para que la última no quede con una
+  palabra suelta. Es el detalle que más eleva la percepción de un titular grande
+  y no altera la caja: solo decide dónde corta.
+*/
+h1,
+h2,
+h3,
+.hero-kicker,
+blockquote p {
+  text-wrap: balance;
+}
+
+/* En párrafos, `pretty` evita líneas viudas sin reflujo agresivo. */
+p,
+li,
+dd,
+figcaption,
+small {
+  text-wrap: pretty;
+}
+
+/*
+  Cifras de ancho fijo en todo lo que sea precio o total. Sin esto, los
+  contadores animados de la home y del configurador "bailan" mientras suben,
+  porque cada dígito tiene un ancho distinto.
+*/
+.plan-card > strong,
+.holo-copy strong,
+.summary-total-price,
+.persistent-summary-cop,
+.faq-price-main strong,
+.plan-presentation-currency-line,
+.cart-item-total,
+.cart-total-row strong,
+[data-total-cop],
+.plan-showroom-price,
+.experience-proof-theme {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Las comillas de una cita cuelgan fuera del bloque de texto, como en imprenta. */
+blockquote {
+  hanging-punctuation: first last;
+}
+
+/* ---------------------------------------------------------------------------
+   3. FOCO VISIBLE UNIFICADO
+   Había reglas de foco repartidas por ocho hojas, con grosores y colores
+   distintos. Esta es la base común para todo lo que no declare la suya.
+   --------------------------------------------------------------------------- */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Sobre superficie naranja el anillo naranja no se ve: se invierte. */
+:where(.gold-button, .complete-button, .not-found-home, .consent-button:hover):focus-visible {
+  outline-color: #050505;
+  outline-offset: -5px;
+}
+
+/* ---------------------------------------------------------------------------
+   4. SUPERFICIE
+   --------------------------------------------------------------------------- */
+/*
+  Luz superior de un píxel en las tarjetas oscuras. Da la sensación de que la
+  superficie tiene canto y recibe luz desde arriba, en lugar de ser un
+  rectángulo plano. Es `box-shadow` inset, así que no ocupa espacio.
+*/
+.value-card,
+.resource-card,
+.evidence-record,
+.experience-proof-card,
+.plan-presentation-bridge-card,
+.plan-card,
+.holo-card {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+.plan-card.featured {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 24px 70px rgba(231, 111, 81, 0.14);
+}
+
+/* ---------------------------------------------------------------------------
+   5. BARRA DE SCROLL
+   La barra blanca del sistema rompe una web negra a pantalla completa.
+   --------------------------------------------------------------------------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(244, 162, 97, 0.42) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #08080a;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(244, 162, 97, 0.34);
+  border: 3px solid #08080a;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 162, 97, 0.6);
+}
+
+/* ---------------------------------------------------------------------------
+   6. IMÁGENES
+   --------------------------------------------------------------------------- */
+/*
+  Una imagen sin cargar deja un hueco negro sobre fondo negro y parece un fallo.
+  Este fondo de carga da un gris apenas perceptible que desaparece al pintarse.
+*/
+img:not([src$='.svg']) {
+  background-color: #0e0e10;
+}
+
+/* Ningún media desborda su contenedor, pase lo que pase con el CSS de página. */
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   7. DETALLES DE INTERACCIÓN
+   --------------------------------------------------------------------------- */
+/* El texto seleccionado mantiene la marca también en la sección clara. */
+.home-editorial-light ::selection {
+  background: #c66d35;
+  color: #fff;
+}
+
+/* Los enlaces de párrafo subrayan por debajo de la línea base, no encima. */
+p a:not([class]),
+li a:not([class]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(244, 162, 97, 0.55);
+  transition: text-decoration-color 0.25s;
+}
+
+p a:not([class]):hover,
+li a:not([class]):hover {
+  text-decoration-color: var(--gold);
+}
+
+/* Sin selección accidental de texto al pulsar repetidamente en controles. */
+button,
+[role='button'],
+.faq-list button,
+.filters button {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ---------------------------------------------------------------------------
+   8. IMPRESIÓN
+   Alguien va a imprimir o guardar en PDF una página de plan. Que sea legible.
+   --------------------------------------------------------------------------- */
+@media print {
+  .navbar,
+  .mobile-nav,
+  .footer,
+  .consent-banner,
+  .bayona-cursor,
+  .whatsapp-float,
+  .scroll-cue,
+  .route-fallback {
+    display: none !important;
+  }
+
+  body,
+  .scene-bg,
+  section {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  strong,
+  dt {
+    color: #000 !important;
+  }
+
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: var(--type-size-04);
+    word-break: break-all;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   9. MOVIMIENTO REDUCIDO
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  p a:not([class]),
+  li a:not([class]),
+  *::-webkit-scrollbar-thumb {
+    transition: none;
+  }
+}

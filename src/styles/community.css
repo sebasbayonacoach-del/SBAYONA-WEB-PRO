@@ -1,0 +1,4576 @@
+.community-page {
+  --community-bg: #050505;
+  --community-bg-alt: #08080a;
+  --community-card: #0c0c0d;
+  --community-thumb: #141416;
+  --community-text: #f5f5f5;
+  /* Alias del sistema, no re-declaración: estos dos duplicaban #a3a3a3/#6b6b6b
+     y se quedaron atrás cuando styles.css los subió por WCAG. */
+  --community-muted: var(--muted);
+  --community-dim: var(--gray-dim);
+  --community-orange: #f4a261;
+  --community-line: rgba(255, 255, 255, 0.06);
+  --community-line-soft: rgba(255, 255, 255, 0.04);
+  --community-line-orange: rgba(244, 162, 97, 0.3);
+  --community-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow-x: clip;
+  background: var(--community-bg);
+  color: var(--community-text);
+  font-family: var(--type-family-text);
+  font-weight: 300;
+}
+
+.community-page,
+.community-page * {
+  box-sizing: border-box;
+}
+
+.community-page * {
+  border-radius: 0 !important;
+}
+
+/* OPT 15 — film grain */
+.community-page::before {
+  content: '';
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  opacity: 0.02;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* OPT 15 — vignette */
+.community-page::after {
+  content: '';
+  position: fixed;
+  z-index: 9998;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
+  pointer-events: none;
+}
+
+.community-page :is(h1, h2, h3, p, blockquote) {
+  margin-top: 0;
+}
+
+.community-page :is(h1, h2, h3) {
+  font-family: var(--type-family-display);
+}
+
+.community-page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.community-page :is(a, button, summary):focus-visible {
+  outline: 2px solid var(--community-orange);
+  outline-offset: 4px;
+}
+
+.community-shell,
+.community-section .container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.community-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.community-number-layer {
+  isolation: isolate;
+}
+
+.community-button {
+  min-height: 52px;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 24px;
+  border: 1px solid rgba(244, 162, 97, 1);
+  background: transparent;
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-05);
+  line-height: 1.2;
+  font-family: var(--type-family-display);
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  transition:
+    color 0.3s var(--community-ease),
+    background-color 0.3s var(--community-ease),
+    border-color 0.3s var(--community-ease),
+    box-shadow 0.3s var(--community-ease),
+    transform 0.3s var(--community-ease);
+}
+
+.community-button-primary {
+  background: var(--community-orange);
+  color: var(--community-bg);
+}
+
+.community-button-secondary {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.community-button:hover,
+.community-button:focus-visible {
+  border-color: rgba(244, 162, 97, 0.8);
+  background: var(--community-orange);
+  color: var(--community-bg);
+  box-shadow: 0 14px 40px rgba(244, 162, 97, 0.12);
+  transform: translateY(-2px);
+}
+
+.community-inline-link,
+.community-text-link,
+.community-social-link {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--community-muted);
+  font-family: var(--type-family-text);
+  font-size: var(--type-size-06);
+  font-weight: 300;
+  transition: color 0.3s var(--community-ease), transform 0.3s var(--community-ease);
+}
+
+.community-inline-link {
+  color: var(--community-orange);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-05);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.community-inline-link:hover,
+.community-inline-link:focus-visible,
+.community-text-link:hover,
+.community-text-link:focus-visible,
+.community-social-link:hover,
+.community-social-link:focus-visible {
+  color: var(--community-orange);
+  transform: translateY(-2px);
+}
+
+/* OPT 1 — full cinema hero */
+.community-hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 120px 0 96px;
+  background: var(--community-bg);
+}
+
+.community-hero::before {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(circle, rgba(244, 162, 97, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.community-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 920px;
+  margin-inline: auto;
+  padding-inline: 24px;
+  text-align: center;
+}
+
+.community-kicker {
+  margin: 0 0 24px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.community-hero-title {
+  max-width: 900px;
+  margin: 0 auto;
+  color: var(--community-text);
+  font: 900 clamp(36px, 7vw, 72px)/1.05 'Montserrat', Arial, sans-serif;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  /*
+    Quitados `opacity: 0` y `transform: translateY(40px)` de base. Este bloque
+    animaba con `heroSlideUp`, que solo declara el `to`, así que usaba esos dos
+    valores como arranque implícito. Pero `ds-atelier.css` apunta
+    `.ds-frame[data-experience-scope='brand'] :is(h1, h2)` —más especificidad—,
+    roba el shorthand `animation` completo y lo sustituye por
+    `ds-atelier-wipe`, que solo mueve `clip-path`. Resultado medido en el
+    navegador: el titular de la comunidad se quedaba con la opacidad base de 0 y
+    sin ninguna animación que lo subiera. La página se abría SIN TITULAR.
+    La regla de abajo ya anima con `heroUp`, que sí declara su `from`, y el
+    propio atelier abre la máscara: el texto se vea por una u otra vía.
+    Es la trampa que immersive-motion.css ya documenta —«un opacity: 0 base cuya
+    animación pierde la cascada deja el texto transparente»—; estaba avisada y
+    seguía pasando.
+  */
+  animation: heroSlideUp 0.8s var(--community-ease) 0.3s forwards;
+}
+
+.community-hero-title span,
+.community-hero-title strong {
+  display: block;
+  font-weight: 900;
+}
+
+.community-hero-title strong {
+  color: var(--community-orange);
+}
+
+.community-hero-subtitle {
+  max-width: 640px;
+  margin: 30px auto 0;
+  color: var(--community-muted);
+  font-size: clamp(15px, 2vw, 17px);
+  line-height: 1.6;
+  animation: heroSlideUp 0.8s var(--community-ease) 0.6s forwards;
+}
+
+.community-hero-actions,
+.community-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 36px;
+  animation: heroSlideUp 0.8s var(--community-ease) 0.9s forwards;
+}
+
+.community-hero-note {
+  margin: 18px 0 0;
+  color: var(--community-dim);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.6;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.community-scroll-indicator {
+  position: absolute;
+  z-index: 2;
+  bottom: 28px;
+  left: 50%;
+  min-width: 48px;
+  min-height: 64px;
+  display: grid;
+  justify-items: center;
+  align-content: end;
+  gap: 8px;
+  color: var(--community-dim);
+  transform: translateX(-50%);
+}
+
+.community-scroll-indicator > span {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(180deg, rgba(244, 162, 97, 0), rgba(244, 162, 97, 0.45));
+}
+
+/*
+  `heroSlideUp` solo declaraba el `to` y contaba con que cada elemento llevara
+  `opacity: 0` y `translateY(40px)` de base. Eso es una trampa: en cuanto una
+  regla más específica (atelier para h1/h2, immersive-motion para los hijos de
+  [data-immersive='clip']) sustituye el shorthand `animation` completo, la
+  animación deja de existir y la base oculta se queda para siempre. Medido en
+  /community: el titular y el subtítulo abrían invisibles.
+  Ahora el `from` vive aquí, que es donde pertenece: el estado oculto ya no es
+  una propiedad del elemento, es el primer fotograma de su animación.
+*/
+@keyframes heroSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* OPT 2 — section framework */
+.community-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(80px, 14vw, 160px) 0;
+}
+
+.community-section:nth-child(odd) {
+  background: var(--community-bg);
+}
+
+.community-section:nth-child(even) {
+  background: var(--community-bg-alt);
+}
+
+.community-week,
+.community-access,
+.community-entry {
+  isolation: isolate;
+}
+
+.community-week .community-section-content::after,
+.community-access .community-section-content::after,
+.community-entry .community-section-content::after {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+  opacity: 0.24;
+  filter: saturate(0.8);
+}
+
+.community-week .community-section-content::after {
+  inset: -8% -12% 6% 54%;
+  background:
+    linear-gradient(90deg, rgb(5 5 5 / 86%), rgb(5 5 5 / 42%) 48%, rgb(5 5 5 / 88%)),
+    url('/images/scenes/escena-coach-anonimo-terraza.webp') center / cover no-repeat;
+}
+
+.community-access .community-section-content::after {
+  inset: 0 54% 8% -10%;
+  background:
+    linear-gradient(90deg, rgb(5 5 5 / 46%), rgb(5 5 5 / 88%)),
+    url('/images/bayona-generated/bank-senior-woman-step-1672.webp') center / cover no-repeat;
+}
+
+.community-entry .community-section-content::after {
+  inset: 4% -8% 0 50%;
+  background:
+    linear-gradient(90deg, rgb(5 5 5 / 84%), rgb(5 5 5 / 36%) 48%, rgb(5 5 5 / 92%)),
+    url('/images/bayona-generated/bank-child-precision-jump-1672.webp') center / cover no-repeat;
+}
+
+.community-section-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* OPT 3 — decorative section numbers */
+.community-section-number,
+.community-section:not(.community-closing)::before,
+.community-closing .community-number-layer::before {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 0;
+  color: rgba(244, 162, 97, 0.03);
+  font: 400 clamp(120px, 20vw, 200px)/1 'DM Mono', monospace;
+  letter-spacing: -0.08em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.community-section:not(.community-closing)::before {
+  content: attr(data-section-number);
+}
+
+.community-closing .community-number-layer {
+  position: static;
+}
+
+.community-closing .community-number-layer::before {
+  content: '10';
+}
+
+.community-closing .community-number-layer > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* OPT 4 — hairline dividers */
+.community-divider,
+.community-section:not(.community-closing)::after {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04) 50%, transparent);
+}
+
+.community-section:not(.community-closing)::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* OPT 5 — consistent section headers */
+.community-header,
+.community-section-header {
+  max-width: 800px;
+}
+
+.community-section-header.is-centered {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.community-section-header.is-centered :is(.community-eyebrow, .community-subtitle) {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.community-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 20px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.community-title {
+  max-width: 800px;
+  margin: 0 0 20px;
+  color: var(--community-text);
+  font: 900 clamp(28px, 5.5vw, 52px)/1.05 'Montserrat', Arial, sans-serif;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.community-title span {
+  color: var(--community-orange);
+}
+
+.community-subtitle {
+  max-width: 640px;
+  margin: 0 0 48px;
+  color: var(--community-muted);
+  font: 300 clamp(15px, 2vw, 17px)/1.6 'Inter', Arial, sans-serif;
+}
+
+/* OPT 6 — editorial why column */
+/* `community-identity-points` es el mismo nodo (el `<ol>` de POR QUÉ EXISTIMOS):
+   viaja con `community-why-list` porque lo que declara es para qué sirve la
+   lista —puntos de identidad, no tarjetas— y no un estilo nuevo. */
+.community-why-list,
+.community-identity-points {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+/* Una sola columna: el `<li>` tiene UN hijo (un div con el titular y la frase),
+   así que con la rejilla de 40px + 1fr ese div entero caía en la pista del
+   número y el texto se partía a una palabra por línea. La pista de 40px no
+   alimentaba nada: no hay ::before ni contador aquí. */
+.community-why-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: padding-left 0.3s var(--community-ease);
+}
+
+.community-why-item:hover {
+  padding-left: 12px;
+}
+
+.community-why-item:last-child {
+  border-bottom: 0;
+}
+
+.community-why-num {
+  padding-top: 3px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-06);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.1em;
+}
+
+.community-why-text {
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-09);
+  line-height: 1.4;
+  font-family: var(--type-family-display);
+}
+
+.community-why-item p {
+  margin: 8px 0 0;
+  color: var(--community-muted);
+  font-size: var(--type-size-07);
+  line-height: 1.6;
+}
+
+.community-founder-note {
+  max-width: 680px;
+  margin: 28px auto 0;
+  padding: 20px 22px;
+  border-left: 1px solid rgba(244, 162, 97, 0.5);
+  background: linear-gradient(90deg, rgba(244, 162, 97, 0.05), transparent 88%);
+  color: var(--community-muted);
+  font-size: var(--type-size-07);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.community-movement-line {
+  max-width: 680px;
+  margin: 28px auto 0;
+  color: var(--community-orange);
+  font: 700 clamp(16px, 2vw, 20px)/1.5 'Montserrat', Arial, sans-serif;
+}
+
+/* OPT 7 — asymmetric feelings bento */
+.community-feelings {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  max-width: 1000px;
+  margin-inline: auto;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.community-feeling {
+  min-width: 0;
+  padding: 32px;
+  background: var(--community-bg);
+  transition: background-color 0.4s var(--community-ease);
+}
+
+.community-feeling:hover {
+  background: var(--community-card);
+}
+
+.community-feeling > span {
+  display: block;
+  margin-bottom: 40px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+}
+
+.community-feeling-title {
+  margin: 0 0 10px;
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 900;
+  font-size: var(--type-size-10);
+  line-height: 1.2;
+  font-family: var(--type-family-display);
+}
+
+.community-feeling-desc {
+  margin: 0;
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.6;
+  font-family: var(--type-family-text);
+}
+
+.community-loss-line {
+  max-width: 1000px;
+  margin: 28px auto 0;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--community-muted);
+  font-size: var(--type-size-07);
+  font-style: italic;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.community-proof-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 1000px;
+  margin: 32px auto 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.community-proof-strip article {
+  min-width: 0;
+  padding: 22px 18px;
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.community-proof-strip article:last-child {
+  border-right: 0;
+}
+
+.community-proof-strip strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+}
+
+.community-proof-strip p {
+  margin: 0;
+  color: var(--community-muted);
+  font-size: var(--type-size-06);
+  line-height: 1.6;
+}
+
+/* OPT 8 — BAYONA identity grid */
+.community-identity {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  max-width: 900px;
+  margin-inline: auto;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.community-trait {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 32px;
+  background: var(--community-bg);
+  transition:
+    background-color 0.3s var(--community-ease),
+    transform 0.3s var(--community-ease);
+}
+
+.community-trait:hover {
+  background: var(--community-card);
+  transform: translateY(-4px);
+}
+
+.community-trait-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  color: var(--community-orange);
+}
+
+.community-trait > div {
+  display: grid;
+  gap: 8px;
+}
+
+.community-trait-name {
+  margin: 0;
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 900;
+  font-size: var(--type-size-09);
+  line-height: 1.35;
+  font-family: var(--type-family-display);
+  text-transform: uppercase;
+}
+
+.community-trait-desc {
+  margin: 0;
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.6;
+  font-family: var(--type-family-text);
+}
+
+.community-aspiration-line {
+  max-width: 900px;
+  margin: 28px auto 0;
+  color: var(--community-orange);
+  font: 700 clamp(16px, 2vw, 20px)/1.5 'Montserrat', Arial, sans-serif;
+  text-align: center;
+}
+
+/* OPT 9 — three-day calendar */
+.community-calendar {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.community-day {
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--community-card);
+  transition:
+    border-color 0.3s var(--community-ease),
+    transform 0.3s var(--community-ease);
+}
+
+.community-day:hover {
+  border-color: rgba(244, 162, 97, 0.3);
+  transform: translateY(-2px);
+}
+
+.community-day-name {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.2em;
+}
+
+.community-day-title {
+  margin: auto 0 8px;
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-08);
+  line-height: 1.3;
+  font-family: var(--type-family-display);
+}
+
+.community-day-desc {
+  margin: 0;
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.5;
+  font-family: var(--type-family-text);
+}
+
+.community-week-note {
+  margin: 24px 0 0;
+  color: var(--community-muted);
+  font-size: var(--type-size-07);
+  font-style: italic;
+}
+
+/* OPT 10 — access tier cards */
+.community-tiers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.community-tier {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--community-card);
+  transition:
+    border-color 0.3s var(--community-ease),
+    transform 0.3s var(--community-ease),
+    box-shadow 0.3s var(--community-ease);
+}
+
+.community-tier:hover {
+  border-color: rgba(244, 162, 97, 0.3);
+  transform: translateY(-4px);
+}
+
+.community-tier.elite {
+  border-color: rgba(244, 162, 97, 0.2);
+  box-shadow: 0 0 40px rgba(244, 162, 97, 0.05);
+}
+
+.community-tier-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--community-orange);
+}
+
+.community-tier-label {
+  margin-bottom: 12px;
+  color: var(--community-dim);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.2em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.community-tier-name {
+  margin: 40px 0 12px;
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 900;
+  font-size: var(--type-size-09);
+  line-height: 1.25;
+  font-family: var(--type-family-display);
+}
+
+.community-tier-desc {
+  margin: 0 0 16px;
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.5;
+  font-family: var(--type-family-text);
+}
+
+.community-tier-feeling {
+  display: grid;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--community-orange);
+  font: italic 300 12px/1.5 'Inter', Arial, sans-serif;
+}
+
+/* La etiqueta del alcance: tipografía de rótulo, no de frase. La frase en cursiva
+   la lleva `.community-tier-feeling` y `.community-tier-feeling-quote`. */
+.community-tier-feeling strong,
+.community-tier-feeling-label {
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.12em;
+}
+
+.community-tier-feeling em {
+  color: var(--community-orange);
+  font-style: italic;
+}
+
+.community-access .community-inline-link {
+  margin-top: 24px;
+}
+
+/* OPT 11 — editorial testimonials */
+.community-testimonials {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.community-quote {
+  position: relative;
+  margin: 0;
+  padding: 32px 0 32px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.community-quote:last-child {
+  border-bottom: 0;
+}
+
+.community-quote::before {
+  content: '"';
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(244, 162, 97, 0.1);
+  font-style: normal;
+  font-weight: 900;
+  font-size: var(--type-size-19);
+  line-height: 1;
+  font-family: var(--type-family-display);
+}
+
+.community-quote > span[aria-hidden='true'] {
+  display: none;
+}
+
+.community-quote-text {
+  margin: 0 0 12px;
+  color: var(--community-text);
+  font: italic 300 18px/1.6 'Inter', Arial, sans-serif;
+}
+
+.community-quote-author {
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-06);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  font-style: normal;
+  letter-spacing: 0.1em;
+}
+
+.community-disclaimer {
+  max-width: 720px;
+  margin: 24px auto 0;
+  color: var(--community-dim);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.6;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.05em;
+}
+
+/* OPT 12 — social feed cards */
+.community-social {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.community-social-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--community-card);
+  transition:
+    border-color 0.3s var(--community-ease),
+    transform 0.3s var(--community-ease);
+}
+
+.community-social-card:hover {
+  border-color: rgba(244, 162, 97, 0.3);
+  transform: translateY(-4px);
+}
+
+/* `community-live-media` es el gancho del raíl nuevo sobre la misma tarjeta
+   social: viaja con el pulgar porque el pulgar ya sabe qué es una miniatura. */
+.community-social-thumb,
+.community-live-media {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--community-thumb);
+  color: var(--community-orange);
+  filter: brightness(0.7);
+  transition: filter 0.3s var(--community-ease);
+}
+
+.community-social-thumb.is-video,
+.community-social-thumb.is-square {
+  aspect-ratio: 16 / 9;
+}
+
+.community-social-card:hover .community-social-thumb {
+  filter: brightness(0.9);
+}
+
+.community-social-thumb > img {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.community-social-thumb > span {
+  position: absolute;
+  z-index: 3;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.community-social-content,
+.community-live-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.community-social-platform,
+.community-live-platform {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.15em;
+}
+
+.community-social-title {
+  margin: 0 0 8px;
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--type-size-07);
+  line-height: 1.45;
+  font-family: var(--type-family-display);
+}
+
+.community-live-date {
+  margin: 6px 0 0;
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+}
+
+.community-social-link {
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+/* Supporting group cards */
+.community-group-traits {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  padding: 1px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.community-group-traits article {
+  min-height: 190px;
+  padding: 28px;
+  background: var(--community-card);
+  transition: background-color 0.3s var(--community-ease);
+}
+
+.community-group-traits article:hover {
+  background: var(--community-bg);
+}
+
+.community-group-traits span {
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+}
+
+.community-group-traits h3 {
+  margin: 38px 0 10px;
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 900;
+  font-size: var(--type-size-09);
+  line-height: 1.25;
+  font-family: var(--type-family-display);
+}
+
+.community-group-traits p {
+  margin: 0;
+  color: var(--community-muted);
+  font-size: var(--type-size-07);
+  line-height: 1.6;
+}
+
+/* OPT 13 — WhatsApp chat preview */
+.community-chat-details {
+  max-width: 520px;
+  margin: 48px auto 0;
+}
+
+.community-chat-details summary {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  list-style: none;
+}
+
+.community-chat-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.community-chat-details summary svg {
+  transition: transform 0.3s var(--community-ease);
+}
+
+.community-chat-details[open] summary svg {
+  transform: rotate(180deg);
+}
+
+/* `community-chat` es el nombre con el que el JSX etiqueta la conversación; el
+   `community-chat-preview` de abajo ya sabe lo que es una chat bubble. */
+.community-chat,
+.community-chat-preview {
+  max-width: 400px;
+  margin: 32px auto 0;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--community-card);
+}
+
+.community-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.community-chat-name {
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-07);
+  line-height: 1.4;
+  font-family: var(--type-family-display);
+}
+
+.community-chat-status {
+  margin: 0 0 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  text-align: center;
+}
+
+.community-chat-bubble {
+  max-width: 80%;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.5;
+  font-family: var(--type-family-text);
+}
+
+.community-chat-bubble.member {
+  margin-right: auto;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--community-muted);
+}
+
+.community-chat-bubble.sebastian,
+.community-chat-bubble.is-coach {
+  margin-right: 0;
+  margin-left: auto;
+  border-left: 1px solid rgba(244, 162, 97, 1);
+  background: rgba(244, 162, 97, 0.1);
+  color: var(--community-text);
+}
+
+.community-chat-author {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+}
+
+.community-chat-bubble p {
+  margin: 0;
+}
+
+.community-chat-caption {
+  max-width: 100%;
+  margin: 16px 0 0;
+  color: var(--community-dim);
+  font: italic 300 12px/1.5 'Inter', Arial, sans-serif;
+  text-align: center;
+}
+
+/* Supporting entry steps */
+.community-entry-steps {
+  max-width: 680px;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  list-style: none;
+}
+
+.community-entry-steps li {
+  min-height: 82px;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.community-entry-steps li > span {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(244, 162, 97, 0.5);
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+}
+
+.community-entry-steps strong {
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-07);
+  line-height: 1.4;
+  font-family: var(--type-family-display);
+  letter-spacing: 0.04em;
+}
+
+.community-entry-cta {
+  margin-top: 34px;
+}
+
+.community-entry-note {
+  margin: 16px 0 0;
+  color: var(--community-dim);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.6;
+  font-family: var(--type-family-mono);
+}
+
+/* Supporting channel links */
+.community-channel-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0 0 28px;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  list-style: none;
+}
+
+.community-channel-list li {
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.community-channel-list a {
+  min-height: 150px;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  transition: background-color 0.3s var(--community-ease), transform 0.3s var(--community-ease);
+}
+
+.community-channel-list a:hover,
+.community-channel-list a:focus-visible {
+  background: rgba(244, 162, 97, 0.05);
+  transform: translateY(-2px);
+}
+
+.community-channel-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(244, 162, 97, 0.35);
+  color: var(--community-orange);
+}
+
+.community-channel-list strong,
+.community-channel-list small {
+  display: block;
+}
+
+.community-channel-list strong {
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.community-channel-list small {
+  margin-top: 8px;
+  color: var(--community-muted);
+  font-size: var(--type-size-06);
+  line-height: 1.5;
+}
+
+.community-channel-list a > svg {
+  color: var(--community-orange);
+}
+
+/* OPT 14 — sunset cinema closing
+   `community-bridge` es el nombre de planta (dos salidas desde un mismo tallo);
+   viaja con el cierre porque el cierre ya pone el fondo y la caja. */
+.community-bridge,
+.community-closing {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(60px, 10vw, 120px) 0;
+  background: var(--community-bg) !important;
+  text-align: center;
+}
+
+.community-closing::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(244, 162, 97, 0.08) 0%, rgba(244, 162, 97, 0.02) 30%, transparent 60%);
+  pointer-events: none;
+}
+
+.community-closing::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 50%;
+  background: radial-gradient(ellipse at center bottom, rgba(244, 162, 97, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.community-closing .community-section-content {
+  width: 100%;
+}
+
+.community-closing .community-eyebrow {
+  justify-content: center;
+}
+
+.community-closing .community-title {
+  max-width: 940px;
+  margin-inline: auto;
+}
+
+.community-closing-pressure {
+  margin: 0 0 16px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-05);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.community-closing .community-subtitle {
+  margin: 0 auto 32px;
+}
+
+.community-closing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.community-closing-actions .community-button-primary {
+  min-height: 58px;
+  padding-inline: 32px;
+}
+
+.community-footer-note {
+  position: relative;
+  z-index: 1;
+  padding: 24px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  background: var(--community-bg);
+}
+
+.community-footer-note p {
+  margin-block: 0;
+  color: var(--community-dim);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.7;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* OPT 15 — reveal and stagger choreography */
+.community-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s var(--community-ease),
+    transform 0.8s var(--community-ease);
+}
+
+.community-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.community-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s var(--community-ease),
+    transform 0.6s var(--community-ease),
+    border-color 0.3s var(--community-ease),
+    background-color 0.3s var(--community-ease),
+    padding-left 0.3s var(--community-ease);
+}
+
+.community-stagger.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.community-stagger.visible > *:nth-child(1) {
+  transition-delay: 0s;
+}
+
+.community-stagger.visible > *:nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+.community-stagger.visible > *:nth-child(3) {
+  transition-delay: 0.16s;
+}
+
+.community-stagger.visible > *:nth-child(4) {
+  transition-delay: 0.24s;
+}
+
+.community-stagger.visible > :is(.community-trait, .community-tier, .community-social-card):hover {
+  transform: translateY(-4px);
+}
+
+.community-stagger.visible > .community-day:hover,
+.community-stagger.visible > .community-channel-list li:hover {
+  transform: translateY(-2px);
+}
+
+.community-stagger.visible > .community-why-item:hover {
+  padding-left: 12px;
+}
+
+@media (min-width: 600px) {
+  .community-identity {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .community-shell,
+  .community-section .container {
+    padding-inline: 40px;
+  }
+
+  .community-feelings {
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .community-feeling:first-child {
+    grid-row: span 2;
+  }
+
+  .community-calendar,
+  .community-tiers,
+  .community-social,
+  .community-group-traits,
+  .community-channel-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Requested mobile system */
+@media (max-width: 768px) {
+  .community-shell,
+  .community-section .container {
+    padding-inline: 24px;
+  }
+
+  .community-hero {
+    padding: 104px 0 72px;
+  }
+
+  .community-hero-inner {
+    text-align: left;
+  }
+
+  .community-hero-subtitle {
+    margin-left: 0;
+  }
+
+  .community-hero-actions,
+  .community-hero-cta,
+  .community-closing-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .community-hero-cta .community-button,
+  .community-hero-cta .community-text-link,
+  .community-entry-cta,
+  .community-closing-actions .community-button,
+  .community-channels > .container > .community-button {
+    width: 100%;
+  }
+
+  .community-scroll-indicator {
+    display: none;
+  }
+
+  .community-section {
+    padding: 60px 0;
+  }
+
+  .community-section-number,
+  .community-section:not(.community-closing)::before,
+  .community-closing .community-number-layer::before {
+    top: 20px;
+    left: 20px;
+    font-size: var(--type-size-19);
+  }
+
+  .community-title {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  .community-subtitle {
+    margin-bottom: 40px;
+  }
+
+  .community-section-header.is-centered {
+    text-align: left;
+  }
+
+  .community-section-header.is-centered :is(.community-eyebrow, .community-subtitle) {
+    margin-left: 0;
+  }
+
+  .community-feelings,
+  .community-identity,
+  .community-calendar,
+  .community-tiers,
+  .community-social,
+  .community-group-traits,
+  .community-channel-list,
+  .community-proof-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .community-feeling:first-child {
+    grid-row: auto;
+  }
+
+  .community-proof-strip article,
+  .community-proof-strip article:last-child {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .community-proof-strip article:last-child {
+    border-bottom: 0;
+  }
+
+  .community-chat-preview {
+    margin: 24px 16px;
+  }
+
+  .community-quote {
+    padding-left: 36px;
+  }
+
+  .community-channel-list {
+    border-left: 0;
+  }
+
+  .community-channel-list li {
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .community-channel-list a {
+    min-height: 104px;
+  }
+
+  .community-closing {
+    min-height: 80vh;
+    padding: 60px 0;
+  }
+
+  .community-footer-note p {
+    text-align: left;
+  }
+
+  .community-page :is(button, a) {
+    min-height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-page,
+  .community-page *,
+  .community-page *::before,
+  .community-page *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .community-reveal,
+  .community-reveal.visible,
+  .community-stagger,
+  .community-stagger > *,
+  .community-stagger.visible > *,
+  .community-hero-title,
+  .community-hero-subtitle,
+  .community-hero-cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Final surgical polish — Community 01–10 */
+.community-hero {
+  text-align: center;
+}
+
+.community-hero::before {
+  bottom: -20%;
+  left: 50%;
+  width: 80%;
+  height: 70%;
+  background: radial-gradient(ellipse, rgba(244, 162, 97, 0.07) 0%, transparent 60%);
+  transform: translateX(-50%);
+}
+
+.community-hero-title {
+  animation: heroUp 0.8s var(--community-ease) 0.3s both;
+}
+
+.community-hero-subtitle {
+  animation: heroUp 0.8s var(--community-ease) 0.6s both;
+}
+
+.community-hero-cta {
+  animation: heroUp 0.8s var(--community-ease) 0.9s both;
+}
+
+@keyframes heroUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.community-section-number,
+.community-section:not(.community-closing)::before,
+.community-closing .community-number-layer::before {
+  top: 32px;
+  left: 32px;
+}
+
+.community-stagger.visible > .community-day:hover,
+.community-day:hover {
+  border-color: rgba(244, 162, 97, 0.3);
+  transform: translateY(-4px);
+}
+
+.community-trait {
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.community-trait:hover,
+.community-tier:hover {
+  border-color: rgba(244, 162, 97, 0.3);
+  transform: translateY(-4px);
+}
+
+.community-tier.elite {
+  border-color: rgba(244, 162, 97, 0.25);
+  box-shadow: 0 0 40px rgba(244, 162, 97, 0.05);
+}
+
+.community-quote::before {
+  top: -8px;
+}
+
+/* Visible WhatsApp conversation */
+.community-chat-preview {
+  position: relative;
+  max-width: 420px;
+  margin: 32px auto 0;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--community-card);
+}
+
+.community-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.community-chat-avatar {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--community-orange);
+  color: var(--community-bg);
+  font-style: normal;
+  font-weight: 900;
+  font-size: var(--type-size-08);
+  line-height: 1;
+  font-family: var(--type-family-display);
+}
+
+.community-chat-headinfo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.community-chat-name {
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-07);
+  line-height: 1.4;
+  font-family: var(--type-family-display);
+  letter-spacing: 0.02em;
+}
+
+.community-chat-header .community-chat-status {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.1em;
+  text-align: left;
+}
+
+.community-chat-bubble {
+  max-width: 82%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+  padding: 12px 14px;
+}
+
+.community-chat-bubble.member {
+  margin-right: auto;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--community-muted);
+}
+
+.community-chat-bubble.sebastian {
+  margin-right: 0;
+  margin-left: auto;
+  border-left: 1px solid rgba(244, 162, 97, 1);
+  background: rgba(244, 162, 97, 0.12);
+  color: var(--community-text);
+}
+
+.community-chat-author {
+  margin-bottom: 0;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.12em;
+}
+
+.community-chat-text {
+  color: inherit;
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.55;
+  font-family: var(--type-family-text);
+}
+
+.community-chat-caption {
+  max-width: 420px;
+  margin: 20px auto 0;
+  color: var(--community-dim);
+  font: italic 300 13px/1.55 'Inter', Arial, sans-serif;
+  text-align: center;
+}
+
+/* Added conversion lines */
+.community-marketing-line {
+  margin: 22px 0 0;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-07);
+  line-height: 1.6;
+  font-family: var(--type-family-text);
+}
+
+.community-marketing-line.is-italic {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.community-marketing-line.is-mono {
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.6;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.1em;
+}
+
+.community-founder-closure,
+.community-loss-question,
+.community-identity-entry,
+.community-week-momentum,
+.community-tier-access-note,
+.community-group-proof {
+  max-width: 900px;
+}
+
+.community-founder-closure {
+  max-width: 680px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.community-loss-question,
+.community-identity-entry {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.community-week-momentum {
+  max-width: 900px;
+  margin-top: 24px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.community-tier-access-note {
+  margin-top: 24px;
+}
+
+.community-testimonial-intro {
+  max-width: 720px;
+  margin: -16px auto 28px;
+  text-align: center;
+}
+
+.community-live-note {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.community-group-proof {
+  max-width: 520px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.community-entry-speed {
+  margin-top: 16px;
+}
+
+.community-footer-note .community-final-signature {
+  margin-top: 16px;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.7;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .community-hero-inner {
+    text-align: center;
+  }
+
+  .community-hero-subtitle {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .community-section-number,
+  .community-section:not(.community-closing)::before,
+  .community-closing .community-number-layer::before {
+    top: 20px;
+    left: 20px;
+    font-size: var(--type-size-19);
+  }
+
+  .community-chat-preview {
+    margin: 24px 16px;
+  }
+
+  .community-marketing-line,
+  .community-loss-question,
+  .community-identity-entry,
+  .community-testimonial-intro,
+  .community-live-note,
+  .community-group-proof {
+    text-align: left;
+  }
+
+  .community-footer-note .community-final-signature {
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-hero-title,
+  .community-hero-subtitle,
+  .community-hero-cta {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* Luxury card system — Sensaciones, Días y Niveles únicamente */
+.lux-card {
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.lux-card::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: radial-gradient(circle 240px at var(--mx) var(--my), rgba(244, 162, 97, 0.1), transparent 65%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--community-ease);
+}
+
+.lux-card:hover::before {
+  opacity: 1;
+}
+
+.lux-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.community-feeling-shell,
+.community-day-shell,
+.community-tier-shell,
+.lux-tilt {
+  min-width: 0;
+  height: 100%;
+}
+
+.lux-number,
+.lux-card > .lux-number {
+  position: absolute;
+  z-index: 0;
+  top: 18px;
+  right: 22px;
+  margin: 0;
+  color: transparent;
+  font: 400 clamp(64px, 10vw, 120px)/0.85 'DM Mono', monospace;
+  letter-spacing: -0.02em;
+  pointer-events: none;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+  transition:
+    color 0.4s var(--community-ease),
+    -webkit-text-stroke-color 0.4s var(--community-ease);
+}
+
+.lux-card:hover .lux-number {
+  color: rgba(244, 162, 97, 0.1);
+  -webkit-text-stroke-color: rgba(244, 162, 97, 0.45);
+}
+
+/* Sensaciones — editorial asymmetric bento */
+.community-feelings {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.community-feeling-shell {
+  min-height: 180px;
+}
+
+.community-feeling {
+  min-height: 180px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(28px, 4vw, 44px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: var(--community-bg);
+  transition:
+    background-color 0.4s var(--community-ease),
+    border-color 0.4s var(--community-ease),
+    transform 0.4s var(--community-ease);
+}
+
+.community-feeling:hover {
+  border-color: rgba(244, 162, 97, 0.3);
+  background: var(--community-card);
+  transform: translateY(-2px);
+}
+
+.community-feeling > .lux-icon {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 auto;
+  padding: 0;
+  color: var(--community-orange);
+  transition:
+    filter 0.4s var(--community-ease),
+    transform 0.4s var(--community-ease);
+}
+
+.community-feeling:hover .lux-icon {
+  filter: drop-shadow(0 0 8px rgba(244, 162, 97, 0.15));
+  transform: translateY(-2px);
+}
+
+.community-feeling-title {
+  margin: 0;
+  color: var(--community-text);
+  font: 900 clamp(20px, 3vw, 28px)/1.15 'Montserrat', Arial, sans-serif;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.community-feeling-desc {
+  max-width: 420px;
+  margin: 0;
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.6;
+  font-family: var(--type-family-text);
+}
+
+/* Días — connected editorial timeline */
+.community-calendar {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.community-calendar::before {
+  content: '';
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 162, 97, 0.3), transparent);
+  pointer-events: none;
+}
+
+.community-day {
+  min-height: 250px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(28px, 4vw, 40px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: var(--community-bg);
+  transition:
+    background-color 0.4s var(--community-ease),
+    border-color 0.4s var(--community-ease),
+    transform 0.4s var(--community-ease);
+}
+
+.community-day:hover {
+  border-color: rgba(244, 162, 97, 0.3);
+  background: var(--community-card);
+  transform: translateY(-4px);
+}
+
+.community-day-index {
+  color: color-mix(in srgb, var(--muted) 65%, transparent);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.community-day-label {
+  color: var(--community-text);
+  font: 500 clamp(32px, 5vw, 48px)/1 'DM Mono', monospace;
+  letter-spacing: -0.02em;
+  transition: color 0.4s var(--community-ease);
+}
+
+.community-day:hover .community-day-label {
+  color: var(--community-orange);
+}
+
+.community-day-title {
+  margin: auto 0 0;
+  color: var(--community-text);
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-08);
+  line-height: 1.35;
+  font-family: var(--type-family-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.community-day-desc {
+  margin: 0;
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.55;
+  font-family: var(--type-family-text);
+}
+
+.community-day::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #f4a261;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--community-ease);
+}
+
+.community-day:hover::after {
+  transform: scaleX(1);
+}
+
+/* Niveles — restrained prestige hierarchy */
+.community-tiers {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  gap: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.community-tier {
+  min-height: 380px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(28px, 4vw, 40px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: var(--community-bg);
+  transition:
+    background-color 0.4s var(--community-ease),
+    border-color 0.4s var(--community-ease),
+    box-shadow 0.4s var(--community-ease),
+    transform 0.4s var(--community-ease);
+}
+
+.community-tier:hover {
+  border-color: rgba(244, 162, 97, 0.3);
+  background: var(--community-card);
+  transform: translateY(-4px);
+}
+
+.community-tier-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--community-orange);
+}
+
+.community-tier-icon {
+  flex: 0 0 auto;
+  color: var(--community-orange);
+}
+
+.community-tier-label {
+  margin: 0;
+  color: color-mix(in srgb, var(--muted) 65%, transparent);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.22em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.community-tier.privado .community-tier-label {
+  color: var(--community-orange);
+}
+
+.community-tier-name {
+  margin: 28px 0 0;
+  color: var(--community-text);
+  font: 900 clamp(22px, 3vw, 30px)/1.15 'Montserrat', Arial, sans-serif;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.community-tier-desc {
+  margin: 0;
+  color: var(--community-muted);
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--type-size-07);
+  line-height: 1.6;
+  font-family: var(--type-family-text);
+}
+
+.community-tier-feeling {
+  display: block;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.community-tier-feeling-quote {
+  display: block;
+  margin-top: 8px;
+  color: var(--community-text);
+  font: italic 300 15px/1.5 'Inter', Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: color 0.4s var(--community-ease);
+}
+
+.community-tier:hover .community-tier-feeling-quote {
+  color: var(--community-orange);
+}
+
+.community-tier-badge,
+.lux-card > .community-tier-badge {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 0;
+  padding: 5px 10px;
+  background: var(--community-orange);
+  color: var(--community-bg);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.community-tier-access-note {
+  max-width: 520px;
+  margin: 24px auto 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .community-feelings {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: minmax(180px, auto);
+  }
+
+  .community-feeling-shell-1,
+  .community-feeling-shell-4 {
+    grid-column: span 4;
+  }
+
+  .community-feeling-shell-2,
+  .community-feeling-shell-3 {
+    grid-column: span 2;
+  }
+
+  .community-calendar,
+  .community-tiers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .community-tier.prioritario {
+    transform: translateY(-2px);
+  }
+
+  .community-tier.prioritario:hover,
+  .community-tier.privado,
+  .community-tier.privado:hover {
+    transform: translateY(-4px);
+  }
+
+  .community-tier.privado {
+    border-color: rgba(244, 162, 97, 0.28);
+    box-shadow: 0 0 50px rgba(244, 162, 97, 0.06);
+  }
+}
+
+@media (max-width: 767px) {
+  .community-feelings,
+  .community-calendar,
+  .community-tiers {
+    grid-template-columns: 1fr;
+  }
+
+  .community-feeling-shell,
+  .community-day-shell,
+  .community-tier-shell {
+    grid-column: span 1 !important;
+  }
+
+  .community-tier.prioritario,
+  .community-tier.privado,
+  .community-tier:hover {
+    transform: none;
+  }
+
+  .lux-number {
+    font-size: var(--type-size-17);
+  }
+}
+
+@media (hover: none) {
+  .lux-card::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-feeling,
+  .community-day,
+  .community-tier,
+  .community-tier.prioritario,
+  .community-tier.privado,
+  .lux-number,
+  .lux-card::before,
+  .community-day::after,
+  .community-feeling .lux-icon {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .lux-card::before {
+    opacity: 0 !important;
+  }
+}
+
+/* Section 06 — continuous testimonial marquee */
+.testimonial-marquee {
+  --testimonial-gap: 24px;
+  --testimonial-loop-offset: 12px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 8px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+.testimonial-track {
+  width: max-content;
+  display: flex;
+  align-items: stretch;
+  gap: var(--testimonial-gap);
+  animation: testimonialScroll 55s linear infinite;
+  will-change: transform;
+}
+
+.testimonial-marquee:hover .testimonial-track,
+.testimonial-marquee:focus-within .testimonial-track {
+  animation-play-state: paused;
+}
+
+@keyframes testimonialScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - var(--testimonial-loop-offset)));
+  }
+}
+
+.testimonial-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(300px, 80vw, 440px);
+  display: flex;
+  flex-direction: column;
+  padding: 36px 32px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--community-card);
+  transition: border-color 0.4s var(--community-ease);
+}
+
+.testimonial-card:hover,
+.testimonial-card:focus-visible {
+  border-color: rgba(244, 162, 97, 0.3);
+}
+
+.testimonial-card:focus-visible {
+  outline: 1px solid rgba(244, 162, 97, 0.3);
+  outline-offset: -1px;
+}
+
+.testimonial-quote-mark {
+  position: absolute;
+  top: 8px;
+  left: 18px;
+  color: rgba(244, 162, 97, 0.12);
+  font-style: normal;
+  font-weight: 900;
+  font-size: var(--type-size-18);
+  line-height: 1;
+  font-family: var(--type-family-display);
+  pointer-events: none;
+}
+
+.testimonial-quote {
+  margin: 0 0 20px;
+  color: var(--community-text);
+  font: italic 300 16px/1.65 'Inter', Arial, sans-serif;
+}
+
+.testimonial-author {
+  display: block;
+  margin-top: auto;
+  color: var(--community-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .testimonial-marquee {
+    --testimonial-gap: 16px;
+    --testimonial-loop-offset: 8px;
+  }
+
+  .testimonial-card {
+    width: 80vw;
+    padding: 28px 24px 24px;
+  }
+
+  .testimonial-quote {
+    font-size: var(--type-size-08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-track {
+    animation: none;
+  }
+
+  .testimonial-marquee {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .testimonial-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .testimonial-card {
+    scroll-snap-align: start;
+  }
+
+  .testimonial-card[aria-hidden='true'] {
+    display: none;
+  }
+}
+
+/* Additive conversion enhancements — free entry and always-accessible join CTAs */
+.community-hero-free {
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 28px 0 0;
+  padding: 14px 24px;
+  border-top: 1px solid rgba(244, 162, 97, 0.3);
+  border-bottom: 1px solid rgba(244, 162, 97, 0.3);
+  color: #f4a261;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-07);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.community-hero-life {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 14px 0 0;
+  color: var(--gray-dim);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.6;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.community-hero-life-dot {
+  flex: 0 0 auto;
+  color: #6b7f3e;
+}
+
+.community-mid-join {
+  max-width: 720px;
+  margin: 48px auto 0;
+  padding: clamp(28px, 5vw, 44px) 24px;
+  border-top: 1px solid rgba(244, 162, 97, 0.22);
+  border-bottom: 1px solid rgba(244, 162, 97, 0.22);
+  background: rgba(244, 162, 97, 0.035);
+  text-align: center;
+}
+
+.community-mid-join-label {
+  margin: 0 0 18px;
+  color: #f4a261;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.community-mid-join-button {
+  margin-inline: auto;
+}
+
+.community-join-floating {
+  position: fixed;
+  z-index: 90;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  padding: 12px 16px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(244, 162, 97, 0.3);
+  background: rgba(5, 5, 5, 0.92);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+.community-join-floating a {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #f4a261;
+  color: #050505;
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-07);
+  line-height: 1.2;
+  font-family: var(--type-family-display);
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.community-join-floating a:hover,
+.community-join-floating a:focus-visible {
+  background: #e76f51;
+}
+
+.community-join-floating a:focus-visible {
+  outline: 2px solid #f4a261;
+  outline-offset: -4px;
+}
+
+@media (max-width: 768px) {
+  .community-hero-free {
+    width: 100%;
+    padding-inline: 12px;
+    font-size: var(--type-size-05);
+    letter-spacing: 0.11em;
+  }
+
+  .community-hero-life {
+    align-items: flex-start;
+    font-size: var(--type-size-04);
+    letter-spacing: 0.06em;
+  }
+
+  .community-mid-join {
+    margin-top: 40px;
+    padding: 28px 18px;
+  }
+
+  .community-mid-join-button {
+    width: 100%;
+  }
+
+  .community-join-floating.show {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-join-floating,
+  .community-join-floating a {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+
+/* ==========================================================================
+   FASE 4C · ATELIER — COMUNIDAD: LA LÍNEA QUE HABLA
+   La aspiración se compone como titular de portada y el calendario pasa a filas
+   con filete. La honestidad del bloque (lo que existe y lo que no) no cambia
+   una palabra.
+   Todo sale de los tokens del sistema: cero `!important`, cero colores
+   nuevos, cero radios propios, cero `z-index` sueltos. Cero WebGL.
+   ========================================================================== */
+
+.community-aspiration-line {
+  font-family: var(--bayona-font-display);
+  text-wrap: balance;
+  letter-spacing: -0.04em;
+}
+
+.community-calendar {
+  border-block-start: var(--bayona-hairline);
+}
+
+.community-calendar > * {
+  border-block-end: var(--bayona-hairline);
+  padding-block: var(--bayona-gap-plate);
+}
+
+.community-access {
+  border: var(--bayona-hairline);
+  background: var(--bayona-surface-1);
+}
+
+.community-button {
+  border: var(--bayona-hairline);
+}
+
+.community-button-primary {
+  border-color: var(--bayona-warm);
+}
+
+/* ==========================================================================
+   UNIDAD TIPOGRÁFICA · /community (2026-09-19)
+   --------------------------------------------------------------------------
+   Esta era la hoja más libre del sitio: sesenta y tantos `font:` escritos a
+   mano, con siete tamaños de etiqueta distintos (9px, 10px, 11px, 12px…) y
+   cinco tracking distintos (0.05em, 0.08em, 0.1em, 0.12em, 0.2em, 0.24em).
+   Exactamente lo que el dueño rechazó: «cuadros más grandes, letras más
+   pequeñas», «no hay coherencia».
+
+   Se retira todo. Cada ROL pide su paso a la escala nombrada de
+   ds-tokens.css §11. Mismo rol → mismo token → mismo render que en /about,
+   /programs, /shop, /resources y /parkour-academy.
+   La identidad de esta ruta queda en la geometría (bento, tira de prueba,
+   número fantasma de sección), el ritmo y el revelado.
+   Cero `!important` (MP-9), cero colores nuevos.
+   ========================================================================== */
+
+/* Lectura: todo el texto corrido sale del mismo paso. */
+.community-page :is(p, li, dd, blockquote) {
+  font-family: var(--type-family-text);
+  font-size: var(--type-body);
+  font-weight: var(--type-weight-body);
+  line-height: var(--type-leading-body);
+  letter-spacing: var(--type-tracking-body);
+}
+
+.community-page small {
+  font-family: var(--type-family-text);
+  font-size: var(--type-meta);
+  font-weight: var(--type-weight-body);
+  line-height: var(--type-leading-body);
+}
+
+/* Títulos: una familia, un peso, un aire, un tracking. */
+.community-page :is(h1, h2, h3, h4),
+.community-page :is(.community-title, .community-hero-title, .community-why-text,
+  .community-trait-name, .community-tier-name, .community-day-title,
+  .community-feeling-title, .community-social-title, .community-chat-name,
+  .community-aspiration-line, .community-movement-line, .community-quote-author,
+  .community-testimonial-author, .testimonial-author) {
+  font-family: var(--type-family-display);
+  font-weight: var(--type-weight-display);
+}
+
+.community-page :is(h1, h2),
+.community-page :is(.community-hero-title, .community-title) {
+  line-height: var(--type-leading-heading);
+  letter-spacing: var(--type-tracking-heading);
+  text-transform: uppercase;
+}
+
+.community-page :is(h3, h4),
+.community-page :is(.community-feeling-title, .community-social-title,
+  .community-day-title, .community-tier-name, .community-trait-name) {
+  line-height: var(--type-leading-title);
+  letter-spacing: var(--type-tracking-title);
+}
+
+/* Párrafo de entrada: el primer texto de cada capítulo. */
+.community-page .community-section-subtitle,
+.community-page .community-subtitle,
+.community-page .community-hero-subtitle,
+.community-page .community-founder-note,
+.community-page .community-tier-feeling {
+  font-family: var(--type-family-text);
+  font-size: var(--type-lede);
+  font-weight: var(--type-weight-body-soft);
+  line-height: var(--type-leading-body);
+  letter-spacing: var(--type-tracking-body);
+  max-inline-size: var(--ds-measure);
+}
+
+/* Rótulo mono: capítulo, estado, fecha, paso y dato. Un solo paso. */
+.community-page :is(.community-overline, .community-eyebrow, .community-kicker),
+.community-page .community-marketing-line.is-mono,
+.community-page :is(.community-hero-free, .community-hero-life, .community-hero-note),
+.community-page :is(.community-chat-author, .community-chat-status),
+.community-page .community-chat-header .community-chat-status,
+.community-page .community-chat-details summary,
+.community-page :is(.community-day-index, .community-day-label, .community-day-name),
+.community-page .community-entry-note,
+.community-page .community-entry-steps li > span,
+.community-page .community-feeling > span,
+.community-page .community-footer-note p,
+.community-page .community-footer-note .community-final-signature,
+.community-page .community-group-traits span,
+.community-page .community-live-date,
+.community-page .community-mid-join-label,
+.community-page .community-proof-strip strong,
+.community-page .community-social-platform,
+.community-page .community-social-thumb > span,
+.community-page :is(.community-tier-badge, .community-tier-label),
+.community-page .lux-card > .community-tier-badge,
+.community-page .community-closing-pressure,
+.community-page :is(.lux-number, .community-why-num),
+.community-page .lux-card > .lux-number {
+  font-family: var(--type-family-mono);
+  font-size: var(--type-eyebrow);
+  font-weight: var(--type-weight-label);
+  line-height: var(--type-leading-eyebrow);
+  letter-spacing: var(--type-tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+/* Número fantasma de sección: figura display, no un tamaño aparte. */
+.community-page .community-section:not(.community-closing)::before,
+.community-page .community-closing .community-number-layer::before {
+  font-family: var(--type-family-display);
+  font-size: var(--type-display);
+  font-weight: var(--type-weight-display);
+  line-height: var(--type-leading-display);
+  letter-spacing: var(--type-tracking-display);
+}
+
+/* Cita y firma: voz del fundador en el paso de apoyo. */
+.community-page .community-quote::before,
+.community-page .testimonial-quote-mark {
+  font-family: var(--type-family-display);
+  font-size: var(--type-h2);
+  font-weight: var(--type-weight-display);
+  line-height: 1;
+}
+
+/* CTA: el mismo botón se escribe igual en las seis rutas. */
+.community-page :is(.community-button, .community-text-link, .community-inline-link),
+.community-page .community-join-floating a,
+.community-page .community-chat-bubble a {
+  font-family: var(--type-family-cta);
+  font-size: var(--type-cta);
+  font-weight: var(--type-weight-cta);
+  line-height: var(--type-leading-eyebrow);
+  letter-spacing: var(--type-tracking-label);
+  text-transform: uppercase;
+}
+
+/* ── Manifiesto «una persona BAYONA» ───────────────────────────────────────
+   Lista numerada con regla entre líneas, en vez de la rejilla de tarjetas que
+   usa la sección contigua. Cada línea entra desplazándose desde su propio
+   número, no todas a la vez. */
+.community-manifest {
+  list-style: none;
+  margin: clamp(28px, 4vw, 52px) 0 0;
+  padding: 0;
+  display: grid;
+}
+
+.community-manifest-line {
+  display: grid;
+  grid-template-columns: clamp(56px, 7vw, 104px) 1fr auto;
+  align-items: baseline;
+  gap: clamp(14px, 2.4vw, 30px);
+  padding: clamp(18px, 2.6vw, 30px) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.11);
+  opacity: 0;
+  transform: translateX(-14px);
+  animation: community-manifest-line 620ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.community-manifest-line:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+@keyframes community-manifest-line {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.community-manifest-index {
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: var(--type-size-05);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--bayona-orange, #f4a261);
+}
+
+.community-manifest-body {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.community-manifest-body .community-trait-name {
+  margin: 0;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: var(--type-card);
+  font-weight: 900;
+  color: #fff;
+}
+
+.community-manifest-body .community-trait-desc {
+  margin: 0;
+  max-width: 54ch;
+  color: #a8a29b;
+  font-size: var(--type-size-04);
+  line-height: 1.65;
+}
+
+.community-manifest-icon {
+  align-self: center;
+  color: rgba(255, 255, 255, 0.28);
+}
+
+@media (max-width: 640px) {
+  .community-manifest-line {
+    grid-template-columns: 2.6rem 1fr;
+  }
+  .community-manifest-icon {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-manifest-line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Raíl horizontal «lo último, en movimiento» ────────────────────────────
+   Sangra por el borde derecho para que se lea como un canal que continúa más
+   allá de la pantalla, no como una rejilla cerrada. El arrastre es horizontal,
+   que es el eje que ninguna otra sección de esta página usa. */
+.community-rail {
+  list-style: none;
+  margin: clamp(26px, 3.4vw, 44px) 0 0;
+  padding: 0 clamp(16px, 4vw, 64px) clamp(6px, 1vw, 12px);
+  display: flex;
+  gap: clamp(14px, 1.8vw, 24px);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: clamp(16px, 4vw, 64px);
+  scrollbar-width: thin;
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 72px), transparent 100%);
+  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 72px), transparent 100%);
+}
+
+.community-rail:focus-visible {
+  outline: 1px solid var(--bayona-orange, #f4a261);
+  outline-offset: -2px;
+}
+
+.community-rail-item {
+  /* Ancho a propósito: con las tres tarjetas cabiendo justas en desktop el raíl
+     se leía como una rejilla más y no sangraba por el borde. 34vw hace que la
+     tercera se corte, que es lo que comunica «esto sigue más allá». */
+  flex: 0 0 clamp(280px, 34vw, 460px);
+  scroll-snap-align: start;
+  display: flex;
+}
+
+.community-rail-item .community-live-card {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-rail {
+    scroll-behavior: auto;
+  }
+}
+
+/**
+ * BAYONA · FIGURAS DE /COMMUNITY (FASE 6)
+ * ---------------------------------------------------------------------------
+ * Tres secciones afirmaban algo y no lo mostraban. Cada figura ES el argumento
+ * de su sección —dos trayectorias, un pulso, una diana—, por eso se pinta antes
+ * del titular: lo primero que hay que leer no puede ser un párrafo.
+ * Ninguna es ornamento y ninguna repite a las otras: línea, latido y anillos.
+ */
+
+.community-figure {
+  display: block;
+  width: min(100%, 620px);
+  height: auto;
+  margin: 0 auto clamp(22px, 3.6vw, 44px);
+  overflow: visible;
+}
+
+.community-figure-label {
+  font-family: var(--type-family-mono);
+  font-size: var(--ds-fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  fill: rgba(244, 162, 97, 0.82);
+}
+
+/* 01 · POR QUÉ EXISTIMOS — dos trayectorias desde el mismo punto. */
+.community-why-solo {
+  color: var(--bayona-muted);
+}
+
+.community-why-solo line {
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.community-why-hollow {
+  fill: none;
+  stroke: var(--bayona-orange);
+  stroke-width: 2;
+  opacity: 0.45;
+}
+
+.community-why-juntos polyline {
+  fill: none;
+  stroke: var(--bayona-orange);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-dasharray: 620;
+  stroke-dashoffset: 620;
+  animation: community-figure-draw 1100ms cubic-bezier(0.22, 1, 0.36, 1) 160ms forwards;
+}
+
+.community-why-juntos .community-figure-label {
+  fill: var(--bayona-muted);
+}
+
+.community-why-node {
+  fill: var(--bayona-orange);
+}
+
+.community-why-hex {
+  fill: none;
+  stroke: var(--bayona-orange);
+  stroke-width: 2;
+}
+
+/* 04 · LA SEMANA — un latido por momento, sobre la misma línea base. */
+.community-pulso-base {
+  stroke: rgba(244, 162, 97, 0.22);
+  stroke-width: 1;
+}
+
+.community-pulso-beat path {
+  fill: none;
+  stroke: var(--bayona-orange);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  animation: community-figure-in 520ms ease both;
+  animation-delay: calc(var(--i, 0) * 210ms);
+}
+
+.community-pulso-node {
+  fill: var(--bayona-white);
+  animation: community-figure-in 520ms ease both;
+  animation-delay: calc(var(--i, 0) * 210ms + 120ms);
+}
+
+/* 05 · TRES NIVELES — el centro no cambia, cambia el radio. */
+.community-figure--why {
+  /* Las dos trayectorias salen de un viewBox de 640 × 160: con el tope genérico
+     de 620px el nodo hueco y su rótulo «SE APAGA» se aplastaban contra el canto. */
+  width: min(100%, 640px);
+}
+
+.community-figure--niveles {
+  /* Es una diana, no un mural: a 620px competía con el titular de abajo. */
+  width: min(100%, 380px);
+}
+
+.community-orbit-ring {
+  fill: none;
+  stroke: rgba(244, 162, 97, 0.28);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: community-orbit-abrir 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 150ms);
+}
+
+.community-orbit-node {
+  fill: var(--bayona-orange);
+  animation: community-figure-in 520ms ease both;
+  animation-delay: calc(var(--i, 0) * 150ms + 260ms);
+}
+
+.community-orbit-core {
+  fill: var(--bayona-white);
+}
+
+@keyframes community-figure-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes community-figure-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes community-orbit-abrir {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 02 · CÓMO SE SIENTE — un hilo de tres mensajes; el último es el que cambia algo. */
+.community-figure--hilo {
+  color: rgba(244, 162, 97, 0.55);
+}
+
+.community-hilo-base {
+  stroke: rgba(244, 162, 97, 0.22);
+  stroke-width: 1;
+}
+
+.community-hilo-turn rect {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  animation: community-figure-in 480ms ease both;
+  animation-delay: calc(var(--i, 0) * 180ms);
+}
+
+.community-hilo-turn line {
+  stroke: rgba(244, 162, 97, 0.3);
+  stroke-width: 1;
+}
+
+.community-hilo-turn .community-figure-label {
+  fill: var(--bayona-muted);
+}
+
+.community-hilo-turn.is-respuesta rect {
+  fill: rgba(244, 162, 97, 0.14);
+  stroke: var(--bayona-orange);
+}
+
+.community-hilo-turn.is-respuesta .community-figure-label {
+  fill: var(--bayona-orange);
+}
+
+/* 03 · QUIÉN ERES AQUÍ — cada arista del polígono es un rasgo del manifiesto. */
+.community-figure--rasgos {
+  width: min(100%, 300px);
+  color: rgba(244, 162, 97, 0.6);
+}
+
+.community-rasgo-arista {
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-dasharray: 96;
+  stroke-dashoffset: 96;
+  animation: community-figure-draw 520ms linear both;
+  animation-delay: calc(var(--i, 0) * 130ms);
+}
+
+.community-rasgo-nodo {
+  fill: var(--bayona-white);
+  animation: community-figure-in 420ms ease both;
+  animation-delay: calc(var(--i, 0) * 130ms);
+}
+
+.community-rasgo-nucleo {
+  fill: var(--bayona-orange);
+}
+
+/* En móvil la figura se queda con la forma: los rótulos de 11px de un viewBox
+ * de 640 reducido a 390 se leerían a ~7px, y eso no es información, es ruido. */
+@media (max-width: 700px) {
+  .community-figure {
+    width: min(100%, 360px);
+  }
+
+  .community-figure-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-figure *,
+  .community-why-juntos polyline,
+  .community-hilo-turn rect,
+  .community-rasgo-arista {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/**
+ * BAYONA · /COMMUNITY FASE 6B — tres secciones que repetían planta
+ * ---------------------------------------------------------------------------
+ * El registro marcaba tres pares contiguos con la misma planta. Se arreglaron
+ * cambiando la composición, no la etiqueta: la secuencia de entrada vuelve a
+ * enseñar sus números (el CSS ya reservaba la columna y el JSX no la pintaba),
+ * los testimonios pasan de carrusel duplicado a página partida, y la última
+ * sección deja de despedirse dos veces: enseña a dónde lleva y se planta como
+ * puente.
+ */
+
+/* 09 · ENTRAR ES SIMPLE — hilo entre los números de la secuencia. */
+.community-entry-steps li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: calc(50% + 18px);
+  width: 1px;
+  height: calc(100% - 34px);
+  background: linear-gradient(180deg, rgba(244, 162, 97, 0.55), rgba(244, 162, 97, 0.12));
+}
+
+/* 06 · HISTORIAS — la regla a la izquierda, el índice de evidencias a la derecha. */
+.community-stories-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: start;
+  gap: clamp(26px, 4vw, 62px);
+}
+
+.community-stories-indice {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(244, 162, 97, 0.26);
+}
+
+.community-stories-indice li {
+  display: grid;
+  gap: 8px;
+  padding: clamp(14px, 1.8vw, 22px) 0;
+  border-bottom: 1px solid rgba(244, 162, 97, 0.14);
+  animation: community-figure-in 520ms ease both;
+  animation-delay: calc(var(--i, 0) * 110ms);
+}
+
+.community-stories-indice .testimonial-quote {
+  margin: 0;
+  color: var(--community-text);
+}
+
+.community-stories-indice .testimonial-author {
+  color: var(--community-orange);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+}
+
+/* 10 · PUENTE — la horquilla: un camino que se abre en dos salidas. */
+.community-bridge-horquilla {
+  display: block;
+  width: min(100%, 560px);
+  height: auto;
+  margin: 0 auto clamp(22px, 3vw, 38px);
+}
+
+.community-horquilla-tallo,
+.community-horquilla-rama {
+  fill: none;
+  stroke: rgba(244, 162, 97, 0.55);
+  stroke-width: 2;
+  stroke-dasharray: 620;
+  stroke-dashoffset: 620;
+  animation: community-figure-draw 1500ms cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
+}
+
+.community-horquilla-tallo {
+  stroke: var(--bayona-orange);
+  stroke-width: 2.5;
+}
+
+.community-horquilla-punta {
+  fill: var(--bayona-orange);
+  animation: community-figure-in 420ms ease both;
+  animation-delay: 1200ms;
+}
+
+@media (max-width: 900px) {
+  .community-stories-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-stories-indice li {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Ajustes vistos en la captura: la columna del titular pedía más aire y la
+ * línea de estado quedaba huérfana y centrada dentro de la columna izquierda.
+ * DENTRO del breakpoint de escritorio: la primera vez lo puse sin condición y
+ * ganaba también a 390px, así que el titular se partía en dos columnas de
+ * 240px y `data-immersive="clip"` se lo comía a tijeretazos. */
+@media (min-width: 701px) {
+  .community-stories-split {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  }
+}
+
+.community-stories-split .community-marketing-line {
+  margin: 0;
+  text-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-horquilla-tallo,
+  .community-horquilla-rama,
+  .community-horquilla-punta {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/* A 390 px dos titulares caían en columnas de 178 y 305 px y su palabra más
+   larga («COMUNIDAD», «PRÁCTICA.») medía 50 y 27 px más que la columna: con
+   `overflow: visible` la palabra pintaba sobre el hueco vecino. El documento ya
+   está en `lang="es"`, así que se parte con guion en móvil y en escritorio el
+   titular sigue intacto. */
+@media (max-width: 680px) {
+  .community-page :is(h1, h2, h3) {
+    hyphens: auto;
+  }
+}
+
+/* ==========================================================================
+   VACÍO MEDIDO · /COMMUNITY a 1440x900 (2026-09-21)
+   --------------------------------------------------------------------------
+   Cuatro bandas negras a lo ancho (243, 190, 160, 160 px) y dos huecos en la
+   mitad derecha (254, 299 px). Casi todo es ritmo DOBLE, no falta de contenido:
+   `.community-section` pedía `padding: clamp(80px, 14vw, 160px) 0` y las diez
+   secciones van pegadas, así que cada costura sumaba 160 + 160 = 320 px antes
+   de la primera letra. El aire lo manda `--route-section-space` (route-identity
+   §1f: clamp(88px, 9vw, 148px) = 129,6 px a 1440) y aquí se reparte mitad
+   y mitad, de modo que la COSTURA valga un token —no dos— y cada sección siga
+   respirando lo mismo por arriba y por abajo: 64,8 + 64,8 = 129,6 px.
+   Todas las reglas llevan `.community-page` por delante (0,2,0) para que el
+   resultado no dependa del orden en que se inyecta el chunk de /community
+   frente a overrides.css y luxury-system.css, y van dentro del breakpoint de
+   escritorio: el bloque ≤768 px declara su propio aire (60 px) y su propio
+   `min-height` de remate, y no se toca.
+   ========================================================================== */
+@media (min-width: 769px) {
+  .community-page .community-section {
+    padding-block: calc(var(--route-section-space, clamp(88px, 9vw, 148px)) / 2);
+  }
+
+  /* El remate se filmaba como plano de cine: `min-height: 80vh` (720 px) y
+     120 px de aire por lado para ~490 px de contenido. Los 243 px medidos en el
+     último fotograma son la suma de ese aire con el de la sección de arriba
+     (160 + 120 = 280) menos las líneas de letra. Con el pie de arriba, la
+     costura vale lo mismo que todas. */
+  .community-page .community-closing {
+    min-height: 0;
+  }
+
+  /* Suelos de tarjeta que no ajustan con su letra: `.community-tier` reservaba
+     380 px para ~300 px de contenido y el sobrante (~80 px) caía entre la
+     descripción y el alcance, que baja con `margin-top: auto` — negro a lo
+     ancho de las tres columnas. Con `align-items: stretch` la fila ya se iguala
+     sola, así que el suelo fijo únicamente reservaba vacío. */
+  .community-page :is(.community-tier, .community-day, .community-feeling, .community-feeling-shell) {
+    min-height: 0;
+  }
+}
+
+/* 09 · LA SECUENCIA DE ENTRADA era una columna de 680 px pegada al margen
+   izquierdo (`margin: 0`): sus tres líneas de mono a 13 px terminaban hacia
+   x=390 y dejaban la mitad derecha (x ≥ 720) sin una letra durante ~250 px,
+   cada línea pagada además con un suelo de 82 px para 32 px de número. En tres
+   carriles el texto del tercero cae en 958..1290 —dentro de la mitad derecha—
+   y la fila pasa de ~246 px a ~80 px. */
+@media (min-width: 900px) {
+  .community-page .community-entry-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: none;
+    gap: 0;
+  }
+
+  .community-page .community-entry-steps li {
+    min-height: 0;
+    padding-block: var(--ds-space-6);
+    border-block-end: 0;
+    border-inline-end: 1px solid var(--community-line);
+  }
+
+  .community-page .community-entry-steps li:last-child {
+    border-inline-end: 0;
+  }
+
+  /* El hilo vertical se mediaba contra la sección (el `li` no es
+     `position: relative`), así que caía fuera de los números: en tres carriles
+     sobra, la secuencia ya la llevan las figuras. */
+  .community-page .community-entry-steps li:not(:last-child)::after {
+    display: none;
+  }
+
+  /* 08 · RASGOS DEL GRUPO: tres tarjetas apiladas a lo ancho de 1200 px con
+     190 px de suelo cada una. El texto, a 14 px, no llegaba a x=720 en NINGUNA
+     de las tres filas: 299 px de mitad derecha vacía (y 570 px de alto).
+     Repartidas en tres pistas, la tercera ocupa 930..1320 y el bloque baja de
+     570 px a ~190 px. */
+  .community-page .community-group-traits {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .community-page .community-group-traits article {
+    min-height: 0;
+  }
+}
+.community-hero-pass {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(760px, 92vw);
+  margin: clamp(22px, 3vw, 34px) auto 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid rgba(244, 162, 97, 0.26);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018)),
+    rgba(8, 8, 10, 0.62);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.community-hero-pass li {
+  min-height: 116px;
+  padding: clamp(16px, 2vw, 22px);
+  text-align: left;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.community-hero-pass li:last-child {
+  border-right: 0;
+}
+
+.community-hero-pass span,
+.community-week-board-top span,
+.community-week-board li span,
+.community-week-board li em {
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.community-hero-pass span,
+.community-week-board li span {
+  display: block;
+  color: var(--orange, #f4a261);
+}
+
+.community-hero-pass strong {
+  display: block;
+  margin-top: 12px;
+  color: var(--white, #f5f5f5);
+  font-family: var(--type-family-display);
+  font-size: clamp(1rem, 1.3vw, 1.24rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.community-hero-pass small {
+  display: block;
+  margin-top: 9px;
+  color: rgba(245, 245, 245, 0.62);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.community-week-board {
+  margin: clamp(28px, 4vw, 48px) 0 clamp(24px, 4vw, 42px);
+  border: 1px solid rgba(244, 162, 97, 0.24);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.016)),
+    radial-gradient(80% 120% at 88% 0%, rgba(244, 162, 97, 0.12), transparent 62%),
+    rgba(8, 8, 10, 0.7);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+.community-week-board-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(16px, 2vw, 22px) clamp(18px, 2.5vw, 28px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.community-week-board-top span {
+  color: rgba(244, 162, 97, 0.82);
+}
+
+.community-week-board-top strong {
+  color: rgba(245, 245, 245, 0.9);
+  font-family: var(--type-family-display);
+  font-size: clamp(1.15rem, 2vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.community-week-board ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.community-week-board li {
+  position: relative;
+  min-height: 128px;
+  padding: clamp(18px, 2.4vw, 28px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.community-week-board li:last-child {
+  border-right: 0;
+}
+
+.community-week-board li::after {
+  content: '';
+  position: absolute;
+  left: clamp(18px, 2.4vw, 28px);
+  right: clamp(18px, 2.4vw, 28px);
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(244, 162, 97, 0.9), transparent);
+}
+
+.community-week-board li strong {
+  display: block;
+  margin-top: 22px;
+  color: var(--white, #f5f5f5);
+  font-family: var(--type-family-display);
+  font-size: clamp(1.25rem, 2.3vw, 2.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.community-week-board li em {
+  display: block;
+  margin-top: 10px;
+  color: rgba(245, 245, 245, 0.58);
+  font-style: normal;
+}
+
+@media (max-width: 760px) {
+  .community-hero-pass,
+  .community-week-board ol {
+    grid-template-columns: 1fr;
+  }
+
+  .community-hero-pass li,
+  .community-week-board li {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .community-hero-pass li:last-child,
+  .community-week-board li:last-child {
+    border-bottom: 0;
+  }
+
+  .community-week-board-top {
+    display: grid;
+  }
+}
+
+/* ==========================================================================
+   LANE C · 22-SEP — LA COMUNIDAD COMO CLUB (anotaciones 2.4 y 49-55)
+   --------------------------------------------------------------------------
+   Cuatro cosas pedías y cuatro cosas se arreglan aquí, en orden de impacto:
+
+   1. LUZ. La página abría a #050505 con una viñeta negra de 0,3 encima de todo.
+      El fondo sube a carbón (#0b0b0d) y la viñeta baja a 0,16: sigue siendo
+      cine, deja de ser sótano. Los textos no cambian de talla ni de color, así
+      que el contraste solo mejora (fondo más claro bajo texto claro = ratio
+      estable o mejor).
+   2. IMAGEN FUERA DE LAS CAJAS. Donde había una foto metida dentro de cada
+      card (cuatro veces la misma imagen en «imagina esto», tres en los
+      niveles), queda ahora UNA imagen humana grande de escena y piezas
+      dibujadas: el pase de socio, los momentos numerados y la escalera de
+      niveles. Es la planta del bloque que te gustaba como referencia.
+   3. PULSO COMO SISTEMA. «Lunes, miércoles, viernes» era una línea y tres
+      tarjetas sueltas. Ahora es un calendario: siete días marcando los tres
+      con cita, y cada día con tema, lo que compartes y lo que recibes.
+   4. NIVELES DISEÑADOS. Abierto / prioritario / privado como tres piezas de
+      club con banda de índice, alcance y condición sellada, no como cards
+      genéricas con foto dentro.
+
+      Las condiciones son las publicadas: el grupo abierto es gratis, la
+      prioridad depende de la membresía y lo privado es exclusivo ELITE con su
+      máximo de 10 cupos. Aquí no se inventa ni un precio.
+   ========================================================================== */
+
+.community-page {
+  --community-bg: #0b0b0d;
+  --community-bg-alt: #101014;
+  --community-card: #15151a;
+  --community-thumb: #1c1c22;
+  --community-line: rgba(255, 255, 255, 0.08);
+  --community-line-soft: rgba(255, 255, 255, 0.05);
+  background:
+    radial-gradient(120% 62% at 82% -12%, rgba(244, 162, 97, 0.075), transparent 62%),
+    var(--community-bg);
+}
+
+/* Los fondos de escena arrastran su propio #050505 (media-scenes.css, global).
+   Dentro de comunidad se alinean con el carbón nuevo para que no queden
+   manchas más oscuras entre sección y sección. */
+.community-page .scene-bg {
+  background-color: var(--community-bg);
+}
+
+.community-page::after {
+  background: radial-gradient(ellipse at center, transparent 62%, rgba(0, 0, 0, 0.16) 100%);
+}
+
+.community-page .community-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+/* --------------------------------------------------------------------------
+   1 · HERO: composición de club en dos bandas, no titular centrado
+   -------------------------------------------------------------------------- */
+.community-hero--club {
+  padding: clamp(120px, 17vh, 190px) 0 clamp(88px, 12vh, 120px);
+}
+
+.community-hero--club::before {
+  /* El halo de antes caía centrado bajo el texto y apagaba la foto. */
+  inset: -10% -10% auto auto;
+  width: 58%;
+  height: 74%;
+  background: radial-gradient(circle, rgba(244, 162, 97, 0.1) 0%, transparent 62%);
+}
+
+.community-hero-club-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr);
+  gap: clamp(34px, 5vw, 66px);
+  align-items: center;
+  width: min(1200px, calc(100% - 48px));
+  margin-inline: auto;
+  text-align: left;
+}
+
+.community-hero-copy {
+  max-width: 640px;
+}
+
+.community-hero--club .community-hero-title {
+  max-width: 15ch;
+  margin: 0;
+}
+
+.community-hero--club .community-hero-subtitle,
+.community-hero--club .community-hero-actions,
+.community-hero--club .community-hero-note {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.community-hero--club .community-hero-subtitle {
+  max-width: 52ch;
+}
+
+.community-hero--club .community-hero-actions {
+  justify-content: flex-start;
+}
+
+.community-hero--club .community-hero-note {
+  margin-top: 26px;
+  color: var(--community-muted);
+}
+
+.community-hero-side {
+  display: grid;
+  gap: clamp(18px, 2.4vw, 26px);
+  justify-items: start;
+}
+
+.community-hero-side .community-hero-pass {
+  width: min(100%, 460px);
+  margin: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.community-hero-side .community-hero-pass li {
+  min-height: 0;
+}
+
+/* El pase: la pieza que hace que «gratis» se lea como condición de club y no
+   como oferta. Dibujado con CSS, sin foto dentro. */
+.community-pass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: min(100%, 460px);
+  padding: clamp(20px, 2.6vw, 28px);
+  border: 1px solid rgba(244, 162, 97, 0.34);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.02)),
+    rgba(11, 11, 13, 0.82);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+}
+
+.community-pass::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -46%;
+  right: -14%;
+  width: 58%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(244, 162, 97, 0.2), transparent 66%);
+  pointer-events: none;
+}
+
+.community-pass-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(245, 245, 245, 0.62);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.community-pass-body {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: clamp(16px, 2.4vw, 24px) 0 14px;
+}
+
+.community-pass-body strong {
+  color: rgba(245, 245, 245, 0.72);
+  font-family: var(--type-family-display);
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.community-pass-body em {
+  color: var(--community-orange);
+  font: 900 clamp(26px, 3.4vw, 40px)/0.9 'Montserrat', Arial, sans-serif;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.community-pass-terms {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 14px 0 0;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.community-pass-terms li + li {
+  padding-left: 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.community-pass-terms span {
+  display: block;
+  color: rgba(244, 162, 97, 0.78);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.18em;
+}
+
+.community-pass-terms strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--community-text);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-06);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+
+.community-pass-perf {
+  margin-top: 16px;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0 6px, transparent 6px 13px);
+}
+
+.community-pass-foot {
+  margin: 12px 0 0;
+  color: rgba(245, 245, 245, 0.5);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   2 · ESCENA: foto grande humana + narrativa, sin cajas con imagen dentro
+   -------------------------------------------------------------------------- */
+.community-scene {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(26px, 4vw, 54px);
+  align-items: start;
+}
+
+.community-scene-photo {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--community-thumb);
+}
+
+.community-scene-photo img {
+  display: block;
+  width: 100%;
+  height: clamp(300px, 44vw, 520px);
+  object-fit: cover;
+  object-position: center 40%;
+  filter: saturate(0.94) contrast(1.04);
+  transform: scale(1.01);
+  transition: transform 1.2s var(--community-ease);
+}
+
+.community-scene-photo:hover img {
+  transform: scale(1.045);
+}
+
+.community-scene-photo figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  gap: 6px;
+  padding: clamp(18px, 2.6vw, 26px);
+  background: linear-gradient(180deg, transparent, rgba(5, 5, 5, 0.82) 58%, rgba(5, 5, 5, 0.95));
+}
+
+.community-scene-photo figcaption strong {
+  color: var(--community-text);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-08);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.community-scene-photo figcaption span {
+  color: rgba(245, 245, 245, 0.66);
+  font-family: var(--type-family-text);
+  font-size: var(--type-size-06);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.community-moments {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--community-line);
+}
+
+.community-moment {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: clamp(14px, 2vw, 22px);
+  padding: clamp(20px, 2.6vw, 28px) 0;
+  border-bottom: 1px solid var(--community-line);
+}
+
+.community-moment-index {
+  color: rgba(244, 162, 97, 0.55);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-05);
+  letter-spacing: 0.12em;
+}
+
+/* Segunda columna del momento: sin `min-width: 0` un titular largo se come la
+   pista del número y parte la línea narrativa en móvil. */
+.community-moment-body {
+  min-width: 0;
+}
+
+.community-moment-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: rgba(245, 245, 245, 0.52);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.community-moment-title {
+  margin: 10px 0 8px;
+  color: var(--community-text);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-09);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.community-moment-desc {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--community-muted);
+  font-family: var(--type-family-text);
+  font-size: var(--type-size-07);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   3 · PULSO: calendario de siete días + panel por día con tema/aporte/retorno
+   -------------------------------------------------------------------------- */
+.community-pulse {
+  display: grid;
+  gap: clamp(22px, 3vw, 34px);
+}
+
+.community-calendar-week {
+  border: 1px solid rgba(244, 162, 97, 0.22);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012)),
+    rgba(11, 11, 13, 0.6);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.26);
+}
+
+.community-calendar-week-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(14px, 1.8vw, 20px) clamp(16px, 2.2vw, 24px);
+  border-bottom: 1px solid var(--community-line);
+}
+
+.community-calendar-week-head span {
+  color: rgba(244, 162, 97, 0.82);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.community-calendar-week-head strong {
+  color: rgba(245, 245, 245, 0.86);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-06);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.community-calendar-week ol {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.community-calendar-week li {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: clamp(16px, 2vw, 22px) 6px clamp(18px, 2.2vw, 24px);
+  border-right: 1px solid var(--community-line-soft);
+  text-align: center;
+}
+
+.community-calendar-week li:last-child {
+  border-right: 0;
+}
+
+.community-calendar-day {
+  color: rgba(245, 245, 245, 0.55);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-06);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.community-calendar-dot {
+  width: 7px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.community-calendar-pulse {
+  color: rgba(245, 245, 245, 0.34);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-03);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.community-calendar-week li.is-active .community-calendar-day {
+  color: var(--community-text);
+}
+
+.community-calendar-week li.is-active .community-calendar-dot {
+  background: var(--community-orange);
+  box-shadow: 0 0 0 4px rgba(244, 162, 97, 0.16);
+}
+
+.community-calendar-week li.is-active .community-calendar-pulse {
+  color: rgba(244, 162, 97, 0.86);
+}
+
+.community-calendar-week li.is-active {
+  background: linear-gradient(180deg, rgba(244, 162, 97, 0.1), transparent 72%);
+}
+
+.community-calendar-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--community-line);
+  background: var(--community-line);
+}
+
+.community-calendar-panel {
+  display: grid;
+  gap: clamp(16px, 2vw, 22px);
+  padding: clamp(24px, 3.4vw, 38px);
+  background: var(--community-bg);
+  transition: background-color 0.4s var(--community-ease);
+}
+
+.community-calendar-panel:hover {
+  background: var(--community-card);
+}
+
+.community-calendar-panel-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: clamp(14px, 2vw, 20px);
+}
+
+.community-calendar-num {
+  color: rgba(244, 162, 97, 0.5);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-05);
+  letter-spacing: 0.12em;
+}
+
+.community-calendar-panel .community-day-label {
+  font-size: clamp(22px, 2.6vw, 30px);
+  letter-spacing: -0.01em;
+}
+
+.community-calendar-tag {
+  padding: 6px 12px;
+  border: 1px solid rgba(244, 162, 97, 0.3);
+  color: var(--community-orange);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.community-calendar-rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--community-line);
+}
+
+.community-calendar-rows > div {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: clamp(10px, 1.6vw, 18px);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--community-line-soft);
+}
+
+.community-calendar-rows dt {
+  color: rgba(244, 162, 97, 0.78);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.2em;
+}
+
+.community-calendar-rows dd {
+  margin: 0;
+  color: var(--community-muted);
+  font-family: var(--type-family-text);
+  font-size: var(--type-size-07);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.community-calendar-note {
+  margin: 0;
+  max-width: 62ch;
+  color: rgba(245, 245, 245, 0.44);
+  font-family: var(--type-family-text);
+  font-size: var(--type-size-06);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   4 · NIVELES: escalera de club diseñada, cero fotos dentro
+   -------------------------------------------------------------------------- */
+.community-tier-ladder {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--community-line);
+  background: var(--community-line);
+}
+
+.community-tier-card {
+  position: relative;
+  isolation: isolate;
+  min-height: 0;
+  gap: 0;
+  padding: clamp(26px, 3.4vw, 40px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 46%),
+    var(--community-bg);
+}
+
+.community-tier-card::before {
+  /* Filete superior: el grosor crece con el nivel, que es lo que cambia aquí. */
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(244, 162, 97, 0.28), transparent 62%);
+}
+
+.community-tier-card:hover::before {
+  background: linear-gradient(90deg, var(--community-orange), transparent 72%);
+}
+
+.community-tier-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--community-line);
+}
+
+.community-tier-index {
+  color: rgba(244, 162, 97, 0.72);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.22em;
+}
+
+.community-tier-tag {
+  color: rgba(245, 245, 245, 0.5);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.community-tier-keyline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: clamp(22px, 3vw, 32px) 0 18px;
+  color: rgba(244, 162, 97, 0.62);
+}
+
+.community-tier-keyline span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 162, 97, 0.32));
+}
+
+.community-tier-keyline span:last-child {
+  background: linear-gradient(90deg, rgba(244, 162, 97, 0.32), transparent);
+}
+
+.community-tier-card .community-tier-name {
+  margin: 0;
+}
+
+.community-tier-card .community-tier-desc {
+  margin: 12px 0 0;
+  max-width: 38ch;
+}
+
+.community-tier-scope {
+  display: grid;
+  gap: 10px;
+  margin: clamp(20px, 2.6vw, 26px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.community-tier-scope li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+  color: rgba(245, 245, 245, 0.72);
+  font-family: var(--type-family-text);
+  font-size: var(--type-size-06);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.community-tier-scope svg {
+  margin-top: 3px;
+  color: var(--community-orange);
+}
+
+.community-tier-condition {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(22px, 2.8vw, 30px);
+  padding-top: 16px;
+  border-top: 1px solid var(--community-line);
+}
+
+.community-tier-condition strong {
+  color: var(--community-text);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-05);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.community-tier-card .community-tier-feeling {
+  margin-top: 18px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.community-tier.privado {
+  background:
+    linear-gradient(180deg, rgba(244, 162, 97, 0.09), transparent 52%),
+    var(--community-card);
+}
+
+.community-tier.privado .community-tier-condition strong {
+  color: var(--community-orange);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  .community-hero-club-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  }
+
+  .community-scene {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+  }
+
+  .community-scene-photo {
+    position: sticky;
+    top: 96px;
+  }
+
+  .community-calendar-panels,
+  .community-tier-ladder {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .community-calendar-panel,
+  .community-tier-card {
+    height: 100%;
+  }
+}
+
+@media (max-width: 899px) {
+  .community-calendar-week ol {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .community-calendar-week li {
+    border-bottom: 1px solid var(--community-line-soft);
+  }
+}
+
+@media (max-width: 640px) {
+  .community-pass-terms,
+  .community-hero-side .community-hero-pass {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .community-pass-terms li + li {
+    padding-top: 12px;
+    padding-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 0;
+  }
+
+  .community-calendar-rows > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .community-calendar-panel-head {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .community-calendar-tag {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .community-moment {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .community-moment-index {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-scene-photo img,
+  .community-scene-photo:hover img {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── 3b · EL PULSO SE NAVEGA ──────────────────────────────────────────────
+   Un día con agenda es una pieza seleccionable: botón que lleva a su panel
+   (`lib/schedule/clubPulse.js`). Un día sin agenda sigue siendo texto, y por
+   eso no puede ofrecer destino. La tipografía de la casilla la pone
+   `.community-calendar-day`; aquí solo se quita el chasis de `<button>`. */
+.community-calendar-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: none;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    color 0.24s var(--community-ease),
+    border-color 0.24s var(--community-ease);
+}
+
+.community-calendar-week li.is-active .community-calendar-link:hover {
+  color: var(--community-orange);
+  border-bottom-color: currentColor;
+}
+
+.community-calendar-link:focus-visible {
+  outline: 1px solid var(--community-orange);
+  outline-offset: 4px;
+}
+
+/* Aterrizaje del salto: el panel no queda pegado al borde superior y admite el
+   foco que devuelve `goToPulseDay`. */
+.community-calendar-panel {
+  scroll-margin-top: clamp(80px, 10vh, 120px);
+}
+
+.community-calendar-panel:focus-visible {
+  outline: 1px solid rgba(244, 162, 97, 0.5);
+  outline-offset: -1px;
+}
+
+/* ── Ganchos de plano ─────────────────────────────────────────────────────
+   `config/sectionBlueprints.js` reconoce cada sección de /community por esta
+   tercera clase, así que el nombre tiene que existir en el DOM. En CSS hace dos
+   trabajos reales: el desfase de aterrizaje para los enlaces con `#` de la
+   página (hoy `#por-que`, y el que se añada) y el recorte del eje x, que en la
+   sección del raíl no puede convertir el sangrado en barra de scroll. */
+.community-page :is(.community-why, .community-scene-block, .community-person, .community-manifest-section, .community-live, .community-rail-section) {
+  scroll-margin-top: clamp(80px, 10vh, 120px);
+}
+
+.community-live,
+.community-rail-section {
+  overflow-x: clip;
+}
+
+/* Las dos figuras de acompañamiento: el polígono de rasgos y la diana de
+   niveles se dibujan para mirarse, así que la arista y el anillo sobre los que
+   cae el puntero responden. El retardo de entrada lo sigue mando `--i` desde
+   el JSX; esto solo es el estado. */
+.community-rasgo:hover .community-rasgo-arista {
+  stroke: var(--bayona-orange);
+}
+
+.community-orbit:hover .community-orbit-ring {
+  stroke: var(--bayona-orange);
+}

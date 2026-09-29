@@ -1,0 +1,128 @@
+/* EditMode (?edit=1) — panel de selección. Solo se carga con el query param:
+   el visitante normal nunca descarga estas reglas (van en el chunk lazy del
+   componente). Por eso este fichero es autónomo: no depende de tokens. */
+
+body.bayona-editing,
+body.bayona-editing a,
+body.bayona-editing button {
+  cursor: crosshair;
+}
+
+#bayona-edit-panel {
+  position: fixed;
+  z-index: 999999;
+  font-family: var(--type-family-text);
+}
+
+.bayona-edit-hint {
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  max-width: min(92vw, 560px);
+  padding: 9px 16px;
+  font-size: var(--type-size-06);
+  letter-spacing: 0.04em;
+  color: #f5f1ea;
+  background: rgba(5, 5, 5, 0.92);
+  border: 1px solid rgba(244, 162, 97, 0.55);
+}
+
+.bayona-edit-panel {
+  right: 14px;
+  bottom: 14px;
+  width: min(92vw, 340px);
+  padding: 14px 14px 12px;
+  font-size: var(--type-size-07);
+  line-height: 1.45;
+  color: #f5f1ea;
+  background: rgba(5, 5, 5, 0.94);
+  border: 1px solid rgba(244, 162, 97, 0.55);
+}
+
+.bayona-edit-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  align-items: baseline;
+}
+
+.bayona-edit-label {
+  flex: 0 0 64px;
+  font-size: var(--type-size-05);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f4a261;
+}
+
+.bayona-edit-row code {
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-06);
+  color: #ffd9ad;
+  word-break: break-all;
+}
+
+.bayona-edit-input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px 10px;
+  font: inherit;
+  color: #f5f1ea;
+  background: #111;
+  border: 1px solid #333;
+  resize: vertical;
+}
+
+.bayona-edit-input:focus {
+  outline: 1px solid #f4a261;
+  border-color: #f4a261;
+}
+
+/* Vista previa en vivo: EXACTAMENTE lo que se copiará. Si esto está
+   incompleto, el envío también lo estará: nada sale a medias sin verse. */
+.bayona-edit-preview {
+  margin: 0 0 8px;
+  padding: 8px 10px;
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-05);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #ffd9ad;
+  background: #0a0a0a;
+  border: 1px dashed rgba(244, 162, 97, 0.4);
+  max-height: 130px;
+  overflow-y: auto;
+}
+
+.bayona-edit-warn {
+  margin: 0 0 8px;
+  font-size: var(--type-size-06);
+  color: #ffb4a2;
+}
+
+.bayona-edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.bayona-edit-copy,
+.bayona-edit-close {
+  flex: 1;
+  padding: 9px 0;
+  font-size: var(--type-size-06);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.bayona-edit-copy {
+  color: #050505;
+  background: #f4a261;
+  border: 1px solid #f4a261;
+}
+
+.bayona-edit-close {
+  color: #f5f1ea;
+  background: transparent;
+  border: 1px solid #555;
+}

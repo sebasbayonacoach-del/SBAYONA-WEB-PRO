@@ -1,0 +1,32 @@
+/* 
+ * PLAN PRESENTATION VALUE SECTION - Solo hover en inclusiones
+ * Sin modificar estructura ni layout
+ */
+
+/* 1. Hover en cada ítem ilumina icono */
+.plan-presentation-value-icon {
+  transition: color 250ms ease, transform 250ms ease;
+}
+
+.plan-presentation-value-list li:hover .plan-presentation-value-icon {
+  color: rgba(244, 162, 97, 1);
+  transform: scale(1.08);
+}
+
+/* 2. Valor real cambia a naranja en hover */
+.plan-presentation-value-price strong {
+  transition: color 250ms ease;
+}
+
+.plan-presentation-value-list li:hover .plan-presentation-value-price strong {
+  color: rgba(244, 162, 97, 0.95);
+}
+
+/* 3. Transición general del ítem */
+.plan-presentation-value-list li {
+  transition: background 250ms ease;
+}
+
+.plan-presentation-value-list li:hover {
+  background: rgba(255, 255, 255, 0.015);
+}

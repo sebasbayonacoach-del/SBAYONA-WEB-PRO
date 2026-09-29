@@ -1,0 +1,344 @@
+/*
+ * Chat de la asesora. Se importa desde CompanionChat.jsx, como hace
+ * JourneyRibbon: el CSS de un componente viaja con él y no engorda la lista de
+ * importaciones de main.jsx (hay un test que vigila cuáles son las tres
+ * últimas).
+ *
+ * Todo con tokens del sistema: sin color literal ni tamaño de letra fijo.
+ * Ocupa la esquina inferior IZQUIERDA porque la derecha ya es del botón de
+ * WhatsApp en todo el sitio; dos flotantes en la misma esquina se tapan.
+ */
+.chat {
+  position: fixed;
+  z-index: 95;
+  bottom: 92px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  width: min(384px, calc(100vw - 40px));
+  max-height: min(62vh, 520px);
+  border: 1px solid var(--bayona-hairline);
+  background: var(--bayona-surface-1, var(--bayona-surface-0));
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.chat__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-block-end: 1px solid var(--bayona-hairline);
+}
+
+.chat__avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 1px solid var(--bayona-orange);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(244, 162, 97, 0.5), rgba(231, 111, 81, 0.2) 70%);
+  color: var(--bayona-white);
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.chat__ident {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat__title {
+  margin: 0;
+  color: var(--bayona-white);
+  font-size: var(--ds-fs-eyebrow);
+  font-family: var(--type-family-mono, monospace);
+  letter-spacing: 0.12em;
+}
+
+/* Quién habla y hasta dónde llega: el asistente responde con lo publicado y
+   el canal humano se nombra aparte (§8 de la dirección de producto). */
+.chat__sub {
+  margin: 4px 0 0;
+  color: var(--bayona-muted, var(--bayona-white));
+  font-size: 0.7rem;
+  line-height: 1.5;
+  font-family: var(--type-family-text, sans-serif);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.chat__close {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  color: var(--bayona-muted);
+  border: 1px solid var(--bayona-hairline);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color var(--bayona-dur-micro) var(--bayona-ease-standard),
+    border-color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+.chat__close:hover {
+  color: var(--bayona-orange);
+  border-color: var(--bayona-orange);
+}
+
+.chat__hilo {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 14px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chat-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chat-msg__who {
+  color: var(--bayona-muted);
+  font-size: var(--ds-fs-eyebrow);
+  font-family: var(--type-family-mono, monospace);
+  letter-spacing: 0.14em;
+}
+
+.chat-msg__texto {
+  margin: 0;
+  color: var(--bayona-bone, var(--bayona-white));
+  font-size: var(--type-size-08);
+  line-height: 1.62;
+  white-space: pre-line;
+}
+
+.chat-msg--tu {
+  padding-inline-start: 14px;
+  border-inline-start: 1px solid var(--bayona-orange);
+}
+
+.chat-msg--tu .chat-msg__who {
+  color: var(--bayona-orange);
+}
+
+.chat-msg--escribiendo {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat__tecleo {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.chat__tecleo i {
+  width: 5px;
+  height: 5px;
+  background: var(--bayona-muted);
+  border-radius: 50%;
+  animation: chat-laton 1.1s var(--bayona-ease-standard) infinite;
+}
+
+.chat__tecleo i:nth-child(2) { animation-delay: 0.16s; }
+.chat__tecleo i:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes chat-laton {
+  0%, 60%, 100% { opacity: 0.3; translate: 0 0; }
+  30% { opacity: 1; translate: 0 -3px; }
+}
+
+.chat__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 14px 12px;
+}
+
+.chat__chip {
+  padding: 8px 11px;
+  color: var(--bayona-white);
+  border: 1px solid var(--bayona-hairline);
+  background: var(--bayona-surface-2, transparent);
+  font-size: var(--ds-fs-eyebrow);
+  font-family: var(--type-family-mono, monospace);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition:
+    translate var(--bayona-dur-micro) var(--bayona-ease-standard),
+    border-color var(--bayona-dur-micro) var(--bayona-ease-standard),
+    color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+.chat__chip:hover {
+  color: var(--bayona-orange);
+  border-color: var(--bayona-orange);
+  translate: 0 -2px;
+}
+
+/* WhatsApp como canal externo: logo real, verde propio y nombre escrito.
+   Se separa del naranja de la casa justo para que nadie lo confunda con el
+   chat interno; es la única excepción de color declarada en esta hoja. */
+.chat__chip--whatsapp,
+.chat__whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #eaf6ee;
+  border-color: #1f7a4d;
+  background: #1f7a4d;
+}
+
+.chat__chip--whatsapp:hover,
+.chat__whatsapp:hover,
+.chat__chip--whatsapp:focus-visible,
+.chat__whatsapp:focus-visible {
+  color: #ffffff;
+  border-color: #2c9a63;
+  background: #2c9a63;
+}
+
+.chat__chip--whatsapp svg,
+.chat__whatsapp svg {
+  flex: none;
+}
+
+.chat__chip--claim {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--bayona-orange);
+  border-color: var(--bayona-orange);
+  cursor: pointer;
+}
+
+.chat__chip--claim:hover,
+.chat__chip--claim:focus-visible {
+  color: var(--bayona-white);
+  background: var(--bayona-orange);
+}
+
+/* Pie del chat: la salida humana siempre visible. */
+.chat__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  border-block-start: 1px solid var(--bayona-hairline);
+  color: var(--bayona-muted, var(--bayona-white));
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.chat__whatsapp {
+  padding: 7px 10px;
+  border: 1px solid;
+  font-size: var(--ds-fs-eyebrow);
+  font-family: var(--type-family-mono, monospace);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.chat__form {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  border-block-start: 1px solid var(--bayona-hairline);
+}
+
+.chat__campo {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 12px;
+  color: var(--bayona-white);
+  border: 1px solid var(--bayona-hairline);
+  background: var(--bayona-surface-0);
+  font-size: var(--type-size-08);
+  font-family: inherit;
+}
+
+.chat__campo::placeholder {
+  color: var(--bayona-muted);
+}
+
+.chat__campo:focus-visible {
+  outline: 2px solid var(--bayona-orange);
+  outline-offset: 1px;
+}
+
+.chat__enviar {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  color: var(--bayona-white);
+  border: 1px solid var(--bayona-orange);
+  background: var(--bayona-orange);
+  cursor: pointer;
+  transition:
+    translate var(--bayona-dur-micro) var(--bayona-ease-standard),
+    opacity var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+.chat__enviar:hover {
+  translate: 0 -2px;
+}
+
+.chat__enviar:disabled {
+  opacity: 0.4;
+  cursor: default;
+  translate: none;
+}
+
+.chat__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  /*
+   * En móvil el chat se abre como hoja: la esquina izquierda ya no deja ancho
+   * suficiente para leer una respuesta de tres líneas, y aquí sí que no hay
+   * nada que tapar porque es lo que la persona acaba de pedir.
+   */
+  .chat {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: min(84vh, 620px);
+    border-inline: 0;
+    border-block-end: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat__tecleo i {
+    animation: none;
+    opacity: 0.7;
+  }
+
+  .chat__chip,
+  .chat__chip:hover,
+  .chat__enviar,
+  .chat__enviar:hover {
+    translate: none;
+  }
+}

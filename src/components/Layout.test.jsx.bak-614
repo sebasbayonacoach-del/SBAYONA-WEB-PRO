@@ -1,0 +1,70 @@
+import { readdirSync, readFileSync } from 'node:fs'
+import { extname, join, resolve } from 'node:path'
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+import { WhatsAppButton } from './Layout.jsx'
+
+const PRODUCT_SOURCE_EXTENSIONS = new Set(['.css', '.js', '.jsx', '.svg'])
+const FORBIDDEN_WHATSAPP_GREENS = [
+  ['WhatsApp green', /#25d366\b/i],
+  ['WhatsApp dark green', /#128c7e\b/i],
+  ['WhatsApp teal', /#075e54\b/i],
+  ['WhatsApp light green', /#dcf8c6\b/i],
+  ['named WhatsApp green token', /whatsapp[-_\s]*(?:green|verde)\b/i],
+]
+
+function listProductSources(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(directory, entry.name)
+
+    if (entry.isDirectory()) return listProductSources(path)
+    if (entry.name.includes('.test.') || !PRODUCT_SOURCE_EXTENSIONS.has(extname(entry.name))) return []
+
+    return [path]
+  })
+}
+
+describe('WhatsAppButton — FASE 12', () => {
+  it('mantiene el canal oficial wa.me con nombre y destino accesibles', () => {
+    render(<WhatsAppButton />)
+
+    const link = screen.getByRole('link', { name: 'Hablar con BAYONA por WhatsApp' })
+    const url = new URL(link.href)
+
+    // Anotación 8 del brief de 70: el botón debe decir el canal con todas las
+    // letras («Hablar por WhatsApp») en lugar del ambiguo «Hablemos». Se actualiza
+    // la aserción porque la cambió el dueño del producto, no para hacerla pasar.
+    expect(link).toHaveTextContent('Hablar por WhatsApp')
+    expect(link).toHaveAttribute('class', 'whatsapp-button')
+    expect(link).toHaveAttribute('target', '_blank')
+    expect(link.rel.split(/\s+/)).toContain('noreferrer')
+    expect(url.origin).toBe('https://wa.me')
+    expect(url.pathname).toBe('/34614988006')
+    expect(url.searchParams.get('text')).toBe('Hola BAYONA, quiero conocer el camino que mejor encaja conmigo.')
+  })
+
+  it('usa naranja BAYONA, blanco y un objetivo táctil de 48 px', () => {
+    const css = readFileSync(resolve(process.cwd(), 'src/styles/home.css'), 'utf8')
+    const baseRule = css.match(/\.whatsapp-button\s*\{([^}]*)\}/)?.[1]
+    const hoverRule = css.match(/\.whatsapp-button:hover\s*\{([^}]*)\}/)?.[1]
+
+    expect(baseRule).toMatch(/min-width:\s*48px/i)
+    expect(baseRule).toMatch(/min-height:\s*48px/i)
+    expect(baseRule).toMatch(/border:\s*1px solid var\(--orange\)/i)
+    expect(baseRule).toMatch(/background:\s*var\(--orange\)/i)
+    expect(hoverRule).toMatch(/border-color:\s*#fff/i)
+    expect(hoverRule).toMatch(/background:\s*#fff/i)
+    expect(css).toMatch(/@media \(prefers-reduced-motion:\s*reduce\)/i)
+  })
+
+  it('no conserva colores verdes de WhatsApp en el código de producto', () => {
+    const violations = listProductSources(resolve(process.cwd(), 'src')).flatMap((path) => {
+      const source = readFileSync(path, 'utf8')
+      return FORBIDDEN_WHATSAPP_GREENS
+        .filter(([, pattern]) => pattern.test(source))
+        .map(([label]) => `${path}: ${label}`)
+    })
+
+    expect(violations).toEqual([])
+  })
+})

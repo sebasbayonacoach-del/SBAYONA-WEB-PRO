@@ -1,0 +1,201 @@
+/* BAYONA · 404 — usa los tokens de styles.css (--gold, --muted, DM Mono) */
+
+.not-found-page {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(120% 120% at 70% 25%, rgba(244, 162, 97, 0.12), transparent 55%),
+    linear-gradient(180deg, #050505 0%, #0a0a0b 100%);
+}
+
+.not-found-shell {
+  padding: 140px 0 110px;
+}
+
+.not-found-page h1 {
+  margin: 0;
+  font-size: clamp(52px, 9vw, 128px);
+  line-height: 0.82;
+  font-weight: 900;
+}
+
+.not-found-lead {
+  max-width: 520px;
+  margin: 30px 0 0;
+  font-size: var(--type-size-07);
+}
+
+.not-found-path {
+  margin: 14px 0 0;
+  color: var(--gray-dim);
+  font: 12px/1.6 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+
+.not-found-path code {
+  color: var(--gold);
+  font-family: var(--type-family-mono);
+  word-break: break-all;
+}
+
+.not-found-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 54px 0 0;
+}
+
+.not-found-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 168px;
+  padding: 20px;
+  border: 1px solid #ffffff22;
+  background: linear-gradient(145deg, #111, #090909);
+  transition: transform 0.25s, border-color 0.25s, background 0.25s;
+}
+
+.not-found-card:hover,
+.not-found-card:focus-visible {
+  border-color: var(--gold);
+  background: #1a0f0b;
+  transform: translateY(-6px);
+}
+
+.not-found-card-number {
+  color: var(--gold);
+  font: 12px 'DM Mono', monospace;
+  letter-spacing: 0.14em;
+}
+
+.not-found-card strong {
+  margin-top: 6px;
+  font-size: var(--type-size-08);
+  letter-spacing: -0.02em;
+}
+
+.not-found-card small {
+  color: var(--muted);
+  font-size: var(--type-size-05);
+  line-height: 1.6;
+}
+
+.not-found-card svg {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.not-found-card:hover svg,
+.not-found-card:focus-visible svg {
+  opacity: 1;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: 44px;
+}
+
+.not-found-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 19px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg, #f4a261, #e76f51);
+  color: #070707;
+  font-size: var(--type-size-05);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.not-found-home:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 44px rgba(231, 111, 81, 0.26);
+}
+
+.not-found-help {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #d5d0c8;
+  font-size: var(--type-size-05);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.not-found-help:hover {
+  color: var(--gold);
+}
+
+@media (max-width: 950px) {
+  .not-found-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .not-found-shell {
+    padding: 120px 0 90px;
+  }
+
+  .not-found-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .not-found-card,
+  .not-found-home {
+    transition: none;
+  }
+
+  .not-found-card:hover,
+  .not-found-card:focus-visible,
+  .not-found-home:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   FASE 4C · ATELIER — 404 CON NÚMERO DE PÁGINA
+   El 404 deja de ser un aviso y se lee como una hoja en blanco del catálogo:
+   cifra gigante, una línea de ayuda y las puertas de siempre.
+   Todo sale de los tokens del sistema: cero `!important`, cero colores
+   nuevos, cero radios propios, cero `z-index` sueltos. Cero WebGL.
+   ========================================================================== */
+
+.not-found-card-number {
+  font-family: var(--bayona-font-display);
+  font-size: var(--bayona-type-figure);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--bayona-bone);
+  font-variant-numeric: tabular-nums;
+}
+
+.not-found-card {
+  border: var(--bayona-hairline);
+  background: var(--bayona-surface-1);
+}
+
+.not-found-grid > * {
+  border-block-end: var(--bayona-hairline);
+}
+
+.not-found-help p {
+  max-inline-size: var(--bayona-measure);
+}

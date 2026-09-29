@@ -1,0 +1,228 @@
+/*
+  BAYONA · COMPARTIR E INVITAR
+  Cierre de recorrido. Tono generoso, no transaccional: aquí no se pide nada
+  para la marca, se ofrece pasar algo que ya es gratis.
+*/
+
+.share-invite {
+  padding: clamp(64px, 7vw, 104px) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  background: linear-gradient(180deg, #07070a 0%, #050505 100%);
+}
+
+.share-invite-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(28px, 4vw, 64px);
+}
+
+.share-invite-eyebrow {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font: 500 var(--fs-label, 12px) 'DM Mono', ui-monospace, monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.share-invite-copy h2 {
+  margin: 0 0 18px;
+}
+
+.share-invite-copy h2 span {
+  color: var(--gold);
+}
+
+.share-invite-copy p {
+  max-width: 54ch;
+  margin: 0;
+}
+
+.share-invite-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.share-invite-primary,
+.share-invite-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: var(--v2-radius-sm, 10px);
+  font-size: var(--type-size-05);
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.share-invite-primary {
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #050505;
+  cursor: pointer;
+}
+
+.share-invite-primary:hover {
+  background: var(--orange-fire);
+  border-color: var(--orange-fire);
+  transform: translateY(-2px);
+}
+
+.share-invite-whatsapp {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: transparent;
+  color: #d5d0c8;
+}
+
+.share-invite-whatsapp:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.share-invite-primary:focus-visible,
+.share-invite-whatsapp:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* La confirmación se anuncia, no se pinta: el botón ya cambia de estado. */
+.share-invite-status {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 900px) {
+  .share-invite-inner {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+@media (max-width: 560px) {
+  .share-invite-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .share-invite-primary,
+  .share-invite-whatsapp {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-invite-primary,
+  .share-invite-whatsapp {
+    transition: none;
+  }
+
+  .share-invite-primary:hover,
+  .share-invite-whatsapp:hover {
+    transform: none;
+  }
+}
+
+/* ── El relevo ─────────────────────────────────────────────────────────────
+   La sección era solo párrafo + botones: abría por texto en las ocho rutas del
+   itinerario. Aquí el objeto manda y llega primero; el texto pasa a segunda
+   columna. El testigo viaja de la marca de quien tiene el enlace a la marca de
+   quien aún no lo ha visto, que es exactamente lo que se pide. */
+.share-invite-inner {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) 1fr;
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+.share-invite-relay {
+  /* El contenedor tiene cuatro hijos (relevo, copia, acciones y confirmación)
+     y solo dos columnas: sin esto, los botones caían a la columna del relevo.
+     `1 / -1` no vale porque -1 apunta a la última LÍNEA EXPLÍCITA y aquí las
+     filas son implícitas; se enumeran a mano las tres filas que ocupa. */
+  grid-row: 1 / span 3;
+  align-self: center;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.share-invite-relay-track,
+.share-invite-relay-run {
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.share-invite-relay-track {
+  stroke: rgba(255, 255, 255, 0.16);
+}
+
+.share-invite-relay-run {
+  stroke: var(--bayona-orange, #f4a261);
+  stroke-dasharray: 26 62;
+  animation: share-invite-relay 2600ms cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes share-invite-relay {
+  0%   { stroke-dashoffset: 88; opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { stroke-dashoffset: -88; opacity: 0; }
+}
+
+.share-invite-relay-node {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 1.5;
+}
+
+.share-invite-relay-node.is-from {
+  stroke: rgba(255, 255, 255, 0.22);
+}
+
+/* El destino se enciende cuando el testigo llega, no antes: la luz es la
+   respuesta, no un adorno que parpadea suelto. */
+.share-invite-relay-node.is-to {
+  animation: share-invite-destino 2600ms cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes share-invite-destino {
+  0%, 55%  { stroke: rgba(255, 255, 255, 0.22); fill: transparent; }
+  78%, 92% { stroke: var(--bayona-orange, #f4a261); fill: rgba(244, 162, 97, 0.14); }
+  100%     { stroke: rgba(255, 255, 255, 0.22); fill: transparent; }
+}
+
+@media (max-width: 760px) {
+  .share-invite-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .share-invite-relay {
+    max-width: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-invite-relay-run {
+    stroke-dashoffset: -20;
+    animation: none;
+    opacity: 1;
+  }
+
+  .share-invite-relay-node.is-to {
+    animation: none;
+    stroke: var(--bayona-orange, #f4a261);
+  }
+}

@@ -1,0 +1,186 @@
+/*
+  BAYONA · PRESENTACIÓN DEL PRECIO v2
+  ===========================================================================
+  DIAGNÓSTICO
+
+  El motor de precios del proyecto es la mejor pieza de ingeniería que tiene:
+  validación real, cálculo entero en COP, equivalencias declaradas como
+  aproximadas. Pero se presentaba como una tabla.
+
+  Tres problemas concretos:
+
+  1. El precio competía con el nombre del plan por la misma jerarquía. En una
+     oferta de acompañamiento el precio NO es el protagonista: lo es lo que
+     recibes. El precio debe leerse con calma, después.
+  2. La moneda y las equivalencias tenían el mismo peso visual que la cifra, así
+     que "149.000 COP/mes ≈ €35 ≈ $38 USD" se leía como un bloque confuso.
+  3. Los cuatro planes se veían igual de importantes. Sin una jerarquía clara,
+     quien no sabe elegir no elige.
+
+  CRITERIO
+
+  El precio se compone como en una ficha de producto de lujo: cifra grande y
+  tranquila, moneda pequeña al lado, equivalencias en un segundo plano
+  explícito. Nada de tachados, nada de "antes/ahora", nada de urgencia.
+*/
+
+/* =========================================================================
+   1. LA CIFRA
+   ========================================================================= */
+.plan-card > strong,
+.plan-showroom-price,
+.faq-price-main strong,
+.summary-total-price > b,
+.persistent-summary-cop {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.24em;
+  font-variant-numeric: tabular-nums;
+  /* La cifra no lleva la compensación óptica agresiva de los titulares: los
+     números necesitan aire entre sí para leerse de un golpe. */
+  letter-spacing: -0.03em !important;
+}
+
+/* La unidad, siempre pequeña y en monoespaciada: es un dato, no un titular. */
+.plan-card > strong small,
+.faq-price-main small,
+.summary-total-price small {
+  color: var(--gray-dim) !important;
+  font: 500 var(--fs-label) 'DM Mono', ui-monospace, monospace !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase;
+}
+
+/* =========================================================================
+   2. LAS EQUIVALENCIAS, EN SEGUNDO PLANO DECLARADO
+   Van juntas, separadas por una regla, y con la palabra clave: aproximadas.
+   ========================================================================= */
+.faq-price-equivalents,
+.plan-presentation-currency-line,
+.checkout-plan-price small {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gray-dim) !important;
+  font: 500 var(--fs-label) 'DM Mono', ui-monospace, monospace !important;
+  letter-spacing: 0.1em;
+}
+
+.faq-price-equivalents::before,
+.plan-presentation-currency-line::before {
+  content: '';
+  flex: none;
+  width: 16px;
+  height: 1px;
+  background: rgba(244, 162, 97, 0.55);
+}
+
+/* =========================================================================
+   3. JERARQUÍA ENTRE PLANES
+   El destacado gana por luz y elevación, no por tamaño: si creciera, rompería
+   la retícula y obligaría al ojo a recalcular.
+   ========================================================================= */
+.plan-accordion-item.featured,
+.faq-price-card.is-featured {
+  position: relative;
+  border-color: rgba(244, 162, 97, 0.55) !important;
+}
+
+.plan-accordion-item.featured::before,
+.faq-price-card.is-featured::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(90% 70% at 50% 0%, rgba(244, 162, 97, 0.14), transparent 68%);
+}
+
+.plan-accordion-item.featured > *,
+.faq-price-card.is-featured > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* El plan de cupo limitado se marca con una línea, no con un grito. */
+.faq-price-card.is-limited,
+.plan-accordion-item[data-plan-id='ELITE'] {
+  box-shadow: inset 3px 0 0 var(--orange-fire), var(--v2-lift);
+}
+
+/* =========================================================================
+   4. TRANSICIÓN DEL TOTAL
+   El contador ya anima el número. Aquí se le da un destello al cambiar, para
+   que el cambio se note sin tener que leerlo.
+   ========================================================================= */
+@keyframes v2-total-pulse {
+  0% {
+    color: var(--white);
+  }
+  35% {
+    color: var(--orange);
+  }
+  100% {
+    color: var(--white);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-selection-feedback='active'] .summary-total-price b,
+  [data-selection-feedback='active'] .persistent-summary-cop {
+    animation: v2-total-pulse 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* =========================================================================
+   5. LA TABLA COMPARATIVA
+   Es una tabla de verdad y debe seguir siéndolo, pero necesitaba respiración y
+   una columna fija para poder leerse en horizontal sin perder el concepto.
+   ========================================================================= */
+.program-comparison-table th,
+.program-comparison-table td {
+  padding-block: clamp(14px, 1.4vw, 20px) !important;
+}
+
+.program-comparison-table tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #0b0b0c;
+}
+
+/* La fila que se recorre se ilumina: en una tabla ancha es lo que evita
+   perder el renglón al mirar la última columna. */
+@media (hover: hover) and (pointer: fine) {
+  .program-comparison-table tbody tr:hover td,
+  .program-comparison-table tbody tr:hover th {
+    background: rgba(244, 162, 97, 0.07);
+  }
+}
+
+/* =========================================================================
+   6. LA TIENDA
+   Sin imágenes en las fichas (regla de marca), la ficha necesita que el precio
+   ordene la lectura: nombre, precio, acción.
+   ========================================================================= */
+.holo-copy > div {
+  align-items: baseline;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+.holo-copy strong {
+  font-size: var(--fs-h3) !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+/* La ficha sin foto puede permitirse una altura menor y más aire dentro. */
+.holo-card {
+  min-height: 0 !important;
+}
+
+.holo-copy p {
+  height: auto !important;
+}

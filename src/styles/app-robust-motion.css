@@ -1,0 +1,41 @@
+/* BAYONA+ · ROBUST MOTION
+   Content is visible first. IntersectionObserver only adds movement. */
+
+body.premium-route--app .app-page .app-reveal,
+body.premium-route--app .app-page .app-reveal.visible,
+body.premium-route--app .app-page .app-reveal-stagger > *,
+body.premium-route--app .app-page .app-reveal-stagger.visible > * {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@supports (animation-timeline: view()) {
+  body.premium-route--app .app-page .app-reveal {
+    animation: app-safe-section-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 20%;
+  }
+
+  @keyframes app-safe-section-rise {
+    from { transform: translateY(20px); filter: blur(2px); }
+    to { transform: translateY(0); filter: blur(0); }
+  }
+}
+
+/* Mockup scene is the object: no opaque panel behind it. */
+body.premium-route--app .app-mockup-stage,
+body.premium-route--app .app-concept,
+body.premium-route--app .app-section-content {
+  background-color: #050505 !important;
+}
+
+body.premium-route--app .app-device-stage {
+  isolation: isolate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.premium-route--app .app-page .app-reveal {
+    animation: none !important;
+    filter: none !important;
+  }
+}

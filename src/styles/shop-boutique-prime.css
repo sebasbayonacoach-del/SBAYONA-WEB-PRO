@@ -1,0 +1,64 @@
+/* BAYONA PRIME · catálogo boutique tipográfico
+   Las fotos viven a sangre en escenas grandes; las fichas son información. */
+body.premium-route--shop .shop-product-visual {
+  aspect-ratio: auto !important;
+  min-height: 94px !important;
+  height: 94px !important;
+  display: grid !important;
+  place-items: end start !important;
+  padding: 18px !important;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(244,162,97,.09), transparent 34%),
+    linear-gradient(90deg, rgba(255,255,255,.025), transparent 52%),
+    #080809 !important;
+  background-size: auto !important;
+}
+
+body.premium-route--shop .shop-product-visual > svg {
+  width: 25px !important;
+  height: 25px !important;
+  opacity: .78;
+  filter: none !important;
+}body.premium-route--shop .shop-product-chip {
+  top: 15px !important;
+  left: 18px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  color: rgba(245,245,242,.42) !important;
+  font-size: .57rem !important;
+  letter-spacing: .18em !important;
+  backdrop-filter: none !important;
+}
+
+body.premium-route--shop .shop-product-preview-toggle {
+  display: none !important;
+}
+
+body.premium-route--shop .shop-product-card h3 {
+  margin-top: 18px !important;
+  min-height: 0 !important;
+  font-size: clamp(1.04rem, 1.45vw, 1.3rem) !important;
+  line-height: 1.05 !important;
+}body.premium-route--shop .shop-product-card > p {
+  min-height: 3.2em !important;
+  margin-top: .72rem !important;
+  color: rgba(245,245,242,.54) !important;
+  line-height: 1.55 !important;
+}
+
+body.premium-route--shop .shop-product-price {
+  margin-top: auto !important;
+  padding-top: 1.15rem !important;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+
+body.premium-route--shop .shop-product-actions {
+  margin-top: 1rem !important;
+}
+
+@media (min-width: 1080px) {
+  body.premium-route--shop .shop-products-masonry,
+  body.premium-route--shop .shop-products-masonry.is-flat {
+    gap: 12px !important;
+  }
+}

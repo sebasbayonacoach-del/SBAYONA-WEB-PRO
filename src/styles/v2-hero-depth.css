@@ -1,0 +1,246 @@
+/*
+  BAYONA · PROFUNDIDAD DEL HÉROE v2
+  ===========================================================================
+  HALLAZGO
+
+  El héroe ya tenía un sistema de profundidad de tres capas, bien construido:
+
+      .hero-content     parallaje  +4 / +3   px por puntero
+      .hero-aurora      parallaje  -8 / -6   (contra el contenido)
+      .hero-particles   parallaje  +6 / +4   (6 partículas)
+
+  Capas que se mueven a distinta velocidad y en distinta dirección: eso ES
+  profundidad, y además sin un byte de WebGL en la ruta que marca el LCP.
+  Hay incluso un contrato de test que impide volver a meter un canvas aquí.
+
+  El problema no era que faltara: era que estaba apagado.
+
+      overrides.css:676   .hero-particles { opacity: 0.28 }
+      home.css:2881       .hero-module .hero-aurora { opacity: 0.15 }
+
+  Con la aurora al 15% el efecto es literalmente imperceptible. De ahí la
+  sensación de "no hay animaciones" al entrar.
+
+  QUÉ HACE ESTE ARCHIVO
+
+  1. Sube las capas a una intensidad visible.
+  2. Añade profundidad REAL en Z con `perspective` + `translateZ`, en lugar de
+     solo desplazar en el plano.
+  3. Da vida propia a cada partícula: deriva lenta, desenfoque por distancia y
+     brillo. Las que están "más lejos" se ven más borrosas y más despacio.
+
+  Por qué no WebGL: el héroe es el LCP. three.js son 827 kB (222 kB gzip) y
+  meterlo aquí retrasaría la primera impresión en móvil justo para conseguir un
+  efecto que ya se puede tener gratis. El WebGL se queda donde ya está y se
+  carga en diferido: el globo de /about y la escena de /app.
+*/
+
+/* =========================================================================
+   1. ESCENARIO CON PERSPECTIVA
+   ========================================================================= */
+.hero-module,
+.home-hero {
+  perspective: 1400px;
+  perspective-origin: 60% 40%;
+  transform-style: preserve-3d;
+}
+
+/* =========================================================================
+   2. LA AURORA, VISIBLE
+   Sube de 0.15 a 0.38 y gana una respiración propia. Es la fuente de luz de
+   la escena: si no se ve, no hay volumen.
+   ========================================================================= */
+.hero-module .hero-aurora,
+.home-hero .hero-aurora {
+  /* IMMERSIVE LUXURY §5/§1 · la aurora baja de 0.38 a resplandor ambiente
+     (1-5%, §40). La órbita WebGL es ahora la fuente de luz móvil del hero;
+     una segunda forma naranja con mix-blend screen competía con el titular
+     y perdía. El volumen lo da el plano diagonal + el velo, no el brillo. */
+  opacity: 0.22;
+  filter: blur(52px) saturate(1.15);
+  mix-blend-mode: screen;
+}
+
+@keyframes v2-aurora-breathe {
+  0% {
+    opacity: 0.18;
+    transform: translate3d(var(--hero-aurora-x, 0), var(--hero-aurora-y, 0), -180px) scale(1);
+  }
+  50% {
+    opacity: 0.26;
+    transform: translate3d(var(--hero-aurora-x, 0), var(--hero-aurora-y, 0), -140px) scale(1.09);
+  }
+  100% {
+    opacity: 0.18;
+    transform: translate3d(var(--hero-aurora-x, 0), var(--hero-aurora-y, 0), -180px) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-module .hero-aurora,
+  .home-hero .hero-aurora {
+    animation: v2-aurora-breathe 17s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    will-change: transform, opacity;
+  }
+}
+
+/* =========================================================================
+   3. LAS PARTÍCULAS, CON DISTANCIA REAL
+   Sube de 0.28 a 0.72. Cada una recibe una Z distinta, así que el parallaje
+   del puntero las separa de verdad en lugar de moverlas en bloque.
+   ========================================================================= */
+.hero-particles {
+  /* IMMERSIVE LUXURY §1/§5 · el sistema de partículas pasa a ser textura
+     ambiente subordinada (de 0.72 a 0.3): la órbita WebGL es ahora la capa
+     atmosférica móvil del hero, y dos sistemas de puntos de luz compitiendo
+     restaban presencia al titular. Se conserva el parallax 3D y la deriva
+     individual: si WebGL cae, sigue siendo un fondo vivo, solo que discreto. */
+  opacity: 0.3;
+  transform-style: preserve-3d;
+}
+
+.hero-particles span {
+  /* El brillo es lo que convierte un punto en una mota de luz. */
+  box-shadow:
+    0 0 6px rgba(244, 162, 97, 0.9),
+    0 0 18px rgba(244, 162, 97, 0.45);
+  will-change: transform, opacity;
+}
+
+/*
+  Deriva individual. Cada partícula usa una duración y un retardo distintos
+  para que no laten al unísono, que es lo que delata una animación barata.
+*/
+@keyframes v2-particle-drift {
+  0% {
+    transform: translate3d(0, 0, var(--particle-z, 0)) scale(1);
+    opacity: calc(var(--particle-opacity, 0.6) * 0.55);
+  }
+  50% {
+    transform: translate3d(6px, -18px, var(--particle-z, 0)) scale(1.35);
+    opacity: var(--particle-opacity, 0.6);
+  }
+  100% {
+    transform: translate3d(0, 0, var(--particle-z, 0)) scale(1);
+    opacity: calc(var(--particle-opacity, 0.6) * 0.55);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-particles span {
+    animation: v2-particle-drift cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  /*
+     Profundidad por partícula: las lejanas van más despacio, más borrosas y
+     más pequeñas. Es la señal que el cerebro lee como distancia.
+  */
+  .hero-particles span:nth-child(1) {
+    --particle-z: 90px;
+    animation-duration: 11s;
+    animation-delay: 0s;
+  }
+
+  .hero-particles span:nth-child(2) {
+    --particle-z: -70px;
+    animation-duration: 16s;
+    animation-delay: -2.4s;
+    filter: blur(1.4px);
+  }
+
+  .hero-particles span:nth-child(3) {
+    --particle-z: 140px;
+    animation-duration: 9s;
+    animation-delay: -1.1s;
+  }
+
+  .hero-particles span:nth-child(4) {
+    --particle-z: -120px;
+    animation-duration: 19s;
+    animation-delay: -5.8s;
+    filter: blur(2.2px);
+  }
+
+  .hero-particles span:nth-child(5) {
+    --particle-z: 40px;
+    animation-duration: 13s;
+    animation-delay: -3.6s;
+    filter: blur(0.6px);
+  }
+
+  .hero-particles span:nth-child(6) {
+    --particle-z: -40px;
+    animation-duration: 15s;
+    animation-delay: -7.2s;
+    filter: blur(1px);
+  }
+}
+
+/* =========================================================================
+   4. EL CONTENIDO, POR DELANTE DE LA ESCENA
+   Se le da Z positiva para que quede claramente delante de la luz y de las
+   motas, y una inclinación mínima al puntero. 1.2 grados: lo justo para que
+   el ojo lea volumen sin que el texto se deforme.
+   ========================================================================= */
+@media (min-width: 769px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero-module[data-pointer-effects='true'] .hero-content {
+    transform:
+      translate3d(var(--hero-content-x, 0), var(--hero-content-y, 0), 60px)
+      rotateY(calc(var(--hero-content-x, 0px) * 0.3))
+      rotateX(calc(var(--hero-content-y, 0px) * -0.3));
+    transform-style: preserve-3d;
+  }
+}
+
+/* =========================================================================
+   5. VIÑETA
+   Cierra la escena por los bordes y empuja la mirada al centro. Sin esto la
+   luz de la aurora se escapa por las esquinas y el plano se aplana.
+   ========================================================================= */
+.hero-module::after,
+.home-hero::after {
+  background:
+    radial-gradient(120% 100% at 50% 42%, transparent 44%, rgba(5, 5, 5, 0.5) 100%),
+    linear-gradient(0deg, #050505 0%, transparent 34%, rgba(5, 5, 5, 0.34) 100%);
+}
+
+/* =========================================================================
+   5.5 CAPA WEBGL DEL HERO (Fase 11.1)
+   El canvas de Three.js vive detrás del contenido (z-index: 0) y no captura
+   eventos de puntero. SceneMount ya aplica estos estilos inline; esta regla
+   refuerza el contrato visual.
+   ========================================================================= */
+.hero-webgl-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* =========================================================================
+   6. MOVIMIENTO REDUCIDO
+   Se apaga toda la escena. Las capas siguen visibles y quietas: la
+   composición no depende del movimiento para funcionar.
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .hero-module .hero-aurora,
+  .home-hero .hero-aurora,
+  .hero-particles span {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .hero-module .hero-aurora,
+  .home-hero .hero-aurora {
+    opacity: 0.3;
+  }
+
+  .hero-particles {
+    opacity: 0.55;
+  }
+
+  .hero-module,
+  .home-hero {
+    perspective: none;
+  }
+}

@@ -1,0 +1,846 @@
+/* ==========================================================================
+   ROUTE IDENTITY · identidad geométrica por ruta
+   --------------------------------------------------------------------------
+   PROBLEMA QUE RESUELVE (medido sobre el código vivo, 2026-09-18):
+   el sitio se sentía igual en todas partes no por las páginas, sino por reglas
+   globales que imponían UNA sola apertura, UN solo suelo, UN solo ritmo y UN
+   solo remate a las 18 rutas:
+     · v2-typography.css → `--fs-h1 !important` en los 12 héroes y
+       `--fs-h2 !important` en todo `main h2`  (MEDIDO: 86,4px y 67,2px
+       idénticos en 7 de 8 rutas antes de esta hoja)
+     · luxury-system.css → h1 de héroe, suelo de sección y altura mínima únicos
+     · overrides.css     → el mismo padding-block para 18 clases de sección
+
+   MECANISMO. Las declaraciones tipográficas que ganan la cascada llevan
+   `!important` y leen `var(--fs-h1)` / `var(--fs-h2)` / `var(--lh-heading)` /
+   `var(--ls-heading)`. Esta hoja NO intenta ganarles por especificidad (sería
+   una guerra de `!important`, prohibida por MP-9): redefine ESOS tokens por
+   ruta, y la declaración ganadora pasa a resolver un valor distinto en cada
+   página. Para el resto (suelo, altura, ritmo) luxury-system.css y
+   overrides.css consultan --route-ground / --route-hero-min /
+   --route-section-space, cuyo valor por defecto es el histórico: una ruta sin
+   declarar queda exactamente como estaba.
+
+   DISCIPLINA (PAGE-BLUEPRINTS.md TEST 4, de obligado cumplimiento):
+   «prohibido resolver la diferenciación como mundo diferente = color /
+   gradiente / tema diferente». La identidad se construye con GEOMETRÍA,
+   RITMO, ESCALA Y ALINEACIÓN; la paleta sigue siendo una sola. Solo se usan
+   peldaños de la escala tipográfica que ya existe (--fs-display / --fs-h1 /
+   --fs-h2 / --fs-h3): no se inventan cuerpos nuevos.
+   Cero !important, cero colores nuevos, cero radios propios, cero animaciones
+   infinitas, z-index solo por --ds-z-*, movimiento solo transform/opacity.
+
+   Las intensidades respetan la pirámide gobernada (2 immersive · 7 balanced ·
+   9 quiet): solo `/` y `/parkour-academy` abren a escala display.
+
+   --------------------------------------------------------------------------
+   0. REVISIÓN 2026-09-19 · LA ESCALA DEJA DE SER IDENTIDAD DE RUTA
+   --------------------------------------------------------------------------
+   El dueño revisó el sitio en vivo y su diagnóstico fue explícito: «todos los
+   títulos tienen distintos tamaños, todos los títulos cambian, todo está
+   totalmente distinto. Lo que quiero es que haya una coherencia de tamaño de
+   letra, de diseño, de efectos».
+
+   La causa era esta hoja: al redefinir `--fs-h1` / `--fs-h2` / `--lh-heading`
+   / `--ls-heading` por ruta, el MISMO rol semántico medía distinto en cada
+   página. /programs abría su h1 con el peldaño de sección, /resources igual,
+   /parkour-academy lo inflaba al de portada y /about cambiaba el aire y el
+   tracking del titular. Eso no es identidad: es ruido.
+
+   REGLA NUEVA, de obligado cumplimiento en las seis rutas editoriales
+   (about, programs, parkour-academy, shop, community, resources):
+     · El TAMAÑO, el INTERLINEADO y el TRACKING de un rol son únicos en todo
+       el sitio. Los declara la escala nombrada `--type-*` (ds-tokens.css §11)
+       sobre los pasos de v2-typography.css. Ninguna ruta los redefine.
+     · La identidad de ruta se construye SOLO con geometría, encuadre, ritmo,
+       suelo y movimiento: `--route-hero-min`, `--route-section-space`,
+       `--route-ground`, el dispositivo de etiqueta (§3), el tratamiento de
+       caja del h2 (§4), el remate (§5) y la dirección del revelado (§10).
+     · Se retira también el titular hueco de /parkour-academy: un h2 trazado
+       en una ruta y relleno en las demás es, literalmente, «títulos de formas
+       distintas».
+
+   Las rutas transaccionales (checkout, entrar, plan, 404) conservan su escala
+   de decisión: no son páginas editoriales y su apertura mínima es función, no
+   estilo.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. RUTAS CON GANCHO body.premium-route--* (9 rutas del itinerario)
+   -------------------------------------------------------------------------- */
+
+/* 1a. / · RAÍZ · immersive. v2-typography excluye #home-hero-title a
+       propósito y su escala la gobierna home-atelier.css: NO se toca aquí.
+       Solo suelo de horizonte (la luz viene de abajo) y el mayor aire. */
+body.premium-route--home {
+  --route-hero-min: clamp(46rem, 92svh, 64rem);
+  --route-section-space: clamp(112px, 12vw, 192px);
+  --route-ground:
+    radial-gradient(120% 78% at 50% 108%, rgba(244, 162, 97, 0.075), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.014), transparent 22%, rgba(255, 255, 255, 0.006));
+}
+
+/* 1b. /about · balanced · editorial. Suelo de columnas, retícula vertical de
+       filetes. La escala y el aire del titular son los del sistema: esta hoja
+       ya no los redefine (ver §0). */
+body.premium-route--about {
+  --route-hero-min: clamp(38rem, 72svh, 52rem);
+  --route-section-space: clamp(104px, 11vw, 176px);
+  --route-ground:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.028) 0,
+      rgba(255, 255, 255, 0.028) 1px,
+      transparent 1px,
+      transparent 8.3333%
+    ),
+    radial-gradient(circle at 12% 22%, rgba(244, 162, 97, 0.05), transparent 30%);
+}
+
+/* 1c. /programs · balanced · página de DATOS. Pauta horizontal y ritmo
+       apretado: la diferenciación es de densidad, no de tamaño de letra. */
+body.premium-route--programs {
+  --route-hero-min: clamp(32rem, 58svh, 44rem);
+  --route-section-space: clamp(72px, 7vw, 120px);
+  --route-ground:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.022) 0,
+      rgba(255, 255, 255, 0.022) 1px,
+      transparent 1px,
+      transparent 4rem
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent 30%);
+}
+
+/* 1d. /parkour-academy · immersive · la apertura más alta del sitio fuera de
+       la raíz y suelo en diagonal: la única ruta cuya luz no está alineada al
+       eje, porque es la ruta del movimiento. El tamaño del titular ya no se
+       infla por ruta: abre como abre cualquier página (ver §0). */
+body.premium-route--parkour-academy {
+  --route-hero-min: clamp(48rem, 96svh, 68rem);
+  --route-section-space: clamp(104px, 11vw, 184px);
+  --route-ground:
+    linear-gradient(115deg, rgba(244, 162, 97, 0.062) 0%, transparent 34%, transparent 66%, rgba(231, 111, 81, 0.04) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.012), transparent 24%);
+}
+
+/* 1e. /shop · balanced · catálogo. Malla en dos ejes (rejilla de producto) y
+       el ritmo más apretado de las rutas balanced: un catálogo se lee en
+       densidad, no en aire. El interlineado del titular es el del sistema. */
+body.premium-route--shop {
+  --route-hero-min: clamp(36rem, 66svh, 48rem);
+  --route-section-space: clamp(64px, 6.5vw, 108px);
+  --route-ground:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.02) 0,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3.5rem
+    ),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.02) 0,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3.5rem
+    ),
+    radial-gradient(circle at 88% 14%, rgba(244, 162, 97, 0.05), transparent 26%);
+}
+
+/* 1f. /community · balanced · el destello cambia de esquina (abajo-izquierda)
+       para que el suelo no sea el de la raíz. El tracking del titular es el
+       del sistema: aquí nada se escribe con otra letra. */
+body.premium-route--community {
+  --route-hero-min: clamp(38rem, 70svh, 52rem);
+  --route-section-space: clamp(88px, 9vw, 148px);
+  --route-ground:
+    radial-gradient(circle at 10% 88%, rgba(244, 162, 97, 0.058), transparent 32%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.012), transparent 26%);
+}
+
+/* 1g. /resources · quiet · revista. Pauta horizontal fina de papel pautado y
+       ritmo de lectura. La escala del titular es la del sistema: una revista
+       se distingue por su pauta, no por un cuerpo de letra propio. */
+body.premium-route--resources {
+  --route-hero-min: clamp(30rem, 54svh, 42rem);
+  --route-section-space: clamp(64px, 6.5vw, 104px);
+  --route-ground:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.018) 0,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 2.25rem
+    ),
+    radial-gradient(circle at 78% 8%, rgba(244, 162, 97, 0.04), transparent 24%);
+}
+
+/* 1h. /faq · quiet · la página más calmada del itinerario. Sin destello: suelo
+       plano. La gobernanza prohíbe volverla cinematográfica, así que su
+       identidad es la ausencia de adorno y la escala menor. */
+body.premium-route--faq {
+  /* 2026-09-20 · la identidad de /faq sigue siendo la calma (interlinea más
+     aflojada, suelo plano, sin destello), pero deja de pagarlo con un tamaño de
+     titular propio: Sebastián pidió títulos iguales en todo el sitio. El paso
+     abajo de `--fs-h1`/`--fs-h2` se quita aquí y en /plan por el mismo motivo. */
+  --lh-heading: 1.12;
+  --ls-heading: -0.015em;
+  --route-hero-min: clamp(26rem, 46svh, 36rem);
+  --route-section-space: clamp(56px, 6vw, 96px);
+  --route-ground: linear-gradient(180deg, rgba(255, 255, 255, 0.008), transparent 40%);
+}
+
+/* 1i. /app · BAYONA OS ya tiene identidad propia (os-shell, body.os-mode) y
+       trabajo en curso sin commitear: deliberadamente NO se toca aquí. */
+
+/* --------------------------------------------------------------------------
+   2. RUTAS SIN GANCHO premium-route--* (fuera del itinerario)
+   -------------------------------------------------------------------------- */
+
+/* 2a. /plan/{raiz,fuerza,rendimiento,elite} · quiet · las cuatro hojas
+       comparten archivo y DOM; solo cambia data-plan. Se les da escala de
+       decisión y, a cada plan, su propia GEOMETRÍA de medida y sangría
+       (nunca su propio color). */
+.plan-presentation {
+  /* Ídem: la medida de decisión se sigue marcando con interlinea y aire
+     propios; el cuerpo del titular ya no es parte de la señal. */
+  --lh-heading: 1.04;
+  --route-section-space: clamp(72px, 7.5vw, 124px);
+  --route-ground: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent 34%);
+}
+
+/* RAÍZ · el primer paso: medida estrecha. Se lee como una carta.
+   El modificador `i` no es adorno: PlanPresentation.jsx escribe el id del plan
+   EN MAYÚSCULAS en data-plan, así que sin él ninguno de estos cuatro bloques
+   llegaría a casar y las fichas abrirían idénticas. */
+.plan-presentation[data-plan='raiz' i] {
+  --route-measure: 52ch;
+  --rule-shift: 0;
+}
+
+/* FUERZA · medida ancha y bloque denso, sin aire decorativo. */
+.plan-presentation[data-plan='fuerza' i] {
+  --route-measure: 74ch;
+  --rule-shift: 2.5rem;
+}
+
+/* RENDIMIENTO · ficha técnica: pauta horizontal y sangría de columna. */
+.plan-presentation[data-plan='rendimiento' i] {
+  --route-measure: 66ch;
+  --rule-shift: 5rem;
+  --route-ground:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.02) 0,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3rem
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent 30%);
+}
+
+/* ÉLITE · el aire ES el adorno: la medida más estrecha y el ritmo más largo.
+   Sin pauta. (No se toca DP-5 ni se añade urgencia.) */
+.plan-presentation[data-plan='elite' i] {
+  --route-measure: 46ch;
+  --route-section-space: clamp(96px, 10vw, 168px);
+  --route-ground: none;
+}
+
+.plan-presentation .plan-presentation-shell p {
+  max-width: var(--route-measure, var(--ds-measure));
+}
+
+.plan-presentation .plan-presentation-section > .plan-presentation-shell {
+  padding-inline-start: var(--rule-shift, 0);
+}
+
+/* 2b. /checkout · quiet · PROHIBICIÓN ABSOLUTA de espectáculo. Identidad =
+       claridad: suelo sin destello, apertura a escala de sección. */
+.checkout-hero,
+.checkout-page {
+  /* Shared heading scale; checkout stays quiet through layout and spacing,
+     not a competing local type size. */
+  --fs-h1: var(--lux-fs-h1);
+  --fs-h2: var(--lux-fs-h2);
+  --lh-heading: 1.14;
+  --ls-heading: -0.01em;
+  --route-hero-min: 0;
+  --route-ground: none;
+}
+
+/* 2c. /entrar · quiet · acceso sin fricción. Medido: la raíz es un DIV cuyo
+   hijo es `.section-shell` (otro div), así que la regla global de suelo
+   `main section` no llega aquí, y `.entrar-card h1` fija 1.6rem literal en
+   auth-members.css sin leer ningún token. Ambas cosas se aterrizan abajo.
+   Identidad: suelo partido en dos planos y tarjeta apoyada a la izquierda, no
+   centrada como una portada. */
+.entrar-page {
+  /* Same page-title role as the rest of BAYONA; only geometry is local. */
+  --fs-h1: var(--lux-fs-h1);
+  --route-hero-min: 0;
+  --route-ground: linear-gradient(96deg, rgba(255, 255, 255, 0.02) 0 38%, transparent 38%);
+  background-image: var(--route-ground);
+}
+
+.entrar-page .entrar-card h1 {
+  font-size: var(--fs-h1);
+  letter-spacing: var(--ls-heading);
+}
+
+.entrar-page > .section-shell {
+  display: grid;
+  justify-items: start;
+}
+
+/* `margin: 0 auto` en auth-members.css volvería a centrar la tarjeta dentro del
+   área de la rejilla: se anula para que el apoyo a la izquierda sea real. */
+.entrar-page > .section-shell > .entrar-card {
+  margin-inline: 0;
+}
+
+/* 2d. 404 · quiet · asimétrico a propósito: el error no se presenta centrado
+       como una portada. */
+.not-found-page {
+  --fs-h1: var(--lux-fs-h1);
+  --route-ground: radial-gradient(circle at 14% 26%, rgba(244, 162, 97, 0.05), transparent 28%);
+}
+
+.not-found-shell {
+  text-align: left;
+}
+
+/* --------------------------------------------------------------------------
+   3. DISPOSITIVO DE ETIQUETA POR RUTA
+      El comodín de overrides.css convertía las 46 etiquetas del sitio en el
+      mismo micro-rótulo DM Mono naranja. Misma familia, GEOMETRÍA distinta.
+   -------------------------------------------------------------------------- */
+
+/* About: filete vertical por encima del rótulo, como una acotación editorial. */
+body.premium-route--about .eyebrow {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+body.premium-route--about .eyebrow span {
+  width: 1px;
+  height: 26px;
+}
+
+/* Programs: doble filete y rótulo tabular, gramática de ficha de datos. */
+body.premium-route--programs .eyebrow {
+  border-top: 1px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  border-bottom: 1px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  padding-block: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+body.premium-route--programs .eyebrow span {
+  width: 46px;
+}
+
+/* Parkour Academy: filete largo, la etiqueta abre la línea entera. */
+body.premium-route--parkour-academy .eyebrow span {
+  width: 96px;
+  height: 2px;
+}
+
+/* Shop: cajetín, gramática de etiqueta de producto. */
+body.premium-route--shop .eyebrow {
+  border: 1px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  padding: 8px 12px;
+  width: max-content;
+}
+
+body.premium-route--shop .eyebrow span {
+  display: none;
+}
+
+/* Community: la página no usa `.eyebrow` sino capítulos numerados
+   `.community-overline.community-eyebrow`. Su dispositivo es el filete
+   inferior a sangre: recorre toda la columna, a diferencia del cajetín
+   cerrado de /shop, de la banda de /programs y del filete vertical de /about. */
+body.premium-route--community .community-eyebrow {
+  gap: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  letter-spacing: 0.32em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Resources: folio de revista, filete largo y rótulo a la derecha. */
+body.premium-route--resources .eyebrow {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+body.premium-route--resources .eyebrow span {
+  flex: 1 1 auto;
+  width: auto;
+  max-width: 180px;
+}
+
+/* FAQ: sin filete. Solo el rótulo, en calma. */
+body.premium-route--faq .eyebrow span {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   4. TRATAMIENTO DE H2 POR RUTA (solo geometría; el cuerpo lo fija --fs-h2)
+   -------------------------------------------------------------------------- */
+
+/* About: h2 con sangría francesa y filete colgante. */
+body.premium-route--about h2 {
+  padding-inline-start: 3.5rem;
+  border-inline-start: 1px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+}
+
+/* Programs: margen corto, gramática de ficha. */
+body.premium-route--programs h2 {
+  margin-bottom: 24px;
+}
+
+/* Parkour Academy: el titular se apoya en un filete de señal por debajo, como
+   una línea de pista. Ya no se hueca la segunda línea: un h2 trazado aquí y
+   relleno en las demás rutas es exactamente el «títulos de formas distintas»
+   que el dueño pidió retirar (§0). */
+body.premium-route--parkour-academy h2 {
+  border-bottom: 1px solid var(--ds-hairline-signal, rgba(244, 162, 97, 0.55));
+  padding-bottom: 20px;
+}
+
+/* Shop: h2 sobre filete inferior, alineado a la retícula del catálogo. */
+body.premium-route--shop h2 {
+  border-bottom: 1px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  padding-bottom: 20px;
+}
+
+/* Community: h2 desplazado, convive con el numeral fantasma sin pisarlo. */
+body.premium-route--community .community-title {
+  padding-inline-start: 1.5rem;
+}
+
+/* Resources: h2 en medida de sumario, con filete grueso arriba. */
+body.premium-route--resources h2 {
+  max-width: 22ch;
+  border-top: 2px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  padding-top: 18px;
+}
+
+/* FAQ: margen mínimo, en calma. */
+body.premium-route--faq h2 {
+  margin-bottom: 20px;
+}
+
+/* Planes: h2 con sangría para la numeración tipográfica colgada. */
+.plan-presentation h2 {
+  position: relative;
+  padding-inline-start: 4rem;
+}
+
+/* 404: titular hueco, eco del de la academia en la página de error. */
+.not-found-shell h1 {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ds-hairline-signal, rgba(244, 162, 97, 0.55));
+}
+
+/* --------------------------------------------------------------------------
+   5. REMATE IDÉNTICO EN 9 RUTAS → remate distinto por ruta
+      ShareInvite + NextChapter + BrandMarquee pintan los mismos ~250px al pie
+      de las 9 rutas del itinerario. Se rompe la repetición con geometría.
+   -------------------------------------------------------------------------- */
+
+body.premium-route--home .next-chapter-link {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+body.premium-route--about .share-invite-inner {
+  border-inline-start: 1px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  padding-inline-start: 2.5rem;
+}
+
+body.premium-route--programs .share-invite,
+body.premium-route--programs .next-chapter {
+  padding-block: 40px;
+}
+
+body.premium-route--parkour-academy .next-chapter {
+  border-top: 2px solid var(--ds-hairline-signal, rgba(244, 162, 97, 0.55));
+}
+
+body.premium-route--shop .share-invite-inner {
+  border-top: 1px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  border-bottom: 1px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  padding-block: 32px;
+}
+
+body.premium-route--community .next-chapter-link {
+  justify-content: center;
+  text-align: center;
+}
+
+body.premium-route--resources .share-invite-inner {
+  border-top: 2px solid var(--ds-hairline-color, rgba(255, 255, 255, 0.12));
+  padding-top: 28px;
+}
+
+body.premium-route--faq .share-invite,
+body.premium-route--faq .next-chapter {
+  padding-block: 32px;
+}
+
+/* En la ruta más calmada se retira el ticker de marca: es movimiento infinito
+   y la gobernanza pide calma en las páginas de lectura. */
+body.premium-route--faq .premium-brand-marquee {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   6. NAVEGACIÓN · la barra deja de ser idéntica en todas las rutas
+      v3-finish.css ya gobierna los estados de .navbar; aquí solo se añade el
+      marcador de ruta activa, sin duplicar aquellas reglas.
+   -------------------------------------------------------------------------- */
+
+.desktop-nav a[aria-current='page'],
+.desktop-nav a.active {
+  position: relative;
+}
+
+.desktop-nav a[aria-current='page']::after,
+.desktop-nav a.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 2px;
+  background: var(--orange);
+}
+
+.breadcrumb[data-route] [aria-current='page'] {
+  color: var(--white);
+}
+
+/* ORIENTACIÓN EN LA BARRA. La cabecera agrupa los enlaces por recorrido real
+   (RECORRIDO, ENTRENAR, ECOSISTEMA, DECIDIR) y hasta aquí los cuatro
+   se veían idénticos en todas las rutas: la barra no decía en qué parte del
+   sitio estabas. Ahora el rótulo del grupo al que pertenece la ruta activa se
+   enciende —mismo neutro, más luz, más tracking y un filete debajo— y los demás
+   se retiran. La home no pertenece a ningún grupo, así que no se enciende
+   ninguno: quien llega arriba del todo no está «dentro» de una sección. */
+.desktop-nav .nav-group-label {
+  transition:
+    color 240ms ease,
+    letter-spacing 240ms ease;
+}
+
+body.premium-route--programs .nav-group[aria-label='ENTRENAR'] .nav-group-label,
+body.premium-route--parkour-academy .nav-group[aria-label='ENTRENAR'] .nav-group-label,
+body.premium-route--about .nav-group[aria-label='RECORRIDO'] .nav-group-label,
+body.premium-route--shop .nav-group[aria-label='ECOSISTEMA'] .nav-group-label,
+body.premium-route--community .nav-group[aria-label='ECOSISTEMA'] .nav-group-label,
+body.premium-route--app .nav-group[aria-label='ECOSISTEMA'] .nav-group-label,
+body.premium-route--resources .nav-group[aria-label='DECIDIR'] .nav-group-label,
+body.premium-route--faq .nav-group[aria-label='DECIDIR'] .nav-group-label,
+body.premium-route--entrar .nav-group[aria-label='DECIDIR'] .nav-group-label {
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.24em;
+  padding-bottom: 3px;
+  border-bottom: 1px solid currentColor;
+}
+
+/* Los grupos que no son el de la ruta activa pierden presencia. */
+body.premium-route--programs .nav-group:not([aria-label='ENTRENAR']) .nav-group-label,
+body.premium-route--parkour-academy .nav-group:not([aria-label='ENTRENAR']) .nav-group-label,
+body.premium-route--about .nav-group:not([aria-label='RECORRIDO']) .nav-group-label,
+body.premium-route--shop .nav-group:not([aria-label='ECOSISTEMA']) .nav-group-label,
+body.premium-route--community .nav-group:not([aria-label='ECOSISTEMA']) .nav-group-label,
+body.premium-route--app .nav-group:not([aria-label='ECOSISTEMA']) .nav-group-label,
+body.premium-route--resources .nav-group:not([aria-label='DECIDIR']) .nav-group-label,
+body.premium-route--faq .nav-group:not([aria-label='DECIDIR']) .nav-group-label,
+body.premium-route--entrar .nav-group:not([aria-label='DECIDIR']) .nav-group-label {
+  color: rgba(167, 162, 155, 0.3);
+}
+
+/* Las fichas de plan no llevan gancho premium-route-- (el gancho vive en el
+   article) y se llega a ellas desde Programas: pertenecen a ENTRENAR.
+   /entrar ahora es cierre del recorrido, así que pertenece a DECIDIR. */
+body:has(.plan-presentation[data-plan]) .nav-group[aria-label='ENTRENAR'] .nav-group-label {
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.24em;
+  padding-bottom: 3px;
+  border-bottom: 1px solid currentColor;
+}
+
+body:has(.plan-presentation[data-plan]) .nav-group:not([aria-label='ENTRENAR']) .nav-group-label {
+  color: rgba(167, 162, 155, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   7. MÓVIL · en pantallas estrechas la diferenciación se simplifica en vez de
+      comprimir el escritorio (regla M.3 del blueprint).
+   -------------------------------------------------------------------------- */
+@media (max-width: 800px) {
+  body.premium-route--about,
+  body.premium-route--parkour-academy,
+  body.premium-route--programs,
+  body.premium-route--shop,
+  body.premium-route--resources {
+    /* Sin retículas ni suelos compuestos en móvil: se pierde detalle y cuesta
+       composición. El suelo vuelve al plano. */
+    --route-ground: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent 36%);
+  }
+
+  body.premium-route--about h2,
+  .plan-presentation h2 {
+    padding-inline-start: 0;
+    border-inline-start: 0;
+  }
+
+  .plan-presentation .plan-presentation-section > .plan-presentation-shell {
+    padding-inline-start: 0;
+  }
+
+  body.premium-route--about .eyebrow,
+  body.premium-route--resources .eyebrow {
+    flex-direction: row;
+  }
+
+  /* El filete de capítulo mantiene su trazo a sangre, pero con tracking de
+     móvil: a 0.32em el número y el título no caben en una línea estrecha. */
+  body.premium-route--community .community-eyebrow {
+    padding-bottom: 9px;
+    letter-spacing: 0.18em;
+  }
+
+  body.premium-route--about .eyebrow span {
+    width: 26px;
+    height: 1px;
+  }
+
+  /* En móvil el titular hueco de la página de error pierde legibilidad:
+     vuelve al relleno. (La academia ya no tiene titular hueco: §0 y §4.) */
+  .not-found-shell h1 {
+    color: var(--orange);
+    -webkit-text-stroke: 0;
+  }
+
+  .not-found-shell h1 {
+    color: var(--white);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. DISPOSITIVO DE SCROLL POR RUTA
+      overrides.css ya no pinta una barra naranja constante: la pista es tenue y
+      el naranja va en el relleno, que es lo que framer-motion escala. Sobre esa
+      base cada ruta recibe SU dispositivo, diferenciado solo por GEOMETRÍA
+      (alto, anclaje, pauta de la máscara, resplandor). Nunca por color: el
+      TEST 4 de PAGE-BLUEPRINTS prohíbe resolver la diferenciación como
+      «mundo distinto = color distinto».
+   -------------------------------------------------------------------------- */
+
+/*
+  UNA SOLA LÍNEA, VARIANTE SUTIL. Comentario 5 del brief de 70 anotaciones: la
+  línea de progreso «aparece cortada, distinta o incoherente según la página».
+  Dos cosas provocaban eso de verdad, no de gusto:
+
+  1) Las pautas `mask-image` con trazo y hueco. A 2 px de alto, un trazo de 2 px
+     con 6 px de aire no se lee como diseño editorial: se lee como línea rota.
+     Fuera todas (about, programs, shop y las cuatro fichas de plan).
+  2) Grosor distinto por ruta (1,5 / 2 / 3 px). El grosor se unifica arriba y
+     aquí solo varía la pista y el resplandor, que es lo que se percibe como
+     carácter sin romper el sistema.
+
+  El anclaje vertical ya no vive aquí: lo da v3-finish.css contra `--nav-height`
+  para todas las rutas, así que home no puede desincronizarse del navbar.
+*/
+body:is(
+  .premium-route--home,
+  .premium-route--about,
+  .premium-route--programs,
+  .premium-route--parkour-academy,
+  .premium-route--community,
+  .premium-route--app,
+  .premium-route--shop,
+  .premium-route--resources,
+  .premium-route--faq,
+  .premium-route--entrar
+) .scroll-progress {
+  --progress-h: 2px;
+  --progress-track: linear-gradient(90deg, rgba(244, 162, 97, 0.12), rgba(255, 255, 255, 0.045), rgba(244, 162, 97, 0.08));
+  --progress-fill: linear-gradient(90deg, #f4a261, #ffe0bd 48%, #f4a261);
+  --progress-glow: 0 0 18px rgba(244, 162, 97, 0.46);
+}
+
+/* Programs: pista algo más presente. Sin pauta: ver comentario de arriba. */
+body.premium-route--programs .scroll-progress {
+  --progress-track: linear-gradient(90deg, rgba(244, 162, 97, 0.16), rgba(255, 255, 255, 0.08), rgba(244, 162, 97, 0.1));
+}
+
+/* Parkour Academy: la ruta inmersiva lleva más luz, no más grosor. */
+body.premium-route--parkour-academy .scroll-progress {
+  --progress-glow: 0 0 22px rgba(244, 162, 97, 0.62);
+}
+
+/* Community: antes era la única ruta con el progreso ABAJO. Esa excepción era
+   literalmente la incoherencia que señalaba el brief: mismo sistema, anclado
+   en otro sitio. Vuelve al anclaje común. */
+body.premium-route--community .scroll-progress {
+  --progress-glow: 0 0 14px rgba(244, 162, 97, 0.32);
+}
+
+/* Resources tiene hoja propia (resources.css); aquí solo se le entrega el token
+   de pista tenue que su regla ya intentaba pintar y que perdía contra el
+   `!important` heredado de overrides.css. */
+body.premium-route--resources .scroll-progress {
+  --progress-track: linear-gradient(90deg, rgba(244, 162, 97, 0.1), rgba(255, 255, 255, 0.03), rgba(244, 162, 97, 0.08));
+}
+
+/* FAQ: la página más calmada. Pista casi invisible y sin luz, MISMO grosor que
+   el resto: variar el grosor por ruta era parte de lo que hacía sentir la
+   línea «distinta según la página». */
+body.premium-route--faq .scroll-progress {
+  --progress-track: linear-gradient(90deg, rgba(244, 162, 97, 0.08), rgba(255, 255, 255, 0.03), rgba(244, 162, 97, 0.06));
+  --progress-glow: 0 0 12px rgba(244, 162, 97, 0.24);
+}
+
+/* App y acceso ya son parte de la casa visual, pero sin lienzo global 3D:
+   mantienen línea y chrome; su propio contenido decide el ambiente. */
+body:is(.premium-route--app, .premium-route--entrar) .scroll-progress {
+  --progress-glow: 0 0 16px rgba(244, 162, 97, 0.38);
+}
+
+/* Fichas de plan: sin resplandor, aquí se decide y no se espera. La pauta de
+   trazo y aire que llevaba cada plan se retira: ver la nota del principio de
+   esta familia. Lo que distingue a las cuatro fichas son sus medidas y su
+   contenido, no cuatro líneas de progreso distintas. */
+body:has(.plan-presentation) .scroll-progress {
+  --progress-glow: none;
+}
+
+/* Páginas que caben en una pantalla: no hay recorrido que indicar. */
+body:has(.entrar-page) .scroll-progress,
+body:has(.not-found-page) .scroll-progress,
+body:has(.checkout-page) .scroll-progress {
+  opacity: 0;
+}
+
+/* --------------------------------------------------------------------------
+   10. DIRECCIÓN DEL REVELADO · immersive-motion.css declara UNA primitiva
+      (clip reveal + line draw) y sus valores por defecto en :root. Aquí cada
+      ruta redefine esos tokens: desde qué lado se descubre el titular y en qué
+      ventana del scroll. Es la misma cámara, moviéndose distinto en cada
+      página — que es lo que evita que el sitio se sienta repetido sin romper
+      el lenguaje (TEST 4: nada de esto es color ni tema, es geometría).
+      Sin !important (MP-9): gana por especificidad sobre :root y hereda.
+   -------------------------------------------------------------------------- */
+
+/* ABOUT · editorial: la columna se lee de izquierda a derecha, así que la
+   máscara corre en horizontal y la ventana es larga (lectura reposada). */
+body.premium-route--about {
+  --reveal-from: inset(0 100% 0 0);
+  --reveal-a: 0%;
+  --reveal-b: 62%;
+}
+
+/* PROGRAMS · ficha técnica: el bloque sube desde el suelo, ventana seca. */
+body.premium-route--programs {
+  --reveal-from: inset(100% 0 0 0);
+  --reveal-a: 8%;
+  --reveal-b: 52%;
+}
+
+/* PARKOUR ACADEMY · desplazamiento: entra por la derecha y pronto, como un
+   gesto que ya está en marcha cuando llegas. */
+body.premium-route--parkour-academy {
+  --reveal-from: inset(0 0 0 100%);
+  --reveal-a: 0%;
+  --reveal-b: 38%;
+}
+
+/* SHOP · vitrina: las dos hojas se abren desde el centro. */
+body.premium-route--shop {
+  --reveal-from: inset(0 50% 0 50%);
+  --reveal-a: 5%;
+  --reveal-b: 55%;
+}
+
+/* COMMUNITY · mismo gesto que la portada (baja la máscara) pero en otra
+   ventana: aquí el bloque se descubre tarde y despacio, que es el ritmo de
+   una conversación y no el de un escaparate. */
+body.premium-route--community {
+  --reveal-from: inset(0 0 100% 0);
+  --reveal-a: 18%;
+  --reveal-b: 70%;
+}
+
+/* RESOURCES · revista: abre en diagonal desde la esquina inferior izquierda. */
+body.premium-route--resources {
+  --reveal-from: inset(100% 100% 0 0);
+  --reveal-a: 0%;
+  --reveal-b: 50%;
+}
+
+/* FAQ · la respuesta se parte por la mitad y se abre arriba y abajo. */
+body.premium-route--faq {
+  --reveal-from: inset(50% 0 50% 0);
+  --reveal-a: 0%;
+  --reveal-b: 40%;
+}
+
+/* PLANES · cada plan revela como respira su propio dispositivo de scroll
+   (sección 8): RAÍZ baja, FUERZA entra por la izquierda, RENDIMIENTO por la
+   derecha, ÉLITE se abre desde el centro. El modificador `i` no es adorno:
+   PlanPresentation.jsx escribe el id del plan EN MAYÚSCULAS en data-plan. */
+body:has(.plan-presentation[data-plan='raiz' i]) {
+  --reveal-from: inset(0 0 100% 0);
+  --reveal-a: 0%;
+  --reveal-b: 50%;
+}
+
+body:has(.plan-presentation[data-plan='fuerza' i]) {
+  --reveal-from: inset(0 100% 0 0);
+  --reveal-a: 0%;
+  --reveal-b: 42%;
+}
+
+body:has(.plan-presentation[data-plan='rendimiento' i]) {
+  --reveal-from: inset(0 0 0 100%);
+  --reveal-a: 0%;
+  --reveal-b: 36%;
+}
+
+body:has(.plan-presentation[data-plan='elite' i]) {
+  --reveal-from: inset(0 50% 0 50%);
+  --reveal-a: 0%;
+  --reveal-b: 60%;
+}
+
+/* --------------------------------------------------------------------------
+   9. MOVIMIENTO REDUCIDO · un único bloque, con estado estático DISEÑADO
+      (nunca duration: 0). Todo lo anterior es geometría estática, así que no
+      hay nada que congelar; se deja constancia explícita de que el marcador de
+      navegación no se anima y de que el progreso de scroll sigue siendo
+      informativo (no es adorno: indica posición de lectura, así que se queda).
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .desktop-nav a[aria-current='page']::after,
+  .desktop-nav a.active::after {
+    transform: none;
+    transition: none;
+  }
+
+  .scroll-progress > i {
+    transition: none;
+  }
+
+  .desktop-nav .nav-group-label {
+    transition: none;
+  }
+}

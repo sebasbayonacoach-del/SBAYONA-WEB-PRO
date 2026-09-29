@@ -1,0 +1,27 @@
+/* 
+ * PLAN PRESENTATION SUMMARY - Solo bloque lateral de precio
+ * Sin modificar estructura ni layout
+ */
+
+/* 1. Fondo 3% más oscuro */
+.plan-presentation-value-summary {
+  background: rgba(0, 0, 0, 0.65) !important;
+}
+
+/* 2. Sombra sutil */
+.plan-presentation-value-summary {
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* 3. Botón con glow leve */
+.plan-presentation-value-summary a[href] {
+  box-shadow: 0 4px 16px rgba(244, 162, 97, 0.15);
+  transition: box-shadow 250ms ease, transform 200ms ease;
+}
+
+.plan-presentation-value-summary a[href]:hover {
+  box-shadow: 0 6px 24px rgba(244, 162, 97, 0.28);
+  transform: translateY(-2px);
+}

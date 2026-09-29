@@ -1,0 +1,908 @@
+/**
+ * Auth + área de miembros + lead magnet (Fase 2 SaaS).
+ *
+ * Clases propias con prefijos `entrar-`, `members-` y `lead-`: no colisionan
+ * con ninguna hoja de página. Reutiliza el lenguaje global (gold-button,
+ * eyebrow, section-shell) y solo aporta el envoltorio oscuro premium.
+ */
+
+.entrar-page,
+.members-page {
+  background: #060606;
+  color: #f5f1e8;
+}
+
+.entrar-page {
+  position: relative;
+  min-height: 100svh;
+  padding: clamp(5.5rem, 8vw, 8rem) 0 clamp(4rem, 7vw, 7rem);
+  overflow: hidden;
+  background:
+    radial-gradient(70% 90% at 15% 30%, rgba(244, 162, 97, 0.11), transparent 58%),
+    radial-gradient(70% 90% at 86% 72%, rgba(255, 255, 255, 0.055), transparent 62%),
+    linear-gradient(145deg, #080808 0%, #0d0b0a 42%, #050505 100%);
+}
+
+.entrar-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(70% 72% at 50% 36%, #000, transparent 74%);
+  opacity: 0.58;
+}
+
+.entrar-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.78) 0%, rgba(5, 5, 5, 0.58) 48%, rgba(5, 5, 5, 0.86) 100%),
+    url('/images/scenes/escena-proceso-wow-lab.webp') center / cover no-repeat;
+  opacity: 0.34;
+  filter: saturate(0.9);
+}
+
+.entrar-page .entrar-shell::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 3% auto 8% -8%;
+  width: min(42rem, 46vw);
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.48), rgba(5, 5, 5, 0.88)),
+    url('/images/scenes/escena-problema-amanecer.webp') center / cover no-repeat;
+  opacity: 0.22;
+  filter: saturate(0.82);
+}
+
+.entrar-shell {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  /*
+   * Medido el 22-09-2026 con un `Range` sobre el texto: la línea
+   * «desbloqueado.» pinta de 768 a 1330, es decir 102 px MÁS ALLÁ de su propio
+   * cajón (la columna termina en 1228). No la corta la ventana, pero desalinea
+   * el titular con las tres tarjetas de debajo, que sí paran en 1222. Queda
+   * ABIERTO: intentado con `minmax(37rem, 0.75fr)` en esta retícula, la columna
+   * siguió midiendo 460 px, o sea hay otra regla ganando y todavía no está
+   * localizada — no se deja el repartido tocado sin prueba de que hace algo.
+   */
+  grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.62fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.entrar-command {
+  /*
+   * `minmax(0, 1.05fr) minmax(22rem, 0.62fr)` deja en la columna derecha un
+   * área de ~672 px a 1440, y un `max-width` de 44 rem (704 px) no la respeta:
+   * el área no recorta al hijo, así que el bloque entero salía 32 px por fuera
+   * del viewport y `overflow: hidden` de `.entrar-page` se comía el final del
+   * titular («GUARDA LO QUE HAS DESBLOQUEA…») y la tercera tarjeta de estado.
+   * Medido el 22-09-2026 sobre el build con la sonda de desbordes, y visto en
+   * `oj-panel-00.png`. El `100%` de un hijo de retícula resuelve contra su área:
+   * es el techo que faltaba, sin cambiar el diseño cuando sí hay sitio.
+   */
+  max-width: min(44rem, 100%);
+}
+
+.entrar-command h1 {
+  /*
+   * Dos defectos en una línea de CSS. `10ch` a 118 px de cuerpo son ~767 px, más
+   * que el área de la retícula, y además la palabra más larga del titular
+   * («DESBLOQUEADO.») mide 13 caracteres: con un techo de 10 ch la letra se
+   * salía del cajón y el `overflow: hidden` de la página la cortaba a media
+   * palabra — se leía «GUARDA» con la A partida y «DESBLO». Medido con
+   * `probe-tipografia-h1.mjs`: **115 px, fuera de escala** en `/panel` y
+   * `/entrar`, cuando el resto del sitio está en 66 px desde el arreglo del
+   * titular de portada (el dueño: «los títulos no deben verse tan grandes»).
+   *
+   * Se pone el token de la escala, que es lo que faltaba: sin él esta hoja
+   * seguía su propio tamaño y ninguna guarda lo veía porque el sondeo no
+   * recorría estas dos rutas. Con 66 px, «DESBLOQUEADO.» mide ~530 px y entra
+   * en los ~672 del área, así que el techo pasa a ser el 100 % y no los ch.
+   */
+  max-width: 100%;
+  margin: 0.9rem 0 1rem;
+  font-family: var(--ds-font-heading);
+  /* Escala y ritmo del dueño único (luxury-typography-final.css). Antes esta
+     hoja declaraba su propio `clamp()` y un `line-height: 0.86`, así que el
+     titular del acceso medía 115 px, fuera de la escala del sitio. */
+  font-size: var(--lux-fs-h1, clamp(2.35rem, 1.4rem + 3.3vw, 4.35rem));
+  font-weight: 950;
+  line-height: var(--lux-lh-display, 0.98);
+  letter-spacing: var(--lux-track-display, -0.052em);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.entrar-command h1::first-line {
+  color: #f4a261;
+}
+
+.entrar-command > p {
+  max-width: min(45rem, 100%);
+  margin: 0 0 clamp(1.6rem, 3vw, 2.5rem);
+  color: rgba(245, 241, 232, 0.76);
+  font-family: var(--ds-font-body);
+  /* Entradilla del acceso: rol de lead y cuerpo del sistema, no un tamaño suelto. */
+  font-size: var(--lux-fs-lead, clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem));
+  line-height: var(--lux-lh-body, 1.7);
+}
+
+.entrar-vault {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid rgba(244, 162, 97, 0.22);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018)),
+    rgba(8, 8, 10, 0.68);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.entrar-vault article {
+  min-height: 9rem;
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.entrar-vault article:last-child {
+  border-right: 0;
+}
+
+.entrar-vault span,
+.entrar-locker li {
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.entrar-vault span {
+  display: block;
+  color: rgba(244, 162, 97, 0.82);
+}
+
+.entrar-vault strong {
+  display: block;
+  margin: 0.75rem 0 0.35rem;
+  color: #f5f1e8;
+  font-family: var(--ds-font-heading);
+  font-size: clamp(1.45rem, 2vw, 2.35rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.entrar-vault small {
+  display: block;
+  color: rgba(245, 241, 232, 0.62);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.entrar-locker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1.1rem;
+  margin: clamp(1.3rem, 2.4vw, 2rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entrar-locker li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.62rem;
+  color: rgba(245, 241, 232, 0.78);
+  line-height: 1.45;
+}
+
+.entrar-locker li span {
+  flex: 0 0 auto;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.24rem;
+  border: 1px solid rgba(244, 162, 97, 0.75);
+  background: rgba(244, 162, 97, 0.16);
+  transform: rotate(45deg);
+}
+
+.entrar-card {
+  max-width: 26rem;
+  margin: 0 0 0 auto;
+  padding: clamp(1.5rem, 2.5vw, 2.2rem);
+  border: 1px solid rgba(244, 162, 97, 0.28);
+  border-radius: 0;
+  background:
+    radial-gradient(80% 70% at 50% 0%, rgba(244, 162, 97, 0.1), transparent 58%),
+    rgba(14, 14, 16, 0.72);
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.52),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+}
+
+.entrar-card h1 {
+  font-family: var(--ds-font-heading);
+  font-weight: var(--ds-fw-heading);
+  font-size: var(--lux-fs-h1, clamp(2.35rem, 1.4rem + 3.3vw, 4.35rem));
+  line-height: var(--lux-lh-display, 0.98);
+  letter-spacing: var(--lux-track-display, -0.052em);
+  margin: 0.75rem 0 0.5rem;
+}
+
+.entrar-card .eyebrow {
+  margin-top: 0;
+}
+
+.entrar-lead {
+  opacity: 0.72;
+  font-family: var(--ds-font-body);
+  font-size: var(--ds-fs-body);
+  line-height: var(--ds-lh-body);
+  margin: 0 0 1.5rem;
+}
+
+.entrar-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.entrar-tabs button {
+  background: none;
+  border: 0;
+  color: #f5f1e8;
+  opacity: 0.55;
+  font-family: var(--ds-font-body);
+  font-weight: var(--ds-fw-cta);
+  font-size: var(--ds-fs-cta);
+  letter-spacing: var(--ds-ls-cta);
+  text-transform: uppercase;
+  padding: 0.7rem 0.25rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.entrar-tabs button[aria-selected='true'] {
+  opacity: 1;
+  border-bottom-color: #d8b45a;
+}
+
+.entrar-form label {
+  display: block;
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: var(--ds-ls-eyebrow);
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin: 1rem 0 0.4rem;
+}
+
+.entrar-form input {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--ds-radius-control);
+  color: #f5f1e8;
+  font-family: var(--ds-font-body);
+  font-size: var(--ds-fs-body);
+  padding: 0.7rem 0.8rem;
+}
+
+@media (max-width: 70rem) {
+  .entrar-shell {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .entrar-command {
+    max-width: none;
+  }
+
+  .entrar-command h1 {
+    max-width: 12ch;
+  }
+
+  .entrar-card {
+    width: min(100%, 30rem);
+    margin: 0;
+  }
+}
+
+@media (max-width: 44rem) {
+  .entrar-vault,
+  .entrar-locker {
+    grid-template-columns: 1fr;
+  }
+
+  .entrar-vault article {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .entrar-vault article:last-child {
+    border-bottom: 0;
+  }
+}
+
+.entrar-form input:focus-visible {
+  outline: 2px solid #d8b45a;
+  outline-offset: 2px;
+}
+
+.entrar-form .gold-button {
+  width: 100%;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+.entrar-errors {
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(220, 90, 90, 0.55);
+  border-radius: 3px;
+  background: rgba(220, 90, 90, 0.08);
+  font-size: var(--type-size-07);
+}
+
+.entrar-recover {
+  margin-top: 1.25rem;
+  font-size: var(--type-size-07);
+  opacity: 0.85;
+}
+
+.entrar-recover > button {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: #d8b45a;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.entrar-recover-note {
+  margin: 0.6rem 0 0;
+  font-size: var(--type-size-07);
+  opacity: 0.75;
+}
+
+/* Área de miembros. */
+
+.members-hero {
+  padding-top: 3.5rem;
+}
+
+.members-hero h1 {
+  /* Titular de página del área de miembros: misma escala y ritmo que el resto. */
+  font-size: var(--lux-fs-h1, clamp(2.35rem, 1.4rem + 3.3vw, 4.35rem));
+  line-height: var(--lux-lh-display, 0.98);
+  letter-spacing: var(--lux-track-display, -0.052em);
+  margin: 0.75rem 0 0.25rem;
+  overflow-wrap: break-word;
+}
+
+.members-tier {
+  margin: 0.25rem 0 0;
+  font-size: var(--type-size-08);
+  opacity: 0.85;
+}
+
+.members-tier strong {
+  color: #d8b45a;
+  letter-spacing: 0.1em;
+}
+
+.members-signout {
+  margin-top: 1rem;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  color: #f5f1e8;
+  font: inherit;
+  font-size: var(--type-size-06);
+  letter-spacing: 0.14em;
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+}
+
+.members-grid {
+  display: grid;
+  /* Aire y separación desde la escala de espacio del sistema, no números
+     sueltos: el mismo ritmo que el resto de la casa. */
+  gap: var(--ds-space-5);
+  margin-top: var(--ds-space-6);
+  padding-bottom: 3.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+}
+
+.members-block {
+  border: 1px solid rgba(216, 180, 90, 0.22);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.025);
+  padding: 1.5rem 1.35rem;
+}
+
+.members-block h2 {
+  /*
+    Título compacto de tarjeta dentro del área de miembros. Sin anclarlo, el
+    `main h2 !important` de la capa editorial lo subiría al titular de sección
+    (hasta 3.3rem) y rompería la tarjeta; con el `!important` propio gana por
+    especificidad y se queda en el peldaño h4 de la escala global.
+  */
+  font-size: var(--lux-fs-h4) !important;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.6rem;
+}
+
+.members-block p {
+  font-size: var(--type-size-07);
+  opacity: 0.78;
+  margin: 0 0 1rem;
+}
+
+.members-routine-list {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.members-routine-list label {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  font-size: var(--type-size-07);
+  cursor: pointer;
+}
+
+.members-routine-list input {
+  accent-color: #d8b45a;
+  width: 1rem;
+  height: 1rem;
+}
+
+.members-progress-count {
+  font-size: var(--type-size-14);
+  margin: 0 0 0.25rem;
+}
+
+.members-progress-count strong {
+  color: #d8b45a;
+}
+
+.members-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.members-links a {
+  color: #d8b45a;
+  font-size: 0.86rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(216, 180, 90, 0.4);
+  padding-bottom: 0.35rem;
+  width: fit-content;
+}
+
+/* Lead magnet (embudo freemium). */
+
+.lead-magnet {
+  background: #060606;
+  color: #f5f1e8;
+  border-top: 1px solid rgba(216, 180, 90, 0.25);
+  border-bottom: 1px solid rgba(216, 180, 90, 0.25);
+}
+
+.lead-magnet-inner {
+  padding-top: 2.75rem;
+  padding-bottom: 2.75rem;
+  max-width: 34rem;
+}
+
+.lead-magnet h2 {
+  /* Titular de sección del embudo: peldaño h3 de la escala global, anclado
+     frente al `main h2 !important` editorial. */
+  font-size: var(--lux-fs-h3) !important;
+  line-height: var(--lux-lh-title) !important;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.lead-magnet p {
+  font-size: var(--lux-fs-body);
+  line-height: var(--lux-lh-body);
+  opacity: 0.75;
+  margin: 0 0 1.25rem;
+}
+
+.lead-magnet form label {
+  display: block;
+  font-size: var(--type-size-06);
+  letter-spacing: 0.14em;
+  opacity: 0.75;
+  margin: 0.9rem 0 0.4rem;
+}
+
+.lead-magnet form input {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 3px;
+  color: #f5f1e8;
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.7rem 0.8rem;
+}
+
+.lead-magnet form input:focus-visible {
+  outline: 2px solid #d8b45a;
+  outline-offset: 2px;
+}
+
+.lead-magnet .gold-button {
+  width: 100%;
+  margin-top: 1.4rem;
+  justify-content: center;
+}
+
+.lead-magnet-errors {
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(220, 90, 90, 0.55);
+  border-radius: 3px;
+  background: rgba(220, 90, 90, 0.08);
+  font-size: var(--type-size-07);
+}
+
+.lead-magnet-errors ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.lead-magnet-success {
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(216, 180, 90, 0.45);
+  border-radius: 3px;
+  background: rgba(216, 180, 90, 0.07);
+  font-size: var(--type-size-08);
+}
+
+.lead-magnet-note {
+  margin: 1rem 0 0;
+  font-size: var(--type-size-07);
+}
+
+/* Push opt-in (/app · RECURSOS GRATIS). Reutiliza .members-signout. */
+.members-push {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+
+.members-push .members-signout {
+  margin-top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.members-push-note {
+  margin: 0;
+  font-size: var(--type-size-07);
+}
+
+/* ==========================================================================
+   /entrar · ninguna capa fija encima del formulario
+   (audit-uniformidad 2026-09-21, 1440x900 · «BLOQUEO FIJO PERMANENTE:
+    DIV > P "BAYONA OS · ACCESO"»)
+
+   Qué tapa, con nombre y apellido: la CORTINA de cambio de ruta de
+   `src/engine/motion/PageTransition.jsx:26-33`. Es un `motion.div` sin clase
+   (por eso la sonda imprime `DIV`: es el `tagName` que usa cuando `className`
+   viene vacío) con `position: fixed; inset: 0; z-index: 9999`. Acabado el
+   barrido se queda MONTADA con `clip-path: inset(100% 0 0 0)`, o sea invisible
+   pero con caja de 1440x900: `getBoundingClientRect()` no mira el `clip-path`,
+   así que el auditor la lee como un fijo que cubre toda la ventana. Y solo
+   aparece en /entrar porque la sonda exige que el MISMO texto esté tapado en
+   los tres puntos de scroll: esta pantalla mide una vista (`.entrar-page` son
+   4,5rem + 3,5rem de aire y una tarjeta de 26rem), así que 400, alto/2 y
+   alto-1200 se recortan los tres a scroll 0 y el rótulo «BAYONA OS · ACCESO»
+   —el primer `main p` del documento— es el mismo en las tres medidas.
+
+   Por qué NO es el dock: `App.jsx:133-143` mete `/entrar` en `PRODUCT_ROUTES` y
+   `App.jsx:158` define `showEditorialChrome = !isProductRoute`, que es la llave
+   de `<GuideCompanion/>` (:334), `<ArrivalBonusCard/>` (:317),
+   `<JourneyRibbon/>` (:311), `<WhatsAppButton/>` (:301) y `<UniverseScale*>`
+   (:323). Ninguna de esas capas se monta en el acceso, así que
+   `companion.css` y `rewards.css` no tienen aquí nada que esconder. Y en el CSS
+   compilado no queda ningún fijo sin clase: `navbar`, `mobile-nav`,
+   `consent-banner`, `translate-offer`, `scroll-progress`, `companion`,
+   `companion-orb`, `arrival-bonus-layer`, `journey-ribbon`, `universe-scale`,
+   `whatsapp-button` y `confirmation-lines` viven todos bajo un selector de
+   clase, que la sonda habría impreso en lugar de `DIV`.
+
+   El arreglo es CSS y vive en la hoja de ESTA ruta: mientras el acceso esté
+   montado, la cortina no se pinta. La regla gana sin necesidad de `!important`
+   porque `curtainStyle` declara en línea `position`, `inset`, `zIndex`,
+   `pointerEvents`, `borderRadius` y `background`, pero no `display`. El
+   precedente de alcance es `rewards.css:157`
+   (`body:has(.plan-presentation-hero)`): la capa global se apaga leyendo qué hay
+   en pantalla, sin tocar el componente.
+   ========================================================================== */
+body:has(.entrar-page) > #root > div[aria-hidden='true']:not([class]) {
+  display: none;
+}
+
+/* Botón Google (/entrar). Blanco de marca Google sobre el tema oscuro;
+   radio 0 como el resto del sistema BAYONA. */
+.entrar-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0 1rem;
+  color: var(--muted, #a3a3a3);
+  font-size: var(--type-size-06);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.entrar-divider::before,
+.entrar-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.entrar-google {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  font-size: var(--type-size-08);
+  color: #1f1f1f;
+  background: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.entrar-google:hover:not(:disabled) {
+  background: #f7f8f8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.entrar-google:focus-visible {
+  outline: 2px solid var(--gold, #f4a261);
+  outline-offset: 2px;
+}
+
+.entrar-google:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.entrar-google svg {
+  flex: 0 0 auto;
+}
+
+.entrar-note {
+  margin: 0.85rem 0 0;
+  font-size: var(--type-size-07);
+}
+
+/* La hoja de rutina que se entrega en el intercambio: el objeto antes del
+ * formulario, para que lo primero que se vea sea lo que se recibe. */
+.lead-magnet-figure {
+  display: block;
+  width: min(100%, 300px);
+  height: auto;
+  margin: 0 auto clamp(18px, 2.6vw, 30px);
+}
+
+.lead-magnet-hoja {
+  fill: var(--bayona-surface-1);
+  stroke: rgba(244, 162, 97, 0.5);
+  stroke-width: 1.5;
+}
+
+.lead-magnet-hoja.is-atras {
+  fill: none;
+  stroke: rgba(244, 162, 97, 0.22);
+}
+
+.lead-magnet-linea {
+  stroke: rgba(244, 162, 97, 0.4);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.lead-magnet-linea.is-titulo {
+  stroke: var(--bayona-white);
+  stroke-width: 3;
+}
+
+.lead-magnet-sello {
+  fill: var(--bayona-orange);
+}
+
+
+/* ==========================================================================
+   LANE D · 2026-09-22 — /entrar como puerta final del recorrido (§6, §7, §8)
+   Vincula el cierre con lo reclamado de verdad, separa lo local/demo de lo
+   conectado y le da a WhatsApp su identidad de canal. Mismo lenguaje visual de
+   la hoja: oro BAYONA, mono para rótulos, cero `!important`.
+   ========================================================================== */
+
+.entrar-command .entrar-verdict {
+  max-width: 44rem;
+  margin: clamp(1.4rem, 3vw, 2rem) 0 0.6rem;
+  padding: 1.1rem 1.25rem;
+  border-left: 2px solid rgba(244, 162, 97, 0.45);
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(245, 241, 232, 0.82);
+  font-family: var(--ds-font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.entrar-verdict.is-open {
+  border-left-color: var(--bayona-orange, #f4a261);
+}
+
+.entrar-verdict strong {
+  color: #f5f1e8;
+  font-weight: 700;
+}
+
+.entrar-command .entrar-count {
+  margin: 0 0 1rem;
+  color: rgba(245, 241, 232, 0.6);
+  font-family: var(--ds-font-body);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.entrar-progress {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: clamp(1.4rem, 3vw, 2rem);
+}
+
+.entrar-progress span {
+  width: 3rem;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.entrar-progress span.is-filled {
+  background: var(--bayona-orange, #f4a261);
+}
+
+.entrar-command .entrar-scope {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0 0 clamp(1.6rem, 3vw, 2.2rem);
+  padding: 0.95rem 1.1rem;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  color: rgba(245, 241, 232, 0.66);
+  font-family: var(--ds-font-body);
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+
+.entrar-scope span {
+  color: rgba(244, 162, 97, 0.9);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.entrar-scope[data-tone='cloud'] {
+  border-style: solid;
+  border-color: rgba(244, 162, 97, 0.35);
+}
+
+.entrar-exit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+}
+
+.entrar-exit-link {
+  color: rgba(245, 241, 232, 0.72);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.entrar-exit-link:hover,
+.entrar-exit-link:focus-visible {
+  color: #f4a261;
+  border-bottom-color: rgba(244, 162, 97, 0.55);
+}
+
+/* WhatsApp dentro de la tarjeta de acceso. */
+.entrar-wa {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1.35rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f5f1e8;
+  text-decoration: none;
+}
+
+.entrar-wa svg {
+  flex: none;
+  color: #4fd07f;
+}
+
+.entrar-wa strong {
+  display: block;
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: 0.18em;
+}
+
+.entrar-wa small {
+  display: block;
+  margin-top: 0.2rem;
+  color: rgba(245, 241, 232, 0.58);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.entrar-wa:hover,
+.entrar-wa:focus-visible {
+  border-color: rgba(244, 162, 97, 0.5);
+}
+
+.entrar-wa-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #f4a261;
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: 0.12em;
+}
+
+.entrar-wa-inline svg {
+  color: #4fd07f;
+}

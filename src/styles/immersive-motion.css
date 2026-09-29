@@ -1,0 +1,156 @@
+/*
+  BAYONA · IMMERSIVE LUXURY — SISTEMA DE TRANSICIONES (Fase C)
+  ===========================================================================
+  Maestro: PLAN-IMMERSIVE-LUXURY.md §9 y §30.
+
+  Lenguaje de transición GLOBAL. No se inventa nada: son tres primitivas que
+  ya usaba el pase atelier (fadeUp, stagger), elevadas a sistema:
+
+    1. CLIP REVEAL (§30 TYPE REVEAL) — el titular no aparece: SE DESCUBRE.
+       Una mascara baja y la tipografia ya está ahí detrás. Es lo que separa
+       "texto animado" de "cámara que se mueve".
+    2. LINE DRAW (§30 LINE DRAW) — los filetes no existen de antemano: se
+       DIBUJAN. scaleX de 0 a 1 con la curva de entrada. Convierte cada
+       separador en una seal de progreso.
+    3. PLANE SHIFT (§50) — el ritmo dark/light entre escenas. Usar los
+       tokens --ds-plane-* recién declarados.
+
+  USO: cualquier bloque añade `data-immersive="clip"` a su contenedor y
+  sus hijos directos h2/h3/p/li entran con clip reveal. Los hairlines con
+  `data-immersive="line"` se dibujan al entrar en viewport.
+
+  Todo está bajo IntersectionObserver en `useImmersiveReveal` (más abajo en
+  este mismo archivo como utilidad JS opcional) O, sin JS, bajo
+  `animation-timeline: view()` con fallback estático. Aquí va la versión
+  CSS-first con `view()` — los navegadores sin soporte lo dejan estático,
+  que es exactamente el fallback de reduced-motion. Cero dependencias.
+
+  §43 Silencio: nada de esto se anima en bucle. Entra, y se queda.
+  ===========================================================================
+*/
+
+/* 0 · TOKENOS — la primitiva es una; la geometría es de cada ruta.
+   route-identity.css redefine estos valores por ruta (dirección de la
+   máscara, ventana de entrada, origen del filete). Aquí solo van los
+   por defecto, que son exactamente el pase atelier original. */
+:root {
+  --reveal-a: 0%;                 /* inicio de la ventana de entrada */
+  --reveal-b: 45%;                /* fin de la ventana de entrada */
+  --reveal-step: 0%;              /* compás: lo desplaza el nth-child */
+  --reveal-from: inset(0 0 100% 0); /* la máscara baja */
+  --reveal-to: inset(0 0 0 0);
+  --reveal-line-origin: left center;
+}
+
+/* 1 · CLIP REVEAL — la máscara baja y el texto ya estaba ahí.
+   SOLO clip-path, nunca opacity: opacity es la propiedad que Framer Motion
+   maneja en estos mismos elementos y, además, un `opacity: 0` base cuya
+   animación pierde la cascada deja el texto transparente (medido: el pase
+   atelier anima h1/h2 con ds-atelier-wipe y gana por especificidad). Una
+   máscara no puede dejar contenido invisible: o está abierta o se abre.
+   La segunda rama del selector existe por eso mismo — dentro de un ancla
+   inmersiva la cámara de la ruta manda sobre el wipe genérico del atelier. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-immersive='clip'] > *,
+    .ds-frame[data-experience-scope='brand'] [data-immersive='clip'] > * {
+      clip-path: var(--reveal-from);
+      animation: immersive-clip-reveal
+        var(--ds-dur-emphasis, 800ms)
+        var(--ds-ease-entrance, cubic-bezier(0.16, 1, 0.3, 1))
+        both;
+      animation-timeline: view();
+      animation-range:
+        entry calc(var(--reveal-a) + var(--reveal-step))
+        entry calc(var(--reveal-b) + var(--reveal-step));
+    }
+
+    /* El descendiente número hace de compás: entra el primero, marca al
+       resto. No es stagger de delay: es posición en el scroll. Desplaza la
+       ventana de la ruta en vez de sustituirla, así la ruta sigue mandando. */
+    [data-immersive='clip'] > *:nth-child(2) { --reveal-step: 5%; }
+    [data-immersive='clip'] > *:nth-child(3) { --reveal-step: 10%; }
+    [data-immersive='clip'] > *:nth-child(4) { --reveal-step: 15%; }
+    [data-immersive='clip'] > *:nth-child(5) { --reveal-step: 20%; }
+  }
+}
+
+@keyframes immersive-clip-reveal {
+  to {
+    clip-path: var(--reveal-to);
+  }
+}
+
+/* 2 · LINE DRAW — el filete se dibuja de izquierda a derecha. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-immersive='line'] {
+      transform-origin: var(--reveal-line-origin);
+      transform: scaleX(0);
+      animation: immersive-line-draw
+        var(--ds-dur-emphasis, 800ms)
+        var(--ds-ease-entrance, cubic-bezier(0.16, 1, 0.3, 1))
+        both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+
+@keyframes immersive-line-draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* 3 · FALLBACK explícito (§46 accesibilidad): si no hay soporte de
+   animation-timeline o hay reduced-motion, TODO es visible y estático.
+   Sin esta regla los navegadores antiguos respetarían los estados iniciales
+   (la máscara cerrada) y el contenido desaparecería. Es la cláusula de
+   seguridad. La rama con ámbito de marca va aquí también: declara clip-path
+   con más especificidad que la rama genérica, así que el fallback tiene que
+   empatarla para ganarle por orden. */
+@supports not (animation-timeline: view()) {
+  [data-immersive='clip'] > *,
+  .ds-frame[data-experience-scope='brand'] [data-immersive='clip'] > *,
+  [data-immersive='line'] {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-immersive='clip'] > *,
+  .ds-frame[data-experience-scope='brand'] [data-immersive='clip'] > *,
+  [data-immersive='line'] {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    animation: none !important;
+  }
+}
+
+/* 4 · UNIFORMIDAD 2026-09-20 (pedido Sebastián): micro-movimiento parejo.
+   Una sola vez al entrar, nunca en bucle. Respeta reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .ds-frame[data-experience-scope='brand'] .section-shell[data-entrance='mount'] {
+    animation: immersive-section-in var(--ds-dur-emphasis, 800ms)
+      var(--ds-ease-entrance, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  }
+  .ds-frame[data-experience-scope='brand'] a:focus-visible,
+  .ds-frame[data-experience-scope='brand'] button:focus-visible,
+  .ds-frame[data-experience-scope='brand'] input:focus-visible {
+    outline: 2px solid var(--ds-color-accent);
+    outline-offset: 3px;
+  }
+}
+
+@keyframes immersive-section-in {
+  from {
+    transform: translateY(14px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

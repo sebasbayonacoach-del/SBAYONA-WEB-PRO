@@ -1,0 +1,261 @@
+/* BAYONA · BENEFICIOS COMO SISTEMA ORBITAL */
+
+.benefits-orbit-stage-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.benefits-orbit-intro {
+  max-width: 980px;
+  padding: clamp(4.5rem, 8vw, 8rem) 0 clamp(2rem, 4vw, 4rem);
+}
+
+.benefits-orbit-intro > p,
+.benefits-orbit-copy > p,
+.benefits-orbit-node span,
+.benefits-orbit-follow {
+  font-family: var(--type-family-mono, monospace);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.benefits-orbit-intro > p {
+  margin: 0 0 1.2rem;
+  color: var(--bayona-orange, #f4a261);
+  font-size: .66rem;
+  font-weight: 700;
+}
+
+.benefits-orbit-intro h2 {
+  max-width: 10.5ch;
+  margin: 0;
+  color: #f7f7f3;
+  font-size: clamp(3.8rem, 7vw, 7.6rem);
+  font-weight: 900;
+  line-height: .88;
+  letter-spacing: -.058em;
+  text-wrap: balance;
+}
+
+.benefits-orbit-intro > span {
+  display: block;
+  max-width: 40rem;
+  margin-top: 1.5rem;
+  color: rgba(247,247,243,.66);
+  font-size: clamp(1rem, 1.2vw, 1.14rem);
+  line-height: 1.7;
+}
+
+.benefits-orbit-stage {
+  margin-inline: calc(var(--prime-gutter, 24px) * -1);
+}
+
+.benefits-orbit-stage .sticky-stage-viewport {
+  height: calc(100svh - 66px);
+  min-height: 620px;
+}
+
+.benefits-orbit-viewport {
+  width: min(var(--prime-page-max, 1380px), calc(100vw - (var(--prime-gutter, 24px) * 2)));
+  height: 100%;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, .92fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 7rem);
+}
+
+.benefits-orbit-visual {
+  position: relative;
+  min-height: min(68vh, 680px);
+  display: grid;
+  place-items: center;
+  perspective: 1100px;
+}
+
+.benefits-orbit-system {
+  position: relative;
+  width: clamp(280px, 38vw, 590px);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.benefits-orbit {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  border: 1px solid rgba(247,247,243,.16);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.benefits-orbit--one { width: 96%; height: 44%; transform: translate(-50%, -50%) rotateX(64deg); }
+.benefits-orbit--two { width: 72%; height: 72%; transform: translate(-50%, -50%) rotateY(66deg); }
+.benefits-orbit--three { width: 48%; height: 96%; transform: translate(-50%, -50%) rotateZ(32deg); }
+
+.benefits-orbit::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid transparent;
+  border-top-color: rgba(244,162,97,.74);
+  border-radius: inherit;
+}
+
+.benefits-orbit-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 27%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: #050505;
+  border: 1px solid rgba(244,162,97,.56);
+  transform: translate(-50%, -50%) translateZ(86px);
+  box-shadow: 0 0 90px rgba(244,162,97,.12);
+}
+
+.benefits-orbit-core span {
+  color: var(--bayona-orange, #f4a261);
+  font-family: var(--type-family-display, sans-serif);
+  font-size: clamp(2.8rem, 5vw, 5.4rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.08em;
+}
+
+.benefits-orbit-node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  color: rgba(247,247,243,.26);
+  transition: color .3s ease, transform .35s cubic-bezier(.16,1,.3,1);
+}
+
+.benefits-orbit-node[data-node='0'] { left: 3%; top: 23%; }
+.benefits-orbit-node[data-node='1'] { right: 0; top: 48%; }
+.benefits-orbit-node[data-node='2'] { left: 16%; bottom: 9%; }
+
+.benefits-orbit-node span {
+  font-size: .56rem;
+}
+
+.benefits-orbit-node[data-active='true'] {
+  color: var(--bayona-orange, #f4a261);
+  transform: scale(1.08);
+}
+
+.benefits-orbit-copy > p {
+  margin: 0 0 1rem;
+  color: var(--bayona-orange, #f4a261);
+  font-size: .66rem;
+  font-weight: 700;
+}
+
+.benefits-orbit-copy h3 {
+  max-width: 11ch;
+  margin: 0;
+  color: #f7f7f3;
+  font-size: clamp(3rem, 5vw, 5.8rem);
+  font-weight: 900;
+  line-height: .9;
+  letter-spacing: -.052em;
+  text-wrap: balance;
+}
+
+.benefits-orbit-body {
+  max-width: 34rem;
+  margin-top: 1.2rem;
+  color: rgba(247,247,243,.62);
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  line-height: 1.68;
+}
+
+.benefits-orbit-follow {
+  width: fit-content;
+  display: inline-flex;
+  gap: .65rem;
+  margin: 0 0 clamp(4rem, 7vw, 7rem);
+  padding-bottom: .45rem;
+  color: var(--bayona-orange, #f4a261);
+  font-size: .66rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(244,162,97,.46);
+}
+
+@media (max-width: 760px) {
+  .benefits-orbit-intro {
+    padding: 4.5rem 0 1.5rem;
+  }
+
+  .benefits-orbit-intro h2 {
+    font-size: clamp(2.65rem, 12vw, 4.45rem);
+  }
+
+  .benefits-orbit-stage .sticky-stage-viewport {
+    height: calc(100svh - 66px);
+    min-height: 0;
+  }
+
+  .benefits-orbit-viewport {
+    width: min(100% - 32px, 620px);
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(260px, 43vh) auto;
+    gap: .5rem;
+    align-content: center;
+  }
+
+  .benefits-orbit-visual {
+    min-height: 0;
+  }
+
+  .benefits-orbit-system {
+    width: min(78vw, 340px);
+  }
+
+  .benefits-orbit-copy h3 {
+    max-width: 12ch;
+    font-size: clamp(2.2rem, 9.5vw, 3.5rem);
+  }
+
+  .benefits-orbit-body {
+    margin-top: .8rem;
+    font-size: .95rem;
+    line-height: 1.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benefits-orbit-stage {
+    margin-inline: 0;
+  }
+
+  .benefits-orbit-stage .sticky-stage-frame {
+    border-top: 1px solid rgba(247,247,243,.12);
+  }
+
+  .benefits-orbit-system,
+  .benefits-orbit-node {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Geometría soberana: el nuevo capítulo no usa la columna vertical antigua. */
+.solution-section > .home-scene-content--immersive {
+  display: block !important;
+  grid-template-columns: none !important;
+}
+
+.solution-section .benefits-orbit-stage-wrap,
+.solution-section .benefits-orbit-stage {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.solution-section .benefits-orbit-stage {
+  padding: 0 !important;
+  margin-inline: 0 !important;
+}

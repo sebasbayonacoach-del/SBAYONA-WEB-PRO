@@ -1,0 +1,285 @@
+/*
+  BAYONA · DIRECCIÓN DE ARTE v2 — TARJETA TIPOGRÁFICA E IMAGEN VIVA
+  ===========================================================================
+  DOS REGLAS DE MARCA
+
+  1. Ninguna imagen dentro de un cuadro.
+     Las tarjetas son tipográficas: letra, número, línea y espacio.
+  2. Las imágenes viven fuera de las cajas, a sangre, y se mueven.
+
+  POR QUÉ FUNCIONA
+
+  Una foto metida en una tarjeta pequeña compite con su propio texto y pierde:
+  se ve recortada, se lee como un icono y obliga a mantener una miniatura por
+  cada elemento. Sacada de la caja y llevada a sangre, la misma foto tiene
+  escala, respira y puede moverse.
+
+  El resultado es el contraste que da carácter editorial: bloques de texto
+  limpios y silenciosos, y momentos de imagen amplios y vivos.
+*/
+
+/* =========================================================================
+   1. FUERA LAS IMÁGENES DE LAS TARJETAS
+   Se ocultan, no se borran del DOM: el `alt` sigue disponible y el JSX no
+   cambia, así que nada se rompe si mañana se decide otra dirección.
+   ========================================================================= */
+.holo-card .holo-image,
+.shop-feature-image,
+.shop-product-image,
+.experience-proof-portrait,
+.cart-item-visual.has-media .cart-item-media,
+.value-card img,
+.resource-card img,
+.evidence-record img {
+  display: none !important;
+}
+
+/* Retirar la foto de la ficha de producto dejaba el hueco que ella ocupaba:
+   `.shop-product-visual` es una rejilla con `aspect-ratio` y fondo propio, así
+   que al ocultar el `img` (que vive DENTRO) el contenedor seguía midiendo
+   302×326 y se pintaba como una losa negra por cada uno de los 41 productos.
+   La compensación tipográfica de arriba está escrita para `.holo-card`, que es
+   otro componente, y nunca llegó a estas fichas. Se colapsa el contenedor solo
+   cuando su contenido era la foto: los productos SIN media conservan su icono
+   de respaldo (`.shop-product-visual > svg`), que es lo que los representa. */
+.shop-product-visual:has(.shop-product-image) {
+  display: none;
+}
+
+/*
+  Al retirar la imagen, la tarjeta necesita recuperar su propia presencia. Se
+  la da un número o una letra grande de fondo y el color de marca en el borde.
+*/
+.holo-card,
+.value-card,
+.resource-card,
+.experience-proof-card {
+  --v2-card-pad: clamp(22px, 2.5vw, 32px);
+}
+
+/* La ficha de producto pasa de foto + texto a ficha tipográfica. */
+.holo-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: var(--v2-card-pad);
+}
+
+.holo-card .holo-copy {
+  padding: 0;
+}
+
+/* La etiqueta que vivía sobre la foto sube a la esquina de la tarjeta. */
+.holo-card .holo-image span {
+  display: inline-block !important;
+  position: static;
+  padding: 0;
+  background: transparent;
+}
+
+/* =========================================================================
+   2. EL RETRATO SALE DE LA TARJETA DE EXPERIENCIA
+   La cita se sostiene sola. La identidad la da la tipografía: nombre grande,
+   oficio y ciudad en monoespaciada. Las caras siguen estando, a sangre y
+   vivas, en el globo de /about.
+   IMMERSIVE LUXURY §25 · la figura pasa a contents (retrato + firma en
+   columna propia del grid secuencial); ver experience-proof.css.
+   ========================================================================= */
+.experience-proof-figure {
+  display: contents;
+}
+
+.experience-proof-figure figcaption {
+  display: grid;
+  gap: 5px;
+}
+
+/* Comilla tipográfica como marca visual, en lugar de la foto. */
+.experience-proof-card {
+  position: relative;
+}
+
+.experience-proof-card::before {
+  content: '“';
+  position: absolute;
+  top: -0.16em;
+  right: 0.12em;
+  color: rgba(244, 162, 97, 0.16);
+  font: 900 clamp(6rem, 9vw, 9rem)/1 Montserrat, sans-serif;
+  pointer-events: none;
+  user-select: none;
+}
+
+.experience-proof-quote {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================================
+   3. IMÁGENES VIVAS, FUERA DE LAS CAJAS
+   Solo se animan las imágenes que van a sangre: fondos de escena y el visual
+   grande del globo. Respiración lenta y continua, imperceptible de cerca y
+   evidente en conjunto.
+   ========================================================================= */
+@keyframes v2-image-alive {
+  0% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: scale(1.085) translate3d(0, -1.1%, 0);
+  }
+
+  100% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+
+  .globe-testimonials-media-visual,
+  .story-backdrop,
+  .page-hero::before {
+    animation: v2-image-alive 26s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    will-change: transform;
+  }
+}
+
+/* =========================================================================
+   4. BLOQUES DE SOLO TEXTO: PLANO NEGRO O BLANCO
+   Cuando una sección es puro texto, en lugar de decorarla se le da un plano
+   propio. La alternancia negro / hueso marca el ritmo del recorrido mejor que
+   cualquier ilustración, y es lo que hace que el texto se lea como decisión
+   editorial y no como relleno.
+   ========================================================================= */
+.v2-plane--ink {
+  background: #050505;
+}
+
+/* Hueso, no blanco puro: sobre pantalla el #fff vibra y cansa. */
+.v2-plane--bone {
+  --muted: #55504a;
+  --gray-dim: #6f6963;
+  background: #f1ece3;
+  color: #0a0a0a;
+}
+
+.v2-plane--bone h1,
+.v2-plane--bone h2,
+.v2-plane--bone h3,
+.v2-plane--bone h4,
+.v2-plane--bone strong,
+.v2-plane--bone dt {
+  color: #0a0a0a;
+}
+
+.v2-plane--bone p,
+.v2-plane--bone li,
+.v2-plane--bone small {
+  color: #4b4741;
+}
+
+/* El acento se oscurece para mantener contraste AA sobre hueso. */
+.v2-plane--bone .eyebrow,
+.v2-plane--bone h2 span,
+.v2-plane--bone .free-value-eyebrow,
+.v2-plane--bone .experience-proof-eyebrow {
+  color: var(--orange-on-light);
+}
+
+.v2-plane--bone .eyebrow span {
+  background: #b45f2e;
+}
+
+/* Sobre hueso el cristal no funciona: la superficie pasa a tinta sobre papel.
+   IMMERSIVE LUXURY §10: sin cajas — el plano propio de la sección ya separa. */
+.v2-plane--bone .value-card,
+.v2-plane--bone .resource-card {
+  border-color: rgba(9, 9, 9, 0.16) !important;
+  background: rgba(255, 255, 255, 0.44) !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/*
+  Sobre hueso el cristal no funcionaba y estas dos reglas lo apagaban a
+  `!important` sobre la tarjeta de testimonios. Retiradas el 2026-09-22: el brief
+  de 70 anotaciones (§10, Testimonios) pide expresamente «tarjetas glass/blur»
+  sobre fondo con imagen, y esta hoja se estaba llevando por fuerza bruta con una
+  decisión que ya no es del gusto de nadie. La tarjeta manda ahora desde
+  `experience-proof.css`, sin `!important` nuevos en ninguna de las dos partes.
+
+  Se conservan las de arriba (`.value-card`, `.resource-card`): siguen en plano
+  hueso y sin pedido en contra.
+*/
+
+/* =========================================================================
+   5. MOVIMIENTO REDUCIDO
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+
+  .globe-testimonials-media-visual,
+  .story-backdrop,
+  .page-hero::before {
+    animation: none !important;
+  }
+}
+
+/* =========================================================================
+   6. AJUSTES DEL PLANO HUESO EN LA SECCIÓN DE EXPERIENCIAS
+   La sección viene con fondo degradado oscuro propio: sobre hueso hay que
+   neutralizarlo y recolocar los contrastes.
+   ========================================================================= */
+.experience-proof-section.v2-plane--bone {
+  background: linear-gradient(180deg, #f4efe7 0%, #ece6dc 100%);
+}
+
+/* La comilla decorativa necesita más cuerpo sobre papel para verse. */
+.v2-plane--bone .experience-proof-card::before {
+  color: rgba(180, 95, 46, 0.16);
+}
+
+/* IMMERSIVE LUXURY §25 · sobre el plano hueso la secuencia editorial no
+   lleva caja: filetes hairline oscuros sobre papel, como página impresa. */
+.v2-plane--bone .experience-proof-list {
+  background: transparent;
+  border-top-color: rgba(9, 9, 9, 0.18);
+}
+
+/* Mismo motivo que arriba: la tarjeta de testimonios decide su fondo. */
+
+.v2-plane--bone .experience-proof-quote {
+  border-left-color: rgba(180, 95, 46, 0.55);
+  color: #22201d;
+}
+
+.v2-plane--bone .experience-proof-figure strong {
+  color: #0a0a0a;
+}
+
+.v2-plane--bone .experience-proof-theme {
+  border-top-color: rgba(9, 9, 9, 0.12);
+  color: var(--orange-on-light);
+}
+
+.v2-plane--bone .experience-proof-link {
+  border-color: rgba(180, 95, 46, 0.5);
+  color: var(--orange-on-light);
+}
+
+.v2-plane--bone .experience-proof-link:hover {
+  background: #b45f2e;
+  border-color: #b45f2e;
+  color: #fff;
+}
+
+/* El foco sobre papel necesita un anillo oscuro para verse. */
+.v2-plane--bone a:focus-visible,
+.v2-plane--bone button:focus-visible {
+  outline-color: #b45f2e;
+}
+
+/* Los cortes entre plano oscuro y plano hueso son a hueso: sin degradado. */
+.v2-plane--bone {
+  border-block: 1px solid rgba(9, 9, 9, 0.1);
+}

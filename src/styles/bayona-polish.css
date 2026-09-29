@@ -1,0 +1,1041 @@
+/* ==========================================================================
+   BAYONA · POLISH EJECUTIVO 3D/OS
+   --------------------------------------------------------------------------
+   Capa final, deliberadamente pequeña: corrige la sensación de "cada página
+   habla distinto" sin borrar la personalidad de cada ruta. La identidad vive
+   en composición, profundidad e imagen; la lectura usa una escala común.
+   ========================================================================== */
+
+:root {
+  --bayona-page-max: min(1180px, calc(100vw - clamp(2rem, 6vw, 6.5rem)));
+  --bayona-copy-max: 68ch;
+  --bayona-copy-tight: 48ch;
+  --bayona-polish-line: color-mix(in srgb, var(--orange, #f4a261) 42%, transparent);
+}
+
+/*
+ * UNA SOLA ESCALA. Esta hoja quería lo mismo que `v2-typography.css`: que dos
+ * titulares del mismo rol no midan distinto en cada página. Lo que no podía era
+ * decirlo con su propia tabla de tamaños, porque entonces convivían dos —la
+ * auditada, que manda con `!important` sobre `main h2/h3/h4` y las clases de
+ * rol, y esta, que ganaba justo en los titulares que NO llevan clase— y el
+ * resultado volvía a ser doce `h2` de doce alturas. Así que aquí ya no hay
+ * ningún `clamp()`: todo es un alias de la escala medida en las 9 rutas
+ * comerciales a 1440 y 390 px. Si algún día el cuerpo se lee pequeño, se sube
+ * `--fs-body` UNA vez allí y se mueve el sitio entero detrás.
+ */
+:root {
+  --bayona-title-hero: var(--fs-display); /* la portada de la página */
+  --bayona-title-page: var(--fs-h1); /* un `h1` que no es portada */
+  --bayona-title-section: var(--fs-h2);
+  --bayona-title-card: var(--fs-h3);
+  --bayona-title-sub: var(--fs-h4);
+  --bayona-body-pro: var(--fs-body);
+  --bayona-line-hero: var(--lh-display);
+  --bayona-line-heading: var(--lh-heading);
+  --bayona-line-title: var(--lh-title);
+  --bayona-track-hero: var(--ls-display);
+  --bayona-track-heading: var(--ls-heading);
+  --bayona-track-title: var(--ls-title);
+}
+
+/*
+ * Paleta del panel CLARO del showroom de planes. El sistema solo define
+ * superficies oscuras (`--black`, `--black-2`, `--black-3` en `styles.css`), y
+ * este panel invierte el signo: tinta oscura sobre cristal claro. Como no hay
+ * tokens para eso, se declaran aquí UNA vez y las reglas de abajo no vuelven a
+ * escribir ni un hex. Pendiente de subir al sistema si el panel claro se
+ * repite en más rutas.
+ */
+:root {
+  --bayona-showroom-ink: #15120f; /* tinta principal sobre crema */
+  --bayona-showroom-ink-strong: #111; /* = --mediterranean */
+  --bayona-showroom-ink-soft: #34251a; /* precio */
+  /* Ajustado con la luminancia medida del crema del panel (0,698-0,779), no a
+     ojo: #9a5528 se quedaba en 4,04-4,48 y el umbral es 4,5; el intento previo
+     en #8a4a20 pasaba pero se le iba de tono. #8f4d28 da 4,63 sobre el fondo
+     más oscuro de los medidos y mantiene el quemado de la marca.
+     (Queda un caso medido a ratio 1,38 con fondo 0,084: ese NO es un problema
+     de color, es la placa oscura del chip de crédito pasando por encima de la
+     pestaña. Se resuelve reubicando el chip, no oscureciendo el texto.) */
+  --bayona-showroom-accent: #8f4d28;
+  --bayona-showroom-index: rgba(20, 18, 16, 0.36);
+  --bayona-showroom-hairline: rgba(20, 18, 16, 0.12);
+  --bayona-showroom-edge: rgba(20, 18, 16, 0.14);
+  --bayona-showroom-glass: rgba(241, 236, 227, 0.74);
+  --bayona-cream: #fff8ef; /* blanco cálido del panel de acceso */
+}
+
+/*
+ * El `text-rendering` iba en `body` pelado, sin ámbito: afectaba a los glifos
+ * de las 18 rutas, incluido el laboratorio, desde una hoja de "pulido". Se
+ * mete en el mismo grupo `:where()` que el resto de la capa, que ya es la
+ * frontera que el proyecto usa para este tipo de capas aditivas.
+ */
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page) {
+  font-family: var(--type-family-text, "Inter", "Montserrat", Arial, sans-serif);
+  text-rendering: geometricPrecision;
+}
+
+/*
+ * Fondo de las rutas de producto (`/app`, `/entrar`, `/checkout`,
+ * `/order-confirmation`, `/onboarding`). Antes eran cuatro hex sueltos: #050505
+ * y #070706 son literalmente `--black`, #10100f es la superficie `--black-2`
+ * del sistema, y el naranja quemado sale de `--orange-deep` mezclado, que es
+ * cómo `shop.css` y `parkour-academy.css` ya aliasan la marca. Ninguna de estas
+ * rutas lleva cycler 3D (`ROUTE_SCENE_DISABLED_ROUTES`), así que este fondo no
+ * entra en las medidas de velo y contraste de las rutas comerciales.
+ */
+body.product-route {
+  background:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--orange-deep) 18%, transparent), transparent 34rem),
+    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--white) 10%, transparent), transparent 30rem),
+    linear-gradient(135deg, var(--black) 0%, var(--black-2) 52%, var(--black) 100%);
+}
+
+/*
+  ANTES: `body.product-route :is(.navbar, ...) { display: none }` a matar.
+  Eran cuatro rutas dentro de `PRODUCT_ROUTES`, así que el navbar desaparecía
+  también en `/panel`. Es exactamente lo que decían los comentarios 62 y 63 de
+  las 70 anotaciones: el acceso y el centro de mando «se sienten separados del
+  sitio, como otra aplicación». Un mando sin la barra de la casa no es una
+  continuación del recorrido, es un producto aparte.
+
+  AHORA: solo se desmaquilla el cromo donde el foco vale más que la navegación,
+  que es la caja y su confirmación. `/onboarding` no pasa por aquí: decide su
+  inmersión sola con `body.onboarding-immersive` (onboarding.css), y esa
+  decisión es correcta porque la recepción es un flujo guiado, no una página.
+*/
+body:has(:is(.checkout-page, .confirmation)) :is(.navbar, .breadcrumb, .breadcrumb-trail) {
+  display: none !important;
+}
+
+/*
+  Hueco para el navbar devuelto al centro de mando. `product-site-chrome` solo
+  se pone en las rutas de producto que sí conservan la barra (ver App.jsx), y
+  `--nav-height` ya vale 4.5rem en escritorio y 4rem por debajo de 950 px, así
+  que el despeje sigue al marco sin volver a hardcodear 73 px.
+*/
+body.product-site-chrome #main-content {
+  padding-top: calc(var(--nav-height, 4.5rem) + 0.75rem);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(h1, h2, h3, .page-hero-title, .app-hero-title, .app-section-title, .community-hero-title) {
+  font-family: var(--type-family-display, "Montserrat", Arial, sans-serif);
+  font-weight: var(--type-weight-display, 900);
+  text-wrap: balance;
+  font-kerning: normal;
+}
+
+/*
+ * Los titulares se agrupan por ROL, no por etiqueta suelta. Estaba mezclado:
+ * `.app-hero-title` y `.community-hero-title` son `<h1>` (los dos títulos de
+ * página de sus rutas) y vivían en la regla del `h2`, que además va declarada
+ * después, así que se comía a la del héroe por orden de cascada. Aquí cada uno
+ * está donde lo puso `v2-typography.css`: portada → display, título de página →
+ * h1, sección → h2, tarjeta → h3, titulillo → h4.
+ *
+ * Y sin `max-inline-size` en `ch`. Un `h1` de 5,4rem cortado a 12 caracteres no
+ * hace un titular compacto: hace ocho líneas de dos palabras que se salen de su
+ * banda. Lo que se quería de ahí lo da `text-wrap: balance`, que sí está puesto
+ * arriba. Los topes de lectura del sitio ya viven en cada hoja de ruta, medidos.
+ */
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(h1, .page-hero-title, .app-hero-title, .community-hero-title) {
+  font-size: var(--bayona-title-page);
+  line-height: var(--bayona-line-heading);
+  letter-spacing: var(--bayona-track-heading);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(.home-hero-title) {
+  font-size: var(--bayona-title-hero);
+  line-height: var(--bayona-line-hero);
+  letter-spacing: var(--bayona-track-hero);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(h2, .app-section-title) {
+  font-size: var(--bayona-title-section);
+  line-height: var(--bayona-line-heading);
+  letter-spacing: var(--bayona-track-heading);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(h3) {
+  font-size: var(--bayona-title-card);
+  line-height: var(--bayona-line-title);
+  letter-spacing: var(--bayona-track-title);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(h4) {
+  font-size: var(--bayona-title-sub);
+  line-height: var(--bayona-line-title);
+  letter-spacing: var(--bayona-track-title);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(p, li, blockquote, dd) {
+  text-wrap: pretty;
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(p, li, dd) {
+  font-size: var(--bayona-body-pro);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(section, article, aside, header, footer) {
+  scroll-margin-top: calc(var(--bayona-shell-offset, 76px) + 24px);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is([class*='section'], [class*='hero'], [class*='panel'], [class*='card']) {
+  min-width: 0;
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(.eyebrow, [class*='eyebrow'], [class*='kicker'], [class*='overline'], [class*='label']) {
+  font-family: var(--type-family-mono, "DM Mono", monospace);
+  font-size: var(--type-eyebrow, 0.75rem);
+  line-height: var(--type-leading-eyebrow, 1.4);
+  letter-spacing: var(--type-tracking-eyebrow, 0.18em);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(.section-shell, .route-shell, .premium-shell, .app-shell, .checkout-shell, .auth-shell) {
+  width: var(--bayona-page-max);
+  margin-inline: auto;
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(.hero-subheadline, .offer-intro, .vision-copy, .pain-intro, .mechanism-intro, .pillar-intro, .proof-intro, .calculator-intro, .community-subtitle, .resources-lead) {
+  max-inline-size: var(--bayona-copy-max);
+  font-family: var(--type-family-text, "Inter", "Montserrat", Arial, sans-serif);
+  font-size: var(--type-lede, clamp(1rem, 1.45vw, 1.22rem));
+  line-height: var(--type-leading-body, 1.65);
+}
+
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  :is(.plan-cta, .plan-presentation-link, .complete-button, .app-primary-cta, .app-secondary-cta, .hero-cta, .button, button) {
+  font-family: var(--type-family-cta, "Montserrat", Arial, sans-serif);
+  letter-spacing: var(--type-tracking-label, 0.14em);
+}
+
+.ds-frame[data-experience-mode='product'] {
+  min-height: 100svh;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.045), transparent 34%),
+    radial-gradient(circle at 74% 18%, color-mix(in srgb, var(--orange-deep) 16%, transparent), transparent 32rem),
+    var(--black);
+}
+
+.ds-frame[data-experience-mode='product'] .breadcrumb {
+  opacity: 0.7;
+}
+
+.app-entry-loading {
+  min-height: calc(100svh - var(--bayona-shell-offset, 76px));
+  display: grid;
+  place-items: center;
+  padding: clamp(5rem, 9vw, 8rem) var(--page-gutter, clamp(1.25rem, 4vw, 4rem));
+  color: var(--bayona-cream);
+}
+
+.app-entry-loading__panel {
+  position: relative;
+  width: min(720px, 100%);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--bayona-cream) 16%, transparent);
+  border-radius: clamp(28px, 4vw, 48px);
+  padding: clamp(2rem, 5vw, 4rem);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035)),
+    radial-gradient(circle at 18% 10%, color-mix(in srgb, var(--orange-deep) 28%, transparent), transparent 22rem),
+    color-mix(in srgb, var(--black) 86%, transparent);
+  box-shadow:
+    0 44px 120px rgba(0, 0, 0, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(24px);
+}
+
+.app-entry-loading__panel::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: inherit;
+}
+
+.app-entry-loading__eyebrow {
+  margin: 0 0 1rem;
+  color: var(--orange);
+  font-family: var(--type-family-mono, "DM Mono", monospace);
+  font-size: 0.73rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.app-entry-loading h1 {
+  max-inline-size: 10ch;
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 6.8rem);
+  line-height: 0.82;
+  letter-spacing: -0.075em;
+}
+
+.app-entry-loading__panel > p:not(.app-entry-loading__eyebrow) {
+  max-inline-size: 58ch;
+  margin: clamp(1.25rem, 3vw, 2rem) 0 0;
+  color: color-mix(in srgb, var(--bayona-cream) 72%, transparent);
+  font-size: clamp(1rem, 1.4vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.app-entry-loading__rail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: clamp(1.75rem, 4vw, 3rem);
+}
+
+.app-entry-loading__rail span {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.78rem 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: color-mix(in srgb, var(--bayona-cream) 74%, transparent);
+  font-family: var(--type-family-mono, "DM Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/*
+ * Reserva de la banda inferior, DENTRO del pie. El pie de cada ruta lleva tres
+ * enlaces sociales en su última fila, y medido con probe-overlays `Seguir en
+ * Instagram` y `Suscribirse en YouTube` salían 100 % cubiertos por el chip de
+ * crédito y el botón de WhatsApp al final del scroll de las cuatro rutas de
+ * contenido: enlaces a los que no se llega ni bajando del todo.
+ *
+ * Primera versión, equivocada: reservar el hueco en `main`. `main` es hermano
+ * del pie, así que aquello añadía ~180 px de nada entre la última sección y el
+ * pie de página (y `probe-revelados` lo contó como 4 bloques nuevos sin cerrar).
+ * Se reserva dentro del propio `.footer`, que es el elemento que sufre la capa.
+ */
+:where(.ds-frame, .premium-route, .home-page, .app-page, .checkout-page, .auth-page)
+  .footer {
+  padding-bottom: calc(var(--dock-slot-2) + 1.5rem);
+}
+
+/*
+ * Los números fantasma de fondo (`/about` con el año, `/faq` con el índice de
+ * categoría) van con `::after/::before` desplazados hacia fuera de una caja con
+ * `overflow: hidden`, así que la propia tarjeta les mordía un tercio: medido,
+ * -34 px dentro del recorte en `/about` (33 % segado) y -43 px en `/faq`
+ * (18 %). Son decoraciones casi invisibles (alpha 0,024 / 0,03) cuyo único
+ * efecto visible era el corte, así que se asientan dentro de la caja.
+ */
+.about-timeline-entry--stage::after,
+.about-timeline-index {
+  bottom: 0;
+  top: auto;
+}
+
+/* El de /faq está anclado ARRIBA (-43,2 px): se asienta hacia dentro sin
+ * cambiar de lado, que es lo que corta el tercio y no el anclaje en sí. */
+.faq-category::before {
+  top: 0;
+  bottom: auto;
+}
+
+@media (min-width: 980px) {
+  .home-memberships-section .plan-explorer.plan-showroom {
+    display: grid;
+    grid-template-columns: minmax(250px, 0.31fr) minmax(0, 1fr);
+    gap: clamp(24px, 3.8vw, 54px);
+    align-items: start;
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-selector {
+    position: sticky;
+    top: calc(var(--bayona-shell-offset, 74px) + 24px);
+    grid-template-columns: 1fr;
+    border-color: var(--bayona-showroom-edge);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.34)),
+      var(--bayona-showroom-glass);
+    box-shadow: 0 28px 70px rgba(35, 27, 20, 0.16);
+    backdrop-filter: blur(18px);
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-comparison-item + .plan-comparison-item {
+    border-left: 0;
+    border-top: 1px solid var(--bayona-showroom-hairline);
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-tab {
+    min-height: 122px;
+    padding: 18px;
+    color: var(--bayona-showroom-ink);
+  }
+
+  /*
+   * Las filas de comparación del selector seguían heredando el BLANCO del
+   * tablero oscuro y se pintaban sobre el cristal crema del panel nuevo:
+   * probe-contraste midió `li.plan-comparison-item` a ratio 2,46-3,55 (texto
+   * blanco sobre un tono medio, fondo 0,25-0,38 de luminancia) en las cuatro
+   * filas, o sea justo los nombres de plan y sus precios. Mismo color de tinta
+   * que las pestañas hermanas.
+   */
+  .home-memberships-section .plan-explorer.plan-showroom .plan-comparison-item,
+  .home-memberships-section .plan-explorer.plan-showroom .plan-comparison-item :is(strong, b, span, small, dd, dt) {
+    color: var(--bayona-showroom-ink);
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-tab:hover,
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-tab[aria-pressed='true'] {
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--orange-deep) 16%, transparent), rgba(255, 255, 255, 0.22));
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-tab-index {
+    color: var(--bayona-showroom-index);
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-tab-copy strong {
+    color: var(--bayona-showroom-ink-strong);
+    font-size: clamp(1rem, 1.15vw, 1.18rem);
+    white-space: normal;
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-tab-copy small,
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-tab-price small {
+    color: var(--bayona-showroom-accent);
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-tab-price {
+    color: var(--bayona-showroom-ink-soft);
+    font-size: var(--type-size-06, 0.84rem);
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-stage {
+    min-width: 0;
+    margin-top: 0;
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-preview {
+    grid-template-columns: minmax(360px, 0.88fr) minmax(440px, 1.12fr);
+    min-width: 0;
+  }
+
+  /*
+   * Las dos acciones del preview van en UNA columna a partir de 980. Iban en
+   * dos (`home.css:1596`, `repeat(2, minmax(0,1fr))`), y como el propio
+   * `.plan-presentation-link` ya abre un grid interno de `86px + 1fr`
+   * (`home.css:4215`), la segunda subcolumna se partía a ~21 px: el botón
+   * «VER PRESENTACIÓN» se escribía en vertical. Una columna y cada botón
+   * recupera los 496 px que tiene en el resto de cortes.
+   */
+  .home-memberships-section .plan-showroom-preview .plan-card-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.home-memberships-section .plan-showroom-preview .plan-canonical-name {
+  max-inline-size: 9ch;
+  font-size: clamp(3rem, 5.8vw, 5.6rem);
+  line-height: 0.86;
+  letter-spacing: -0.065em;
+}
+
+.home-memberships-section .plan-showroom-preview .plan-descriptor {
+  max-inline-size: var(--bayona-copy-tight);
+  font-size: var(--type-size-07, 0.86rem);
+  line-height: 1.45;
+}
+
+.home-memberships-section .plan-showroom-narrative {
+  max-inline-size: 62ch;
+}
+
+.home-memberships-section .plan-summary-jtbd p {
+  font-size: clamp(1.02rem, 1.42vw, 1.24rem);
+  line-height: 1.48;
+}
+
+.home-memberships-section .plan-showroom-preview .plan-summary-scope,
+.home-memberships-section .plan-showroom-preview .plan-summary-value {
+  font-size: var(--type-size-08, 1rem);
+  line-height: 1.68;
+}
+
+.home-memberships-section .plan-showroom-price dd {
+  align-items: flex-end;
+  row-gap: 10px;
+}
+
+/*
+ * `v2-pricing.css:31` pone `.plan-showroom-price` en `inline-flex` porque en la
+ * ficha normal es un `<strong>` con la cifra y la moneda en línea. Aquí es un
+ * `<dl>`, así que el `dt` salía como segundo elemento de un flex-row y se
+ * exprimía hasta su min-content: «INVERSIÓN MENSUAL» escrito en vertical, una
+ * letra por línea, solo en escritorio. En bloque vuelve a ser lo que es: un
+ * rótulo encima de la cifra.
+ */
+.home-memberships-section .plan-showroom-price {
+  display: block;
+}
+
+.home-memberships-section .plan-showroom-price dd {
+  display: flex;
+}
+
+.home-memberships-section .plan-showroom-preview .plan-price {
+  display: inline-block;
+  max-inline-size: 100%;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  font-size: clamp(3rem, 4.8vw, 4.7rem);
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-memberships-section .plan-showroom-preview .plan-unit,
+.home-memberships-section .plan-showroom-preview .plan-eur,
+.home-memberships-section .plan-showroom-preview .plan-usd {
+  white-space: nowrap;
+  font-size: var(--type-size-05, 0.81rem);
+}
+
+.home-memberships-section .plan-showroom-visual {
+  min-height: clamp(380px, 42vw, 620px);
+}
+
+.home-memberships-section .plan-showroom-visual-title {
+  max-inline-size: 14ch;
+  text-wrap: balance;
+  font-size: clamp(2.2rem, 4.2vw, 4.6rem);
+  line-height: 0.92;
+}
+
+.home-memberships-section .plan-showroom-facts dd {
+  font-size: clamp(0.98rem, 1.25vw, 1.15rem);
+  line-height: 1.12;
+  overflow-wrap: normal;
+}
+
+.home-memberships-section .plan-showroom-inclusions strong {
+  text-wrap: balance;
+}
+
+@media (max-width: 979px) {
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-memberships-section .plan-showroom-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .home-memberships-section .plan-showroom-preview .plan-price {
+    font-size: clamp(2.75rem, 13vw, 4.4rem);
+  }
+}
+
+@media (max-width: 620px) {
+  .app-entry-loading__rail {
+    grid-template-columns: 1fr;
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-selector {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .home-memberships-section .plan-explorer.plan-showroom .plan-comparison-item {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+
+  .home-memberships-section .plan-showroom-preview .plan-canonical-name {
+    font-size: clamp(2.55rem, 17vw, 4.1rem);
+  }
+
+  .home-memberships-section .plan-showroom-visual {
+    min-height: 320px;
+  }
+}
+
+/* Product route polish · acceso y caja con el mismo lenguaje BAYONA OS. */
+.entrar-page {
+  min-height: calc(100svh - var(--bayona-shell-offset, 76px));
+  display: grid;
+  align-items: center;
+  padding-block: clamp(4rem, 8vw, 7rem);
+  background:
+    radial-gradient(circle at 14% 12%, rgba(205, 111, 53, 0.18), transparent 28rem),
+    linear-gradient(112deg, rgba(255, 255, 255, 0.055), transparent 34%),
+    #070706;
+}
+
+.entrar-loading {
+  display: grid;
+  gap: 0.9rem;
+  color: var(--bayona-cream, #fff8ef);
+}
+
+.entrar-loading h1 {
+  margin: 0;
+}
+
+.entrar-loading p:last-child {
+  max-inline-size: 42ch;
+  margin: 0;
+  color: color-mix(in srgb, var(--bayona-cream, #fff8ef) 72%, transparent);
+}
+
+.entrar-page > .section-shell {
+  display: grid;
+  /*
+   * El tope de la columna de lectura era 460 px y el titular del panel, ya a la
+   * escala del sitio (66 px), tiene una palabra de 563 px de tinta
+   * («desbloqueado.»): la línea se salía 102 px de su cajón y desalineaba con
+   * las tres tarjetas de estado, que paran donde termina la columna. Medido con
+   * `Range.getClientRects()` línea a línea, no con la caja.
+   *
+   * Esta regla es la que manda, no `.entrar-shell` (auth-members.css): gana por
+   * combinación de descendientes, así que tiene más especificidad. Por eso un
+   * intento anterior de ensanchar la retícula en la otra hoja no movió nada.
+   * 37 rem = 592 px, que es lo que pide la palabra más un margen corto.
+   */
+  grid-template-columns: minmax(0, 0.86fr) minmax(300px, 37rem);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.entrar-page > .section-shell::before {
+  content: "BAYONA OS";
+  display: grid;
+  min-height: clamp(260px, 44vw, 520px);
+  place-items: end start;
+  border: 1px solid rgba(255, 248, 239, 0.1);
+  border-radius: var(--bayona-radius-panel);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), transparent 48%),
+    radial-gradient(circle at 22% 18%, rgba(227, 163, 95, 0.24), transparent 22rem),
+    rgba(255, 255, 255, 0.035);
+  color: rgba(255, 248, 239, 0.16);
+  font-family: var(--type-family-display, "Montserrat", Arial, sans-serif);
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 900;
+  line-height: 0.78;
+  letter-spacing: -0.08em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 34px 90px rgba(0, 0, 0, 0.35);
+}
+
+.entrar-page > .section-shell > .entrar-card {
+  width: min(100%, 460px);
+  margin: 0;
+  border-color: rgba(255, 238, 210, 0.16);
+  border-radius: var(--bayona-radius-panel);
+  padding: clamp(1.5rem, 4vw, 2.4rem);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04)),
+    rgba(10, 9, 8, 0.82);
+  box-shadow: 0 34px 110px rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(22px);
+}
+
+.entrar-card h1 {
+  max-inline-size: 9ch;
+  margin-block: 0.85rem 0.8rem;
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+}
+
+.entrar-lead {
+  max-inline-size: 34ch;
+}
+
+.entrar-form input,
+.entrar-google,
+.entrar-tabs {
+  border-radius: 18px;
+}
+
+.entrar-tabs {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.entrar-tabs button[aria-selected='true'] {
+  background: rgba(227, 163, 95, 0.14);
+}
+
+.checkout-hero {
+  padding-block: clamp(4rem, 8vw, 7rem) clamp(2rem, 4vw, 3rem);
+}
+
+/*
+ * 2026-09-21 · audit-uniformidad a 1440x900. El `h1` de /checkout abría a 36 px
+ * contra los 86,4 px de las otras ocho aperturas y su caja recortaba +82 px. No
+ * era un tamaño suelto: `route-identity.css:267` reescribe `--fs-h1`,
+ * `--lh-heading` y `--ls-heading` dentro de `.checkout-hero`/`.checkout-page`
+ * («el paso de pago no compite por atención»), y `overrides.css:789` más el
+ * bloque de abajo cortaban el titular a 11ch. A 36 px, 11ch eran ~190 px, así
+ * que «acompañamiento.» desbordaba la caja que recorta
+ * `.checkout-hero { overflow: hidden }`.
+ *
+ * El titular vuelve a la escala PEDINDO EL PASO, sin escribir ningún número, con
+ * el idioma que ya usa `route-identity.css:309` en el 404 (`--fs-h1:
+ * var(--ds-fs-h2)`): el paso se declaró en el `:root` de esta hoja, así que su
+ * valor queda sustituido ALLÍ y hereda a `.checkout-hero` ya resuelto a 5,4rem,
+ * sin leer el `--fs-h1` achicado de la ruta. La compresión de móvil se conserva
+ * porque `v2-typography.css:286` redefine esos mismos pasos en `:root`.
+ *
+ * Y el tope en `ch` se va: con el titular en 86,4 px, 11ch serían ~460 px contra
+ * una palabra de ~660 px, es decir recortaría el doble. Lo que ordena las líneas
+ * es `text-wrap: balance` (arriba, comentario de la línea 116), que es justo lo
+ * que este proyecto usa en vez de un corte en caracteres.
+ */
+.checkout-hero,
+.checkout-page {
+  --fs-h1: var(--bayona-title-page);
+  --lh-heading: var(--bayona-line-heading);
+  --ls-heading: var(--bayona-track-heading);
+}
+
+.checkout-hero h1 {
+  /* `max-width` además de `max-inline-size`: `overrides.css:789` dejó su 11ch en
+     la ranura física; las dos tienen que irse para que la caja no recorte. */
+  max-inline-size: none;
+  max-width: none;
+  text-transform: none;
+  text-wrap: balance;
+}
+
+.checkout-subtitle {
+  max-inline-size: 58ch;
+  color: color-mix(in srgb, var(--bayona-cream, #fff8ef) 72%, transparent);
+}
+
+.checkout-page {
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.checkout-layout {
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.checkout-form,
+.order-summary {
+  border-radius: var(--bayona-radius-panel);
+  border-color: rgba(255, 238, 210, 0.14);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025)),
+    rgba(9, 8, 7, 0.78);
+  box-shadow: 0 28px 86px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.checkout-fieldset {
+  border-radius: 28px;
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.checkout-fieldset legend {
+  max-inline-size: 28ch;
+  color: var(--bayona-cream, #fff8ef);
+  text-wrap: balance;
+}
+
+.checkout-plans,
+.checkout-service-list,
+.checkout-extra-list {
+  gap: 0.8rem;
+}
+
+.checkout-plans label,
+.checkout-service-option,
+.checkout-extra-list label {
+  border-radius: 22px;
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.checkout-plans label.selected,
+.checkout-extra-list label.selected {
+  border-color: rgba(227, 163, 95, 0.54);
+  background:
+    linear-gradient(135deg, rgba(227, 163, 95, 0.16), rgba(255, 255, 255, 0.035));
+}
+
+.order-summary {
+  position: sticky;
+  top: calc(var(--bayona-shell-offset, 76px) + 24px);
+}
+
+.summary-total {
+  border-radius: 24px;
+  background: rgba(227, 163, 95, 0.12);
+}
+
+@media (max-width: 900px) {
+  .entrar-page > .section-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .entrar-page > .section-shell::before {
+    min-height: 220px;
+  }
+
+  .order-summary {
+    position: static;
+  }
+}
+
+/* Product route polish · confirmación como protocolo BAYONA OS. */
+
+/*
+ * 2026-09-21 · audit-uniformidad a 1440x900. /order-confirmation salía con
+ * CUATRO titulares recortados (H1 «TU SIGUIENTE PASO ESTÁ CLARO.» +120 px y los
+ * tres H3 del protocolo, +205/+160/+159 px) y con el H2 a 44,8 px mientras el
+ * resto del sitio abre sus secciones a 67,2 px. Dos causas: una de geometría y
+ * otra de escala.
+ *
+ *  1. GEOMETRÍA. `place-items: center` centraba también en el eje inline, así
+ *     que ninguna caja del árbol (ni el shell, ni sus columnas, ni las filas del
+ *     protocolo) se estiraba: todas se dimensionaban por su propio contenido.
+ *     Leídas las tres cifras de desborde de los H3, cada una es exactamente la
+ *     palabra más larga de su rótulo menos ~30 px: las cajas de texto del
+ *     protocolo venían quedándose en ~30 px de ancho dentro de una columna que
+ *     sobre el papel tenía 335. Con `align-items: center` + `justify-items:
+ *     stretch` —una declaración por eje— el contenido vuelve a estirarse, el
+ *     `width: min(1120px, 100%)` del shell resuelve contra un área de rejilla
+ *     definida y las filas del protocolo reciben una pista ancha explícita.
+ *  2. ESCALA. El H2 llevaba un `clamp()` propio CON `!important` aquí (44,8 px)
+ *     y otro `clamp()` en `styles.css` (0,1,1, ganaba por especificidad a
+ *     `main h2`, 0,0,2), que es la deriva que `ds-tokens.css:255` describe como
+ *     causa del desorden: «cada hoja de página declaraba su propio clamp() para
+ *     subtítulos, rótulos y tarjetas, y esos sí ganaban la cascada». Se borran
+ *     los dos y el paso lo pone `v2-typography.css` por rol. Los H3 llevaban otro
+ *     `clamp()` de página, pero sin `!important` nunca llegó a mandar: ya estaban
+ *     en `--fs-h3` (27,36 px); lo suyo era solo el recorte del punto 1.
+ *
+ * Y una columna en vez de dos, medida y no a ojo: con el H1 en 86,4 px y el H2 en
+ * 67,2 px, las dos columnas necesitarían ~604 px + ~487 px + hueco y margen, o
+ * sea ~1220 px dentro de un shell de 1120 px. No caben: el par 86,4/67,2 no se
+ * puede sentar lado a lado en este sitio. Apilado, cada titular dispone de los
+ * ~1056 px del shell y el protocolo lee como lo que es —01, 02, 03 en orden—.
+ * El breakpoint de 900 px ya apilaba así; ahora escritorio y móvil dicen lo
+ * mismo.
+ */
+.confirmation {
+  min-height: 100svh;
+  display: grid;
+  /* `place-items: center` recortaba titulares: centraba también en el eje
+     inline y dejaba cada caja de la página en su shrink-to-fit. */
+  align-items: center;
+  justify-items: stretch;
+  padding: clamp(4rem, 8vw, 7rem) var(--bayona-gutter, clamp(1rem, 4vw, 3rem));
+  background:
+    radial-gradient(circle at 84% 14%, rgba(227, 163, 95, 0.18), transparent 30rem),
+    radial-gradient(circle at 12% 76%, rgba(255, 255, 255, 0.08), transparent 24rem),
+    #060605;
+}
+
+.confirmation-lines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.42;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055), transparent 1px) 0 0 / 42px 42px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.035), transparent 1px) 0 0 / 42px 42px;
+  mask-image: radial-gradient(circle at 50% 40%, black, transparent 78%);
+}
+
+.confirmation-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, 100%);
+  margin-inline: auto;
+  display: grid;
+  /* Una columna: ver la nota de arriba, el par 86,4/67,2 no cabe lado a lado. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: stretch;
+  border: 1px solid rgba(255, 238, 210, 0.14);
+  border-radius: var(--bayona-radius-panel, 32px);
+  padding: clamp(1.2rem, 4vw, 2rem);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
+    rgba(8, 7, 6, 0.88);
+  box-shadow: 0 42px 120px rgba(0, 0, 0, 0.46);
+  backdrop-filter: blur(18px);
+}
+
+.confirmation-intro,
+.confirmation-next {
+  min-width: 0;
+  border-radius: calc(var(--bayona-radius-panel, 32px) - 10px);
+  padding: clamp(1.35rem, 3.5vw, 2.5rem);
+}
+
+.confirmation-intro {
+  display: grid;
+  align-content: space-between;
+  min-height: clamp(420px, 44vw, 640px);
+  background:
+    linear-gradient(90deg, rgba(227, 163, 95, 0.12), transparent 1px) 0 0 / 26px 26px,
+    radial-gradient(circle at 24% 20%, rgba(227, 163, 95, 0.2), transparent 22rem),
+    rgba(255, 255, 255, 0.035);
+}
+
+.confirmation-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--bayona-cream, #fff8ef);
+}
+
+.confirmation-status p,
+.confirmation-next-heading p {
+  margin: 0;
+  color: color-mix(in srgb, var(--bayona-cream, #fff8ef) 68%, transparent);
+  font-family: var(--type-family-label, "DM Mono", ui-monospace, monospace);
+  font-size: var(--type-size-04, 0.75rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.confirmation-check {
+  display: grid;
+  place-items: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  border: 1px solid rgba(227, 163, 95, 0.54);
+  border-radius: 999px;
+  color: var(--bayona-gold, #e3a35f);
+  background: rgba(227, 163, 95, 0.12);
+}
+
+.confirmation h1 {
+  /* Se quita `max-inline-size: 10ch`: a 86,4 px diez caracteres eran ~520 px de
+     caja y «SIGUIENTE» desbordaba (+120 px medido). Las líneas las reparte
+     `text-wrap: balance`, que ya viste a todos los titulares de `.ds-frame`. */
+  margin: clamp(2rem, 7vw, 6rem) 0 1rem;
+  text-transform: uppercase;
+}
+
+.confirmation h1 span {
+  color: var(--bayona-gold, #e3a35f);
+}
+
+.confirmation-lead {
+  max-inline-size: 46ch;
+  margin: 0;
+  color: color-mix(in srgb, var(--bayona-cream, #fff8ef) 76%, transparent);
+  font-size: clamp(1rem, 1.35vw, 1.18rem);
+}
+
+.confirmation-next {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.confirmation-next-heading {
+  margin-bottom: clamp(1.2rem, 3vw, 2rem);
+}
+
+.confirmation-next-heading h2 {
+  /* Fuera el `clamp()` propio con `!important`: era lo único que sostenía este
+     titular de sección en 44,8 px (2,8rem) frente a los 67,2 px de `--fs-h2` en
+     el resto del sitio. Sin él, `main h2` de `v2-typography.css:138` manda y la
+     ruta entra en la escala. Medido con la sonda: 44,8 px → 67,2 px. */
+  margin: 0.45rem 0 0;
+}
+
+.confirmation-steps {
+  display: grid;
+  /* Pista explícita de ancho completo: la columna implícita era `auto` y, con el
+     centrado inline que heredaba la página, cada fila podía acabarse en su
+     shrink-to-fit en vez de en el ancho de la columna. La sonda medía las cajas
+     de texto de los tres H3 en ~30 px (+205/+160/+159 de desborde); con pista
+     definida y `justify-items: stretch` disponen de los ~990 px del paso. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.confirmation-steps li {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: clamp(1rem, 2.8vw, 1.45rem);
+  background: rgba(5, 5, 5, 0.62);
+}
+
+.confirmation-steps li > span {
+  color: var(--bayona-gold, #e3a35f);
+  font-family: var(--type-family-label, "DM Mono", ui-monospace, monospace);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+}
+
+.confirmation-steps h3 {
+  margin: 0 0 0.45rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  letter-spacing: -0.025em;
+}
+
+.confirmation-steps p {
+  margin: 0;
+  color: color-mix(in srgb, var(--bayona-cream, #fff8ef) 70%, transparent);
+}
+
+.confirmation-step-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+  color: var(--bayona-gold, #e3a35f);
+  font-family: var(--type-family-label, "DM Mono", ui-monospace, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .confirmation {
+    place-items: stretch;
+  }
+
+  .confirmation-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .confirmation-intro {
+    min-height: 360px;
+  }
+
+  .confirmation-steps li {
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+  }
+}

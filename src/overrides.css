@@ -1,0 +1,1304 @@
+/* BAYONA final global luxury layer — intentionally imported last. */
+:root {
+  --bayona-black: #050505;
+  --bayona-ink: #080808;
+  --bayona-panel: #0b0b0c;
+  --bayona-panel-raised: #101011;
+  --bayona-white: #fff;
+  --bayona-copy: #c8c3bb;
+  --bayona-muted: #8d8881;
+  --bayona-line: rgba(255, 255, 255, 0.14);
+  --bayona-line-strong: rgba(244, 162, 97, 0.45);
+  --bayona-orange: #f4a261;
+  --black: var(--bayona-black);
+  --white: var(--bayona-white);
+  --orange: var(--bayona-orange);
+  --gold: var(--bayona-orange);
+  --orange-fire: var(--bayona-orange);
+  --mediterranean: #111;
+  --deep-blue: #0b0b0c;
+  --luxury-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+  font-synthesis: none;
+}
+
+html {
+  background: var(--bayona-black);
+  scroll-padding-top: 76px;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: clip;
+  background: var(--bayona-black);
+  color: var(--bayona-white);
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 52%, rgba(0, 0, 0, 0.1) 72%, rgba(0, 0, 0, 0.48) 125%);
+}
+
+::selection {
+  background: var(--bayona-orange);
+  color: var(--bayona-black);
+}
+
+:is(h1, h2, h3, h4, h5, h6, strong, b) {
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+:is(h1, h2) {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd,
+blockquote {
+  text-wrap: pretty;
+}
+
+:is(.eyebrow, .section-label, [class*='kicker'], [class*='overline'], [class*='index'], [class*='tag']) {
+  font-family: 'DM Mono', ui-monospace, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+:is(a, button, input, select, textarea, summary) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:is(a, button, summary) {
+  transition-timing-function: var(--luxury-ease) !important;
+}
+
+:is(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--bayona-white) !important;
+  outline-offset: 4px !important;
+}
+
+/*
+ * DIANA TÁCTIL SEGÚN EL DISPOSITIVO, no según el humor del CSS (22-09-2026).
+ *
+ * Esta regla era un `min-height: 48px` a secas para todos los botones. La
+ * intención es WCAG 2.5.5 (48 px, nivel AAA) y en el dedo sigue siendo la
+ * correcta. Medido en el build con `probe-botones-estirados.mjs`: en escritorio
+ * deformaba **25 controles compactos** repartidos en 6 rutas —la `×` del globo
+ * del acompañante (23×48), los puntos del mapa de testimonios de About (24×48),
+ * los steppers de cantidad de Programas (32×48) y tres celdas del calendario de
+ * Comunidad—. Un botón diseñado cuadrado dejaba de serlo porque una hoja global
+ * le imponía alto.
+ *
+ * Se separan los dos casos: 24 px de suelo en puntero fino, que es WCAG 2.5.8
+ * (AA) y respeta el tamaño con el que cada componente se diseñó, y los 48 px
+ * completos cuando el puntero es grueso, que es donde la diana grande de verdad
+ * evita el fallo de puntería.
+ */
+:is(button, [role='button'], a[class*='button'], a[class*='cta'], .gold-button, .text-button) {
+  min-height: 24px;
+}
+
+@media (pointer: coarse) {
+  :is(button, [role='button'], a[class*='button'], a[class*='cta'], .gold-button, .text-button) {
+    min-height: 48px;
+  }
+}
+
+button,
+select,
+summary {
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid var(--bayona-line);
+  border-radius: 0 !important;
+  background: #080808;
+  color: var(--bayona-white);
+}
+
+img,
+video {
+  filter: saturate(0.62) contrast(1.06) brightness(0.84);
+  transition: filter 500ms var(--luxury-ease), transform 700ms var(--luxury-ease);
+}
+
+:is(a, button, figure):hover > img,
+:is(a, button, figure):focus-within > img {
+  filter: saturate(0.78) contrast(1.04) brightness(0.94);
+}
+
+.section-shell,
+.community-shell,
+.resources-shell,
+.plan-presentation-shell,
+.plan-presentation-hero-shell {
+  width: min(1240px, calc(100% - 80px));
+}
+
+:is(
+  .about-problem,
+  .about-values,
+  .about-method,
+  .about-cta,
+  .programs-pain,
+  .programs-method,
+  .programs-proof,
+  .programs-visualization,
+  .programs-comparison-section,
+  .programs-services,
+  .programs-cta-stack,
+  .app-section,
+  .community-definition,
+  .community-week,
+  .community-entry,
+  .resources-section,
+  .faq-section,
+  .faq-contact
+) {
+  /* Ritmo vertical configurable por ruta: el valor por defecto es el histórico.
+     route-identity.css lo varía según la intensidad de cada página. */
+  padding-block: var(--route-section-space, clamp(96px, 10vw, 160px));
+}
+
+:is(
+  .about-page,
+  .community-page,
+  .resources-page,
+  .faq-page,
+  .plan-presentation,
+  .shop-page
+) {
+  background: var(--bayona-black);
+  color: var(--bayona-white);
+}
+
+:is(
+  .pain-section,
+  .vision-section,
+  .mechanism-section,
+  .solution-section,
+  .proof-section,
+  .offer-section,
+  .calculator-section,
+  .cta-stack-section,
+  .about-story,
+  .programs-offer,
+  .programs-calculator,
+  .app-concept,
+  .community-for-whom,
+  .community-access,
+  .community-social,
+  .resources-section,
+  .faq-section,
+  .plan-presentation-section
+) {
+  border-color: var(--bayona-line);
+}
+
+/* Shell / navigation */
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: clamp(18px, 2.6vw, 42px);
+  padding: 0 max(24px, calc((100vw - 1440px) / 2));
+  border-bottom: 1px solid transparent;
+  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.82), transparent);
+  backdrop-filter: none;
+  transition: min-height 350ms var(--luxury-ease), background-color 350ms var(--luxury-ease), border-color 350ms var(--luxury-ease), backdrop-filter 350ms var(--luxury-ease);
+}
+
+.navbar.is-scrolled,
+.navbar.is-open {
+  min-height: 64px;
+  border-bottom-color: var(--bayona-line);
+  background: rgba(5, 5, 5, 0.88);
+}
+
+.navbar.is-scrolled {
+  backdrop-filter: blur(18px) saturate(0.7);
+}
+
+.navbar.is-open {
+  backdrop-filter: none;
+}
+
+.brand {
+  position: relative;
+  z-index: 102;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bayona-white);
+  font-size: 13px;
+  letter-spacing: 0.17em;
+}
+
+.brand > span {
+  color: var(--bayona-orange);
+  font: 600 10px/1 'DM Mono', monospace;
+  letter-spacing: 0;
+}
+
+.brand > strong {
+  font-size: inherit;
+  font-weight: 800;
+}
+
+.desktop-nav {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  gap: clamp(13px, 1.45vw, 26px);
+}
+
+.desktop-nav a {
+  position: relative;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  color: #a7a29b;
+  font: 600 8px/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.desktop-nav a::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  left: 0;
+  height: 1px;
+  background: var(--bayona-orange);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 280ms var(--luxury-ease);
+}
+
+.desktop-nav a:hover,
+.desktop-nav a.active {
+  color: var(--bayona-white);
+}
+
+.desktop-nav a:hover::after,
+.desktop-nav a.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-cta {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 1px solid var(--bayona-orange);
+  color: var(--bayona-orange);
+  font: 700 8px/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-cta:hover,
+.nav-cta:focus-visible {
+  background: var(--bayona-orange);
+  color: var(--bayona-black);
+}
+
+.nav-cart-button {
+  position: relative;
+  z-index: 102;
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  /* El badge va en `position: absolute; top: 4px; right: 4px` y mide 20 px, así
+     que ocupaba la franja 4-24 px desde el borde derecho: la etiqueta «Carrito»
+     terminaba debajo y se leía «CARRI» en las capturas de las 13 rutas. Se
+     reserva el hueco en el botón, que es lo que manda el flujo. */
+  padding: 0 30px 0 12px;
+  border: 1px solid var(--bayona-line);
+  border-radius: 0;
+  background: rgba(5, 5, 5, 0.78);
+  color: var(--bayona-white);
+  font: 700 8px/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 280ms var(--luxury-ease), background-color 280ms var(--luxury-ease), color 280ms var(--luxury-ease);
+}
+
+.nav-cart-button > svg {
+  color: var(--bayona-orange);
+}
+
+.nav-cart-button:hover,
+.nav-cart-button:focus-visible {
+  border-color: var(--bayona-orange);
+  background: rgba(244, 162, 97, 0.08);
+}
+
+.nav-cart-count {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  padding-inline: 4px;
+  border: 2px solid var(--bayona-black);
+  border-radius: 0;
+  background: var(--bayona-orange);
+  color: var(--bayona-black);
+  font: 800 8px/1 'DM Mono', monospace;
+  letter-spacing: 0;
+}
+
+.menu-button {
+  position: relative;
+  z-index: 102;
+  width: 48px;
+  height: 48px;
+  display: none;
+  place-items: center;
+  border: 1px solid var(--bayona-line);
+  background: rgba(5, 5, 5, 0.78);
+  color: var(--bayona-white);
+}
+
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 28px;
+  overflow-y: auto;
+  padding: 104px max(22px, calc((100vw - 720px) / 2)) 36px;
+  background:
+    linear-gradient(rgba(244, 162, 97, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 162, 97, 0.045) 1px, transparent 1px),
+    rgba(5, 5, 5, 0.985);
+  background-size: 64px 64px, 64px 64px, auto;
+}
+
+.mobile-nav > p,
+.mobile-nav > small {
+  margin: 0;
+  color: var(--bayona-muted);
+  font: 600 9px/1.5 'DM Mono', monospace;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.mobile-nav > div {
+  align-self: center;
+  border-top: 1px solid var(--bayona-line);
+}
+
+.mobile-nav a {
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  border-bottom: 1px solid var(--bayona-line);
+  color: var(--bayona-white);
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(20px, 6vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.mobile-nav a span {
+  color: var(--bayona-orange);
+  font: 500 9px/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+
+.mobile-nav a.active {
+  color: var(--bayona-orange);
+}
+
+.mobile-cart-action {
+  width: 100%;
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 48px;
+  gap: 0;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--bayona-line);
+  border-radius: 0;
+  background: rgba(244, 162, 97, 0.055);
+  color: var(--bayona-white);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 280ms var(--luxury-ease), color 280ms var(--luxury-ease);
+}
+
+.mobile-cart-action > span:first-child {
+  color: var(--bayona-orange);
+  font: 500 9px/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+
+.mobile-cart-copy {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.mobile-cart-copy strong {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(20px, 6vw, 36px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.mobile-cart-copy small {
+  color: var(--bayona-muted);
+  font: 600 8px/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mobile-cart-action > svg {
+  justify-self: center;
+  color: var(--bayona-orange);
+}
+
+.mobile-cart-action:hover,
+.mobile-cart-action:focus-visible {
+  background: rgba(244, 162, 97, 0.12);
+  color: var(--bayona-orange);
+}
+
+/* Global controls */
+.gold-button,
+.text-button,
+.cta-primary,
+.cta-secondary,
+.cta-tertiary,
+.primary-cta,
+.secondary-cta {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.gold-button,
+.cta-primary,
+.primary-cta {
+  border: 1px solid var(--bayona-orange) !important;
+  background: var(--bayona-orange) !important;
+  color: var(--bayona-black) !important;
+}
+
+.gold-button:hover,
+.gold-button:focus-visible,
+.cta-primary:hover,
+.cta-primary:focus-visible,
+.primary-cta:hover,
+.primary-cta:focus-visible {
+  border-color: var(--bayona-white) !important;
+  background: var(--bayona-white) !important;
+  color: var(--bayona-black) !important;
+  transform: translateY(-2px);
+}
+
+.cta-secondary,
+.cta-tertiary,
+.secondary-cta,
+.text-button {
+  border-color: var(--bayona-line-strong) !important;
+  background: transparent !important;
+  color: var(--bayona-white) !important;
+}
+
+.cta-secondary:hover,
+.cta-tertiary:hover,
+.secondary-cta:hover,
+.text-button:hover {
+  border-color: var(--bayona-orange) !important;
+  color: var(--bayona-orange) !important;
+}
+
+/* Progreso de scroll. ARREGLO MEDIDO: la regla anterior lo dejaba en
+   `position: static`, así que ni `top: 73px` (v3-finish) ni `z-index` tenían
+   efecto: la barra naranja de 2px vivía en el flujo del documento y quedaba
+   fuera de pantalla (rect.top = -10919px en la home), y el `<i>` que
+   framer-motion escala era `display: inline` con caja 0x0, invisible. Es decir,
+   el indicador no indicaba nada en ninguna ruta salvo /resources.
+   Ahora la pista es fija y tenue y el naranja pasa AL RELLENO, que es lo único
+   que hace legible el progreso. Alto, pista y resplandor quedan tokenizados
+   para que route-identity.css varíe el dispositivo por ruta sin añadir ni un
+   `!important` nuevo (los tres que ya existían se conservan, solo leen token). */
+.scroll-progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10001 !important;
+  height: var(--progress-h, 2px) !important;
+  background: var(--progress-track, rgba(255, 255, 255, 0.07)) !important;
+  box-shadow: none;
+}
+
+.scroll-progress > i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: var(--progress-fill, var(--bayona-orange));
+  box-shadow: var(--progress-glow, 0 0 16px rgba(244, 162, 97, 0.5));
+  transform-origin: left center;
+}
+
+.bayona-cursor {
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 50% !important;
+  background-color: var(--bayona-orange) !important;
+}
+
+.whatsapp-button {
+  border-radius: 0 !important;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.48) !important;
+}
+
+/*
+  La etiqueta ahora dice el canal completo («Hablar por WhatsApp», anotación 8).
+  En el móvil eso convierte una píldora de 48 px en una tira de ~180 px, y este
+  botón flotante ya estaba señalado por `scripts/probe-overlays.mjs` por tapar
+  preguntas del acordeón de /faq y texto de /programs, /resources y /shop a
+  390 px. En estrecho se queda solo el glifo —que es lo reconocible— y el nombre
+  del canal lo sigue diciendo el `aria-label`.
+*/
+@media (max-width: 600px) {
+  .whatsapp-button > span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .whatsapp-button {
+    padding: 11px 13px;
+  }
+}
+
+/* Route harmonization and removal of legacy color casts */
+.about-page,
+.about-page .page-hero,
+.about-story,
+.vision-section,
+.proof-section,
+.request-preview,
+.app-hero,
+.app-device-screen,
+.resources-hero,
+.resources-calendar,
+.resources-calendar-grid li {
+  background-color: var(--bayona-black) !important;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    radial-gradient(circle at 78% 20%, rgba(244, 162, 97, 0.09), transparent 36%) !important;
+  background-size: 72px 72px, 72px 72px, auto !important;
+}
+
+.about-page .page-hero::after,
+.page-hero::after,
+.community-hero::after,
+.resources-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(5, 5, 5, 0.97), rgba(5, 5, 5, 0.66) 62%, rgba(5, 5, 5, 0.35));
+}
+
+.page-hero-content,
+.community-hero-inner,
+.resources-hero-layout {
+  position: relative;
+  z-index: 1;
+}
+
+:is(
+  .pain-item,
+  .pain-item-alt,
+  .evidence-record,
+  .plan-summary-card,
+  .recommendation-guide,
+  .request-preview,
+  .about-timeline-entry,
+  .program-plan-card,
+  .plan-accordion-item,
+  .pillar,
+  .program-service-category,
+  .app-feature-card,
+  .community-access-panel,
+  .resources-steps li,
+  .resources-category-panel,
+  .faq-contact-card,
+  .plan-presentation-method-card,
+  .plan-presentation-final-summary
+) {
+  border-color: var(--bayona-line) !important;
+  border-radius: 0 !important;
+  background-color: var(--bayona-panel) !important;
+  background-image: none !important;
+  box-shadow: none;
+}
+
+:is(
+  .plan-summary-card.is-featured,
+  .plan-accordion-item.featured,
+  .community-access-panel.is-open,
+  .faq-list article.open,
+  .request-preview[data-preview-state='reviewed']
+) {
+  border-color: var(--bayona-orange) !important;
+  background: linear-gradient(145deg, rgba(244, 162, 97, 0.075), var(--bayona-panel) 58%) !important;
+}
+
+:is(
+  .about-value,
+  .about-timeline-entry,
+  .age-path-item,
+  .pillar,
+  .program-service,
+  .app-directions-list article,
+  .community-schedule-item,
+  .community-audience-list li,
+  .resources-protocol-days li,
+  .faq-category,
+  .plan-presentation-value-list li
+) {
+  border-color: var(--bayona-line) !important;
+}
+
+:is(
+  .about-value,
+  .age-path-item,
+  .pillar,
+  .program-service,
+  .app-feature-card,
+  .community-access-panel,
+  .resources-steps li,
+  .faq-contact-card,
+  .plan-presentation-method-card
+) svg {
+  color: var(--bayona-orange);
+  stroke-width: 1.25;
+}
+
+:is(
+  .hero-module,
+  .page-hero,
+  .community-hero,
+  .resources-hero,
+  .faq-hero,
+  .app-hero,
+  .plan-presentation-hero
+) {
+  min-height: min(100svh, 980px);
+}
+
+:is(
+  .hero-module h1,
+  .page-hero h1,
+  .community-hero h1,
+  .resources-hero h1,
+  .faq-hero h1,
+  .app-hero h1,
+  .plan-presentation-hero h1
+) {
+  /* 13ch era una medida de composición, pero se comportaba como una tijera:
+     con `letter-spacing: -0.07em` la palabra más larga del hero de /programs
+     («ENTRENAMIENTO», 13 letras) mide ~13,3 «0», y la línea del TextMask lleva
+     `overflow: hidden`, así que la cortaba **sin producir desborde de
+     documento** — ningún chequeo de desbordes lo veía. 15ch mantiene la
+     medida para titulares de varias palabras y deja aire para la palabra sola.
+     (Intento descartado: `min-width: min(min-content, 100%)` no es válido, las
+     palabras intrínsecas no entran dentro de `min()`, y la declaración caía.) */
+  max-width: 15ch;
+  /* Y en pantallas angostas, donde ni 15ch basta porque el propio `clamp` del
+     titular sigue pidiendo ~42 px más que la línea («ENTRENAMIENTO» a 390 px):
+     el guión español parte la palabra en vez de que `overflow: hidden` se la
+     coma. El documento ya lleva `lang="es"`, y solo actúa cuando la palabra no
+     cabe, así que en escritorio no cambia nada. */
+  hyphens: auto;
+  font-family: 'Montserrat', Arial, sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.07em !important;
+}
+
+.hero-particles,
+.app-hero-orbit {
+  opacity: 0.28;
+}
+
+/* Intentionally circular or device-like geometry. */
+.bayona-cursor,
+.globe-testimonials-world-point,
+.globe-testimonials-world-point::before,
+.globe-testimonials-world-point span,
+.globe-testimonials-location-index button,
+.globe-testimonials-location-index button::after,
+.globe-testimonials-portrait,
+.globe-testimonials-country-code,
+.faq-hero::before,
+.app-phone-camera {
+  border-radius: 50% !important;
+}
+
+.app-phone-shell,
+.app-phone-bezel,
+.app-phone-screen,
+.app-device-watch .app-device-frame,
+.app-watch-pulse {
+  border-radius: 22px !important;
+}
+
+.app-phone-sensor {
+  border-radius: 999px !important;
+}
+
+/* Global thin-line icon contract. */
+svg.lucide {
+  stroke-width: 1.25;
+}
+
+/* Transactional and social routes */
+.checkout-hero,
+.checkout-page,
+.confirmation,
+.onboarding-page {
+  background-color: var(--bayona-black) !important;
+  color: var(--bayona-white);
+}
+
+.checkout-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(132px, 15vw, 220px) clamp(68px, 8vw, 112px);
+  border-bottom: 1px solid var(--bayona-line);
+}
+
+.checkout-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    radial-gradient(circle at 78% 28%, rgba(244, 162, 97, 0.12), transparent 34%);
+  background-size: 72px 72px, 72px 72px, auto;
+}
+
+.checkout-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.checkout-hero h1 {
+  max-width: 11ch;
+  margin: 16px 0 24px;
+  font-size: clamp(50px, 9vw, 118px);
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -0.075em;
+}
+
+.checkout-subtitle {
+  max-width: 620px;
+  margin: 0;
+  color: var(--bayona-copy);
+  font-size: clamp(13px, 1.5vw, 16px);
+}
+
+.checkout-page {
+  padding-block: clamp(84px, 9vw, 132px) !important;
+}
+
+.checkout-layout {
+  margin-top: 0 !important;
+  gap: clamp(36px, 6vw, 76px) !important;
+}
+
+.checkout-form {
+  min-width: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.checkout-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid var(--bayona-line);
+  background: var(--bayona-panel);
+}
+
+.checkout-fieldset legend {
+  padding-inline: 10px;
+  color: var(--bayona-white);
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.checkout-help,
+.checkout-scope-notice,
+.checkout-eur-note,
+.checkout-empty-selection,
+.checkout-page .microcopy {
+  color: var(--bayona-muted) !important;
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.checkout-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.checkout-contact-grid input,
+.checkout-quantity-control select {
+  width: 100%;
+  min-height: 50px;
+  padding-inline: 14px;
+  border-color: var(--bayona-line) !important;
+  background: var(--bayona-ink) !important;
+}
+
+.checkout-service-list,
+.checkout-extra-list {
+  display: grid;
+  gap: 8px;
+}
+
+.checkout-form .checkout-service-option,
+.checkout-form .checkout-extra-list > label {
+  min-width: 0;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  margin: 0 !important;
+  padding: 16px;
+  border: 1px solid var(--bayona-line);
+  background: var(--bayona-ink);
+  cursor: pointer;
+}
+
+.checkout-form .checkout-extra-list > label {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.checkout-form :is(.checkout-plans label.selected, .checkout-extra-list > label.selected) {
+  border-color: var(--bayona-orange) !important;
+  background: rgba(244, 162, 97, 0.075) !important;
+}
+
+.checkout-form :is(input[type='radio'], input[type='checkbox']) {
+  accent-color: var(--bayona-orange);
+}
+
+.checkout-service-option > span:first-child,
+.checkout-extra-list > label > span {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.checkout-service-option small,
+.checkout-extra-list small {
+  color: var(--bayona-muted);
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.checkout-quantity-control {
+  min-width: 112px;
+  display: grid;
+  gap: 7px;
+}
+
+.checkout-scope-notice,
+.checkout-page .microcopy {
+  margin: 0;
+  padding-inline: 2px;
+}
+
+.order-summary {
+  border-color: var(--bayona-line-strong) !important;
+  border-radius: 0 !important;
+  background: linear-gradient(145deg, rgba(244, 162, 97, 0.065), var(--bayona-panel) 56%) !important;
+  box-shadow: none !important;
+}
+
+.order-summary :is(.summary-program, .summary-total, ul) {
+  border-color: var(--bayona-line) !important;
+}
+
+.order-summary li svg,
+.checkout-page svg {
+  color: var(--bayona-orange);
+}
+
+.confirmation {
+  background:
+    radial-gradient(circle at 76% 18%, rgba(244, 162, 97, 0.16), transparent 36%),
+    linear-gradient(145deg, var(--bayona-black), var(--bayona-panel) 52%, var(--bayona-black)) !important;
+}
+
+.confirmation-shell {
+  width: min(1180px, 100%);
+}
+
+.confirmation-steps li {
+  border-color: var(--bayona-line) !important;
+  border-radius: 0;
+  background: var(--bayona-panel) !important;
+  box-shadow: none;
+}
+
+.confirmation-check,
+.confirmation-next {
+  border-color: var(--bayona-line-strong) !important;
+}
+
+.onboarding-page {
+  --forms-orange: var(--bayona-orange);
+  --forms-fire: var(--bayona-orange);
+  --forms-line: var(--bayona-line);
+  --forms-panel: var(--bayona-panel);
+}
+
+.onboarding-form,
+.onboarding-data-use > div,
+.onboarding-upload-lock {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.onboarding-field select,
+.onboarding-form {
+  background-color: var(--bayona-ink) !important;
+}
+
+.social-card,
+.social-tile {
+  --brand: var(--bayona-orange) !important;
+  --brand-alt: var(--bayona-orange) !important;
+  border-color: var(--bayona-line);
+  border-radius: 0 !important;
+  background-color: var(--bayona-panel);
+  box-shadow: none;
+}
+
+.social-card-glyph,
+.social-tile-platform {
+  color: var(--bayona-orange) !important;
+  border-color: var(--bayona-line-strong) !important;
+  border-radius: 0;
+}
+
+.social-card :is(svg, .social-card-verified, .social-card-arrow, .social-card-kind, .social-card-cta),
+.social-tile :is(svg, .social-tile-src) {
+  color: var(--bayona-orange) !important;
+}
+
+.social-card-kind-dot,
+.social-loading-dot {
+  background: var(--bayona-orange) !important;
+}
+
+/* Quiet footer */
+.footer {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto;
+  gap: 48px;
+  align-items: start;
+  padding: clamp(72px, 8vw, 120px) max(24px, calc((100vw - 1240px) / 2)) 30px;
+  border-top: 1px solid var(--bayona-line);
+  background: var(--bayona-black);
+  color: var(--bayona-white);
+}
+
+.footer-top {
+  display: grid;
+  gap: 18px;
+}
+
+.footer-mark {
+  width: fit-content;
+  color: var(--bayona-white);
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(28px, 4vw, 54px);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+}
+
+.footer-mark:hover {
+  color: var(--bayona-orange);
+}
+
+.footer-top p {
+  max-width: 340px;
+  margin: 0;
+  color: var(--bayona-muted);
+  font-size: 12px;
+}
+
+.footer-links {
+  display: grid;
+  border-top: 1px solid var(--bayona-line);
+}
+
+.footer-links a {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--bayona-line);
+  color: #aaa59e;
+  font: 600 9px/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer-links a:hover {
+  padding-left: 8px;
+  color: var(--bayona-orange);
+}
+
+.footer-social {
+  display: flex;
+  gap: 8px;
+}
+
+.footer-social a {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--bayona-line);
+  color: var(--bayona-muted) !important;
+}
+
+.footer-social a:hover {
+  border-color: var(--bayona-orange);
+  color: var(--bayona-orange) !important;
+}
+
+.footer-bottom {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--bayona-line);
+}
+
+.footer-bottom small {
+  color: #6f6b65;
+  font: 500 8px/1.5 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 1180px) {
+  .desktop-nav,
+  .nav-cta {
+    display: none;
+  }
+
+  .navbar {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .nav-cart-label {
+    display: none;
+  }
+
+  .menu-button {
+    display: grid;
+  }
+}
+
+@media (max-width: 800px) {
+  .section-shell,
+  .community-shell,
+  .resources-shell,
+  .plan-presentation-shell,
+  .plan-presentation-hero-shell {
+    width: min(100% - 32px, 1240px);
+  }
+
+  :is(
+    .about-problem,
+    .about-values,
+    .about-method,
+    .about-cta,
+    .programs-pain,
+    .programs-method,
+    .programs-proof,
+    .programs-visualization,
+    .programs-comparison-section,
+    .programs-services,
+    .programs-cta-stack,
+    .app-section,
+    .community-definition,
+    .community-week,
+    .community-entry,
+    .resources-section,
+    .faq-section,
+    .faq-contact
+  ) {
+    padding-block: 84px;
+  }
+
+  .navbar {
+    min-height: 64px;
+    padding-inline: 16px;
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding-inline: 20px;
+  }
+
+  .footer-bottom {
+    grid-column: 1;
+  }
+
+  body::after {
+    background: radial-gradient(circle at center, transparent 62%, rgba(0, 0, 0, 0.34) 130%);
+  }
+}
+
+@media (max-width: 520px) {
+  .footer-bottom {
+    flex-direction: column;
+  }
+
+  :is(
+    .hero-module h1,
+    .page-hero h1,
+    .community-hero h1,
+    .resources-hero h1,
+    .faq-hero h1,
+    .app-hero h1,
+    .plan-presentation-hero h1
+  ) {
+    max-width: none;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  img,
+  video,
+  :is(a, button):hover {
+    transform: none !important;
+  }
+}
+
+/* EL UMBRAL — call-to-enter in desktop and mobile navigation */
+.desktop-nav a[href='/onboarding'] {
+  min-height: 42px;
+  align-self: center;
+  padding: 0 12px;
+  border: 1px solid var(--bayona-orange);
+  background: rgba(244, 162, 97, 0.07);
+  color: var(--bayona-orange);
+}
+
+.desktop-nav a[href='/onboarding']::after {
+  display: none;
+}
+
+.desktop-nav a[href='/onboarding']:hover,
+.desktop-nav a[href='/onboarding']:focus-visible,
+.desktop-nav a[href='/onboarding'].active {
+  background: var(--bayona-orange);
+  color: var(--bayona-black);
+}
+
+@media (max-width: 950px) {
+  .mobile-nav a[href='/onboarding'] {
+    min-height: 78px;
+    padding-inline: 12px;
+    border: 1px solid rgba(244, 162, 97, 0.58);
+    background: rgba(244, 162, 97, 0.08);
+    color: var(--bayona-orange);
+  }
+
+  .mobile-nav a[href='/onboarding']:hover,
+  .mobile-nav a[href='/onboarding']:focus-visible,
+  .mobile-nav a[href='/onboarding'].active {
+    background: var(--bayona-orange);
+    color: var(--bayona-black);
+  }
+
+  .mobile-nav a[href='/onboarding']:hover span,
+  .mobile-nav a[href='/onboarding']:focus-visible span,
+  .mobile-nav a[href='/onboarding'].active span {
+    color: var(--bayona-black);
+  }
+}

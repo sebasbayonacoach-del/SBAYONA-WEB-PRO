@@ -1,0 +1,82 @@
+/* BAYONA · ANUNCIADOR DE RUTA (solo lectores de pantalla) */
+
+.route-announcer {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/*
+  `main` recibe foco programático al cambiar de ruta. Sin esto, el navegador
+  pintaría un anillo de foco sobre toda la página, que es ruido visual.
+*/
+#main-content:focus {
+  outline: none;
+}
+
+/* Con teclado sí se marca: la señal de foco no debe desaparecer del todo. */
+#main-content:focus-visible {
+  outline: 2px solid var(--gold, #f4a261);
+  outline-offset: -2px;
+}
+
+/*
+  El lazy loading de rutas necesita un estado de carga visible y sobrio.
+
+  CLS (Fase 12): reserva el viewport COMPLETO. Mientras el chunk de la ruta no
+  ha llegado, las secciones del shell que viven despues del <Suspense>
+  (ShareInvite, NextChapter, PremiumRouteChrome y el Footer) se posicionarian
+  dentro del primer viewport y saltarian al montarse la pagina real
+  (CLS 0,175 medido en desktop). Con 100dvh quedan bajo el pliegue tanto en
+  el estado de carga como en el final (todas las rutas con esas secciones
+  miden mas de un viewport), y el movimiento deja de ser visible.
+*/
+.route-fallback {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 120px 24px;
+}
+
+.route-fallback span {
+  color: var(--gold, #f4a261);
+  font: 500 12px 'DM Mono', monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.route-fallback i {
+  display: block;
+  width: 44px;
+  height: 1px;
+  margin: 14px auto 0;
+  background: var(--gold, #f4a261);
+  transform-origin: left;
+  animation: route-fallback-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes route-fallback-pulse {
+  0%,
+  100% {
+    transform: scaleX(0.2);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-fallback i {
+    animation: none;
+    transform: scaleX(1);
+  }
+}

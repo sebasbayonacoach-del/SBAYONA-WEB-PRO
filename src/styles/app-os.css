@@ -1,0 +1,1665 @@
+/* =========================================================================
+   BAYONA OS · capa visual del área de miembros (WAVE 1-2)
+   -------------------------------------------------------------------------
+   Reglas de esta hoja:
+   · Solo consume tokens existentes (--ds-*). No inventa color ni duración.
+     ÚNICA excepción, declarada el 22-09: el verde del CTA de WhatsApp
+     (`#1f7a4d` / `#2c9a63`). La dirección de producto (§8) pide que WhatsApp se
+     reconozca como WhatsApp y se distinga del asistente interno, y eso no se
+     consigue con el naranja de la casa. Está aislado en `.os-cta--whatsapp`.
+   · El canto afilado es identidad de marca: radio 0 por defecto; la
+     profundidad se logra con plano, hairline y luz (no con sombras suaves
+     ni glassmorphism en todos los bloques).
+   · Estado activo de navegación por POSICIÓN + LÍNEA + PESO, no solo color.
+   · Mobile-first real: la barra inferior aparece por debajo de 1024px.
+   ========================================================================= */
+
+.os-shell {
+  --os-side: 232px;
+  --os-gutter: clamp(1rem, 4vw, 2.5rem);
+  /*
+    Ritmo vertical entre grupos de una misma pantalla. Sale de la escala de
+    espacio del sistema (no de un número suelto): así las cinco pantallas
+    respiran igual sin heredar el aire editorial de sección completa, que en
+    un panel de tarjetas compactas sobraría.
+  */
+  --os-group-gap: clamp(var(--ds-space-5), 2.6vw, var(--ds-space-6));
+  /*
+    Altura de la barra de navegación del sitio (styles.css: `.navbar { height:
+    74px }`, 62px por debajo de 600px). El panel vuelve a vivir DEBAJO de esa
+    barra: antes la ocultaba con `display:none`, y eso es justo lo que hacía que
+    /app con sesión pareciera «una app privada desconectada» (dirección de
+    producto 22-09, §7 y §15). Ahora se le reserva el hueco.
+  */
+  --os-nav-h: 74px;
+  position: relative;
+  z-index: 1;
+  display: block;
+  min-height: 100svh;
+  padding-top: var(--os-nav-h);
+  background:
+    radial-gradient(circle at 82% 8%, rgba(244, 162, 97, 0.14), transparent 28rem),
+    linear-gradient(112deg, rgba(255, 255, 255, 0.045), transparent 38%),
+    var(--ds-surface-background);
+  color: var(--ds-color-ink);
+}
+
+/* -------------------------------------------------------------------------
+   MODO OS · el panel NO apaga la casa.
+   Dirección de producto 22-09 (§4 criterio de aceptación, §7 y §15): header,
+   footer, miga de pan, asistente, WhatsApp y siguiente parada siguen visibles
+   dentro del panel, porque la cuenta es la última estación del recorrido y no
+   un producto aparte. Lo único que se retira aquí son las capas decorativas que
+   colisionarían con la barra lateral fija o duplicarían la ubicación: el marquee
+   de marca, la cinta del recorrido y la señal de escala del universo —el panel
+   ya declara dónde estás con su propia barra superior y su navegación.
+   El PIE nunca se oculta: contiene el aviso legal y los enlaces obligatorios.
+   ------------------------------------------------------------------------- */
+body.os-mode .premium-brand-marquee,
+body.os-mode .journey-ribbon,
+body.os-mode .universe-scale-badge,
+body.os-mode .universe-scale-sights {
+  display: none !important;
+}
+
+.os-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: var(--ds-z-modal);
+  padding: 0.75rem 1rem;
+  background: var(--ds-color-accent);
+  color: #08080a;
+  font: 600 0.8rem/1 'DM Mono', monospace;
+}
+
+.os-skip:focus {
+  left: var(--os-gutter);
+  top: 0.5rem;
+}
+
+/* ── Barra lateral (desktop) ───────────────────────────────────────────── */
+.os-sidebar {
+  display: none;
+  position: fixed;
+  inset: var(--os-nav-h) auto 0 0;
+  width: var(--os-side);
+  padding: 1.75rem 1.25rem;
+  border-right: var(--ds-hairline);
+  background: var(--ds-plane-coal);
+  flex-direction: column;
+  gap: 1.75rem;
+  overflow-y: auto;
+}
+
+.os-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding-bottom: 1.25rem;
+  border-bottom: var(--ds-hairline);
+}
+
+.os-brand__name {
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.os-brand__os {
+  font: 500 0.7rem/1 'DM Mono', monospace;
+  letter-spacing: 0.24em;
+  color: var(--ds-color-accent);
+}
+
+.os-nav ul,
+.os-bottomnav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.os-nav__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 44px;
+  padding: 0.5rem 0.25rem 0.5rem 0.9rem;
+  color: var(--ds-color-muted);
+  text-decoration: none;
+  font: 500 0.72rem/1 'DM Mono', monospace;
+  letter-spacing: 0.16em;
+  transition: color var(--ds-dur-micro) var(--ds-ease-standard);
+}
+
+.os-nav__link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 1.1rem;
+  background: currentColor;
+  opacity: 0;
+  transform: translateY(-50%) scaleY(0.3);
+  transition:
+    opacity var(--ds-dur-micro) var(--ds-ease-standard),
+    transform var(--ds-dur-micro) var(--ds-ease-standard);
+}
+
+.os-nav__link:hover,
+.os-nav__link:focus-visible {
+  color: var(--ds-color-ink);
+}
+
+.os-nav__link.is-active {
+  color: var(--ds-color-ink);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.os-nav__link.is-active::before {
+  opacity: 1;
+  transform: translateY(-50%) scaleY(1);
+  background: var(--ds-color-accent);
+}
+
+.os-nav__pending {
+  margin-left: auto;
+  color: var(--ds-color-dim);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.os-mark {
+  width: 6px;
+  height: 6px;
+  border: 1px solid currentColor;
+  opacity: 0.75;
+  flex: none;
+}
+
+.os-mark--bar { height: 10px; width: 3px; }
+.os-mark--line { width: 11px; height: 1px; }
+.os-mark--path { transform: rotate(45deg); }
+.os-mark--ring { border-radius: 50%; }
+
+.os-identity {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: var(--ds-hairline);
+}
+
+.os-identity__mail {
+  margin: 0 0 0.5rem;
+  overflow: hidden;
+  color: var(--ds-color-muted);
+  font: 400 0.68rem/1.4 'DM Mono', monospace;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.os-identity__tier {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font: 600 0.72rem/1 'DM Mono', monospace;
+  letter-spacing: 0.12em;
+}
+
+/* ── Cuerpo y barra superior ───────────────────────────────────────────── */
+.os-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.os-topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--os-gutter);
+  border-bottom: var(--ds-hairline);
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0.96), rgba(5, 5, 5, 0.72));
+  backdrop-filter: blur(6px);
+}
+
+.os-topbar__section {
+  margin: 0;
+  font: 700 0.7rem/1 'DM Mono', monospace;
+  letter-spacing: 0.22em;
+}
+
+.os-topbar__section span { color: var(--ds-color-accent); }
+
+.os-topbar__date {
+  margin: 0;
+  color: var(--ds-color-dim);
+  font: 400 0.68rem/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+
+.os-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3rem) var(--os-gutter) 6.5rem;
+  outline: none;
+}
+
+.os-boot {
+  min-height: 60svh;
+  /* El arranque se pinta fuera del shell, así que necesita su propio hueco
+     bajo la barra fija del sitio desde que el chrome volvió al panel. */
+  padding-top: 94px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+/* ── Navegación inferior (móvil) ───────────────────────────────────────── */
+.os-bottomnav {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: var(--ds-z-sticky, 40);
+  border-top: var(--ds-hairline);
+  background: rgba(8, 8, 10, 0.94);
+  backdrop-filter: blur(10px);
+}
+
+.os-bottomnav ul {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.os-bottomnav__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 56px;
+  padding: 0.6rem 0.2rem;
+  color: var(--ds-color-dim);
+  text-decoration: none;
+  font: 500 0.68rem/1.15 'DM Mono', monospace;
+  letter-spacing: 0.06em;
+}
+
+.os-bottomnav__link.is-active {
+  color: var(--ds-color-ink);
+  font-weight: 700;
+}
+
+.os-bottomnav__link.is-active .os-mark {
+  border-color: var(--ds-color-accent);
+  background: var(--ds-color-accent);
+}
+
+/* -------------------------------------------------------------------------
+   MÓVIL · el panel aparca las capas flotantes del sitio
+   Desde 2026-09-22 el asistente, el botón de contacto y el crédito vuelven a
+   vivir dentro del panel (§7 y §8 de la dirección de producto). Para que no se
+   monten encima de la barra inferior fija del propio panel, en móvil suben lo
+   que ocupa esa barra.
+   ------------------------------------------------------------------------- */
+.os-shell {
+  --os-dock-h: calc(56px + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 1023px) {
+  body.os-mode .whatsapp-button,
+  body.os-mode .whatsapp-float {
+    bottom: calc(var(--os-dock-h) + 0.9rem);
+  }
+
+  body.os-mode .companion {
+    bottom: calc(var(--os-dock-h) + 0.9rem);
+  }
+
+  body.os-mode .arrival-bonus-layer,
+  body.os-mode .chat {
+    bottom: calc(var(--os-dock-h) + 0.9rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .os-shell {
+    --os-nav-h: 62px;
+  }
+}
+
+/* ── Cabecera de pantalla y etiquetas ──────────────────────────────────── */
+.os-label,
+.os-eyebrow {
+  margin: 0 0 0.6rem;
+  color: var(--ds-color-accent);
+  font: 500 0.66rem/1.4 'DM Mono', monospace;
+  letter-spacing: 0.24em;
+}
+
+/* Titular de pantalla. Se unifica con el peldaño h1 global (el mismo que
+   `.os-screen__title`) y se ancla frente al `main h1` editorial. */
+.os-today__title,
+.os-screen__title {
+  font-size: var(--lux-fs-h1) !important;
+  line-height: var(--lux-lh-display) !important;
+  letter-spacing: var(--lux-track-display) !important;
+}
+
+.os-today__title {
+  margin: 0 0 0.4rem;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.os-today__date {
+  margin: 0 0 var(--os-group-gap);
+  color: var(--ds-color-dim);
+  font: 400 0.7rem/1.4 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+}
+
+/* -- Centro de mando ----------------------------------------------------- */
+.os-command-grid {
+  display: grid;
+  gap: 1px;
+  margin: 0 0 var(--os-group-gap);
+  border: var(--ds-hairline);
+  background: var(--ds-hairline-color);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.os-command-card {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.65rem;
+  min-height: 150px;
+  padding: clamp(1rem, 3vw, 1.35rem);
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent 44%),
+    var(--ds-plane-coal);
+  isolation: isolate;
+}
+
+.os-command-card::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 162, 97, 0.82), transparent);
+  opacity: 0.42;
+}
+
+.os-command-card--wide {
+  min-height: 188px;
+  background:
+    linear-gradient(90deg, rgba(244, 162, 97, 0.16), transparent 1px) 0 0 / 18px 18px,
+    radial-gradient(88% 120% at 88% 0%, rgba(244, 162, 97, 0.18), transparent 58%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.05), transparent 45%),
+    var(--ds-plane-graphite);
+}
+
+.os-command-card__icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: var(--ds-hairline);
+  color: var(--ds-color-accent);
+}
+
+.os-command-card__label {
+  margin: 0;
+  color: var(--ds-color-dim);
+  font: 600 0.64rem/1.35 'DM Mono', monospace;
+  letter-spacing: 0.18em;
+}
+
+.os-command-card__value {
+  margin: 0;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: clamp(1.35rem, 4vw, 2.45rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+/*
+  El mismo rol, cuando es el `h2` de la tarjeta ancha, no debe heredar el
+  titular de sección global (hasta 3.3rem) y desbordar la tarjeta: se ancla al
+  peldaño h3. Las instancias `<p>` (contadores) conservan su tamaño de dato.
+*/
+h2.os-command-card__value {
+  font-size: var(--lux-fs-h3) !important;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: var(--lux-track-title) !important;
+}
+
+.os-command-card__copy {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--ds-color-muted);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.os-vault {
+  position: relative;
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.4rem);
+  margin: 0 0 var(--os-group-gap);
+  padding: clamp(1.15rem, 3.5vw, 1.9rem);
+  overflow: hidden;
+  border: var(--ds-hairline);
+  background:
+    radial-gradient(80% 110% at 12% 0%, rgba(244, 162, 97, 0.18), transparent 56%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.016)),
+    var(--ds-plane-void);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.32);
+}
+
+.os-vault::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(244, 162, 97, 0.09), transparent 1px) 0 0 / 34px 34px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.028), transparent 1px) 0 0 / 34px 34px;
+  mask-image: linear-gradient(115deg, #000, transparent 74%);
+  opacity: 0.78;
+}
+
+.os-vault > * {
+  position: relative;
+  z-index: 1;
+}
+
+.os-vault__intro {
+  max-width: 760px;
+}
+
+/* Titular de grupo del panel: peldaño h3 de la escala global, anclado frente
+   al `main h2` editorial (que aquí sería un titular de sección de página). */
+.os-vault__intro h2 {
+  max-width: 12ch;
+  margin: 0 0 0.8rem;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: var(--lux-fs-h3) !important;
+  font-weight: 900;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: var(--lux-track-title) !important;
+  text-transform: uppercase;
+}
+
+.os-vault__intro p {
+  margin: 0;
+  color: var(--ds-color-muted);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.os-vault__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  border: var(--ds-hairline);
+  background: var(--ds-hairline-color);
+}
+
+.os-vault__grid article {
+  min-height: 178px;
+  display: grid;
+  align-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 2.4vw, 1.35rem);
+  background:
+    linear-gradient(145deg, rgba(244, 162, 97, 0.075), transparent 48%),
+    rgba(5, 5, 5, 0.68);
+}
+
+.os-vault__grid span {
+  color: var(--ds-color-dim);
+  font: 700 0.62rem/1.3 'DM Mono', monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.os-vault__grid strong {
+  color: var(--ds-color-text);
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: clamp(1.3rem, 3vw, 2.25rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.os-vault__grid small {
+  color: var(--ds-color-muted);
+  font: 500 0.68rem/1.55 'DM Mono', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.os-vault__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.1rem;
+}
+
+/* ── Programa del cliente: app fitness, no dashboard genérico ─────────── */
+.os-program-console,
+.os-workout-stage,
+.os-coach-builder {
+  position: relative;
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.4rem);
+  margin: 0 0 var(--os-group-gap);
+  padding: clamp(1.15rem, 3.5vw, 1.9rem);
+  overflow: hidden;
+  border: var(--ds-hairline);
+  background:
+    radial-gradient(92% 120% at 100% 0%, rgba(244, 162, 97, 0.16), transparent 58%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+    var(--ds-plane-void);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.34);
+}
+
+.os-program-console::before,
+.os-workout-stage::before,
+.os-coach-builder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045), transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.028), transparent 1px) 0 0 / 28px 28px;
+  mask-image: radial-gradient(circle at 70% 18%, black, transparent 72%);
+  opacity: 0.8;
+}
+
+.os-program-console > *,
+.os-workout-stage > *,
+.os-coach-builder > * {
+  position: relative;
+  z-index: 1;
+}
+
+.os-program-console__hero h2,
+.os-workout-stage__copy h2,
+.os-coach-builder h2 {
+  max-width: 12ch;
+  margin: 0 0 0.8rem;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: var(--lux-fs-h3) !important;
+  font-weight: 900;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: var(--lux-track-title) !important;
+  text-transform: uppercase;
+}
+
+.os-program-console__hero p,
+.os-workout-stage__copy p,
+.os-coach-builder p {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--ds-color-muted);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.os-program-console__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.15rem;
+}
+
+.os-program-console__meta span {
+  padding: 0.45rem 0.65rem;
+  border: var(--ds-hairline);
+  color: var(--ds-color-muted);
+  background: rgba(255, 255, 255, 0.025);
+  font: 500 0.66rem/1.2 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.os-readiness-grid {
+  display: grid;
+  gap: 1px;
+  border: var(--ds-hairline);
+  background: var(--ds-hairline-color);
+}
+
+.os-readiness-card {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  background: rgba(5, 5, 5, 0.64);
+}
+
+.os-readiness-card span,
+.os-week-plan span,
+.os-week-plan small,
+.os-workout-blocks span,
+.os-workout-blocks small,
+.os-coach-builder__items span {
+  color: var(--ds-color-dim);
+  font: 500 0.64rem/1.35 'DM Mono', monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.os-readiness-card strong {
+  color: var(--ds-color-ink);
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.os-readiness-card--good strong { color: var(--ds-color-accent); }
+
+.os-week-plan {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: var(--ds-hairline);
+  background: var(--ds-hairline-color);
+}
+
+.os-week-plan li {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+  min-height: 122px;
+  padding: 0.9rem;
+  background: rgba(5, 5, 5, 0.6);
+}
+
+.os-week-plan li.is-today {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(244, 162, 97, 0.2), transparent 70%),
+    rgba(244, 162, 97, 0.075);
+}
+
+.os-week-plan strong {
+  color: var(--ds-color-ink);
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: 1rem;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.os-workout-blocks,
+.os-coach-builder__items {
+  display: grid;
+  gap: 1px;
+  border: var(--ds-hairline);
+  background: var(--ds-hairline-color);
+}
+
+.os-workout-blocks article,
+.os-coach-builder__items article {
+  min-width: 0;
+  display: grid;
+  gap: 0.55rem;
+  padding: 1rem;
+  background: rgba(5, 5, 5, 0.62);
+}
+
+.os-workout-blocks strong,
+.os-coach-builder__items strong {
+  color: var(--ds-color-ink);
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.os-workout-blocks p {
+  margin: 0;
+  color: var(--ds-color-muted);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.os-coach-builder {
+  margin-top: var(--os-group-gap);
+}
+
+.os-coach-builder__items svg {
+  color: var(--ds-color-accent);
+}
+
+.os-program-editor {
+  margin-top: var(--os-group-gap);
+  padding: clamp(1.1rem, 3.5vw, 1.75rem);
+  border: var(--ds-hairline);
+  background:
+    linear-gradient(145deg, rgba(244, 162, 97, 0.08), transparent 44%),
+    rgba(255, 255, 255, 0.022);
+}
+
+.os-program-editor__form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.os-program-editor label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.os-program-editor label span {
+  color: var(--ds-color-dim);
+  font: 600 0.64rem/1.35 'DM Mono', monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.os-program-editor :is(input, textarea) {
+  width: 100%;
+  min-width: 0;
+  border: var(--ds-hairline);
+  border-radius: 0;
+  padding: 0.82rem 0.9rem;
+  background: rgba(5, 5, 5, 0.62);
+  color: var(--ds-color-ink);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.os-program-editor textarea {
+  resize: vertical;
+}
+
+.os-program-editor :is(input, textarea):focus {
+  outline: 2px solid var(--ds-color-accent);
+  outline-offset: 2px;
+}
+
+.os-program-editor__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1rem;
+}
+
+.os-program-editor__actions p {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--ds-color-dim);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.os-screen__title {
+  margin: 0 0 0.6rem;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  max-width: 12ch;
+  font-weight: 900;
+  text-transform: uppercase;
+  /* Escala, ritmo y tracking los fija la regla compartida con
+     `.os-today__title` (peldaño h1 global). */
+}
+
+.os-screen__intro {
+  max-width: 62ch;
+  margin: 0 0 var(--os-group-gap);
+  color: var(--ds-color-muted);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.os-session-brief,
+.os-ops-strip {
+  display: grid;
+  gap: 1px;
+  margin: 0 0 var(--os-group-gap);
+  border: var(--ds-hairline);
+  background: var(--ds-hairline-color);
+}
+
+.os-session-brief article,
+.os-ops-strip article {
+  min-width: 0;
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  background: var(--ds-plane-coal);
+}
+
+.os-session-brief svg,
+.os-ops-strip svg {
+  color: var(--ds-color-accent);
+}
+
+.os-session-brief span,
+.os-ops-strip span {
+  color: var(--ds-color-dim);
+  font: 500 0.64rem/1.35 'DM Mono', monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.os-session-brief strong,
+.os-ops-strip strong {
+  color: var(--ds-color-ink);
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+/* ── Hero de TODAY: una acción primaria ────────────────────────────────── */
+.os-hero {
+  display: grid;
+  gap: 2rem;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  border: var(--ds-hairline);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055), transparent 1px) 0 0 / 34px 34px,
+    radial-gradient(120% 90% at 88% 4%, rgba(244, 162, 97, 0.14), transparent 58%),
+    linear-gradient(180deg, var(--ds-plane-graphite), var(--ds-plane-void));
+  box-shadow: 0 28px 96px rgba(0, 0, 0, 0.32);
+}
+
+.os-hero__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: var(--lux-fs-h3) !important;
+  font-weight: 900;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: var(--lux-track-title) !important;
+}
+
+.os-hero__meta {
+  margin: 0 0 1.1rem;
+  color: var(--ds-color-accent);
+  font: 500 0.68rem/1.4 'DM Mono', monospace;
+  letter-spacing: 0.16em;
+}
+
+.os-example {
+  margin: 0 0 1.4rem;
+  padding: 0;
+  list-style: none;
+  border-top: var(--ds-hairline);
+}
+
+.os-example li {
+  padding: 0.6rem 0 0.6rem 1.2rem;
+  border-bottom: var(--ds-hairline);
+  color: #e6e2dc;
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 300;
+  position: relative;
+}
+
+.os-example li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.05rem;
+  width: 6px;
+  height: 1px;
+  background: var(--ds-color-accent);
+}
+
+.os-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.25rem;
+}
+
+.os-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.9rem 1.4rem;
+  border: 1px solid var(--ds-color-accent);
+  background: var(--ds-color-accent);
+  color: #08080a;
+  font: 700 0.74rem/1 'DM Mono', monospace;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  transition: background-color var(--ds-dur-micro) var(--ds-ease-standard),
+    color var(--ds-dur-micro) var(--ds-ease-standard);
+}
+
+.os-cta:hover:not(:disabled) {
+  background: transparent;
+  color: var(--ds-color-accent);
+}
+
+.os-cta:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.os-cta--ghost {
+  background: transparent;
+  color: var(--ds-color-ink);
+  border-color: var(--ds-hairline-color);
+}
+
+.os-cta--ghost:hover:not(:disabled) {
+  border-color: var(--ds-color-accent);
+  color: var(--ds-color-accent);
+}
+
+.os-link {
+  color: var(--ds-color-muted);
+  font: 500 0.72rem/1.4 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--ds-dur-micro) var(--ds-ease-standard),
+    border-color var(--ds-dur-micro) var(--ds-ease-standard);
+}
+
+.os-link:hover,
+.os-link:focus-visible {
+  color: var(--ds-color-accent);
+  border-bottom-color: var(--ds-color-accent);
+}
+
+.os-feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.1rem 0 0;
+  color: var(--ds-color-accent);
+  font: 500 0.74rem/1.4 'DM Mono', monospace;
+}
+
+.os-hero__note,
+.os-panel__foot {
+  max-width: 68ch;
+  margin: 1.1rem 0 0;
+  color: var(--ds-color-dim);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.76rem;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.os-hero__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.os-hero__ring-note {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--ds-color-muted);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* ── Instrumento radial ────────────────────────────────────────────────── */
+.os-ring {
+  position: relative;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
+
+.os-ring svg { display: block; }
+
+.os-ring__track { stroke: rgba(255, 255, 255, 0.09); }
+
+.os-ring__value {
+  stroke: var(--ds-color-accent);
+  transition: stroke-dasharray var(--ds-dur-emphasis) var(--ds-ease-entrance);
+}
+
+.os-ring--empty .os-ring__value { stroke: transparent; }
+
+.os-ring__caption {
+  position: absolute;
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  text-align: center;
+}
+
+.os-ring__value-text {
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: 1.9rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.os-ring__label,
+.os-ring__note {
+  color: var(--ds-color-dim);
+  font: 500 0.65rem/1.35 'DM Mono', monospace;
+  letter-spacing: 0.12em;
+}
+
+.os-ring__note { letter-spacing: 0.06em; }
+
+/* ── Métricas ──────────────────────────────────────────────────────────── */
+.os-metrics {
+  display: grid;
+  gap: 1px;
+  margin-top: var(--os-group-gap);
+  border: var(--ds-hairline);
+  background: var(--ds-hairline-color);
+}
+
+.os-metric {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.1rem 1.15rem;
+  background: var(--ds-plane-coal);
+}
+
+.os-metric__label {
+  margin: 0;
+  color: var(--ds-color-dim);
+  font: 500 0.65rem/1.35 'DM Mono', monospace;
+  letter-spacing: 0.12em;
+}
+
+.os-metric__value {
+  margin: 0;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Sellos de procedencia ─────────────────────────────────────────────── */
+.os-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.5rem;
+  border: var(--ds-hairline);
+  color: var(--ds-color-dim);
+  font: 500 0.65rem/1.2 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.os-badge--real { color: var(--ds-color-accent); border-color: var(--ds-hairline-signal); }
+.os-badge--derived { color: #cfc8bf; }
+.os-badge--empty,
+.os-badge--concept { color: var(--ds-color-dim); }
+
+/* ── Paneles y estados ─────────────────────────────────────────────────── */
+.os-panel {
+  margin-top: var(--os-group-gap);
+  padding: clamp(1.1rem, 3.5vw, 1.75rem);
+  border: var(--ds-hairline);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.04), transparent 46%),
+    var(--ds-plane-coal);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.os-panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/*
+  Rótulo de panel: es un `h2` semántico, pero su rol es etiqueta compacta. Sin
+  este anclaje, el `main h2 !important` editorial lo convertiría en titular de
+  sección y desarmaría la tarjeta; se fija al peldaño h4 manteniendo la familia
+  mono y el tracking de rótulo.
+*/
+.os-panel__head h2 {
+  margin: 0;
+  font-family: var(--type-family-mono, 'DM Mono', monospace);
+  font-size: var(--lux-fs-h4) !important;
+  font-weight: 700;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: 0.18em;
+}
+
+.os-panel__intro {
+  max-width: 68ch;
+  margin: 0 0 0.9rem;
+  color: var(--ds-color-muted);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.os-panel--account { display: grid; gap: 0.9rem; }
+.os-panel--account .os-panel__head { margin-bottom: 0; }
+
+.os-state {
+  display: grid;
+  justify-items: start;
+  gap: 0.55rem;
+  padding: clamp(1.1rem, 3.5vw, 1.75rem);
+  border: 1px dashed var(--ds-hairline-color);
+  margin-top: var(--os-group-gap);
+  color: var(--ds-color-muted);
+  background:
+    linear-gradient(135deg, rgba(244, 162, 97, 0.08), transparent 42%),
+    rgba(255, 255, 255, 0.018);
+}
+
+.os-state__title {
+  margin: 0;
+  color: var(--ds-color-ink);
+  font: 700 0.78rem/1.4 'DM Mono', monospace;
+  letter-spacing: 0.14em;
+}
+
+.os-state__copy {
+  max-width: 64ch;
+  margin: 0;
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.84rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.os-state--error { border-style: solid; border-color: var(--ds-hairline-signal); }
+.os-state--loading .os-state__spin { animation: os-spin 1.1s linear infinite; }
+
+@keyframes os-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Gráfica ───────────────────────────────────────────────────────────── */
+.os-panel--chart .os-chart { margin-top: 1rem; }
+
+.os-chart {
+  display: block;
+  width: 100%;
+  height: 84px;
+  overflow: visible;
+}
+
+.os-chart__base { stroke: rgba(255, 255, 255, 0.12); stroke-width: 1; }
+.os-chart__area { fill: rgba(244, 162, 97, 0.12); }
+
+.os-chart__line {
+  fill: none;
+  stroke: var(--ds-color-accent);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.os-chart__dot { fill: var(--ds-color-accent); }
+
+.os-chart__value {
+  margin: 0;
+  color: var(--ds-color-muted);
+  font: 400 0.74rem/1.4 'DM Mono', monospace;
+  letter-spacing: 0.06em;
+}
+
+.os-chart__value strong {
+  color: var(--ds-color-ink);
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+}
+
+/* ── Timeline, pasos y listas ──────────────────────────────────────────── */
+.os-timeline,
+.os-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--ds-hairline);
+}
+
+.os-timeline li,
+.os-steps li {
+  position: relative;
+  padding: 0.85rem 0 0.85rem 1.6rem;
+  border-bottom: var(--ds-hairline);
+}
+
+.os-timeline__node {
+  position: absolute;
+  left: 0;
+  top: 1.15rem;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--ds-color-accent);
+  transform: rotate(45deg);
+}
+
+.os-timeline__label {
+  margin: 0;
+  color: var(--ds-color-dim);
+  font: 500 0.65rem/1.35 'DM Mono', monospace;
+  letter-spacing: 0.12em;
+}
+
+.os-timeline__value {
+  margin: 0.2rem 0 0;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.os-steps li {
+  color: #e6e2dc;
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.86rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.os-steps li span {
+  margin-right: 0.6rem;
+  color: var(--ds-color-accent);
+  font: 600 0.72rem/1 'DM Mono', monospace;
+}
+
+.os-plain-list {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+  color: #ded9d2;
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.84rem;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.os-plain-list--muted { color: var(--ds-color-dim); }
+
+.os-defs {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+}
+
+.os-defs dt {
+  color: var(--ds-color-dim);
+  font: 500 0.65rem/1.35 'DM Mono', monospace;
+  letter-spacing: 0.12em;
+}
+
+.os-defs dd {
+  margin: 0.25rem 0 0;
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
+}
+
+.os-defs__mail { display: flex; align-items: center; gap: 0.45rem; }
+
+.os-membership {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin: 0;
+}
+
+.os-membership__label {
+  color: var(--ds-color-dim);
+  font: 500 0.65rem/1.35 'DM Mono', monospace;
+  letter-spacing: 0.12em;
+}
+
+.os-membership__value {
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+/* ── Checklist de entrenamiento ────────────────────────────────────────── */
+.os-checklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--ds-hairline);
+}
+
+.os-checklist label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 48px;
+  padding: 0.6rem 0;
+  border-bottom: var(--ds-hairline);
+  cursor: pointer;
+}
+
+.os-checklist input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.os-checklist__box {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  border: 1px solid var(--ds-hairline-color);
+  color: #08080a;
+  transition: background-color var(--ds-dur-micro) var(--ds-ease-standard),
+    border-color var(--ds-dur-micro) var(--ds-ease-standard);
+}
+
+.os-checklist input:checked + .os-checklist__box {
+  background: var(--ds-color-accent);
+  border-color: var(--ds-color-accent);
+}
+
+.os-checklist input:focus-visible + .os-checklist__box {
+  outline: 2px solid var(--ds-color-accent);
+  outline-offset: 2px;
+}
+
+.os-checklist li label.is-done .os-checklist__text {
+  color: var(--ds-color-dim);
+  text-decoration: line-through;
+}
+
+.os-checklist__text {
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.86rem;
+  font-weight: 300;
+}
+
+/* ── Aviso global de honestidad ────────────────────────────────────────── */
+.os-disclosure {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: var(--ds-hairline);
+  color: var(--ds-color-dim);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.76rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.os-disclosure strong { color: var(--ds-color-muted); }
+
+.os-disclosure__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin: 0.9rem 0 0;
+}
+
+/* ── Reservado a suscriptores · piezas en preparación ──────────────────── */
+.os-locked,
+.os-handoff {
+  margin-top: 2.5rem;
+  padding: clamp(1.25rem, 3vw, 1.9rem);
+  border: var(--ds-hairline);
+  background: var(--ds-plane-coal);
+}
+
+.os-locked__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 1.25rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.os-locked__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding-top: 1rem;
+  border-top: var(--ds-hairline);
+}
+
+.os-locked__list svg {
+  margin-top: 0.2rem;
+  color: var(--ds-color-accent);
+  flex: none;
+}
+
+.os-locked__list strong {
+  display: block;
+  color: var(--ds-color-ink);
+  font-family: var(--type-family-mono, 'DM Mono', monospace);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.os-locked__list small {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--ds-color-muted);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.os-locked__foot {
+  margin: 0 0 1.25rem;
+  color: var(--ds-color-dim);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+
+/* ── Cierre humano: WhatsApp como canal, no como chat interno ──────────── */
+.os-handoff {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  border-color: var(--ds-color-accent);
+}
+
+.os-handoff h2 {
+  margin: 0 0 0.6rem;
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: var(--lux-fs-h3) !important;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: var(--lux-track-title) !important;
+}
+
+.os-handoff p {
+  margin: 0;
+  color: var(--ds-color-muted);
+  font-family: var(--type-family-text, 'Inter', Arial, sans-serif);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.os-handoff__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.4rem;
+}
+
+/* Verde de la marca WhatsApp: el botón se distingue del naranja de BAYONA
+   porque el canal es otro, no una variante del mismo sitio. */
+.os-cta--whatsapp {
+  gap: 0.55rem;
+  border-color: #1f7a4d;
+  background: #1f7a4d;
+  color: #f5f5f5;
+}
+
+.os-cta--whatsapp:hover:not(:disabled),
+.os-cta--whatsapp:focus-visible {
+  border-color: #2c9a63;
+  background: #2c9a63;
+  color: #f5f5f5;
+}
+
+.os-cta--whatsapp svg {
+  flex: none;
+}
+
+/* ── Desktop: aparece la barra lateral ─────────────────────────────────── */
+@media (min-width: 1024px) {
+  .os-sidebar { display: flex; }
+  .os-bottomnav { display: none; }
+  .os-body { margin-left: var(--os-side); }
+  .os-main { padding-bottom: 3.5rem; }
+  .os-topbar { position: sticky; top: var(--os-nav-h); z-index: var(--ds-z-sticky, 40); }
+  .os-hero { grid-template-columns: minmax(0, 1fr) 240px; align-items: start; }
+  .os-hero__aside { align-items: center; text-align: center; }
+  .os-hero__ring-note { text-align: left; }
+  .os-metrics { grid-template-columns: repeat(3, 1fr); }
+  .os-command-grid { grid-template-columns: minmax(0, 1.35fr) repeat(3, minmax(0, 0.75fr)); }
+  /* Nueve piezas del vault: tres columnas cerradas, sin hilera coja. */
+  .os-vault__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .os-program-console { grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.52fr); }
+  .os-program-console__hero { grid-row: span 2; }
+  .os-readiness-grid { grid-template-columns: 1fr; }
+  .os-workout-stage { grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1fr); align-items: stretch; }
+  .os-workout-blocks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .os-coach-builder { grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1fr); align-items: center; }
+  .os-coach-builder__items { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .os-program-editor__form { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .os-program-editor__wide,
+  .os-program-editor__actions { grid-column: 1 / -1; }
+  .os-session-brief,
+  .os-ops-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .os-locked__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .os-handoff {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr);
+    align-items: center;
+  }
+  .os-handoff__actions { justify-content: flex-end; }
+}
+
+@media (max-width: 1023px) {
+  .os-week-plan {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .os-week-plan li {
+    flex: 0 0 min(44vw, 180px);
+    scroll-snap-align: start;
+  }
+
+  .os-readiness-grid,
+  .os-vault__grid,
+  .os-workout-blocks,
+  .os-coach-builder__items {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 680px) and (max-width: 1023px) {
+  .os-readiness-grid,
+  .os-vault__grid,
+  .os-workout-blocks,
+  .os-coach-builder__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Product headings retain heading semantics without billboard sizing.
+   Scope beats the legacy two-class !important editorial heading group. */
+.ds-frame .os-shell :is(h2, .os-hero__title) {
+  font-size: var(--lux-fs-h3) !important;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: var(--lux-track-title) !important;
+  max-inline-size: min(100%, 36ch);
+  text-wrap: balance;
+}
+
+.ds-frame .os-shell :is(h3, .os-panel__head h2) {
+  font-size: var(--lux-fs-h4) !important;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: var(--lux-track-title) !important;
+}
+
+.os-shell :is(.os-screen__title, .os-vault__intro h2, .os-coach-builder h2) {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.os-shell :is(.os-label, .os-eyebrow, .os-topbar__section, .os-topbar__date,
+  .os-command-card__label, .os-metric__label, .os-today__date) {
+  font-size: var(--lux-fs-meta);
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+}
+
+/* One short entrance per screen, never on individual metrics or form feedback. */
+@media (prefers-reduced-motion: no-preference) {
+  .os-main > :is(.os-today, .os-screen) {
+    animation: os-screen-arrive var(--ds-dur-standard) var(--ds-ease-entrance) both;
+  }
+}
+
+@keyframes os-screen-arrive {
+  from { opacity: 0.8; translate: 0 8px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+/* ── Movimiento reducido: nada anima, todo se ve ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .os-ring__value,
+  .os-nav__link::before,
+  .os-cta,
+  .os-link,
+  .os-checklist__box {
+    transition: none;
+  }
+
+  .os-state--loading .os-state__spin { animation: none; }
+}

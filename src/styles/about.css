@@ -1,0 +1,1963 @@
+.about-page {
+  background:
+    radial-gradient(circle at 78% 10%, rgba(244, 162, 97, 0.16), transparent 28%),
+    var(--black);
+}
+
+.about-page .page-hero {
+  min-height: 82svh;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.98) 4%, rgba(5, 5, 5, 0.78) 58%, rgba(5, 5, 5, 0.3)),
+    radial-gradient(circle at 76% 43%, rgba(244, 162, 97, 0.52), transparent 0 25%, rgba(244, 162, 97, 0.08) 26%, transparent 46%),
+    linear-gradient(140deg, #050505 20%, #0b0b0c 140%);
+}
+
+.about-page .page-hero::before {
+  content: '';
+  position: absolute;
+  right: -8vw;
+  width: min(60vw, 760px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(244, 162, 97, 0.24);
+  clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+  transform: rotate(8deg);
+}
+
+.about-page .page-hero-content h1 {
+  max-width: 1000px;
+}
+
+.about-page .hero-subtitle {
+  max-width: 680px;
+}
+
+.about-problem,
+.about-values,
+.about-method,
+.about-cta {
+  padding-block: clamp(88px, 11vw, 150px);
+}
+
+.about-problem {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.6fr);
+  gap: clamp(36px, 8vw, 120px);
+  align-items: end;
+}
+
+.about-problem .eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.about-problem h2 {
+  margin-bottom: 0;
+}
+
+.about-problem-copy {
+  margin: 0 0 7px;
+  color: #d5d0c8;
+  font-size: clamp(16px, 1.7vw, 21px);
+  line-height: 1.75;
+}
+
+.about-story {
+  padding-block: clamp(70px, 9vw, 120px);
+  border-block: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #0c0c0d, #090909);
+}
+
+.about-story-heading h2 {
+  margin-bottom: clamp(58px, 8vw, 100px);
+}
+
+.about-timeline {
+  padding: 0;
+  list-style: none;
+}
+
+.about-timeline-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.32fr) minmax(0, 0.68fr);
+  gap: clamp(28px, 7vw, 100px);
+  min-height: 260px;
+  padding: clamp(34px, 5vw, 62px) clamp(20px, 5vw, 70px);
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.about-timeline-entry:nth-child(even) {
+  grid-template-columns: minmax(0, 0.68fr) minmax(150px, 0.32fr);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.about-timeline-entry:nth-child(even) .about-timeline-meta {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.about-timeline-entry:nth-child(even) .about-timeline-copy {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.about-timeline-meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.about-timeline-meta span,
+.about-timeline-meta time {
+  color: var(--orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.35;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.13em;
+}
+
+.about-timeline-meta time {
+  max-width: 180px;
+  color: #fff;
+  font-size: clamp(15px, 2vw, 22px);
+}
+
+.about-timeline-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+
+.about-timeline-copy h3 {
+  margin: 0 0 18px;
+  font-size: clamp(30px, 5vw, 65px);
+  line-height: 0.9;
+}
+
+.about-timeline-copy p {
+  max-width: 640px;
+  margin: 0;
+  color: #c8c4bd;
+  font-size: clamp(14px, 1.4vw, 17px);
+}
+
+.about-timeline-rule {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 31%;
+  width: 1px;
+  background: linear-gradient(transparent, rgba(244, 162, 97, 0.55), transparent);
+}
+
+.about-timeline-entry:nth-child(even) .about-timeline-rule {
+  right: 31%;
+  left: auto;
+}
+
+.about-timeline-index {
+  position: absolute;
+  right: 0;
+  bottom: -0.28em;
+  color: rgba(255, 255, 255, 0.025);
+  font-size: clamp(130px, 22vw, 300px);
+  font-weight: 900;
+  line-height: 0.8;
+}
+
+.about-values-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.about-value {
+  display: grid;
+  /* Tres pistas para los tres hijos reales (icono, h3, párrafo). Hubo una
+     cuarta pista de 40 px escrita para `.about-value-number`, un número que
+     el JSX no renderiza: al desplazar todo una pista, el h3 caía en los 40 px
+     del icono y `overflow: hidden` de la tarjeta lo recortaba
+     ("CRITERIO" medía 142 px de texto en una caja de 38 px). */
+  grid-template-columns: 60px minmax(150px, 0.4fr) minmax(260px, 0.6fr);
+  gap: clamp(14px, 3vw, 45px);
+  align-items: center;
+  min-height: 104px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.about-value:nth-child(even) {
+  padding-left: clamp(0px, 7vw, 90px);
+}
+
+.about-value-number {
+  color: rgba(255, 255, 255, 0.35);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+}
+
+.about-value svg {
+  color: var(--orange);
+}
+
+.about-value h3,
+.about-value p {
+  margin: 0;
+}
+
+.about-value h3 {
+  font-size: clamp(17px, 2vw, 25px);
+  letter-spacing: 0.08em;
+}
+
+.about-value p {
+  max-width: 520px;
+  font-size: var(--type-size-07);
+}
+
+.about-globe-section {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.8fr) minmax(420px, 1.2fr);
+  gap: clamp(35px, 7vw, 100px);
+  align-items: center;
+  padding-block: clamp(90px, 12vw, 160px);
+}
+
+/* =========================================================================
+   CAPA WEBGL DEL GLOBO (Fase 11.2)
+   El canvas de Three.js vive detrás del mapa interactivo (z-index: 0) y no
+   captura eventos de puntero: GlobeTestimonials sigue recibiendo los clics.
+   SceneMount ya aplica estos estilos inline; esta regla refuerza el contrato.
+   ========================================================================= */
+.about-globe-webgl {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.about-globe-copy p {
+  max-width: 520px;
+  color: #c8c4bd;
+}
+
+.globe-figure,
+.globe-fallback {
+  width: 100%;
+  min-height: min(660px, 72vw);
+  margin: 0;
+  border: 1px solid rgba(244, 162, 97, 0.24);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    radial-gradient(circle, rgba(244, 162, 97, 0.38), rgba(5, 5, 5, 0.96) 68%);
+  background-size: 34px 34px, 34px 34px, auto;
+}
+
+.globe-figure {
+  position: relative;
+  height: min(660px, 72vw);
+  overflow: hidden;
+}
+
+.globe-figure canvas {
+  touch-action: pan-y;
+}
+
+.globe-figure figcaption {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  left: 18px;
+  color: #8c8984;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.55;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
+.globe-marker-ui {
+  position: relative;
+  width: max-content;
+  transform: translate(20px, -10px);
+}
+
+.globe-marker-button {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border: 1px solid rgba(244, 162, 97, 0.55);
+  background: rgba(5, 5, 5, 0.88);
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.globe-marker-ui.is-vision .globe-marker-button {
+  border-style: dashed;
+}
+
+.globe-marker-button span {
+  width: 7px;
+  height: 7px;
+  background: var(--orange);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  box-shadow: 0 0 14px rgba(244, 162, 97, 0.8);
+}
+
+.globe-marker-button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.globe-marker-tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: max-content;
+  max-width: 220px;
+  padding: 9px 11px;
+  border-left: 2px solid var(--orange);
+  background: rgba(5, 5, 5, 0.96);
+  color: #d8d4cd;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.45;
+  font-family: var(--type-family-mono);
+}
+
+.globe-fallback {
+  display: grid;
+  align-content: center;
+  min-height: 440px;
+  padding: clamp(24px, 5vw, 60px);
+}
+
+.globe-fallback > p {
+  margin-bottom: 28px;
+  color: var(--orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.globe-fallback ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.globe-fallback li {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.4fr) minmax(180px, 0.6fr);
+  gap: 20px;
+  padding: 18px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.globe-fallback li:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.globe-fallback strong {
+  font-size: var(--type-size-06);
+}
+
+.globe-fallback span {
+  color: #aaa59e;
+  font-size: var(--type-size-05);
+}
+
+.about-method {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: center;
+}
+
+.about-method .eyebrow {
+  justify-content: center;
+}
+
+.about-method blockquote {
+  max-width: 940px;
+  margin: 0 auto;
+  color: var(--orange);
+  font-size: clamp(25px, 4.8vw, 58px);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.04em;
+}
+
+.about-cta {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.about-cta > p {
+  color: var(--orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+}
+
+.about-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+@media (max-width: 850px) {
+  .about-problem,
+  .about-globe-section {
+    grid-template-columns: 1fr;
+  }
+
+  .about-timeline-entry,
+  .about-timeline-entry:nth-child(even) {
+    grid-template-columns: 125px minmax(0, 1fr);
+  }
+
+  .about-timeline-entry:nth-child(even) .about-timeline-meta,
+  .about-timeline-entry:nth-child(even) .about-timeline-copy {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .about-timeline-rule,
+  .about-timeline-entry:nth-child(even) .about-timeline-rule {
+    right: auto;
+    left: 144px;
+  }
+
+  .about-value,
+  .about-value:nth-child(even) {
+    grid-template-columns: 45px minmax(0, 1fr);
+    padding-left: 0;
+  }
+
+  /* Mismo motivo que en escritorio: sin pista fantasma, el título y el texto
+     comparten la columna 2 y el icono queda en la 1. */
+  .about-value h3,
+  .about-value p {
+    grid-column: 2;
+  }
+
+  .globe-figure,
+  .globe-fallback {
+    min-height: min(620px, 100vw);
+  }
+
+  .globe-figure {
+    height: min(620px, 100vw);
+  }
+}
+
+@media (max-width: 600px) {
+  .about-page .page-hero {
+    min-height: 78svh;
+  }
+
+  .about-page .page-hero-content h1 {
+    font-size: clamp(48px, 15vw, 72px);
+  }
+
+  .about-problem h2,
+  .about-values h2,
+  .about-globe-copy h2,
+  .about-method h2 {
+    margin-bottom: 28px;
+  }
+
+  .about-timeline-entry,
+  .about-timeline-entry:nth-child(even) {
+    display: block;
+    min-height: 0;
+    padding: 38px 0;
+  }
+
+  .about-timeline-meta {
+    margin-bottom: 28px;
+  }
+
+  .about-timeline-rule {
+    display: none;
+  }
+
+  .about-value,
+  .about-value:nth-child(even) {
+    grid-template-columns: 36px 32px 1fr;
+    min-height: 0;
+    padding: 22px 0;
+  }
+
+  .about-value p {
+    font-size: var(--type-size-06);
+  }
+
+  .globe-figure,
+  .globe-fallback {
+    min-height: 440px;
+  }
+
+  .globe-figure {
+    height: 440px;
+  }
+
+  .globe-figure figcaption {
+    font-size: var(--type-size-03);
+  }
+
+  .globe-fallback li {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .about-cta-actions,
+  .about-cta-actions a {
+    width: 100%;
+  }
+
+  .about-cta-actions a {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-page *,
+  .about-page *::before,
+  .about-page *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Progressive timeline, accessible metric, and capability-gated value feedback. */
+.about-timeline {
+  --timeline-progress: 0;
+  position: relative;
+}
+
+.about-timeline::before,
+.about-timeline::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: clamp(-14px, -1vw, -8px);
+  z-index: 2;
+  width: 2px;
+  content: '';
+  pointer-events: none;
+}
+
+.about-timeline::before {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.about-timeline::after {
+  background: #F4A261;
+  box-shadow: 0 0 20px rgba(244, 162, 97, 0.15);
+  transform: scaleY(var(--timeline-progress));
+  transform-origin: top;
+}
+
+.about-count-up {
+  display: inline-block;
+  min-width: 5.2ch;
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.about-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  border: 0 !important;
+  margin: -1px !important;
+  white-space: nowrap !important;
+}
+
+.about-value {
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.about-value > * {
+  position: relative;
+  z-index: 1;
+}
+
+.about-value.has-pointer-effects {
+  will-change: translate;
+  transition:
+    translate 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about-value.has-pointer-effects::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle 260px at var(--mx) var(--my), rgba(244, 162, 97, 0.15), transparent 72%);
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about-page .globe-testimonials-world-point {
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+  border-radius: 0;
+}
+
+.about-page .globe-testimonials-world-point:focus-visible {
+  outline: 2px solid #F4A261;
+  outline-offset: 2px;
+}
+
+.about-page .globe-testimonials-world-point:focus-visible::before {
+  border-color: #F4A261;
+  box-shadow: 0 0 18px rgba(244, 162, 97, 0.15);
+}
+
+.about-page .globe-testimonials-world-point:focus-visible span {
+  background: #F4A261;
+  box-shadow:
+    0 0 0 4px rgba(244, 162, 97, 0.15),
+    0 0 18px rgba(244, 162, 97, 0.15);
+  transform: scale(1.35);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-value.has-pointer-effects:hover {
+    border-bottom-color: rgba(244, 162, 97, 0.55);
+    box-shadow: 0 20px 50px rgba(244, 162, 97, 0.12);
+    translate: 0 -6px;
+  }
+
+  .about-value.has-pointer-effects:hover::before {
+    opacity: 1;
+  }
+
+  .about-page .globe-testimonials-world-point:hover::before {
+    border-color: #F4A261;
+    box-shadow: 0 0 18px rgba(244, 162, 97, 0.15);
+  }
+
+  .about-page .globe-testimonials-world-point:hover span {
+    background: #F4A261;
+    box-shadow:
+      0 0 0 4px rgba(244, 162, 97, 0.15),
+      0 0 18px rgba(244, 162, 97, 0.15);
+    transform: scale(1.35);
+  }
+}
+
+@media (max-width: 768px), (hover: none), (pointer: coarse) {
+  .about-value.has-pointer-effects {
+    box-shadow: none;
+    translate: none;
+  }
+
+  .about-value.has-pointer-effects::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-timeline {
+    --timeline-progress: 1 !important;
+  }
+
+  .about-value.has-pointer-effects {
+    box-shadow: none;
+    translate: none;
+  }
+
+  .about-value.has-pointer-effects::before {
+    display: none;
+  }
+
+  .about-page .globe-testimonials-world-point::before {
+    animation: none !important;
+  }
+}
+
+
+/* ========================================================================== 
+   ABOUT — premium editorial rebuild using the Academia full-bleed language.
+   ========================================================================== */
+
+.about-page {
+  --about-cream: #f1ece3;
+  --about-ink: #0a0a0a;
+  overflow: clip;
+  background: #050505;
+}
+
+#main-content .about-page .page-hero-content h1 {
+  font-size: var(--type-hero);
+  line-height: var(--leading-display);
+}
+
+.about-page .page-hero {
+  min-height: clamp(680px, 88svh, 900px) !important;
+}
+
+.about-page .page-hero-content h1 {
+  max-width: 1040px;
+}
+
+/* 01 — purpose on cream, with one restrained vertical annotation. */
+.about-problem-section {
+  color: var(--about-ink);
+  background: var(--about-cream) !important;
+}
+
+.about-problem-section .about-problem {
+  grid-template-columns: 34px minmax(0, 1.08fr) minmax(300px, 0.62fr);
+  gap: clamp(28px, 6vw, 86px);
+  align-items: end;
+  padding-block: clamp(100px, 12vw, 170px);
+}
+
+.about-vertical-word {
+  align-self: stretch;
+  padding-block: 5px;
+  border-inline-start: 1px solid rgba(9, 9, 9, 0.28);
+  color: rgba(9, 9, 9, 0.55);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+.about-vertical-word--light {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.about-vertical-word--dark {
+  border-color: rgba(9, 9, 9, 0.28);
+  color: rgba(9, 9, 9, 0.55);
+}
+
+.about-problem-section :is(h2, h3),
+.about-problem-section .eyebrow {
+  color: var(--about-ink);
+}
+
+.about-problem-section h2 {
+  max-width: 920px;
+  font-size: clamp(3rem, 6.6vw, 6.7rem);
+}
+
+.about-problem-section h2 span,
+.about-problem-section .eyebrow {
+  color: var(--orange-on-light);
+}
+
+.about-problem-section .about-problem-copy {
+  color: #57524c;
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+}
+
+.about-problem-section .about-problem-copy strong {
+  display: block;
+  margin-top: 20px;
+  color: #151311;
+  font-weight: 750;
+}
+
+/*
+ * LA COLUMNA CENTRAL DEL DIAGNÓSTICO. `.about-problem` es una rejilla de tres
+ * columnas (canto · titular · párrafo) y este `div` es la del medio: un nodo con
+ * forma propia, no un gancho. Dos cosas le hacían falta y ninguna estaba escrita.
+ *
+ * · `min-width: 0`: un ítem de rejilla arranca con `min-width: auto`, así que el
+ *   titular en mayúsculas a 6,7rem —«CONTIGO.» es una sola palabra— podía abrir la
+ *   columna en vez de romperse.
+ * · El aire entre la etiqueta y el titular. `.about-problem .eyebrow` de arriba
+ *   anula el margen global (0-2-0), de modo que hasta ahora las dos líneas solo
+ *   se separaban por la holgura del interlineado: un hueco accidental, distinto en
+ *   cada pantalla. Aquí lo manda la rejilla.
+ */
+.about-problem-heading {
+  min-width: 0;
+  display: grid;
+  gap: clamp(10px, 1.4vw, 16px);
+}
+
+/*
+ * La franja de los tres fundamentos. Antes eran tres frases sueltas; ahora cada
+ * frase lleva encima su orden dibujado —una pieza llena, la flecha, la pieza que
+ * espera—. La banda va primero porque es lo que la sección afirma, y las frases
+ * siguen siendo texto real de HTML: en móvil se leen a su tamaño, sin escalar.
+ */
+.about-reason-strip {
+  border-block: 1px solid rgba(9, 9, 9, 0.2);
+  background: #e9e3da;
+  padding-block: clamp(14px, 2.4vw, 26px) 0;
+}
+
+/* Banda a sangre: sus tres grupos caen al 16,7% / 50% / 83,3% del ancho, que es
+   exactamente el centro de las tres columnas de abajo. */
+.about-figure {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.about-reason-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-reason-list > li {
+  min-height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-right: 1px solid rgba(9, 9, 9, 0.2);
+  color: #4e4943;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.09em;
+  text-align: center;
+}
+
+.about-reason-list > li:last-child {
+  border-right: 0;
+}
+
+/* Lo primero, lleno; lo segundo, contourado y esperando. */
+.about-antes-lleno {
+  fill: #bd6332;
+}
+
+.about-antes-hueco {
+  fill: none;
+  stroke: #4e4943;
+  stroke-opacity: 0.45;
+  stroke-width: 1.4;
+}
+
+.about-antes-flecha {
+  fill: none;
+  stroke: #4e4943;
+  stroke-opacity: 0.5;
+  stroke-width: 1.4;
+}
+
+.about-antes-punta {
+  fill: #4e4943;
+  fill-opacity: 0.6;
+}
+
+/*
+ * LA VARIANTE QUE SÍ TIENE FORMA PROPIA. `.about-figure` es el genérico: el
+ * dibujo ocupa el ancho de la banda a sangre, para que sus tres grupos caigan
+ * sobre las tres columnas de abajo. `--antes` es la única figura de la página
+ * que cuenta una secuencia, y esa secuencia es su forma: la pieza llena ya
+ * está, la línea se traza, la punta aterriza y la segunda pieza se queda
+ * esperando. El modificador declara el timeline con nombre que ancla los dos
+ * trazos —es el ancestro directo de ambos, así que no necesita
+ * `timeline-scope`— y usa el mismo motor del sistema que `.ds-reveal`
+ * (`animation-timeline: view()`). Sin ese motor, o con
+ * `prefers-reduced-motion`, queda el estado diseñado: la frase entera dibujada.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .about-figure--antes {
+      view-timeline: --about-antes block;
+    }
+
+    .about-antes-flecha {
+      /* 52 unidades de viewBox: la longitud exacta del trazo `M-28 22 H+24`. */
+      stroke-dasharray: 52;
+      animation: about-antes-traza linear both;
+      animation-timeline: --about-antes;
+      animation-range: entry 18% cover 20%;
+    }
+
+    .about-antes-punta {
+      animation: about-antes-aterriza linear both;
+      animation-timeline: --about-antes;
+      animation-range: entry 34% cover 30%;
+    }
+  }
+}
+
+@keyframes about-antes-traza {
+  from {
+    stroke-dashoffset: 52;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes about-antes-aterriza {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .about-reason-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-reason-list > li {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(9, 9, 9, 0.2);
+    padding: 14px 20px;
+  }
+
+  .about-reason-list > li:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* 02 — one complete image, progressively blurred only when the timeline begins. */
+.about-story-scene {
+  min-height: 1080px;
+  padding: clamp(380px, 42vw, 570px) 0 clamp(96px, 11vw, 150px);
+  overflow: clip;
+  border: 0;
+  background: #050505;
+}
+
+.about-story-scene.scene-bg.scene-bg--after::after {
+  inset: -2px;
+  opacity: 1;
+  filter: none;
+  background-image:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.06), rgba(5, 5, 5, 0.09) 36%, rgba(5, 5, 5, 0.62) 68%, #050505 100%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.78), rgba(5, 5, 5, 0.16) 64%, rgba(5, 5, 5, 0.12)),
+    var(--scene-image);
+  background-position: center, center, var(--scene-position);
+  background-size: cover;
+  mask-image: none;
+}
+
+.about-story-scene::before {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 62%;
+  content: '';
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(5, 5, 5, 0.66) 46%, #050505);
+  -webkit-backdrop-filter: blur(13px) saturate(0.82);
+  backdrop-filter: blur(13px) saturate(0.82);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%);
+  mask-image: linear-gradient(180deg, transparent, #000 30%);
+}
+
+.about-story-scene > * {
+  position: relative;
+  z-index: 1;
+}
+
+.about-story-heading {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: clamp(28px, 6vw, 86px);
+  margin-bottom: clamp(52px, 7vw, 84px);
+}
+
+.about-story-heading h2 {
+  max-width: 1040px;
+  margin-bottom: 28px;
+  font-size: clamp(3rem, 6.6vw, 6.7rem);
+}
+
+.about-story-heading .about-problem-copy {
+  max-width: 68ch;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(1rem, 1.3vw, 1.16rem);
+}
+
+.about-story-scene .about-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(5, 5, 5, 0.3);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.about-story-scene .about-timeline::before,
+.about-story-scene .about-timeline::after {
+  display: none;
+}
+
+.about-story-scene .about-timeline-entry,
+.about-story-scene .about-timeline-entry:nth-child(even) {
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+  padding: clamp(26px, 3vw, 42px);
+  border: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.19);
+  background: transparent;
+}
+
+.about-story-scene .about-timeline-entry:last-child {
+  border-right: 0;
+}
+
+.about-story-scene .about-timeline-entry:nth-child(even) .about-timeline-meta,
+.about-story-scene .about-timeline-entry:nth-child(even) .about-timeline-copy {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+.about-story-scene .about-timeline-meta {
+  min-height: 70px;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.about-story-scene .about-timeline-meta time {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: var(--type-size-06);
+  text-align: right;
+}
+
+.about-story-scene .about-timeline-copy {
+  margin-top: auto;
+}
+
+.about-story-scene .about-timeline-copy h3 {
+  margin-bottom: 18px;
+  font-size: clamp(1.55rem, 2.55vw, 2.85rem);
+  line-height: 0.95;
+}
+
+.about-story-scene .about-timeline-copy p {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: var(--type-size-07);
+  line-height: 1.65;
+}
+
+.about-story-scene :is(.about-timeline-rule, .about-timeline-index) {
+  display: none;
+}
+
+/* 03 — promise is editorial typography, not four unrelated image boxes. */
+.about-values-section {
+  color: var(--about-ink);
+  background: var(--about-cream) !important;
+}
+
+.about-values-section .about-values {
+  padding-block: clamp(100px, 12vw, 170px);
+}
+
+.about-promise-header {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: clamp(28px, 6vw, 86px);
+  margin-bottom: clamp(50px, 7vw, 88px);
+}
+
+.about-promise-header > div {
+  max-width: 1060px;
+}
+
+.about-values-section :is(h2, h3),
+.about-values-section .eyebrow {
+  color: var(--about-ink);
+}
+
+.about-values-section h2 {
+  margin-bottom: 28px;
+  font-size: clamp(3rem, 6.6vw, 6.7rem);
+}
+
+.about-values-section h2 span,
+.about-values-section .eyebrow {
+  color: var(--orange-on-light);
+}
+
+.about-promise-header p {
+  max-width: 65ch;
+  margin: 0;
+  color: #57524c;
+  font-size: clamp(1rem, 1.3vw, 1.16rem);
+}
+
+.about-values-section .about-values-list {
+  border-color: rgba(9, 9, 9, 0.24);
+}
+
+.about-values-section .about-value,
+.about-values-section .about-value:nth-child(even) {
+  /* Mismo defecto que la regla base: la pista de 38 px estaba escrita para el
+     `.about-value-number` que el JSX no renderiza, así que el h3 caía en ella y
+     `overflow: hidden` de la tarjeta recortaba "CRITERIO" (142 px de texto en
+     una caja de 38 px). Tres pistas para los tres hijos reales. */
+  grid-template-columns: 64px minmax(180px, 0.38fr) minmax(280px, 0.62fr);
+  min-height: 132px;
+  padding: 28px 0;
+  border-color: rgba(9, 9, 9, 0.2);
+  background: transparent;
+}
+
+.about-values-section .about-value-number {
+  color: rgba(9, 9, 9, 0.42);
+}
+
+.about-values-section .about-value svg {
+  color: var(--orange-on-light);
+}
+
+.about-values-section .about-value h3 {
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+}
+
+.about-values-section .about-value p {
+  color: #5b5650;
+  font-size: var(--type-size-07);
+  line-height: 1.65;
+}
+
+/* Experience remains an intentional interactive scene, not a decorative card. */
+.about-globe-section {
+  padding-block: clamp(100px, 12vw, 170px);
+}
+
+.about-globe-copy h2 {
+  font-size: clamp(3rem, 6.3vw, 6.3rem);
+}
+
+/* Community uses one full image, visible first and blurred where the copy begins. */
+.about-community-bridge.cb-bridge {
+  min-height: clamp(820px, 104svh, 1060px);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(350px, 43vw, 560px) 0 clamp(90px, 10vw, 136px);
+}
+
+.about-community-bridge.scene-bg.scene-bg--after::after {
+  inset: -2px;
+  opacity: 1;
+  filter: none;
+  background-image:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.06), rgba(5, 5, 5, 0.09) 40%, rgba(5, 5, 5, 0.68) 73%, #050505 100%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.78), rgba(5, 5, 5, 0.2) 66%, rgba(5, 5, 5, 0.16)),
+    var(--scene-image);
+  background-position: center, center, center 42%;
+  background-size: cover;
+  mask-image: none;
+}
+
+.about-community-bridge.cb-bridge::before {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  width: auto;
+  height: 56%;
+  background: linear-gradient(180deg, transparent, rgba(5, 5, 5, 0.7), #050505);
+  -webkit-backdrop-filter: blur(13px);
+  backdrop-filter: blur(13px);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 34%);
+  mask-image: linear-gradient(180deg, transparent, #000 34%);
+}
+
+.about-community-bridge .cb-bridge-inner {
+  z-index: 1;
+  width: min(1280px, calc(100% - (var(--layout-gutter) * 2)));
+  max-width: none;
+  padding: 0;
+}
+
+.about-community-bridge .cb-bridge-copy {
+  max-width: 820px;
+  margin: 0;
+  text-align: left;
+}
+
+.about-community-bridge .cb-bridge-title {
+  font-size: clamp(3rem, 6.4vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+}
+
+.about-community-bridge .cb-bridge-hook {
+  margin-inline: 0 !important;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(1rem, 1.3vw, 1.16rem);
+}
+
+.about-community-bridge .cb-bridge-free {
+  margin-inline: 0 !important;
+}
+
+/* 05 — one final full-bleed scene with three comprehensible method decisions. */
+.about-method-scene {
+  min-height: clamp(960px, 118svh, 1180px);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(360px, 43vw, 560px) 0 clamp(96px, 11vw, 150px);
+  overflow: clip;
+  border: 0;
+  text-align: left;
+}
+
+.about-method-scene.scene-bg.scene-bg--after::after {
+  inset: -2px;
+  opacity: 1;
+  filter: none;
+  background-image:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.06), rgba(5, 5, 5, 0.12) 38%, rgba(5, 5, 5, 0.7) 70%, #050505 100%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.78), rgba(5, 5, 5, 0.18) 62%, rgba(5, 5, 5, 0.2)),
+    var(--scene-image);
+  background-position: center, center, var(--scene-position);
+  background-size: cover;
+  mask-image: none;
+}
+
+.about-method-scene::before {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 62%;
+  content: '';
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(5, 5, 5, 0.7) 48%, #050505);
+  -webkit-backdrop-filter: blur(14px) saturate(0.82);
+  backdrop-filter: blur(14px) saturate(0.82);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%);
+  mask-image: linear-gradient(180deg, transparent, #000 30%);
+}
+
+.about-method-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 0 clamp(28px, 6vw, 86px);
+}
+
+.about-method-heading,
+/* `MethodSequence` sustituyó a la antigua `.about-method-grid` (ver la nota de
+   más abajo: «ya sin uso»), pero esta asignación siguió apuntando a la clase
+   muerta. El `ol.ds-method` quedaba sin columna y caía en la pista de 34 px del
+   margen: cada paso se componía en [8px, 0px] y su texto desbordaba la caja de
+   ancho cero encima del blockquote. Medido en vivo el 2026-09-22. */
+.about-method-scene .ds-method,
+.about-method-scene blockquote,
+.about-method-scene .about-cta-actions {
+  grid-column: 2;
+}
+
+.about-method-heading {
+  max-width: 1060px;
+}
+
+.about-method-heading h2 {
+  margin-bottom: 28px;
+  font-size: clamp(3rem, 6.6vw, 6.7rem);
+}
+
+.about-method-heading > p {
+  max-width: 67ch;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(1rem, 1.3vw, 1.16rem);
+}
+
+.about-method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: clamp(48px, 6vw, 78px) 0 0;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  list-style: none;
+  background: rgba(5, 5, 5, 0.28);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.about-method-grid li {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 3vw, 42px);
+  border-right: 1px solid rgba(255, 255, 255, 0.19);
+}
+
+.about-method-grid li:last-child {
+  border-right: 0;
+}
+
+.about-method-grid span {
+  color: var(--orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+}
+
+.about-method-grid h3 {
+  margin: auto 0 16px;
+  font-size: clamp(1.65rem, 2.7vw, 2.8rem);
+}
+
+.about-method-grid p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: var(--type-size-07);
+  line-height: 1.65;
+}
+
+.about-method-scene blockquote {
+  max-width: 920px;
+  margin: clamp(48px, 6vw, 76px) 0 0;
+  color: var(--orange);
+  font: 850 clamp(1.7rem, 3.6vw, 3.8rem)/1.05 Montserrat, sans-serif;
+  letter-spacing: -0.055em;
+}
+
+.about-method-scene .about-cta-actions {
+  justify-content: flex-start;
+  margin-top: 42px;
+}
+
+.about-disclaimer {
+  padding: 24px 0;
+  color: rgba(255, 255, 255, 0.56);
+  background: #050505;
+}
+
+.about-disclaimer small {
+  display: block;
+  max-width: 78ch;
+  font-size: var(--type-size-06);
+  line-height: 1.6;
+}
+
+@media (max-width: 950px) {
+  .about-problem-section .about-problem {
+    grid-template-columns: 34px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .about-problem-section .about-problem-copy {
+    grid-column: 2;
+  }
+
+  .about-story-scene .about-timeline,
+  .about-method-grid {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .about-story-scene .about-timeline::-webkit-scrollbar,
+  .about-method-grid::-webkit-scrollbar,
+  .about-reason-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .about-story-scene .about-timeline-entry,
+  .about-story-scene .about-timeline-entry:nth-child(even),
+  .about-method-grid li {
+    flex: 0 0 76%;
+    min-width: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.19);
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 760px) {
+  #main-content .about-page .page-hero-content h1 {
+    font-size: var(--type-hero);
+  }
+
+  .about-page .page-hero {
+    min-height: 74svh !important;
+  }
+
+  .about-problem-section .about-problem,
+  .about-story-heading,
+  .about-promise-header,
+  .about-method-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .about-vertical-word {
+    width: fit-content;
+    padding: 0 0 9px;
+    border-inline-start: 0;
+    border-bottom: 1px solid currentColor;
+    writing-mode: horizontal-tb;
+  }
+
+  .about-problem-section .about-problem-copy,
+  .about-method-heading,
+  .about-method-grid,
+  .about-method-scene blockquote,
+  .about-method-scene .about-cta-actions {
+    grid-column: 1;
+  }
+
+  .about-problem-section h2,
+  .about-story-heading h2,
+  .about-values-section h2,
+  .about-globe-copy h2,
+  .about-community-bridge .cb-bridge-title,
+  .about-method-heading h2 {
+    font-size: clamp(2.55rem, 12vw, 4rem);
+  }
+
+  /*
+    La franja dejó de ser un carrusel de tres frases: ahora es una banda de
+    orden dibujado con su lista debajo, y se apila. Con `display: flex` el svg y
+    la lista salían uno al lado del otro y la segunda quedaba cortada por el
+    borde —así que aquí se quita, no se toca el número del ratchet.
+  */
+  .about-story-scene,
+  .about-community-bridge.cb-bridge,
+  .about-method-scene {
+    min-height: 0;
+    padding-top: clamp(270px, 86vw, 360px);
+    padding-bottom: 86px;
+  }
+
+  .about-story-scene::before,
+  .about-community-bridge.cb-bridge::before,
+  .about-method-scene::before {
+    height: 72%;
+  }
+
+  .about-story-scene .about-timeline-entry,
+  .about-story-scene .about-timeline-entry:nth-child(even),
+  .about-method-grid li {
+    flex-basis: 84%;
+    min-height: 360px;
+    padding: 28px;
+  }
+
+  .about-values-section .about-value,
+  .about-values-section .about-value:nth-child(even) {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+    padding: 28px 0;
+  }
+
+  .about-values-section .about-value h3,
+  .about-values-section .about-value p {
+    grid-column: 2;
+  }
+
+  .about-community-bridge .cb-bridge-inner {
+    width: min(100% - 36px, 1280px);
+  }
+
+  .about-method-scene .about-cta-actions,
+  .about-method-scene .about-cta-actions a {
+    width: 100%;
+  }
+
+  .about-method-scene .about-cta-actions a {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-story-scene .about-timeline,
+  .about-method-grid,
+  .about-reason-strip {
+    scroll-behavior: auto;
+  }
+}
+
+/* ==========================================================================
+   FASE 8 · BLOQUE G — "LA LÍNEA DE VIDA" (sección RECORRIDO de About).
+   Capa ADITIVA: solo actúa con about-timeline--stage (StickyStage). Sin esa
+   clase, el layout original de about-timeline queda intacto.
+   Identidad PROPIA (tercera): la Home recorre horizontal, parkour sube —
+   About ES EL TIEMPO. Cada etapa reemplaza a la anterior en el mismo plano
+   (una biografía, no una lista) y el año queda como sello de agua gigante
+   que cede su sitio al siguiente. La alternancia par/impar del layout
+   original se conserva por etapa: la vida no es simétrica.
+   ========================================================================== */
+
+.about-timeline--stage {
+  display: block;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.about-timeline-stage {
+  position: relative;
+  display: grid;
+  grid-template-rows: 100%;
+  width: 100%;
+  min-height: min(62vh, 540px);
+  align-content: center;
+}
+
+.about-timeline-entry--stage {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: center;
+  border-top: none;
+  /* Reemplazo en el mismo plano: la etapa nueva cruza el plano de la vieja. */
+  opacity: 0;
+  transform: translateY(30px) scale(0.995);
+  transition:
+    opacity 0.65s var(--ease-transform, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 0.65s var(--ease-transform, cubic-bezier(0.22, 1, 0.36, 1));
+  pointer-events: none;
+  /* Sello del año: reutiliza la escala de about-timeline-index pero como
+     año (tiempo), abajo a la derecha — cada etapa firma su época. */
+}
+
+.about-timeline-entry--stage::after {
+  content: attr(data-year);
+  position: absolute;
+  right: 0;
+  bottom: -0.28em;
+  color: rgba(255, 255, 255, 0.025);
+  font-size: clamp(110px, 20vw, 280px);
+  font-weight: 900;
+  line-height: 0.8;
+  pointer-events: none;
+}
+
+.about-timeline-entry--stage.about-timeline-entry--active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* `.premium-reveal.is-visible` (0-2-0, de premium-route-chrome.css) le ganaba a
+   la regla base del escenario (0-1-0) y dejaba las CUATRO etapas de la línea de
+   tiempo opacas a la vez, pintadas una encima de otra en la misma celda. Se
+   necesita un escalón más de especificidad para el estado «no activa»; la regla
+   de arriba sigue aportando el `grid-row/column` que las apila. */
+.about-timeline-entry--stage:not(.about-timeline-entry--active) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Reduced-motion / móvil: pila estática legible; los sellos de año se
+   conservan como marca de agua (legible, sin movimiento). */
+.sticky-stage--static .about-timeline-stage {
+  display: block;
+  min-height: 0;
+}
+
+.sticky-stage--static .about-timeline-entry--stage {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-timeline-entry--stage {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   FASE 4B · ABOUT — CONFIANZA POR ESTRUCTURA
+   --------------------------------------------------------------------------
+   La hoja de ruta define el bloque de tres bloques que antes era una retícula
+   de tarjetas (`.about-method-grid`, ya sin uso: el método lo compone
+   `MethodSequence`). Se retiran las reglas huérfanas del contenedor viejo y se
+   refuerza lo que sí comunica: entrada, bloques respirables, cita y cierre.
+   Reglas de la fase: cero `!important`, cero colores nuevos (los valores se
+   aliasan al sistema), una sola idea de movimiento por bloque y estado
+   estático completo con `prefers-reduced-motion`. Nada de esto toca copy,
+   precio, prestación ni CTA.
+   ========================================================================== */
+
+.about-method-inner blockquote {
+  margin-block: var(--bayona-gap-plate) 0;
+  padding-block-start: var(--bayona-gap-plate);
+  border-block-start: var(--bayona-hairline-signal);
+  font-family: var(--bayona-font-display);
+  font-weight: var(--ds-fw-heading);
+  letter-spacing: var(--ds-ls-heading, -0.03em);
+  text-wrap: balance;
+}
+
+.about-story-heading p,
+.about-method-inner > p {
+  max-inline-size: var(--bayona-measure);
+}
+
+.about-page > section + section {
+  border-block-start: var(--bayona-hairline);
+}
+
+.about-disclaimer {
+  background: var(--bayona-surface-1);
+}
+
+/* ==========================================================================
+   FASE 4C · ATELIER — ABOUT: HISTORIA CON JERARQUÍA
+   La historia se abre con entrada de capítulo, la lista de valores pasa a filas
+   con filete y la nota de desarrollo se sostiene en una placa. Ninguna cifra,
+   biografía ni testimonio nuevos.
+   Todo sale de los tokens del sistema: cero `!important`, cero colores
+   nuevos, cero radios propios, cero `z-index` sueltos. Cero WebGL.
+   ========================================================================== */
+
+.about-story-heading {
+  padding-block-start: var(--bayona-gap-plate);
+  border-block-start: var(--bayona-hairline);
+}
+
+.about-values-list {
+  border-block-start: var(--bayona-hairline);
+}
+
+.about-values-list > * {
+  border-block-end: var(--bayona-hairline);
+  padding-block: var(--bayona-gap-plate);
+  transition: border-block-end-color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+.about-values-list > *:hover,
+.about-values-list > *:focus-within {
+  border-block-end-color: var(--bayona-line-strong, var(--bayona-warm));
+}
+
+.about-count-up {
+  font-family: var(--bayona-font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.045em;
+}
+
+.about-cta-actions {
+  gap: var(--ds-space-4) var(--ds-space-5);
+}
+
+.about-globe-copy p {
+  max-inline-size: var(--bayona-measure);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-values-list > * {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   UNIDAD TIPOGRÁFICA · /about (2026-09-19)
+   --------------------------------------------------------------------------
+   Esta hoja declaraba a mano veinte cuerpos distintos (3rem/6.6vw, 130px/22vw,
+   0.62rem, 17px/2vw…) y cada sección decidía el suyo. Eso es exactamente lo
+   que el dueño señaló: «todos los títulos tienen distintos tamaños».
+
+   Aquí se retiran todas esas decisiones y cada ROL pide su paso a la escala
+   nombrada de ds-tokens.css §11. Mismo rol → mismo token → mismo render que
+   en /programs, /shop, /community, /resources y /parkour-academy.
+   La identidad de esta ruta queda en la geometría (palabra vertical, línea de
+   tiempo en zigzag, globo), el ritmo y la dirección del revelado.
+   Cero `!important` (MP-9), cero colores nuevos, cero tamaños sueltos.
+   ========================================================================== */
+
+/* Títulos: una familia, un peso, un aire, un tracking. */
+.about-page :is(h1, h2, h3, h4) {
+  font-family: var(--type-family-display);
+  font-weight: var(--type-weight-display);
+}
+
+.about-page :is(h1, h2) {
+  line-height: var(--type-leading-heading);
+  letter-spacing: var(--type-tracking-heading);
+  text-transform: uppercase;
+}
+
+.about-page h3 {
+  line-height: var(--type-leading-title);
+  letter-spacing: var(--type-tracking-title);
+}
+
+/* Rótulo mono: la palabra vertical y las etiquetas de capítulo. */
+.about-page .about-vertical-word,
+.about-page .about-reason-list > li,
+.about-page .about-method-grid span,
+.about-page .about-value-number,
+.about-page .about-timeline-meta :is(span, time),
+.about-page .globe-marker-button span {
+  font-family: var(--type-family-mono);
+  font-size: var(--type-eyebrow);
+  font-weight: var(--type-weight-label);
+  line-height: var(--type-leading-eyebrow);
+  letter-spacing: var(--type-tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+/* Párrafo de entrada: el primer texto de cada capítulo. */
+.about-page .hero-subtitle,
+.about-page .about-problem-copy,
+.about-page .about-promise-header p,
+.about-page .about-method-heading > p,
+.about-page .about-method-inner > p,
+.about-page .about-globe-copy p,
+.about-page .cb-bridge-hook {
+  font-family: var(--type-family-text);
+  font-size: var(--type-lede);
+  font-weight: var(--type-weight-body-soft);
+  line-height: var(--type-leading-body);
+  letter-spacing: var(--type-tracking-body);
+  max-inline-size: var(--ds-measure);
+}
+
+/* Cuerpo de ficha y de lista. */
+.about-page .about-timeline-copy p,
+.about-page .about-value p,
+.about-page .about-method-grid p,
+.about-page .globe-fallback li,
+.about-page .cb-bridge-free {
+  font-family: var(--type-family-text);
+  font-size: var(--type-body);
+  font-weight: var(--type-weight-body);
+  line-height: var(--type-leading-body);
+}
+
+/* Cita: voz del fundador, mismo paso que un titular de sección. */
+.about-page :is(.about-method blockquote, .about-method-inner blockquote) {
+  font-family: var(--type-family-display);
+  font-weight: var(--type-weight-display);
+  line-height: var(--type-leading-heading);
+  letter-spacing: var(--type-tracking-heading);
+  text-transform: uppercase;
+}
+
+/* Título del puente a comunidad: rol h2, no un tamaño aparte. */
+.about-page .cb-bridge-title {
+  font-family: var(--type-family-display);
+  font-weight: var(--type-weight-display);
+  line-height: var(--type-leading-heading);
+  letter-spacing: var(--type-tracking-heading);
+  text-transform: uppercase;
+}
+
+/* Figura de dato: el año fantasma y el contador salen de la misma escala. */
+.about-page .about-timeline-index,
+.about-page .about-timeline-entry--stage::after,
+.about-page .about-count-up {
+  font-family: var(--type-family-display);
+  font-size: var(--type-display);
+  font-weight: var(--type-weight-display);
+  line-height: var(--type-leading-display);
+  letter-spacing: var(--type-tracking-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Microcopia de cierre. */
+.about-page .about-disclaimer small {
+  font-family: var(--type-family-text);
+  font-size: var(--type-meta);
+  line-height: var(--type-leading-body);
+}
+
+/* CTA: el mismo botón se escribe igual en las seis rutas. */
+.about-page .about-cta-actions :is(a, button) {
+  font-family: var(--type-family-cta);
+  font-size: var(--type-cta);
+  font-weight: var(--type-weight-cta);
+  letter-spacing: var(--type-tracking-label);
+  text-transform: uppercase;
+}
+
+
+/* PRIME · Timeline About: el stage soberano no hereda el carrusel móvil legado. */
+.about-timeline--stage {
+  overflow: visible;
+}
+
+.about-timeline--stage .about-timeline-stage .about-timeline-entry--stage.about-timeline-entry--active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+@media (max-width: 760px) {
+  .about-timeline--stage {
+    display: block;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .about-timeline--stage .sticky-stage-viewport {
+    width: 100%;
+    height: calc(100svh - 66px);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .about-timeline--stage .about-timeline-stage {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: 1fr;
+    align-content: center;
+  }
+
+  .about-timeline--stage .about-timeline-entry--stage {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .about-timeline--stage .about-timeline-entry--stage.about-timeline-entry--active {
+    opacity: 1;
+  }
+}
+
+
+/* PRIME · About móvil: biografía en actos de pantalla completa. */
+@media (max-width: 760px) {
+  .sticky-stage--static.about-timeline--stage {
+    display: block;
+    height: auto !important;
+    overflow: visible;
+    border-top: 0;
+  }
+
+  .sticky-stage--static.about-timeline--stage .sticky-stage-frame {
+    min-height: 78svh;
+    display: grid;
+    align-items: center;
+    padding: 3rem 0;
+    border-top: 1px solid rgba(247,247,243,.14);
+  }
+
+  .sticky-stage--static.about-timeline--stage .about-timeline-stage {
+    display: block;
+    min-height: 0;
+  }
+
+  .sticky-stage--static.about-timeline--stage .about-timeline-entry--stage {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    padding: 0;
+    opacity: 1;
+    transform: none;
+    border: 0;
+  }
+
+  .sticky-stage--static.about-timeline--stage .about-timeline-meta,
+  .sticky-stage--static.about-timeline--stage .about-timeline-copy {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sticky-stage--static.about-timeline--stage .about-timeline-meta time {
+    display: block;
+    color: var(--bayona-orange,#f4a261);
+    font-size: .68rem;
+    letter-spacing: .16em;
+  }
+
+  .sticky-stage--static.about-timeline--stage .about-timeline-copy h3 {
+    max-width: 9ch;
+    margin: 0;
+    font-size: clamp(2.6rem,12vw,4.4rem);
+    line-height: .9;
+    letter-spacing: -.05em;
+  }
+
+  .sticky-stage--static.about-timeline--stage .about-timeline-copy p {
+    max-width: 30rem;
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.58;
+  }
+
+  .sticky-stage--static.about-timeline--stage .about-timeline-entry--stage::after {
+    right: -.05em;
+    bottom: -.08em;
+    font-size: 42vw;
+    opacity: .7;
+  }
+}

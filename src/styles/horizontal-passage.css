@@ -1,0 +1,47 @@
+/*
+  HORIZONTAL-PASSAGE — pasaje horizontal controlado por scroll (Fase 5).
+  ===========================================================================
+  Componente: src/engine/scroll/HorizontalPassage.jsx
+
+  El viewport queda fijo (sticky) con overflow oculto; el rail es una fila
+  de ancho natural que Framer Motion desplaza en X segun el progreso del
+  tramo. El CSS solo define la geometria; el movimiento vive en el engine.
+*/
+
+.horizontal-passage {
+  position: relative;
+  min-width: 0;
+}
+
+.horizontal-passage-viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.horizontal-passage-rail {
+  display: flex;
+  align-items: stretch;
+  gap: var(--passage-gap, 32px);
+  width: max-content;
+  will-change: transform;
+}
+
+/* ---- Movil / movimiento reducido: pila vertical convencional ---- */
+
+.horizontal-passage--static {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .horizontal-passage-rail {
+    will-change: auto;
+  }
+}

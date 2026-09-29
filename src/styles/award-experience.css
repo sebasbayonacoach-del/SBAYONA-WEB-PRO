@@ -1,0 +1,209 @@
+/* BAYONA CINEMATIC — dirección editorial, cinética y atmosférica transversal. */
+:root {
+  --award-orange: #ff9a57;
+  --award-ink: #070809;
+  --award-paper: #f2efe8;
+  --award-line: color-mix(in srgb, var(--award-paper) 15%, transparent);
+  --award-pointer-x: 50vw;
+  --award-pointer-y: 50vh;
+}
+
+body.award-mode {
+  background:
+    radial-gradient(circle at 50% -20%, rgba(255, 154, 87, 0.09), transparent 42rem),
+    var(--award-ink);
+}
+
+.award-experience {
+  position: fixed;
+  inset: 0;
+  z-index: 2140;
+  pointer-events: none;
+  color: var(--award-paper);
+  font-family: var(--ds-font-mono, monospace);
+}
+
+.award-experience__aura {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(22rem circle at var(--award-pointer-x) var(--award-pointer-y), rgba(255, 154, 87, 0.08), transparent 72%);
+  mix-blend-mode: screen;
+  transition: opacity 220ms ease;
+}
+
+.award-experience__grain {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+  transform: rotate(0.001deg);
+}
+
+.award-experience__route,
+.award-experience__meter {
+  position: absolute;
+  bottom: 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.award-experience__route {
+  left: clamp(1rem, 2.5vw, 2.75rem);
+  animation: award-route-in 680ms cubic-bezier(.2,.75,.2,1) both;
+}
+
+.award-experience__route span {
+  display: grid;
+  width: 2.35rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid var(--award-line);
+  border-radius: 50%;
+  color: var(--award-orange);
+}
+
+.award-experience__meter {
+  right: clamp(1rem, 2.5vw, 2.75rem);
+}
+
+.award-experience__meter i {
+  display: block;
+  width: clamp(4rem, 8vw, 8rem);
+  height: 1px;
+  overflow: hidden;
+  background: var(--award-line);
+}
+
+.award-experience__meter b {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  background: var(--award-orange);
+}
+
+/* El contenido deja de ser una pila de módulos: cada sección se comporta como una escena. */
+body.award-mode .ds-frame[data-experience-scope='brand'] > :is(section, article),
+body.award-mode .ds-frame[data-experience-scope='brand'] > div > :is(section, article) {
+  position: relative;
+  isolation: isolate;
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child) {
+  min-block-size: min(92svh, 72rem);
+  padding-block: clamp(7rem, 12vw, 12rem);
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child)::after {
+  content: '';
+  position: absolute;
+  inset: 0 clamp(1rem, 3vw, 3rem) auto;
+  height: 1px;
+  background: linear-gradient(90deg, var(--award-orange), var(--award-line) 16%, transparent 72%);
+  transform-origin: left;
+  animation: award-line-grow linear both;
+  animation-timeline: view();
+  animation-range: entry 5% entry 60%;
+  pointer-events: none;
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] :is(h1, h2) {
+  max-width: 15ch;
+  text-wrap: balance;
+  letter-spacing: -0.055em;
+  line-height: 0.88;
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] h1 {
+  font-size: clamp(3.75rem, 8.7vw, 9.5rem);
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] h2 {
+  font-size: clamp(2.8rem, 6.2vw, 7rem);
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child) :is(h2, .section-title) {
+  animation: award-heading-reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 48%;
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] :is(img, video) {
+  filter: saturate(0.72) contrast(1.08);
+  transition: filter 500ms ease, transform 900ms cubic-bezier(.16,1,.3,1);
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] :is(a, button):hover :is(img, video),
+body.award-mode .ds-frame[data-experience-scope='brand'] :is(img, video):hover {
+  filter: saturate(1) contrast(1.03);
+  transform: scale(1.025);
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] :is(.card, [class*='-card'], [class*='-item']) {
+  transition: transform 650ms cubic-bezier(.16,1,.3,1), border-color 300ms ease, background-color 300ms ease;
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] :is(.card, [class*='-card'], [class*='-item']):hover {
+  transform: translateY(-0.65rem);
+  border-color: color-mix(in srgb, var(--award-orange) 48%, transparent);
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] :is(a, button) {
+  transition: transform 300ms cubic-bezier(.2,.75,.2,1), color 220ms ease, background-color 220ms ease, border-color 220ms ease;
+}
+
+body.award-mode .ds-frame[data-experience-scope='brand'] :is(a, button):hover {
+  transform: translateY(-2px);
+}
+
+/* La fotografía de cada capítulo acompaña el scroll en todas las rutas públicas. */
+body.award-mode:not(.award-calm) .ds-frame[data-experience-scope='brand'] section.scene-bg--hero[data-award-scene-active]:not(.scene-bg--after)::before,
+body.award-mode:not(.award-calm) .ds-frame[data-experience-scope='brand'] section.scene-bg--hero.scene-bg--after[data-award-scene-active]::after {
+  animation: none !important;
+  transform: translate3d(0, var(--award-scene-y, 0px), 0) scale(var(--award-scene-scale, 1.06)) !important;
+  will-change: transform;
+}
+
+body.award-mode .navbar {
+  margin: clamp(0.7rem, 1.5vw, 1.35rem);
+  width: calc(100% - clamp(1.4rem, 3vw, 2.7rem));
+  border: 1px solid var(--award-line);
+  background: color-mix(in srgb, var(--award-ink) 78%, transparent);
+  backdrop-filter: blur(20px) saturate(1.25);
+}
+
+@keyframes award-heading-reveal {
+  from { opacity: 0; transform: translateY(1.2em) rotate(1.5deg); filter: blur(14px); }
+  to { opacity: 1; transform: translateY(0) rotate(0); filter: blur(0); }
+}
+
+@keyframes award-line-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes award-route-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: none; } }
+@media (max-width: 70rem) {
+  .award-experience__route { display: none; }
+  .award-experience__meter { bottom: 0.9rem; }
+  body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child) {
+    min-block-size: auto;
+    padding-block: clamp(5rem, 15vw, 8rem);
+  }
+  body.award-mode .navbar {
+    margin: 0;
+    width: 100%;
+    border-inline: 0;
+    border-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .award-experience__grain,
+  .award-experience__route,
+  body.award-mode .ds-frame[data-experience-scope='brand'] section::after,
+  body.award-mode .ds-frame[data-experience-scope='brand'] :is(h2, .section-title) {
+    animation: none !important;
+  }
+  .award-experience__aura { display: none; }
+}

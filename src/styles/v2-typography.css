@@ -1,0 +1,311 @@
+/*
+  BAYONA · ESCALA TIPOGRÁFICA ÚNICA v2
+  ===========================================================================
+  MEDICIÓN QUE LO MOTIVA
+
+  Recuento real sobre las 26 hojas del proyecto:
+      297 declaraciones `font-size: clamp(...)`
+      258 valores DISTINTOS
+
+  Es decir: casi cada elemento de la web inventó su propio tamaño. No existía
+  una escala, existían 258 decisiones independientes. De ahí la sensación de que
+  cada página pertenece a un sitio distinto.
+
+  QUÉ HACE ESTE ARCHIVO
+
+  Define nueve pasos y los aplica POR ROL SEMÁNTICO a todas las páginas. Un h2
+  de sección mide lo mismo en Home, en Tienda, en Comunidad y en Recursos.
+
+  SOBRE EL USO DE !important
+
+  Es deliberado y es la única forma limpia de hacerlo. Los 258 valores viven en
+  reglas como `.free-value-header h2` (especificidad 0,1,1) repartidas por 26
+  archivos. Reescribirlos uno a uno produciría un diff de miles de líneas con
+  altísimo riesgo de romper maquetaciones; un reset por rol es reversible,
+  legible y cabe en un archivo.
+
+  Regla para el futuro: los tamaños nuevos se piden a estos tokens. Si algo
+  necesita un tamaño que no está en la escala, lo que falta es un paso de la
+  escala, no una excepción.
+*/
+
+:root {
+  /* ---------------------------------------------------------------------
+     La escala. Progresión ~1.28 en el extremo grande, comprimida en móvil
+     para que un titular de portada no ocupe la pantalla entera.
+     --------------------------------------------------------------------- */
+
+  /** Portada. Solo el h1 del héroe de la home. */
+  --fs-display: clamp(3.1rem, 8.6vw, 7.6rem);
+
+  /** Titular de página. El h1 de cualquier página interior. */
+  --fs-h1: clamp(2.6rem, 6.4vw, 5.4rem);
+
+  /** Titular de sección. El paso más usado de la web. */
+  --fs-h2: clamp(2.1rem, 4.8vw, 4.2rem);
+
+  /** Subsección y titulares de tarjeta. */
+  --fs-h3: clamp(1.25rem, 1.9vw, 1.72rem);
+
+  /** Titulillo, encabezado de grupo, pregunta de acordeón. */
+  --fs-h4: clamp(0.94rem, 1.25vw, 1.12rem);
+
+  /** Párrafo de entrada: el primero de una sección. */
+  --fs-lead: clamp(0.98rem, 1.35vw, 1.22rem);
+
+  /** Cuerpo de texto. */
+  --fs-body: clamp(0.86rem, 1vw, 0.96rem);
+
+  /** Apoyo, notas al pie, microcopia. */
+  --fs-meta: clamp(0.76rem, 0.85vw, 0.82rem);
+
+  /* Etiqueta monoespaciada. Fijo a propósito: no debe escalar. Pero «fijo» no
+     puede significar «ilegible»: 10px en un móvil de 390px es texto que la gente
+     no lee, y este token es el que visten los eyebrows de las ocho rutas. */
+  --fs-label: 0.75rem;
+
+  /* ---------------------------------------------------------------------
+     Interlineado ligado a cada paso. Un titular de 7rem no puede llevar el
+     mismo interlineado que un párrafo.
+     --------------------------------------------------------------------- */
+  --lh-display: 0.84;
+  --lh-heading: 0.94;
+  --lh-title: 1.12;
+  --lh-body: 1.68;
+
+  /* Compensación óptica: a más tamaño, menos espacio entre letras. */
+  --ls-display: -0.055em;
+  --ls-heading: -0.045em;
+  --ls-title: -0.025em;
+  --ls-body: 0;
+}
+
+/* =========================================================================
+   1. PORTADA
+   ========================================================================= */
+.home-content h1,
+/* VWAVE-HERO: el héroe de Home queda excluido para que su escala la gobierne
+   el atelier (home-atelier.css, scope #home-hero-title, sin !important).
+   El resto de páginas conserva el contrato global intacto. */
+.hero-content h1:not(#home-hero-title) {
+  font-size: var(--fs-display) !important;
+  line-height: var(--lh-display) !important;
+  letter-spacing: var(--ls-display) !important;
+}
+
+/* =========================================================================
+   2. TITULAR DE PÁGINA
+   Todas las páginas interiores arrancan con el mismo peso.
+   ========================================================================= */
+.page-hero-content h1,
+.faq-hero h1,
+.shop-hero h1,
+.resources-hero h1,
+.community-hero h1,
+.app-hero h1,
+.academy-hero h1,
+.plan-presentation-hero h1,
+.checkout-hero h1,
+.not-found-page h1,
+.funnel-threshold h1,
+.funnel-question h1,
+.confirmation h1,
+.app-error h1 {
+  font-size: var(--fs-h1) !important;
+  line-height: var(--lh-heading) !important;
+  letter-spacing: var(--ls-heading) !important;
+}
+
+/* =========================================================================
+   3. TITULAR DE SECCIÓN
+   El paso más repetido del sitio. Aquí estaba el desorden más visible: el
+   mismo rol medía 82px en una página, 6.6rem en otra y 4.6rem en otra.
+   ========================================================================= */
+main h2,
+.free-value-header h2,
+.experience-proof-header h2,
+.home-editorial-light .pain-header h2,
+.plan-presentation-section h2,
+.about-section h2,
+.community-main h2,
+.resources-section h2,
+.shop-section h2,
+.faq-section h2,
+.app-features h2,
+.values-section h2,
+.program-section h2,
+.next-chapter-body strong {
+  font-size: var(--fs-h2) !important;
+  line-height: var(--lh-heading) !important;
+  letter-spacing: var(--ls-heading) !important;
+}
+
+/* =========================================================================
+   4. SUBSECCIÓN Y TARJETA
+   ========================================================================= */
+main h3,
+.value-card h3,
+.resource-card h3,
+.holo-copy h3,
+.free-value-card strong,
+.plan-presentation-bridge-card strong,
+.not-found-card strong,
+.experience-proof-figure strong,
+.feature-list h3,
+.evidence-record h3 {
+  font-size: var(--fs-h3) !important;
+  line-height: var(--lh-title) !important;
+  letter-spacing: var(--ls-title) !important;
+}
+
+/* =========================================================================
+   5. TITULILLO
+   ========================================================================= */
+main h4,
+main h5,
+.faq-list button b,
+.faq-accordion .faq-question-text,
+.plan-presentation-faq-list summary strong,
+.checkout-fieldset legend {
+  font-size: var(--fs-h4) !important;
+  line-height: var(--lh-title) !important;
+  letter-spacing: var(--ls-title) !important;
+}
+
+/* =========================================================================
+   6. PÁRRAFO DE ENTRADA
+   El primero de cada sección. Un paso por encima del cuerpo para marcar
+   jerarquía sin recurrir a otro titular.
+   ========================================================================= */
+.hero-subheadline,
+.free-value-lead,
+.pain-intro,
+.mechanism-intro,
+.pillar-intro,
+.proof-intro,
+.offer-intro,
+.calculator-intro,
+.funnel-threshold__lead,
+.page-hero-content > p,
+.next-chapter-body p,
+.experience-proof-scope,
+.plan-presentation-bridge-lead {
+  font-size: var(--fs-lead) !important;
+  line-height: var(--lh-body) !important;
+  letter-spacing: var(--ls-body) !important;
+}
+
+/* =========================================================================
+   7. CUERPO
+   ========================================================================= */
+main p,
+main li,
+main dd,
+main blockquote {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+/* El cuerpo dentro de tarjetas mantiene el mismo paso en toda la web. */
+.value-card p,
+.resource-card p,
+.free-value-card p,
+.plan-presentation-bridge-card small,
+.not-found-card small,
+.experience-proof-quote,
+.holo-copy p {
+  font-size: var(--fs-body) !important;
+  line-height: var(--lh-body) !important;
+}
+
+/* =========================================================================
+   8. APOYO Y MICROCOPIA
+   ========================================================================= */
+main small,
+.microcopy,
+.checkout-help,
+.checkout-scope-notice,
+.checkout-eur-note,
+.home-section-note,
+.faq-price-microcopy,
+.home-disclaimer-note {
+  font-size: var(--fs-meta) !important;
+  line-height: var(--lh-body) !important;
+}
+
+/* =========================================================================
+   9. ETIQUETA MONOESPACIADA
+   Es el elemento que da carácter técnico a la marca. Tamaño fijo: si escalara,
+   perdería la lectura de "dato" y pasaría a leerse como texto.
+   ========================================================================= */
+.eyebrow,
+.free-value-eyebrow,
+.experience-proof-eyebrow,
+.funnel-eyebrow,
+.plan-presentation-eyebrow,
+.resources-eyebrow,
+.next-chapter-meta,
+.journey-ribbon-mark,
+.recommended-mark,
+.free-value-tag,
+.experience-proof-theme,
+.experience-proof-figure span,
+.community-eyebrow,
+.community-overline,
+.community-kicker {
+  font-size: var(--fs-label) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.18em !important;
+  /* El naranja de marca a este tamaño se queda en 3,6 sobre el fondo oscuro
+     (probe-contraste). Ver --orange-on-dark en styles.css. */
+  color: var(--orange-on-dark);
+}
+
+/* =========================================================================
+   10. LONGITUD DE LÍNEA
+   Ninguna columna de texto debe pasar de ~68 caracteres: por encima de eso el
+   ojo pierde el renglón al volver.
+   ========================================================================= */
+main p:not([class]),
+.free-value-lead,
+.hero-subheadline,
+.pain-intro,
+.mechanism-intro,
+.proof-intro,
+.offer-intro,
+.calculator-intro {
+  max-width: 66ch;
+}
+
+/* =========================================================================
+   11. MÓVIL
+   Los titulares se comprimen un paso más para no comerse la pantalla.
+   ========================================================================= */
+@media (max-width: 600px) {
+  :root {
+    --fs-display: clamp(2.7rem, 13vw, 3.9rem);
+    --fs-h1: clamp(2.3rem, 11vw, 3.2rem);
+    --fs-h2: clamp(1.95rem, 9vw, 2.7rem);
+    --lh-display: 0.9;
+    --lh-heading: 0.98;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   UNIFORMIDAD (2026-09-20, medido con scripts/probe-titulos.mjs)
+
+   Retirado en route-identity.css el paso abajo encadenado de /faq y de las
+   cuatro /plan: ocho rutas comparten ya 86px de h1 y 67px de h2. Quedan a
+   propósito como están /checkout, /entrar y el 404, cuya apertura menor está
+   argumentada en esa misma hoja («el paso de pago no compite por atención»).
+
+   Lo que sí era deriva y no decisión: /onboarding abría con peso 600 cuando el
+   resto del sitio escribe sus titulares en 900, y con un `clamp` propio en vez
+   del paso de portada. Se engancha a `--fs-display`, que es el peldaño que le
+   corresponde por rol (es la apertura de una página de recorrido).
+   -------------------------------------------------------------------------- */
+.onboarding-page .rx-title--hero {
+  font-size: var(--fs-display);
+  font-weight: 900;
+}

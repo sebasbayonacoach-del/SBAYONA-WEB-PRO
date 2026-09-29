@@ -1,0 +1,170 @@
+/* Testigo de la escala del universo.
+ *
+ * Iba abajo-centro y tapaba microcopy de los bloques de CTA (comprobado en
+ * /community: se superponía a «acceso por WhatsApp · seguimiento individual»).
+ * Se sube debajo de la cabecera, que es la única franja libre en todas las
+ * rutas: abajo están el acompañante (izquierda), la ficha de contacto
+ * (derecha) y la cinta del recorrido. Z-index 58, por encima de la cinta (55)
+ * y por debajo del acompañante (70) y del crédito (72).
+ *
+ * La fase no se comunica con color nuevo: se comunica con apertura. Cada capa
+ * ganada ensancha el testigo y sube el número de pips encendidos.
+ */
+
+.universe-scale {
+  --us-ink: #f5f5f5;
+  --us-muted: #8f8a84;
+  --us-hairline: rgba(255, 255, 255, 0.13);
+  --us-accent: var(--bayona-orange, #f4a261);
+
+  position: fixed;
+  z-index: 58;
+  top: calc(var(--bayona-header-height, 72px) + 0.9rem);
+  right: 1.1rem;
+  display: grid;
+  justify-items: end;
+  gap: 0.35rem;
+  min-width: 13rem;
+  padding: 0.55rem 0.9rem;
+  border: var(--bayona-hairline, 1px solid var(--us-hairline));
+  background: rgba(6, 6, 7, 0.82);
+  backdrop-filter: blur(10px);
+  text-align: right;
+  pointer-events: none;
+  transition: min-width 700ms var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.universe-scale[data-universe-stage='2'] { min-width: 26rem; }
+.universe-scale[data-universe-stage='3'] { min-width: 29rem; }
+.universe-scale[data-universe-stage='4'] { min-width: 32rem; }
+.universe-scale[data-universe-stage='5'] { min-width: 35rem; }
+
+/* Replegado: solo los pips y el nombre corto. Es el estado normal mientras se
+   baja por la página, para no rozar contenido. */
+.universe-scale--compacto,
+.universe-scale--compacto[data-universe-stage='2'],
+.universe-scale--compacto[data-universe-stage='3'],
+.universe-scale--compacto[data-universe-stage='4'],
+.universe-scale--compacto[data-universe-stage='5'] {
+  min-width: 0;
+  padding: 0.45rem 0.7rem;
+  gap: 0.25rem;
+}
+
+.universe-scale-corto {
+  margin: 0;
+  color: var(--us-muted);
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: var(--type-size-05);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.universe-scale-pips {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.universe-scale-pip {
+  width: 1.5rem;
+  height: 2px;
+  background: var(--us-hairline);
+  transition: background 500ms ease, transform 500ms ease;
+}
+
+.universe-scale-pip[data-filled='yes'] {
+  background: var(--us-accent);
+  transform: scaleX(1.08);
+}
+
+.universe-scale-label {
+  display: grid;
+  gap: 0.1rem;
+  margin: 0;
+}
+
+.universe-scale-stage {
+  color: var(--us-ink);
+  font-family: var(--type-family-display, 'Montserrat', Arial, sans-serif);
+  font-size: var(--type-size-04);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.universe-scale-hint {
+  color: var(--us-muted);
+  font-size: var(--type-size-04);
+  line-height: 1.5;
+}
+
+.universe-scale-remaining {
+  margin: 0;
+  color: var(--us-muted);
+  font-size: var(--type-size-05);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  /* En móvil el testigo se queda arriba-derecha pero se reduce a los pips: la
+     línea de cabecera es suya y no compite con el contenido. */
+  .universe-scale {
+    top: calc(var(--bayona-header-height-movil, 64px) + 0.45rem);
+    right: 0.7rem;
+    min-width: 0;
+    padding: 0.4rem 0.55rem;
+    gap: 0.25rem;
+  }
+
+  .universe-scale-label,
+  .universe-scale-remaining {
+    display: none;
+  }
+
+  .universe-scale-pip {
+    width: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .universe-scale,
+  .universe-scale-pip {
+    transition: none;
+  }
+}
+
+/* Resumen de misiones dentro del testigo. Una línea: la lista completa hacía
+   crecer el panel hasta tapar el encabezado de la página. */
+.universe-scale-mision-total {
+  margin: 0.1rem 0 0;
+  color: var(--us-muted);
+  font-size: var(--type-size-05);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/*
+ * En la página de cuenta el testigo se quita (22-09-2026).
+ *
+ * No es capricho estético: el titular de `/panel` y `/entrar` («GUARDA LO QUE
+ * HAS DESBLOQUEADO.») empieza en la misma esquina superior derecha que ocupa el
+ * testigo fijo, y la primera línea se pinta POR ENCIMA del panel del testigo
+ * (el H1 gana el orden de apilamiento pese al `z-index: 58` de la capa). El
+ * resultado en `oj6-panel-00.png` es «GUARDA LO QUE» mezclado con «MISIONES 0
+ * DE 5 · LA SIGUIENTE: PASAR POR RECEPCIÓN»: dos textos legiendo uno encima del
+ * otro.
+ *
+ * Se resuelve por contenido, no por z-index: en esta ruta el dato del testigo
+ * ya está dicho en el propio cuerpo de la página («Te faltan 3 piezas por
+ * reclamar: el pase de llegada, los sellos de las estaciones y la invitación por
+ * compartir»), así que el cromo es redundario además de molesto. Bajarlo al
+ * fondo derecho no vale, porque vive ahí el botón de WhatsApp; y bajar el
+ * titular deja un hueco de 90 px en la única página que no lo pide.
+ */
+body:has(.entrar-page) .universe-scale {
+  display: none;
+}

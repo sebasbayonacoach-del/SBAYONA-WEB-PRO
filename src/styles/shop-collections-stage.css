@@ -1,0 +1,39 @@
+/* BAYONA SHOP · COLECCIONES COMO GALERÍA DE SCROLL */
+
+.shop-collection-stage{position:relative}
+.shop-collection-stage__intro{max-width:980px;padding:clamp(5rem,8vw,8rem) 0 clamp(2rem,4vw,4rem)}
+.shop-collection-stage__intro>p,.shop-collection-stage__intro>small,.shop-collection-stage__meta,.shop-collection-stage__copy>p,.shop-collection-stage__rail{font-family:var(--type-family-mono,monospace);letter-spacing:.16em;text-transform:uppercase}
+.shop-collection-stage__intro>p{margin:0 0 1.1rem;color:var(--bayona-orange,#f4a261);font-size:.66rem;font-weight:700}
+.shop-collection-stage__intro h2{max-width:10ch;margin:0;color:#f7f7f3;font-size:clamp(3.8rem,7vw,7.6rem);font-weight:900;line-height:.88;letter-spacing:-.058em}
+.shop-collection-stage__intro h2 span{display:block;color:var(--bayona-orange,#f4a261)}
+.shop-collection-stage__intro>small{display:block;max-width:36rem;margin-top:1.35rem;color:rgba(247,247,243,.43);font-size:.58rem;line-height:1.65}
+.shop-collection-stage__sticky{margin-inline:calc(var(--prime-gutter,24px)*-1)}
+.shop-collection-stage__sticky .sticky-stage-viewport{height:calc(100svh - 66px);min-height:620px}
+.shop-collection-stage__frame{position:relative;width:100%;height:100%;overflow:hidden;isolation:isolate;background:#050505}
+.shop-collection-stage__media,.shop-collection-stage__backdrop,.shop-collection-stage__scrim{position:absolute;inset:0}
+.shop-collection-stage__backdrop{background-size:cover;background-position:center;filter:saturate(.82) contrast(1.08);will-change:transform}
+.shop-collection-stage__scrim{background:linear-gradient(90deg,rgba(5,5,5,.96) 0%,rgba(5,5,5,.8) 38%,rgba(5,5,5,.17) 74%),linear-gradient(180deg,rgba(5,5,5,.08),rgba(5,5,5,.6) 90%)}
+.shop-collection-stage__meta{position:absolute;z-index:2;top:2rem;left:max(var(--prime-gutter,24px),calc((100vw - var(--prime-page-max,1380px))/2));right:max(var(--prime-gutter,24px),calc((100vw - var(--prime-page-max,1380px))/2));display:flex;justify-content:space-between;color:rgba(247,247,243,.38);font-size:.56rem}
+.shop-collection-stage__copy{position:absolute;z-index:2;left:max(var(--prime-gutter,24px),calc((100vw - var(--prime-page-max,1380px))/2));bottom:clamp(5rem,10vh,8rem);width:min(760px,calc(100vw - (var(--prime-gutter,24px)*2)))}
+.shop-collection-stage__copy>p{margin:0 0 .8rem;color:var(--bayona-orange,#f4a261);font-size:.64rem;font-weight:700}
+.shop-collection-stage__copy h3{max-width:10ch;margin:0;color:#f7f7f3;font-size:clamp(4rem,7vw,8rem);font-weight:900;line-height:.84;letter-spacing:-.06em;text-wrap:balance}
+.shop-collection-stage__copy>span{display:block;max-width:36rem;margin-top:1.15rem;color:rgba(247,247,243,.68);font-size:clamp(1rem,1.2vw,1.16rem);line-height:1.62}
+.shop-collection-stage__copy button{display:inline-flex;align-items:center;gap:.65rem;margin-top:1.6rem;padding:.8rem 0;border:0;border-bottom:1px solid rgba(244,162,97,.56);color:var(--bayona-orange,#f4a261);background:transparent;font:700 .64rem/1 var(--type-family-mono,monospace);letter-spacing:.13em;text-transform:uppercase;cursor:pointer}
+.shop-collection-stage__rail{position:absolute;z-index:2;right:max(var(--prime-gutter,24px),calc((100vw - var(--prime-page-max,1380px))/2));bottom:clamp(5rem,10vh,8rem);display:grid;gap:.55rem;font-size:.56rem}
+.shop-collection-stage__rail span{color:rgba(247,247,243,.22);transition:color .25s ease,transform .25s ease}
+.shop-collection-stage__rail span[data-active=true]{color:var(--bayona-orange,#f4a261);transform:translateX(-8px)}
+@media(max-width:760px){
+ .shop-collection-stage__intro{padding:4.5rem 0 1.5rem}
+ .shop-collection-stage__intro h2{font-size:clamp(2.7rem,12vw,4.5rem)}
+ .shop-collection-stage__sticky .sticky-stage-viewport{height:calc(100svh - 66px);min-height:0}
+ .shop-collection-stage__backdrop{background-position:58% center}
+ .shop-collection-stage__scrim{background:linear-gradient(180deg,rgba(5,5,5,.12),rgba(5,5,5,.42) 44%,rgba(5,5,5,.96) 80%,#050505)}
+ .shop-collection-stage__meta{top:1rem;left:1rem;right:1rem}
+ .shop-collection-stage__copy{left:1rem;right:1rem;bottom:4rem;width:auto}
+ .shop-collection-stage__copy h3{font-size:clamp(3rem,13vw,4.8rem)}
+ .shop-collection-stage__copy>span{font-size:.96rem;line-height:1.5}
+ .shop-collection-stage__rail{left:1rem;right:1rem;bottom:1.25rem;grid-template-columns:repeat(4,1fr);gap:.4rem}
+ .shop-collection-stage__rail span{border-top:1px solid rgba(247,247,243,.18);padding-top:.35rem}
+ .shop-collection-stage__rail span[data-active=true]{transform:none;border-top-color:var(--bayona-orange,#f4a261)}
+}
+@media(prefers-reduced-motion:reduce){.shop-collection-stage__backdrop,.shop-collection-stage__rail span{transition:none!important;transform:none!important}}

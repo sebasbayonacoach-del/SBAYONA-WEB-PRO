@@ -1,0 +1,94 @@
+/*
+  MARQUEE — pista continua declarativa del Motion Engine 2.0 (Fase 5).
+  ===========================================================================
+  Componente: src/engine/motion/Marquee.jsx
+
+  La animacion corre por CSS en el compositor (transform), sin JS por
+  fotograma. El bucle se consigue duplicando la pista: cada mitad mide
+  exactamente la mitad del track, asi translateX(-50%) es un empalme sin
+  costura. El gap se compensa con padding-right en cada grupo.
+
+  Movimiento reducido: el componente renderiza la variante .marquee--static
+  (sin duplicado ni animacion) y el contenido queda como rail horizontal
+  con scroll manual y snap — nunca contenido atrapado en un bucle.
+*/
+
+.marquee {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-loop var(--marquee-duration, 40s) linear infinite;
+}
+
+.marquee--right .marquee-track {
+  animation-direction: reverse;
+}
+
+.marquee--pause-hover:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-group {
+  display: flex;
+  align-items: center;
+  gap: var(--marquee-gap, 32px);
+  /* El padding compensa el gap entre el final de un grupo y el inicio del
+     siguiente: cada mitad del track ocupa exactamente el 50%. */
+  padding-right: var(--marquee-gap, 32px);
+}
+
+@keyframes marquee-loop {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ---- Movimiento reducido: rail estatico con scroll manual ---- */
+
+.marquee--static {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.marquee--static::-webkit-scrollbar {
+  display: none;
+}
+
+.marquee--static .marquee-track {
+  animation: none;
+  width: auto;
+}
+
+.marquee--static .marquee-group {
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+
+  .marquee {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .marquee-group {
+    scroll-snap-align: start;
+  }
+}

@@ -1,0 +1,713 @@
+/*
+  BAYONA · LUXURY TYPOGRAPHY FINAL PASS
+  ---------------------------------------------------------------------------
+  Objetivo: bajar la sensación de “poster gritando” sin perder presencia.
+  Esta hoja entra la última para cerrar la escala visual de TODAS las rutas:
+  home, páginas editoriales, tienda, app, recursos, comunidad, planes y FAQ.
+
+  Regla de diseño:
+  - Un h1 vende la promesa, no ocupa toda la pantalla.
+  - Un h2 ordena la decisión, no compite con el h1.
+  - El cuerpo debe poder leerse como propuesta premium.
+*/
+
+:root {
+  /*
+    ÚNICO DUEÑO ESCALAR DEL SITIO.
+
+    Diagnóstico: esta hoja fijaba los titulares con `--lux-fs-*` (`!important`),
+    pero `editorial-breathing-pass.css` redefinía `--fs-h1/--fs-h2/--fs-h3/...`
+    con OTRA escala y entra más tarde en la cascada, así que convivían dos
+    escalas paralelas: la de los titulares de aquí y la que heredaban
+    route-identity.css, v2-typography.css y ds-tokens.css vía `--fs-*`. El
+    mismo rol medía distinto según qué regla ganara. La escala competidora se
+    retira de la hoja de respiración; esta pasa a ser la única fuente.
+
+    Fluida de verdad: cada paso es un `clamp()` continuo (sin media queries que
+    salten de tamaño) y los alias `--fs-*` / `--lh-*` de abajo resuelven
+    exactamente al mismo valor que `--lux-*`.
+  */
+  --lux-fs-display: clamp(2.65rem, 6.2vw, 5.8rem);
+  --lux-fs-h1: clamp(2.35rem, 1.4rem + 3.3vw, 4.35rem);
+  --lux-fs-h2: clamp(1.85rem, 1.1rem + 2.4vw, 3.3rem);
+  --lux-fs-h3: clamp(1.25rem, 1.06rem + 0.6vw, 1.6rem);
+  --lux-fs-h4: clamp(1.0625rem, 1rem + 0.2vw, 1.2rem);
+  --lux-fs-lead: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
+  --lux-fs-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --lux-fs-meta: clamp(0.8125rem, 0.78rem + 0.1vw, 0.875rem);
+
+  --lux-lh-display: 0.98;
+  --lux-lh-heading: 1.06;
+  --lux-lh-title: 1.24;
+  --lux-lh-body: 1.7;
+
+  --lux-track-display: -0.052em;
+  --lux-track-heading: -0.04em;
+  --lux-track-title: -0.02em;
+  --lux-measure: 68ch;
+  --lux-measure-tight: 46ch;
+
+  /* Reescribe los tokens vivos para que las hojas antiguas hereden la escala. */
+  --fs-display: var(--lux-fs-display);
+  --fs-h1: var(--lux-fs-h1);
+  --fs-h2: var(--lux-fs-h2);
+  --fs-h3: var(--lux-fs-h3);
+  --fs-h4: var(--lux-fs-h4);
+  --fs-lead: var(--lux-fs-lead);
+  --fs-body: var(--lux-fs-body);
+  --fs-meta: var(--lux-fs-meta);
+  --lh-display: var(--lux-lh-display);
+  --lh-heading: var(--lux-lh-heading);
+  --lh-title: var(--lux-lh-title);
+  --lh-body: var(--lux-lh-body);
+  --ls-display: var(--lux-track-display);
+  --ls-heading: var(--lux-track-heading);
+  --ls-title: var(--lux-track-title);
+}
+
+body {
+  font-size: var(--lux-fs-body);
+  line-height: var(--lux-lh-body);
+  text-rendering: geometricPrecision;
+}
+
+/*
+  Cuerpo de lectura. Se aplica a los párrafos semánticos, pero NO a los roles
+  que no son cuerpo —precio, cifra, dato, etiqueta, botón, valor o rótulo— para
+  no aplanarlos: un `dd` de precio o un contador tienen su propio tamaño y
+  deben seguir leyéndose como dato. No se usa `!important`: la clase del
+  componente (más específica) manda cuando existe.
+*/
+main :where(p, li, dd, blockquote):not(:where(
+  [class*='price'], [class*='figure'], [class*='number'], [class*='stat'],
+  [class*='value'], [class*='label'], [class*='button'], [class*='cta'],
+  [class*='meta'], [class*='eyebrow'], [class*='metric'], [class*='badge'],
+  [class*='kicker'], [class*='date']
+)) {
+  font-size: var(--lux-fs-body);
+  line-height: var(--lux-lh-body);
+}
+
+main :where(p, li, dd, blockquote):not(:where([class*='price'], [class*='figure'], [class*='number'])) {
+  max-inline-size: var(--lux-measure);
+}
+
+/* Héroes: autoridad sin desbordar. */
+:is(
+  #home-hero-title,
+  .home-content h1,
+  .hero-content h1,
+  .page-hero-content h1,
+  .app-hero h1,
+  .app-hero-title,
+  .academy-hero h1,
+  .programs-hero h1,
+  .resources-hero h1,
+  .community-hero h1,
+  .shop-hero h1,
+  .faq-hero h1,
+  .plan-presentation-hero h1,
+  .confirmation h1,
+  .funnel-threshold h1,
+  .funnel-question h1,
+  .not-found-page h1,
+  /* Acceso: el titular de /entrar entra en la misma escala que el resto. Antes
+     declaraba su propio `clamp()` en auth-members.css y medía 115 px, fuera de
+     la escala del sitio. */
+  .entrar-command h1,
+  .entrar-card h1,
+  .rx-title--hero
+) {
+  font-size: var(--lux-fs-h1) !important;
+  line-height: var(--lux-lh-display) !important;
+  letter-spacing: var(--lux-track-display) !important;
+  text-wrap: balance;
+}
+
+/*
+  Fallback genérico: cualquier h1 de una ruta de marca entra en la escala
+  aunque su página no lo haya listado arriba. Se limita al ámbito `brand` a
+  propósito: el playground interno (/design-system) y las rutas de producto
+  van con `data-experience-scope="system"` y tienen su propia hoja, así que no
+  se tocan desde aquí.
+*/
+main[data-experience-scope='brand'] h1 {
+  font-size: var(--lux-fs-h1) !important;
+  line-height: var(--lux-lh-display) !important;
+  letter-spacing: var(--lux-track-display) !important;
+  text-wrap: balance;
+}
+
+/*
+  Portada: el mismo techo que el resto de titulares de página.
+
+  Estaba en `--lux-fs-display` (clamp hasta 5.8rem = 89 px a 1440), por encima de
+  la regla general de arriba, así que la home era la ÚNICA página del sitio con
+  el H1 desbordado: 6 líneas de cartel. Medido con
+  `scripts/probe-tipografia-h1.mjs`: `/` 89 px frente a 66 px en /programs y
+  /parkour-academy.
+
+  El dueño lo pidió dos veces y en dos sesiones: «los títulos no deben verse tan
+  grandes, que se lean bien» (22-09) y «todo está en mayúsculas súper agresivas»
+  (comentario 8). Bajar la portada al token de H1 la pone además en la misma
+  escala que las demás rutas, que es lo que pedía el comentario 3 al quejarse de
+  que los números no fueran uniformes.
+
+  Se conserva `!important` porque el selector que ganaba lo llevaba: si se
+  quitara, volvería a mandar `#home-hero-title { clamp(60px, 11vw, 184px) }` de
+  la capa de experiencia, que es el origen del problema.
+*/
+#home-hero-title,
+.home-content h1,
+.hero-content h1 {
+  font-size: var(--lux-fs-h1) !important;
+  line-height: var(--lux-lh-display) !important;
+}
+
+/* Secciones: mismo rol, misma potencia. */
+:is(
+  main h2,
+  .section-shell h2,
+  .free-value-header h2,
+  .experience-proof-header h2,
+  .pain-header h2,
+  .mechanism-header h2,
+  .pillar-header h2,
+  .proof-header h2,
+  .offer-header h2,
+  .calculator-header h2,
+  .about-section h2,
+  .community-main h2,
+  .resources-section h2,
+  .program-section h2,
+  .app-features h2,
+  .values-section h2,
+  .shop-section h2,
+  .shop-closing h2,
+  .shop-app-promo h2,
+  .faq-section h2,
+  .plan-presentation-section h2,
+  .next-chapter-body strong,
+  .home-about-bridge .cb-bridge-title
+) {
+  font-size: var(--lux-fs-h2) !important;
+  line-height: var(--lux-lh-heading) !important;
+  letter-spacing: var(--lux-track-heading) !important;
+  text-wrap: balance;
+}
+
+/* Tarjetas/subsecciones: lujo = precisión, no titulares inflados. */
+:is(
+  main h3,
+  .value-card h3,
+  .resource-card h3,
+  .free-value-card strong,
+  .experience-proof-figure strong,
+  .plan-presentation-bridge-card strong,
+  .feature-list h3,
+  .evidence-record h3,
+  .holo-copy h3,
+  .plan-canonical-name,
+  .cb-card-title
+) {
+  font-size: var(--lux-fs-h3) !important;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: var(--lux-track-title) !important;
+  text-wrap: balance;
+}
+
+:is(main h4, main h5, .faq-list button b, .faq-accordion .faq-question-text, .checkout-fieldset legend) {
+  font-size: var(--lux-fs-h4) !important;
+  line-height: var(--lux-lh-title) !important;
+  letter-spacing: var(--lux-track-title) !important;
+}
+
+/* Leads: más editoriales, menos landing genérica. */
+:is(
+  .hero-subheadline,
+  .hero-subtitle,
+  .page-hero-content > p,
+  .free-value-lead,
+  .pain-intro,
+  .mechanism-intro,
+  .pillar-intro,
+  .proof-intro,
+  .offer-intro,
+  .calculator-intro,
+  .experience-proof-scope,
+  .plan-presentation-bridge-lead,
+  .next-chapter-body p,
+  .app-section-subtitle,
+  .resources-hero p,
+  .community-hero p,
+  .about-problem-copy
+) {
+  font-size: var(--lux-fs-lead) !important;
+  line-height: var(--lux-lh-body) !important;
+  letter-spacing: 0.002em !important;
+  max-inline-size: var(--lux-measure) !important;
+}
+
+/* Microcopy y labels: legibles, técnicos, sin parecer ruido. */
+:is(
+  main small,
+  .microcopy,
+  .home-section-note,
+  .home-disclaimer-note,
+  .faq-price-microcopy,
+  .checkout-help,
+  .checkout-scope-notice,
+  .checkout-eur-note,
+  .plan-descriptor,
+  .resource-meta,
+  .community-kicker,
+  .community-overline,
+  .eyebrow,
+  .free-value-eyebrow,
+  .experience-proof-eyebrow,
+  .resources-eyebrow,
+  .plan-presentation-eyebrow,
+  .funnel-eyebrow
+) {
+  font-size: var(--lux-fs-meta) !important;
+  line-height: 1.55 !important;
+}
+
+/* Los numerales/figuras siguen siendo arquitectura, pero ya no se comen texto. */
+:is(
+  .pain-number,
+  .pillar-number,
+  .mechanism-marker,
+  .proof-process-marker,
+  .solution-bg-number,
+  .proof-bg-number,
+  .offer-bg-number,
+  .plan-showroom-watermark
+) {
+  opacity: 0.42;
+}
+
+/* Algunas rutas tenían cierres tipo billboard; se vuelven premium/editorial. */
+.shop-closing h2,
+.home-about-bridge :is(.cb-bridge-title, h2),
+.next-chapter-body strong {
+  max-inline-size: var(--lux-measure-tight);
+}
+
+@media (max-width: 760px) {
+  :root {
+    /*
+      La escala ya es fluida: aquí no se vuelve a declarar ningún tamaño ni
+      interlineado —eso era justo lo que producía el salto por breakpoint—.
+      Solo se acorta la medida de lectura para pantallas estrechas.
+    */
+    --lux-measure: 62ch;
+  }
+
+  :is(
+    #home-hero-title,
+    .home-content h1,
+    .hero-content h1,
+    .page-hero-content h1,
+    .app-hero h1,
+    .academy-hero h1,
+    .resources-hero h1,
+    .community-hero h1,
+    .shop-hero h1,
+    .faq-hero h1,
+    .plan-presentation-hero h1
+  ) {
+    letter-spacing: -0.044em !important;
+  }
+
+  :is(main h2, .section-shell h2, .free-value-header h2, .experience-proof-header h2) {
+    letter-spacing: -0.034em !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   HOME · LUXURY EXPERIENCE FINAL PASS
+   Comentarios del usuario: testimonios en tarjetas laterales, planes sin
+   centrado feo, preview glass y fondos luxury en planos claros/oscuros.
+   -------------------------------------------------------------------------- */
+
+.experience-proof-section.v2-plane--bone,
+.home-memberships-section,
+.home-services-configurator {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.experience-proof-section.v2-plane--bone > .section-shell,
+.home-memberships-section > .section-shell,
+.home-services-configurator > .section-shell {
+  position: relative;
+  z-index: 2;
+}
+
+.experience-proof-section.v2-plane--bone::before,
+.home-memberships-section::before,
+.home-services-configurator::before,
+.v2-plane--bone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.02);
+}
+
+.experience-proof-section.v2-plane--bone::after,
+.home-memberships-section::after,
+.home-services-configurator::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.experience-proof-section.v2-plane--bone {
+  color: #11100e;
+  background: #eee7dc !important;
+}
+
+.experience-proof-section.v2-plane--bone::before {
+  background-image:
+    linear-gradient(90deg, rgba(245, 239, 229, 0.92), rgba(245, 239, 229, 0.74) 44%, rgba(245, 239, 229, 0.9)),
+    url('/images/scenes/escena-longevidad-premium.webp');
+  background-position: center 42%;
+}
+
+.experience-proof-section.v2-plane--bone::after {
+  background:
+    radial-gradient(55% 44% at 18% 8%, rgba(244, 162, 97, 0.2), transparent 62%),
+    linear-gradient(180deg, rgba(255, 250, 240, 0.72), rgba(235, 226, 213, 0.9));
+}
+
+.home-memberships-section {
+  background: #eee7dc !important;
+}
+
+.home-memberships-section::before {
+  background-image:
+    linear-gradient(90deg, rgba(241, 235, 224, 0.96), rgba(241, 235, 224, 0.8) 48%, rgba(241, 235, 224, 0.92)),
+    url('/images/scenes/escena-nutricion-lujo.webp');
+  background-position: center;
+}
+
+.home-memberships-section::after {
+  background:
+    radial-gradient(42% 34% at 80% 16%, rgba(244, 162, 97, 0.18), transparent 62%),
+    linear-gradient(180deg, rgba(255, 252, 246, 0.72), rgba(234, 225, 212, 0.86));
+}
+
+.home-services-configurator {
+  color: #fff;
+  background: #070707 !important;
+}
+
+.home-services-configurator::before {
+  opacity: 0.8;
+  background-image:
+    linear-gradient(90deg, rgba(4, 4, 4, 0.94), rgba(4, 4, 4, 0.78) 46%, rgba(4, 4, 4, 0.92)),
+    url('/images/scenes/escena-app-dashboard.webp');
+  background-position: center 45%;
+}
+
+.home-services-configurator::after {
+  background:
+    radial-gradient(44% 38% at 72% 10%, rgba(244, 162, 97, 0.2), transparent 64%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.88), rgba(5, 5, 5, 0.72) 48%, rgba(5, 5, 5, 0.94));
+}
+
+/* Testimonios: de lista vertical a carrusel lateral de tarjetas editoriales. */
+.experience-proof-marquee {
+  position: relative;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  overflow: hidden;
+  padding-block: clamp(10px, 2vw, 22px) clamp(22px, 4vw, 52px);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.experience-proof-marquee::before,
+.experience-proof-marquee::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  z-index: 2;
+  width: min(12vw, 140px);
+  pointer-events: none;
+}
+
+.experience-proof-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(239, 231, 218, 0.98), transparent);
+}
+
+.experience-proof-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, rgba(239, 231, 218, 0.98), transparent);
+}
+
+.experience-proof-marquee .experience-proof-list {
+  width: max-content;
+  display: flex !important;
+  gap: clamp(16px, 2vw, 28px);
+  align-items: stretch;
+  border: 0;
+  animation: bayona-testimonials-marquee 34s linear infinite;
+  will-change: transform;
+}
+
+.experience-proof-marquee:hover .experience-proof-list,
+.experience-proof-marquee:focus-within .experience-proof-list {
+  animation-play-state: paused;
+}
+
+.experience-proof-marquee .experience-proof-card {
+  width: clamp(300px, 38vw, 470px);
+  min-height: clamp(360px, 38vw, 500px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: clamp(18px, 2vw, 28px);
+  padding: clamp(22px, 2.8vw, 36px);
+  border: 1px solid rgba(17, 15, 13, 0.16) !important;
+  background:
+    linear-gradient(145deg, rgba(255, 252, 246, 0.78), rgba(240, 232, 219, 0.5)),
+    rgba(255, 255, 255, 0.32) !important;
+  box-shadow:
+    0 24px 70px rgba(62, 44, 27, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px) saturate(1.1);
+}
+
+.experience-proof-marquee .experience-proof-figure {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.experience-proof-marquee .experience-proof-portrait {
+  width: clamp(68px, 7vw, 94px);
+  height: clamp(68px, 7vw, 94px);
+  border-radius: 999px;
+  border: 1px solid rgba(180, 95, 46, 0.32);
+  filter: grayscale(0.18) contrast(1.02) saturate(0.96);
+}
+
+.experience-proof-marquee .experience-proof-quote,
+.experience-proof-marquee .experience-proof-theme {
+  grid-column: 1;
+}
+
+.experience-proof-marquee .experience-proof-quote {
+  padding-left: 0;
+  border-left: 0;
+  color: #181512;
+  /* La cita habla con el token de lead: una voz editorial, no un tamaño suelto. */
+  font-size: var(--lux-fs-lead) !important;
+  line-height: var(--lux-lh-body) !important;
+}
+
+.experience-proof-marquee .experience-proof-theme {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(17, 15, 13, 0.13);
+}
+
+@keyframes bayona-testimonials-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(calc(-50% - clamp(8px, 1vw, 14px)), 0, 0); }
+}
+
+/* Planes: lectura editorial izquierda, nada centrado feo. */
+.home-memberships-section .plan-showroom-preview {
+  overflow: hidden;
+  grid-template-columns: minmax(0, 0.98fr) minmax(330px, 1.02fr);
+  border: 1px solid rgba(30, 24, 18, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 252, 246, 0.86), rgba(232, 222, 209, 0.74)) !important;
+  box-shadow:
+    0 38px 110px rgba(45, 31, 18, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.54);
+  backdrop-filter: blur(18px) saturate(1.1);
+}
+
+.home-memberships-section .plan-showroom-primary {
+  text-align: left;
+}
+
+.home-memberships-section .plan-showroom-preview,
+.home-memberships-section .plan-showroom-preview :is(header, div, dl, dt, dd, p, h3, span, small, strong) {
+  text-align: left;
+}
+
+.home-memberships-section .plan-showroom-meta {
+  align-items: flex-start;
+  margin-bottom: clamp(24px, 3.6vw, 42px);
+}
+
+.home-memberships-section .plan-showroom-meta span:last-child {
+  text-align: right;
+}
+
+.home-memberships-section .plan-summary-heading,
+.home-memberships-section .plan-showroom-narrative,
+.home-memberships-section .plan-showroom-price {
+  justify-items: start;
+  text-align: left;
+}
+
+/*
+  El nombre canónico del plan ya no se infla a cartel (medía hasta 4.85rem).
+  Cae en la escala h3 del grupo de tarjetas/subsecciones de arriba, que es el
+  rol que le corresponde: nombre de tarjeta, no titular de página.
+*/
+.home-memberships-section .plan-showroom-preview .plan-descriptor {
+  margin-top: 14px;
+  text-align: left;
+}
+
+.home-memberships-section .plan-summary-jtbd p {
+  max-width: 42ch;
+  text-align: left;
+}
+
+.home-memberships-section .plan-showroom-preview .plan-summary-scope,
+.home-memberships-section .plan-showroom-preview .plan-summary-value {
+  max-width: 58ch;
+  text-align: left;
+}
+
+.home-memberships-section .plan-showroom-preview .plan-summary-value {
+  padding: 18px 0 18px 22px;
+}
+
+.home-memberships-section .plan-showroom-price dd {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.home-memberships-section .plan-card-actions {
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+}
+
+/* Preview derecha: glassmorphism cálido con foto y profundidad real. */
+.home-memberships-section .plan-showroom-signature {
+  margin: clamp(18px, 2.4vw, 30px);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-left: 1px solid rgba(255, 255, 255, 0.34);
+  background:
+    linear-gradient(145deg, rgba(20, 17, 14, 0.54), rgba(20, 17, 14, 0.28)),
+    rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 28px 80px rgba(39, 25, 13, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(22px) saturate(1.16);
+  color: #fff;
+}
+
+.home-memberships-section .plan-showroom-signature::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.42;
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.08), rgba(5, 5, 5, 0.86)),
+    var(--plan-showroom-image);
+  background-position: center;
+  background-size: cover;
+  filter: saturate(0.9) contrast(1.04);
+}
+
+.home-memberships-section .plan-showroom-visual {
+  min-height: clamp(300px, 32vw, 460px);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.home-memberships-section .plan-showroom-signature-label,
+.home-memberships-section .plan-showroom-inclusions > p {
+  color: #f8b783;
+}
+
+.home-memberships-section .plan-showroom-facts dt {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.home-memberships-section .plan-showroom-facts dd,
+.home-memberships-section .plan-showroom-inclusions > strong {
+  color: #fff;
+}
+
+.home-memberships-section .plan-showroom-facts dd {
+  text-align: right;
+}
+
+.home-memberships-section .plan-showroom-visual,
+.home-memberships-section .plan-showroom-visual :is(span, strong, small) {
+  text-align: left;
+}
+
+.home-memberships-section .plan-showroom-inclusions li {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 980px) {
+  .home-memberships-section .plan-showroom-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .home-memberships-section .plan-card-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .home-memberships-section .plan-showroom-meta {
+    display: grid;
+  }
+
+  .home-memberships-section .plan-showroom-meta span:last-child {
+    text-align: left;
+  }
+}
+
+@media (max-width: 760px) {
+  .experience-proof-section.v2-plane--bone::before,
+  .home-memberships-section::before,
+  .home-services-configurator::before {
+    background-position: center;
+  }
+
+  .experience-proof-marquee {
+    padding-inline: 0;
+  }
+
+  .experience-proof-marquee .experience-proof-card {
+    width: min(82vw, 360px);
+    min-height: 390px;
+  }
+
+  .home-memberships-section .plan-showroom-primary {
+    padding: clamp(26px, 8vw, 38px);
+  }
+
+  .home-memberships-section .plan-showroom-signature {
+    margin: 0 clamp(14px, 4vw, 22px) clamp(14px, 4vw, 22px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-proof-marquee .experience-proof-list {
+    animation: none;
+    transform: none;
+  }
+}

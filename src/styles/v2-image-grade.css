@@ -1,0 +1,132 @@
+/*
+  BAYONA · GRADADO DE IMAGEN v2
+  ===========================================================================
+  EL PROBLEMA REAL DE LAS IMAGENES
+
+  Todas las fotos del sitio son de banco gratuito (Burst de Shopify y
+  FoodiesFeed), y cada una trae su propia temperatura, su propio contraste y su
+  propia saturacion. Puestas juntas se leen como una carpeta de recortes, no como
+  la imagen de una marca. Eso es lo que hace que una web no parezca profesional
+  aunque cada foto por separado este bien.
+
+  El gradado que habia era parcial e incoherente:
+      .story-backdrop                    grayscale(.5) contrast(1.05)
+      .globe-testimonials-media-visual   saturate(.82) contrast(1.06) brightness(.7)
+      todo lo demas                      sin gradar
+
+  QUE HACE ESTE ARCHIVO
+
+  Un solo gradado para toda la imagen del sitio, definido una vez. El resultado
+  es que veinte fotos de veinte fotografos distintos se lean como una sola
+  direccion de arte.
+
+  LO QUE ESTO NO ARREGLA, Y HAY QUE DECIRLO
+
+  Ninguna correccion de color convierte una foto de banco en una foto de marca.
+  En un negocio construido sobre "Sebastian te acompana personalmente", la foto
+  de un atleta anonimo trabaja EN CONTRA del mensaje: el visitante no reconoce a
+  nadie. La mejora de imagen mas grande de este proyecto no es tecnica, es una
+  sesion de fotos real. Este archivo hace que el banco parezca intencionado
+  mientras eso llega.
+*/
+
+:root {
+  /* ---- El gradado de marca, definido una sola vez ---- */
+  --v2-grade-saturate: 0.86;
+  --v2-grade-contrast: 1.08;
+  --v2-grade-brightness: 0.82;
+
+  --v2-grade: saturate(var(--v2-grade-saturate)) contrast(var(--v2-grade-contrast))
+    brightness(var(--v2-grade-brightness));
+}
+
+/* =========================================================================
+   1. FONDOS DE ESCENA
+   Es la imagen que mas superficie ocupa en toda la web.
+   ========================================================================= */
+.scene-bg:not(.scene-bg--after)::before,
+.scene-bg.scene-bg--after::after {
+  filter: var(--v2-grade);
+}
+
+/* El heroe recorta menos el brillo: es la primera impresion. */
+.scene-bg--hero:not(.scene-bg--after)::before,
+.scene-bg--hero.scene-bg--after::after {
+  filter: saturate(0.9) contrast(1.06) brightness(0.88);
+}
+
+/* =========================================================================
+   2. IMAGENES A SANGRE EN ETIQUETA <img>
+   Las de tarjeta ya estan ocultas por la regla de marca (v2-editorial.css), asi
+   que aqui solo quedan las que ocupan superficie de verdad.
+   ========================================================================= */
+.globe-testimonials-media-visual,
+.story-backdrop,
+.story-cutout {
+  filter: var(--v2-grade) !important;
+}
+
+/* =========================================================================
+   3. IMAGENES VIVAS
+   Toda imagen a sangre respira. Duraciones largas y distintas entre si para que
+   dos imagenes en pantalla no laten sincronizadas, que es lo que delata el
+   truco. Solo transform: se resuelve en el compositor.
+   ========================================================================= */
+@keyframes v2-breathe-a {
+  0%,
+  100% {
+    transform: scale(1.05) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.1) translate3d(-0.8%, -1%, 0);
+  }
+}
+
+@keyframes v2-breathe-b {
+  0%,
+  100% {
+    transform: scale(1.08) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.03) translate3d(1%, 0.7%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+  .story-backdrop {
+    animation: v2-breathe-a 31s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    will-change: transform;
+  }
+
+  .story-cutout {
+    animation: v2-breathe-b 24s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    will-change: transform;
+  }
+
+  .globe-testimonials-media-visual {
+    animation: v2-breathe-a 26s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    will-change: transform;
+  }
+}
+
+/* =========================================================================
+   4. LA SECCION CREMA NO SE GRADA
+   Tiene su propia atmosfera; el gradado calido sobre papel la ensuciaria.
+   ========================================================================= */
+.home-editorial-light.scene-bg:not(.scene-bg--after)::before,
+.home-editorial-light.scene-bg.scene-bg--after::after,
+.v2-plane--bone.scene-bg:not(.scene-bg--after)::before,
+.v2-plane--bone.scene-bg.scene-bg--after::after {
+  filter: none;
+}
+
+/* =========================================================================
+   5. MOVIMIENTO REDUCIDO
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .story-backdrop,
+  .story-cutout,
+  .globe-testimonials-media-visual {
+    animation: none !important;
+  }
+}

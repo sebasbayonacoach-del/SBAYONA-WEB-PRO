@@ -1,0 +1,197 @@
+/*
+ * BAYONA · PASE DE RESPIRACIÓN EDITORIAL
+ *
+ * Corrige el problema común a todas las rutas sin crear otra estética:
+ * una sola escala, más medida de lectura, más aire interno y menos capas
+ * flotantes compitiendo con el contenido en pantallas estrechas.
+ */
+
+/*
+  Esta hoja NO declara escala tipográfica. Los `--fs-*` / `--lh-*` que vivían
+  aquí eran una segunda escala paralela a la de `luxury-typography-final.css`
+  (que entra antes, pero a la que estas declaraciones, al ir más tarde, le
+  robaban los alias `--fs-h1`, `--fs-h2`, `--fs-h3`, `--fs-lead`, `--fs-body` y
+  los cuatro `--lh-*`). El dueño escalar único es `luxury-typography-final.css`;
+  aquí solo se conserva el ritmo y el aire, que sí son responsabilidad de este
+  pase.
+*/
+:root {
+  --bayona-copy-measure: 66ch;
+  --bayona-section-intro-gap: clamp(2rem, 4vw, 3.5rem);
+  --bayona-card-gap: clamp(1rem, 2vw, 1.75rem);
+}
+
+body:is(
+  .premium-route--home,
+  .premium-route--about,
+  .premium-route--programs,
+  .premium-route--parkour-academy,
+  .premium-route--shop,
+  .premium-route--community,
+  .premium-route--resources,
+  .premium-route--faq
+) {
+  --route-section-space: clamp(104px, 10vw, 168px);
+}
+
+.ds-frame :is(p, li, dd, blockquote) {
+  max-width: var(--bayona-copy-measure);
+}
+
+.ds-frame :is(
+  .hero-subheadline,
+  .page-hero-content > p,
+  .about-hero p,
+  .academy-hero p,
+  .community-hero p,
+  .resources-hero p,
+  .shop-hero p,
+  .faq-hero p,
+  .app-hero p
+) {
+  max-width: 58ch;
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.ds-frame :is(
+  .section-shell,
+  .community-shell,
+  .resources-shell,
+  .plan-presentation-shell
+) > :is(h2, header) + p {
+  margin-top: var(--bayona-section-intro-gap);
+}
+
+.ds-frame :is(
+  .values-grid,
+  .products-grid,
+  .plans-grid,
+  .resources-grid,
+  .community-feeling-grid,
+  .programs-audience-grid
+) {
+  gap: var(--bayona-card-gap);
+}
+
+.ds-frame :is(
+  .value-card,
+  .resource-card,
+  .plan-card,
+  .holo-card,
+  [class*='feature-card'],
+  [class*='story-card']
+) {
+  padding: clamp(1.4rem, 2.5vw, 2.35rem);
+}
+
+/* Una pausa perceptible entre capítulos consecutivos, sin duplicar el padding
+   que cada ruta ya controla con --route-section-space. */
+.ds-frame section + section {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 70rem) {
+  body:is(
+    .premium-route--home,
+    .premium-route--about,
+    .premium-route--programs,
+    .premium-route--parkour-academy,
+    .premium-route--shop,
+    .premium-route--community,
+    .premium-route--resources,
+    .premium-route--faq
+  ) {
+    --route-section-space: clamp(88px, 12vw, 120px);
+  }
+
+  /* En tableta y móvil el contenido manda. Los cinco controles persistentes
+     se convierten en un único acceso: WhatsApp. El crédito, las misiones y el
+     acompañante siguen disponibles dentro del recorrido y del panel. */
+  .universe-scale,
+  .arrival-bonus-layer--widget,
+  .journey-ribbon,
+  .companion--global,
+  .companion-orb {
+    display: none !important;
+  }
+
+  .entrar-page > .section-shell {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .entrar-page .entrar-command {
+    max-width: 48rem;
+  }
+
+  .entrar-page .entrar-card {
+    width: min(100%, 34rem);
+    margin-inline: 0;
+  }
+
+  .whatsapp-button,
+  .whatsapp-float {
+    width: 3.25rem;
+    min-width: 3.25rem;
+    height: 3.25rem;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50% !important;
+  }
+
+  .whatsapp-button span,
+  .whatsapp-float span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .ds-frame :is(
+    .page-hero-content,
+    .home-content,
+    .about-hero-content,
+    .community-hero-content,
+    .resources-hero-content,
+    .academy-hero-content
+  ) {
+    padding-top: clamp(8rem, 19vw, 10rem);
+    padding-bottom: clamp(5rem, 12vw, 7rem);
+  }
+}
+
+@media (max-width: 42rem) {
+  body:is(
+    .premium-route--home,
+    .premium-route--about,
+    .premium-route--programs,
+    .premium-route--parkour-academy,
+    .premium-route--shop,
+    .premium-route--community,
+    .premium-route--resources,
+    .premium-route--faq
+  ) {
+    --route-section-space: clamp(72px, 18vw, 96px);
+  }
+
+  .section-shell,
+  .community-shell,
+  .resources-shell,
+  .plan-presentation-shell,
+  .plan-presentation-hero-shell {
+    width: min(100% - 2.5rem, 40rem);
+  }
+
+  .ds-frame :is(
+    .value-card,
+    .resource-card,
+    .plan-card,
+    .holo-card,
+    [class*='feature-card'],
+    [class*='story-card']
+  ) {
+    padding: 1.5rem;
+  }
+}

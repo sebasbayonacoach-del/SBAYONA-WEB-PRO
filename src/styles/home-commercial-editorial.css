@@ -1,0 +1,619 @@
+
+/* ==========================================================================
+   BAYONA · COMERCIAL EDITORIAL 2026-09-29
+   Comprar no debe convertir la web en un dashboard. Sin cards grises:
+   mesa editorial para planes + ficha técnica lineal para configurador.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   PLANES · papel, tinta y una sola señal naranja
+   -------------------------------------------------------------------------- */
+
+body.premium-route--home .home-memberships-section {
+  background:
+    radial-gradient(circle at 82% 16%, rgba(244,162,97,.10), transparent 24%),
+    #f5f1e8 !important;
+  color: #0a0a0a;
+}
+
+body.premium-route--home .home-memberships-section :is(
+  h2,h3,h4,strong,.plan-canonical-name,.plan-showroom-tab-copy strong
+) {
+  color: #0a0a0a !important;
+}
+
+body.premium-route--home .home-memberships-section :is(
+  .offer-intro,
+  .home-offer-clarifier,
+  .plan-summary-scope,
+  .plan-summary-value,
+  .plan-showroom-inclusions li
+) {
+  color: rgba(10,10,10,.62) !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-explorer {
+  margin-top: clamp(3rem, 7vw, 6.5rem);
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-selector {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: clamp(.75rem,2vw,2rem);
+  border: 0 !important;
+  border-bottom: 1px solid rgba(10,10,10,.14) !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-comparison-item,
+body.premium-route--home .home-memberships-section .plan-comparison-item + .plan-comparison-item {
+  border: 0 !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab {
+  min-height: 118px;
+  padding: 1.2rem 0 1.35rem;
+  grid-template-columns: auto minmax(0,1fr);
+  color: #0a0a0a;
+  background: transparent !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab:hover,
+body.premium-route--home .home-memberships-section .plan-showroom-tab[aria-pressed='true'] {
+  background: transparent !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab::after {
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #a44f1c;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab-index {
+  color: rgba(10,10,10,.32);
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab-copy small {
+  color: #a44f1c;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab-price {
+  color: #0a0a0a;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab-price small {
+  color: rgba(10,10,10,.42);
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-tab em {
+  top: auto;
+  right: 0;
+  bottom: 1rem;
+  padding: 0;
+  color: #a44f1c;
+  background: transparent;
+  font-size: .54rem;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-stage {
+  margin-top: clamp(1.5rem,3vw,2.8rem);
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-preview {
+  grid-template-columns: minmax(0,.9fr) minmax(420px,1.1fr);
+  gap: clamp(2.5rem,6vw,7rem);
+  border: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-primary {
+  padding: clamp(2rem,4vw,4rem) 0;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-signature {
+  padding: clamp(2rem,4vw,4rem) 0;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-meta,
+body.premium-route--home .home-memberships-section .plan-descriptor,
+body.premium-route--home .home-memberships-section .plan-summary-jtbd > span,
+body.premium-route--home .home-memberships-section .plan-showroom-price dt,
+body.premium-route--home .home-memberships-section .plan-showroom-signature-label,
+body.premium-route--home .home-memberships-section .plan-showroom-inclusions > p,
+body.premium-route--home .home-memberships-section .plan-showroom-facts dt {
+  color: #a44f1c !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-meta span:last-child {
+  color: rgba(10,10,10,.46);
+}
+
+body.premium-route--home .home-memberships-section .plan-summary-jtbd p,
+body.premium-route--home .home-memberships-section .plan-price,
+body.premium-route--home .home-memberships-section .plan-showroom-facts dd,
+body.premium-route--home .home-memberships-section .plan-showroom-inclusions > strong {
+  color: #0a0a0a !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-summary-value {
+  padding-left: 0;
+  border-left: 0;
+}
+
+body.premium-route--home .home-memberships-section .plan-price-separator {
+  background: rgba(10,10,10,.18);
+}
+
+body.premium-route--home .home-memberships-section :is(
+  .plan-unit,.plan-eur,.plan-usd
+) {
+  color: rgba(10,10,10,.46) !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-visual {
+  min-height: clamp(380px,42vw,610px);
+  box-shadow: none;
+  transform: rotate(1.2deg);
+  transition: transform .55s cubic-bezier(.16,1,.3,1);
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-preview:hover .plan-showroom-visual {
+  transform: rotate(0deg) scale(1.008);
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-visual::before {
+  display: none;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-facts {
+  border-top: 1px solid rgba(10,10,10,.14);
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-facts > div {
+  border-bottom: 1px solid rgba(10,10,10,.14);
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-inclusions li {
+  color: rgba(10,10,10,.62) !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-card-actions {
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-preview .plan-cta {
+  border: 0;
+  color: #0a0a0a;
+  background: var(--bayona-orange,#f4a261);
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-preview .plan-presentation-link {
+  width: auto;
+  min-height: 0;
+  justify-content: flex-start;
+  padding: .7rem 0;
+  border: 0;
+  border-bottom: 1px solid rgba(10,10,10,.28);
+  color: #0a0a0a;
+}
+
+body.premium-route--home .home-memberships-section .plan-showroom-preview .plan-presentation-thumbnail {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   CONFIGURADOR · ficha técnica, no dashboard
+   -------------------------------------------------------------------------- */
+
+body.premium-route--home .home-services-configurator {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(244,162,97,.08), transparent 24%),
+    #050505 !important;
+}
+
+body.premium-route--home .home-configurator-guide {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: clamp(1.25rem,4vw,4rem);
+  margin: clamp(2.5rem,6vw,5rem) 0 clamp(4rem,7vw,7rem);
+  border: 0 !important;
+  border-top: 1px solid rgba(247,247,243,.14) !important;
+}
+
+body.premium-route--home .home-configurator-guide > li {
+  min-height: 0;
+  padding: 1.2rem 0 0;
+  border: 0 !important;
+}
+
+body.premium-route--home .home-configurator-guide > li > span {
+  position: static;
+  margin: 0 0 2.2rem;
+  color: var(--bayona-orange,#f4a261);
+  font-family: var(--type-family-mono,monospace);
+  font-size: .62rem;
+  letter-spacing: .16em;
+}
+
+body.premium-route--home .home-configurator-guide > li > strong {
+  margin: 0 0 .7rem;
+  color: #f7f7f3;
+  font-size: clamp(1.1rem,1.6vw,1.45rem);
+}
+
+body.premium-route--home .home-configurator-guide > li > p {
+  color: rgba(247,247,243,.52);
+  font-size: .93rem;
+  line-height: 1.55;
+}
+
+body.premium-route--home .extras-plan-fieldset {
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+body.premium-route--home .extras-plan-options {
+  gap: 0;
+  border-top: 1px solid rgba(247,247,243,.14);
+}
+
+body.premium-route--home .extras-plan-options label {
+  min-height: 86px;
+  padding: 1rem .6rem 1rem 0;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.14) !important;
+  background: transparent !important;
+  transition: color .25s ease, padding-left .35s cubic-bezier(.16,1,.3,1);
+}
+
+body.premium-route--home .extras-plan-options label.is-selected {
+  padding-left: .75rem;
+  color: var(--bayona-orange,#f4a261);
+  border-bottom-color: rgba(244,162,97,.6) !important;
+  background: linear-gradient(90deg,rgba(244,162,97,.08),transparent 54%) !important;
+}
+
+body.premium-route--home .extras-plan-options label > span {
+  gap: .3rem;
+}
+
+body.premium-route--home .extras-plan-options small {
+  color: rgba(247,247,243,.42);
+}
+
+body.premium-route--home .extras-category-navigation ul {
+  gap: clamp(.8rem,2vw,1.8rem);
+  border-bottom: 1px solid rgba(247,247,243,.14);
+}
+
+body.premium-route--home .extras-category-navigation button {
+  min-height: 0;
+  padding: .9rem 0;
+  border: 0 !important;
+  border-bottom: 2px solid transparent !important;
+  color: rgba(247,247,243,.5);
+  background: transparent !important;
+}
+
+body.premium-route--home .extras-category-navigation button[aria-expanded='true'] {
+  color: var(--bayona-orange,#f4a261);
+  border-bottom-color: var(--bayona-orange,#f4a261) !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .extras-category-panel {
+  margin-top: 2rem;
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .extras-service-list {
+  gap: 0;
+  border-top: 1px solid rgba(247,247,243,.14);
+}
+
+body.premium-route--home .extras-service-item {
+  padding: 1.1rem 0;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.14) !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .extras-service-disclosure,
+body.premium-route--home .extras-selection-action {
+  min-height: 0;
+  padding: .55rem 0;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(244,162,97,.48) !important;
+  color: var(--bayona-orange,#f4a261);
+  background: transparent !important;
+}
+
+body.premium-route--home .extras-selection-action[aria-pressed='true'] {
+  color: #f7f7f3;
+  border-bottom-color: #f7f7f3 !important;
+}
+
+body.premium-route--home .extras-quantity-control select {
+  border: 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.34) !important;
+  border-radius: 0 !important;
+  background: #050505;
+}
+
+body.premium-route--home .persistent-summary {
+  position: sticky;
+  top: 96px;
+  padding: 1.4rem 0 0;
+  border: 0 !important;
+  border-top: 2px solid var(--bayona-orange,#f4a261) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .persistent-summary-totals > div {
+  padding: .85rem 0;
+  border-bottom: 1px solid rgba(247,247,243,.14);
+}
+
+body.premium-route--home .persistent-summary-selection {
+  margin-top: 1.2rem;
+}
+
+body.premium-route--home .persistent-summary-selection li {
+  padding: .35rem 0;
+}
+
+@media (max-width: 760px) {
+  body.premium-route--home .home-memberships-section .plan-showroom-selector {
+    display: flex;
+    gap: 1.4rem;
+    padding-bottom: .2rem;
+    overflow-x: auto;
+    border-bottom: 1px solid rgba(10,10,10,.14) !important;
+    scrollbar-width: none;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-selector::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-comparison-item {
+    flex: 0 0 auto;
+    width: min(58vw,220px);
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-tab {
+    min-height: 98px;
+    padding: .9rem 0 1rem;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-primary,
+  body.premium-route--home .home-memberships-section .plan-showroom-signature {
+    padding: 1.5rem 0;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-preview .plan-canonical-name {
+    font-size: clamp(3.2rem,15vw,5rem);
+    line-height: .82;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-card-actions {
+    grid-template-columns: 1fr;
+  }
+
+  body.premium-route--home .home-memberships-section .plan-showroom-visual {
+    min-height: 62svh;
+    transform: rotate(.7deg);
+  }
+
+  body.premium-route--home .home-configurator-guide {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: .7rem;
+    margin-bottom: 3rem;
+  }
+
+  body.premium-route--home .home-configurator-guide > li {
+    padding-top: .85rem;
+  }
+
+  body.premium-route--home .home-configurator-guide > li > span {
+    margin-bottom: .8rem;
+  }
+
+  body.premium-route--home .home-configurator-guide > li > strong {
+    font-size: .76rem;
+    line-height: 1.1;
+  }
+
+  body.premium-route--home .home-configurator-guide > li > p {
+    display: none;
+  }
+
+  body.premium-route--home .extras-plan-options {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body.premium-route--home .extras-plan-options label {
+    min-height: 76px;
+  }
+
+  body.premium-route--home .extras-category-navigation ul {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
+
+  body.premium-route--home .extras-category-navigation button {
+    font-size: .56rem;
+    letter-spacing: .08em;
+  }
+
+  body.premium-route--home .persistent-summary {
+    position: static;
+    margin-top: 2rem;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   DETALLE DE PLAN · lectura lineal, cero cajas anidadas
+   -------------------------------------------------------------------------- */
+
+body.premium-route--home .home-memberships-section .plan-details-panel {
+  margin-top: clamp(2.5rem,5vw,4.5rem);
+  padding: clamp(2rem,4vw,3.5rem) 0 0;
+  border: 0 !important;
+  border-top: 1px solid rgba(10,10,10,.18) !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-details-grid {
+  gap: clamp(2rem,5vw,5rem);
+}
+
+body.premium-route--home .home-memberships-section .plan-detail-section,
+body.premium-route--home .home-memberships-section .plan-attribute-comparison {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-detail-section h4,
+body.premium-route--home .home-memberships-section .plan-attribute-comparison h4 {
+  padding-bottom: .8rem;
+  border-bottom: 1px solid rgba(10,10,10,.16);
+  color: #0a0a0a !important;
+}
+
+body.premium-route--home .home-memberships-section .plan-detail-section li,
+body.premium-route--home .home-memberships-section .plan-attribute-comparison dl > div {
+  border-color: rgba(10,10,10,.12) !important;
+  background: transparent !important;
+}
+
+/* --------------------------------------------------------------------------
+   REQUEST PREVIEW · conversación/revisión, no dashboard
+   -------------------------------------------------------------------------- */
+
+body.premium-route--home .request-preview {
+  margin-top: clamp(4rem,7vw,7rem);
+  padding: clamp(2.5rem,5vw,4.5rem) 0 0;
+  border: 0 !important;
+  border-top: 1px solid rgba(247,247,243,.16) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .request-preview[data-preview-state='reviewed'] {
+  border-color: rgba(244,162,97,.55) !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .request-preview-heading {
+  max-width: 50rem;
+}
+
+body.premium-route--home .request-preview-eyebrow {
+  color: var(--bayona-orange,#f4a261);
+}
+
+body.premium-route--home .request-preview h3 {
+  max-width: 12ch;
+  color: #f7f7f3;
+  font-size: clamp(2.7rem,5vw,5.6rem);
+  line-height: .92;
+  letter-spacing: -.05em;
+}
+
+body.premium-route--home .request-preview-heading > p:last-child,
+body.premium-route--home .request-preview-status {
+  max-width: 42rem;
+  color: rgba(247,247,243,.56);
+}
+
+body.premium-route--home .request-preview-actions {
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 1.6rem;
+}
+
+body.premium-route--home .request-preview-review,
+body.premium-route--home .request-preview-disabled,
+body.premium-route--home .request-preview-whatsapp {
+  min-height: 0;
+  padding: .95rem 0;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(244,162,97,.52) !important;
+  border-radius: 0 !important;
+  color: var(--bayona-orange,#f4a261);
+  background: transparent !important;
+}
+
+body.premium-route--home .request-preview-disabled {
+  color: rgba(247,247,243,.28);
+  border-bottom-color: rgba(247,247,243,.16) !important;
+}
+
+body.premium-route--home .request-preview-whatsapp {
+  color: #050505;
+  padding-inline: 1.3rem;
+  border-bottom: 0 !important;
+  background: var(--bayona-orange,#f4a261) !important;
+}
+
+body.premium-route--home .request-preview-exact {
+  margin-top: clamp(2rem,4vw,4rem);
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .request-preview-message-panel,
+body.premium-route--home .request-preview-facts > section {
+  padding: 1.2rem 0;
+  border: 0 !important;
+  border-top: 1px solid rgba(247,247,243,.14) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+body.premium-route--home .request-preview-message {
+  max-width: 54rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--bayona-orange,#f4a261);
+  color: rgba(247,247,243,.78);
+  background: transparent !important;
+}
+
+body.premium-route--home .request-preview-included-fields > div {
+  padding: .75rem 0;
+  border-bottom: 1px solid rgba(247,247,243,.1);
+  background: transparent !important;
+}
+
+@media (max-width:760px) {
+  body.premium-route--home .request-preview h3 {
+    font-size: clamp(2.35rem,10vw,3.7rem);
+  }
+
+  body.premium-route--home .request-preview-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  body.premium-route--home .request-preview-facts {
+    display: block;
+  }
+}

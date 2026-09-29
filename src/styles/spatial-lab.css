@@ -1,0 +1,654 @@
+/*
+  BAYONA · LABORATORIO ESPACIAL (Lotes 1 y 2) — spatial-lab.css
+  ===========================================================================
+  Capa PROPIA y acotada: todo vive bajo el prefijo `.lab-` y dentro de
+  `.lab { }`. No toca ningún selector existente, no añade `!important`, no
+  reescribe la cascada global y no declara z-index nuevo: la escala del
+  Design System (§16) sigue siendo la dueña del apilamiento.
+
+  Esta hoja viaja en el chunk de /design-system (se importa desde
+  TrajectoryLab.jsx), no en el CSS de entrada de las rutas públicas.
+
+  Color: se usan SOLO tokens ya vivos (ds-tokens.css / styles.css). La
+  propuesta de paleta "grafito/hueso" del MASTERPLAN se declara con
+  variables locales con fallback, para poder cambiarla sin reescribir nada:
+  si mañana se aprueban tokens de marca para el espacio, se sustituye aquí.
+
+  Movimiento: una sola transición de realce + el desplazamiento de la barra
+  de progreso. Desactivadas con prefers-reduced-motion (no "reducidas":
+  fuera). Ninguna animación infinita (regla 9.2-B).
+
+  Lote 2 añade `.lab-mode*` (control de activación) y `.lab-spatial` (el
+  contenedor que el laboratorio le presta al motor). Sigue sin `z-index`: el
+  apilamiento del lienzo lo decide el propio `SceneMount` en su estilo en línea,
+  dentro de `.lab-spatial`, y no sale de aquí.
+*/
+
+.lab {
+  --lab-ink: var(--ds-color-ink, #f5f2ec);
+  --lab-muted: var(--ds-color-muted, #a3a3a3);
+  --lab-dim: var(--ds-color-dim, #6b6b6b);
+  --lab-accent: var(--ds-color-accent, #f4a261);
+  --lab-plane: #17181a;
+  --lab-concrete: #6e6a63;
+  --lab-bone: #ede7dc;
+  --lab-light-fill: var(--lab-bone);
+  --lab-radius: 0px;
+
+  padding: clamp(24px, 4vw, 56px) 0;
+  color: var(--lab-ink);
+  font-family: var(--ds-font-body, inherit);
+}
+
+/* --------------------------------------------------------------- cabecera */
+
+.lab-head {
+  max-width: 76ch;
+  margin-bottom: var(--ds-dist-medium, 28px);
+}
+
+.lab-kicker {
+  margin: 0 0 10px;
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--ds-fs-eyebrow, 12px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lab-accent);
+}
+
+.lab-title {
+  margin: 0 0 12px;
+  font-family: var(--ds-font-heading, inherit);
+  font-size: var(--ds-fs-h2, 28px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+}
+
+.lab-intro {
+  margin: 0 0 16px;
+  max-width: 62ch;
+  font-size: var(--ds-fs-body, 16px);
+  line-height: 1.6;
+  color: var(--lab-muted);
+}
+
+.lab-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 14px;
+  margin: 0;
+}
+
+.lab-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border: var(--ds-border-width, 1px) solid var(--lab-accent);
+  border-radius: var(--lab-radius);
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--ds-fs-body-small, 12px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lab-accent);
+}
+
+.lab-state__note {
+  max-width: 56ch;
+  font-size: var(--ds-fs-body-small, 12px);
+  line-height: 1.55;
+  color: var(--lab-dim);
+}
+
+/* ----------------------------------------------------------------- cuerpo */
+
+.lab-body {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  gap: var(--ds-dist-medium, 28px);
+  align-items: start;
+}
+
+.lab-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Navegación de estaciones: botones reales, foco visible, estado pulsado. */
+.lab-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lab-tab {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  min-height: 44px;
+  border: var(--ds-border-width, 1px) solid var(--ds-border-color, rgba(255, 255, 255, 0.14));
+  border-radius: var(--lab-radius);
+  background: var(--lab-plane);
+  color: var(--lab-ink);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--ds-dur-micro, 120ms) var(--ds-ease-standard, ease-out),
+    background-color var(--ds-dur-micro, 120ms) var(--ds-ease-standard, ease-out);
+}
+
+.lab-tab:hover {
+  border-color: var(--lab-accent);
+}
+
+.lab-tab:focus-visible {
+  outline: 2px solid var(--lab-accent);
+  outline-offset: 3px;
+}
+
+.lab-tab[aria-pressed='true'] {
+  border-color: var(--lab-accent);
+  background: var(--lab-concrete);
+}
+
+.lab-tab__marker {
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--ds-fs-numeric, 12px);
+  letter-spacing: 0.08em;
+  color: var(--lab-accent);
+}
+
+.lab-tab__title {
+  font-size: var(--ds-fs-body, 15px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Barra de progreso del recorrido: scaleX, sin animar layout. */
+.lab-progress {
+  position: relative;
+  overflow: hidden;
+  /*
+   * `height: 34px` fijo + un texto que en ventana estrecha se parte en dos líneas
+   * = la segunda línea se recorta (visible en las capturas del propietario:
+   * «Estación 1 de 3 · recorrido visto» cortado por la mitad). El arreglo es dejar
+   * de fijar la altura: `min-height` mantiene el ritmo vertical de 34 px cuando la
+   * línea cabe, y deja crecer la caja cuando no. Sin `!important`, sin truco de
+   * `white-space: nowrap` (eso recortaría el mensaje en vez de abrir sitio), y sin
+   * tocar el resto de la hoja.
+   */
+  min-height: 34px;
+  border: var(--ds-border-width, 1px) solid var(--ds-border-hairline, rgba(255, 255, 255, 0.08));
+  background: var(--lab-plane);
+}
+
+.lab-progress__fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--lab-accent), transparent 140%);
+  opacity: 0.36;
+  transition: transform var(--ds-dur-standard, 320ms) var(--ds-ease-entrance, ease-out);
+}
+
+.lab-progress__text {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 6px 12px;
+  line-height: 1.35;
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--ds-fs-body-small, 12px);
+  color: var(--lab-muted);
+}
+
+.lab-reset {
+  align-self: flex-start;
+  padding: 8px 2px;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  color: var(--lab-muted);
+  font-size: var(--ds-fs-body-small, 12px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.lab-reset:hover,
+.lab-reset:focus-visible {
+  color: var(--lab-accent);
+}
+
+.lab-reset:focus-visible {
+  outline: 2px solid var(--lab-accent);
+  outline-offset: 3px;
+}
+
+/* -------------------------------------------------- escenario: dibujo + DOM */
+
+.lab-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.lab-composition {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: var(--ds-border-width, 1px) solid var(--ds-border-hairline, rgba(255, 255, 255, 0.08));
+  background:
+    radial-gradient(120% 90% at 78% 4%, rgba(237, 231, 220, 0.1), transparent 62%), var(--lab-plane);
+  isolation: isolate;
+}
+
+.lab-composition__art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.lab-comp-floor {
+  stroke: var(--lab-concrete);
+  stroke-width: 2;
+}
+
+.lab-comp-aperture {
+  stroke: var(--lab-bone);
+  stroke-width: 6;
+  opacity: 0.7;
+}
+
+.lab-comp-pier {
+  fill: var(--lab-concrete);
+  opacity: 0.55;
+}
+
+.lab-comp-slab {
+  fill: var(--lab-bone);
+  opacity: 0.5;
+  transition: opacity var(--ds-dur-standard, 320ms) var(--ds-ease-standard, ease-out);
+}
+
+.lab-comp-mass {
+  fill: var(--lab-plane);
+  stroke: var(--lab-concrete);
+  stroke-width: 1;
+}
+
+.lab-comp-bar {
+  stroke: var(--lab-accent);
+  stroke-width: 3;
+  opacity: 0.85;
+}
+
+.lab-comp-path {
+  fill: none;
+  stroke: var(--lab-accent);
+  stroke-width: 2;
+  stroke-dasharray: 5 7;
+  opacity: 0.8;
+}
+
+.lab-comp-path-end {
+  fill: var(--lab-accent);
+}
+
+.lab-comp-mark {
+  fill: var(--lab-dim);
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--type-size-07);
+  letter-spacing: 0.1em;
+}
+
+.lab-composition g.is-active .lab-comp-slab {
+  opacity: 1;
+}
+
+.lab-composition__caption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding: 10px 14px;
+  border-top: var(--ds-border-width, 1px) solid var(--ds-border-hairline, rgba(255, 255, 255, 0.08));
+  font-size: var(--ds-fs-body-small, 12px);
+  line-height: 1.5;
+}
+
+.lab-composition__hint {
+  color: var(--lab-dim);
+}
+
+/* Hotspots: botones encima del dibujo, no zonas invisibles. */
+.lab-hotspots {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 78%;
+  pointer-events: none;
+}
+
+.lab-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 9px;
+  min-height: 44px;
+  border: 1px solid rgba(237, 231, 220, 0.35);
+  background: rgba(5, 5, 5, 0.45);
+  color: var(--lab-bone);
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--ds-fs-body-small, 12px);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    border-color var(--ds-dur-micro, 120ms) var(--ds-ease-standard, ease-out),
+    color var(--ds-dur-micro, 120ms) var(--ds-ease-standard, ease-out);
+}
+
+.lab-hotspot__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lab-bone);
+  opacity: 0.7;
+}
+
+.lab-hotspot:hover,
+.lab-hotspot[aria-pressed='true'] {
+  border-color: var(--lab-accent);
+  color: var(--lab-accent);
+}
+
+.lab-hotspot[aria-pressed='true'] .lab-hotspot__dot {
+  background: var(--lab-accent);
+  opacity: 1;
+}
+
+.lab-hotspot:focus-visible {
+  outline: 2px solid var(--lab-accent);
+  outline-offset: 3px;
+}
+
+/* Panel editorial: el contenido vive AQUÍ, seleccionable, en DOM. */
+.lab-panel {
+  padding: 18px 20px 20px;
+  border: var(--ds-border-width, 1px) solid var(--ds-border-hairline, rgba(255, 255, 255, 0.08));
+  background: var(--ds-surface-deep, var(--lab-plane));
+}
+
+.lab-panel__marker {
+  margin: 0 0 8px;
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--ds-fs-numeric, 12px);
+  letter-spacing: 0.14em;
+  color: var(--lab-dim);
+}
+
+.lab-panel__title {
+  margin: 0 0 10px;
+  font-size: var(--ds-fs-h3, 20px);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.lab-panel__body {
+  margin: 0 0 16px;
+  max-width: 62ch;
+  font-size: var(--ds-fs-body, 16px);
+  line-height: 1.62;
+  color: var(--lab-muted);
+}
+
+.lab-panel__spatial {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 18px;
+  margin: 0 0 18px;
+  padding: 14px 0 0;
+  border-top: var(--ds-border-width, 1px) solid var(--ds-border-hairline, rgba(255, 255, 255, 0.08));
+}
+
+.lab-panel__spatial dt {
+  margin: 0 0 4px;
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--ds-fs-eyebrow, 12px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lab-dim);
+}
+
+.lab-panel__spatial dd {
+  margin: 0;
+  font-size: var(--ds-fs-body-small, 13px);
+  line-height: 1.5;
+  color: var(--lab-muted);
+}
+
+.lab-panel__cta {
+  margin: 0;
+}
+
+.lab-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 2px;
+  border-bottom: 1px solid var(--lab-accent);
+  color: var(--lab-accent);
+  font-size: var(--ds-fs-cta, 13px);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.lab-cta:hover,
+.lab-cta:focus-visible {
+  border-bottom-color: var(--ds-color-accent-deep, var(--lab-accent));
+  text-decoration: none;
+}
+
+.lab-cta:focus-visible {
+  outline: 2px solid var(--lab-accent);
+  outline-offset: 4px;
+}
+
+/* ------------------------------------------------------------------ pie */
+
+.lab-foot {
+  display: grid;
+  gap: 10px;
+  margin-top: var(--ds-dist-medium, 28px);
+  padding-top: 14px;
+  border-top: var(--ds-border-width, 1px) solid var(--ds-border-hairline, rgba(255, 255, 255, 0.08));
+}
+
+.lab-boundary {
+  margin: 0;
+  max-width: 76ch;
+  font-size: var(--ds-fs-body-small, 12px);
+  line-height: 1.55;
+  color: var(--lab-dim);
+}
+
+.lab-foot__meta {
+  margin: 0;
+  font-size: var(--ds-fs-body-small, 12px);
+  color: var(--lab-dim);
+}
+
+.lab-foot__meta a {
+  color: var(--lab-muted);
+}
+
+/* ----------------------------------------------------------------- móvil */
+
+@media (max-width: 860px) {
+  .lab-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lab-tabs {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .lab-tab {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 190px;
+  }
+
+  .lab-panel__spatial {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ------------------------------------------------- movimiento reducido: off */
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-tab,
+  .lab-hotspot,
+  .lab-comp-slab,
+  .lab-progress__fill,
+  .lab-mode__cta,
+  .lab-mode__ghost {
+    transition: none;
+  }
+}
+
+/* ───────────────────────────────────── MODO ESPACIAL · control (Lote 2) ── */
+/*
+  El botón de activación es la ÚNICA puerta al motor. No hay autoloop, no hay
+  hover que precargue, no hay "cargando" falso: el estado lo dice la máquina de
+  estados y este bloque solo lo refleja.
+*/
+
+.lab-mode {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(237, 231, 220, 0.12);
+  border-radius: var(--lab-radius);
+  background: rgba(23, 24, 26, 0.55);
+}
+
+.lab-mode__status {
+  margin: 0;
+  color: var(--lab-muted);
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--type-size-06);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lab-mode__cta,
+.lab-mode__ghost {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--lab-accent);
+  border-radius: var(--lab-radius);
+  background: transparent;
+  color: var(--lab-accent);
+  font: inherit;
+  font-size: var(--type-size-07);
+  letter-spacing: 0.02em;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.lab-mode__cta:hover,
+.lab-mode__cta:focus-visible {
+  background: var(--lab-accent);
+  color: #17181a;
+}
+
+.lab-mode__ghost {
+  border-color: rgba(237, 231, 220, 0.22);
+  color: var(--lab-muted);
+}
+
+.lab-mode__ghost:hover,
+.lab-mode__ghost:focus-visible {
+  border-color: var(--lab-muted);
+  color: var(--lab-ink);
+}
+
+.lab-mode__cta:focus-visible,
+.lab-mode__ghost:focus-visible {
+  outline: 2px solid var(--lab-accent);
+  outline-offset: 2px;
+}
+
+.lab-mode__error {
+  margin: 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--lab-accent);
+  color: var(--lab-ink);
+  font-size: var(--type-size-07);
+  line-height: 1.5;
+}
+
+.lab-mode__note {
+  margin: 0;
+  color: var(--lab-dim);
+  font-size: var(--type-size-07);
+  line-height: 1.55;
+}
+
+/* Diagnóstico del entorno: no es marketing, es para quien revisa la maqueta. */
+.lab-mode__engine {
+  margin: 0;
+  color: var(--lab-dim);
+  font-family: var(--ds-font-mono, ui-monospace, monospace);
+  font-size: var(--type-size-06);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ─────────────────────────────────── MODO ESPACIAL · lienzo (Lote 2) ────── */
+/*
+  El laboratorio PRESTA el contenedor y nada más: el `<canvas>` lo dimensiona
+  React Three Fiber sobre este bloque (100% del contenedor), así que aquí no hay
+  reglas para el lienzo ni que forzar con `!important` — la hoja conserva su
+  contrato de cero `!important`. La altura es un encuadre, no un relleno: 16/9
+  para que el pabellón respire en horizontal y 4/5 en el ancho estrecho, donde un
+  16/9 dejaría el objeto minúsculo.
+*/
+
+.lab-spatial {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 62vh;
+  overflow: hidden;
+  border: 1px solid rgba(237, 231, 220, 0.12);
+  border-radius: var(--lab-radius);
+  background: #0c0c0d;
+}
+
+@media (max-width: 860px) {
+  .lab-spatial {
+    aspect-ratio: 4 / 5;
+    max-height: 56vh;
+  }
+}

@@ -1,0 +1,486 @@
+/*
+  BAYONA · MOVIMIENTO LIGADO AL SCROLL v2
+  ===========================================================================
+  "a medida que se deslice debería verse más animado"
+
+  Se resuelve con animaciones ligadas al scroll de CSS (`animation-timeline`),
+  no con JavaScript. Tres razones:
+
+  1. Coste. El sitio ya tiene Framer Motion, Lenis y R3F compitiendo por el hilo
+     principal. Estas animaciones corren en el compositor, así que suman
+     movimiento sin sumar trabajo en JS.
+  2. Cobertura. Se aplica por selector, así que anima secciones que hoy no
+     tienen ni un `whileInView`, sin tocar 16 páginas de JSX.
+  3. Degradación. Todo va dentro de `@supports`. Donde no hay soporte no pasa
+     nada: el contenido se ve, quieto y perfectamente legible.
+
+  Regla de oro: ninguna animación puede dejar contenido invisible si falla. Se
+  anima desde `opacity: 0` SOLO dentro del @supports, de modo que sin soporte el
+  elemento nunca recibe la opacidad inicial.
+*/
+
+@supports (animation-timeline: view()) {
+
+  /* -------------------------------------------------------------------------
+     1. ENTRADA DE SECCIÓN
+     Cada sección se revela al entrar en el viewport y se asienta.
+     `view(85% 15%)` dispara antes de llegar al borde, para que el movimiento
+     acompañe la lectura en lugar de perseguirla.
+     ------------------------------------------------------------------------- */
+  @keyframes v2-rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, var(--ds-dist-near), 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .mechanism-section>.section-shell,
+  .solution-section>.section-shell,
+  .proof-section>.section-shell,
+  .offer-section>.section-shell,
+  .calculator-section>.section-shell,
+  .cta-stack-section>.section-shell,
+  .experience-proof-section>.section-shell,
+  .plan-presentation-section>.plan-presentation-shell,
+  .shop-section>.section-shell,
+  .resources-section>.section-shell,
+  .community-main>.section-shell,
+  .faq-section>.section-shell,
+  .app-features>.section-shell,
+  .values-section>.section-shell,
+  .program-section>.section-shell {
+    animation: v2-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 62%;
+  }
+
+  /* -------------------------------------------------------------------------
+     2. ESCALONADO DE REJILLA
+     Los hijos de una rejilla entran uno detrás de otro. Se consigue con un
+     retardo por posición usando `animation-range` desplazado.
+     ------------------------------------------------------------------------- */
+  @keyframes v2-card-in {
+    from {
+      opacity: 0;
+      transform: perspective(1200px) translate3d(0, var(--ds-dist-near), 0) rotateX(2deg) scale(0.99);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  .experience-proof-list>li,
+  .plan-presentation-bridge-grid>a,
+  .values-grid>.value-card,
+  .resources-grid>.resource-card,
+  .not-found-grid>a,
+  .products-grid>.holo-wrap,
+  .evidence-list>li,
+  .proof-process-list>li {
+    animation: v2-card-in linear both;
+    animation-timeline: view();
+    animation-range: entry 5% entry 55%;
+  }
+
+  /* -------------------------------------------------------------------------
+     3. PARALLAJE DE FONDO
+     El fondo de escena se desplaza más despacio que el contenido. Es el efecto
+     de "todo se mueve de fondo" mientras bajas.
+     ------------------------------------------------------------------------- */
+  @keyframes v2-bg-drift {
+    from {
+      transform: translate3d(0, -3.5%, 0) scale(1.09);
+    }
+
+    to {
+      transform: translate3d(0, 3.5%, 0) scale(1.09);
+    }
+  }
+
+  @media (min-width: 900px) {
+
+    .scene-bg:not(.scene-bg--after)::before,
+    .scene-bg.scene-bg--after::after {
+      animation: v2-bg-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     4. TITULARES QUE SE ASIENTAN
+     Un desplazamiento mínimo y una apertura de letra que se cierra. Da la
+     sensación de que el titular "aterriza" al leerlo.
+     ------------------------------------------------------------------------- */
+  @keyframes v2-heading-settle {
+    from {
+      opacity: 0;
+      transform: translate3d(0, var(--ds-dist-near), 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .experience-proof-header h2,
+  .plan-presentation-section h2,
+  .shop-top h2,
+  .resource-tools h2,
+  .faq-section h2,
+  .community-head h2,
+  .app-head h2 {
+    animation: v2-heading-settle linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 48%;
+  }
+
+  /* -------------------------------------------------------------------------
+     5. LÍNEA DE PROGRESO DE SECCIÓN
+     Una hairline cálida que se llena mientras recorres la sección. Es la señal
+     de "vas avanzando" sin añadir ni un elemento al DOM.
+     ------------------------------------------------------------------------- */
+  @keyframes v2-progress-fill {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .mechanism-section,
+  .solution-section,
+  .offer-section,
+  .experience-proof-section,
+  .calculator-section {
+    position: relative;
+  }
+
+  .mechanism-section::after,
+  .solution-section::after,
+  .offer-section::after,
+  .experience-proof-section::after,
+  .calculator-section::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(244, 162, 97, 0.85), transparent);
+    transform-origin: left center;
+    animation: v2-progress-fill linear both;
+    animation-timeline: view();
+    animation-range: cover 12% cover 92%;
+  }
+
+  /* -------------------------------------------------------------------------
+     6. ACOMPAÑAMIENTO DEL CONFIGURADOR
+     El resumen persistente respira cuando entra en pantalla.
+     ------------------------------------------------------------------------- */
+  @keyframes v2-summary-in {
+    from {
+      opacity: 0;
+      transform: translate3d(18px, 0, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @media (min-width: 951px) {
+    .persistent-summary {
+      animation: v2-summary-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     7. RESPETO AL MOVIMIENTO REDUCIDO
+     Se apaga TODO. Sin animación, sin opacidad inicial, sin transformaciones.
+     ------------------------------------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+
+    .mechanism-section>.section-shell,
+    .solution-section>.section-shell,
+    .proof-section>.section-shell,
+    .offer-section>.section-shell,
+    .calculator-section>.section-shell,
+    .cta-stack-section>.section-shell,
+    .experience-proof-section>.section-shell,
+    .plan-presentation-section>.plan-presentation-shell,
+    .shop-section>.section-shell,
+    .resources-section>.section-shell,
+    .community-main>.section-shell,
+    .faq-section>.section-shell,
+    .app-features>.section-shell,
+    .values-section>.section-shell,
+    .program-section>.section-shell,
+    .experience-proof-list>li,
+    .plan-presentation-bridge-grid>a,
+    .values-grid>.value-card,
+    .resources-grid>.resource-card,
+    .not-found-grid>a,
+    .products-grid>.holo-wrap,
+    .evidence-list>li,
+    .proof-process-list>li,
+    .experience-proof-header h2,
+    .plan-presentation-section h2,
+    .shop-top h2,
+    .resource-tools h2,
+    .faq-section h2,
+    .community-head h2,
+    .app-head h2,
+    .persistent-summary,
+    .scene-bg:not(.scene-bg--after)::before,
+    .scene-bg.scene-bg--after::after {
+      animation: none !important;
+      opacity: 1 !important;
+      letter-spacing: normal;
+      transform: none !important;
+    }
+
+    .mechanism-section::after,
+    .solution-section::after,
+    .offer-section::after,
+    .experience-proof-section::after,
+    .calculator-section::after {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+}
+
+/* ===========================================================================
+   COREOGRAFÍA CONTINUA
+   ---------------------------------------------------------------------------
+   Objetivo: que al bajar ocurra algo constantemente, no solo al cambiar de
+   sección. Se anima el elemento de texto, no solo su contenedor.
+
+   Presupuesto y criterio para que no se convierta en ruido:
+   · Recorridos cortos (12–20px). Lo que se percibe es el ritmo, no el viaje.
+   · Alternancia de dirección: los titulares suben, las etiquetas entran de
+     lado, las reglas se abren en horizontal. Si todo hiciera lo mismo, el ojo
+     dejaría de registrarlo a los tres bloques.
+   · Nada de rebotes ni escalas grandes: es respiración, no espectáculo.
+   · Solo `opacity` y `transform`: se resuelven en el compositor, así que 40
+     elementos animándose cuestan lo mismo que dos.
+   =========================================================================== */
+
+@supports (animation-timeline: view()) {
+
+  /* ---- Texto corrido: párrafos, ítems, definiciones ---- */
+  @keyframes v2-text-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 16px, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /* Opt-in only: prices, lists, live feedback and form help stay readable.
+     Section and card reveals already provide the rhythm around this copy. */
+  .ds-frame[data-experience-mode='editorial'] .ds-copy-reveal {
+    animation: v2-text-in linear both;
+    animation-timeline: view();
+    animation-range: entry 8% entry 42%;
+  }
+
+  /* ---- Etiquetas monoespaciadas: entran de lado ---- */
+  @keyframes v2-label-in {
+    from {
+      opacity: 0;
+      transform: translate3d(-14px, 0, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .eyebrow,
+  .free-value-eyebrow,
+  .experience-proof-eyebrow,
+  .plan-presentation-eyebrow,
+  .resources-eyebrow,
+  .free-value-tag,
+  .experience-proof-theme,
+  .recommended-mark {
+    animation: v2-label-in linear both;
+    animation-timeline: view();
+    animation-range: entry 4% entry 34%;
+  }
+
+  /* ---- Reglas y separadores: se abren en horizontal ---- */
+  @keyframes v2-rule-open {
+    from {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+
+    to {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
+
+  .eyebrow span,
+  .next-chapter-meta i,
+  .story-content i,
+  .schedule article i {
+    transform-origin: left center;
+    animation: v2-rule-open linear both;
+    animation-timeline: view();
+    animation-range: entry 6% entry 40%;
+  }
+
+  /* ---- Bordes de lista: la línea inferior se dibuja al pasar ---- */
+  .pain-item,
+  /* Los pasos del `StickyStage` NO entran aquí. Una animación gobernada por
+     `view()` es dueña de la propiedad que anima durante toda la vida de la
+     página —ninguna regla de hoja le gana—, y `v2-text-in` anima `opacity`: los
+     tres pasos se quedaban en `opacity: 1` a la vez y se pintaban ENCIMA del
+     otro («TE LEEMOS», «CONSTRUIMOS» y «TE ACOMPAÑAMOS» en la misma celda). Su
+     visibilidad la decide el crossfade por clase `--active`. Medido: sin esta
+     exclusión, `getAnimations()` devolvía `v2-text-in/finished/tl=ViewTimeline`
+     en los tres y `getComputedStyle().opacity === 1` aunque la hoja pidiera 0. */
+  .mechanism-step:not(.mechanism-step--stage),
+  .proof-process-item,
+  .summary-line,
+  .feature-list article {
+    animation: v2-text-in linear both;
+    animation-timeline: view();
+    animation-range: entry 6% entry 46%;
+  }
+
+  /* ---- Iconos: aparecen girando muy poco ---- */
+  @keyframes v2-icon-in {
+    from {
+      opacity: 0;
+      transform: rotate(-9deg) scale(0.9);
+    }
+
+    to {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+  }
+
+  .value-card>svg,
+  .resource-card>svg,
+  .free-value-card>svg,
+  .feature-list>article>svg,
+  .principles svg {
+    animation: v2-icon-in linear both;
+    animation-timeline: view();
+    animation-range: entry 8% entry 40%;
+  }
+
+  /* ---- Botones y CTA: se asientan al entrar ---- */
+  @keyframes v2-cta-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 14px, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .gold-button,
+  .text-button,
+  .free-value-card em,
+  .experience-proof-link,
+  .journey-ribbon-stop,
+  .complete-button {
+    animation: v2-cta-in linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 46%;
+  }
+
+  /*
+    ---- Sección de solo texto: el plano se aclara al recorrerla ----
+    Da la sensación de que la luz sigue a la lectura.
+  */
+  @keyframes v2-plane-lift {
+    from {
+      background-color: #050505;
+    }
+
+    to {
+      background-color: #0a0a0c;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .v2-plane--ink {
+      animation: v2-plane-lift linear both;
+      animation-timeline: view();
+      animation-range: cover 10% cover 55%;
+    }
+  }
+
+  /* ---- Apagado total con movimiento reducido ---- */
+  @media (prefers-reduced-motion: reduce) {
+
+    main p,
+    main li,
+    main dd,
+    main blockquote,
+    main figcaption,
+    .eyebrow,
+    .free-value-eyebrow,
+    .experience-proof-eyebrow,
+    .plan-presentation-eyebrow,
+    .resources-eyebrow,
+    .free-value-tag,
+    .experience-proof-theme,
+    .recommended-mark,
+    .eyebrow span,
+    .next-chapter-meta i,
+    .story-content i,
+    .schedule article i,
+    .pain-item,
+    .mechanism-step,
+    .proof-process-item,
+    .summary-line,
+    .feature-list article,
+    .value-card>svg,
+    .resource-card>svg,
+    .free-value-card>svg,
+    .feature-list>article>svg,
+    .principles svg,
+    .gold-button,
+    .text-button,
+    .free-value-card em,
+    .experience-proof-link,
+    .journey-ribbon-stop,
+    .complete-button,
+    .v2-plane--ink {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}

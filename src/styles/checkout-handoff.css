@@ -1,0 +1,118 @@
+/* BAYONA · ESTADO DE ENTREGA DE LA SOLICITUD (checkout) */
+
+.checkout-handoff:empty {
+  display: none;
+}
+
+.checkout-handoff-panel {
+  display: flex;
+  gap: 14px;
+  margin-top: 22px;
+  padding: 18px;
+  border: 1px solid #ffffff26;
+  background: #0d0d0dde;
+}
+
+.checkout-handoff-panel > svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.checkout-handoff-panel.is-ok {
+  border-color: rgba(244, 162, 97, 0.55);
+  background: linear-gradient(90deg, rgba(244, 162, 97, 0.12), transparent);
+}
+
+.checkout-handoff-panel.is-ok > svg {
+  color: var(--gold);
+}
+
+/* Fallo de entrega: se señala en un tono de alerta, no de marca. */
+.checkout-handoff-panel.is-blocked {
+  border-color: rgba(231, 111, 81, 0.75);
+  background: linear-gradient(90deg, rgba(231, 111, 81, 0.16), transparent);
+}
+
+.checkout-handoff-panel.is-blocked > svg {
+  color: var(--orange-fire);
+}
+
+.checkout-handoff-panel strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--type-size-06);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.checkout-handoff-panel p {
+  margin: 0;
+  font-size: var(--type-size-06);
+  line-height: 1.65;
+}
+
+.checkout-handoff-panel a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.checkout-handoff-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.checkout-handoff-open,
+.checkout-handoff-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  font-size: var(--type-size-05);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.checkout-handoff-open {
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #050505;
+  text-decoration: none;
+}
+
+.checkout-handoff-open:hover {
+  background: var(--orange-fire);
+  border-color: var(--orange-fire);
+}
+
+.checkout-handoff-copy {
+  border: 1px solid #ffffff3d;
+  background: transparent;
+  color: #e8e3dc;
+}
+
+.checkout-handoff-copy:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.checkout-handoff-open:focus-visible,
+.checkout-handoff-copy:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .checkout-handoff-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .checkout-handoff-open,
+  .checkout-handoff-copy {
+    justify-content: center;
+  }
+}

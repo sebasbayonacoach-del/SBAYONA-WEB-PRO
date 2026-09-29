@@ -1,0 +1,364 @@
+/* ==========================================================================
+   BAYONA · PORTADA ATELIER (FASE 4D) — LA HOME COMO PIEZA EDITORIAL
+   --------------------------------------------------------------------------
+   Orden del propietario: «toda esta página necesita una nueva transformación
+   visual». Se responde con composición, no con contenido: ni una palabra de
+   copy, de precio, de prestación o de CTA cambia de sitio.
+
+   Por qué una hoja aparte y no otro apendo en `home.css`: la portada no la
+   escribe un solo fichero — hero, visión, dolor, método, planes, configurador,
+   comunidad y puentes viven en `home.css`, `free-value.css`,
+   `experience-proof.css`, `community.css` y en componentes compartidos. Una
+   hoja última y leída de una vez es lo único que puede unificar el ritmo de
+   las 12 secciones sin reescribir seis ficheros ajenas.
+
+   Reglas de fabricación (las mismas que el sistema):
+   · Cero `!important`, cero hex nuevos, cero radios propios.
+   · Cero `z-index` numérico: si hace falta, es `var(--ds-z-*)`.
+   · Todo lo que toca DOM ajeno va dentro del marco de marca Y de un ancestro
+     propio de la portada. `/design-system` y el laboratorio 3A quedan fuera.
+   · Tipografía en `clamp()`: no se pelea con los breakpoints que ya existen.
+   · Los cambios de layout van encerrados en `@media (min-width: …)`, para no
+     aplastar las versiones móviles que `home.css` ya decidió.
+   · `prefers-reduced-motion` deja estado estático diseñado, nunca `duration: 0`.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. RITMO DE CAPÍTULO — las doce secciones respiran igual y se separan bien
+   -------------------------------------------------------------------------- */
+.ds-frame[data-experience-scope='brand'] :is(
+  .vision-section,
+  .pain-section,
+  .mechanism-section,
+  .solution-section,
+  .proof-section,
+  .offer-section,
+  .calculator-section,
+  .cta-stack-section,
+  .free-value,
+  .experience-proof-section,
+  .home-memberships-section,
+  .home-services-configurator
+) {
+  /* `currentColor` hace el filete inútil en una sección y perfecto en la otra:
+     sobre hueso es grafito suave, sobre negro es hueso suave. Un solo dueño. */
+  border-block-start: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  padding-block: clamp(var(--ds-space-8), 12vw, var(--ds-space-11));
+}
+
+/* El primer capítulo no necesita línea: la barra fija ya es su frontera. */
+.ds-frame[data-experience-scope='brand'] .hero-module + section {
+  border-block-start: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. TITULARES — escala de cartel y ajuste óptico, no tamaño de relleno
+   -------------------------------------------------------------------------- */
+.ds-frame[data-experience-scope='brand'] :is(
+  .hero-module,
+  .vision-section,
+  .pain-section,
+  .mechanism-section,
+  .solution-section,
+  .proof-section,
+  .offer-section,
+  .calculator-section,
+  .cta-stack-section,
+  .free-value,
+  .experience-proof-section,
+  .home-services-configurator
+) :is(h1, h2) {
+  font-family: var(--bayona-font-display);
+  font-weight: 900;
+  font-size: clamp(31px, 5vw, 84px);
+  line-height: .92;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+
+/* El titular del héroe manda sobre todas las escalas de la página.
+   VWAVE-HERO: SIN `!important` (contrato experienceSystemContract: atelier
+   aditivo, no invasivo). Gana por especificidad al excluirse el héroe de
+   la regla global v2 (ver v2-typography `:not(#home-hero-title)`).
+   Escala +~25% y ancho liberado: el H1 es el protagonista absoluto. */
+.ds-frame[data-experience-scope='brand'] .hero-module #home-hero-title {
+  font-size: clamp(60px, 11vw, 184px);
+  max-width: 12ch;
+  line-height: .78;
+  letter-spacing: -.055em;
+}
+
+/* Y las frases que lo acompañan se miden: un lead de cartel se lee, uno de
+   muro no. */
+.ds-frame[data-experience-scope='brand'] :is(.hero-module, .vision-section, .pain-section, .mechanism-section, .solution-section, .proof-section, .offer-section, .calculator-section) :is(.hero-subheadline, .vision-copy, .pain-intro, .mechanism-intro, .pillar-intro, .proof-intro, .offer-intro, .calculator-intro, .free-value-lead) {
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.5;
+  max-inline-size: min(100%, 46ch);
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   3. FILACTERIAS — la etiqueta de sección pasa de caption a regla de corte
+   -------------------------------------------------------------------------- */
+.ds-frame[data-experience-scope='brand'] :is(.hero-module, .free-value, .experience-proof-section, .home-memberships-section, .home-services-configurator, .cta-stack-section) .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  color: color-mix(in srgb, currentColor 85%, transparent);
+  font-family: var(--bayona-font-label);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: var(--ds-ls-eyebrow);
+}
+
+/* El `<span/>` vacío de `SectionLabel` ES la regla: se estira, no se duplica. */
+.ds-frame[data-experience-scope='brand'] .eyebrow > span:empty {
+  inline-size: clamp(28px, 4vw, 64px);
+  block-size: 1px;
+  flex: none;
+  background: color-mix(in srgb, var(--bayona-warm) 72%, transparent);
+}
+
+.ds-frame[data-experience-scope='brand'] :is(.free-value-eyebrow, .experience-proof-eyebrow) {
+  font-family: var(--bayona-font-label);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: .26em;
+  color: color-mix(in srgb, currentColor 85%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   4. HÉROE — cifra dibujada, puertas alineadas y nota de recepción
+   -------------------------------------------------------------------------- */
+@supports (-webkit-text-stroke: 1px currentColor) {
+  /* El «01» del héroe y los números de capítulo dejan de rellenarse: se
+     dibujan. Es la diferencia entre un adorno y una marca de página. */
+  .ds-frame[data-experience-scope='brand'] :is(.hero-chapter-mark, .solution-bg-number, .proof-bg-number, .offer-bg-number) {
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, currentColor 34%, transparent);
+  }
+
+  .ds-frame[data-experience-scope='brand'] .hero-chapter-mark {
+    font-size: clamp(64px, 9vw, 132px);
+    line-height: .7;
+    letter-spacing: -.05em;
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(.solution-bg-number, .proof-bg-number, .offer-bg-number) {
+    font-size: clamp(190px, 31vw, 470px);
+    line-height: .68;
+    letter-spacing: -.06em;
+    -webkit-text-stroke-width: 1.5px;
+    -webkit-text-stroke-color: color-mix(in srgb, var(--bayona-bone) 15%, transparent);
+  }
+}
+
+/* Las tres puertas dejan de ser tres columnas iguales de landing: se
+   alinean a la izquierda y ocupan lo que dicen. */
+@media (min-width: 951px) {
+  .ds-frame[data-experience-scope='brand'] .hero-module .hero-actions {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    justify-content: start;
+    align-items: center;
+    gap: clamp(20px, 2.6vw, 40px);
+  }
+
+  .ds-frame[data-experience-scope='brand'] .hero-module .hero-actions > * {
+    min-inline-size: 0;
+  }
+}
+
+/* El enlace de descenso se subraya solo cuando se le busca. */
+.ds-frame[data-experience-scope='brand'] .hero-transform-cta {
+  position: relative;
+  padding-block-end: var(--ds-space-1);
+  letter-spacing: var(--ds-ls-eyebrow);
+}
+
+.ds-frame[data-experience-scope='brand'] .hero-transform-cta::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  /* La línea ES un filete del sistema, no un relleno: 1px de borde. */
+  border-block-end: 1px solid currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--bayona-dur-standard) var(--bayona-ease-travel);
+}
+
+.ds-frame[data-experience-scope='brand'] .hero-transform-cta:hover::after,
+.ds-frame[data-experience-scope='brand'] .hero-transform-cta:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* La tercera puerta (la de quien no sabe qué necesita) es una nota, no un
+   botón más: se apoya en un filete y en una etiqueta mono. */
+.ds-frame[data-experience-scope='brand'] .reception-cta {
+  border-block-start: var(--bayona-hairline);
+  padding-block-start: var(--ds-space-3);
+}
+
+/* --------------------------------------------------------------------------
+   5. FILAS CON SEÑAL — listas que responden al puntero y al foco
+   -------------------------------------------------------------------------- */
+.ds-frame[data-experience-scope='brand'] :is(
+  .pain-item,
+  .pillar-item,
+  .proof-process-item,
+  .mechanism-step,
+  .vision-90-list > li,
+  .free-value-card,
+  .experience-proof-card
+) {
+  transition:
+    border-color var(--bayona-dur-standard) var(--bayona-ease-standard),
+    color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+/* La marca numérica se enciende y sube dos píxeles. `translate` es una
+   propiedad independiente: no le pisa el `transform` a Framer Motion. */
+.ds-frame[data-experience-scope='brand'] :is(.pain-item, .pillar-item, .proof-process-item, .mechanism-step, .vision-90-list > li):hover :is(.pain-number, .pillar-number, .proof-process-marker, .mechanism-marker),
+.ds-frame[data-experience-scope='brand'] :is(.pain-item, .pillar-item, .proof-process-item, .mechanism-step, .vision-90-list > li):focus-within :is(.pain-number, .pillar-number, .proof-process-marker, .mechanism-marker) {
+  color: var(--bayona-warm);
+  translate: 0 -2px;
+}
+
+/* El filete de la fila se entibia. Se usa `border-color` (los cuatro lados) y
+   no `border-bottom-color` porque en el tramo de escritorio medio estas filas
+   se reorganizan a columnas y el filete pasa a ser derecho: la señal tiene que
+   seguir existiendo en las dos geometrías. En la sección clara el dueño ya
+   fijó `border-color` con `!important`: allí la señal la lleva el número. */
+.ds-frame[data-experience-scope='brand'] :is(.pain-item, .pillar-item, .proof-process-item, .mechanism-step):hover,
+.ds-frame[data-experience-scope='brand'] :is(.pain-item, .pillar-item, .proof-process-item, .mechanism-step):focus-within {
+  border-color: var(--bayona-warm);
+}
+
+/* En reposo los números son fantasmas de la retícula, no etiquetas naranjas:
+  34 % del propio color de la sección funciona sobre hueso y sobre negro. */
+.ds-frame[data-experience-scope='brand'] :is(.pain-number, .mechanism-marker, .proof-process-marker, .pillar-number) {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.03em;
+  color: color-mix(in srgb, currentColor 34%, transparent);
+  transition:
+    color var(--bayona-dur-standard) var(--bayona-ease-standard),
+    translate var(--bayona-dur-micro) var(--bayona-ease-entrance);
+}
+
+/* --------------------------------------------------------------------------
+   6. PLANES — la sección clara se lee como una tabla, no como cuatro tarjetas
+   -------------------------------------------------------------------------- */
+.ds-frame[data-experience-scope='brand'] .home-memberships-section :is(.plan-canonical-name, .plan-descriptor) {
+  font-family: var(--bayona-font-display);
+  letter-spacing: -.02em;
+  line-height: 1.04;
+}
+
+.ds-frame[data-experience-scope='brand'] .home-memberships-section .plan-canonical-name {
+  font-size: clamp(24px, 2.7vw, 42px);
+  text-transform: uppercase;
+}
+
+.ds-frame[data-experience-scope='brand'] .home-memberships-section .plan-descriptor {
+  font-family: var(--bayona-font-body);
+  font-size: clamp(14px, 1.15vw, 17px);
+  letter-spacing: 0;
+  line-height: 1.45;
+  color: color-mix(in srgb, currentColor 72%, transparent);
+}
+
+/* Toda cifra de dinero del país de la portada es tabular: columnas que
+   alinean, no texto que baila. */
+.ds-frame[data-experience-scope='brand'] :is(.home-memberships-section, .home-services-configurator) :is([class*='price'], [class*='eur'], .plan-attribute-comparison dd, .persistent-summary-count) {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+@media (min-width: 951px) {
+  /* El desplegable de plan deja de parecer un acordeón: es una fila de índice
+     con su diente. El `min-height: 50px` que vigila el contrato se respeta. */
+  .ds-frame[data-experience-scope='brand'] .home-memberships-section .plan-disclosure-button {
+    border-block-start: var(--bayona-hairline-signal);
+    padding-block: var(--ds-space-5);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. TESTIMONIOS, COMUNIDAD Y CIERRES
+   -------------------------------------------------------------------------- */
+/* Comilla de apertura como signo tipográfico: adorno, no contenido. */
+.ds-frame[data-experience-scope='brand'] .experience-proof-quote::before {
+  content: '\201C';
+  display: block;
+  font-family: var(--bayona-font-display);
+  font-size: clamp(44px, 5vw, 76px);
+  line-height: .4;
+  color: color-mix(in srgb, var(--bayona-warm) 62%, transparent);
+}
+
+.ds-frame[data-experience-scope='brand'] .experience-proof-quote {
+  font-size: clamp(17px, 1.5vw, 22px);
+  line-height: 1.34;
+  text-wrap: pretty;
+}
+
+/* El puente de comunidad: la conversación deja de ser un simulacro de app y
+   se apoya en la retícula editorial. */
+.ds-frame[data-experience-scope='brand'] .home-community-bridge .cb-chat-thread > * {
+  border-block-end: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.ds-frame[data-experience-scope='brand'] .home-community-bridge .cb-chat-caption,
+.ds-frame[data-experience-scope='brand'] .home-community-bridge .cb-chat-status {
+  font-family: var(--bayona-font-label);
+  letter-spacing: .16em;
+}
+
+/* Los cierres (puente a About y aviso legal de la portada) vuelven a su
+   tamaño de carta editorial. */
+.ds-frame[data-experience-scope='brand'] .home-about-bridge :is(.cb-bridge-title, h2) {
+  font-size: clamp(34px, 5.4vw, 92px);
+  line-height: .9;
+  letter-spacing: -.045em;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(.home-section-note, .home-disclaimer, .home-pain-note) {
+  font-family: var(--bayona-font-label);
+  font-size: var(--ds-fs-eyebrow);
+  line-height: 1.6;
+  letter-spacing: .06em;
+  color: color-mix(in srgb, currentColor 85%, transparent);
+  max-inline-size: min(100%, var(--ds-measure));
+}
+
+/* --------------------------------------------------------------------------
+   8. ESTADO ESTÁTICO DISEÑADO (reduced motion)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .ds-frame[data-experience-scope='brand'] :is(
+    .pain-item,
+    .pillar-item,
+    .proof-process-item,
+    .mechanism-step,
+    .vision-90-list > li,
+    .free-value-card,
+    .experience-proof-card
+  ) {
+    transition: none;
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(.pain-number, .mechanism-marker, .proof-process-marker, .pillar-number) {
+    transition: none;
+  }
+
+  /* La señal sigue ahí en reposo: la línea del enlace de descenso se ve
+     trazada y el número ya está encendido. No se quita nada. */
+  .ds-frame[data-experience-scope='brand'] .hero-transform-cta::after {
+    transform: none;
+    transition: none;
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(.pain-item, .pillar-item, .proof-process-item, .mechanism-step, .vision-90-list > li):hover :is(.pain-number, .pillar-number, .proof-process-marker, .mechanism-marker) {
+    translate: none;
+  }
+}

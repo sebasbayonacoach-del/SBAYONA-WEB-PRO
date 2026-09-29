@@ -1,0 +1,334 @@
+:root {
+  --font-display: 'Montserrat', Arial, sans-serif;
+  --font-body: 'Inter', Arial, sans-serif;
+  --font-label: 'DM Mono', ui-monospace, monospace;
+  --type-display: clamp(4.75rem, 10.5vw, 10.5rem);
+  --type-hero: clamp(3.125rem, 5.7vw, 5.125rem);
+  --type-section: clamp(3.1rem, 6.5vw, 6.75rem);
+  --type-feature: clamp(2rem, 4vw, 4.25rem);
+  --type-card: clamp(1.1rem, 1.7vw, 1.65rem);
+  --type-lead: clamp(1rem, 1.45vw, 1.32rem);
+  --type-body: clamp(0.92rem, 1vw, 1.05rem);
+  --type-label: 0.68rem;
+  --leading-display: 0.82;
+  --leading-heading: 0.92;
+  --leading-body: 1.72;
+  --tracking-display: -0.068em;
+  --tracking-label: 0.14em;
+  --layout-max: 1280px;
+  --layout-gutter: clamp(1.25rem, 4.2vw, 5rem);
+  --section-space: clamp(6rem, 11vw, 10.5rem);
+  --nav-height: 4.5rem;
+  --luxury-black: #050505;
+  --luxury-ink: #090909;
+  --luxury-panel: rgba(12, 12, 13, 0.76);
+  --luxury-line: rgba(255, 255, 255, 0.13);
+  --luxury-muted: #aaa49c;
+  --luxury-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-padding-top: calc(var(--nav-height) + 1.25rem);
+  background: var(--luxury-black);
+}
+
+body {
+  min-width: 320px;
+  color: #f7f5f1;
+  background: var(--luxury-black);
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+:where(h1, h2, h3, h4, h5, h6, .brand, .footer-mark) {
+  font-family: var(--font-display);
+  /* 900, no 850: es el peso con el que el resto del sitio escribe sus
+     titulares, y al ser `:where` este era el default que se colaba en cuanto
+     una ruta no fijaba el suyo. Medido con scripts/probe-titulos.mjs. */
+  font-weight: 900;
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+
+:where(h1) {
+  font-size: var(--type-hero);
+  line-height: var(--leading-display);
+}
+
+/* Apertura común, escala decidida por ruta.
+   Los valores por defecto siguen siendo los históricos; cada ruta puede fijar
+   --route-hero-size / --route-hero-leading / --route-hero-tracking desde
+   route-identity.css para dejar de abrir exactamente igual que las demás. */
+#main-content :is(
+  .hero-module,
+  .page-hero,
+  .academy-hero,
+  .plan-presentation-hero,
+  .shop-hero,
+  .app-hero,
+  .community-hero,
+  .resources-hero,
+  .faq-hero,
+  .checkout-hero,
+  .confirmation-intro,
+  .funnel-threshold__content
+) h1 {
+  min-width: 0;
+  font-size: var(--route-hero-size, var(--type-hero));
+  line-height: var(--route-hero-leading, var(--leading-display));
+  letter-spacing: var(--route-hero-tracking, var(--tracking-display));
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Keep animated Home words atomic while still allowing wrapping between words. */
+#main-content .hero-module .hero-title-word {
+  display: inline-block;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+:where(h2) {
+  font-size: var(--type-section);
+  line-height: var(--leading-heading);
+}
+
+:where(h3) {
+  font-size: var(--type-card);
+  line-height: 1.02;
+}
+
+:where(p, li, dd, blockquote) {
+  font-family: var(--font-body);
+  line-height: var(--leading-body);
+}
+
+:where(.eyebrow, [class*='kicker'], [class*='eyebrow'], [class*='label'], [class*='meta']) {
+  font-family: var(--font-label);
+  letter-spacing: var(--tracking-label);
+}
+
+.section-shell,
+.community-shell,
+.resources-shell,
+.about-shell,
+.programs-shell {
+  width: min(var(--layout-max), calc(100% - (var(--layout-gutter) * 2))) !important;
+  margin-inline: auto;
+}
+
+:where(main section) {
+  scroll-margin-top: calc(var(--nav-height) + 1.25rem);
+}
+
+:where(main section:not(.scene-bg):not(.page-hero):not(.video-section)) {
+  background-color: var(--luxury-black);
+  /* Suelo de sección configurable por ruta. Por defecto, el histórico: el mismo
+     destello cálido arriba a la derecha. route-identity.css cambia la GEOMETRÍA
+     (posición, ángulo, retícula) por ruta, nunca el color: la paleta es una sola. */
+  background-image: var(
+    --route-ground,
+    radial-gradient(circle at 88% 14%, rgba(244, 162, 97, 0.055), transparent 26%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.012), transparent 18%, rgba(255, 255, 255, 0.008))
+  );
+}
+
+:where(.manifesto, .story-section, .values-section, .program-section, .plans-section,
+  .shop-section, .resources-section, .app-features, .community-main, .stories-section,
+  .faq-section, .global-section) {
+  padding-block: var(--section-space);
+}
+
+.resources-section,
+.shop-feature,
+.shop-closing,
+.shop-app-promo {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+.page-hero,
+.app-hero,
+.shop-hero,
+.community-hero,
+.about-hero,
+.programs-hero,
+.resources-hero,
+.faq-hero {
+  /* Altura de apertura configurable por ruta; el valor por defecto es el histórico. */
+  min-height: var(--route-hero-min, clamp(42rem, 82svh, 58rem)) !important;
+  height: auto !important;
+}
+
+/* Ancla de posicionamiento para la capa WebGL de PageHero (prop `scene`).
+   Solo existe cuando una página aprobada monta escena; el resto no cambia. */
+.page-hero {
+  position: relative;
+}
+
+/* Capa WebGL del PageHero (Fase 11.4): canvas detrás del contenido.
+   Recibe puntero en las zonas vacías del hero (órbita del showroom);
+   el contenido (z-index 1) conserva todos sus clics. */
+.page-hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.page-hero-content,
+.home-content,
+.app-hero-copy {
+  width: min(var(--layout-max), calc(100% - (var(--layout-gutter) * 2))) !important;
+}
+
+.navbar {
+  min-height: var(--nav-height);
+  height: var(--nav-height);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(5, 5, 5, 0.78);
+  box-shadow: 0 16px 52px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(20px) saturate(0.82);
+}
+
+.navbar.is-scrolled,
+.navbar.is-open {
+  background: rgba(5, 5, 5, 0.94);
+}
+
+.plan-showroom-preview .plan-price,
+.plan-price-count,
+.persistent-summary-count,
+.shop-product-price,
+.shop-feature-price,
+.checkout-plan-price,
+.summary-total-price {
+  font-family: var(--font-body) !important;
+  font-variant-numeric: tabular-nums lining-nums !important;
+  font-feature-settings: 'zero' 0, 'tnum' 1, 'lnum' 1 !important;
+  letter-spacing: -0.055em !important;
+}
+
+.plan-price-count {
+  min-width: 0 !important;
+  white-space: nowrap;
+}
+
+:where(.gold-button, .cta-primary, .cta-secondary, .plan-cta, .plan-presentation-link,
+  .funnel-button, .shop-add-to-cart, .shop-product-actions a) {
+  min-height: 3.25rem;
+  font-family: var(--font-label);
+  letter-spacing: 0.075em;
+}
+
+.video-section--standalone {
+  background:
+    linear-gradient(180deg, #050505 0%, rgba(9, 9, 10, 0.94) 36%, #050505 100%),
+    radial-gradient(circle at 72% 28%, rgba(244, 162, 97, 0.1), transparent 40%);
+}
+
+.video-section__frame {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: #090909;
+  box-shadow: 0 40px 110px rgba(0, 0, 0, 0.48);
+}
+
+.video-section__poster > img {
+  opacity: 0.7;
+  mask-image: linear-gradient(180deg, #000 0%, #000 54%, transparent 100%);
+}
+
+/* Mobile keeps editorial scale through horizontal, snap-based rails instead of shrinking cards. */
+@media (max-width: 1180px) {
+  .desktop-nav,
+  .nav-cta {
+    display: none !important;
+  }
+
+  .menu-button {
+    display: grid !important;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --type-display: clamp(3.55rem, 18vw, 6.5rem);
+    --type-hero: clamp(2rem, 10vw, 5rem);
+    --type-section: clamp(2.75rem, 13vw, 4.9rem);
+    --type-feature: clamp(2rem, 9vw, 3.2rem);
+    --type-card: clamp(1.12rem, 5.8vw, 1.65rem);
+    --type-lead: clamp(1rem, 4.8vw, 1.2rem);
+    --layout-gutter: 1.15rem;
+    --section-space: clamp(5rem, 23vw, 7.75rem);
+    --nav-height: 4rem;
+  }
+
+  body {
+    font-size: var(--type-size-08);
+  }
+
+  .navbar {
+    padding-inline: 1rem;
+  }
+
+  .page-hero,
+  .app-hero,
+  .shop-hero,
+  .community-hero,
+  .about-hero,
+  .programs-hero,
+  .resources-hero,
+  .faq-hero {
+    min-height: clamp(38rem, 88svh, 50rem) !important;
+  }
+
+  :where(.values-grid, .about-values-grid, .age-path-grid, .program-pillars-grid,
+    .community-tiers-grid, .resources-grid, .shop-collection-cards,
+    .app-feature-grid, .app-differentiators-grid) {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-auto-columns: min(84vw, 22rem);
+    grid-template-columns: none !important;
+    gap: 0.9rem;
+    margin-right: calc(var(--layout-gutter) * -1);
+    padding-right: var(--layout-gutter);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+  }
+
+  :where(.values-grid, .about-values-grid, .age-path-grid, .program-pillars-grid,
+    .community-tiers-grid, .resources-grid, .shop-collection-cards,
+    .app-feature-grid, .app-differentiators-grid)::-webkit-scrollbar {
+    display: none;
+  }
+
+  :where(.values-grid, .about-values-grid, .age-path-grid, .program-pillars-grid,
+    .community-tiers-grid, .resources-grid, .shop-collection-cards,
+    .app-feature-grid, .app-differentiators-grid) > * {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .mobile-nav {
+    inset: var(--nav-height) 0 0 !important;
+    overflow-y: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

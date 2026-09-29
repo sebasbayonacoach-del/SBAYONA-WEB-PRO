@@ -1,0 +1,441 @@
+/**
+ * Auth + área de miembros + lead magnet (Fase 2 SaaS).
+ *
+ * Clases propias con prefijos `entrar-`, `members-` y `lead-`: no colisionan
+ * con ninguna hoja de página. Reutiliza el lenguaje global (gold-button,
+ * eyebrow, section-shell) y solo aporta el envoltorio oscuro premium.
+ */
+
+.entrar-page,
+.members-page {
+  background: #060606;
+  color: #f5f1e8;
+}
+
+.entrar-page {
+  padding: 4.5rem 0 3.5rem;
+}
+
+.entrar-card {
+  max-width: 26rem;
+  margin: 0 auto;
+  padding: 2rem 1.75rem;
+  border: 1px solid rgba(216, 180, 90, 0.28);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.entrar-card h1 {
+  font-size: var(--type-size-11);
+  letter-spacing: 0.02em;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.entrar-lead {
+  opacity: 0.72;
+  font-size: var(--type-size-08);
+  margin: 0 0 1.5rem;
+}
+
+.entrar-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.entrar-tabs button {
+  background: none;
+  border: 0;
+  color: #f5f1e8;
+  opacity: 0.55;
+  font: inherit;
+  font-size: var(--type-size-07);
+  letter-spacing: 0.12em;
+  padding: 0.7rem 0.25rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.entrar-tabs button[aria-selected='true'] {
+  opacity: 1;
+  border-bottom-color: #d8b45a;
+}
+
+.entrar-form label {
+  display: block;
+  font-size: var(--type-size-06);
+  letter-spacing: 0.14em;
+  opacity: 0.75;
+  margin: 1rem 0 0.4rem;
+}
+
+.entrar-form input {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 3px;
+  color: #f5f1e8;
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.7rem 0.8rem;
+}
+
+.entrar-form input:focus-visible {
+  outline: 2px solid #d8b45a;
+  outline-offset: 2px;
+}
+
+.entrar-form .gold-button {
+  width: 100%;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+.entrar-errors {
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(220, 90, 90, 0.55);
+  border-radius: 3px;
+  background: rgba(220, 90, 90, 0.08);
+  font-size: var(--type-size-07);
+}
+
+.entrar-recover {
+  margin-top: 1.25rem;
+  font-size: var(--type-size-07);
+  opacity: 0.85;
+}
+
+.entrar-recover > button {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: #d8b45a;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.entrar-recover-note {
+  margin: 0.6rem 0 0;
+  font-size: var(--type-size-07);
+  opacity: 0.75;
+}
+
+/* Área de miembros. */
+
+.members-hero {
+  padding-top: 3.5rem;
+}
+
+.members-hero h1 {
+  font-size: var(--type-size-13);
+  margin: 0.75rem 0 0.25rem;
+  overflow-wrap: break-word;
+}
+
+.members-tier {
+  margin: 0.25rem 0 0;
+  font-size: var(--type-size-08);
+  opacity: 0.85;
+}
+
+.members-tier strong {
+  color: #d8b45a;
+  letter-spacing: 0.1em;
+}
+
+.members-signout {
+  margin-top: 1rem;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  color: #f5f1e8;
+  font: inherit;
+  font-size: var(--type-size-06);
+  letter-spacing: 0.14em;
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+}
+
+.members-grid {
+  display: grid;
+  gap: 1.25rem;
+  padding-bottom: 3.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+}
+
+.members-block {
+  border: 1px solid rgba(216, 180, 90, 0.22);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.025);
+  padding: 1.5rem 1.35rem;
+}
+
+.members-block h2 {
+  font-size: var(--type-size-08);
+  letter-spacing: 0.06em;
+  margin: 0 0 0.6rem;
+}
+
+.members-block p {
+  font-size: var(--type-size-07);
+  opacity: 0.78;
+  margin: 0 0 1rem;
+}
+
+.members-routine-list {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.members-routine-list label {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  font-size: var(--type-size-07);
+  cursor: pointer;
+}
+
+.members-routine-list input {
+  accent-color: #d8b45a;
+  width: 1rem;
+  height: 1rem;
+}
+
+.members-progress-count {
+  font-size: var(--type-size-14);
+  margin: 0 0 0.25rem;
+}
+
+.members-progress-count strong {
+  color: #d8b45a;
+}
+
+.members-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.members-links a {
+  color: #d8b45a;
+  font-size: 0.86rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(216, 180, 90, 0.4);
+  padding-bottom: 0.35rem;
+  width: fit-content;
+}
+
+/* Lead magnet (embudo freemium). */
+
+.lead-magnet {
+  background: #060606;
+  color: #f5f1e8;
+  border-top: 1px solid rgba(216, 180, 90, 0.25);
+  border-bottom: 1px solid rgba(216, 180, 90, 0.25);
+}
+
+.lead-magnet-inner {
+  padding-top: 2.75rem;
+  padding-bottom: 2.75rem;
+  max-width: 34rem;
+}
+
+.lead-magnet h2 {
+  font-size: var(--type-size-11);
+  margin: 0.75rem 0 0.5rem;
+}
+
+.lead-magnet p {
+  font-size: var(--type-size-08);
+  opacity: 0.75;
+  margin: 0 0 1.25rem;
+}
+
+.lead-magnet form label {
+  display: block;
+  font-size: var(--type-size-06);
+  letter-spacing: 0.14em;
+  opacity: 0.75;
+  margin: 0.9rem 0 0.4rem;
+}
+
+.lead-magnet form input {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 3px;
+  color: #f5f1e8;
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.7rem 0.8rem;
+}
+
+.lead-magnet form input:focus-visible {
+  outline: 2px solid #d8b45a;
+  outline-offset: 2px;
+}
+
+.lead-magnet .gold-button {
+  width: 100%;
+  margin-top: 1.4rem;
+  justify-content: center;
+}
+
+.lead-magnet-errors {
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(220, 90, 90, 0.55);
+  border-radius: 3px;
+  background: rgba(220, 90, 90, 0.08);
+  font-size: var(--type-size-07);
+}
+
+.lead-magnet-errors ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.lead-magnet-success {
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(216, 180, 90, 0.45);
+  border-radius: 3px;
+  background: rgba(216, 180, 90, 0.07);
+  font-size: var(--type-size-08);
+}
+
+.lead-magnet-note {
+  margin: 1rem 0 0;
+  font-size: var(--type-size-07);
+}
+
+/* Push opt-in (/app · RECURSOS GRATIS). Reutiliza .members-signout. */
+.members-push {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+
+.members-push .members-signout {
+  margin-top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.members-push-note {
+  margin: 0;
+  font-size: var(--type-size-07);
+}
+
+/* Botón Google (/entrar). Blanco de marca Google sobre el tema oscuro;
+   radio 0 como el resto del sistema BAYONA. */
+.entrar-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0 1rem;
+  color: var(--muted, #a3a3a3);
+  font-size: var(--type-size-06);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.entrar-divider::before,
+.entrar-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.entrar-google {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  font-size: var(--type-size-08);
+  color: #1f1f1f;
+  background: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.entrar-google:hover:not(:disabled) {
+  background: #f7f8f8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.entrar-google:focus-visible {
+  outline: 2px solid var(--gold, #f4a261);
+  outline-offset: 2px;
+}
+
+.entrar-google:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.entrar-google svg {
+  flex: 0 0 auto;
+}
+
+.entrar-note {
+  margin: 0.85rem 0 0;
+  font-size: var(--type-size-07);
+}
+
+/* La hoja de rutina que se entrega en el intercambio: el objeto antes del
+ * formulario, para que lo primero que se vea sea lo que se recibe. */
+.lead-magnet-figure {
+  display: block;
+  width: min(100%, 300px);
+  height: auto;
+  margin: 0 auto clamp(18px, 2.6vw, 30px);
+}
+
+.lead-magnet-hoja {
+  fill: var(--bayona-surface-1);
+  stroke: rgba(244, 162, 97, 0.5);
+  stroke-width: 1.5;
+}
+
+.lead-magnet-hoja.is-atras {
+  fill: none;
+  stroke: rgba(244, 162, 97, 0.22);
+}
+
+.lead-magnet-linea {
+  stroke: rgba(244, 162, 97, 0.4);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.lead-magnet-linea.is-titulo {
+  stroke: var(--bayona-white);
+  stroke-width: 3;
+}
+
+.lead-magnet-sello {
+  fill: var(--bayona-orange);
+}

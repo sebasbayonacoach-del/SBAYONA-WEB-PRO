@@ -1,0 +1,272 @@
+/* BAYONA · PRUEBA DE PROCESO COMO SISTEMA ESPACIAL */
+
+.proof-process-immersive {
+  position: relative;
+  width: 100%;
+  color: #f7f7f3;
+}
+
+.proof-process-intro {
+  max-width: 980px;
+  padding: clamp(4.5rem, 8vw, 8rem) 0 clamp(2rem, 4vw, 4rem);
+}
+
+.proof-process-intro > p,
+.proof-process-copy > p,
+.proof-process-counter,
+.proof-process-plane {
+  font-family: var(--type-family-mono, monospace);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.proof-process-intro > p {
+  margin: 0 0 1.2rem;
+  color: var(--bayona-orange, #f4a261);
+  font-size: .66rem;
+  font-weight: 700;
+}
+
+.proof-process-intro h2 {
+  max-width: 10ch;
+  margin: 0;
+  color: #f7f7f3;
+  font-size: clamp(3.8rem, 7vw, 7.6rem);
+  font-weight: 900;
+  line-height: .88;
+  letter-spacing: -.058em;
+  text-wrap: balance;
+}
+
+.proof-process-intro > span {
+  display: block;
+  max-width: 40rem;
+  margin-top: 1.5rem;
+  color: rgba(247,247,243,.66);
+  font-size: clamp(1rem, 1.2vw, 1.14rem);
+  line-height: 1.7;
+}
+
+.proof-process-stage {
+  margin-inline: calc(var(--prime-gutter, 24px) * -1);
+}
+
+.proof-process-stage .sticky-stage-viewport {
+  height: calc(100svh - 66px);
+  min-height: 620px;
+}
+
+.proof-process-viewport {
+  position: relative;
+  width: min(var(--prime-page-max, 1380px), calc(100vw - (var(--prime-gutter, 24px) * 2)));
+  height: 100%;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 7rem);
+}
+
+.proof-process-visual {
+  position: relative;
+  min-height: min(68vh, 680px);
+  display: grid;
+  place-items: center;
+  perspective: 1200px;
+}
+
+.proof-process-object {
+  position: relative;
+  width: clamp(300px, 42vw, 650px);
+  height: clamp(300px, 42vw, 650px);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.proof-process-plane {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: calc(19% + (var(--plane-index) * 25%));
+  height: 20%;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: center;
+  padding: 0 1.2rem;
+  color: rgba(247,247,243,.28);
+  border-top: 1px solid rgba(247,247,243,.14);
+  transform: translateZ(calc((2 - var(--plane-index)) * 44px)) rotateX(-7deg);
+  transition:
+    color .32s ease,
+    border-color .32s ease,
+    transform .42s cubic-bezier(.16,1,.3,1);
+}
+
+.proof-process-plane::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(244,162,97,.035), transparent 70%);
+  opacity: 0;
+  transition: opacity .32s ease;
+}
+
+.proof-process-plane span {
+  position: relative;
+  z-index: 1;
+  font-size: .62rem;
+}
+
+.proof-process-plane strong {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(1.1rem, 2vw, 2rem);
+  font-weight: 700;
+  letter-spacing: .13em;
+}
+
+.proof-process-plane i {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 0;
+  height: 2px;
+  background: var(--bayona-orange, #f4a261);
+  transition: width .4s cubic-bezier(.16,1,.3,1);
+}
+
+.proof-process-plane[data-past='true'] {
+  color: rgba(247,247,243,.45);
+}
+
+.proof-process-plane[data-active='true'] {
+  color: #f7f7f3;
+  border-color: rgba(244,162,97,.52);
+  transform: translateZ(110px) rotateX(0deg) scale(1.03);
+}
+
+.proof-process-plane[data-active='true']::before {
+  opacity: 1;
+}
+
+.proof-process-plane[data-active='true'] i {
+  width: 100%;
+}
+
+.proof-process-pulse {
+  position: absolute;
+  left: 4%;
+  top: calc(27% + (var(--pulse-index) * 25%));
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bayona-orange, #f4a261);
+  box-shadow: 0 0 22px rgba(244,162,97,.72);
+  transform: translateZ(130px);
+  transition: top .42s cubic-bezier(.16,1,.3,1);
+}
+
+.proof-process-copy > p {
+  margin: 0 0 1rem;
+  color: var(--bayona-orange, #f4a261);
+  font-size: .66rem;
+  font-weight: 700;
+}
+
+.proof-process-copy h3 {
+  max-width: 11ch;
+  margin: 0;
+  color: #f7f7f3;
+  font-size: clamp(3rem, 5vw, 5.8rem);
+  font-weight: 900;
+  line-height: .9;
+  letter-spacing: -.052em;
+  text-wrap: balance;
+}
+
+.proof-process-counter {
+  position: absolute;
+  right: 0;
+  bottom: 2rem;
+  margin: 0;
+  color: rgba(247,247,243,.35);
+  font-size: .58rem;
+}
+
+@media (max-width: 760px) {
+  .proof-process-intro {
+    padding: 4.5rem 0 1.5rem;
+  }
+
+  .proof-process-intro h2 {
+    font-size: clamp(2.65rem, 12vw, 4.45rem);
+  }
+
+  .proof-process-stage .sticky-stage-viewport {
+    height: calc(100svh - 66px);
+    min-height: 0;
+  }
+
+  .proof-process-viewport {
+    width: min(100% - 32px, 620px);
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(260px, 43vh) auto;
+    gap: .5rem;
+    align-content: center;
+  }
+
+  .proof-process-visual {
+    min-height: 0;
+  }
+
+  .proof-process-object {
+    width: min(82vw, 350px);
+    height: min(82vw, 350px);
+  }
+
+  .proof-process-plane {
+    left: 0;
+    right: 0;
+    grid-template-columns: 42px 1fr;
+    padding-inline: .3rem;
+  }
+
+  .proof-process-plane strong {
+    font-size: .92rem;
+  }
+
+  .proof-process-copy h3 {
+    max-width: 12ch;
+    font-size: clamp(2.2rem, 9.5vw, 3.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proof-process-stage {
+    margin-inline: 0;
+  }
+
+  .proof-process-stage .sticky-stage-frame {
+    border-top: 1px solid rgba(247,247,243,.12);
+  }
+
+  .proof-process-object,
+  .proof-process-plane,
+  .proof-process-pulse {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* El antiguo intro de proof tenía max-width:900px. Este motor ocupa el marco completo. */
+.proof-section > .section-shell > .proof-process-immersive {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.proof-section .proof-process-stage {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  margin-inline: 0 !important;
+}

@@ -1,0 +1,182 @@
+
+/* PRIME performance gate: a CSS custom-property URL is not painted until the
+   section approaches the viewport. Once loaded we never unload it, avoiding
+   flicker when scrolling back. */
+.scene-bg[data-media-key] {
+  --prime-scene-image: none;
+}
+
+.scene-bg[data-media-key][data-prime-scene-near='true'] {
+  --prime-scene-image: var(--scene-image);
+}
+
+.scene-bg {
+  /*
+    `--scene-image` es lo que consumen todas las hojas (home.css, about.css,
+    plan-presentation.css…). Aquí se resuelve una sola vez: por defecto la URL
+    plana, y en el @supports de más abajo la versión con image-set().
+    Así se sirve la resolución adecuada sin duplicar ni un selector.
+  */
+  --scene-image: var(--scene-image-url, none);
+  --scene-position: center;
+  --scene-opacity: 0.62;
+  --scene-overlay: 32%;
+  --scene-blur: 0px;
+  position: relative;
+  isolation: isolate;
+  background-color: #050505;
+}
+
+/*
+  Los fondos de escena son el LCP de casi todas las páginas y se pedían siempre
+  al ancho máximo (1600 px), también en un móvil de 390 px. Con image-set() el
+  navegador elige 960 px o 1600 px según la densidad de pantalla.
+
+  Va detrás de @supports a propósito: Safari 14–16 solo entiende
+  -webkit-image-set, y si el valor de una custom property no es válido el
+  navegador la deja sin definir, lo que borraría el fondo entero. Con la
+  comprobación previa, esos navegadores se quedan con --scene-image-url.
+*/
+@supports (background-image: image-set(url('data:image/gif;base64,R0lGODlhAQABAAAAACw=') 1x)) {
+  .scene-bg {
+    --scene-image: var(--scene-image-set, var(--scene-image-url, none));
+  }
+}
+
+.scene-bg--hero {
+  --scene-opacity: 0.94;
+  --scene-overlay: 18%;
+  --scene-blur: 0px;
+}
+
+.scene-bg--accent {
+  --scene-opacity: 0.78;
+  --scene-overlay: 24%;
+  --scene-blur: 0px;
+}
+
+.scene-bg:not(.scene-bg--after)::before,
+.scene-bg.scene-bg--after::after {
+  position: absolute;
+  z-index: -1;
+  inset: -1px;
+  content: '';
+  pointer-events: none;
+  background-image:
+    linear-gradient(180deg,
+      rgb(5 5 5 / var(--scene-overlay)) 0%,
+      rgba(5, 5, 5, 0.12) 36%,
+      rgba(5, 5, 5, 0.34) 68%,
+      #050505 100%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.58) 0%, rgba(5, 5, 5, 0.08) 52%, rgba(5, 5, 5, 0.3) 100%),
+    var(--prime-scene-image, var(--scene-image));
+  background-position: center, center, var(--scene-position);
+  background-repeat: no-repeat;
+  background-size: cover, cover, cover;
+  filter: blur(var(--scene-blur));
+  opacity: var(--scene-opacity);
+  transform-origin: center;
+  clip-path: inset(0);
+  mask-image: linear-gradient(180deg, #000 0%, #000 76%, rgba(0, 0, 0, 0.72) 86%, transparent 100%);
+}
+
+.scene-bg--hero:not(.scene-bg--after)::before,
+.scene-bg--hero.scene-bg--after::after {
+  /* Medido con scripts/probe-contraste.mjs: los titulares de héroe quedaban a
+     ratio 2,3–3,2 sobre la foto, porque este degradado arrancaba en 0,10 vertical
+     y 0,14 en el centro horizontal —la banda donde cae el texto— y solo oscurecía
+     de verdad abajo del todo, que suele estar vacío. Se sube esa banda sin tocar
+     el pie (que ya era opaco) ni el extremo derecho, para no apagar la foto. */
+  background-image:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.3) 0%, rgba(5, 5, 5, 0.36) 48%, #050505 100%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.82) 0%, rgba(5, 5, 5, 0.34) 58%, rgba(5, 5, 5, 0.22) 100%),
+    var(--prime-scene-image, var(--scene-image));
+}
+
+/* --------------------------------------------------------------------------
+   SUPERFICIE CORTA — el velo de arriba está escrito para un hero a alto
+   completo: la rampa vertical termina en #050505 opaco en el 100 % y la
+   máscara suelta el último 24 %. En una tarjeta de 205 px o una fila de 156
+   eso recorta media foto y deja banda negra al pie, y con las piezas pegadas
+   el conjunto se lee a rayas. Medido en /programs (franjas de edad) y
+   repetido en 30 superficies de /community, /resources, /shop y /programs.
+   La corrección va por variante, no por llamada: `hero` es cinematográfico y
+   se disuelve; `accent` y `subtle` son superficies y enseñan la foto entera.
+   `--flat` queda para forzarlo donde haga falta sin cambiar de variante.
+   -------------------------------------------------------------------------- */
+.scene-bg--accent:not(.scene-bg--after)::before,
+.scene-bg--subtle:not(.scene-bg--after)::before,
+.scene-bg--flat:not(.scene-bg--after)::before,
+.scene-bg--accent.scene-bg--after::after,
+.scene-bg--subtle.scene-bg--after::after,
+.scene-bg--flat.scene-bg--after::after {
+  background-image:
+    linear-gradient(180deg, rgb(5 5 5 / var(--scene-overlay)) 0%, rgb(5 5 5 / var(--scene-overlay)) 100%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.58) 0%, rgba(5, 5, 5, 0.08) 52%, rgba(5, 5, 5, 0.3) 100%),
+    var(--prime-scene-image, var(--scene-image));
+  mask-image: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  .scene-bg--motion:not(.scene-bg--after)::before,
+  .scene-bg--motion.scene-bg--after::after {
+    animation: scene-bg-drift 22s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+}
+
+@keyframes scene-bg-drift {
+  from {
+    transform: scale(1.012) translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: scale(1.052) translate3d(0, -0.8%, 0);
+  }
+}
+
+@media (max-width: 760px) {
+
+  .scene-bg:not(.scene-bg--after)::before,
+  .scene-bg.scene-bg--after::after {
+    background-position: center, center, var(--scene-position);
+    mask-image: linear-gradient(180deg, #000 0%, #000 70%, rgba(0, 0, 0, 0.7) 83%, transparent 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .scene-bg:not(.scene-bg--after)::before,
+  .scene-bg.scene-bg--after::after {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   VELO DE LA CAPA DEL CYCLER  (decisión de Sebastián, 20-sep)
+   --------------------------------------------------------------------------
+   El lienzo del `RouteSceneCycler` se desplaza CON su sección, así que su
+   objeto no se queda quieto: barre la franja central entera mientras se baja.
+   Medido sección a sección (`scripts/inventario-3d.mjs`), los huecos libres
+   reales de las rutas de texto van de 157 a 622 px, y el objeto más pequeño del
+   repertorio mide 272 px de alto (la media, 522). Es decir: por bien elegido que
+   esté el objeto, en algún fotograma cruza letras.
+
+   Retirar el 3D de esas rutas dejaba el sitio en cuatro objetos y mataba la
+   inmersión que pide el brief, así que se ataca el otro término del problema:
+   el objeto sigue donde está, pero deja de competir. A `opacity: 1` un disco
+   negro sobre un titular negro es un obstáculo; a 0,5 es profundidad.
+
+   Es UNA regla por atributo, no nueve parches por ruta. El texto ya va por
+   encima (z-index 1) y la capa no recibe puntero, así que esto solo baja peso
+   visual. Si algún día el objeto vuelve a primer plano en una ruta, se le da
+   opacidad propia a ESE tramo en lugar de subir la global.
+   ========================================================================== */
+[data-scene-cycler] {
+  /* `--scene-veil` lo pone `RouteSceneCycler` en cada sección midiendo su hueco
+     libre real: 0,9 donde el objeto tiene el encuadre para él solo (la línea de
+     tiempo de `/about`, 3841 px libres) y 0,5 donde comparte franja con texto.
+     El valor por defecto deja velo incluso si el script no llegó a medir. */
+  opacity: var(--scene-veil, 0.5);
+}

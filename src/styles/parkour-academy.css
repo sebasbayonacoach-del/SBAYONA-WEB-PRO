@@ -1,0 +1,1229 @@
+.parkour-academy {
+  --academy-orange: #f4a261;
+  --academy-cream: #f3eee6;
+  overflow: clip;
+  background: #050505;
+  color: var(--academy-cream);
+}
+
+.parkour-academy :is(h1, h2, h3, p) { margin-top: 0; }
+.parkour-academy :is(h1, h2, h3) { text-wrap: balance; }
+
+.academy-hero {
+  position: relative;
+  min-height: max(760px, 100svh);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(120px, 15vh, 180px) clamp(22px, 6vw, 96px) clamp(54px, 8vh, 94px);
+}
+
+/* El raíl común (23-09): este hero era el único que sumaba dos huecos — su
+   `padding-inline` de hasta 96px y el del marco—, así que el titular caía en
+   x=215 mientras el resto del sitio estaba en 120. El `section` tiene un solo
+   hijo (`.academy-hero-inner`), que ya pide el ancho del marco, así que el
+   aire lateral lo pone `--layout-gutter` y sobra la parte de aquí. Por debajo
+   de 1100px se conserva el relleno original: ahí el marco no reserva carril. */
+@media (min-width: 1100px) {
+  .academy-hero {
+    padding-inline: 0;
+  }
+}
+
+/* =========================================================================
+   CAPA WEBGL DE LA TRAYECTORIA (Fase 11.3)
+   El canvas de Three.js vive detrás del contenido del hero (z-index: 0) y no
+   captura eventos de puntero: los CTAs siguen recibiendo todos los clics.
+   ========================================================================= */
+.academy-parkour-webgl {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.academy-hero-inner {
+  width: min(100%, 1500px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 40px;
+  align-items: end;
+}
+
+.academy-hero-copy { max-width: 980px; }
+.academy-hero h1,
+.academy-heading h2,
+.academy-safety h2,
+.academy-closing h2 {
+  margin-bottom: 28px;
+  font-family: var(--type-family-display);
+  font-weight: 850;
+  line-height: .84;
+  letter-spacing: -.075em;
+  text-transform: uppercase;
+}
+
+.academy-hero h1 { font-size: clamp(62px, 9.5vw, 160px); }
+.academy-hero h1 span,
+.academy-heading h2 span,
+.academy-safety h2 span,
+.academy-closing h2 span { color: var(--academy-orange); }
+
+.academy-hero-copy > p {
+  max-width: 650px;
+  margin-bottom: 32px;
+  color: rgba(255, 255, 255, .82);
+  font-size: clamp(17px, 1.7vw, 24px);
+  line-height: 1.5;
+}
+
+.academy-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.academy-action {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 14px 20px;
+  border: 1px solid rgba(255,255,255,.38);
+  color: #fff;
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-05);
+  letter-spacing: .09em;
+  text-decoration: none;
+  transition: color 280ms ease, background 280ms ease, border-color 280ms ease;
+}
+.academy-action--primary { border-color: var(--academy-orange); background: var(--academy-orange); color: #090909; }
+.academy-action--quiet { background: rgba(5,5,5,.38); backdrop-filter: blur(12px); }
+.academy-action:is(:hover, :focus-visible) { background: #fff; border-color: #fff; color: #050505; }
+.academy-hero-copy small,
+.academy-safety-copy small {
+  display: block;
+  margin-top: 18px;
+  color: rgba(255,255,255,.62);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-05);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.academy-hero-words { display: grid; gap: 8px; padding-bottom: 10px; }
+.academy-hero-words span {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.28);
+  color: rgba(255,255,255,.65);
+  font: 12px/1 'DM Mono', monospace;
+  letter-spacing: .14em;
+  writing-mode: vertical-rl;
+}
+
+.academy-principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-block: 1px solid rgba(255,255,255,.13);
+  background: #080808;
+}
+.academy-principles span {
+  min-height: 74px;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  border-right: 1px solid rgba(255,255,255,.13);
+  color: rgba(255,255,255,.72);
+  font: 12px/1.4 'DM Mono', monospace;
+  letter-spacing: .11em;
+  text-align: center;
+}
+.academy-principles span:last-child { border-right: 0; }
+
+.academy-section { padding: clamp(90px, 12vw, 180px) clamp(22px, 6vw, 96px); }
+.academy-heading { width: min(100%, 1220px); margin: 0 auto clamp(54px, 8vw, 100px); }
+.academy-heading--compact { max-width: 920px; margin-left: 0; }
+.academy-heading h2,
+.academy-safety h2,
+.academy-closing h2 { font-size: clamp(44px, 7.3vw, 112px); }
+.academy-heading > p { max-width: 680px; color: #aaa59e; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.65; }
+
+.academy-paths { background: #f1ece3; color: #0a0a0a; }
+.academy-paths .eyebrow { color: #625f5a; }
+.academy-age-track {
+  width: min(100%, 1440px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: auto;
+  border: 1px solid rgba(0,0,0,.22);
+  background: rgba(0,0,0,.22);
+}
+.academy-age {
+  min-height: 410px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-content: space-between;
+  gap: 28px;
+  padding: clamp(26px, 3.4vw, 46px);
+  border-bottom: 0;
+  background:
+    linear-gradient(145deg, rgba(198, 109, 53, 0.13), transparent 44%),
+    #ebe3d7;
+}
+.academy-age > strong {
+  grid-column: 1 / -1;
+  color: var(--academy-orange);
+  font: 800 clamp(60px, 8vw, 118px)/0.82 Montserrat, sans-serif;
+  letter-spacing: -.09em;
+}
+.academy-age-kicker {
+  display: block;
+  margin-bottom: 14px;
+  color: #766e67;
+  font: 800 11px/1 'DM Mono', monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.academy-age h3 { margin-bottom: 12px; font-size: clamp(26px, 3vw, 46px); letter-spacing: -.05em; }
+.academy-age p { max-width: 620px; margin-bottom: 0; color: #5b5752; line-height: 1.6; }
+.academy-age em {
+  display: block;
+  max-width: 520px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0,0,0,.18);
+  color: #1a1715;
+  font: 700 12px/1.55 'DM Mono', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.academy-zero-step {
+  width: min(100%, 1440px);
+  display: grid;
+  grid-template-columns: minmax(130px, 0.24fr) minmax(0, 1fr) auto;
+  gap: clamp(18px, 3vw, 42px);
+  align-items: center;
+  margin: clamp(24px, 4vw, 44px) auto 0;
+  padding: clamp(20px, 3vw, 34px);
+  border: 1px solid rgba(0,0,0,.22);
+  background: rgba(255,255,255,.38);
+}
+
+.academy-zero-step span {
+  color: var(--academy-orange);
+  font: 800 11px/1 'DM Mono', monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.academy-zero-step p {
+  margin: 0;
+  color: #4e4944;
+  line-height: 1.55;
+}
+
+.academy-zero-step a {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border-bottom: 1px solid var(--academy-orange);
+  color: #0a0a0a;
+  font: 800 12px/1 'DM Mono', monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.academy-levels { min-height: 900px; }
+.academy-levels::before { mask-image: linear-gradient(#000 0%, #000 82%, transparent 100%); }
+.academy-level-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid rgba(255,255,255,.2); }
+.academy-level {
+  min-height: 470px;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 46px);
+  border-right: 1px solid rgba(255,255,255,.2);
+  background: linear-gradient(180deg, rgba(5,5,5,.26), rgba(5,5,5,.84));
+  backdrop-filter: blur(4px);
+}
+.academy-level:last-child { border-right: 0; }
+.academy-level > span { color: var(--academy-orange); font: 12px/1 'DM Mono', monospace; }
+.academy-level > p { margin: 80px 0 12px; color: rgba(255,255,255,.6); font: 12px/1.4 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+.academy-level h3 { margin-bottom: 35px; font-size: clamp(30px, 3.4vw, 52px); letter-spacing: -.06em; }
+.academy-level ul { margin: auto 0 0; padding: 0; list-style: none; }
+.academy-level li { padding: 12px 0; border-top: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.78); }
+
+.academy-method { background: #080808; }
+.academy-method-list { width: min(100%, 1440px); margin: auto; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,.17); }
+.academy-method-list li { display: grid; grid-template-columns: 90px minmax(180px,.6fr) 1fr; gap: 30px; align-items: start; padding: 34px 0; border-bottom: 1px solid rgba(255,255,255,.17); }
+.academy-method-list span { color: var(--academy-orange); font: 12px/1 'DM Mono', monospace; }
+.academy-method-list h3 { margin: -7px 0 0; font-size: clamp(28px, 3.4vw, 54px); letter-spacing: -.05em; }
+.academy-method-list p { max-width: 620px; margin: 0; color: #aaa59e; line-height: 1.65; }
+
+.academy-safety { min-height: min(900px, 100svh); display: flex; align-items: flex-end; }
+.academy-safety-copy { width: min(100%, 900px); }
+.academy-safety-copy > svg { margin-bottom: 25px; color: var(--academy-orange); }
+.academy-safety-copy > p { max-width: 680px; color: rgba(255,255,255,.8); font-size: clamp(17px, 1.7vw, 23px); line-height: 1.6; }
+
+.academy-logistics { background: #f1ece3; color: #090909; }
+.academy-logistics .eyebrow { color: #625f5a; }
+.academy-logistics-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid rgba(0,0,0,.2); }
+.academy-logistics-grid article { min-height: 310px; padding: clamp(26px, 3vw, 48px); border-right: 1px solid rgba(0,0,0,.2); }
+.academy-logistics-grid article:last-child { border-right: 0; }
+.academy-logistics-grid svg { margin-bottom: 70px; color: #c66d35; stroke-width: 1.2; }
+.academy-logistics-grid span { display: block; margin-bottom: 12px; color: #766e67; font: 12px/1 'DM Mono', monospace; letter-spacing: .12em; }
+.academy-logistics-grid h3 { margin-bottom: 12px; font-size: clamp(28px, 3vw, 44px); letter-spacing: -.05em; }
+.academy-logistics-grid p { max-width: 400px; color: #5c5752; line-height: 1.6; }
+
+.academy-faq { background: #080808; }
+.academy-faq-list { width: min(100%, 1200px); margin: auto; border-top: 1px solid rgba(255,255,255,.17); }
+.academy-faq details { border-bottom: 1px solid rgba(255,255,255,.17); }
+.academy-faq summary { min-height: 92px; display: flex; align-items: center; gap: 28px; padding: 22px 0; cursor: pointer; font-size: clamp(17px, 2vw, 28px); font-weight: 650; list-style: none; }
+.academy-faq summary::-webkit-details-marker { display: none; }
+.academy-faq summary::after { content: '+'; margin-left: auto; color: var(--academy-orange); font: 300 28px/1 'Inter', Arial, sans-serif; }
+.academy-faq details[open] summary::after { content: '−'; }
+.academy-faq summary span { color: #716d67; font: 12px/1 'DM Mono', monospace; }
+.academy-faq details > p { max-width: 740px; margin: 0 0 30px 54px; color: #aaa59e; line-height: 1.65; }
+
+.academy-closing { min-height: min(900px, 100svh); display: flex; align-items: flex-end; padding: clamp(100px, 14vw, 190px) clamp(22px, 6vw, 96px); }
+.academy-closing > div { width: min(100%, 1120px); }
+.academy-closing p { max-width: 650px; color: rgba(255,255,255,.78); font-size: clamp(17px, 1.6vw, 22px); line-height: 1.6; }
+.academy-program-link { display: block; width: fit-content; margin-top: 24px; color: rgba(255,255,255,.72); font-size: 13px; text-underline-offset: 5px; }
+
+@media (max-width: 800px) {
+  .academy-hero { min-height: 860px; padding-inline: 20px; }
+  .academy-hero-inner { display: block; }
+  .academy-hero h1 { font-size: clamp(50px, 15vw, 76px); }
+  .academy-hero h1 .academy-hero-final-word {
+    display: block;
+    color: inherit;
+    font-size: .6em;
+    letter-spacing: -.065em;
+  }
+  .academy-hero-words { display: none; }
+  .academy-actions { align-items: stretch; flex-direction: column; }
+  .academy-action { width: 100%; }
+  .academy-principles { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
+  .academy-principles span { min-width: 78vw; border-right: 1px solid rgba(255,255,255,.13); scroll-snap-align: start; }
+  .academy-section { padding: 92px 20px; }
+  .academy-heading { margin-bottom: 52px; }
+  .academy-heading h2, .academy-safety h2, .academy-closing h2 { font-size: clamp(42px, 13.8vw, 68px); line-height: .9; }
+  .academy-safety h2 { font-size: clamp(36px, 11.4vw, 50px); }
+  .academy-age-track { display: flex; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; border: 1px solid rgba(0,0,0,.2); }
+  .academy-age { min-width: 84vw; min-height: 430px; display: flex; flex-direction: column; align-items: flex-start; padding: 28px; border: 0; border-right: 1px solid rgba(0,0,0,.2); scroll-snap-align: start; }
+  .academy-age > svg { margin-top: auto; }
+  .academy-zero-step { grid-template-columns: 1fr; align-items: start; }
+  .academy-level-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
+  .academy-level { min-width: 82vw; border-right: 1px solid rgba(255,255,255,.2); scroll-snap-align: start; }
+  .academy-method-list li { grid-template-columns: 42px 1fr; }
+  .academy-method-list li p { grid-column: 2; }
+  .academy-logistics-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
+  .academy-logistics-grid article { min-width: 84vw; border-right: 1px solid rgba(0,0,0,.2); scroll-snap-align: start; }
+  .academy-safety, .academy-closing { min-height: 760px; padding-inline: 20px; }
+  .academy-faq details > p { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parkour-academy *, .parkour-academy *::before, .parkour-academy *::after { scroll-behavior: auto !important; }
+  .academy-action { transition: none; }
+}
+
+/* ==========================================================================
+   FASE 8 · BLOQUE F — "LA ESCALERA" (sección TRES NIVELES de la Academia).
+   Capa ADITIVA: solo actúa con academy-level-grid--stage (StickyStage). Sin
+   esa clase, el layout original de academy-level-grid queda intacto.
+   Identidad PROPIA vs. la Home: recorrido VERTICAL ASCENDENTE. El nivel
+   activo sube hasta la altura de lectura; el siguiente asoma desde abajo
+   (la progresión se siente física: primer salto → control). El marcador de
+   nivel es la escalera de luz que sube con el scroll.
+   ========================================================================== */
+
+.academy-level-grid--stage {
+  display: block;
+  min-width: 0;
+}
+
+/* Frame del escenario: un plano; solo un nivel visible a la vez. */
+.academy-level-stage {
+  position: relative; /* ancla el raíl de nivel absoluto */
+  display: grid;
+  grid-template-rows: 100%;
+  width: 100%;
+  padding-left: clamp(22px, 3.5vw, 42px); /* aire para el raíl */
+  min-height: min(60vh, 520px);
+  align-content: center;
+}
+
+.academy-level--stage {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: center;
+  /* Entrada desde ABAJO: la dirección del parkour es subir. */
+  opacity: 0;
+  transform: translateY(64px);
+  transition:
+    opacity 0.6s var(--ease-transform, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 0.6s var(--ease-transform, cubic-bezier(0.22, 1, 0.36, 1));
+  pointer-events: none;
+}
+
+/* El nivel superado queda ARRIBA, como peldaño pasado: la escalera sube. */
+.academy-level--stage.academy-level--past {
+  opacity: 0.14;
+  transform: translateY(-30px) scale(0.97);
+  filter: saturate(0.5);
+}
+
+.academy-level--stage.academy-level--active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Marcador de nivel: la escalera de luz vertical a la izquierda del frame.
+   Su relleno sube con el estado activo — el peldaño iluminado. */
+.academy-level-stage::before {
+  content: '';
+  position: absolute;
+  left: clamp(4px, 1.2vw, 14px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: min(46vh, 380px);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255, 255, 255, 0.10) 100%
+  );
+  /* Requiere --stage-fill para el tramo iluminado; la Home usa un hilo
+     horizontal, parkour un raíl vertical: nunca intercambiables. */
+  --stage-fill: 33.333%;
+  background:
+    linear-gradient(
+      180deg,
+      var(--orange, #e76f51) 0%,
+      var(--orange, #e76f51) var(--stage-fill),
+      rgba(255, 255, 255, 0.10) var(--stage-fill),
+      rgba(255, 255, 255, 0.10) 100%
+    );
+}
+
+/* Reduced-motion / móvil: StickyStage degrada a pila estática; los niveles
+   se apilan legibles y el raíl desaparece (la secuencia se lee sin mover). */
+.sticky-stage--static .academy-level-stage {
+  display: block;
+  min-height: 0;
+  position: static;
+}
+
+.sticky-stage--static .academy-level-stage::before {
+  display: none;
+}
+
+.sticky-stage--static .academy-level--stage {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .academy-level--stage {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   FASE 4B · PARKOUR ACADEMY — SHELL, NO ESCENA
+   --------------------------------------------------------------------------
+   La restricción histórica se respalda en el sistema: el naranja de la
+   academia era el naranja de la marca escrito a mano dos veces. Pasa a ser
+   alias. Cero canvas, cero pointer lock, cero WASD: profundidad por superficie,
+   filete y ritmo.
+   Reglas de la fase: cero `!important`, cero colores nuevos (los valores se
+   aliasan al sistema), una sola idea de movimiento por bloque y estado
+   estático completo con `prefers-reduced-motion`. Nada de esto toca copy,
+   precio, prestación ni CTA.
+   ========================================================================== */
+
+.parkour-academy {
+  --academy-orange: var(--bayona-warm);
+}
+
+.parkour-academy > section + section {
+  border-block-start: var(--bayona-hairline);
+}
+
+/* El filete entre capítulos lo pone el marco del shell (`.ds-frame >
+   section + section`); aquí solo se unifica la señal y se asienta el héroe. */
+.parkour-academy .academy-hero {
+  border-block-end: var(--bayona-hairline);
+}
+
+.parkour-academy :is(h1, h2) {
+  text-wrap: balance;
+}
+
+/* ==========================================================================
+   FASE 4C · ATELIER — ACADEMIA: RIGOR DE PISTA
+   La barra de edades se dibuja con el filete del sistema y los botones comparten
+   la señal. Sin escena: la profundidad de esta página es tipografía, aire y
+   líneas.
+   Todo sale de los tokens del sistema: cero `!important`, cero colores
+   nuevos, cero radios propios, cero `z-index` sueltos. Cero WebGL.
+   ========================================================================== */
+
+.academy-age-track {
+  border-block-start: var(--bayona-hairline);
+}
+
+.academy-age {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.academy-actions {
+  gap: var(--ds-space-4) var(--ds-space-5);
+}
+
+.academy-action {
+  border: var(--bayona-hairline);
+}
+
+.academy-action--primary {
+  border-color: var(--bayona-warm);
+}
+
+.academy-action--quiet:hover,
+.academy-action--quiet:focus-visible {
+  border-color: var(--bayona-warm);
+  color: var(--bayona-warm);
+}
+
+/* ==========================================================================
+   UNIDAD TIPOGRÁFICA · /parkour-academy (2026-09-19)
+   --------------------------------------------------------------------------
+   El dueño pidió una sola escala: «coherencia de tamaño de letra, de diseño».
+   Esta página declaraba doce cuerpos distintos a mano (62/160px en el héroe,
+   44/112px en los h2, 28/54px en el método, 22/40px en las edades…) y cada
+   uno era una decisión independiente. Aquí se retiran todas y cada ROL pide
+   su paso a la escala nombrada de ds-tokens.css §11.
+
+   Regla: mismo rol → mismo token → mismo render que en /about, /programs,
+   /shop, /community y /resources. La identidad de esta ruta queda en la
+   geometría, el suelo en diagonal, el ritmo y la dirección del revelado.
+   Cero `!important` (MP-9), cero colores nuevos, cero tamaños sueltos.
+   ========================================================================== */
+
+/* Títulos: una familia, un peso, un aire y un tracking. */
+.parkour-academy :is(h1, h2, h3, h4) {
+  font-family: var(--type-family-display);
+  font-weight: var(--type-weight-display);
+}
+
+.parkour-academy :is(h1, h2) {
+  line-height: var(--type-leading-heading);
+  letter-spacing: var(--type-tracking-heading);
+  text-transform: uppercase;
+}
+
+.parkour-academy h3 {
+  font-size: var(--type-h3);
+  line-height: var(--type-leading-title);
+  letter-spacing: var(--type-tracking-title);
+}
+
+/* Rótulo mono: un solo paso para todas las etiquetas de la página. */
+.parkour-academy .academy-hero-words span,
+.parkour-academy .academy-principles span,
+.parkour-academy .academy-level > span,
+.parkour-academy .academy-level > p,
+.parkour-academy .academy-method-list span,
+.parkour-academy .academy-logistics-grid span,
+.parkour-academy .academy-faq summary span,
+.parkour-academy .academy-hero-copy small,
+.parkour-academy .academy-safety-copy small {
+  font-family: var(--type-family-mono);
+  font-size: var(--type-eyebrow);
+  font-weight: var(--type-weight-label);
+  line-height: var(--type-leading-eyebrow);
+  letter-spacing: var(--type-tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+/* Párrafo de entrada: el primer texto de cada capítulo. */
+.parkour-academy .academy-hero-copy > p,
+.parkour-academy .academy-heading > p,
+.parkour-academy .academy-safety-copy > p,
+.parkour-academy .academy-closing p {
+  font-family: var(--type-family-text);
+  font-size: var(--type-lede);
+  font-weight: var(--type-weight-body-soft);
+  line-height: var(--type-leading-body);
+  letter-spacing: var(--type-tracking-body);
+  max-inline-size: var(--ds-measure);
+}
+
+/* Cuerpo de ficha y de lista. */
+.parkour-academy .academy-age p,
+.parkour-academy .academy-method-list p,
+.parkour-academy .academy-logistics-grid p,
+.parkour-academy .academy-faq details > p,
+.parkour-academy .academy-level li {
+  font-family: var(--type-family-text);
+  font-size: var(--type-body);
+  font-weight: var(--type-weight-body);
+  line-height: var(--type-leading-body);
+}
+
+/* Pregunta de acordeón: rol de tarjeta, no de cartel. */
+.parkour-academy .academy-faq summary {
+  font-family: var(--type-family-display);
+  font-size: var(--type-h3);
+  font-weight: var(--type-weight-display);
+  line-height: var(--type-leading-title);
+  letter-spacing: var(--type-tracking-title);
+}
+
+/* Figura de etapa: el dato grande también sale de la escala. */
+.parkour-academy .academy-age > strong {
+  font-family: var(--type-family-display);
+  font-size: var(--type-h1);
+  font-weight: var(--type-weight-display);
+  line-height: 1;
+  letter-spacing: var(--type-tracking-heading);
+}
+
+/* CTA: el mismo botón se escribe igual en las seis rutas. */
+.parkour-academy .academy-action {
+  font-family: var(--type-family-cta);
+  font-size: var(--type-cta);
+  font-weight: var(--type-weight-cta);
+  letter-spacing: var(--type-tracking-label);
+  text-transform: uppercase;
+}
+
+/**
+ * BAYONA · FIGURAS DE LA ACADEMIA
+ * ---------------------------------------------------------------------------
+ * El brief pide que el parkour se lea aparte del resto del sitio, así que estas
+ * dos no son diagramas abstractos sino vistas de un recorrido: un plano cenital
+ * (apoyos y saltos) y un alzado (peldaños y la línea de confianza por encima).
+ * Ninguna repite la gramática de las figuras de /community o /programs.
+ */
+
+.academy-figure {
+  display: block;
+  width: min(100%, 620px);
+  height: auto;
+  margin: 0 auto clamp(20px, 3.2vw, 38px);
+  overflow: visible;
+}
+
+.academy-figure--alzado {
+  width: min(100%, 340px);
+}
+
+.academy-figure-label {
+  font-family: var(--type-family-mono);
+  font-size: var(--ds-fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  fill: var(--bayona-muted);
+}
+
+.academy-apoyos rect {
+  fill: var(--bayona-surface-1);
+  stroke: rgba(244, 162, 97, 0.45);
+  stroke-width: 1.5;
+}
+
+.academy-ruta {
+  fill: none;
+  stroke: var(--bayona-orange);
+  stroke-width: 2;
+  stroke-dasharray: 14 10;
+  stroke-linejoin: round;
+}
+
+.academy-aterrizajes circle {
+  fill: var(--bayona-white);
+  animation: academy-apoyo-entra 420ms ease both;
+  animation-delay: calc(var(--i, 0) * 180ms);
+}
+
+.academy-suelo {
+  stroke: rgba(244, 162, 97, 0.22);
+  stroke-width: 1;
+}
+
+.academy-peldanos {
+  fill: none;
+  stroke: rgba(244, 162, 97, 0.5);
+  stroke-width: 2;
+}
+
+.academy-confianza {
+  fill: none;
+  stroke: var(--bayona-white);
+  stroke-width: 2;
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: academy-trazo 1500ms cubic-bezier(0.22, 1, 0.36, 1) 300ms forwards;
+}
+
+.academy-confianza-final {
+  fill: var(--bayona-orange);
+}
+
+@keyframes academy-trazo {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes academy-apoyo-entra {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .academy-figure {
+    width: min(100%, 360px);
+  }
+
+  .academy-figure-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .academy-figure *,
+  .academy-confianza {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/* =========================================================================
+   PASO 2026-09-22 · DIRECCIÓN §14 — ESCENAS, APERTURAS Y COSTURAS
+   Lo que se arregla aquí: el plano SVG (fuera), las tarjetas de edad sin
+   apertura, los niveles sin preview, el método vacío y la logística a pantalla
+   completa. Todo en tokens del sistema: ningún color nuevo.
+   ========================================================================= */
+
+/* --- Mapa de la clase (sustituye al plano cenital) ---------------------- */
+.academy-session-map {
+  width: min(100%, 1220px);
+  margin: 0 auto clamp(48px, 6vw, 78px);
+  padding: clamp(22px, 2.6vw, 34px);
+  border: 1px solid rgba(10, 10, 10, 0.16);
+  border-radius: var(--ds-radius-float);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.28));
+  box-shadow: 0 22px 60px -34px rgba(10, 10, 10, 0.5);
+}
+
+.academy-session-map h3 {
+  margin-bottom: 18px;
+  color: rgba(10, 10, 10, 0.78);
+  font: 12px/1 'DM Mono', monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.academy-session-map ol {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* El hilo que recorre los cinco tramos es la línea de la propia sesión. */
+.academy-session-map ol::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 15px;
+  width: 1px;
+  background: linear-gradient(rgba(244, 162, 97, 0.7), rgba(244, 162, 97, 0.12));
+}
+
+.academy-session-map li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 12px 0;
+}
+
+.academy-stop-index {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ds-radius-round);
+  background: var(--academy-orange);
+  color: var(--ds-surface-background);
+  font: 11px/1 'DM Mono', monospace;
+}
+
+.academy-session-map strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ds-surface-background);
+  font-size: var(--ds-fs-h4);
+  letter-spacing: -0.02em;
+}
+
+.academy-session-map p {
+  max-width: 62ch;
+  margin: 0;
+  color: rgba(10, 10, 10, 0.62);
+  line-height: 1.55;
+}
+
+/* --- Etapas que se abren ------------------------------------------------- */
+/* La base de `.academy-age` era una retícula de 2 columnas pensada para un
+   `<article>` suelto. Ahora es un `<details>` con summary + panel: una columna,
+   y el número de edad se re-ancla dentro del summary. */
+.academy-age-track { align-items: start; }
+
+.academy-age {
+  position: relative;
+  display: block;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--ds-radius-float);
+}
+
+.academy-age summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: start;
+  cursor: pointer;
+  list-style: none;
+}
+
+.academy-age summary::-webkit-details-marker { display: none; }
+.academy-age summary > span { min-width: 0; }
+
+.academy-age summary > strong {
+  color: var(--academy-orange);
+  font: 800 clamp(38px, 4.4vw, 62px)/0.86 Montserrat, sans-serif;
+  letter-spacing: -0.09em;
+}
+
+.academy-age-arrow {
+  align-self: center;
+  color: rgba(10, 10, 10, 0.4);
+  transition: transform 260ms ease, color 260ms ease;
+}
+
+.academy-age:hover .academy-age-arrow { transform: translateX(7px); color: var(--academy-orange); }
+.academy-age[open] .academy-age-arrow { transform: rotate(90deg); color: var(--academy-orange); }
+
+.academy-age-panel {
+  margin-top: 18px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(10, 10, 10, 0.14);
+}
+
+.academy-age-panel ul {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.academy-age-panel li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 10px;
+  color: rgba(10, 10, 10, 0.72);
+  font-size: var(--ds-fs-body-small);
+  line-height: 1.5;
+}
+
+.academy-age-panel li svg { margin-top: 3px; color: var(--academy-orange); }
+
+.academy-age-panel a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid rgba(10, 10, 10, 0.3);
+  border-radius: var(--ds-radius-control);
+  color: var(--ds-surface-background);
+  font: 600 12px/1 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+}
+
+.academy-age-panel a:hover { border-color: var(--academy-orange); background: var(--academy-orange); }
+
+/* --- Niveles: preview por peldaño --------------------------------------- */
+/* La sección ya no lleva fotografía de fondo: la foto se fue al método, que es
+   donde el dueño pedía escenas. El nivel gana en cambio su propia ficha. */
+.academy-levels {
+  background: linear-gradient(var(--ds-surface-deep), var(--ds-surface-background) 78%);
+}
+
+.academy-level-preview {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 128px;
+  margin-bottom: 26px;
+  border: 1px solid var(--ds-border-color);
+  border-radius: var(--ds-radius-control);
+  background:
+    radial-gradient(120% 100% at 20% 0%, rgba(244, 162, 97, 0.16), transparent 62%),
+    var(--ds-surface-raised);
+}
+
+.academy-level-preview-frame {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--academy-orange);
+  border-radius: var(--ds-radius-round);
+  color: var(--academy-orange);
+  font: 13px/1 'DM Mono', monospace;
+}
+
+.academy-level-preview-tag {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  color: rgba(255, 255, 255, 0.42);
+  font: 10px/1 'DM Mono', monospace;
+  letter-spacing: 0.14em;
+}
+
+.academy-level-criteria {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--ds-border-color);
+}
+
+.academy-level-criteria dt {
+  color: var(--academy-orange);
+  font: 10px/1 'DM Mono', monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.academy-level-criteria dd {
+  margin: 5px 0 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: var(--ds-fs-body-small);
+  line-height: 1.5;
+}
+
+/* --- Método en escenas --------------------------------------------------- */
+.academy-method-scenes {
+  display: grid;
+  gap: clamp(56px, 8vw, 120px);
+  width: min(100%, 1320px);
+  margin-inline: auto;
+}
+
+.academy-scene {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(26px, 4vw, 62px);
+  align-items: center;
+}
+
+.academy-scene.is-reversed { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
+.academy-scene.is-reversed .academy-scene-media { order: 2; }
+
+.academy-scene-media {
+  position: relative;
+  min-height: clamp(280px, 44vw, 520px);
+  border: 1px solid var(--ds-border-color);
+  border-radius: var(--ds-radius-float);
+  overflow: hidden;
+  box-shadow: var(--ds-shadow-lift);
+}
+
+.academy-scene-number {
+  position: absolute;
+  left: 20px;
+  bottom: 14px;
+  color: var(--academy-cream);
+  font: 12px/1 'DM Mono', monospace;
+  letter-spacing: 0.18em;
+}
+
+.academy-scene-copy { position: relative; }
+
+.academy-scene-copy h3 {
+  margin-bottom: 18px;
+  font-size: clamp(28px, 3.4vw, 46px);
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+
+.academy-scene-copy h3 span { color: var(--academy-orange); }
+
+.academy-scene-kicker {
+  margin-bottom: 12px;
+  color: var(--academy-orange);
+  font: 11px/1 'DM Mono', monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.academy-scene-copy > p {
+  max-width: 56ch;
+  color: rgba(255, 255, 255, 0.74);
+  line-height: 1.65;
+}
+
+.academy-scene-copy ul {
+  display: grid;
+  gap: 9px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.academy-scene-copy li {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 12px;
+  padding-top: 9px;
+  border-top: 1px solid var(--ds-border-color);
+  color: rgba(255, 255, 255, 0.66);
+  font-size: var(--ds-fs-body-small);
+}
+
+.academy-scene-copy li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-top: 7px;
+  border-radius: var(--ds-radius-round);
+  background: var(--academy-orange);
+}
+
+/* La marca de seguridad no decora: marca la escena que la pide. */
+.academy-scene-mark {
+  position: absolute;
+  top: -6px;
+  right: 0;
+  color: var(--academy-orange);
+  opacity: 0.28;
+}
+
+/* --- Logística: franja, no tres pantallas -------------------------------- */
+.academy-logistics { padding-block: clamp(60px, 7vw, 96px); }
+
+.academy-logistics-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(100%, 1220px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid rgba(10, 10, 10, 0.18);
+  border-radius: var(--ds-radius-float);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.academy-logistics-strip li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: 'icon label' 'icon value' 'icon copy';
+  gap: 2px 14px;
+  padding: clamp(18px, 2.2vw, 26px);
+  border-right: 1px solid rgba(10, 10, 10, 0.14);
+}
+
+.academy-logistics-strip li:last-child { border-right: 0; }
+.academy-logistics-strip svg { grid-area: icon; align-self: start; margin-top: 4px; color: var(--academy-orange); }
+.academy-logistics-strip span { grid-area: label; color: rgba(10, 10, 10, 0.5); font: 10px/1 'DM Mono', monospace; letter-spacing: 0.14em; }
+.academy-logistics-strip strong { grid-area: value; color: var(--ds-surface-background); font-size: var(--ds-fs-h4); }
+.academy-logistics-strip p { grid-area: copy; margin: 6px 0 0; max-width: 34ch; color: rgba(10, 10, 10, 0.6); font-size: var(--ds-fs-body-small); line-height: 1.5; }
+
+/* --- FAQ negro: integrada, no pegada ------------------------------------- */
+.academy-faq {
+  position: relative;
+  padding-block: clamp(60px, 8vw, 110px);
+}
+
+.academy-faq::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--academy-orange), transparent);
+  opacity: 0.5;
+}
+
+.academy-faq-foot {
+  max-width: 560px;
+  margin: 26px auto 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: var(--ds-fs-body-small);
+  line-height: 1.5;
+}
+
+/* --- Cierre: banda tipográfica, sin pantalla de fondo -------------------- */
+.academy-closing {
+  min-height: 0;
+  padding: clamp(64px, 8vw, 110px) clamp(22px, 6vw, 96px);
+  border-top: 1px solid var(--ds-border-color);
+  background: linear-gradient(var(--ds-surface-deep), var(--ds-surface-background));
+}
+
+@media (max-width: 900px) {
+  .academy-scene,
+  .academy-scene.is-reversed { grid-template-columns: minmax(0, 1fr); }
+  .academy-scene.is-reversed .academy-scene-media { order: 0; }
+  .academy-logistics-strip { grid-template-columns: minmax(0, 1fr); }
+  .academy-logistics-strip li { border-right: 0; border-bottom: 1px solid rgba(10, 10, 10, 0.14); }
+  .academy-logistics-strip li:last-child { border-bottom: 0; }
+}
+
+/* =========================================================================
+   PASO 2026-09-22 · ANOTACIONES 33-37 — LA BARRA DE EDADES RESPIRA
+   --------------------------------------------------------------------------
+   Medido en el DOM real de la ruta (scripts/probe-medios-vacios.mjs no llega a
+   esto: no hay ningún contenedor de medio en esta barra), y sale otra cosa:
+
+   · Los «dos rectángulos grises» NO eran huecos de foto sin foto. La barra
+     declaraba `background: rgba(0,0,0,.22)` para dibujar el filete de 1 px
+     entre tarjetas y, con `align-items: start`, las dos tarjetas más cortas
+     dejaban al aire 82 px y 122 px de ese fondo sobre el crema de la sección.
+     El filete lo pasa a llevar cada ficha y el contenedor se queda sin fondo:
+     si las alturas vuelven a diferir, lo que asoma es la sección, no una losa.
+
+   · El texto partido a una palabra por línea era el reparto del `summary`:
+     `auto minmax(0,1fr) auto` deja en la columna `auto` el ancho intrínseco del
+     número, y «13—17» se comía 200 px de los 329 de la ficha. A la copia le
+     quedaban 70 px. La figura pasa a su propia fila y el texto manda en todo el
+     ancho. No se toca ningún tamaño de letra: cambia el reparto, no la escala.
+
+   · La flecha (anotaciones 33 y 34) se dibuja por fin como control: chip con
+     filete, rótula VER/CERRAR y la punta mirando hacia abajo, que es hacia
+     donde se abre el panel.
+
+   Cero `!important` y cero colores literales nuevos: todo sale de los tokens
+   de la hoja y del sistema.
+   ========================================================================= */
+
+/* --- 1. La barra: tres fichas, no una retícula con el fondo a la vista ---- */
+.academy-age-track {
+  gap: var(--ds-space-4);
+  border: 0;
+  background: none;
+  align-items: start;
+}
+
+.academy-age {
+  border: 1px solid rgba(10, 10, 10, 0.16);
+  padding: clamp(22px, 2.6vw, 34px);
+}
+
+.academy-age:hover { border-color: rgba(10, 10, 10, 0.34); }
+.academy-age[open] { border-color: var(--academy-orange); }
+
+/* --- 2. Reparto: la figura arriba, el texto dueño del ancho --------------- */
+.academy-age summary {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'figure control'
+    'copy control';
+  gap: 10px 14px;
+  align-items: center;
+}
+
+.academy-age summary > strong { grid-area: figure; }
+/* El mando también es un `span` hijo directo: sin el `:not()` se llevaba el
+   área del texto y se estiraba a todo el ancho de la ficha. */
+.academy-age summary > span:not(.academy-age-open) { grid-area: copy; align-self: start; }
+.academy-age summary > .academy-age-open { grid-area: control; align-self: center; }
+
+.academy-age summary > span > p { text-wrap: pretty; }
+
+/* --- 3. El mando que abre (anotaciones 33 y 34) --------------------------- */
+.academy-age-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid rgba(10, 10, 10, 0.26);
+  border-radius: var(--ds-radius-control);
+  color: rgba(10, 10, 10, 0.62);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-eyebrow);
+  font-weight: var(--type-weight-label);
+  letter-spacing: var(--type-tracking-eyebrow);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: border-color 260ms ease, color 260ms ease;
+}
+
+.academy-age-open-out { display: none; }
+.academy-age[open] .academy-age-open-in { display: none; }
+.academy-age[open] .academy-age-open-out { display: inline; }
+
+.academy-age-arrow {
+  color: inherit;
+  /* Cerrada apunta a donde se abre; abierta, a donde se cierra. */
+  transform: rotate(90deg);
+}
+
+.academy-age:hover .academy-age-open { border-color: var(--academy-orange); color: var(--academy-orange); }
+.academy-age:hover .academy-age-arrow { transform: rotate(90deg); color: var(--academy-orange); }
+.academy-age[open] .academy-age-arrow { transform: rotate(-90deg); color: var(--academy-orange); }
+.academy-age[open]:hover .academy-age-arrow { transform: rotate(-90deg); }
+
+/* --- 4. El hueco de vídeo pedido en la anotación 35 ----------------------- */
+/* Es el módulo del sitio (`VideoSection`), no un marco nuevo: mismo reproductor
+   y mismo estado «próximamente» que ya ven en / y en /programs. */
+.academy-method .video-section--contained {
+  width: min(100%, 1320px);
+  margin: clamp(56px, 8vw, 110px) auto 0;
+}
+
+/* --- 5. Móvil: la barra vuelve a ser carrusel, con su propio filete ------- */
+@media (max-width: 800px) {
+  .academy-age-track {
+    gap: 0;
+    align-items: stretch;
+    border: 1px solid rgba(10, 10, 10, 0.16);
+    background: none;
+  }
+
+  .academy-age {
+    border: 0;
+    border-right: 1px solid rgba(10, 10, 10, 0.16);
+    border-radius: 0;
+  }
+
+  .academy-age:last-child { border-right: 0; }
+
+  .academy-age summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'figure control'
+      'copy copy';
+  }
+}

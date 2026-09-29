@@ -1,0 +1,39 @@
+/*
+  TEXT-MASK — reveal de lineas con mascara (Fase 5).
+  ===========================================================================
+  Componente: src/engine/motion/TextMask.jsx
+
+  Cada linea vive dentro de un envoltorio con overflow oculto; la linea
+  interior emerge con translateY gracias a Framer Motion (los tiempos salen
+  de motionTokens). El CSS solo define la mascara y la disposicion.
+*/
+
+.text-mask {
+  display: block;
+  min-width: 0;
+}
+
+.text-mask-line {
+  display: block;
+  overflow: hidden;
+  /* Margen negativo minimo para que los descendentes (j, g, p) no se
+     recorten al asentar la linea. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.text-mask-inner {
+  display: block;
+  will-change: transform;
+}
+
+/* Movimiento reducido: sin mascara ni recorte; el texto respira normal. */
+.text-mask--static .text-mask-line-static {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-mask-inner {
+    will-change: auto;
+  }
+}

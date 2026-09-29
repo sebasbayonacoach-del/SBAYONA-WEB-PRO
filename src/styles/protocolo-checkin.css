@@ -1,0 +1,210 @@
+/**
+ * BAYONA · CHECK-IN DEL PROTOCOLO 7 DÍAS
+ * ---------------------------------------------------------------------------
+ * Cuadrícula de tres hábitos por siete días. Sin redondezos, sin iconería de
+ * juego y sin color más que el naranja de la marca cuando algo está hecho: la
+ * idea es un registro, no un pegatina. Las casillas miden 44px como mínimo
+ * porque se tocan con el pulgar, no con el ratón.
+ */
+
+.protocolo-checkin {
+  position: relative;
+  display: grid;
+  gap: clamp(26px, 4vw, 46px);
+  padding: clamp(66px, 9vw, 118px) max(24px, calc((100vw - 980px) / 2));
+  background: var(--bayona-surface-0);
+  border-block: 1px solid var(--bayona-hairline);
+}
+
+/* El bloque de arriba es el objeto; se pinta antes que cualquier frase. */
+.protocolo-cuadricula {
+  display: grid;
+  gap: clamp(14px, 2vw, 22px);
+  padding: clamp(18px, 2.6vw, 30px);
+  background:
+    linear-gradient(140deg, rgba(244, 162, 97, 0.12), transparent 62%),
+    var(--bayona-surface-1);
+  border: 1px solid var(--bayona-hairline);
+}
+
+.protocolo-dias {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(44px, 1fr));
+  gap: 8px;
+  padding-inline-start: calc(190px + 10px);
+  color: var(--bayona-muted);
+  font-family: var(--type-family-mono);
+  font-size: var(--ds-fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.protocolo-dias .is-hoy {
+  color: var(--bayona-orange);
+}
+
+.protocolo-habitos {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.protocolo-fila {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.protocolo-fila-cabecera {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  font-size: var(--ds-fs-lead);
+  line-height: 1.25;
+}
+
+.protocolo-fila-cabecera strong {
+  font-family: var(--type-family-mono);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--bayona-white);
+}
+
+.protocolo-fila-cabecera span {
+  color: var(--bayona-muted);
+}
+
+.protocolo-celdas {
+  display: grid;
+  /* minmax(0, 1fr): con «1fr» a secas la pista no baja del ancho mínimo de su
+   * contenido y la séptima casilla se salía del panel en móvil. */
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.protocolo-celda {
+  appearance: none;
+  width: 100%;
+  min-height: 44px;
+  background: rgba(244, 162, 97, 0.05);
+  border: 1px solid rgba(244, 162, 97, 0.22);
+  border-radius: 0;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.protocolo-celda[data-marca] {
+  background: var(--bayona-orange);
+  border-color: var(--bayona-orange);
+  transform: translateY(-1px);
+}
+
+.protocolo-celda[data-hoy]:not([data-marca]) {
+  border-color: rgba(244, 162, 97, 0.7);
+}
+
+.protocolo-celda:hover {
+  border-color: var(--bayona-orange);
+}
+
+.protocolo-celda:focus-visible {
+  outline: 2px solid var(--bayona-orange);
+  outline-offset: 2px;
+}
+
+.protocolo-texto {
+  display: grid;
+  gap: 14px;
+  max-inline-size: var(--bayona-measure);
+}
+
+.protocolo-eyebrow {
+  margin: 0;
+  color: var(--bayona-orange);
+  font-family: var(--type-family-mono);
+  font-size: var(--ds-fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.protocolo-texto h2 {
+  margin: 0;
+  font-family: var(--bayona-font-display);
+  font-size: var(--bayona-type-step-title);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--bayona-white);
+}
+
+.protocolo-texto h2 span {
+  color: var(--bayona-orange);
+}
+
+.protocolo-lead,
+.protocolo-resumen,
+.protocolo-nota {
+  margin: 0;
+  font-size: var(--ds-fs-lead);
+  line-height: 1.55;
+  color: var(--bayona-white);
+}
+
+.protocolo-resumen {
+  font-family: var(--type-family-mono);
+  font-size: var(--ds-fs-eyebrow);
+  letter-spacing: 0.08em;
+  color: var(--bayona-orange);
+}
+
+.protocolo-resumen[data-vacio] {
+  color: var(--bayona-muted);
+}
+
+.protocolo-nota {
+  color: var(--bayona-muted);
+}
+
+@media (max-width: 700px) {
+  /* Siete casillas de 40px con 4px de separación caben justas en 390px; con los
+   * 8px de la versión de escritorio la última columna se salía del panel. */
+  .protocolo-cuadricula {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .protocolo-dias {
+    padding-inline-start: 0;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .protocolo-fila {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .protocolo-celdas {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .protocolo-celda {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .protocolo-celda {
+    transition: none;
+    transform: none;
+  }
+}

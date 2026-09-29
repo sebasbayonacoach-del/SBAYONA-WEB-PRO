@@ -1,0 +1,9 @@
+node_modules/
+dist/
+artifacts/
+.snapshot-anot-20260922-1005/
+.snapshot-preagentes/
+.vite-cache/
+.netlify/
+*.log
+.DS_Store

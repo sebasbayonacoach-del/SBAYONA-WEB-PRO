@@ -1,0 +1,26 @@
+/* BAYONA ABOUT · PROCESO COMO HAZ DE DECISIÓN */
+
+.about-decision-stage{position:relative;margin-top:clamp(2rem,5vw,4.5rem)}
+.about-decision-stage__sticky .sticky-stage-viewport{height:calc(100svh - 66px);min-height:620px}
+.about-decision-stage__frame{position:relative;width:min(var(--prime-page-max,1380px),calc(100vw - (var(--prime-gutter,24px)*2)));height:100%;margin-inline:auto;display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr);align-items:center;gap:clamp(3rem,8vw,9rem)}
+.about-decision-beam{position:relative;height:min(68vh,680px);min-height:420px}
+.about-decision-beam__track{position:absolute;left:50%;top:5%;bottom:5%;width:1px;background:rgba(247,247,243,.14);transform:translateX(-50%)}
+.about-decision-beam__pulse{position:absolute;left:50%;top:5%;width:12px;height:12px;border-radius:50%;background:var(--bayona-orange,#f4a261);box-shadow:0 0 28px rgba(244,162,97,.5);transform:translateX(-50%)}
+.about-decision-beam b{position:absolute;left:calc(50% + 28px);top:calc(7% + (var(--decision-index)*42%));color:rgba(247,247,243,.22);font:700 .64rem/1 var(--type-family-mono,monospace);letter-spacing:.14em;transition:color .25s ease,transform .25s ease}
+.about-decision-beam b[data-past=true]{color:rgba(244,162,97,.38)}
+.about-decision-beam b[data-active=true]{color:var(--bayona-orange,#f4a261);transform:translateX(8px)}
+.about-decision-copy>p,.about-decision-stage__counter{font-family:var(--type-family-mono,monospace);letter-spacing:.16em;text-transform:uppercase}
+.about-decision-copy>p{margin:0 0 1rem;color:var(--bayona-orange,#f4a261);font-size:.64rem;font-weight:700}
+.about-decision-copy h3{max-width:10ch;margin:0;color:#f7f7f3;font-size:clamp(4rem,7vw,8rem);font-weight:900;line-height:.84;letter-spacing:-.06em}
+.about-decision-copy>span{display:block;max-width:35rem;margin-top:1.25rem;color:rgba(247,247,243,.64);font-size:clamp(1rem,1.25vw,1.18rem);line-height:1.64}
+.about-decision-stage__counter{position:absolute;right:0;bottom:2rem;margin:0;color:rgba(247,247,243,.28);font-size:.56rem}
+@media(max-width:760px){
+ .about-decision-stage__sticky .sticky-stage-viewport{height:calc(100svh - 66px);min-height:0}
+ .about-decision-stage__frame{width:min(100% - 32px,620px);grid-template-columns:72px minmax(0,1fr);gap:1.1rem}
+ .about-decision-beam{height:58vh;min-height:360px}
+ .about-decision-beam b{left:calc(50% + 16px);font-size:.52rem}
+ .about-decision-copy h3{font-size:clamp(2.8rem,13vw,4.6rem)}
+ .about-decision-copy>span{font-size:.96rem;line-height:1.52}
+ .about-decision-stage__counter{bottom:1rem}
+}
+@media(prefers-reduced-motion:reduce){.about-decision-beam b{transition:none!important;transform:none!important}}

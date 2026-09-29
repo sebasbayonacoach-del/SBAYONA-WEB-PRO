@@ -1,0 +1,81 @@
+/* 
+ * HOME SCROLL ANIMATIONS
+ * Micro-animaciones fade-in solo para títulos H1 y cards
+ * Sin modificar estructura, grid ni layout
+ */
+
+/* Elementos que aparecen con fade-in en scroll */
+.hero-module h1,
+.vision-section h2,
+.pain-section h2,
+.mechanism-section h2,
+.solution-section h2,
+.proof-section h2,
+.offer-section h2,
+.calculator-section h2,
+.cta-stack-section h2,
+.pain-item,
+.proof-process-item,
+.vision-90-list .proof-process-item,
+/* Los pasos del escenario fijado NO pasan por este revelado: su visibilidad la
+   decide el crossfade del `StickyStage` (`.mechanism-step--stage` con
+   `opacity: 0` y `--active` con `opacity: 1`). Al añadirse `.is-visible` por el
+   IntersectionObserver, esta regla (0-2-0) le ganaba a la del escenario (0-1-0)
+   y los tres pasos —TE LEEMOS, CONSTRUIMOS, TE ACOMPAÑAMOS— se quedaban opacos
+   los tres en la misma celda: texto pintado encima de texto. */
+.mechanism-step:not(.mechanism-step--stage),
+.pillar-item,
+.evidence-record,
+.plan-showroom-preview,
+.home-configurator-guide li {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+/* Estado visible cuando entra en viewport */
+.hero-module h1.is-visible,
+.vision-section h2.is-visible,
+.pain-section h2.is-visible,
+.mechanism-section h2.is-visible,
+.solution-section h2.is-visible,
+.proof-section h2.is-visible,
+.offer-section h2.is-visible,
+.calculator-section h2.is-visible,
+.cta-stack-section h2.is-visible,
+.pain-item.is-visible,
+.proof-process-item.is-visible,
+.vision-90-list .proof-process-item.is-visible,
+.mechanism-step.is-visible:not(.mechanism-step--stage),
+.pillar-item.is-visible,
+.evidence-record.is-visible,
+.plan-showroom-preview.is-visible,
+.home-configurator-guide li.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respeto a reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-module h1,
+  .vision-section h2,
+  .pain-section h2,
+  .mechanism-section h2,
+  .solution-section h2,
+  .proof-section h2,
+  .offer-section h2,
+  .calculator-section h2,
+  .cta-stack-section h2,
+  .pain-item,
+  .proof-process-item,
+  .vision-90-list .proof-process-item,
+  .mechanism-step,
+  .pillar-item,
+  .evidence-record,
+  .plan-showroom-preview,
+  .home-configurator-guide li {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

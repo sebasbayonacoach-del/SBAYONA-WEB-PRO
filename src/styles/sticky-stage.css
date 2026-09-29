@@ -1,0 +1,40 @@
+/*
+  STICKY-STAGE — escenario narrativo fijo (Fase 5).
+  ===========================================================================
+  Componente: src/engine/scroll/StickyStage.jsx
+
+  La seccion exterior declara la longitud del tramo de scroll (100-500vh);
+  el viewport interior queda fijo (position: sticky) mientras el usuario la
+  recorre. El CSS solo define la fijacion y la pila estatica del fallback.
+*/
+
+.sticky-stage {
+  position: relative;
+  min-width: 0;
+}
+
+.sticky-stage-viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ---- Movimiento reducido / movil: pila estatica legible ---- */
+
+.sticky-stage--static {
+  height: auto;
+}
+
+.sticky-stage--static .sticky-stage-frame {
+  min-height: 0;
+  padding-block: 48px;
+}
+
+.sticky-stage--static .sticky-stage-frame + .sticky-stage-frame {
+  border-top: 1px solid var(--ds-border-subtle, rgba(255, 255, 255, 0.08));
+}

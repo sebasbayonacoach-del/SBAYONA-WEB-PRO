@@ -1,0 +1,2998 @@
+.shop-page {
+  --shop-black: #050505;
+  --shop-panel: #0b0b0c;
+  --shop-orange: #f4a261;
+  --shop-white: #fff;
+  --shop-muted: #9a958e;
+  /*
+   * Escalera de texto secundario sobre el negro de la tienda. Existe porque mi
+   * primer arreglo de contraste fue torpe: colapsé 13 grises literales distintos
+   * (#66-#8c) a un único `var(--gray-dim)`, WCAG pasó, y el barrido visual
+   * encontró tres jerarquías fundidas (descripción de ficha y precio €/.USD a
+   * ratio de luminancia 1,04 cuando antes separaban 1,83; subtítulo de colección
+   * indistinguible de la descripción; barra de filtros con rótulo, contador y
+   * línea al mismo tono). Solo seis de los trece fallaban de verdad.
+   *
+   * Los valores salen de la luminancia MEDIDA del fondo en la sonda (0,006), no
+   * de suponer #050505: con ese denominador el texto necesita L ≥ 0,202 para el
+   * 4,5, y un primer intento en #7d7973 (L 0,193) se quedó en 4,34. Estos tres
+   * pasos dan 4,62 / 5,50 / 7,00 y conservan el orden que el diseño ya tenía.
+   */
+  /* Corrección tras medir: el primer #827e77 dio 4,37 en pantalla (mi estimación
+     de luminancia venía corta), así que cada peldaño sube medio paso. */
+  --shop-dim-low: #88847d;
+  --shop-dim-mid: #94908a;
+  --shop-dim-high: #a39f98;
+  --shop-line: rgba(255, 255, 255, 0.14);
+  overflow: clip;
+  background: var(--shop-black);
+  color: var(--shop-white);
+  font-family: var(--type-family-text);
+}
+
+.shop-page *,
+.shop-page *::before,
+.shop-page *::after {
+  box-sizing: border-box;
+}
+
+.shop-page button,
+.shop-page input {
+  border-radius: 0;
+  font: inherit;
+}
+
+.shop-page h1,
+.shop-page h2,
+.shop-page h3,
+.shop-page strong {
+  font-family: var(--type-family-display);
+}
+
+.shop-hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--shop-black);
+}
+
+.shop-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    radial-gradient(circle at 50% 48%, rgba(244, 162, 97, 0.075), transparent 34%);
+  background-size: 72px 72px, 72px 72px, auto;
+  mask-image: linear-gradient(to bottom, #000, rgba(0, 0, 0, 0.42) 76%, transparent);
+}
+
+/* =========================================================================
+   CAPA WEBGL HOLOGRÁFICA (Fase 11.6)
+   El canvas de Three.js vive detrás del título del hero (z-index: 0) y no
+   captura eventos de puntero: carrito, filtros y CTAs de WhatsApp siguen
+   recibiendo todos los clics. El velo ::before (z-index: 1) aporta
+   profundidad por encima del canvas.
+   ========================================================================= */
+.shop-hologram-webgl {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.shop-hero-content {
+  width: min(1320px, calc(100% - 34px));
+  display: grid;
+  justify-items: center;
+  padding: 112px 0 126px;
+  text-align: center;
+}
+
+.shop-hero-content > div {
+  width: 100%;
+}
+
+.shop-hero h1 {
+  margin: 0;
+  font-size: clamp(52px, 12.7vw, 180px);
+  font-weight: 900;
+  line-height: 0.79;
+  letter-spacing: -0.078em;
+  text-transform: uppercase;
+  perspective: 800px;
+}
+
+.shop-hero-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.shop-hero-line:nth-child(2) {
+  color: var(--shop-orange);
+}
+
+.shop-hero-line > span {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+
+.shop-hero-line > .is-space {
+  width: 0.22em;
+}
+
+.shop-hero-content > p {
+  max-width: 640px;
+  margin: clamp(30px, 4vw, 48px) 0 0;
+  color: #bcb7af;
+  font-size: clamp(13px, 1.3vw, 18px);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.shop-hero-concierge {
+  width: min(760px, 100%);
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) 1.2fr;
+  margin-top: clamp(24px, 4vw, 38px);
+  border: 1px solid rgba(244, 162, 97, 0.32);
+  background:
+    linear-gradient(135deg, rgba(244, 162, 97, 0.14), transparent 46%),
+    rgba(8, 8, 9, 0.72);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(18px);
+  text-align: left;
+}
+
+.shop-hero-ticket {
+  display: grid;
+  gap: 8px;
+  padding: clamp(18px, 3vw, 26px);
+  border-right: 1px solid var(--shop-line);
+}
+
+.shop-hero-ticket span,
+.shop-hero-ledger dt,
+.shop-concierge-strip span {
+  color: var(--shop-orange);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-02);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.shop-hero-ticket strong {
+  color: var(--shop-white);
+  font-size: clamp(20px, 2.1vw, 32px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.shop-hero-ticket small {
+  color: var(--shop-dim-high);
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-03);
+  line-height: 1.55;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.shop-hero-ledger {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+}
+
+.shop-hero-ledger > div {
+  display: grid;
+  align-content: center;
+  min-height: 100%;
+  padding: clamp(16px, 2.5vw, 24px);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.shop-hero-ledger > div:first-child {
+  border-left: 0;
+}
+
+.shop-hero-ledger dt {
+  margin-bottom: 10px;
+  color: var(--shop-dim-mid);
+}
+
+.shop-hero-ledger dd {
+  margin: 0;
+  color: var(--shop-white);
+  font-family: var(--type-family-display);
+  font-size: clamp(18px, 2vw, 27px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.shop-scroll-indicator {
+  min-width: 48px;
+  min-height: 58px;
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  margin-top: clamp(34px, 5vw, 58px);
+  color: var(--shop-dim-mid);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shop-scroll-indicator:hover,
+.shop-scroll-indicator:focus-visible {
+  color: var(--shop-orange);
+}
+
+.shop-scroll-indicator svg {
+  animation: shop-scroll-cue 1.8s ease-in-out infinite;
+}
+
+.shop-hero-marquee {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-block: 1px solid var(--shop-line);
+  background: rgba(5, 5, 5, 0.92);
+  color: var(--shop-dim-high);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+
+.shop-hero-marquee span,
+.shop-hero-marquee i {
+  display: inline-block;
+  margin-right: 24px;
+  font-style: normal;
+}
+
+.shop-hero-marquee i {
+  color: var(--shop-orange);
+}
+
+@keyframes shop-scroll-cue {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(7px); }
+}
+
+.shop-collections,
+.shop-catalog,
+.shop-process {
+  padding-block: clamp(96px, 12vw, 176px);
+}
+
+.shop-section-heading,
+.shop-catalog-intro {
+  display: grid;
+  gap: 25px;
+  align-items: end;
+}
+
+.shop-section-heading h2,
+.shop-catalog-intro h2,
+.shop-process h2,
+.shop-feature h2,
+.shop-closing h2 {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+}
+
+.shop-section-heading h2,
+.shop-catalog-intro h2,
+.shop-process h2 {
+  font-size: clamp(42px, 8vw, 94px);
+  line-height: 0.87;
+}
+
+.shop-section-heading h2 span,
+.shop-catalog-intro h2 span,
+.shop-process h2 span,
+.shop-closing h2 span {
+  color: var(--shop-orange);
+}
+
+.shop-section-heading > p,
+.shop-catalog-intro > p {
+  max-width: 470px;
+  margin: 0;
+  color: var(--shop-muted);
+  font-size: var(--type-size-07);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.shop-collection-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: clamp(48px, 7vw, 90px);
+  padding: 1px;
+  background: var(--shop-line);
+}
+
+.shop-concierge-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: clamp(22px, 4vw, 42px) 0;
+  border: 1px solid var(--shop-line);
+  background: var(--shop-line);
+}
+
+.shop-concierge-strip article {
+  min-height: 190px;
+  padding: clamp(18px, 2.6vw, 30px);
+  background:
+    linear-gradient(135deg, rgba(244, 162, 97, 0.07), transparent 46%),
+    rgba(9, 9, 10, 0.96);
+}
+
+.shop-concierge-strip strong {
+  display: block;
+  max-width: 260px;
+  margin-top: 18px;
+  color: var(--shop-white);
+  font-size: clamp(20px, 2vw, 30px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.shop-concierge-strip p {
+  max-width: 310px;
+  margin: 16px 0 0;
+  color: var(--shop-dim-high);
+  font-size: var(--type-size-04);
+  line-height: 1.55;
+}
+
+.shop-collection-card {
+  position: relative;
+  min-width: 0;
+  min-height: clamp(230px, 35vw, 390px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: space-between;
+  gap: 12px;
+  padding: clamp(18px, 3.2vw, 34px);
+  overflow: hidden;
+  border: 0;
+  background: #090909;
+  color: var(--shop-white);
+  text-align: left;
+  cursor: pointer;
+  isolation: isolate;
+  transition: background-color 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shop-collection-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(145deg, rgba(244, 162, 97, 0.07), transparent 54%);
+  opacity: 0;
+  transition: opacity 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shop-collection-card-line {
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  pointer-events: none;
+  transition: border-color 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shop-collection-card[aria-pressed='true']::before {
+  opacity: 1;
+}
+
+.shop-collection-card[aria-pressed='true'] .shop-collection-card-line {
+  border-color: var(--shop-orange);
+}
+
+.shop-collection-card-number {
+  color: rgba(255, 255, 255, 0.48);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.12em;
+}
+
+.shop-collection-card-icon {
+  grid-row: span 2;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(244, 162, 97, 0.36);
+  color: var(--shop-orange);
+}
+
+.shop-collection-card strong {
+  align-self: end;
+  font-size: clamp(16px, 3.1vw, 31px);
+  font-weight: 900;
+  line-height: 0.93;
+  letter-spacing: -0.045em;
+}
+
+.shop-collection-card-statement {
+  max-width: 260px;
+  color: #a7a29b;
+  font-size: clamp(12px, 1.4vw, 12px);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.shop-collection-card > svg {
+  align-self: end;
+  color: var(--shop-orange);
+}
+
+.shop-feature {
+  min-height: 90svh;
+  display: grid;
+  border-block: 1px solid var(--shop-line);
+  background: #080808;
+}
+
+.shop-feature-visual {
+  position: relative;
+  min-height: 500px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--shop-line);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    #070707;
+  background-size: 48px 48px;
+}
+
+.shop-feature-aura {
+  position: absolute;
+  width: min(66vw, 460px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(244, 162, 97, 0.26);
+  box-shadow:
+    0 0 0 42px rgba(244, 162, 97, 0.025),
+    0 0 0 84px rgba(244, 162, 97, 0.014);
+  transform: rotate(12deg);
+}
+
+.shop-feature-image {
+  position: relative;
+  z-index: 2;
+  width: min(68%, 470px);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  object-fit: cover;
+  filter: none;
+}
+
+.shop-feature-icon {
+  position: relative;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  color: var(--shop-orange);
+  filter: drop-shadow(0 0 24px rgba(244, 162, 97, 0.54));
+}
+
+.shop-feature-shadow {
+  position: absolute;
+  bottom: 19%;
+  width: min(35%, 210px);
+  height: 1px;
+  background: var(--shop-orange);
+  box-shadow: 0 0 28px 8px rgba(244, 162, 97, 0.18);
+}
+
+.shop-feature-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(54px, 9vw, 130px) max(20px, calc((100vw - 1240px) / 2));
+}
+
+.shop-feature h2 {
+  max-width: 720px;
+  margin-top: 25px;
+  font-size: clamp(54px, 10vw, 124px);
+  line-height: 0.8;
+}
+
+.shop-feature-copy > p:not(.section-label) {
+  max-width: 520px;
+  margin: 28px 0 0;
+  color: #aaa59e;
+  font-size: clamp(14px, 1.45vw, 18px);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.shop-feature-price {
+  display: grid;
+  gap: 9px;
+  margin-top: 30px;
+}
+
+.shop-feature-price strong {
+  color: var(--shop-orange);
+  font-size: clamp(25px, 3vw, 38px);
+  font-weight: 900;
+}
+
+.shop-feature-price small {
+  color: var(--shop-dim-mid);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+}
+
+.shop-feature-actions > a,
+.shop-feature-actions > button,
+.shop-product-actions > a,
+.shop-product-actions > button,
+.shop-empty button,
+.shop-closing-actions a {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid var(--shop-orange);
+  border-radius: 0;
+  color: #050505;
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-04);
+  line-height: 1.25;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: border-color 260ms cubic-bezier(0.22, 1, 0.36, 1), background-color 260ms cubic-bezier(0.22, 1, 0.36, 1), color 260ms cubic-bezier(0.22, 1, 0.36, 1), transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shop-feature-actions,
+.shop-product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.shop-feature-actions > a,
+.shop-feature-actions > button {
+  padding: 12px 18px;
+}
+
+.shop-feature-actions > a,
+.shop-product-actions > a,
+.shop-empty button,
+.shop-closing-actions a {
+  background: var(--shop-orange);
+  color: #050505;
+}
+
+.shop-add-to-cart {
+  background: transparent;
+  color: #ffffff !important;
+  cursor: pointer;
+}
+
+.shop-add-to-cart:hover,
+.shop-add-to-cart:focus-visible {
+  background: var(--shop-orange);
+  color: #050505;
+  transform: translateY(-2px);
+}
+
+.shop-add-to-cart:disabled {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: transparent;
+  color: var(--shop-dim-low);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.shop-feature-note {
+  margin-top: 17px;
+  color: var(--shop-dim-low);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-03);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.shop-catalog-intro > p {
+  font-family: var(--type-family-mono);
+  font-size: var(--type-size-05);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.shop-filter-bar {
+  position: sticky;
+  top: 60px;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px 18px;
+  margin-top: clamp(48px, 7vw, 82px);
+  padding: 14px;
+  border-block: 1px solid rgba(244, 162, 97, 0.3);
+  background: rgba(5, 5, 5, 0.97);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+}
+
+.shop-pill-group {
+  grid-column: 1 / -1;
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.shop-pill-group > span {
+  color: var(--shop-dim-low);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.shop-pill-group > div {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  padding-bottom: 3px;
+  scrollbar-width: none;
+}
+
+.shop-pill-group > div::-webkit-scrollbar {
+  display: none;
+}
+
+.shop-pill-group button {
+  min-height: 48px;
+  flex: 0 0 auto;
+  padding: 11px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: #aaa59e;
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease,
+    translate 220ms ease;
+}
+
+.shop-pill-group button[aria-pressed='true'] {
+  border-color: var(--shop-orange);
+  background: var(--shop-orange);
+  color: #050505;
+}
+
+.shop-search-box {
+  width: 48px;
+  min-height: 48px;
+  display: flex;
+  justify-self: start;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #0b0b0c;
+  transition: width 260ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms ease;
+}
+
+.shop-search-box.is-open {
+  width: min(100%, 340px);
+  border-color: var(--shop-orange);
+}
+
+.shop-search-toggle,
+.shop-search-clear {
+  width: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--shop-orange);
+  cursor: pointer;
+}
+
+.shop-search-box input {
+  min-width: 0;
+  width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--shop-white);
+  font-size: var(--type-size-06);
+  opacity: 0;
+  transition: width 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
+}
+
+.shop-search-box.is-open input {
+  width: 100%;
+  opacity: 1;
+}
+
+.shop-filter-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 13px;
+  text-align: right;
+}
+
+.shop-filter-meta > span {
+  color: var(--shop-dim-high);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  white-space: nowrap;
+}
+
+.shop-filter-meta > button {
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--shop-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.shop-collection-groups,
+.shop-flat-results {
+  margin-top: 70px;
+}
+
+.shop-product-collection {
+  padding-block: clamp(62px, 8vw, 110px);
+  border-top: 1px solid var(--shop-line);
+}
+
+.shop-product-collection:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.shop-product-collection-heading {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 34px;
+}
+
+.shop-product-collection-heading > span {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(244, 162, 97, 0.4);
+  color: var(--shop-orange);
+}
+
+.shop-product-collection-heading h3 {
+  margin: 0;
+  font-size: clamp(26px, 5vw, 48px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.shop-product-collection-heading p {
+  margin: 8px 0 0;
+  color: var(--shop-dim-high);
+  font-size: var(--type-size-05);
+  font-weight: 300;
+}
+
+.shop-product-collection-heading > button {
+  grid-column: 1 / -1;
+  min-height: 48px;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--shop-orange);
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.shop-products-masonry {
+  columns: 1;
+  column-gap: 18px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.shop-product-entry {
+  min-width: 0;
+  break-inside: avoid;
+  margin: 0 0 18px;
+}
+
+.shop-product-tilt {
+  width: 100%;
+  transform-style: preserve-3d;
+}
+
+/* Las 43 tarjetas entraban con UN solo `ds-reveal` en el `<section>`: la página
+   más grande del sitio (1485 nodos) se animaba al 9 % y el catálogo aparecía de
+   golpe. Cada tarjeta lleva ahora su revelado por `view()`; este desfase por
+   índice es lo que hace que se lea como una onda que sube y no como una pared
+   que se enciende. Va por `nth-child` y no por columna porque la rejilla es de
+   `columns`: en un multicol las hermanas consecutivas SÍ son vecinas verticales.
+   Sin `@supports`: si no hay `animation-timeline`, no hay animación que rango. */
+.shop-products-masonry .shop-product-entry:nth-child(3n + 2) .shop-product-card {
+  animation-range: entry 6% entry 64%;
+}
+
+.shop-products-masonry .shop-product-entry:nth-child(3n) .shop-product-card {
+  animation-range: entry 12% entry 74%;
+}
+
+.shop-product-card {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 17px 17px;
+  overflow: hidden;
+  border: 1px solid var(--shop-line);
+  background: var(--shop-panel);
+  transition: border-color 260ms cubic-bezier(0.22, 1, 0.36, 1), transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease;
+}
+
+.shop-product-visual {
+  min-height: 0;
+  aspect-ratio: 4 / 5;
+  display: grid;
+  place-items: center;
+  margin-inline: -17px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    #080808;
+  background-size: 38px 38px;
+}
+
+.shop-product-entry.is-tall .shop-product-visual,
+.shop-product-entry.is-compact .shop-product-visual {
+  min-height: 0;
+}
+
+.shop-product-image {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 0;
+  object-fit: cover;
+  filter: none;
+}
+
+/* `stock-media-image` es el gancho que StockImage pone en toda foto de catálogo.
+   Dentro de la tienda viaja como bloque: un `<img>` en línea deja el hueco de
+   la línea base y ese hueco se ve como una línea de aire bajo la foto, justo
+   donde la tarjeta corta a sangre. */
+.shop-page .stock-media-image {
+  display: block;
+}
+
+.shop-product-visual > svg {
+  width: 32px;
+  height: 32px;
+  color: var(--shop-orange);
+  filter: drop-shadow(0 0 18px rgba(244, 162, 97, 0.35));
+}
+
+.shop-product-card h3 {
+  margin: 20px 0 0;
+  font-size: var(--type-size-08);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.shop-product-card > p {
+  min-height: 38px;
+  margin: 9px 0 0;
+  overflow: hidden;
+  color: #959089;
+  font-size: var(--type-size-06);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.shop-product-price {
+  display: grid;
+  gap: 6px;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.shop-product-price strong {
+  color: var(--shop-orange);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.shop-product-price small {
+  color: var(--shop-dim-low);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+}
+
+.shop-product-variant {
+  display: grid;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.shop-product-variant > span {
+  color: var(--shop-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.09em;
+}
+
+.shop-product-variant select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid rgba(244, 162, 97, 0.38);
+  border-radius: 0;
+  outline: 0;
+  background: #080808;
+  color: var(--shop-white);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  cursor: pointer;
+}
+
+.shop-product-variant select:focus-visible {
+  border-color: var(--shop-orange);
+}
+
+.shop-product-variant small {
+  color: var(--shop-dim-mid);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-03);
+  line-height: 1.45;
+  font-family: var(--type-family-mono);
+}
+
+.shop-product-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.shop-product-actions > a,
+.shop-product-actions > button {
+  width: 100%;
+  padding: 11px 8px;
+}
+
+.shop-product-cart-note {
+  display: block;
+  margin-top: 10px;
+  color: var(--shop-dim-high);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-03);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.03em;
+}
+
+.shop-product-actions > a:hover,
+.shop-product-actions > a:focus-visible,
+.shop-feature-actions > a:hover,
+.shop-feature-actions > a:focus-visible,
+.shop-empty button:hover,
+.shop-empty button:focus-visible,
+.shop-closing-actions a:hover,
+.shop-closing-actions a:focus-visible {
+  border-color: var(--shop-white);
+  background: var(--shop-white);
+  color: #050505;
+}
+
+.shop-empty {
+  display: grid;
+  justify-items: center;
+  gap: 13px;
+  margin-top: 65px;
+  padding: 80px 22px;
+  border: 1px solid rgba(244, 162, 97, 0.28);
+  text-align: center;
+}
+
+.shop-empty strong {
+  font-size: clamp(21px, 5vw, 34px);
+}
+
+.shop-empty p {
+  margin: 0;
+  color: var(--shop-muted);
+  font-size: var(--type-size-06);
+}
+
+.shop-empty button {
+  margin-top: 8px;
+  padding: 0 17px;
+}
+
+.shop-process {
+  text-align: center;
+  border-top: 1px solid var(--shop-line);
+}
+
+.shop-process .section-label {
+  justify-content: center;
+}
+
+/*
+ * Figuras de la tienda. Dos gramáticas que no existen en el resto del sitio:
+ * la muestra de tejido (objeto de tienda, no diagrama) y el viaje de una pieza
+ * que cambia de forma. Sustituyen la fila de iconos de 28px del proceso.
+ */
+.shop-figure {
+  display: block;
+  width: min(100%, 560px);
+  height: auto;
+  margin: 0 auto clamp(26px, 4vw, 52px);
+  overflow: visible;
+}
+
+.shop-figure-label {
+  font-family: var(--type-family-mono);
+  font-size: var(--ds-fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  fill: var(--bayona-muted);
+}
+
+.shop-trama {
+  fill: none;
+  stroke: var(--shop-orange);
+  stroke-opacity: 0.34;
+  stroke-width: 1.2;
+}
+
+/* Las dos figuras de /shop salen de un viewBox de 640 ancho; con el tope
+   genérico de `.shop-figure` (560px) los rótulos de los extremos —el cuarto
+   nombre de colección a x=545 y «TE LLEGA» a x=556— se aplastaban contra el
+   canto. Cada una pide el ancho que de verdad usa. */
+.shop-figure--swatches {
+  width: min(100%, 640px);
+}
+
+.shop-figure--viaje {
+  width: min(100%, 620px);
+}
+
+/* La tela es el relleno de la muestra y llega por `fill="url(#trama-…)"` desde
+   el JSX. Aquí se le baja la opacidad para que mande el canto (`.shop-muestra-borde`
+   se pinta después): sin esto las cuatro tramas pesan más que su propio marco y
+   la fila se lee como cuatro bloques en vez de cuatro tejidos. */
+.shop-muestra-tela {
+  fill-opacity: 0.72;
+}
+
+.shop-trama-punto {
+  fill: var(--shop-orange);
+  fill-opacity: 0.4;
+}
+
+.shop-muestra-borde {
+  fill: none;
+  stroke: var(--shop-orange);
+  stroke-width: 1.2;
+}
+
+/* El hilo que atraviesa las cuatro muestras: la misma actitud bajo cuatro tramas. */
+.shop-hilo {
+  fill: none;
+  stroke: var(--shop-orange);
+  stroke-width: 2;
+}
+
+.shop-viaje-objeto {
+  fill: none;
+  stroke: var(--shop-orange);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.shop-viaje-detalle {
+  stroke-opacity: 0.5;
+  stroke-width: 1.2;
+}
+
+.shop-viaje-hilo {
+  fill: none;
+  stroke: var(--shop-orange);
+  stroke-opacity: 0.55;
+  stroke-width: 1.4;
+  stroke-dasharray: 5 7;
+  animation: shop-viaje-correr 2.8s linear infinite;
+}
+
+@keyframes shop-viaje-correr {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@media (max-width: 700px) {
+  .shop-figure {
+    width: min(100%, 340px);
+  }
+
+  /* A media escala el texto SVG deja de ser legible: la silueta carga el mensaje. */
+  .shop-figure-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-viaje-hilo {
+    animation: none;
+  }
+}
+
+.shop-process > p {
+  margin: 34px 0 0;
+  color: var(--shop-dim-high);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1.5;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.shop-commercial-note {
+  display: block;
+  padding-block: 25px;
+  border-block: 1px solid var(--shop-line);
+  color: var(--shop-dim-low);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-03);
+  line-height: 1.7;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.shop-training-bridge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-block: 28px;
+  border-top: 1px solid var(--shop-line);
+  color: var(--shop-muted);
+}
+
+.shop-training-bridge p {
+  margin: 0;
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.1em;
+}
+
+.shop-training-bridge a {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--shop-orange);
+  color: var(--shop-orange);
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+}
+
+.shop-training-bridge-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 16px 22px;
+}
+
+.shop-closing {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(244, 162, 97, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 162, 97, 0.06) 1px, transparent 1px),
+    #070605;
+  background-size: 84px 84px, 84px 84px, auto;
+  text-align: center;
+}
+
+.shop-closing::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 17%;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 162, 97, 0.72), transparent);
+  box-shadow: 0 0 70px 20px rgba(244, 162, 97, 0.13);
+}
+
+.shop-closing > div {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  padding-block: 100px;
+}
+
+.shop-closing h2 {
+  font-size: clamp(60px, 14vw, 188px);
+  line-height: 0.78;
+}
+
+.shop-closing > div > p {
+  max-width: 560px;
+  margin: 35px 0 0;
+  color: #bdb8b0;
+  font-size: clamp(13px, 1.5vw, 18px);
+  font-weight: 300;
+}
+
+.shop-closing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 35px;
+}
+
+.shop-closing-actions a {
+  padding: 0 17px;
+}
+
+.shop-closing-actions a:last-child {
+  background: transparent;
+  color: var(--shop-orange);
+}
+
+.shop-app-promo {
+  position: relative;
+  isolation: isolate;
+  min-height: 92svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding-block: clamp(100px, 13vw, 184px);
+  border-top: 1px solid rgba(244, 162, 97, 0.34);
+  border-radius: 0;
+  background:
+    radial-gradient(ellipse at 50% -8%, rgba(244, 162, 97, 0.32), transparent 52%),
+    linear-gradient(180deg, #25140a 0%, #100a06 38%, #050505 100%);
+  text-align: center;
+}
+
+.shop-app-promo::before {
+  content: '';
+  position: absolute;
+  top: 31%;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 162, 97, 0.68), transparent);
+  box-shadow: 0 0 90px 26px rgba(244, 162, 97, 0.12);
+}
+
+.shop-app-promo-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+}
+
+.shop-app-promo .eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  color: var(--shop-orange) !important;
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.shop-app-promo .eyebrow > span {
+  width: 24px;
+  height: 1px;
+  background: var(--shop-orange);
+}
+
+.shop-app-promo h2 {
+  width: 100%;
+  max-width: 1240px;
+  margin: 26px 0 0;
+  color: var(--shop-white);
+  font-family: var(--type-family-display);
+  font-size: clamp(44px, 5.5vw, 80px);
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -0.072em;
+  text-wrap: balance;
+}
+
+.shop-app-promo h2 span {
+  color: var(--shop-orange);
+}
+
+.shop-app-promo-subtitle {
+  max-width: 650px;
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  color: #d0cbc4;
+  font-family: var(--type-family-text);
+  font-size: clamp(14px, 1.55vw, 18px);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.shop-app-promo-points {
+  width: min(880px, 100%);
+  display: grid;
+  gap: 0;
+  margin: clamp(38px, 5vw, 58px) 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  list-style: none;
+}
+
+.shop-app-promo-points li {
+  position: relative;
+  min-height: 64px;
+  display: grid;
+  place-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f2eee8;
+  font-family: var(--type-family-text);
+  font-size: var(--type-size-07);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.shop-app-promo-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 1px;
+  background: var(--shop-orange);
+}
+
+.shop-app-promo-badge {
+  width: fit-content;
+  margin: 34px 0 0;
+  padding: 12px 15px;
+  border: 1px solid rgba(244, 162, 97, 0.52);
+  border-radius: 0;
+  background: rgba(5, 5, 5, 0.34);
+  color: var(--shop-orange);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.shop-app-promo-cta {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 0 22px;
+  border: 1px solid var(--shop-orange);
+  border-radius: 0;
+  background: var(--shop-orange);
+  color: #050505;
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--type-size-04);
+  line-height: 1.2;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  transition: border-color 260ms cubic-bezier(0.22, 1, 0.36, 1), background-color 260ms cubic-bezier(0.22, 1, 0.36, 1), transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shop-app-promo-cta:hover,
+.shop-app-promo-cta:focus-visible {
+  border-color: var(--shop-white);
+  background: var(--shop-white);
+  color: #050505;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 700px) {
+  .shop-app-promo-points {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .shop-app-promo-points li {
+    min-height: 92px;
+    border-bottom: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .shop-app-promo-points li:last-child {
+    border-right: 0;
+  }
+
+  .shop-app-promo-points li::before {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 420px) {
+  .shop-app-promo {
+    min-height: 0;
+    padding-block: 92px;
+  }
+
+  .shop-app-promo h2 {
+    width: 100%;
+    font-size: clamp(34px, 9.2vw, 40px);
+    letter-spacing: -0.06em;
+  }
+
+  .shop-app-promo-points li {
+    justify-items: start;
+    padding-left: 32px;
+    text-align: left;
+  }
+
+  .shop-app-promo-cta {
+    width: 100%;
+    padding-inline: 14px;
+  }
+}
+
+@media (max-width: 699px) {
+  .shop-hero-concierge,
+  .shop-hero-ledger,
+  .shop-concierge-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-hero-concierge {
+    width: min(520px, 100%);
+  }
+
+  .shop-hero-ticket {
+    border-right: 0;
+    border-bottom: 1px solid var(--shop-line);
+  }
+
+  .shop-hero-ledger > div {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .shop-hero-ledger > div:first-child {
+    border-top: 0;
+  }
+
+  .shop-concierge-strip article {
+    min-height: 0;
+  }
+
+  .shop-training-bridge,
+  .shop-training-bridge-actions {
+    justify-content: flex-start;
+  }
+}
+
+.shop-page a:focus-visible,
+.shop-page button:focus-visible,
+.shop-page input:focus-visible,
+.shop-search-box:focus-within {
+  outline: 2px solid var(--shop-white);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .shop-collection-card:hover::before {
+    opacity: 1;
+  }
+
+  .shop-collection-card:hover .shop-collection-card-line {
+    border-color: rgba(244, 162, 97, 0.72);
+  }
+
+  .shop-product-card:hover,
+  .shop-product-card:focus-within {
+    border-color: rgba(244, 162, 97, 0.72);
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.42);
+    transform: translateY(-4px);
+  }
+}
+
+@media (min-width: 700px) {
+  .shop-section-heading,
+  .shop-catalog-intro {
+    grid-template-columns: minmax(0, 1.12fr) minmax(260px, 0.5fr);
+    gap: 7vw;
+  }
+
+  .shop-feature {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  }
+
+  .shop-feature-visual {
+    min-height: 720px;
+    border-right: 1px solid var(--shop-line);
+    border-bottom: 0;
+  }
+
+  .shop-feature-copy {
+    padding: clamp(65px, 8vw, 120px);
+  }
+
+  .shop-filter-bar {
+    top: 70px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr) auto;
+    align-items: end;
+    padding: 16px 18px;
+  }
+
+  .shop-pill-group {
+    grid-column: auto;
+  }
+
+  .shop-search-box {
+    grid-column: 1;
+  }
+
+  .shop-filter-meta {
+    grid-column: 2 / 4;
+  }
+
+  .shop-product-collection-heading {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .shop-product-collection-heading > button {
+    grid-column: auto;
+    justify-self: end;
+  }
+
+  .shop-products-masonry {
+    columns: 2;
+  }
+}
+
+@media (min-width: 1080px) {
+  .shop-collection-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .shop-filter-bar {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr) auto auto;
+  }
+
+  .shop-search-box {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: end;
+  }
+
+  .shop-filter-meta {
+    grid-column: 4;
+    grid-row: 1;
+    align-self: end;
+    min-height: 48px;
+  }
+
+  .shop-products-masonry {
+    columns: 3;
+    column-gap: 21px;
+  }
+
+  .shop-product-entry {
+    margin-bottom: 21px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .shop-products-masonry {
+    columns: 4;
+    column-gap: 22px;
+  }
+
+  .shop-product-entry {
+    margin-bottom: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .shop-hero h1 {
+    font-size: clamp(46px, 14.2vw, 61px);
+  }
+
+  .shop-collection-card {
+    padding: 16px 13px;
+  }
+
+  .shop-collection-card-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .shop-collection-card strong {
+    font-size: var(--type-size-08);
+  }
+
+  .shop-collection-card-statement {
+    font-size: var(--type-size-03);
+  }
+
+  .shop-filter-bar {
+    margin-inline: -10px;
+  }
+
+  .shop-filter-meta {
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-page *,
+  .shop-page *::before,
+  .shop-page *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .shop-product-card,
+  .shop-collection-card,
+  .shop-scroll-indicator svg {
+    transform: none !important;
+  }
+}
+
+/* Additive interaction polish: pointer effects stay progressive and mobile-safe. */
+.shop-page {
+  --shop-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shop-hero-marquee > .rfm-marquee-container {
+  width: 100%;
+  min-width: 0;
+}
+
+.shop-hero-marquee .rfm-marquee {
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.shop-filter-bar {
+  transition:
+    border-color 260ms var(--shop-ease-out),
+    background-color 260ms var(--shop-ease-out),
+    box-shadow 260ms var(--shop-ease-out);
+}
+
+.shop-pill-group button {
+  min-width: 48px;
+  touch-action: manipulation;
+  transform: translateY(0);
+  transition:
+    color 260ms var(--shop-ease-out),
+    border-color 260ms var(--shop-ease-out),
+    background-color 260ms var(--shop-ease-out),
+    box-shadow 260ms var(--shop-ease-out),
+    transform 260ms var(--shop-ease-out);
+}
+
+.shop-pill-group button[aria-pressed='true'] {
+  box-shadow: inset 0 -2px 0 rgba(5, 5, 5, 0.14);
+  transform: translateY(-1px);
+}
+
+.shop-search-toggle,
+.shop-search-clear,
+.shop-filter-meta > button {
+  min-width: 48px;
+  min-height: 48px;
+  touch-action: manipulation;
+}
+
+.shop-product-card {
+  --shop-pointer-x: 50%;
+  --shop-pointer-y: 50%;
+  isolation: isolate;
+  border-radius: 0;
+  transition:
+    border-color 260ms var(--shop-ease-out),
+    transform 260ms var(--shop-ease-out),
+    box-shadow 260ms var(--shop-ease-out);
+}
+
+.shop-product-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 0;
+  background: radial-gradient(
+    circle 180px at var(--shop-pointer-x) var(--shop-pointer-y),
+    rgba(244, 162, 97, 0.14) 0%,
+    rgba(244, 162, 97, 0.07) 36%,
+    transparent 72%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms var(--shop-ease-out);
+}
+
+.shop-product-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.shop-product-card:focus-within {
+  border-color: var(--shop-orange);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.4),
+    0 0 28px rgba(244, 162, 97, 0.12);
+}
+
+.shop-product-card:focus-within::before {
+  opacity: 1;
+}
+
+.shop-product-visual img,
+.shop-product-visual > svg {
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 420ms var(--shop-ease-out);
+  will-change: transform;
+}
+
+.shop-product-visual > svg {
+  filter: drop-shadow(0 0 18px rgba(244, 162, 97, 0.15));
+}
+
+.shop-feature-visual {
+  --shop-feature-x: 0px;
+  --shop-feature-y: 0px;
+}
+
+.shop-feature-icon {
+  filter: drop-shadow(0 0 24px rgba(244, 162, 97, 0.15));
+}
+
+.shop-feature-shadow {
+  box-shadow: 0 0 28px 8px rgba(244, 162, 97, 0.15);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .shop-product-card:hover,
+  .shop-product-card:focus-within {
+    border-color: var(--shop-orange);
+    box-shadow:
+      0 24px 52px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(244, 162, 97, 0.1);
+    transform: translateY(-6px);
+  }
+
+  .shop-product-card:hover::before,
+  .shop-product-card:focus-within::before {
+    opacity: 1;
+  }
+
+  .shop-product-card:hover .shop-product-visual img,
+  .shop-product-card:hover .shop-product-visual > svg,
+  .shop-product-card:focus-within .shop-product-visual img,
+  .shop-product-card:focus-within .shop-product-visual > svg {
+    transform: scale(1.05);
+  }
+
+  .shop-feature-aura,
+  .shop-feature-icon,
+  .shop-feature-image,
+  .shop-feature-shadow {
+    will-change: transform;
+    transition: transform 320ms var(--shop-ease-out);
+  }
+
+  .shop-feature-aura {
+    transform: translate3d(
+      calc(0px - var(--shop-feature-x)),
+      calc(0px - var(--shop-feature-y)),
+      0
+    ) rotate(12deg);
+  }
+
+  .shop-feature-icon,
+  .shop-feature-image {
+    transform: translate3d(var(--shop-feature-x), var(--shop-feature-y), 0);
+  }
+
+  .shop-feature-shadow {
+    transform: translate3d(var(--shop-feature-x), 0, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .shop-product-tilt,
+  .shop-product-card,
+  .shop-feature-icon,
+  .shop-feature-image,
+  .shop-feature-shadow {
+    transform: none !important;
+  }
+
+  .shop-feature-aura {
+    transform: rotate(12deg) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-page *,
+  .shop-page *::before,
+  .shop-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .shop-hero-marquee .rfm-marquee,
+  .shop-product-tilt,
+  .shop-product-card,
+  .shop-product-visual img,
+  .shop-product-visual > svg,
+  .shop-feature-icon,
+  .shop-feature-image,
+  .shop-feature-shadow {
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .shop-feature-aura {
+    transform: rotate(12deg) !important;
+    will-change: auto;
+  }
+}
+
+/* Product object system: compact at rest, expansive on intent. */
+.shop-products-masonry,
+.shop-products-masonry.is-flat {
+  columns: initial;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+}
+
+.shop-product-entry,
+.shop-product-entry.is-compact,
+.shop-product-entry.is-tall {
+  position: relative;
+  margin: 0;
+  break-inside: auto;
+}
+
+.shop-product-tilt,
+.shop-product-card {
+  min-height: 100%;
+}
+
+.shop-product-card {
+  overflow: visible;
+  transform-origin: 50% 42%;
+}
+
+.shop-product-visual {
+  position: relative;
+  aspect-ratio: 1 / 1.08;
+  transition: aspect-ratio 460ms var(--shop-ease-out);
+}
+
+.shop-product-card > p {
+  min-height: 0;
+  max-height: 3.15em;
+  transition: max-height 420ms var(--shop-ease-out);
+}
+
+.shop-product-preview-toggle {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 4;
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 13px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(5, 5, 5, 0.82);
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition:
+    opacity 260ms var(--shop-ease-out),
+    color 260ms var(--shop-ease-out),
+    border-color 260ms var(--shop-ease-out),
+    background-color 260ms var(--shop-ease-out),
+    transform 260ms var(--shop-ease-out);
+}
+
+.shop-product-preview-toggle:is(:hover, :focus-visible),
+.shop-product-preview-toggle[aria-expanded='true'] {
+  border-color: var(--shop-orange);
+  background: var(--shop-orange);
+  color: #050505;
+}
+
+.shop-product-card.is-preview-open {
+  z-index: 5;
+  border-color: var(--shop-orange);
+  box-shadow: 0 28px 68px rgba(0, 0, 0, 0.56), 0 0 34px rgba(244, 162, 97, 0.12);
+}
+
+.shop-product-card.is-preview-open .shop-product-visual {
+  aspect-ratio: 4 / 5;
+}
+
+.shop-product-card.is-preview-open .shop-product-image,
+.shop-product-card.is-preview-open .shop-product-visual > svg {
+  transform: scale(1.1);
+}
+
+.shop-product-card.is-preview-open > p {
+  max-height: 8em;
+}
+
+@media (min-width: 620px) {
+  .shop-products-masonry,
+  .shop-products-masonry.is-flat {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1080px) {
+  .shop-products-masonry,
+  .shop-products-masonry.is-flat {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shop-products-masonry,
+  .shop-products-masonry.is-flat {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* Con cuatro columnas la ficha mide ~303 px: las dos columnas de acciones
+     dejaban cada botón en ~130 px y el texto, descontando borde, padding,
+     icono y hueco, disponía de solo ~88 px. «AÑADIR AL CARRITO» pide ~190 px
+     en una línea (más los 24 del icono), así que partía en tres («AÑADIR / AL
+     / CARRITO»). Al apilar, cada CTA ocupa todo el interior de la ficha y
+     entra en una línea sin tocar el cuerpo del sistema. El pie pasa de 78 a
+     ~104 px en TODAS las fichas a la vez y la retícula estira por igual
+     (`min-height: 100%`), así que ninguna queda más alta que su vecina. Por
+     debajo de 1280 las celdas ya eran anchas para dos líneas limpias y se
+     deja el par lado a lado. */
+  .shop-product-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .shop-product-preview-toggle {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .shop-product-entry:is(:hover, :focus-within) {
+    z-index: 8;
+  }
+
+  .shop-product-card:is(:hover, :focus-within) .shop-product-preview-toggle {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .shop-product-card:is(:hover, :focus-within) {
+    transform: translateY(-9px) scale(1.025);
+  }
+
+  .shop-product-card:is(:hover, :focus-within) .shop-product-image,
+  .shop-product-card:is(:hover, :focus-within) .shop-product-visual > svg {
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 619px), (hover: none), (pointer: coarse) {
+  .shop-product-card {
+    transform: none !important;
+  }
+
+  .shop-product-preview-toggle {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-product-card,
+  .shop-product-visual,
+  .shop-product-preview-toggle,
+  .shop-product-image,
+  .shop-product-card > p {
+    transition: none !important;
+  }
+
+  .shop-product-card:is(:hover, :focus-within) {
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   FASE 4B · SHOP — EL MISMO UNIVERSO, CERO FRICCIÓN DE COMPRA
+   --------------------------------------------------------------------------
+   Shop declaraba su propia paleta con valores idénticos a los del sistema
+   (`#050505`, `#0b0b0c`, `#f4a261`, `#fff`, `rgba(255,255,255,.14)`). Esos
+   cinco tokens pasan a ser alias: mismo pixel, un solo dueño, y si la marca
+   cambia una señal la tienda la sigue sin que nadie la persiga. Ni un gramo de
+   WebGL, ni un cambio en carrito, precio, variante ni CTA.
+   Reglas de la fase: cero `!important`, cero colores nuevos (los valores se
+   aliasan al sistema), una sola idea de movimiento por bloque y estado
+   estático completo con `prefers-reduced-motion`. Nada de esto toca copy,
+   precio, prestación ni CTA.
+   ========================================================================== */
+
+.shop-page {
+  --shop-black: var(--bayona-surface-0);
+  --shop-panel: var(--bayona-surface-1);
+  --shop-orange: var(--bayona-warm);
+  --shop-white: var(--bayona-white, #fff);
+  --shop-line: var(--bayona-line, rgba(255, 255, 255, 0.14));
+}
+
+/* Las colecciones se leen como capítulos: la figura numerada sube de peso
+   óptico y el filete hace de riel entre una y otra. */
+.shop-collection-cards {
+  border-block-start: var(--bayona-hairline);
+}
+
+.shop-section-heading h2 {
+  font-family: var(--bayona-font-display);
+  letter-spacing: var(--ds-ls-heading, -0.03em);
+  text-wrap: balance;
+}
+
+.shop-section-heading p {
+  max-inline-size: var(--bayona-measure);
+}
+
+.shop-feature + .shop-feature,
+.shop-product-card + .shop-product-card {
+  border-block-start: var(--bayona-hairline);
+}
+
+/* Estado de producto sin hover obligatorio: la señal vive en el filete y en
+   la figura de la colección, así que en táctil se lee igual. */
+.shop-collection-card:hover .shop-collection-card-number,
+.shop-collection-card:focus-within .shop-collection-card-number {
+  color: var(--bayona-warm);
+}
+
+.shop-collection-card {
+  transition: border-block-end-color var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-collection-card {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   FASE 4C · ATELIER — TIENDA CON FORMA DE CATÁLOGO
+   La línea del héroe se compone como portada, las colecciones ganan canto
+   diagonal y filete, y el precio pasa a cifra. La mecánica de carrito,
+   variante y CTA no se toca.
+   Todo sale de los tokens del sistema: cero `!important`, cero colores
+   nuevos, cero radios propios, cero `z-index` sueltos. Cero WebGL.
+   ========================================================================== */
+
+.shop-hero-line {
+  font-family: var(--bayona-font-display);
+  letter-spacing: -0.05em;
+  line-height: 0.86;
+}
+
+.shop-collection-card {
+  position: relative;
+  border-block-end: var(--bayona-hairline);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+  transition: clip-path var(--bayona-dur-micro) var(--bayona-ease-standard);
+}
+
+.shop-collection-card:hover,
+.shop-collection-card:focus-within {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 100% 100%, 0 100%);
+}
+
+.shop-collection-card-number {
+  font-family: var(--bayona-font-display);
+  font-size: var(--bayona-type-figure-inline);
+  font-weight: var(--ds-fw-heading);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.shop-collection-card-line {
+  background: var(--bayona-hairline-color);
+}
+
+.shop-product-price {
+  font-family: var(--bayona-font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.shop-product-visual {
+  border: var(--bayona-hairline);
+  background: var(--bayona-surface-1);
+}
+
+.shop-app-promo-inner,
+.shop-feature-visual {
+  border: var(--bayona-hairline);
+}
+
+.shop-scroll-indicator {
+  color: var(--bayona-warm);
+  font-family: var(--bayona-font-label);
+  letter-spacing: var(--ds-ls-eyebrow);
+}
+
+/* Reduced motion: el canto diagonal se QUEDA (es composición, no movimiento);
+   lo único que se apaga es el tránsito al cerrarse. */
+@media (prefers-reduced-motion: reduce) {
+  .shop-collection-card {
+    transition: none;
+  }
+
+  .shop-collection-card:hover,
+  .shop-collection-card:focus-within {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+  }
+}
+
+/* ==========================================================================
+   UNIDAD TIPOGRÁFICA · /shop (2026-09-19)
+   --------------------------------------------------------------------------
+   Esta hoja tenía más de cuarenta cuerpos escritos a mano: 8px, 9px, 10px,
+   11px, 12px, 13px, 15px, 16px y siete clamp() distintos, cada uno con su
+   propio tracking. El dueño lo resumió así: «todo tiene distinta tipografía».
+
+   Se retira todo. Cada ROL pide su paso a la escala nombrada de
+   ds-tokens.css §11: una cara display para declarar, una cara de texto para
+   leer, una mono para el dato. Mismo rol → mismo token → mismo render que en
+   /about, /programs, /community, /resources y /parkour-academy.
+   La identidad de esta ruta queda en la geometría (catálogo, ficha recortada,
+   marquesina), el ritmo y el revelado. Cero `!important` (MP-9), cero colores
+   nuevos, cero radios.
+   ========================================================================== */
+
+/* Lectura: todo el texto corrido sale del mismo paso. */
+.shop-page :is(p, li, dd, blockquote) {
+  font-family: var(--type-family-text);
+  font-size: var(--type-body);
+  font-weight: var(--type-weight-body);
+  line-height: var(--type-leading-body);
+  letter-spacing: var(--type-tracking-body);
+}
+
+.shop-page small {
+  font-family: var(--type-family-text);
+  font-size: var(--type-meta);
+  font-weight: var(--type-weight-body);
+  line-height: var(--type-leading-body);
+}
+
+/* Títulos: una familia, un peso, un aire, un tracking. */
+.shop-page :is(h1, h2, h3, h4),
+.shop-page strong {
+  font-family: var(--type-family-display);
+  font-weight: var(--type-weight-display);
+}
+
+.shop-page :is(h1, h2) {
+  line-height: var(--type-leading-heading);
+  letter-spacing: var(--type-tracking-heading);
+  text-transform: uppercase;
+}
+
+.shop-page :is(h3, h4) {
+  line-height: var(--type-leading-title);
+  letter-spacing: var(--type-tracking-title);
+}
+
+/* Párrafo de entrada: el primer texto de cada capítulo. */
+.shop-page .shop-hero-copy > p,
+.shop-page .shop-hero-subtitle,
+.shop-page .shop-closing p {
+  font-family: var(--type-family-text);
+  font-size: var(--type-lede);
+  font-weight: var(--type-weight-body-soft);
+  line-height: var(--type-leading-body);
+  letter-spacing: var(--type-tracking-body);
+  max-inline-size: var(--ds-measure);
+}
+
+/* Rótulo mono: precio, filtro, nota y dato. Un solo paso. */
+.shop-page .shop-app-promo-badge,
+.shop-page .shop-collection-card-number,
+.shop-page .shop-commercial-note,
+.shop-page .shop-feature-note,
+.shop-page .shop-feature-price small,
+.shop-page .shop-filter-meta > :is(button, span),
+.shop-page .shop-pill-group > span,
+.shop-page .shop-pill-group button,
+.shop-page .shop-product-cart-note,
+.shop-page .shop-product-collection-heading > button,
+.shop-page .shop-product-preview-toggle,
+.shop-page .shop-product-price small,
+.shop-page .shop-product-variant > span,
+.shop-page .shop-product-variant :is(select, small),
+.shop-page .shop-scroll-indicator,
+.shop-page .shop-catalog-intro > p,
+.shop-page .shop-process > p,
+.shop-page .shop-training-bridge p,
+.shop-page .shop-app-promo .eyebrow {
+  font-family: var(--type-family-mono);
+  font-size: var(--type-eyebrow);
+  font-weight: var(--type-weight-label);
+  line-height: var(--type-leading-eyebrow);
+  letter-spacing: var(--type-tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+/* Marquesina: declaración grande, cara display, paso display. */
+.shop-page .shop-hero-marquee {
+  font-family: var(--type-family-display);
+  font-size: var(--type-display);
+  font-weight: var(--type-weight-display);
+  line-height: var(--type-leading-display);
+  letter-spacing: var(--type-tracking-display);
+  text-transform: uppercase;
+}
+
+/* CTA: el mismo botón se escribe igual en las seis rutas. */
+.shop-page .shop-feature-actions > :is(a, button),
+.shop-page .shop-product-actions > :is(a, button),
+.shop-page .shop-empty button,
+.shop-page .shop-closing-actions a,
+.shop-page .shop-app-promo-cta,
+.shop-page .shop-training-bridge a {
+  font-family: var(--type-family-cta);
+  font-size: var(--type-cta);
+  font-weight: var(--type-weight-cta);
+  line-height: var(--type-leading-eyebrow);
+  letter-spacing: var(--type-tracking-label);
+  text-transform: uppercase;
+}
+
+/* El HUD de progreso del universo y la barra de filtros pegajosa se comían la
+   misma franja en esta ruta: el HUD va en `top: cabecera + 0,9rem` (y=86) y la
+   barra se pega en `top: 60` con 110 px de alto (60–170), así que mientras el
+   catálogo está a la vista el panel abierto tapaba las píldoras de «POR
+   COLECCIÓN». El HUD no roba el clic (`pointer-events: none`), pero tapaba
+   etiquetas de controles. Se baja por debajo de la barra; en el resto de rutas
+   no hay barra pegajosa y el HUD se queda donde estaba. */
+body.premium-route--shop .universe-scale {
+  top: 182px;
+}
+
+/* ==========================================================================
+   LANE C · 22-SEP — BOUTIQUE ANTES QUE REJILLA (anotaciones 46 y 61, §16)
+   --------------------------------------------------------------------------
+   · `shop-product-chip`: cada pieza declara su colección, que es lo que hace
+     que un catálogo se lea como vitrina y no como rejilla de e-commerce.
+   · `shop-counter`: el mostrador de servicios. La tienda también es puerta a
+     sesiones sueltas, evaluaciones, recuperación y técnica. Los precios vienen
+     de config/offerings.js, no de aquí.
+   · `shop-credit`: el crédito de la visita, a la vista y con su límite dicho
+     (cortesía canjeable en un plan, no dinero ni descuento en equipo).
+   ========================================================================== */
+.shop-product-chip {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  padding: 4px 9px;
+  background: rgba(5, 5, 5, 0.74);
+  color: var(--shop-dim-high);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-03);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+}
+
+.shop-page .shop-product-visual {
+  position: relative;
+}
+
+.shop-counter {
+  padding-block: clamp(56px, 8vw, 104px);
+  border-block-start: 1px solid var(--shop-line);
+}
+
+.shop-counter h2 {
+  margin: 0;
+  color: var(--shop-white);
+  font-family: var(--type-family-display);
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.shop-counter h2 span {
+  color: var(--shop-orange);
+}
+
+.shop-counter-groups {
+  display: grid;
+  gap: 1px;
+  margin-top: clamp(32px, 4.6vw, 56px);
+  background: var(--shop-line);
+}
+
+.shop-counter-group {
+  padding: clamp(22px, 3vw, 34px) 0;
+  background: var(--shop-black);
+}
+
+.shop-counter-group-head {
+  display: grid;
+  gap: 8px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--shop-line);
+}
+
+.shop-counter-group-head h3 {
+  margin: 0;
+  color: var(--shop-white);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-09);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.shop-counter-group-head p {
+  margin: 0;
+  color: var(--shop-dim-mid);
+  font-size: var(--type-size-07);
+}
+
+.shop-counter-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  margin-top: 18px;
+  background: var(--shop-line);
+}
+
+.shop-service-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: clamp(18px, 2.4vw, 26px);
+  background: var(--shop-panel);
+  transition: background-color 260ms var(--shop-ease-out);
+}
+
+.shop-service-card:hover {
+  background: var(--bayona-surface-2);
+}
+
+.shop-service-card header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.shop-service-card h4 {
+  margin: 0;
+  color: var(--shop-white);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-08);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.shop-service-flag {
+  padding: 3px 8px;
+  border: 1px solid rgba(244, 162, 97, 0.42);
+  color: var(--shop-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-03);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+}
+
+.shop-service-card p {
+  margin: 0;
+  color: var(--shop-dim-mid);
+  font-size: var(--type-size-07);
+  line-height: 1.6;
+}
+
+.shop-service-price strong {
+  display: block;
+  color: var(--shop-white);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-08);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.shop-service-price small {
+  display: block;
+  margin-top: 4px;
+  color: var(--shop-dim-low);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-03);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.shop-service-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.shop-service-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding-block-end: 4px;
+  border-block-end: 1px solid rgba(244, 162, 97, 0.42);
+  color: var(--shop-white);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 260ms var(--shop-ease-out), border-color 260ms var(--shop-ease-out);
+}
+
+.shop-service-actions a:hover {
+  color: var(--shop-orange);
+  border-color: var(--shop-orange);
+}
+
+.shop-counter-links {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  margin: 1px 0 0;
+  padding: 0;
+  list-style: none;
+  background: var(--shop-line);
+}
+
+.shop-counter-links li {
+  display: grid;
+  gap: 8px;
+  padding: clamp(18px, 2.4vw, 26px);
+  background: var(--shop-black);
+}
+
+.shop-counter-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--shop-white);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 260ms var(--shop-ease-out);
+}
+
+.shop-counter-links a:hover {
+  color: var(--shop-orange);
+}
+
+.shop-counter-links p {
+  margin: 0;
+  color: var(--shop-dim-mid);
+  font-size: var(--type-size-07);
+  line-height: 1.6;
+}
+
+.shop-counter-help {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: clamp(22px, 3vw, 34px);
+  padding: clamp(18px, 2.4vw, 26px);
+  border: 1px solid rgba(244, 162, 97, 0.3);
+  background: linear-gradient(120deg, rgba(244, 162, 97, 0.08), transparent 62%);
+}
+
+.shop-counter-help p {
+  margin: 0;
+  color: var(--shop-white);
+  font-size: var(--type-size-07);
+}
+
+.shop-counter-help a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--shop-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.shop-credit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid var(--shop-line);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 54%),
+    var(--shop-panel);
+}
+
+.shop-credit-figure span {
+  color: var(--shop-orange);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.2em;
+}
+
+.shop-credit-figure strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--shop-white);
+  font-family: var(--type-family-display);
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.shop-credit-figure small {
+  display: block;
+  margin-top: 6px;
+  color: var(--shop-dim-mid);
+  font-size: var(--type-size-06);
+}
+
+.shop-credit-copy {
+  margin: 0;
+  color: var(--shop-dim-high);
+  font-size: var(--type-size-07);
+  line-height: 1.65;
+}
+
+.shop-credit button,
+.shop-credit a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid var(--shop-orange);
+  background: transparent;
+  color: var(--shop-white);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 260ms var(--shop-ease-out), color 260ms var(--shop-ease-out);
+}
+
+.shop-credit button:hover,
+.shop-credit a:hover {
+  background: var(--shop-orange);
+  color: var(--shop-black);
+}
+
+@media (min-width: 900px) {
+  .shop-counter-list,
+  .shop-counter-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .shop-counter-group:first-child .shop-counter-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .shop-credit {
+    grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.4fr) auto;
+  }
+}
+
+/* PRIME 2026-09-29 · Hero boutique alineado al sistema editorial. */
+@media (min-width: 901px) {
+  .shop-hero-content {
+    justify-items: start;
+    text-align: left;
+    padding-block: clamp(7rem, 13vh, 9rem) clamp(5rem, 9vh, 7rem);
+  }
+
+  .shop-hero h1 {
+    max-width: 10ch;
+    color: #f5f5f2;
+    text-align: left;
+  }
+
+  .shop-hero-line {
+    color: #f5f5f2;
+    white-space: normal;
+  }
+
+  .shop-hero-line:nth-child(2) {
+    color: var(--shop-orange);
+  }
+
+  .shop-hero-content > p {
+    max-width: 38rem;
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .shop-hero-concierge {
+    width: min(680px, 100%);
+    justify-self: start;
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    box-shadow: none;
+  }
+
+  .shop-scroll-indicator {
+    justify-self: start;
+  }
+}
+
+
+/* ==========================================================================
+   BAYONA SHOP · PRODUCT RUNWAY
+   Catálogo como recorrido horizontal de objetos. Sin tarjeta como superficie.
+   ========================================================================== */
+
+.shop-collection-cards {
+  grid-template-columns: minmax(0,1fr) !important;
+  gap: 0 !important;
+  border-top: 1px solid rgba(247,247,243,.14);
+}
+
+.shop-collection-card {
+  min-height: 0 !important;
+  padding: 1.25rem 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.14) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.shop-collection-card::before,
+.shop-collection-card-line {
+  display: none !important;
+}
+
+.shop-collection-card[aria-pressed='true'] {
+  padding-left: .8rem !important;
+  background: linear-gradient(90deg,rgba(244,162,97,.08),transparent 56%) !important;
+}
+
+.shop-products-masonry,
+.shop-products-masonry.is-flat {
+  columns: auto !important;
+  display: flex !important;
+  gap: clamp(1rem,2.4vw,2.2rem) !important;
+  margin: 0 !important;
+  padding: 0 0 1.3rem !important;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(244,162,97,.45) transparent;
+}
+
+.shop-product-entry {
+  flex: 0 0 min(36vw,520px);
+  margin: 0 !important;
+  scroll-snap-align: center;
+}
+
+.shop-product-tilt {
+  transform: none !important;
+}
+
+.shop-product-card {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+.shop-product-card::before {
+  display: none !important;
+}
+
+.shop-product-visual {
+  margin: 0 !important;
+  aspect-ratio: 4 / 5;
+  border: 0 !important;
+  background: #070707 !important;
+}
+
+.shop-product-card h3 {
+  margin-top: 1.15rem;
+  font-size: clamp(1.8rem,3vw,3.5rem);
+  line-height: .95;
+  letter-spacing: -.045em;
+}
+
+.shop-product-card > p {
+  min-height: 0;
+  max-width: 34rem;
+  color: rgba(247,247,243,.56);
+}
+
+.shop-product-price {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.shop-product-price strong {
+  font-size: clamp(1.3rem,2vw,2rem);
+}
+
+.shop-product-actions {
+  grid-template-columns: auto auto;
+  justify-content: start;
+  gap: 1.2rem;
+}
+
+.shop-product-actions > a,
+.shop-product-actions > button {
+  width: auto;
+  min-height: 0;
+  padding: .7rem 0;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(244,162,97,.5) !important;
+  background: transparent !important;
+  color: var(--shop-orange) !important;
+}
+
+.shop-product-actions > a:hover,
+.shop-product-actions > button:hover,
+.shop-product-actions > a:focus-visible,
+.shop-product-actions > button:focus-visible {
+  color: var(--shop-white) !important;
+  border-bottom-color: var(--shop-white) !important;
+  background: transparent !important;
+}
+
+/* Servicios: mostrador lineal, no mini-cards. */
+.shop-counter-list {
+  gap: 0 !important;
+  border-top: 1px solid rgba(247,247,243,.14);
+}
+
+.shop-service-card {
+  padding: 1.4rem 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(247,247,243,.14) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.shop-service-card:hover {
+  padding-left: .7rem !important;
+  background: linear-gradient(90deg,rgba(244,162,97,.06),transparent 55%) !important;
+}
+
+.shop-service-actions a,
+.shop-service-actions button {
+  border-radius: 0 !important;
+}
+
+@media (max-width:760px) {
+  .shop-product-entry {
+    flex-basis: 84vw;
+  }
+
+  .shop-product-card h3 {
+    font-size: clamp(2rem,10vw,3.2rem);
+  }
+
+  .shop-product-actions {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .shop-collection-card {
+    padding-block: 1rem !important;
+  }
+}

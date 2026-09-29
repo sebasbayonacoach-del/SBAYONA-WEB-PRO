@@ -1,0 +1,122 @@
+/*
+  BAYONA · OFERTA DE TRADUCCIÓN
+  Va arriba, bajo la barra de navegación: es información de contexto, no una
+  acción de conversión, así que no debe competir con la cinta de recorrido ni con
+  el botón de WhatsApp, que viven abajo.
+*/
+
+.translate-offer {
+  position: fixed;
+  z-index: 45;
+  top: 74px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(460px, calc(100% - 40px));
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--v2-radius-sm, 10px);
+  background: rgba(8, 8, 10, 0.92);
+  animation: translate-offer-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .translate-offer {
+    backdrop-filter: blur(16px) saturate(1.15);
+  }
+}
+
+@keyframes translate-offer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.translate-offer > svg {
+  flex: none;
+  color: var(--gold);
+}
+
+.translate-offer-copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--type-size-05) !important;
+  line-height: 1.4;
+}
+
+.translate-offer-action {
+  flex: none;
+  padding: 7px 11px;
+  border: 1px solid rgba(244, 162, 97, 0.5);
+  border-radius: var(--v2-radius-sm, 10px);
+  color: var(--gold);
+  font-size: var(--type-size-05);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  transition: background 0.28s, color 0.28s, border-color 0.28s;
+}
+
+.translate-offer-action:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #050505;
+}
+
+.translate-offer-close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: var(--gray-dim);
+  transition: color 0.24s;
+}
+
+.translate-offer-close:hover {
+  color: #fff;
+}
+
+.translate-offer-action:focus-visible,
+.translate-offer-close:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (max-width: 950px) {
+  .translate-offer {
+    top: 62px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+
+  /* En móvil el texto de contexto sobra: la acción se explica sola. */
+  .translate-offer-copy {
+    display: none;
+  }
+
+  .translate-offer-action {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .translate-offer {
+    animation: none;
+  }
+
+  .translate-offer-action,
+  .translate-offer-close {
+    transition: none;
+  }
+}

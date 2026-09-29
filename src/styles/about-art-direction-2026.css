@@ -1,0 +1,55 @@
+/* BAYONA ABOUT · ART DIRECTION 2026-09-29 */
+
+body.premium-route--about .breadcrumb {
+  display: none !important;
+}
+
+body.premium-route--about .page-hero {
+  min-height: calc(100svh - 66px);
+}
+
+body.premium-route--about .page-hero-content {
+  width: min(1320px, calc(100% - 72px)) !important;
+  max-width: 1320px !important;
+  margin-inline: auto;
+  padding-top: clamp(5rem,10vh,8rem);
+  padding-bottom: clamp(4rem,8vh,7rem);
+}
+
+body.premium-route--about .page-hero-title,
+body.premium-route--about .page-hero-title.text-mask {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1120px !important;
+  font-family: var(--font-display) !important;
+  font-size: clamp(4.5rem,7vw,7.4rem) !important;
+  line-height: .88 !important;
+  letter-spacing: -.058em !important;
+  text-wrap: balance;
+}
+
+body.premium-route--about .page-hero-content > p {
+  max-width: 38rem !important;
+  margin-top: 1.5rem !important;
+  color: rgba(247,247,243,.7) !important;
+  font-size: clamp(1rem,1.22vw,1.16rem) !important;
+  line-height: 1.62 !important;
+}
+
+body.premium-route--about .page-hero::after {
+  filter: saturate(.7) contrast(1.1);
+}
+
+@media (max-width:760px) {
+  body.premium-route--about .page-hero-content {
+    width: calc(100% - 32px) !important;
+    padding-top: 4rem;
+  }
+
+  body.premium-route--about .page-hero-title,
+  body.premium-route--about .page-hero-title.text-mask {
+    max-width: 100% !important;
+    font-size: clamp(2.85rem,11.5vw,4.2rem) !important;
+    line-height: .9 !important;
+  }
+}

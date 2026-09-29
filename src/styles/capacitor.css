@@ -1,0 +1,32 @@
+/*
+ * BAYONA · Ajustes web→móvil para la WebView de Capacitor (Android).
+ *
+ * REGLAS DE ESTA HOJA (no relajar):
+ * - Solo CSS seguro y aditivo: custom properties + padding con env().
+ * - Cero selectores de componentes: no se toca .desktop-nav, .mobile-nav,
+ *   héroes ni drawers. Si algo concreto tapara contenido en el APK, se
+ *   corrige en su propia hoja y se reporta — no aquí.
+ * - En escritorio y navegadores sin notch, env(safe-area-inset-*) vale 0,
+ *   así que estas reglas son no-op fuera del teléfono.
+ * - El layout ya usa 100svh/100dvh (small/dynamic viewport): no se rompe
+ *   con la status bar. Esto solo reserva el hueco del notch y de la
+ *   barra de gestos cuando el WebView dibuja edge-to-edge.
+ */
+
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+/* El contenido nunca queda debajo del notch ni de la barra de gestos.
+   Nada más: el `scroll-padding-top` de los anclajes lo siguen gobernando
+   overrides.css / luxury-system.css / elite-refinements.css (valores
+   afinados por breakpoint; no se tocan desde aquí). */
+body {
+  padding-top: var(--sat);
+  padding-bottom: var(--sab);
+  padding-left: var(--sal);
+  padding-right: var(--sar);
+}

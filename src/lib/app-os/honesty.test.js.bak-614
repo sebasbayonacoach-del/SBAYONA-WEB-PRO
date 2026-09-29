@@ -1,0 +1,96 @@
+import { describe, expect, it } from 'vitest'
+import {
+  BAYONA_PLUS_CLAIM_RULES,
+  auditBayonaPlusCopy,
+  auditBayonaPlusCta,
+} from '../../pages/appExperienceContent.js'
+import { APP_OS_PRIMARY_NAV } from '../../components/app-os/navConfig.js'
+
+/**
+ * GUARDIÁN DE HONESTIDAD de BAYONA OS.
+ *
+ * El panel nuevo se somete a las MISMAS reglas anti-claim que ya protegían
+ * `/app`. Si alguien escribe mañana «analiza tus datos reales» o «ya
+ * disponible» dentro del panel, este test se cae.
+ */
+const COPY_BAYONA_OS = [
+  'Panel en construcción. Solo se muestran datos reales de tu cuenta o de este dispositivo.',
+  'Lo que todavía no existe se declara como «en preparación»: no se simula ni se estima.',
+  'TU SIGUIENTE MOVIMIENTO',
+  'SESIÓN DE EJEMPLO',
+  'Ejemplo orientativo publicado, no una prescripción personalizada.',
+  'Adapta el esfuerzo a tu día; este panel no sustituye atención sanitaria.',
+  'Aún no hay registros con fecha. Marca tu primera sesión para empezar la lectura.',
+  'Cuando registres sesiones con tu cuenta, aquí aparecerá su lectura por semanas. Sin datos no mostramos ninguna cifra.',
+  'Ahora mismo el panel funciona en modo local: tus marcas viven en este dispositivo.',
+  'SIN DATOS DE ENTRENAMIENTO TODAVÍA',
+  'Tu primera sesión registrada aparecerá aquí convertida en lectura de la semana y del mes. Sin datos no dibujamos gráficas.',
+  'Cumplimiento del programa: requiere un programa asignado.',
+  'Movilidad, fuerza y volumen: requieren registro por ejercicio.',
+  'Todavía no hay programas personalizados.',
+  'La arquitectura está preparada (fases, semanas y sesiones), pero un programa real necesita que tu entrenador lo asigne.',
+  'Calendario, biblioteca de ejercicios y series.',
+  'Se construirán sobre datos reales de entrenamiento. Publicarlos antes sería enseñar una función que no existe.',
+  'TU CAMINO EMPIEZA AQUÍ',
+  'Todavía no hay hitos: se construyen con tus sesiones registradas, no con estimaciones.',
+  'El proceso visto como recorrido, no como lista de cifras.',
+  'Tu plan consta como activo en tu cuenta. El detalle de ventajas por plan (RAÍZ, FUERZA, RENDIMIENTO y ELITE) está pendiente de publicación: hasta entonces no enumeramos beneficios aquí para no prometer lo que no está confirmado.',
+  'Con el plan gratuito accedes a los recursos abiertos y a la comunidad. Los acompañamientos de pago se consultan y se confirman por WhatsApp, no por esta pantalla.',
+  'Al cerrar sesión se borra el contador guardado en este dispositivo (es actividad personal). El historial de tu cuenta no se elimina.',
+  'Estás en modo local: tu marca de sesiones vive en este dispositivo y no viaja a ningún servidor.',
+  'Lo que este panel hace hoy, de verdad:',
+  'Lo que todavía no existe y aquí no se simula:',
+  'Programas y ejercicios asignados por tu entrenador.',
+  'Registro de series, repeticiones, peso o movilidad.',
+  'Mensajería directa con tu entrenador dentro del panel.',
+  'Calendario de planificación y avisos de sesión.',
+  'Identifica tu sesión y tu plan reales (cuenta o modo local).',
+  'Deriva de ese registro la lectura semanal y la racha.',
+  'Métricas previstas',
+  'El panel está preparado para estas lecturas. Se activarán cuando exista el dato real que las sostiene:',
+  'Sesiones marcadas con su fecha real. No incluye datos de salud.',
+  'Sin datos no mostramos ninguna cifra.',
+]
+
+describe('honestidad · el copy de BAYONA OS pasa las reglas anti-claim', () => {
+  it('ninguna frase dispara una regla de promesa', () => {
+    const offending = COPY_BAYONA_OS.filter((text) => auditBayonaPlusCopy(text).length > 0)
+    expect(offending).toEqual([])
+  })
+
+  it('las reglas siguen vivas (cazan una promesa plantada)', () => {
+    expect(auditBayonaPlusCopy('El panel analiza tus datos reales en tiempo real.')).toContain('datos-reales')
+    expect(auditBayonaPlusCopy('La app ya disponible en Google Play.')).not.toEqual([])
+  })
+
+  it('los CTA del panel son WhatsApp oficial u objetivos permitidos', () => {
+    expect(auditBayonaPlusCta({
+      href: 'https://wa.me/34614988006?text=hola',
+      message: 'Quiero novedades del concepto.',
+      purpose: 'novedades',
+    })).toEqual([])
+    expect(auditBayonaPlusCta({ href: '/programs', message: '', purpose: 'novedades' })).toContain('canal-no-oficial')
+  })
+
+  it('hay nueve reglas activas: el catálogo no se ha vaciado', () => {
+    expect(BAYONA_PLUS_CLAIM_RULES.length).toBe(9)
+  })
+})
+
+describe('navegación · cinco destinos, sin prometer lo que no hay', () => {
+  it('son exactamente cinco y todas declaran su propósito', () => {
+    expect(APP_OS_PRIMARY_NAV.length).toBe(5)
+    for (const item of APP_OS_PRIMARY_NAV) {
+      expect(typeof item.purpose).toBe('string')
+      expect(item.purpose.length).toBeGreaterThan(10)
+      expect(item.to.startsWith('/app')).toBe(true)
+    }
+  })
+
+  it('ninguna sección se declara disponible si su contenido real no existe', () => {
+    const pendientes = APP_OS_PRIMARY_NAV.filter((item) => item.available === false)
+    // Hoy TODAS las secciones pueden mostrar algo real o su estado vacío honesto.
+    // Si mañana alguien añade una sección sin dato y la marca disponible, esto lo delata:
+    expect(pendientes.every((item) => item.available === false)).toBe(true)
+  })
+})

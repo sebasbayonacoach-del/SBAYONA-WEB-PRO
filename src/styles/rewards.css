@@ -1,0 +1,1226 @@
+/**
+ * BONO DE LLEGADA · CRÉDITO BAYONA
+ * ---------------------------------------------------------------------------
+ * Hoja propia porque el bono es una capa GLOBAL flotante (como el acompañante):
+ * prefijada `.arrival-bonus`, no toca ningún selector ajeno.
+ *
+ * Reglas de la casa que se respetan aquí:
+ *  · Cero colores nuevos: negro #050505, blanco #f5f5f5, gris #a3a3a3 y los
+ *    dos naranjas de la marca #f4a261 / #e76f51.
+ *  · Cero `!important`.
+ *  · Montserrat para el rótulo, Inter para el habla; micro-etiquetas en
+ *    mayúscula con letter-spacing, como en toda la recepción.
+ *  · El movimiento es SOLO transform/opacity sobre elementos propios: nunca
+ *    clip-path sobre titulares ajenos ni opacidad base sobre h1/h2/p.
+ *  · `prefers-reduced-motion` apaga el brillo y la flotación, no el contenido.
+ */
+
+.arrival-bonus-layer {
+  --ab-ink: #f5f5f5;
+  --ab-muted: #a3a3a3;
+  --ab-accent: #f4a261;
+  --ab-fire: #e76f51;
+  --ab-shell: rgba(9, 9, 10, 0.94);
+  --ab-hairline: rgba(245, 245, 245, 0.14);
+  --ab-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+  background: rgba(3, 3, 4, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+
+/* En modo premium no bloquea la lectura ni la venta: flota como un artefacto
+   de producto, no como un pop-up publicitario. */
+.arrival-bonus-layer--open {
+  inset: auto;
+  right: 1.25rem;
+  bottom: max(6.5rem, calc(env(safe-area-inset-bottom) + 6.5rem));
+  left: auto;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0;
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+}
+
+/* El widget vive abajo a un lado; solo existe tras reclamar. */
+.arrival-bonus-layer--widget {
+  inset: auto;
+  top: auto;
+  right: auto;
+  /* Casilla 2: por encima del orbe. */
+  bottom: var(--dock-slot-2);
+  left: var(--dock-left);
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0;
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+}
+
+.arrival-bonus-layer > * {
+  pointer-events: auto;
+}
+
+/*
+ * Igual que el orbe del acompañante: mientras la página se mueve, el crédito se
+ * aparta y deja pasar el puntero. A 390 px el chip mide casi el ancho útil de
+ * la pantalla, y en las fichas de plan se ponía encima del precio de la portada
+ * y del botón «ACTIVAR <plan>». Nadie clica el crédito mientras scrollea, así
+ * que el gesto no cuesta acceso. Señal `html.is-scrolling` (App.jsx).
+ *
+ * El `opacity` ya no puede ir en la capa: desde el arreglo del doble estado la
+ * capa es el elemento que anima framer-motion y deja su `opacity: 1` en el
+ * `style` en línea, que gana a esta hoja sin necesidad de `!important`. Se
+ * aplana un nivel y se pone en el `.arrival-bonus-widget`, que es un `div`
+ * normal y el único contenido de la capa: visualmente es el mismo fundido.
+ * `translate` sí sigue valiendo en la capa porque es una propiedad distinta de
+ * `transform`, que es la que escribe la animación.
+ */
+html.is-scrolling .arrival-bonus-layer--widget {
+  translate: 0 10px;
+  pointer-events: none;
+  transition: translate 0.16s ease;
+}
+
+html.is-scrolling .arrival-bonus-layer--widget .arrival-bonus-widget {
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+/*
+ * En escritorio el chip se compacta a una sola línea. Motivo medido, no de
+ * gusto: la versión apilada (etiqueta arriba, cifra abajo, compartir debajo)
+ * ocupaba ~200x150 px flotando en la esquina y en /shop tapaba el precio y el
+ * botón «AÑADIR AL CARRITO» de la primera ficha (captura ld1440shop-01.png).
+ * Etiqueta, cifra y sellos en línea reducen el área tapada a aproximadamente un
+ * tercio sin quitar nada: el botón conserva su `aria-label` completo.
+ */
+@media (min-width: 42.01rem) {
+  /* Con el ancestro a propósito: la definición de `__main` está MÁS ABAJO en
+     este mismo archivo y, a igual especificidad, gana el orden — la primera
+     versión de esta regla no se aplicaba y el chip seguía apilado. */
+  .arrival-bonus-layer--widget .arrival-bonus-widget__main {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.5rem;
+    min-width: 0;
+    padding: 0.5rem 0.85rem;
+  }
+
+  .arrival-bonus-layer--widget .arrival-bonus-widget__label {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+  }
+
+  .arrival-bonus-layer--widget .arrival-bonus-widget__seals {
+    font-size: 0.62rem;
+    opacity: 0.72;
+  }
+}
+
+/*
+ * A partir de 1440 px el chip deja de ser una línea y se mide con el hueco real
+ * de la página. `.section-shell` es `min(1240px, 100% - 80px)`, así que por
+ * encima de 1320 px el hueco libre a la izquierda es `50vw - 620px`: a 1440 son
+ * 100 px y, descontando el margen del dock, quedan 80. La versión en línea medía
+ * 165 px —85 px metidos en la columna de contenido— y en /shop rozaba el precio
+ * de la primera ficha. Lo que molesta es el ancho, no el alto: la columna crece
+ * hacia arriba, y los huecos del dock (`--dock-slot-*`) se calculan por debajo.
+ *
+ * ARREGLO DEL TEXTO ESTRUJADO (medido a 1440 px sobre la versión anterior): el
+ * hueco de 80 px se le daba al botón principal, pero NADIE se lo daba al resto
+ * del clúster. Dentro de esos 80 px el rótulo «RECLAMAR» medía 107 px y debajo
+ * asomaba un botón de 203 px, así que el `__main` tenía `scrollWidth` 118 sobre
+ * `clientWidth` 78: la cifra y la orden se salían del cuadrito y el clúster
+ * seguía entrando 123 px en la columna de lectura, que era justo lo que la
+ * regla quería evitar. Ahora el límite de 80 px se aplica al CLÚSTER ENTERO y
+ * dentro de él solo cabe lo que cabe: rótulo, cifra y sellos. La orden escrita
+ * («RECLAMAR», «X sin reclamar») y el rótulo de compartir se quedan en las
+ * anchuras donde hay sitio; en la columna estrecha los sustituye la línea de
+ * estado del canto, y el `aria-label` del botón sigue diciendo la cifra
+ * completa.
+ */
+@media (min-width: 68.75rem) {
+  /*
+   * Antes este bloque empezaba en 90rem (1440 px). Bajarlo a 1100 px es lo que
+   * cierra el hueco que quedó medido el 22-09: con el carril ya reservado en
+   * `luxury-system.css` (120 px de foso a partir de 1100), por debajo de 1440 el
+   * chip seguía en su versión de una línea —165 px— y entraba 45 px en la
+   * columna de lectura. El `max()` mantiene el comportamiento de siempre donde
+   * sobra espacio (a 1920 el hueco real es de 320 px) y fija los 80 px de la
+   * columna en el resto, que es lo que cabe dentro del foso.
+   */
+  .arrival-bonus-layer--widget .arrival-bonus-widget {
+    /*
+     * El 620px fijado a mano era la mitad de un marco de 1240px que ya no
+     * existe: `--layout-max` es 1280px, así que el muelle rebasaba el borde
+     * izquierdo del contenido en 20px a TODOS los anchos de escritorio
+     * (medido con `scripts/probe-ancho-muelle.mjs`: 20px de solape a 1440,
+     * 1590, 1720 y 1920; 76px a 1280, donde además el héroe no reservaba
+     * carril). Ahora se deriva del mismo token que el contenido, más el foso.
+     */
+    width: max(
+      5rem,
+      calc(50vw - (var(--layout-max) / 2) - var(--dock-foso) - var(--dock-left))
+    );
+  }
+
+  .arrival-bonus-layer--widget .arrival-bonus-widget__main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.12rem;
+    width: 100%;
+    min-width: 0;
+    padding: 0.55rem 0.5rem 0.6rem;
+  }
+
+  .arrival-bonus-layer--widget .arrival-bonus-widget__amount {
+    /* 13 px: «$121.600» mide ~55 px y entra en los 62 px útiles de la columna.
+       El rótulo y la línea de sellos ya vienen ajustados a 0,62 rem en la regla
+       de 42,01 rem, que sigue aplicando por encima: «CARTERA» mide 58 px. */
+    font-size: var(--type-size-05);
+    letter-spacing: 0.01em;
+  }
+
+  .arrival-bonus-layer--widget .arrival-bonus-widget__claim,
+  .arrival-bonus-layer--widget .arrival-bonus-widget__pending {
+    display: none;
+  }
+
+  /* Compartir pasa a ser el mismo ancho, solo con el icono por delante. */
+  .arrival-bonus-layer--widget .arrival-bonus-widget__share {
+    justify-content: center;
+    width: 100%;
+    min-height: 2.1rem;
+    padding: 0;
+  }
+
+  .arrival-bonus-layer--widget .arrival-bonus-widget__share-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/*
+ * En las fichas de plan el chip de crédito NO se muestra. Motivo medido, no
+ * estético: a 390 px el botón «COMPARTÉ Y SUMA» del propio chip tapaba la
+ * etiqueta «INVERSIÓN MENSUAL» del héroe (scroll 0) y el pie «UN PASO MÁS»
+ * (probe-solapes), y reservar hueco dentro del héroe no lo resolvía porque el
+ * chip es fijo respecto a la ventana, no al documento. El crédito sigue visible
+ * en el resto del sitio y en `/panel` (su propia dirección desde hoy); en la
+ * ficha de venta lo que tiene que estar libre es el precio y el CTA de activar.
+ */
+body:has(.plan-presentation-hero) .arrival-bonus-layer--widget {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.is-scrolling .arrival-bonus-layer--widget {
+    translate: none;
+  }
+}
+
+/* --- La tarjeta ------------------------------------------------------------ */
+
+.arrival-bonus__card {
+  position: relative;
+  width: min(26rem, calc(100vw - 2rem));
+  max-height: min(88svh, 44rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1.35rem 1.4rem 1.5rem;
+  border: 1px solid var(--ab-hairline);
+  background:
+    radial-gradient(circle at 88% 4%, rgba(244, 162, 97, 0.12), transparent 42%),
+    linear-gradient(165deg, #131317, #060607 62%);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  color: var(--ab-ink);
+  font-family: var(--type-family-text);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.arrival-bonus-layer--open .arrival-bonus__card {
+  width: min(23.5rem, calc(100vw - 2rem));
+  max-height: min(72svh, 38rem);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.44);
+}
+
+/* Banda superior: la silueta de una tarjeta bancaria, sin logotipos ajenos. */
+.arrival-bonus__strip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.1rem;
+  /* El cierre está absolutamente posicionado en la esquina: sin este hueco la
+     etiqueta «crédito de entrenamiento» se mete debajo del aspa. */
+  padding-inline-end: 2.9rem;
+}
+
+.arrival-bonus__brand {
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-06);
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--ab-ink);
+}
+
+.arrival-bonus__chip {
+  position: relative;
+  flex: none;
+  width: 1.7rem;
+  height: 1.25rem;
+  overflow: hidden;
+  border: 1px solid rgba(244, 162, 97, 0.45);
+  background: linear-gradient(135deg, rgba(244, 162, 97, 0.4), rgba(231, 111, 81, 0.25));
+}
+
+/* Único adorno animado: un destello que cruza el chip, elemento propio. */
+.arrival-bonus__chip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgba(245, 245, 245, 0.5) 50%, transparent 62%);
+  transform: translateX(-100%);
+  animation: arrival-bonus-sheen 3.6s var(--ab-ease) infinite;
+}
+
+.arrival-bonus__kind {
+  margin-left: auto;
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ab-muted);
+}
+
+.arrival-bonus__close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ab-muted);
+  cursor: pointer;
+  transition: color 0.25s var(--ab-ease), border-color 0.25s var(--ab-ease);
+}
+
+.arrival-bonus__close:hover,
+.arrival-bonus__close:focus-visible {
+  color: var(--ab-ink);
+  border-color: var(--ab-hairline);
+}
+
+.arrival-bonus__eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ab-accent);
+}
+
+.arrival-bonus__title {
+  margin: 0 0 0.6rem;
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-09);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  color: var(--ab-ink);
+}
+
+.arrival-bonus__lead {
+  margin: 0 0 0.5rem;
+  font-size: var(--type-size-07);
+  color: var(--ab-ink);
+}
+
+.arrival-bonus__amount {
+  font-family: var(--type-family-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ab-accent);
+}
+
+.arrival-bonus__honesty {
+  margin: 0 0 1rem;
+  font-size: var(--type-size-06);
+  letter-spacing: 0.04em;
+  color: var(--ab-muted);
+}
+
+/* --- Selector de país ------------------------------------------------------ */
+
+.arrival-bonus__region {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.9rem;
+}
+
+.arrival-bonus__label {
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ab-muted);
+}
+
+.arrival-bonus__select {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--ab-hairline);
+  background: #0a0a0c;
+  color: var(--ab-ink);
+  font-family: var(--type-family-text);
+  font-size: var(--type-size-07);
+}
+
+.arrival-bonus__select:focus-visible {
+  border-color: var(--ab-accent);
+  outline: none;
+}
+
+.arrival-bonus__seals {
+  margin: 0 0 1.15rem;
+  font-size: var(--type-size-06);
+  color: var(--ab-muted);
+}
+
+.arrival-bonus__seals strong {
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--ab-ink);
+}
+
+/* --- CTA -------------------------------------------------------------------- */
+
+.arrival-bonus__actions {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.arrival-bonus__cta,
+.arrival-bonus__ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--ab-accent);
+  background: var(--ab-accent);
+  color: #050505;
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-06);
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s var(--ab-ease), color 0.3s var(--ab-ease);
+}
+
+.arrival-bonus__cta--link {
+  text-decoration: none;
+}
+
+.arrival-bonus__cta:hover {
+  background: var(--ab-fire);
+  border-color: var(--ab-fire);
+  color: var(--ab-ink);
+}
+
+.arrival-bonus__ghost {
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--ab-muted);
+  border-color: var(--ab-hairline);
+}
+
+.arrival-bonus__ghost:hover {
+  color: var(--ab-ink);
+  border-color: rgba(244, 162, 97, 0.42);
+}
+
+.arrival-bonus__cta:focus-visible,
+.arrival-bonus__ghost:focus-visible {
+  outline: 2px solid var(--ab-ink);
+  outline-offset: 2px;
+}
+
+/* --- El widget flotante ----------------------------------------------------- */
+
+.arrival-bonus-widget {
+  /* En columna, no en fila: lado a lado el clúster medía ~360 px y tapaba el
+     párrafo de intro de la sección de planes. Apilado ocupa el ancho del botón
+     mayor (~200 px) y deja libre la columna de lectura. */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.arrival-bonus-widget__main {
+  /*
+   * `position: relative` ancla las dos señales de pase que lleva dentro: el
+   * filete de la banda izquierda y el testigo de pendiente. El radio de 2 px y
+   * el aro de 1 px son LOS MISMOS valores del pase abierto
+   * (`.arrival-bonus__card`), para que la billetera se lea como ese pase
+   * plegado y no como una caja de texto suelta.
+   */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  min-width: 9.5rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--ab-hairline);
+  border-radius: 2px;
+  background: var(--ab-shell);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 0 1px rgba(244, 162, 97, 0.16);
+  color: var(--ab-ink);
+  cursor: pointer;
+  transition: border-color 0.3s var(--ab-ease), transform 0.3s var(--ab-ease);
+  animation: arrival-bonus-float 6.4s var(--ab-ease) infinite;
+}
+
+.arrival-bonus-widget__main::before {
+  /* La banda del pase: filete naranja por dentro, sin costar ancho. */
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--ab-accent), rgba(231, 111, 81, 0.25));
+}
+
+.arrival-bonus-widget__main:hover,
+.arrival-bonus-widget__main:focus-visible {
+  border-color: var(--ab-accent);
+  transform: translateY(-2px);
+}
+
+.arrival-bonus-widget__label {
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ab-muted);
+}
+
+.arrival-bonus-widget__amount {
+  font-family: var(--type-family-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ab-accent);
+}
+
+.arrival-bonus-widget__seals {
+  font-size: var(--type-size-05);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ab-muted);
+}
+
+.arrival-bonus-widget__share {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--ab-hairline);
+  background: var(--ab-shell);
+  color: var(--ab-muted);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s var(--ab-ease), border-color 0.3s var(--ab-ease);
+}
+
+.arrival-bonus-widget__share:hover,
+.arrival-bonus-widget__share:focus-visible {
+  color: var(--ab-ink);
+  border-color: var(--ab-accent);
+}
+
+/* --- Movimiento ------------------------------------------------------------- */
+
+@keyframes arrival-bonus-sheen {
+  0%, 62% { transform: translateX(-100%); }
+  86%, 100% { transform: translateX(100%); }
+}
+
+@keyframes arrival-bonus-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -0.3rem, 0); }
+}
+
+@keyframes arrival-bonus-flag {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 42rem) {
+  /*
+   * En móvil el chip de crédito NO flota. No es un capricho estético: la fila de
+   * abajo ya está repartida entre el acompañante (que a ≤680 px ocupa el ancho
+   * completo, `companion.css:296-300`), el botón de WhatsApp abajo-derecha y, en
+   * /community, la barra de unirse. Medido con probe-overlays a 390x844, el chip
+   * dejaba el CTA «VER LA COMUNIDAD» con el 56 % cubierto y su punto central
+   * dentro del chip en scroll 0 — el botón principal de la ruta no se podía
+   * pulsar. Reubicarlo solo cambiaba un solape por otro.
+   *
+   * El crédito sigue existiendo en móvil: se ve en la tarjeta de bienvenida y
+   * en `/panel`, que desde hoy tiene su propia dirección. Lo que se quita es el
+   * recordatorio permanente encima del contenido, que era lo que estorbaba.
+   */
+  .arrival-bonus-layer--widget {
+    display: none;
+  }
+}
+
+/* --- El pase como objeto: troquel, filete y sellos -------------------------- */
+
+/*
+ * Comentario 13 del 22-09: «armes un diseño súper hermoso, de lujo, como si
+ * fuera un tiquete muy personalizado, una invitación VIP». El contenedor deja
+ * de leerse como una caja de texto y pasa a silueta de pase: dos muescas
+ * laterales que parten la tarjeta en cuerpo y talón, filete dorado por dentro y
+ * guilloché discreto de billete. Cero colores nuevos: los mismos dos naranjas
+ * de la marca sobre negro.
+ */
+.arrival-bonus__card {
+  border-radius: 2px;
+  box-shadow:
+    0 0 0 1px rgba(244, 162, 97, 0.16),
+    inset 0 0 44px rgba(0, 0, 0, 0.6),
+    0 24px 64px rgba(0, 0, 0, 0.6);
+}
+
+.arrival-bonus__card::before {
+  /* Guilloché: rayas finísimas que solo se ven de refilón, como en un pase real. */
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      118deg,
+      rgba(244, 162, 97, 0.05) 0 1px,
+      transparent 1px 9px
+    );
+  mix-blend-mode: screen;
+  opacity: 0.5;
+}
+
+.arrival-bonus__card > * {
+  position: relative;
+}
+
+/* Las dos muescas que separan el cuerpo del talón del pase. */
+.arrival-bonus__perf {
+  position: relative;
+  height: 0;
+  margin: 1.15rem -1.4rem 1.05rem;
+  border-top: 1px dashed rgba(245, 245, 245, 0.22);
+}
+
+.arrival-bonus__perf::before,
+.arrival-bonus__perf::after {
+  content: '';
+  position: absolute;
+  top: -0.55rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: #070708;
+  box-shadow: inset 0 0 0 1px rgba(245, 245, 245, 0.08);
+}
+
+.arrival-bonus__perf::before {
+  left: -0.55rem;
+}
+
+.arrival-bonus__perf::after {
+  right: -0.55rem;
+}
+
+/* La lista de sellos: cada uno es un talón recortable con su propio estado. */
+.arrival-bonus__seal-list {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.arrival-bonus__seal {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--ab-hairline);
+  border-left: 2px solid var(--ab-muted);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Descubierto y pendiente piden acción; reclamado se apaga; usado se tacha. */
+.arrival-bonus__seal[data-state='Pendiente de reclamar'] {
+  border-left-color: var(--ab-fire);
+  background: linear-gradient(90deg, rgba(231, 111, 81, 0.14), transparent 60%);
+}
+
+.arrival-bonus__seal[data-state='Reclamado'] {
+  border-left-color: var(--ab-accent);
+}
+
+.arrival-bonus__seal[data-state='Usado'] {
+  border-left-color: rgba(245, 245, 245, 0.2);
+  opacity: 0.6;
+}
+
+.arrival-bonus__seal[data-state='Usado'] .arrival-bonus__seal-copy strong {
+  text-decoration: line-through;
+}
+
+.arrival-bonus__seal-notch {
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1px solid var(--ab-accent);
+  transform: rotate(45deg);
+}
+
+.arrival-bonus__seal-copy {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.arrival-bonus__seal-copy strong {
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-06);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ab-ink);
+}
+
+.arrival-bonus__seal-copy small {
+  font-size: var(--type-size-04);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ab-muted);
+}
+
+.arrival-bonus__seal-cta {
+  flex: none;
+  padding: 0.34rem 0.6rem;
+  border: 1px solid var(--ab-accent);
+  background: transparent;
+  color: var(--ab-accent);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: right;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ab-ease), color 0.25s var(--ab-ease);
+}
+
+.arrival-bonus__seal-cta:hover,
+.arrival-bonus__seal-cta:focus-visible {
+  background: var(--ab-accent);
+  color: #070708;
+}
+
+.arrival-bonus__seal-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ab-muted);
+}
+
+/* El chip de acción del estado plegado: la orden, no solo la cifra. */
+.arrival-bonus-widget__claim {
+  align-self: flex-start;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--ab-accent);
+  color: var(--ab-accent);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.arrival-bonus-widget__pending {
+  font-size: var(--type-size-04);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ab-fire);
+}
+
+/*
+ * El testigo: una línea de estado en el canto de la billetera mientras haya algo
+ * sin reclamar. Es la señal que sustituye a la palabra «RECLAMAR» cuando la
+ * columna de 80 px no la admite. Se pinta en el borde, no en el flujo: en la
+ * esquina superior derecha llegaba a tocar la última letra del rótulo (el
+ * «CARTERA» de 0,62 rem ocupa 56 px de los 62 útiles), y aquí no cuesta ni un
+ * píxel de ancho ni de legibilidad. Solo opacidad, que es lo que permite la
+ * regla de la casa para el movimiento.
+ */
+.arrival-bonus-widget__flag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ab-accent), rgba(231, 111, 81, 0.25));
+  animation: arrival-bonus-flag 2.8s var(--ab-ease) infinite;
+}
+
+/* --- La tarjeta de regalo (comentario 14) ----------------------------------- */
+
+.gift-pass {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1.1rem;
+  background: rgba(3, 3, 4, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: auto;
+  animation: gift-pass-in 0.4s var(--ab-ease) both;
+}
+
+.gift-pass__frame {
+  position: relative;
+  width: min(46rem, 100%);
+  max-height: min(92svh, 46rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.2rem, 3vw, 2.4rem) clamp(1.6rem, 3vw, 2.2rem);
+  border: 1px solid rgba(244, 162, 97, 0.4);
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 82% 6%, rgba(244, 162, 97, 0.16), transparent 46%),
+    repeating-linear-gradient(118deg, rgba(244, 162, 97, 0.05) 0 1px, transparent 1px 10px),
+    linear-gradient(165deg, #14131a, #060607 62%);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.7), inset 0 0 60px rgba(0, 0, 0, 0.55);
+  color: var(--ab-ink);
+  font-family: var(--type-family-text);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.gift-pass__close {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ab-muted);
+  cursor: pointer;
+  transition: color 0.25s var(--ab-ease), border-color 0.25s var(--ab-ease);
+}
+
+.gift-pass__close:hover,
+.gift-pass__close:focus-visible {
+  color: var(--ab-ink);
+  border-color: var(--ab-hairline);
+}
+
+.gift-pass__strip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+  padding-inline-end: 2.9rem;
+}
+
+.gift-pass__brand,
+.gift-pass__kind {
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-06);
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--ab-ink);
+}
+
+.gift-pass__kind {
+  margin-left: auto;
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  color: var(--ab-muted);
+}
+
+.gift-pass__chip {
+  flex: none;
+  width: 1.7rem;
+  height: 1.25rem;
+  border: 1px solid rgba(244, 162, 97, 0.45);
+  background: linear-gradient(135deg, rgba(244, 162, 97, 0.45), rgba(231, 111, 81, 0.25));
+}
+
+.gift-pass__eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ab-accent);
+}
+
+.gift-pass__title {
+  margin: 0 0 0.6rem;
+  font-family: var(--type-family-display);
+  font-size: clamp(1.6rem, 4.4vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--ab-ink);
+}
+
+.gift-pass__lead {
+  margin: 0 0 1.3rem;
+  max-width: 46ch;
+  font-size: var(--type-size-07);
+  color: var(--ab-ink);
+}
+
+.gift-pass__fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.7rem 1rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px dashed rgba(245, 245, 245, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.gift-pass__field {
+  display: grid;
+  gap: 0.3rem;
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.gift-pass__field-label {
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ab-muted);
+}
+
+.gift-pass__field input {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--ab-hairline);
+  border-bottom: 2px solid var(--ab-accent);
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--ab-ink);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-08);
+  letter-spacing: 0.04em;
+}
+
+.gift-pass__field input:focus-visible {
+  outline: 2px solid var(--ab-accent);
+  outline-offset: 2px;
+}
+
+.gift-pass__verb {
+  flex: 0 1 auto;
+  padding-bottom: 0.6rem;
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-06);
+  font-style: italic;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: var(--ab-accent);
+}
+
+.gift-pass__condition {
+  margin: 1.1rem 0 0;
+  padding: 0.7rem 0.9rem;
+  border-left: 2px solid var(--ab-fire);
+  background: rgba(231, 111, 81, 0.08);
+  font-size: var(--type-size-06);
+  color: var(--ab-ink);
+}
+
+.gift-pass__condition strong {
+  font-family: var(--type-family-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ab-fire);
+}
+
+.gift-pass__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.gift-pass__download,
+.gift-pass__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.72rem 1.15rem;
+  border: 1px solid var(--ab-accent);
+  color: var(--ab-accent);
+  background: transparent;
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-05);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ab-ease), color 0.25s var(--ab-ease);
+}
+
+.gift-pass__download {
+  background: var(--ab-accent);
+  color: #070708;
+}
+
+.gift-pass__download:hover,
+.gift-pass__download:focus-visible,
+.gift-pass__copy:hover,
+.gift-pass__copy:focus-visible {
+  background: var(--ab-accent);
+  color: #070708;
+}
+
+.gift-pass__social {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ab-hairline);
+}
+
+.gift-pass__social-link {
+  padding: 0.42rem 0.8rem;
+  border: 1px solid var(--ab-hairline);
+  color: var(--ab-muted);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.25s var(--ab-ease), border-color 0.25s var(--ab-ease);
+}
+
+.gift-pass__social-link:hover,
+.gift-pass__social-link:focus-visible {
+  color: var(--ab-ink);
+  border-color: var(--ab-accent);
+}
+
+.gift-pass__social-link--wa {
+  border-color: var(--ab-accent);
+  color: var(--ab-accent);
+}
+
+.gift-pass__serial,
+.gift-pass__note {
+  margin: 0.9rem 0 0;
+  font-size: var(--type-size-04);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ab-muted);
+}
+
+.gift-pass__note {
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--ab-accent);
+}
+
+@keyframes gift-pass-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- Responsive de la tarjeta de regalo ------------------------------------- */
+
+@media (min-width: 60rem) {
+  .arrival-bonus__card {
+    width: min(28rem, calc(100vw - 2rem));
+  }
+}
+
+@media (max-width: 42rem) {
+  .gift-pass {
+    place-items: end center;
+    padding: 0;
+  }
+
+  .gift-pass__frame {
+    width: 100%;
+    max-height: 94svh;
+    border-inline: 0;
+    border-bottom: 0;
+  }
+
+  .gift-pass__verb {
+    padding-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gift-pass {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrival-bonus__chip::after,
+  .arrival-bonus-widget__main,
+  .arrival-bonus-widget__flag {
+    animation: none;
+  }
+
+  .seal-gift {
+    animation: none;
+  }
+}
+
+/* --- El regalo escondido (comentario 13) ------------------------------------ */
+
+/*
+ * Un disco de 1,6rem, casi una lenteja de luz en la esquina de la sección. No
+ * lleva rótulo hasta que lo pulsas: lo de «escondido» es literal, y ahí está la
+ * gracia — quien no mira por debajo no cobra (§6).
+ */
+.seal-gift-wrap {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/*
+ * Variante en el flujo, para montar el regalo dentro de un párrafo o de una
+ * lista sin tocar el posicionamiento de la sección que lo recibe.
+ */
+.seal-gift-wrap--flow {
+  position: static;
+  vertical-align: middle;
+}
+
+.seal-gift {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  border: 1px solid rgba(244, 162, 97, 0.5);
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, rgba(244, 162, 97, 0.35), rgba(231, 111, 81, 0.16) 68%);
+  color: var(--ab-accent);
+  cursor: pointer;
+  opacity: 0.62;
+  animation: seal-gift-breathe 3.4s var(--ab-ease) infinite;
+  transition: opacity 0.25s var(--ab-ease), transform 0.25s var(--ab-ease);
+}
+
+.seal-gift:hover,
+.seal-gift:focus-visible {
+  opacity: 1;
+  transform: translateY(-2px) scale(1.06);
+}
+
+.seal-gift--done {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: auto;
+  height: auto;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--ab-hairline);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ab-muted);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 1;
+  animation: none;
+}
+
+.seal-gift__toast {
+  padding: 0.2rem 0.45rem;
+  border-left: 2px solid var(--ab-accent);
+  background: rgba(9, 9, 10, 0.9);
+  color: var(--ab-accent);
+  font-family: var(--type-family-display);
+  font-size: var(--type-size-04);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@keyframes seal-gift-breathe {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(244, 162, 97, 0.28); }
+  50% { box-shadow: 0 0 0 0.45rem rgba(244, 162, 97, 0); }
+}

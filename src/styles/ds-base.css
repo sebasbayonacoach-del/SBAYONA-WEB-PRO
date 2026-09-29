@@ -1,0 +1,456 @@
+/*
+  BAYONA · DESIGN SYSTEM 2.0 — COMPONENTES BASE (Fase 3)
+  ===========================================================================
+  Estilos de los componentes base del sistema. Todo el archivo está
+  PREFIJADO `.ds-`: ninguna regla toca selectores legacy, así que las 17
+  rutas públicas conservan su estado visual exacto.
+
+  Convenciones:
+  · Cada componente pide sus valores a ds-tokens.css (nunca literales).
+  · Estados cubiertos: default / hover / focus-visible / active / disabled /
+    loading / error, con foco visible accesible en todos los interactivos.
+  · `prefers-reduced-motion` anula transformaciones y transiciones.
+  · El canto afilado (R9.5) es el defecto; los radios suaves aparecen solo
+    donde el token lo dice (controles y superficies que flotan).
+*/
+
+/* ===========================================================================
+   1. CONTENEDOR Y RETÍCULA
+   =========================================================================== */
+
+/* Contenedor editorial: medidas reales de .section-shell (1240px, 40px/lado). */
+.ds-container {
+  width: min(var(--ds-grid-max), 100% - (var(--ds-grid-gutter) * 2));
+  margin-inline: auto;
+}
+
+/* Sección editorial: aire vertical entre bloques de contenido. */
+.ds-section {
+  position: relative;
+  padding-block: var(--ds-section-gap);
+}
+
+/* Sección a sangre: sin aire ni contenedor (full-bleed). */
+.ds-section--flush {
+  padding-block: 0;
+}
+
+/* Retícula base. El número de columnas se pide con `--ds-grid-cols`
+   (defecto: una columna). Las clases modificadoras fijan los casos de uso. */
+.ds-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--ds-grid-cols, 1), 1fr);
+  gap: var(--ds-grid-gap);
+}
+
+.ds-grid--cols-2 { --ds-grid-cols: 2; }
+.ds-grid--cols-3 { --ds-grid-cols: 3; }
+.ds-grid--cols-4 { --ds-grid-cols: 4; }
+
+/* ===========================================================================
+   2. SUPERFICIES — escalera de elevación por tono, luz y textura.
+   =========================================================================== */
+.ds-surface {
+  position: relative;
+  background: var(--ds-surface-background);
+}
+
+.ds-surface--deep { background: var(--ds-surface-deep); }
+.ds-surface--raised { background: var(--ds-surface-raised); }
+.ds-surface--content { background: var(--ds-surface-content); }
+.ds-surface--overlay { background: var(--ds-surface-overlay); }
+
+/* Cristal: superficie que flota. El desenfoque solo donde se soporta,
+   siguiendo el presupuesto de v2-surface.css. */
+.ds-surface--glass {
+  background: var(--ds-surface-glass);
+  border: var(--ds-border-hairline);
+  box-shadow: var(--ds-shadow-lift);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  @media (min-width: 900px) {
+    .ds-surface--glass {
+      backdrop-filter: blur(var(--ds-surface-glass-blur)) saturate(1.15);
+      background: var(--ds-surface-glass-strong);
+    }
+  }
+}
+
+/* ===========================================================================
+   3. TARJETA — superficie de contenido que flota.
+   =========================================================================== */
+.ds-card {
+  position: relative;
+  padding: var(--ds-space-6);
+  border-radius: var(--ds-radius-float);
+  border: var(--ds-border-hairline);
+  background: var(--ds-surface-glass);
+  box-shadow: var(--ds-shadow-lift);
+  transition: var(--ds-transition);
+}
+
+.ds-card:hover {
+  border-color: var(--ds-border-color-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--ds-shadow-lift-warm);
+}
+
+/* ===========================================================================
+   4. TIPOGRAFÍA SEMÁNTICA
+   Los pasos son los de ds-tokens.css (escala v2 + CTA y numérico).
+   =========================================================================== */
+.ds-display,
+.ds-title-1,
+.ds-title-2,
+.ds-title-3,
+.ds-title-4 {
+  margin: 0;
+  font-family: var(--ds-font-heading);
+  font-weight: var(--ds-fw-heading);
+  color: var(--ds-color-ink);
+}
+
+.ds-display {
+  font-size: var(--ds-fs-display);
+  line-height: var(--ds-lh-display);
+  letter-spacing: var(--ds-ls-display);
+}
+
+.ds-title-1 {
+  font-size: var(--ds-fs-h1);
+  line-height: var(--ds-lh-heading);
+  letter-spacing: var(--ds-ls-heading);
+}
+
+.ds-title-2 {
+  font-size: var(--ds-fs-h2);
+  line-height: var(--ds-lh-heading);
+  letter-spacing: var(--ds-ls-heading);
+}
+
+.ds-title-3 {
+  font-size: var(--ds-fs-h3);
+  line-height: var(--ds-lh-title);
+  letter-spacing: var(--ds-ls-title);
+}
+
+.ds-title-4 {
+  font-size: var(--ds-fs-h4);
+  line-height: var(--ds-lh-title);
+  letter-spacing: var(--ds-ls-title);
+}
+
+.ds-lead {
+  margin: 0;
+  max-width: var(--ds-measure);
+  font-family: var(--ds-font-body);
+  font-weight: var(--ds-fw-body-light);
+  font-size: var(--ds-fs-lead);
+  line-height: var(--ds-lh-body);
+  color: var(--ds-color-ink);
+}
+
+.ds-body {
+  margin: 0;
+  max-width: var(--ds-measure);
+  font-family: var(--ds-font-body);
+  font-weight: var(--ds-fw-body);
+  font-size: var(--ds-fs-body);
+  line-height: var(--ds-lh-body);
+  color: var(--ds-color-muted);
+}
+
+.ds-body-small {
+  margin: 0;
+  max-width: var(--ds-measure);
+  font-family: var(--ds-font-body);
+  font-weight: var(--ds-fw-body);
+  font-size: var(--ds-fs-body-small);
+  line-height: var(--ds-lh-body);
+  color: var(--ds-color-dim);
+}
+
+/* Etiqueta técnica (eyebrow): DM Mono, tracking amplio, guion de marca. */
+.ds-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 var(--ds-space-5);
+  color: var(--ds-color-accent);
+  font-family: var(--ds-font-mono);
+  font-weight: 500;
+  font-size: var(--ds-fs-eyebrow);
+  line-height: 1;
+  letter-spacing: var(--ds-ls-eyebrow);
+  text-transform: uppercase;
+}
+
+.ds-eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--ds-color-accent);
+}
+
+/* Dato numérico: precios y métricas. DM Mono para lectura de "dato". */
+.ds-numeric {
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-numeric);
+  line-height: 1.1;
+  color: var(--ds-color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===========================================================================
+   5. BOTÓN — tres variantes, siete estados.
+   El lenguaje visual es el de .gold-button / .text-button (gradiente cálido,
+   mayúsculas, tracking), tokenizado.
+   =========================================================================== */
+.ds-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 11px;
+  padding: 15px 19px;
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-control);
+  font-family: var(--ds-font-heading);
+  font-size: var(--ds-fs-cta);
+  font-weight: var(--ds-fw-cta);
+  letter-spacing: var(--ds-ls-cta);
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--ds-transition);
+}
+
+/* Primary: la acción principal. Gradiente cálido con texto oscuro. */
+.ds-button--primary {
+  background: linear-gradient(135deg, var(--ds-color-accent), var(--ds-color-accent-fire));
+  border-color: var(--ds-color-accent);
+  color: #070707;
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(244, 162, 97, 0.25),
+    0 12px 40px rgba(231, 111, 81, 0.14);
+}
+
+.ds-button--primary:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, var(--ds-color-accent-fire), var(--ds-color-accent));
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(231, 111, 81, 0.5),
+    0 18px 60px rgba(244, 162, 97, 0.28);
+}
+
+.ds-button--primary:active {
+  transform: translateY(-1px);
+}
+
+/* Secondary: acción de apoyo. Contorno neutro que se enciende en acento. */
+.ds-button--secondary {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.26);
+  color: var(--ds-color-ink);
+}
+
+.ds-button--secondary:hover {
+  border-color: var(--ds-color-accent);
+  color: var(--ds-color-accent);
+}
+
+.ds-button--secondary:active {
+  transform: translateY(1px);
+}
+
+/* Ghost: acción mínima, solo texto. */
+.ds-button--ghost {
+  padding: 8px 4px;
+  background: transparent;
+  color: var(--ds-color-ink);
+}
+
+.ds-button--ghost:hover {
+  color: var(--ds-color-accent);
+}
+
+/* Foco visible accesible: mismo contrato que los CTAs legacy. */
+.ds-button:focus-visible {
+  outline: 2px solid var(--ds-color-accent);
+  outline-offset: 3px;
+}
+
+/* Disabled y loading. */
+.ds-button:disabled,
+.ds-button[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.4;
+  transform: none;
+}
+
+.ds-button[aria-busy='true'] {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+/* ===========================================================================
+   6. ENLACE — texto con subrayado de marca.
+   =========================================================================== */
+.ds-link {
+  color: var(--ds-color-muted);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.25);
+  text-underline-offset: 4px;
+  transition: color var(--ds-dur-micro) var(--ds-ease-standard),
+    text-decoration-color var(--ds-dur-micro) var(--ds-ease-standard);
+}
+
+.ds-link:hover {
+  color: var(--ds-color-accent);
+  text-decoration-color: var(--ds-color-accent);
+}
+
+.ds-link:focus-visible {
+  outline: 2px solid var(--ds-color-accent);
+  outline-offset: 3px;
+}
+
+/* ===========================================================================
+   7. MÉTRICA — dato + etiqueta.
+   =========================================================================== */
+.ds-metric {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+}
+
+.ds-metric__label {
+  color: var(--ds-color-dim);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-fs-body-small);
+  letter-spacing: var(--ds-ls-eyebrow);
+  text-transform: uppercase;
+}
+
+/* ===========================================================================
+   8. MEDIA — bloque de imagen con proporción controlada.
+   =========================================================================== */
+.ds-media {
+  position: relative;
+  overflow: hidden;
+  background: var(--ds-surface-raised);
+}
+
+.ds-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ds-media--16-9 { aspect-ratio: 16 / 9; }
+.ds-media--4-5 { aspect-ratio: 4 / 5; }
+.ds-media--1-1 { aspect-ratio: 1 / 1; }
+
+/* ===========================================================================
+   9. HERO BASE — estructura del opening de página.
+   El fondo (imagen/escena/atmósfera) lo aporta cada página.
+   =========================================================================== */
+.ds-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 78svh;
+}
+
+.ds-hero__content {
+  width: min(var(--ds-grid-max), 100% - (var(--ds-grid-gutter) * 2));
+  margin-inline: auto;
+  padding-block: var(--ds-space-9) var(--ds-space-8);
+}
+
+/* ===========================================================================
+   10. CTA — grupo de cierre: acciones + microcopia.
+   =========================================================================== */
+.ds-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ds-space-5);
+  margin-top: var(--ds-space-6);
+}
+
+.ds-cta__note {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--ds-color-dim);
+  font-size: var(--ds-fs-body-small);
+  line-height: var(--ds-lh-body);
+}
+
+/* Nota de error (formularios): color brasa, nunca rojo saturado (R9.4). */
+.ds-note--error {
+  color: var(--ds-color-accent-fire);
+}
+
+/* ===========================================================================
+   11. RESPONSIVE
+   =========================================================================== */
+@media (max-width: 800px) {
+  .ds-container,
+  .ds-hero__content {
+    width: min(var(--ds-grid-max), 100% - (var(--ds-grid-gutter-mobile) * 2));
+  }
+
+  .ds-grid--cols-3,
+  .ds-grid--cols-4 {
+    --ds-grid-cols: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .ds-grid--cols-2,
+  .ds-grid--cols-3,
+  .ds-grid--cols-4 {
+    --ds-grid-cols: 1;
+  }
+}
+
+/* ===========================================================================
+   12. MOVIMIENTO REDUCIDO
+   =========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .ds-card,
+  .ds-button,
+  .ds-link {
+    transition: none;
+  }
+
+  .ds-card:hover,
+  .ds-button--primary:hover,
+  .ds-button--secondary:active,
+  .ds-button--primary:active {
+    transform: none;
+  }
+}
+
+
+/* ==========================================================================
+   ACCESSIBILITY UTILITY · visually hidden, screen-reader available
+   Semantic fallback lists used by immersive stages must never enter layout.
+   ========================================================================== */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

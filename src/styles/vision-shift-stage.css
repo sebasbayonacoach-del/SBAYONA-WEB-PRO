@@ -1,0 +1,286 @@
+/* BAYONA · VISIÓN COMO LENTE DE ENFOQUE */
+
+.vision-shift {
+  position: relative;
+  width: 100%;
+  color: #f7f7f3;
+}
+
+.vision-shift-intro {
+  max-width: 980px;
+  padding: clamp(4.5rem, 8vw, 8rem) 0 clamp(2rem, 4vw, 4rem);
+}
+
+.vision-shift-intro > p,
+.vision-shift-copy > p,
+.vision-shift-counter {
+  font-family: var(--type-family-mono, monospace);
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.vision-shift-intro > p {
+  margin: 0 0 1.2rem;
+  color: var(--bayona-orange, #f4a261);
+  font-size: .66rem;
+  font-weight: 700;
+}
+
+.vision-shift-intro h2 {
+  max-width: 10.5ch;
+  margin: 0;
+  color: #f7f7f3;
+  font-size: clamp(3.8rem, 7vw, 7.6rem);
+  font-weight: 900;
+  line-height: .88;
+  letter-spacing: -.058em;
+  text-wrap: balance;
+}
+
+.vision-shift-intro > span {
+  display: block;
+  max-width: 40rem;
+  margin-top: 1.5rem;
+  color: rgba(247,247,243,.66);
+  font-size: clamp(1rem, 1.2vw, 1.14rem);
+  line-height: 1.7;
+}
+
+.vision-shift-stage {
+  margin-inline: calc(var(--prime-gutter, 24px) * -1);
+}
+
+.vision-shift-stage .sticky-stage-viewport {
+  height: calc(100svh - 66px);
+  min-height: 620px;
+}
+
+.vision-shift-viewport {
+  position: relative;
+  width: min(var(--prime-page-max, 1380px), calc(100vw - (var(--prime-gutter, 24px) * 2)));
+  height: 100%;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(340px, .9fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 7rem);
+}
+
+.vision-shift-visual {
+  position: relative;
+  min-height: min(68vh, 680px);
+  display: grid;
+  place-items: center;
+  perspective: 1100px;
+}
+
+.vision-shift-visual::before {
+  content: '';
+  position: absolute;
+  inset: 10% 8%;
+  border: 1px solid rgba(247,247,243,.12);
+  transform: rotate(-5deg);
+}
+
+.vision-shift-lens {
+  position: relative;
+  width: clamp(260px, 36vw, 560px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(244,162,97,.64);
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 90px rgba(244,162,97,.12);
+  will-change: transform;
+}
+
+.vision-shift-lens__image {
+  position: absolute;
+  inset: -8%;
+  background-image: var(--scene-image-set, var(--scene-image-url));
+  background-position: var(--scene-position, center);
+  background-size: cover;
+  filter: saturate(1.08) contrast(1.08) brightness(1.08);
+  transform: scale(1.08);
+}
+
+.vision-shift-lens::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255,255,255,.16), transparent 20%),
+    linear-gradient(180deg, transparent, rgba(5,5,5,.24));
+  pointer-events: none;
+}
+
+.vision-shift-lens__scan {
+  position: absolute;
+  z-index: 2;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--bayona-orange, #f4a261), transparent);
+  box-shadow: 0 0 14px rgba(244,162,97,.45);
+}
+
+.vision-shift-lens > span {
+  position: absolute;
+  z-index: 3;
+  right: 10%;
+  bottom: 7%;
+  color: #f7f7f3;
+  font-family: var(--type-family-display, sans-serif);
+  font-size: clamp(4rem, 9vw, 9rem);
+  font-weight: 900;
+  line-height: .8;
+  letter-spacing: -.08em;
+  opacity: .32;
+}
+
+.vision-shift-axis {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  width: min(72%, 520px);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: .3rem;
+  transform: translateX(-50%);
+}
+
+.vision-shift-axis span {
+  height: 2px;
+  background: rgba(247,247,243,.18);
+  transition: background .3s ease, transform .3s ease;
+}
+
+.vision-shift-axis span[data-past='true'] {
+  background: rgba(244,162,97,.48);
+}
+
+.vision-shift-axis span[data-active='true'] {
+  background: var(--bayona-orange, #f4a261);
+  transform: scaleY(2);
+}
+
+.vision-shift-copy > p {
+  margin: 0 0 1rem;
+  color: var(--bayona-orange, #f4a261);
+  font-size: .66rem;
+  font-weight: 700;
+}
+
+.vision-shift-copy h3 {
+  max-width: 11ch;
+  margin: 0;
+  color: #f7f7f3;
+  font-size: clamp(3rem, 5.2vw, 6rem);
+  font-weight: 900;
+  line-height: .9;
+  letter-spacing: -.052em;
+  text-wrap: balance;
+}
+
+.vision-shift-counter {
+  position: absolute;
+  right: 0;
+  bottom: 2rem;
+  margin: 0;
+  color: rgba(247,247,243,.35);
+  font-size: .58rem;
+}
+
+@media (max-width: 760px) {
+  .vision-shift-intro {
+    padding: 4.5rem 0 1.5rem;
+  }
+
+  .vision-shift-intro h2 {
+    font-size: clamp(2.65rem, 12vw, 4.45rem);
+  }
+
+  .vision-shift-stage .sticky-stage-viewport {
+    height: calc(100svh - 66px);
+    min-height: 0;
+  }
+
+  .vision-shift-viewport {
+    width: min(100% - 32px, 620px);
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(260px, 44vh) auto;
+    gap: .6rem;
+    align-content: center;
+  }
+
+  .vision-shift-visual {
+    min-height: 0;
+  }
+
+  .vision-shift-lens {
+    width: min(68vw, 320px);
+  }
+
+  .vision-shift-visual::before {
+    inset: 8% 14%;
+  }
+
+  .vision-shift-copy h3 {
+    max-width: 12ch;
+    font-size: clamp(2.2rem, 9.5vw, 3.5rem);
+  }
+
+  .vision-shift-counter {
+    bottom: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vision-shift-stage {
+    margin-inline: 0;
+  }
+
+  .vision-shift-stage .sticky-stage-frame {
+    border-top: 1px solid rgba(247,247,243,.12);
+  }
+
+  .vision-shift-lens,
+  .vision-shift-axis span {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+.vision-shift-follow {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  margin-top: 1.6rem;
+  padding-bottom: .45rem;
+  color: var(--bayona-orange, #f4a261);
+  font-family: var(--type-family-mono, monospace);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(244,162,97,.46);
+}
+
+/* Geometría soberana: neutraliza el grid histórico 34px + contenido. */
+.vision-section > .vision-layout--immersive {
+  display: block !important;
+  grid-template-columns: none !important;
+}
+
+.vision-section .vision-shift,
+.vision-section .vision-shift-stage {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.vision-section .vision-shift-stage {
+  padding: 0 !important;
+  margin-inline: 0 !important;
+}

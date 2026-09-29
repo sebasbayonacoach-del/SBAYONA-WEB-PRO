@@ -1,0 +1,687 @@
+/* Additive conversion and luxury consistency layer for the six primary routes. */
+body.premium-route-active {
+  --premium-bg: #050505;
+  --premium-panel: #0c0c0d;
+  --premium-text: #f5f5f5;
+  --premium-muted: #a3a3a3;
+  --premium-orange: #f4a261;
+  --premium-orange-hover: #e76f51;
+  --premium-hairline: rgba(255, 255, 255, 0.04);
+  --premium-orange-line: rgba(244, 162, 97, 0.3);
+  --premium-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --luxury-ease: var(--premium-ease);
+}
+
+body.premium-route-active .app-page {
+  --ease-luxury: var(--premium-ease);
+  --ease-smooth: var(--premium-ease);
+}
+
+/* ExperienceProvider owns the single global grain layer. */
+body.premium-route-active .hero-grain {
+  display: none !important;
+}
+
+body.premium-route--community .community-page::before,
+body.premium-route--community .community-page::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Community already owns its mobile floating WhatsApp action. */
+body.premium-route--community .whatsapp-button {
+  display: none !important;
+}
+
+body.premium-route-active :is(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [class*='card'],
+  [class*='item'],
+  [class*='cta']
+) {
+  transition-timing-function: var(--premium-ease) !important;
+}
+
+/* Hairlines only reinforce route sections; App and Community already own dividers. */
+body.premium-route-active main :is(
+  .vision-section,
+  .pain-section,
+  .mechanism-section,
+  .solution-section,
+  .proof-section,
+  .offer-section,
+  .calculator-section,
+  .cta-stack-section,
+  .about-problem,
+  .about-story,
+  .about-values,
+  .about-globe-section,
+  .about-method,
+  .programs-pain,
+  .programs-method,
+  .programs-proof,
+  .programs-visualization,
+  .programs-offer,
+  .programs-comparison-section,
+  .programs-services,
+  .programs-calculator,
+  .programs-cta-stack,
+  .shop-collections,
+  .shop-feature,
+  .shop-catalog,
+  .shop-process,
+  .shop-closing,
+  .shop-app-promo
+) {
+  border-top: 1px solid var(--premium-hairline);
+}
+
+/* Missing large section numbers. Existing Home 03–05, App and Community remain untouched. */
+body.premium-route-active main :is(
+  .pain-section,
+  .mechanism-section,
+  .calculator-section,
+  .cta-stack-section,
+  .about-problem,
+  .about-story,
+  .about-values,
+  .about-globe-section,
+  .about-method,
+  .programs-pain,
+  .programs-method,
+  .programs-visualization,
+  .programs-offer,
+  .programs-comparison-section,
+  .programs-services,
+  .programs-calculator,
+  .programs-cta-stack,
+  .shop-collections,
+  .shop-feature,
+  .shop-catalog,
+  .shop-process,
+  .shop-app-promo
+) {
+  position: relative;
+  isolation: isolate;
+}
+
+body.premium-route--home .pain-section::before,
+body.premium-route--home .mechanism-section::before,
+body.premium-route--home .calculator-section::before,
+body.premium-route--home .cta-stack-section::before,
+body.premium-route--about .about-problem::before,
+body.premium-route--about .about-story::before,
+body.premium-route--about .about-values::before,
+body.premium-route--about .about-globe-section::before,
+body.premium-route--about .about-method::before,
+body.premium-route--programs .programs-pain::before,
+body.premium-route--programs .programs-method::before,
+body.premium-route--programs .programs-visualization::before,
+body.premium-route--programs .programs-offer::before,
+body.premium-route--programs .programs-comparison-section::before,
+body.premium-route--programs .programs-services::before,
+body.premium-route--programs .programs-calculator::before,
+body.premium-route--programs .programs-cta-stack::before,
+body.premium-route--shop .shop-collections::before,
+body.premium-route--shop .shop-feature::before,
+body.premium-route--shop .shop-catalog::before,
+body.premium-route--shop .shop-process::before,
+body.premium-route--shop .shop-app-promo::before {
+  position: absolute;
+  top: clamp(28px, 5vw, 72px);
+  right: max(18px, calc((100% - 1240px) / 2));
+  z-index: -1;
+  color: rgba(244, 162, 97, 0.03);
+  font: 500 clamp(130px, 18vw, 280px)/0.72 'DM Mono', monospace;
+  letter-spacing: -0.1em;
+  pointer-events: none;
+}
+
+body.premium-route--home .pain-section::before,
+body.premium-route--about .about-problem::before,
+body.premium-route--programs .programs-pain::before,
+body.premium-route--shop .shop-collections::before { content: '01'; }
+body.premium-route--home .mechanism-section::before,
+body.premium-route--about .about-story::before,
+body.premium-route--programs .programs-method::before,
+body.premium-route--shop .shop-feature::before { content: '02'; }
+body.premium-route--about .about-values::before,
+body.premium-route--programs .programs-visualization::before,
+body.premium-route--shop .shop-catalog::before { content: '03'; }
+body.premium-route--about .about-globe-section::before,
+body.premium-route--programs .programs-offer::before,
+body.premium-route--shop .shop-process::before { content: '04'; }
+body.premium-route--about .about-method::before,
+body.premium-route--programs .programs-comparison-section::before,
+body.premium-route--shop .shop-app-promo::before { content: '05'; }
+body.premium-route--home .calculator-section::before,
+body.premium-route--programs .programs-services::before { content: '06'; }
+body.premium-route--home .cta-stack-section::before,
+body.premium-route--programs .programs-calculator::before { content: '07'; }
+body.premium-route--programs .programs-cta-stack::before { content: '08'; }
+
+/* Observer-driven gaps only: About timeline and Shop cards/process. */
+.premium-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.65s var(--premium-ease) var(--premium-reveal-delay, 0s),
+    transform 0.65s var(--premium-ease) var(--premium-reveal-delay, 0s);
+}
+
+.premium-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.premium-card {
+  transition-property: border-color, box-shadow, transform;
+  transition-duration: 0.35s;
+  transition-timing-function: var(--premium-ease) !important;
+}
+
+.premium-spotlight-card {
+  --premium-spotlight-x: 50%;
+  --premium-spotlight-y: 50%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.premium-spotlight-card::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    300px circle at var(--premium-spotlight-x) var(--premium-spotlight-y),
+    rgba(244, 162, 97, 0.13),
+    transparent 68%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--premium-ease);
+}
+
+.premium-spotlight-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.premium-spotlight-card:focus-within::after {
+  opacity: 1;
+}
+
+.premium-tilt-ready {
+  transform-style: preserve-3d;
+}
+
+.premium-tilt-card {
+  transform:
+    perspective(1000px)
+    rotateX(var(--premium-tilt-x, 0deg))
+    rotateY(var(--premium-tilt-y, 0deg))
+    translateY(-4px) !important;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .premium-card:not(.premium-tilt-card):hover {
+    border-color: var(--premium-orange-line) !important;
+    transform: translateY(-4px) !important;
+  }
+
+  .premium-spotlight-card:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Shared 40 px brand marquee. Linear motion is intentional and exclusive to marquees. */
+.premium-brand-marquee {
+  position: relative;
+  height: 40px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-block: 1px solid var(--premium-hairline, rgba(255, 255, 255, 0.04));
+  background: #050505;
+  color: #f5f5f5;
+}
+
+.premium-brand-marquee-track {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  animation: premiumBrandMarquee 38s linear infinite;
+  will-change: transform;
+}
+
+.premium-brand-marquee-group {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.premium-brand-marquee-item {
+  padding-right: 52px;
+  color: rgba(245, 245, 245, 0.25);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-05);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+
+@keyframes premiumBrandMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.premium-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+/* Compact route rail; it complements existing Bridges instead of repeating them. */
+.premium-journey {
+  border-bottom: 1px solid var(--premium-hairline, rgba(255, 255, 255, 0.04));
+  background: #080808;
+  color: #f5f5f5;
+}
+
+.premium-journey-inner {
+  width: min(1240px, calc(100% - 48px));
+  margin-inline: auto;
+  padding-block: 28px 34px;
+}
+
+.premium-journey-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.premium-journey-heading span {
+  color: #f4a261;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.16em;
+}
+
+.premium-journey-heading strong {
+  color: #a3a3a3;
+  font: 900 clamp(15px, 2vw, 22px)/1 'Montserrat', Arial, sans-serif;
+  letter-spacing: -0.03em;
+}
+
+.premium-journey-list {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--premium-hairline, rgba(255, 255, 255, 0.04));
+  list-style: none;
+}
+
+.premium-journey-list li {
+  min-width: 0;
+  border-right: 1px solid var(--premium-hairline, rgba(255, 255, 255, 0.04));
+}
+
+.premium-journey-list li:first-child {
+  border-left: 1px solid var(--premium-hairline, rgba(255, 255, 255, 0.04));
+}
+
+.premium-journey-list a {
+  min-height: 58px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  color: #a3a3a3;
+  text-decoration: none;
+  transition:
+    color 0.3s var(--premium-ease, cubic-bezier(0.16, 1, 0.3, 1)),
+    background-color 0.3s var(--premium-ease, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.premium-journey-list a > span {
+  color: #f4a261;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--type-size-03);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+}
+
+.premium-journey-list a > strong {
+  overflow: hidden;
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--type-size-04);
+  line-height: 1;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.05em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.premium-journey-list a > svg {
+  color: #f4a261;
+}
+
+.premium-journey-list a:hover,
+.premium-journey-list a:focus-visible,
+.premium-journey-list a[aria-current='page'] {
+  background: rgba(244, 162, 97, 0.08);
+  color: #f5f5f5;
+}
+
+.premium-journey-list a[aria-current='page'] {
+  box-shadow: inset 0 -1px #f4a261;
+}
+
+/* Honest free/guarantee micro-bands. */
+.guarantee-microband,
+.resources-free-band {
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 14px;
+  padding: 9px 12px;
+  border: 1px solid rgba(244, 162, 97, 0.3);
+  background: rgba(244, 162, 97, 0.055);
+  color: #f4a261;
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.resources-free-band {
+  margin-bottom: 20px;
+}
+
+/* One visual contract for every canonical WhatsApp CTA. Existing messages stay contextual. */
+a[href^='https://wa.me/34614988006'] {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 18px;
+  border: 1px solid #f4a261 !important;
+  border-radius: 0 !important;
+  background: #f4a261 !important;
+  color: #050505 !important;
+  font-family: 'DM Mono', monospace !important;
+  font-size: var(--type-size-05);
+  font-weight: 800 !important;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+a[href^='https://wa.me/34614988006']:hover,
+a[href^='https://wa.me/34614988006']:focus-visible {
+  border-color: #e76f51 !important;
+  background: #e76f51 !important;
+  color: #050505 !important;
+  box-shadow: 0 14px 38px rgba(244, 162, 97, 0.14) !important;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .premium-journey-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .premium-journey-list li:nth-child(5) {
+    border-left: 1px solid var(--premium-hairline, rgba(255, 255, 255, 0.04));
+  }
+}
+
+@media (max-width: 620px) {
+  body.premium-route-active main :is(
+    .pain-section,
+    .mechanism-section,
+    .calculator-section,
+    .cta-stack-section,
+    .about-problem,
+    .about-story,
+    .about-values,
+    .about-globe-section,
+    .about-method,
+    .programs-pain,
+    .programs-method,
+    .programs-visualization,
+    .programs-offer,
+    .programs-comparison-section,
+    .programs-services,
+    .programs-calculator,
+    .programs-cta-stack,
+    .shop-collections,
+    .shop-feature,
+    .shop-catalog,
+    .shop-process,
+    .shop-app-promo
+  )::before {
+    top: 24px;
+    right: 14px;
+    font-size: var(--type-size-21);
+  }
+
+  .premium-brand-marquee-item {
+    padding-right: 34px;
+    font-size: var(--type-size-04);
+    letter-spacing: 0.12em;
+  }
+
+  .premium-journey-inner {
+    width: min(100% - 28px, 1240px);
+    padding-block: 24px 28px;
+  }
+
+  .premium-journey-heading {
+    display: grid;
+    gap: 8px;
+  }
+
+  .premium-journey-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .premium-journey-list li:nth-child(odd) {
+    border-left: 1px solid var(--premium-hairline, rgba(255, 255, 255, 0.04));
+  }
+
+  .premium-journey-list a {
+    min-height: 52px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-brand-marquee-track {
+    width: 100%;
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .premium-brand-marquee-group {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .premium-brand-marquee-group + .premium-brand-marquee-group,
+  .premium-brand-marquee-item + .premium-brand-marquee-item {
+    display: none;
+  }
+
+  .premium-brand-marquee-item {
+    padding: 0 16px;
+  }
+
+  .premium-reveal,
+  .premium-reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .premium-card:hover,
+  .premium-tilt-card,
+  a[href^='https://wa.me/34614988006']:hover,
+  a[href^='https://wa.me/34614988006']:focus-visible {
+    transform: none !important;
+  }
+
+  .premium-spotlight-card::after {
+    display: none;
+  }
+}
+
+/* One contextual continuation replaces the former seven-link journey rail. */
+.premium-continuation {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid rgba(5, 5, 5, 0.18);
+  background: #eee8df;
+  color: #090909;
+}
+
+.premium-continuation-inner {
+  width: min(1440px, calc(100% - 48px));
+  min-height: clamp(300px, 34vw, 470px);
+  display: grid;
+  grid-template-columns: minmax(130px, 0.3fr) minmax(0, 1fr) auto;
+  gap: clamp(28px, 5vw, 78px);
+  align-items: center;
+  margin-inline: auto;
+  padding-block: clamp(54px, 8vw, 108px);
+}
+
+.premium-continuation-marker {
+  align-self: stretch;
+  display: flex;
+  align-items: flex-start;
+  border-right: 1px solid rgba(5, 5, 5, 0.18);
+  color: #c86f38;
+  font: 600 clamp(13px, 1.4vw, 18px)/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+
+.premium-continuation-copy p {
+  margin: 0 0 18px;
+  color: #866d5c;
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--type-size-04);
+  line-height: 1.4;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.premium-continuation-copy h2 {
+  max-width: 900px;
+  margin: 0;
+  color: #090909;
+  font: 850 clamp(38px, 6.2vw, 92px)/0.88 Montserrat, sans-serif;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.premium-continuation-copy > span {
+  max-width: 620px;
+  display: block;
+  margin-top: 22px;
+  color: #5f5a54;
+  font: 400 clamp(13px, 1.3vw, 17px)/1.65 'Inter', Arial, sans-serif;
+}
+
+.premium-continuation-action {
+  min-height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 15px 20px;
+  border: 1px solid #090909;
+  background: #090909;
+  color: #fff;
+  font-style: normal;
+  font-weight: 750;
+  font-size: var(--type-size-04);
+  line-height: 1.2;
+  font-family: var(--type-family-mono);
+  letter-spacing: 0.09em;
+  text-align: center;
+  text-decoration: none;
+  transition: color 280ms var(--premium-ease), background-color 280ms var(--premium-ease), transform 280ms var(--premium-ease);
+}
+
+.premium-continuation-action:is(:hover, :focus-visible) {
+  background: #f4a261;
+  color: #090909;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 780px) {
+  .premium-continuation-inner {
+    width: min(100% - 36px, 1440px);
+    min-height: 520px;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-content: center;
+    padding-block: 72px;
+  }
+
+  .premium-continuation-marker {
+    min-height: 34px;
+    align-items: flex-start;
+    border-right: 0;
+    border-bottom: 1px solid rgba(5, 5, 5, 0.18);
+  }
+
+  .premium-continuation-action {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-continuation-action { transition: none; }
+  .premium-continuation-action:is(:hover, :focus-visible) { transform: none; }
+}

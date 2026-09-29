@@ -1,0 +1,273 @@
+/*
+  BAYONA · SISTEMA DE SUPERFICIE v2
+  ===========================================================================
+  Diagnóstico que lo motiva:
+
+  · "todo se ve muy oscuro, muy negro"  → el fondo es #050505 plano. Sin luz no
+    hay profundidad y todo parece el mismo plano.
+  · "los cuadros son muy cuadrados"     → styles.css impone
+    `border-radius: 0 !important` a TODO el documento. Eso da carácter en los
+    titulares y en la retícula, pero aplicado a las tarjetas produce una
+    sensación de tabla, no de interfaz.
+  · "que se vea desenfocado"            → no había ni un `backdrop-filter` en
+    superficies de contenido.
+
+  Criterio de la respuesta:
+
+  1. La paleta NO cambia. Mismo negro, mismo naranja. Cambia la LUZ.
+  2. El canto afilado se conserva donde construye la marca (titulares, retícula
+     editorial, secciones) y se suaviza solo en las superficies que flotan.
+  3. El cristal se aplica con presupuesto: `backdrop-filter` es caro, así que
+     solo en superficies grandes y solo cuando el dispositivo lo aguanta.
+*/
+
+:root {
+  /* ---- Canto de las superficies que flotan ---- */
+  --v2-radius: 16px;
+  --v2-radius-sm: 10px;
+
+  /* ---- Cristal ---- */
+  --v2-glass-bg: rgba(255, 255, 255, 0.042);
+  --v2-glass-bg-strong: rgba(255, 255, 255, 0.062);
+  --v2-glass-border: rgba(255, 255, 255, 0.1);
+  --v2-glass-border-hover: rgba(244, 162, 97, 0.42);
+  --v2-glass-blur: 20px;
+
+  /* ---- Luz de marca ---- */
+  --v2-warm: 244, 162, 97;
+  --v2-ember: 231, 111, 81;
+
+  /* Sombra en dos capas: contacto cercano + caída larga. */
+  --v2-lift:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 24px 60px rgba(0, 0, 0, 0.42);
+  --v2-lift-warm:
+    0 1px 0 rgba(255, 255, 255, 0.1) inset,
+    0 2px 10px rgba(0, 0, 0, 0.5),
+    0 28px 80px rgba(var(--v2-ember), 0.16);
+}
+
+/* ===========================================================================
+   1. LUZ AMBIENTE
+   El fondo deja de ser #050505 plano. Dos focos cálidos muy tenues y fijos dan
+   volumen a toda la página sin tocar ni un color de marca.
+   =========================================================================== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 78% 8%, rgba(var(--v2-warm), 0.075), transparent 70%),
+    radial-gradient(50% 40% at 12% 92%, rgba(var(--v2-ember), 0.055), transparent 72%);
+}
+
+/* El contenido queda por encima de la luz. */
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* La sección editorial crema no recibe luz cálida: tiene su propia atmósfera. */
+.home-editorial-light {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================================================================
+   2. SUPERFICIES DE CRISTAL
+   Se listan de forma explícita. Nada de selectores universales: cada superficie
+   que pasa a cristal es una decisión, no un efecto colateral.
+   ---------------------------------------------------------------------------
+   IMMERSIVE LUXURY (§10-12) · `.experience-proof-card` y `.vision-panel`
+   SALEN de esta lista: su sección es ahora una secuencia editorial con
+   filetes hairline (ver experience-proof.css / home.css). El cristal les
+   devolvía la caja que el lenguaje inmersivo disuelve. El resto conserva
+   su superficie.
+   =========================================================================== */
+.value-card,
+.resource-card,
+.evidence-record,
+.plan-presentation-bridge-card,
+.holo-card,
+.recommendation-disclaimer,
+.extras-category-panel,
+.extras-service-item,
+.persistent-summary,
+.request-preview,
+.plan-accordion-item,
+.faq-price-card,
+.not-found-card,
+.checkout-handoff-panel,
+.summary-program,
+.member-access {
+  border-radius: var(--v2-radius) !important;
+  border: 1px solid var(--v2-glass-border);
+  background: var(--v2-glass-bg);
+  box-shadow: var(--v2-lift);
+  transition:
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+  El desenfoque solo en escritorio y solo si el navegador lo soporta.
+  En móvil `backdrop-filter` sobre superficies grandes hunde los fotogramas,
+  y ahí el cristal translúcido ya se lee bien sin desenfocar.
+*/
+@supports (backdrop-filter: blur(1px)) {
+  @media (min-width: 900px) {
+    .value-card,
+    .resource-card,
+    .evidence-record,
+    .plan-presentation-bridge-card,
+    .persistent-summary,
+    .request-preview,
+    .plan-accordion-item,
+    .faq-price-card,
+    .checkout-handoff-panel {
+      backdrop-filter: blur(var(--v2-glass-blur)) saturate(1.15);
+      background: var(--v2-glass-bg-strong);
+    }
+  }
+}
+
+/* Elevación al pasar por encima. Sutil: 3px, no un salto. */
+.value-card:hover,
+.resource-card:hover,
+.experience-proof-card:hover,
+.plan-presentation-bridge-card:hover,
+.holo-card:hover,
+.extras-service-item:hover,
+.faq-price-card:hover {
+  border-color: var(--v2-glass-border-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--v2-lift-warm);
+}
+
+/* El plan destacado y el resumen persistente ya llevan acento cálido propio. */
+.plan-accordion-item.featured,
+.persistent-summary {
+  border-color: rgba(var(--v2-warm), 0.4);
+  box-shadow: var(--v2-lift-warm);
+}
+
+/* ---- Controles: canto suave pequeño, sin cristal ---- */
+.gold-button,
+.complete-button,
+.not-found-home,
+.consent-button,
+.reception-cta,
+.journey-ribbon-redo,
+.journey-ribbon-close,
+.experience-proof-link,
+.checkout-handoff-open,
+.checkout-handoff-copy,
+.filters button,
+.search,
+.resource-search,
+.extras-selection-action,
+.recommended-mark {
+  border-radius: var(--v2-radius-sm) !important;
+}
+
+/* Retratos y miniaturas: círculo en los avatares, canto suave en el resto. */
+.experience-proof-portrait,
+.globe-testimonials-portrait {
+  border-radius: 50% !important;
+}
+
+.cart-item-media,
+.shop-product-image,
+.holo-image {
+  border-radius: var(--v2-radius-sm) !important;
+}
+
+/* ===========================================================================
+   3. CRISTAL EN LA NAVEGACIÓN Y EN LAS CAPAS FLOTANTES
+   =========================================================================== */
+@supports (backdrop-filter: blur(1px)) {
+  .navbar {
+    backdrop-filter: blur(18px) saturate(1.2);
+    background: linear-gradient(180deg, rgba(5, 5, 5, 0.82), rgba(5, 5, 5, 0.28));
+  }
+
+  .mobile-nav,
+  .journey-ribbon,
+  .consent-banner {
+    backdrop-filter: blur(22px) saturate(1.15);
+  }
+}
+
+.mobile-nav,
+.journey-ribbon-stop,
+.cart-drawer-content {
+  border-radius: var(--v2-radius) !important;
+}
+
+/* La cinta va pegada al borde inferior: solo redondea arriba. */
+.journey-ribbon {
+  border-radius: var(--v2-radius) var(--v2-radius) 0 0 !important;
+}
+
+.journey-ribbon-stop {
+  border-radius: var(--v2-radius-sm) !important;
+}
+
+/* ===========================================================================
+   4. LO QUE NO SE TOCA
+   El canto afilado es identidad de BAYONA en estos sitios. Se reafirma aquí
+   para que ninguna regla de arriba se los lleve por delante.
+   =========================================================================== */
+.brand span,
+.footer-mark span,
+.home-editorial-light .pain-item,
+.home-editorial-light .pain-column,
+.section-shell > h2,
+.eyebrow span,
+.hero-content,
+.story-stage,
+.schedule article,
+.world-grid div,
+.stats-section > div {
+  border-radius: 0 !important;
+}
+
+/* ===========================================================================
+   5. MOVIMIENTO REDUCIDO
+   =========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .value-card,
+  .resource-card,
+  .evidence-record,
+  .experience-proof-card,
+  .plan-presentation-bridge-card,
+  .holo-card,
+  .vision-panel,
+  .extras-service-item,
+  .faq-price-card,
+  .plan-accordion-item {
+    transition: none;
+  }
+
+  .value-card:hover,
+  .resource-card:hover,
+  .experience-proof-card:hover,
+  .plan-presentation-bridge-card:hover,
+  .holo-card:hover,
+  .extras-service-item:hover,
+  .faq-price-card:hover {
+    transform: none;
+  }
+}
+
+/* Sin luz ambiente al imprimir. */
+@media print {
+  body::before {
+    display: none;
+  }
+}
