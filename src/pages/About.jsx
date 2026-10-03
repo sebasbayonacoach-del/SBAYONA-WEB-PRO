@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import GlobeTestimonials from '../components/GlobeTestimonials.jsx'
 import AboutValuesStage from '../components/about/AboutValuesStage.jsx'
 import AboutMethodStage from '../components/about/AboutMethodStage.jsx'
+import { MethodSequence } from '../components/method/MethodSequence.jsx'
 import { StickyStage } from '../engine/scroll/StickyStage.jsx'
 import Bridge from '../components/Bridge'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
@@ -290,6 +291,8 @@ export default function About() {
             <p>Qué miramos, qué decidimos con eso y cómo seguimos cuando la vida real aparece.</p>
           </div>
 
+          {/* Fuente semántica compartida para lectura accesible del método. */}
+          <MethodSequence items={methodSteps} className="sr-only" label="Las tres fases del método BAYONA" />
           <AboutMethodStage items={methodSteps} />
 
           <blockquote>

@@ -50,15 +50,6 @@ export default function AboutMethodStage({ items = [] }) {
 
   return (
     <div className="about-decision-stage">
-      <ol className="sr-only" aria-label="Las tres fases del método BAYONA">
-        {items.map((item) => (
-          <li key={item.number}>
-            <h3>{item.title}</h3>
-            <p>{item.copy}</p>
-          </li>
-        ))}
-      </ol>
-
       <StickyStage
         length={length}
         states={items.length}

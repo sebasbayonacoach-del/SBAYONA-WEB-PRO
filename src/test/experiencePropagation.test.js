@@ -40,7 +40,7 @@ describe('Propagación de la capa de experiencia (FASE 4 · 4.2 y 4.5)', () => {
 
     // Home conserva su recorrido espacial (StickyStage) pero habla el mismo
     // idioma: número como figura y señal naranja en el paso activo.
-    const fase4 = homeCss.slice(homeCss.indexOf('FASE 4 · 4.3'))
+    const fase4 = homeCss.slice(homeCss.indexOf('FASE 4 · 4.3'), homeCss.indexOf('FASE 4B · 4.3'))
 
     expect(fase4).toContain('--bayona-type-figure-soft')
     expect(fase4).toContain('--bayona-warm')
@@ -49,7 +49,7 @@ describe('Propagación de la capa de experiencia (FASE 4 · 4.2 y 4.5)', () => {
   })
 
   it('las superficies y el ritmo de la portada salen del sistema', () => {
-    const fase4 = homeCss.slice(homeCss.indexOf('FASE 4 · 4.3'))
+    const fase4 = homeCss.slice(homeCss.indexOf('FASE 4 · 4.3'), homeCss.indexOf('FASE 4B · 4.3'))
 
     expect(fase4).toMatch(/background:\s*var\(--bayona-surface-1\)/)
     expect(fase4).toMatch(/background:\s*var\(--bayona-surface-0\)/)
@@ -117,10 +117,12 @@ describe('Propagación de la capa de experiencia (FASE 4 · 4.2 y 4.5)', () => {
 })
 
 describe('FASE 4B · propagación selectiva a las rutas comerciales', () => {
-  const sheetBlock = (source, marker) => {
+  const sheetBlock = (source, marker, endMarker = 'FASE 4C') => {
     const index = source.indexOf(marker)
     expect(index, `falta el bloque ${marker}`).toBeGreaterThan(-1)
-    const block = source.slice(index)
+    const end = endMarker ? source.indexOf(endMarker, index + marker.length) : -1
+    if (endMarker) expect(end, `falta el fin de ${marker}`).toBeGreaterThan(index)
+    const block = source.slice(index, endMarker ? end : undefined)
     // Se descarta la cabecera comentada: se auditan declaraciones, no prosa.
     const close = block.indexOf('*/')
 
@@ -149,7 +151,8 @@ describe('FASE 4B · propagación selectiva a las rutas comerciales', () => {
 
   it('ningún bloque de la fase define colores nuevos, !important ni canvas', () => {
     const blocks = [
-      ['home.css', sheetBlock(homeCss, 'FASE 4B · 4.3')],
+      // Escenas inmersivas posteriores tienen otra política de cascada.
+      ['home.css', sheetBlock(homeCss, 'FASE 4B · 4.3', 'BAYONA IMMERSIVE CHAPTERS')],
       ['programs.css', sheetBlock(read('styles', 'programs.css'), 'FASE 4B')],
       ['shop.css', sheetBlock(read('styles', 'shop.css'), 'FASE 4B')],
       ['about.css', sheetBlock(read('styles', 'about.css'), 'FASE 4B')],
