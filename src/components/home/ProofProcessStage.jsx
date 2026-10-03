@@ -81,7 +81,6 @@ export default function ProofProcessStage({ block }) {
         length={length}
         states={items.length}
         topOffset={66}
-        allowMobile
         className="proof-process-stage"
       >
         {({ index, progress, isStatic }) => {

@@ -219,28 +219,8 @@ export function HomeProofSection({
   const hasPublishedEvidence = publishedEvidence.length > 0
   const visibleBlock = hasPublishedEvidence ? homeEvidenceBlock : homeProcessFallbackBlock
 
-  if (!hasPublishedEvidence) {
-    return (
-      <section
-        className="home-proof-gate-semantic sr-only"
-        aria-labelledby="home-proof-heading"
-        data-content-stage="proof"
-        data-content-block={visibleBlock.id}
-        data-evidence-gate="empty"
-      >
-        <h2 id="home-proof-heading">{visibleBlock.heading}</h2>
-        <ol aria-label="Proceso verificable de BAYONA">
-          {visibleBlock.items.map((item) => (
-            <li key={item.id}>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-    )
-  }
-
+  // Sin testimonios verificados mostramos el proceso editorial real,
+  // no una sección invisible. La evidencia sigue cerrada hasta su aprobación.
   return (
     <section
       {...sceneBackgroundProps(siteMedia.home.proof, {
