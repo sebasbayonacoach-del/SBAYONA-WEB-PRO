@@ -1,11 +1,13 @@
-import { motion, useTransform } from 'framer-motion'
-import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
+import { motion, useMotionValueEvent, useTransform } from 'framer-motion'
+import { useState } from 'react'
+import { resolveVisionChapter, resolveVisionGalleryProgress } from './visionPacing.js'
 import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
 import '../../styles/vision-shift-stage.css'
 import '../../styles/vision-shift-elite.css'
 import '../../styles/vision-spatial-gallery.css'
 import '../../styles/vision-device-mockups.css'
 import '../../styles/vision-gallery-luxury-layout.css'
+import '../../styles/vision-phone-hero.css'
 
 const VISION_LABELS = ['ACCIÓN', 'LECTURA', 'INTENCIÓN', 'DIRECCIÓN', 'CONTINUIDAD']
 
@@ -51,7 +53,7 @@ function GalleryFrame({ progress, frame, frameIndex }) {
         {frame.kind === 'phone' && (
           <div className="vision-spatial-phone-bar" aria-hidden="true">
             <span className="vision-spatial-device-brand">BAYONA</span>
-            <span className="vision-spatial-phone-status">● ●</span>
+            <span className="vision-spatial-phone-status">9:41&nbsp;&nbsp;◕ ▰</span>
           </div>
         )}
         {frame.kind === 'desktop' && <div className="vision-spatial-desktop-bar" aria-hidden="true"><span>● ● ●</span><strong>BAYONA / MOVIMIENTO</strong></div>}
@@ -65,7 +67,7 @@ function GalleryFrame({ progress, frame, frameIndex }) {
             decoding="async"
             draggable="false"
           />
-          {frame.kind === 'phone' && <div className="vision-spatial-screen-overlay" aria-hidden="true"><strong>UNA SEMANA.<br />UN SIGUIENTE PASO.</strong><small>PROCESO BAYONA</small></div>}
+          {frame.kind === 'phone' && <div className="vision-spatial-screen-overlay" aria-hidden="true"><span className="vision-phone-workbook-label">TU PROCESO / SEMANA 01</span><strong>UNA SEMANA.<br />UN SIGUIENTE PASO.</strong><small>MÉTODO BAYONA · VISTA CONCEPTUAL</small><span className="vision-phone-workbook-progress"><i /><i /><i /><i /><i /></span></div>}
         </div>
         {frame.kind === 'desktop' && <div className="vision-spatial-keyboard" aria-hidden="true" />}
       </div>
@@ -111,12 +113,64 @@ function SpatialGallery({ progress }) {
   )
 }
 
+function VisionStep({ item, index, progress, isStatic, total }) {
+  const isContinuity = item.id === 'continuity'
+  return (
+    <div className="vision-shift-viewport" data-vision-step={index + 1}>
+      <div className="vision-shift-visual">
+        {!isStatic && <span className="vision-gallery-overline" aria-hidden="true">BAYONA / PROCESO EN MOVIMIENTO</span>}
+        {!isStatic && <SpatialGallery progress={progress} />}
+      </div>
+      <motion.article
+        className="vision-shift-copy"
+        aria-hidden="true"
+        key={item.id}
+        initial={isStatic ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <p>{VISION_LABELS[index] ?? item.marker}</p>
+        <h3>{item.title}</h3>
+        {isStatic && <span className="vision-shift-summary">{item.body}</span>}
+        {isContinuity && !isStatic && (
+          <p className="vision-spatial-promise">
+            Sin entrenar por rachas. Un proceso que puedes adaptar a tu vida, incluso cuando cambia tu semana.
+          </p>
+        )}
+      </motion.article>
+      {isContinuity && (
+        <a className="vision-spatial-cta" href="/programs">
+          DESCUBRE TU PROGRAMA <span aria-hidden="true">↗</span>
+        </a>
+      )}
+      <p className="vision-shift-counter" aria-hidden="true">
+        {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+      </p>
+    </div>
+  )
+}
+
+function AnimatedVisionSequence({ items, progress }) {
+  const [index, setIndex] = useState(() => resolveVisionChapter(progress.get()))
+  const galleryProgress = useTransform(progress, resolveVisionGalleryProgress)
+  useMotionValueEvent(progress, 'change', (value) => {
+    const next = resolveVisionChapter(value)
+    setIndex((current) => current === next ? current : next)
+  })
+  return (
+    <VisionStep
+      index={index}
+      item={items[index] ?? items[0]}
+      total={items.length}
+      progress={galleryProgress}
+      isStatic={false}
+    />
+  )
+}
+
 export default function VisionShiftStage({ block }) {
-  const { mode } = useCapabilities()
   const items = block?.items ?? []
   if (!items.length) return null
-
-  const length = mode === 'desktop' ? '440vh' : '330vh'
 
   return (
     <div className="vision-shift">
@@ -143,51 +197,23 @@ export default function VisionShiftStage({ block }) {
       </ol>
 
       <StickyStage
-        length={length}
+        length="500vh"
         states={items.length}
         topOffset={66}
         allowMobile
         className="vision-shift-stage vision-shift-stage--spatial"
       >
-        {({ index, progress, isStatic }) => {
-          const item = items[index] ?? items[0]
-          const isContinuity = item.id === 'continuity'
-
-          return (
-            <div className="vision-shift-viewport">
-              <div className="vision-shift-visual">
-                {!isStatic && <span className="vision-gallery-overline" aria-hidden="true">BAYONA / PROCESO EN MOVIMIENTO</span>}
-                {!isStatic && <SpatialGallery progress={progress} />}
-              </div>
-
-              <motion.article
-                className="vision-shift-copy"
-                aria-hidden="true"
-                key={item.id}
-                initial={isStatic ? false : { opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <p>{VISION_LABELS[index] ?? item.marker}</p>
-                <h3>{item.title}</h3>
-                {isStatic && <span className="vision-shift-summary">{item.body}</span>}
-                {isContinuity && !isStatic && (
-                  <p className="vision-spatial-promise">
-                    Sin entrenar por rachas. Un proceso que puedes adaptar a tu vida, incluso cuando cambia tu semana.
-                  </p>
-                )}
-              </motion.article>
-              {isContinuity && (
-                <a className="vision-spatial-cta" href="/programs">
-                  DESCUBRE TU PROGRAMA <span aria-hidden="true">↗</span>
-                </a>
-              )}
-              <p className="vision-shift-counter" aria-hidden="true">
-                {String(index + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}
-              </p>
-            </div>
-          )
-        }}
+        {({ index, progress, isStatic }) => isStatic ? (
+          <VisionStep
+            index={index}
+            item={items[index] ?? items[0]}
+            progress={progress}
+            total={items.length}
+            isStatic
+          />
+        ) : (
+          <AnimatedVisionSequence items={items} progress={progress} />
+        )}
       </StickyStage>
     </div>
   )
