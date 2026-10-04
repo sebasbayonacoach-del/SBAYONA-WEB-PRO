@@ -4,6 +4,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import { Link } from 'react-router-dom'
 import { GoldButton, SectionLabel } from '../components/Layout'
 import BenefitsOrbitStage from '../components/home/BenefitsOrbitStage.jsx'
+import CinematicOfferGate from '../components/home/CinematicOfferGate.jsx'
 import CommunityImmersiveStage from '../components/home/CommunityImmersiveStage.jsx'
 import ExperienceProof from '../components/home/ExperienceProof.jsx'
 import ImmersiveMethodStage from '../components/home/ImmersiveMethodStage.jsx'
@@ -38,6 +39,8 @@ import '../styles/home.css'
 import '../styles/home-cinematic-continuity.css'
 import '../styles/home-commercial-editorial.css'
 import '../styles/home-art-direction-2026.css'
+import '../styles/bayona-cinematic-system.css'
+import '../styles/bayona-cinematic-motion.css'
 
 /** Capa WebGL del hero — carga diferida para proteger el LCP (Fase 11.1). */
 const Hero3DLayer = lazy(() => import('../components/home/Hero3DLayer.jsx'))
@@ -677,6 +680,7 @@ export default function Home() {
         data-content-block={homeOfferBlock.id}
       >
         <div className="offer-bg-number" aria-hidden="true">05</div>
+        <CinematicOfferGate />
         <div className="section-shell home-offer-shell">
           <div className="home-section-heading-grid home-offer-heading-layout" data-immersive="clip">
             <span className="home-vertical-word" aria-hidden="true">MEMBRESÍAS</span>

@@ -10,6 +10,20 @@ const SIGNALS = Object.freeze([
   { label: 'SOPORTE', Icon: Users },
 ])
 
+const DISTRACTIONS = ['MÁS RÁPIDO', 'CAMBIA TODO', 'COMPARA', 'SIN PARAR', 'AHORA']
+
+function NoiseField({ progress }) {
+  const y = useTransform(progress, [0,.24,.55,1], ['-12%','2%','120%','180%'])
+  const x = useTransform(progress, [0,1], ['10%','-28%'])
+  const opacity = useTransform(progress, [0,.18,.5,.8,1],[.78,.68,.1,0,0])
+  const rotate = useTransform(progress,[0,1],[-6,23])
+  return (
+    <motion.div className="bayona-noise-field" style={{x,y,opacity,rotate}} aria-hidden="true">
+      {DISTRACTIONS.map((phrase,i)=><span className="bayona-noise-billboard" key={phrase} style={{'--noise-index':i}}>{phrase}</span>)}
+    </motion.div>
+  )
+}
+
 function OrbitSystem({ progress, activeIndex }) {
   const rotate = useTransform(progress, [0, 1], [-24, 336])
   const scale = useTransform(progress, [0, .5, 1], [.9, 1.06, .94])
@@ -42,7 +56,7 @@ export default function BenefitsOrbitStage({ block }) {
   const items = block?.items ?? []
   if (!items.length) return null
 
-  const length = mode === 'desktop' ? '150vh' : '160vh'
+  const length = mode === 'desktop' ? '300vh' : '320vh'
 
   return (
     <div className="benefits-orbit-stage-wrap">
@@ -82,6 +96,8 @@ export default function BenefitsOrbitStage({ block }) {
           return (
             <div className="benefits-orbit-viewport">
               <div className="benefits-orbit-visual">
+                {!isStatic && <NoiseField progress={progress} />}
+                <div className="bayona-ascent-steps" aria-hidden="true"><span>01 / ENFOQUE</span><span>02 / CRITERIO</span><span>03 / PROGRESO</span></div>
                 {isStatic ? (
                   <div className="benefits-orbit-system benefits-orbit-system--static" aria-hidden="true">
                     <div className="benefits-orbit benefits-orbit--one" />

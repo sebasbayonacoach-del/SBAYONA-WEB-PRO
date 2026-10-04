@@ -77,6 +77,25 @@ function DossierObject({ progress, activeIndex }) {
   )
 }
 
+function ChallengeTheater({ progress }) {
+  const speed = useTransform(progress,[0,.28,.45,1],[1.4,.95,1,1])
+  const enter = useTransform(progress,[0,.25,.56,1],['16%','0%','0%','0%'])
+  return (
+    <div className="bayona-challenge-theater" aria-hidden="true">
+      <div className="bayona-challenge-beams">
+        {Array.from({length:9},(_,i)=><span key={i} style={{'--beam':i}} />)}
+      </div>
+      <motion.div className="bayona-challenge-screen" style={{scale:speed,x:enter}}>
+        <span>UNA EXPERIENCIA GUIADA</span>
+        <strong>30 DÍAS</strong>
+        <p>UN DÍA A LA VEZ / SIN PROMESAS VACÍAS</p>
+        <div className="bayona-challenge-screen__rows"><i/><i/><i/><i/><i/></div>
+      </motion.div>
+      <div className="bayona-challenge-seats"><span/><span/><span/><span/><span/></div>
+    </div>
+  )
+}
+
 function StaticDossierObject({ activeIndex }) {
   return (
     <div className="free-dossier-object free-dossier-object--static" aria-hidden="true">
@@ -99,7 +118,7 @@ function StaticDossierObject({ activeIndex }) {
 
 export default function FreeValue() {
   const { mode } = useCapabilities()
-  const length = mode === 'desktop' ? '155vh' : '165vh'
+  const length = mode === 'desktop' ? '340vh' : '360vh'
 
   return (
     <section
@@ -121,7 +140,7 @@ export default function FreeValue() {
         <small>DESLIZA PARA ABRIR EL KIT</small>
       </header>
 
-      <ol className="sr-only" aria-label="Las cuatro piezas del kit de entrada gratuito">
+      <ol className="sr-only" aria-hidden="true" aria-label="Las cuatro piezas del kit de entrada gratuito">
         {PIECES.map((piece) => (
           <li key={piece.id}>
             <h3>{piece.title}</h3>
@@ -143,18 +162,17 @@ export default function FreeValue() {
           const words = piece.copy.split(/\s+/)
 
           return (
-            <div className="free-dossier-viewport">
+            <div className="free-dossier-viewport" data-piece={piece.id}>
               <div className="free-dossier-visual">
                 {isStatic ? (
                   <StaticDossierObject activeIndex={index} />
                 ) : (
-                  <DossierObject progress={progress} activeIndex={index} />
+                  <>{piece.id === 'reto' ? <ChallengeTheater progress={progress} /> : <DossierObject progress={progress} activeIndex={index} />}</>
                 )}
               </div>
 
               <motion.article
                 className="free-dossier-copy"
-                aria-hidden="true"
                 key={piece.id}
                 initial={isStatic ? false : { opacity: 0, y: 28, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}

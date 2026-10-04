@@ -10,13 +10,13 @@ const THREAD = Object.freeze([
   Object.freeze({
     id: 'question',
     author: 'ANDREA',
-    text: 'Tengo dolor en la rodilla al hacer sentadillas. ¿Es normal?',
+    text: 'Al hacer sentadillas noto molestias en la rodilla. ¿Por dónde empiezo a revisarlo?',
     side: 'member',
   }),
   Object.freeze({
     id: 'answer',
     author: 'SEBASTIÁN',
-    text: 'No es normal, pero sí común. Tu rodilla se va hacia adentro. Probemos esto y me cuentas.',
+    text: 'Si duele, reduce o detén ese ejercicio. Revisamos tu técnica y el contexto; si persiste, consulta a un profesional sanitario.',
     side: 'coach',
   }),
 ])
@@ -30,7 +30,8 @@ function ConversationLine({ message, isStatic }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
     >
-      <span>{message.author}</span>
+      <span className="community-immersive-line__avatar" aria-hidden="true">{message.author === 'ANDREA' ? 'A' : 'B'}</span>
+      <span className="community-immersive-line__author">{message.author} <small>{message.side === 'coach' ? '· ORIENTACIÓN' : '· COMUNIDAD'}</small></span>
       <p>{message.text}</p>
     </motion.div>
   )
@@ -38,7 +39,7 @@ function ConversationLine({ message, isStatic }) {
 
 export default function CommunityImmersiveStage({ media }) {
   const { mode } = useCapabilities()
-  const length = mode === 'desktop' ? '135vh' : '145vh'
+  const length = mode === 'desktop' ? '240vh' : '260vh'
 
   return (
     <section
@@ -71,11 +72,12 @@ export default function CommunityImmersiveStage({ media }) {
           <div className="community-immersive-frame" data-state={index}>
             <div className="community-immersive-scrim" aria-hidden="true" />
 
-            <div className="community-immersive-transcript">
+            <div className="community-immersive-transcript community-interface" role="group" aria-label="Ejemplo ilustrativo de orientación en comunidad">
+              <div className="community-interface__chrome" aria-hidden="true"><span>B / COMMUNITY</span><span>ORIENTACIÓN · CONTEXTO · RESPETO</span><span>○ ○ ○</span></div>
               <div className="community-immersive-channel">
                 <MessageCircle size={18} strokeWidth={1.25} aria-hidden="true" />
                 <span>BAYONA / COMUNIDAD</span>
-                <i>ACTIVO AHORA</i>
+                <i>CONVERSACIÓN ILUSTRATIVA</i>
               </div>
 
               {index >= 0 ? <ConversationLine message={THREAD[0]} isStatic={isStatic} /> : null}

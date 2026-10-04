@@ -1,33 +1,31 @@
 import { motion } from 'framer-motion'
-import { Lock, Unlock } from 'lucide-react'
+import { Activity, ArrowUpRight, Crosshair, Route, Target } from 'lucide-react'
 import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
 import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
 import '../../styles/pain-unlock-stage.css'
 import '../../styles/pain-unlock-contrast.css'
 
-function LockRail({ items, activeIndex }) {
-  return (
-    <div className="pain-unlock-rail" aria-hidden="true">
-      {items.map((item, index) => {
-        const isPast = index < activeIndex
-        const isActive = index === activeIndex
-        const Icon = isPast ? Unlock : Lock
+const CHECKPOINT_ICONS = [Crosshair, Activity, Route, Target]
 
+function ProgressRail({ items, activeIndex }) {
+  return (
+    <div className="pain-unlock-rail pain-navigation" aria-hidden="true">
+      {items.map((item, index) => {
+        const Icon = CHECKPOINT_ICONS[index] ?? Target
         return (
           <div
-            className="pain-unlock-lock"
-            data-active={isActive ? 'true' : undefined}
-            data-past={isPast ? 'true' : undefined}
+            className="pain-navigation-stop"
+            data-active={index === activeIndex ? 'true' : undefined}
+            data-past={index < activeIndex ? 'true' : undefined}
             key={item.id}
           >
-            <span className="pain-unlock-lock__number">{item.marker}</span>
-            <span className="pain-unlock-lock__icon">
-              <Icon size={38} strokeWidth={1.15} />
-            </span>
-            <span className="pain-unlock-lock__line" />
+            <span className="pain-navigation-stop__number">{item.marker}</span>
+            <span className="pain-navigation-stop__orb"><Icon size={27} strokeWidth={1.55} /></span>
+            <span className="pain-navigation-stop__axis" />
           </div>
         )
       })}
+      <span className="pain-navigation-indicator" style={{ '--stage': activeIndex }} />
     </div>
   )
 }
@@ -58,7 +56,7 @@ export default function PainUnlockStage({ block }) {
   const items = block?.items ?? []
   if (!items.length) return null
 
-  const length = mode === 'desktop' ? '145vh' : '155vh'
+  const length = mode === 'desktop' ? '280vh' : '300vh'
 
   return (
     <div className="pain-unlock">
@@ -90,8 +88,9 @@ export default function PainUnlockStage({ block }) {
           return (
             <div className="pain-unlock-viewport">
               <div className="pain-unlock-visual">
-                <p className="pain-unlock-visual__caption">ABRIMOS UNO A LA VEZ</p>
-                <LockRail items={items} activeIndex={index} />
+                <p className="pain-unlock-visual__caption">CUATRO PUNTOS DE PARTIDA / UNA DIRECCIÓN</p>
+                <ProgressRail items={items} activeIndex={index} />
+                <div className="pain-navigation-caption" aria-hidden="true"><span>IDENTIFICAR</span><ArrowUpRight size={15} /><span>AVANZAR</span></div>
                 <div className="pain-unlock-axis" aria-hidden="true">
                   <span style={{ '--unlock-progress': `${((index + 1) / items.length) * 100}%` }} />
                 </div>
