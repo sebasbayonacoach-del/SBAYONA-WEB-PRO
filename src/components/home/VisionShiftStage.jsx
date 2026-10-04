@@ -4,22 +4,23 @@ import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
 import '../../styles/vision-shift-stage.css'
 import '../../styles/vision-shift-elite.css'
 import '../../styles/vision-spatial-gallery.css'
+import '../../styles/vision-device-mockups.css'
 
 const VISION_LABELS = ['ACCIÓN', 'LECTURA', 'INTENCIÓN', 'DIRECCIÓN', 'CONTINUIDAD']
 
 // Diez fotografías deportivas existentes en el catálogo local y comprobadas
 // en public/images/burst. Sin requests a bancos externos ni recursos ficticios.
 export const VISION_STORY_FRAMES = Object.freeze([
-  { id: 'preparacion', file: 'jogger-laces-up', label: 'Preparación' },
-  { id: 'primer-paso', file: 'one-arm-push-up', label: 'Primer paso' },
-  { id: 'aprendizaje', file: 'woman-strong-band-exercise', label: 'Aprendizaje' },
-  { id: 'progresion', file: 'weighted-squat-exercise', label: 'Progresión' },
-  { id: 'movilidad', file: 'person-stretching-in-fitness-clothing', label: 'Movilidad' },
-  { id: 'ritmo', file: 'man-running-at-the-track', label: 'Ritmo' },
-  { id: 'control', file: 'core-strength-fitness', label: 'Control' },
-  { id: 'fuerza', file: 'woman-lifts-free-weights', label: 'Fuerza' },
-  { id: 'perspectiva', file: 'sunset-hike-to-the-summit', label: 'Perspectiva' },
-  { id: 'continuidad', file: 'strong-women-planking', label: 'Continuidad' },
+  { id: 'preparacion', file: 'jogger-laces-up', label: 'Preparación', kind: 'phone' },
+  { id: 'primer-paso', file: 'one-arm-push-up', label: 'Primer paso', kind: 'coach' },
+  { id: 'aprendizaje', file: 'woman-strong-band-exercise', label: 'Aprendizaje', kind: 'phone' },
+  { id: 'progresion', file: 'weighted-squat-exercise', label: 'Progresión', kind: 'desktop' },
+  { id: 'movilidad', file: 'person-stretching-in-fitness-clothing', label: 'Movilidad', kind: 'coach' },
+  { id: 'ritmo', file: 'man-running-at-the-track', label: 'Ritmo', kind: 'phone' },
+  { id: 'control', file: 'core-strength-fitness', label: 'Control', kind: 'desktop' },
+  { id: 'fuerza', file: 'woman-lifts-free-weights', label: 'Fuerza', kind: 'phone' },
+  { id: 'perspectiva', file: 'sunset-hike-to-the-summit', label: 'Perspectiva', kind: 'coach' },
+  { id: 'continuidad', file: 'strong-women-planking', label: 'Continuidad', kind: 'phone' },
 ])
 
 // Movimiento sin React re-render por pixel; MotionValue controla las diez
@@ -37,19 +38,33 @@ function GalleryFrame({ progress, frame, frameIndex }) {
 
   return (
     <motion.figure
-      className="vision-spatial-frame"
+      className={`vision-spatial-frame vision-spatial-frame--${frame.kind}`}
       style={{ transform, opacity, zIndex: 10 - frameIndex }}
       data-frame={frame.id}
+      data-device={frame.kind}
     >
-      <img
-        src={`/images/burst/${frame.file}-960.webp`}
-        alt=""
-        width="960"
-        height="640"
-        loading={frameIndex < 2 ? 'eager' : 'lazy'}
-        decoding="async"
-        draggable="false"
-      />
+      <div className="vision-spatial-device">
+        {frame.kind === 'phone' && (
+          <div className="vision-spatial-phone-bar" aria-hidden="true">
+            <span className="vision-spatial-device-brand">BAYONA</span>
+            <span className="vision-spatial-phone-status">● ●</span>
+          </div>
+        )}
+        {frame.kind === 'desktop' && <div className="vision-spatial-desktop-bar" aria-hidden="true"><span>● ● ●</span><strong>BAYONA / MOVIMIENTO</strong></div>}
+        <div className="vision-spatial-screen">
+          <img
+            src={`/images/burst/${frame.file}-960.webp`}
+            alt=""
+            width="960"
+            height="640"
+            loading={frameIndex < 2 ? 'eager' : 'lazy'}
+            decoding="async"
+            draggable="false"
+          />
+          {frame.kind === 'phone' && <div className="vision-spatial-screen-overlay" aria-hidden="true"><strong>UNA SEMANA.<br />UN SIGUIENTE PASO.</strong><small>PROCESO BAYONA</small></div>}
+        </div>
+        {frame.kind === 'desktop' && <div className="vision-spatial-keyboard" aria-hidden="true" />}
+      </div>
       <figcaption>
         <span>{String(frameIndex + 1).padStart(2, '0')} / 10</span>
         <span>{frame.label}</span>

@@ -1,0 +1,186 @@
+/* Mockups editoriales de BAYONA: un móvil vertical como protagonista,
+   ordenador panorámico para la planificación y fotografía deportiva orgánica.
+   Todas las imágenes son activos locales ya verificados. */
+.vision-spatial-frame {
+  inset: auto;
+  overflow: visible;
+  display: grid;
+  place-items: center;
+  transform-origin: center center;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.vision-spatial-device {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+}
+.vision-spatial-screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.vision-spatial-frame .vision-spatial-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.83) contrast(1.08) brightness(.78);
+}
+.vision-spatial-frame::after { display: none; }
+
+/* TELÉFONO — alto, estrecho, cuerpo metálico y pantalla completa. */
+.vision-spatial-frame--phone {
+  width: 69%;
+  height: 102%;
+  border: 4px solid #434447;
+  border-radius: clamp(24px, 3vw, 41px);
+  box-shadow: 0 28px 72px rgba(0,0,0,.66), 0 0 0 1px rgba(250,200,141,.32), inset 0 0 0 2px rgba(0,0,0,.7);
+  background: #08090b;
+}
+.vision-spatial-frame--phone .vision-spatial-device {
+  inset: 5px;
+  overflow: hidden;
+  border-radius: clamp(19px, 2.6vw, 34px);
+}
+.vision-spatial-frame--phone .vision-spatial-device::before {
+  content: '';
+  position: absolute;
+  z-index: 4;
+  top: 8px;
+  left: 50%;
+  width: 25%;
+  height: 12px;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: #070808;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.08);
+}
+.vision-spatial-frame--phone .vision-spatial-screen {
+  inset: 0;
+}
+.vision-spatial-frame--phone .vision-spatial-screen img {
+  filter: saturate(.73) contrast(1.1) brightness(.57);
+}
+.vision-spatial-phone-bar {
+  position: absolute;
+  z-index: 3;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(22px, 3vw, 35px) 12px 12px;
+  font: 700 .58rem/1 var(--type-family-mono, monospace);
+  color: rgba(255,255,255,.95);
+  letter-spacing: .16em;
+  background: linear-gradient(#070809, transparent);
+}
+.vision-spatial-phone-status { color: #f4a261; letter-spacing: .1em; }
+.vision-spatial-screen-overlay {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 2;
+  display: grid;
+  gap: clamp(.3rem, 1vw, .65rem);
+  padding: 24px clamp(11px, 2vw, 22px) 32px;
+  color: #f7f7f3;
+  background: linear-gradient(0deg,rgba(3,4,5,.94),transparent);
+}
+.vision-spatial-screen-overlay strong {
+  font: 800 clamp(.78rem,1.7vw,1.3rem)/1.04 var(--type-family-display, sans-serif);
+  letter-spacing: -.035em;
+}
+.vision-spatial-screen-overlay small {
+  font: 700 .52rem/1.3 var(--type-family-mono,monospace);
+  color: #f4a261;
+  letter-spacing: .16em;
+}
+.vision-spatial-frame--phone figcaption {
+  display: none;
+}
+/* ORDENADOR — pantalla panorámica + base física de aluminio. */
+.vision-spatial-frame--desktop {
+  width: 116%;
+  height: 70%;
+  border: 6px solid #393b3d;
+  border-radius: 13px 13px 5px 5px;
+  box-shadow: 0 32px 75px rgba(0,0,0,.6), 0 0 0 1px rgba(244,162,97,.24);
+  background: #0c0d10;
+}
+.vision-spatial-frame--desktop .vision-spatial-device {
+  inset: 0;
+}
+.vision-spatial-frame--desktop .vision-spatial-screen {
+  inset: 24px 0 0;
+}
+.vision-spatial-desktop-bar {
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  height: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: 6px 10px;
+  color: rgba(255,255,255,.75);
+  background: #141618;
+  font: 600 .47rem/1.4 var(--type-family-mono,monospace);
+  letter-spacing: .13em;
+}
+.vision-spatial-desktop-bar span { color: #f4a261; }
+.vision-spatial-frame--desktop .vision-spatial-screen img { filter: saturate(.74) contrast(1.14) brightness(.73); }
+.vision-spatial-keyboard {
+  position: absolute;
+  z-index: -1;
+  top: 100%;
+  left: -8%;
+  width: 116%;
+  height: 12%;
+  background: linear-gradient(180deg,#585b60 0%,#252629 26%,#121315 85%,transparent);
+  clip-path: polygon(7% 0,93% 0,100% 100%,0 100%);
+  border-radius: 0 0 10px 10px;
+}
+.vision-spatial-frame--desktop figcaption {
+  bottom: 8px;
+  padding: .5rem;
+  z-index: 2;
+  color: #fff;
+  background: rgba(3,4,5,.5);
+}
+/* ENTRENADOR / MOVIMIENTO — silueta editorial, sin caja rectangular. */
+.vision-spatial-frame--coach {
+  width: 83%;
+  height: 98%;
+  border: 0;
+  box-shadow: none;
+}
+.vision-spatial-frame--coach .vision-spatial-device {
+  overflow: hidden;
+  border-radius: 47% 47% 14% 14% / 34% 34% 12% 12%;
+  border: 1px solid rgba(244,162,97,.56);
+  box-shadow: 0 25px 66px rgba(0,0,0,.42);
+  background: #0a0b0c;
+}
+.vision-spatial-frame--coach .vision-spatial-screen img {
+  filter: saturate(.78) contrast(1.12) brightness(.84);
+}
+.vision-spatial-frame--coach figcaption {
+  inset: auto 8% 4%;
+  background: linear-gradient(90deg,rgba(0,0,0,.65),transparent);
+}
+@media(max-width:760px) {
+  .vision-spatial-frame--phone { width: 79%; border-width: 3px; }
+  .vision-spatial-frame--desktop { width: 117%; }
+  .vision-spatial-frame--coach { width: 87%; }
+  .vision-spatial-phone-bar { padding-top: 24px; font-size: .5rem; }
+  .vision-spatial-screen-overlay { padding: 12px 10px 23px; }
+  .vision-spatial-screen-overlay strong { font-size: .78rem; }
+  .vision-spatial-desktop-bar { font-size: .4rem; padding: 6px; }
+}
+@media (max-width:480px) {
+  .vision-spatial-frame--desktop { width: 120%; height: 68%; }
+  .vision-spatial-frame--phone { width: 85%; }
+  .vision-spatial-frame--coach { width: 90%; }
+}

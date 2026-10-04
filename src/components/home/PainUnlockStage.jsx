@@ -3,6 +3,7 @@ import { Lock, Unlock } from 'lucide-react'
 import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
 import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
 import '../../styles/pain-unlock-stage.css'
+import '../../styles/pain-unlock-contrast.css'
 
 function LockRail({ items, activeIndex }) {
   return (
