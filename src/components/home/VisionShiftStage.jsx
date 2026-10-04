@@ -2,6 +2,7 @@ import { motion, useTransform } from 'framer-motion'
 import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
 import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
 import '../../styles/vision-shift-stage.css'
+import '../../styles/vision-shift-elite.css'
 
 const VISION_LABELS = ['ACCIÓN', 'LECTURA', 'INTENCIÓN', 'DIRECCIÓN', 'CONTINUIDAD']
 
@@ -39,7 +40,11 @@ export default function VisionShiftStage({ block }) {
     <div className="vision-shift">
       <header className="vision-shift-intro">
         <p>LO PRIMERO QUE CAMBIA</p>
-        <h2 id="home-vision-heading">{block.heading}</h2>
+        <h2 id="home-vision-heading">
+          {block.heading.endsWith('A CIEGAS.') ? (
+            <>{block.heading.slice(0, -'A CIEGAS.'.length)}<em>A CIEGAS.</em></>
+          ) : block.heading}
+        </h2>
         <span>{block.body}</span>
         <a className="vision-shift-follow" href="#problemas">
           VAMOS A VER CÓMO FUNCIONA <span aria-hidden="true">↓</span>
@@ -99,6 +104,7 @@ export default function VisionShiftStage({ block }) {
                     <span key={`${word}-${wordIndex}`}>{word}{wordIndex < words.length - 1 ? ' ' : ''}</span>
                   ))}
                 </h3>
+                {isStatic && <span className="vision-shift-summary">{item.body}</span>}
               </motion.article>
 
               <p className="vision-shift-counter" aria-hidden="true">
