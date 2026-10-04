@@ -96,6 +96,17 @@ export default function BenefitsOrbitStage({ block }) {
           return (
             <div className="benefits-orbit-viewport">
               <div className="benefits-orbit-visual">
+                <div
+                  className="bayona-benefits-photographic-layer"
+                  style={{
+                    backgroundImage: `url("${[
+                      '/images/burst/person-stretching-in-fitness-clothing-960.webp',
+                      '/images/burst/man-running-at-the-track-960.webp',
+                      '/images/burst/strong-women-planking-960.webp',
+                    ][index] ?? '/images/burst/man-running-at-the-track-960.webp'}")`,
+                  }}
+                  aria-hidden="true"
+                />
                 {!isStatic && <NoiseField progress={progress} />}
                 <div className="bayona-ascent-steps" aria-hidden="true"><span>01 / ENFOQUE</span><span>02 / CRITERIO</span><span>03 / PROGRESO</span></div>
                 {isStatic ? (

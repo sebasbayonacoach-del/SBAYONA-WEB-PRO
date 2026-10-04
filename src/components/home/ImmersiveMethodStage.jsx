@@ -21,6 +21,15 @@ function JourneyScene({ progress, activeIndex, staticMode = false }) {
   const depth = useTransform(driver, [0, .5, 1], [.92, 1.15, .95])
   return (
     <div className="bayona-voyage" data-flight={activeIndex + 1} aria-hidden="true">
+      <img
+        className="bayona-voyage-photographic-layer"
+        src="/images/burst/sunset-hike-to-the-summit-960.webp"
+        alt=""
+        width="960"
+        height="640"
+        loading="lazy"
+        decoding="async"
+      />
       <div className="bayona-voyage-sky" />
       <div className="bayona-voyage-stars">
         {Array.from({length:24}, (_,i)=><span key={i} style={{'--star':i,left:`${(i*37+11)%96}%`,top:`${(i*29+9)%91}%`}} />)}

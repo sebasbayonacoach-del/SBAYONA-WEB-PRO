@@ -90,6 +90,21 @@ export default function ProofProcessStage({ block }) {
           return (
             <div className="proof-process-viewport">
               <div className="proof-process-visual">
+                <div className="proof-process-photo" aria-hidden="true">
+                  <img
+                    src={[
+                      '/images/burst/woman-strong-band-exercise-960.webp',
+                      '/images/burst/core-strength-fitness-960.webp',
+                      '/images/burst/person-stretching-in-fitness-clothing-960.webp',
+                    ][index]}
+                    alt=""
+                    loading="eager"
+                    decoding="async"
+                    width="960"
+                    height="640"
+                  />
+                  <span>PROCESO ILUSTRADO · NO EVIDENCIA DE RESULTADOS</span>
+                </div>
                 {isStatic ? (
                   <StaticProcessObject activeIndex={index} />
                 ) : (

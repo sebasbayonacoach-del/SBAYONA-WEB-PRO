@@ -41,6 +41,7 @@ import '../styles/home-commercial-editorial.css'
 import '../styles/home-art-direction-2026.css'
 import '../styles/bayona-cinematic-system.css'
 import '../styles/bayona-cinematic-motion.css'
+import '../styles/bayona-visual-audit.css'
 
 /** Capa WebGL del hero — carga diferida para proteger el LCP (Fase 11.1). */
 const Hero3DLayer = lazy(() => import('../components/home/Hero3DLayer.jsx'))
@@ -723,31 +724,35 @@ export default function Home() {
         data-content-stage={homeActionBlock.stage}
         data-content-block={homeActionBlock.id}
       >
+        <div className="bayona-final-visual" aria-hidden="true">
+          <img src="/images/burst/sunset-hike-to-the-summit-960.webp" alt="" width="960" height="640" loading="lazy" decoding="async" />
+          <span className="bayona-final-visual__caption">BAYONA / SIGUIENTE HORIZONTE</span>
+        </div>
         <div className="section-shell final-curtain" data-immersive="clip">
           {/*
             IMMERSIVE LUXURY §52-53 · CIERRE CINEMATOGRÁFICO.
             No es "compra ahora": es la última página de un libro. Declaración
             final, sello de marca y las dos puertas, tipográficas, sin cajas.
           */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={stagger}>
+          <div className="bayona-final-narrative">
             <SectionLabel>07 / CONTINÚA LA HISTORIA</SectionLabel>
-            <motion.h2 id="home-about-bridge-title" variants={fadeUp}>
+            <h2 id="home-about-bridge-title">
               {homeActionBlock.heading.split(', ')[0]}, <br />
               <span>{homeActionBlock.heading.split(', ').slice(1).join(', ')}</span>
-            </motion.h2>
-            <motion.p variants={fadeUp} className="offer-intro">
+            </h2>
+            <p className="offer-intro">
               {homeActionBlock.body}
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }} variants={stagger} className="cta-stack final-doors">
-            <motion.div variants={fadeUp}>
+          <div className="cta-stack final-doors">
+            <div>
               <Link to="/about" className="cta-primary">CONOCER LA HISTORIA <ArrowUpRight size={18} aria-hidden="true" /></Link>
-            </motion.div>
-            <motion.div variants={fadeUp}>
+            </div>
+            <div>
               <Link to="/programs" className="cta-secondary">COMPARAR PROGRAMAS <Zap size={18} aria-hidden="true" /></Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           <div className="final-seal" aria-hidden="true">
             <p className="final-mark">BAYONA</p>

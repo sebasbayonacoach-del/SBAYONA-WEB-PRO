@@ -89,7 +89,7 @@ function ChallengeTheater({ progress }) {
         <span>UNA EXPERIENCIA GUIADA</span>
         <strong>30 DÍAS</strong>
         <p>UN DÍA A LA VEZ / SIN PROMESAS VACÍAS</p>
-        <div className="bayona-challenge-screen__rows"><i/><i/><i/><i/><i/></div>
+        <img className="bayona-challenge-screen__hero" src="/images/burst/man-running-at-the-track-960.webp" alt="" width="960" height="640" loading="lazy" decoding="async" /><div className="bayona-challenge-screen__rows"><i/><i/><i/><i/><i/></div>
       </motion.div>
       <div className="bayona-challenge-seats"><span/><span/><span/><span/><span/></div>
     </div>
