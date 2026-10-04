@@ -5,6 +5,7 @@ import '../../styles/vision-shift-stage.css'
 import '../../styles/vision-shift-elite.css'
 import '../../styles/vision-spatial-gallery.css'
 import '../../styles/vision-device-mockups.css'
+import '../../styles/vision-gallery-luxury-layout.css'
 
 const VISION_LABELS = ['ACCIÓN', 'LECTURA', 'INTENCIÓN', 'DIRECCIÓN', 'CONTINUIDAD']
 
@@ -29,17 +30,20 @@ function GalleryFrame({ progress, frame, frameIndex }) {
   const transform = useTransform(progress, (value) => {
     const distance = frameIndex - Math.max(0, Math.min(1, value)) * 9
     const depth = Math.min(4, Math.abs(distance))
-    return `translate3d(${distance * 29}%, ${depth * 4}%, ${-depth * 166}px) rotateY(${distance * -8}deg) rotateZ(${distance * 1.65}deg) scale(${1 - depth * 0.085})`
+    return `translate3d(${distance * 41}%, ${depth * 2}%, ${-depth * 195}px) rotateY(${distance * -6}deg) rotateZ(${distance * 0.7}deg) scale(${1 - depth * 0.085})`
   })
+  const stacking = useTransform(progress, (value) =>
+    Math.round(30 - Math.abs(frameIndex - Math.max(0, Math.min(1, value)) * 9) * 3))
   const opacity = useTransform(progress, (value) => {
     const distance = Math.abs(frameIndex - Math.max(0, Math.min(1, value)) * 9)
-    return Math.max(0, Math.min(1, 1.2 - distance * 0.36))
+    // Solo el plano protagonista y una insinuación de los adyacentes.
+    return Math.max(0, Math.min(1, 1.15 - distance * 0.95))
   })
 
   return (
     <motion.figure
       className={`vision-spatial-frame vision-spatial-frame--${frame.kind}`}
-      style={{ transform, opacity, zIndex: 10 - frameIndex }}
+      style={{ transform, opacity, zIndex: stacking }}
       data-frame={frame.id}
       data-device={frame.kind}
     >
@@ -152,6 +156,7 @@ export default function VisionShiftStage({ block }) {
           return (
             <div className="vision-shift-viewport">
               <div className="vision-shift-visual">
+                {!isStatic && <span className="vision-gallery-overline" aria-hidden="true">BAYONA / PROCESO EN MOVIMIENTO</span>}
                 {!isStatic && <SpatialGallery progress={progress} />}
               </div>
 
