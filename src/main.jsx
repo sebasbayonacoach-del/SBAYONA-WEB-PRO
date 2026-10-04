@@ -131,6 +131,8 @@ import './styles/luxury-typography-final.css'
 import './styles/editorial-breathing-pass.css'
 import './styles/award-experience.css'
 import './styles/prime-polish.css'
+/* Criterio compartido de marca: mismas superficies, contenedores y fichas sin fotos. */
+import './styles/bayona-visual-unity.css'
 /*
  * Capa de experiencia (FASE 4). Última hoja global a propósito: solo aliasa
  * tokens del sistema y matiza por cascada, así que puede unificar el lenguaje

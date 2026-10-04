@@ -9,7 +9,6 @@ import {
   Cpu,
   Download,
   Dumbbell,
-  Eye,
   Footprints,
   Leaf,
   Move,
@@ -25,8 +24,7 @@ import Tilt from 'react-parallax-tilt'
 import Marquee from 'react-fast-marquee'
 import { toast } from 'sonner'
 import { SectionLabel } from '../components/Layout'
-import { sceneBackgroundProps, StockImage } from '../components/SceneBackground.jsx'
-import VideoSection from '../components/VideoSection.jsx'
+import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import ShopCollectionsStage from '../components/shop/ShopCollectionsStage.jsx'
 import { editorialServices } from '../config/offerings.js'
 import { whatsAppLink } from '../config/site.config.js'
@@ -37,7 +35,7 @@ import {
   shopCollections,
   shopProducts,
 } from '../config/shopProducts.js'
-import { mediaHeroUrls, siteMedia } from '../config/siteMedia.js'
+import { siteMedia } from '../config/siteMedia.js'
 import { motionTokens } from '../engine/config/motionTokens.js'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
 import { ARRIVAL_BONUS_EUR, useRewards } from '../lib/rewards/RewardsProvider.jsx'
@@ -45,6 +43,7 @@ import { selectCartCount, selectCartTotalCOP, useCartStore } from '../store/cart
 import '../styles/shop.css'
 import '../styles/shop-catalog-editorial.css'
 import '../styles/shop-art-direction-2026.css'
+import '../styles/shop-unified-catalog.css'
 
 /** Capa WebGL holográfica — carga diferida para proteger el LCP (Fase 11.6). */
 const ShopHologramLayer = lazy(() => import('../components/shop/ShopHologramLayer.jsx'))
@@ -179,11 +178,7 @@ function HeroTitle() {
 function CollectionCard({ collection, active, onSelect, reducedMotion }) {
   return (
     <motion.button
-      {...sceneBackgroundProps(collection.media, {
-        className: 'shop-collection-card',
-        variant: 'subtle',
-        pseudo: 'after',
-      })}
+      className="shop-collection-card"
       data-collection={collection.id}
       type="button"
       aria-pressed={active}
@@ -244,7 +239,6 @@ function ProductCard({ product, reducedMotion }) {
   const { finePointer, mode } = useCapabilities()
   const addItem = useCartStore((state) => state.addItem)
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0)
-  const [previewOpen, setPreviewOpen] = useState(false)
   const pointerEffects = mode === 'desktop' && finePointer && !reducedMotion
   const variantDefinitions = CART_PRODUCT_VARIANTS[product.id] ?? []
   const variantDefinition = variantDefinitions[selectedVariantIndex]
@@ -256,7 +250,6 @@ function ProductCard({ product, reducedMotion }) {
   const cartItemName = selectedVariant ? `${baseProductName} — ${selectedVariant.label}` : product.name
   const canAddToCart = Number.isFinite(cartPriceCOP)
   const cartHelpId = `shop-cart-help-${product.id}`
-  const previewId = `shop-product-preview-${product.id}`
 
   const handleAddToCart = () => {
     if (!canAddToCart) return
@@ -266,7 +259,6 @@ function ProductCard({ product, reducedMotion }) {
       name: cartItemName,
       priceCOP: cartPriceCOP,
       qty: 1,
-      media: product.media,
       icon: product.icon,
     })
     toast.success('Añadido', { description: `${cartItemName} está en tu carrito.` })
@@ -287,38 +279,15 @@ function ProductCard({ product, reducedMotion }) {
       glareBorderRadius="0"
     >
       <article
-        className={`shop-product-card ds-reveal${previewOpen ? ' is-preview-open' : ''}`}
+        className="shop-product-card ds-reveal"
         data-product-id={product.id}
         onPointerMove={pointerEffects ? updateCardSpotlight : undefined}
         onPointerLeave={pointerEffects ? resetCardSpotlight : undefined}
       >
-        <div className="shop-product-visual" id={previewId}>
-          {product.media?.src ? (
-            <StockImage
-              className="shop-product-image stock-media-image"
-              media={product.media}
-              sizes="(max-width: 760px) 78vw, 32vw"
-            />
-          ) : (
-            <ShopIcon name={product.icon} size={32} />
-          )}
-          {/*
-            Etiqueta de colección cosida a la propia pieza: sin ella las 43
-            fichas eran anonadas iguales y la página se leía como rejilla de
-            e-commerce. Con ella cada card dice de qué vitrina es.
-          */}
-          <span className="shop-product-chip" aria-hidden="true">{product.collection}</span>
-          <button
-            className="shop-product-preview-toggle"
-            type="button"
-            aria-expanded={previewOpen}
-            aria-controls={previewId}
-            aria-label={`${previewOpen ? 'Contraer' : 'Ampliar'} vista de ${product.name}`}
-            onClick={() => setPreviewOpen((current) => !current)}
-          >
-            <Eye size={15} strokeWidth={1.2} aria-hidden="true" />
-            <span>{previewOpen ? 'CERRAR' : 'AMPLIAR'}</span>
-          </button>
+        <div className="shop-product-visual" aria-hidden="true">
+          <span className="shop-product-mark">BAYONA / {product.collectionTitle}</span>
+          <ShopIcon name={product.icon} size={46} className="shop-product-icon" />
+          <span className="shop-product-chip">{product.category}</span>
         </div>
         <h3>{product.name}</h3>
         <p>{product.description}</p>
@@ -404,15 +373,8 @@ function FeatureVisual({ product, reducedMotion }) {
       onPointerLeave={parallaxEnabled ? resetFeatureParallax : undefined}
     >
       <span className="shop-feature-aura" aria-hidden="true" />
-      {product.media?.src ? (
-        <StockImage
-          className="shop-feature-image stock-media-image"
-          media={product.media}
-          sizes="(max-width: 699px) 78vw, 46vw"
-        />
-      ) : (
-        <ShopIcon className="shop-feature-icon" name={product.icon} size={32} aria-hidden="true" />
-      )}
+      <ShopIcon className="shop-feature-icon" name={product.icon} size={70} />
+      <span className="shop-feature-wordmark" aria-hidden="true">BAYONA</span>
       <span className="shop-feature-shadow" aria-hidden="true" />
     </div>
   )
@@ -523,7 +485,6 @@ export default function Shop() {
       name: featuredProduct.name,
       priceCOP: featuredProduct.priceCop,
       qty: 1,
-      media: featuredProduct.media,
       icon: featuredProduct.icon,
     })
     toast.success('Añadido', { description: `${featuredProduct.name} está en tu carrito.` })
@@ -610,13 +571,6 @@ export default function Shop() {
           onSelect={selectCollectionCard}
         />
 
-        <VideoSection
-          title="LA COLECCIÓN"
-          subtitle="Sebastián presenta la identidad detrás de cada pieza."
-          poster={mediaHeroUrls(siteMedia.shop.collections.movement).retina}
-          duration="90 SEG"
-          placement="contained"
-        />
       </section>
 
       {/*
@@ -752,8 +706,12 @@ export default function Shop() {
             <SectionLabel>BAYONA COLLECTION</SectionLabel>
             <h2 id="shop-catalog-title">ENCUENTRA LO<br /><span>QUE TE REPRESENTA.</span></h2>
           </div>
-          <p>{PRODUCT_COUNT} piezas para llevar contigo.</p>
+          <p>{PRODUCT_COUNT} referencias de ropa, movimiento, fuerza y recuperación.</p>
         </header>
+
+        <p className="shop-catalog-availability">
+          Catálogo consultable. Precio, disponibilidad, características, tallas y entrega se confirman antes de finalizar el pedido.
+        </p>
 
         <div className="shop-filter-bar">
           <PillGroup

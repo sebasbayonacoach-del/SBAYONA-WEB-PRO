@@ -1,0 +1,73 @@
+/* BAYONA PRIME — una sola identidad entre rutas.
+   Las fotografías se reservan para escenarios de página completos; ninguna
+   tarjeta de contenido presenta fotografías en su interior. */
+.ds-frame:not([data-experience-scope='system']) {
+  --bayona-unity-surface: var(--bayona-surface-1, var(--black-2));
+  --bayona-unity-border: var(--bayona-hairline, 1px solid rgba(255,255,255,.14));
+  --bayona-unity-accent: var(--bayona-warm, var(--orange));
+  color: var(--bayona-white, var(--white));
+  font-family: var(--bayona-font-body, Montserrat, sans-serif);
+  background-color: var(--bayona-surface-0, var(--black));
+}
+
+/* Las rutas tienen una medida de lectura común, sin alterar escenas a sangre. */
+.ds-frame:not([data-experience-scope='system']) .section-shell {
+  max-width: min(100%, 1320px);
+  margin-inline: auto;
+}
+
+.ds-frame:not([data-experience-scope='system']) :is(
+  .ds-card,
+  [class*='-card'],
+  [class*='-tile']
+) {
+  border-color: var(--bayona-unity-border-color, rgba(255,255,255,.16));
+  border-radius: 0;
+}
+
+/* Una tarjeta comunica con jerarquía, numeración e iconos, no con fotografías.
+   Ocultamos también media heredada por inline style y pseudoelementos. */
+.ds-frame:not([data-experience-scope='system']) :is(
+  .ds-card,
+  [class*='-card'],
+  [class*='-tile']
+) :is(img, picture, video, canvas, iframe) {
+  display: none !important;
+}
+.ds-frame:not([data-experience-scope='system']) :is(
+  .ds-card,
+  [class*='-card'],
+  [class*='-tile']
+) {
+  background-image: none !important;
+}
+.ds-frame:not([data-experience-scope='system']) :is(
+  .ds-card,
+  [class*='-card'],
+  [class*='-tile']
+)::before,
+.ds-frame:not([data-experience-scope='system']) :is(
+  .ds-card,
+  [class*='-card'],
+  [class*='-tile']
+)::after {
+  background-image: none !important;
+}
+.ds-frame:not([data-experience-scope='system']) :is(
+  .ds-card,
+  [class*='-card'],
+  [class*='-tile']
+) :is(button, a):focus-visible {
+  outline: 2px solid var(--bayona-unity-accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-frame:not([data-experience-scope='system']) :is(
+    .ds-card,
+    [class*='-card'],
+    [class*='-tile']
+  ) {
+    transition: none;
+  }
+}

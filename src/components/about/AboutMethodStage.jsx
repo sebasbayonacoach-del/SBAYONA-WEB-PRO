@@ -25,6 +25,25 @@ function DecisionBeam({ progress, activeIndex, total }) {
   )
 }
 
+/* StickyStage entrega un número en modo estático: no debe llegar a useTransform. */
+function StaticDecisionBeam({ activeIndex, total }) {
+  return (
+    <div className="about-decision-beam" aria-hidden="true">
+      <span className="about-decision-beam__track" />
+      {Array.from({ length: total }, (_, index) => (
+        <b
+          key={index}
+          data-active={index === activeIndex ? 'true' : undefined}
+          data-past={index < activeIndex ? 'true' : undefined}
+          style={{ '--decision-index': index }}
+        >
+          {String(index + 1).padStart(2, '0')}
+        </b>
+      ))}
+    </div>
+  )
+}
+
 function DecisionCopy({ item, index, isStatic }) {
   return (
     <motion.article
@@ -59,7 +78,11 @@ export default function AboutMethodStage({ items = [] }) {
       >
         {({ index, progress, isStatic }) => (
           <div className="about-decision-stage__frame">
-            <DecisionBeam progress={progress} activeIndex={index} total={items.length} />
+            {isStatic ? (
+              <StaticDecisionBeam activeIndex={index} total={items.length} />
+            ) : (
+              <DecisionBeam progress={progress} activeIndex={index} total={items.length} />
+            )}
             <DecisionCopy item={items[index] ?? items[0]} index={index} isStatic={isStatic} />
             <p className="about-decision-stage__counter" aria-hidden="true">
               {String(index + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}

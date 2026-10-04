@@ -129,6 +129,18 @@ describe('/shop — landing editorial y catálogo consultable', () => {
     expect(screen.queryByText('NO ENCONTRAMOS ESA PIEZA.')).not.toBeInTheDocument()
   })
 
+  it('utiliza fichas editoriales sin fotografías ni vídeos incrustados', () => {
+    const { container } = renderShop()
+    const cards = [...container.querySelectorAll('[data-product-id]')]
+    expect(cards).toHaveLength(shopProducts.length)
+    for (const card of cards) {
+      expect(card.querySelector('img, picture, video, canvas')).toBeNull()
+      expect(card.querySelector('.shop-product-visual svg')).not.toBeNull()
+      expect(card).toHaveTextContent(/COP/)
+    }
+    expect(container.querySelector('#shop-catalog')).toHaveTextContent(/disponibilidad.*confirm/i)
+  })
+
   it('añade productos al carrito con su variante y abre el carrito', () => {
     renderShop()
 
