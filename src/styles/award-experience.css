@@ -93,12 +93,12 @@ body.award-mode .ds-frame[data-experience-scope='brand'] > div > :is(section, ar
   isolation: isolate;
 }
 
-body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child) {
+body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child):not(.scroll-film) {
   min-block-size: min(92svh, 72rem);
   padding-block: clamp(7rem, 12vw, 12rem);
 }
 
-body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child)::after {
+body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child):not(.scroll-film)::after {
   content: '';
   position: absolute;
   inset: 0 clamp(1rem, 3vw, 3rem) auto;
@@ -126,7 +126,7 @@ body.award-mode .ds-frame[data-experience-scope='brand'] h2 {
   font-size: clamp(2.8rem, 6.2vw, 7rem);
 }
 
-body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child) :is(h2, .section-title) {
+body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child):not(.scroll-film) :is(h2, .section-title) {
   animation: award-heading-reveal linear both;
   animation-timeline: view();
   animation-range: entry 0% entry 48%;
@@ -186,7 +186,7 @@ body.award-mode .navbar {
 @media (max-width: 70rem) {
   .award-experience__route { display: none; }
   .award-experience__meter { bottom: 0.9rem; }
-  body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child) {
+  body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child):not(.scroll-film) {
     min-block-size: auto;
     padding-block: clamp(5rem, 15vw, 8rem);
   }

@@ -21,6 +21,14 @@ for (const viewport of [
     await expect(firstFrame).toBeAttached()
     await expect(firstFrame).toHaveCSS('mask-image', /linear-gradient/)
     await expect(film).toHaveCSS('background-color', 'rgb(5, 5, 5)')
+    // El sistema global de capítulos no puede dibujar su filete de 1px sobre el cielo.
+    const chapterRule = await film.evaluate((el) => ({
+      content: getComputedStyle(el, '::after').content,
+      height: getComputedStyle(el, '::after').height,
+    }))
+    expect(chapterRule.content, `no debe existir la línea superior (${chapterRule.height})`).toBe('none')
+    await expect(film).toHaveCSS('padding-top', '0px')
+    await expect(film).toHaveCSS('padding-bottom', '0px')
     await expect(film.locator('.scroll-film__calm')).toHaveText('MODO CALMA')
 
     const top = await film.evaluate((element) => element.getBoundingClientRect().top + window.scrollY)
@@ -31,3 +39,18 @@ for (const viewport of [
     })
   })
 }
+
+test('Modo calma mantiene el cielo integrado sin filetes decorativos', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await page.goto('/', { waitUntil: 'domcontentloaded' })
+  const film = page.locator('[data-scroll-story="home-intro"]')
+  const filmY = await film.evaluate(el => el.getBoundingClientRect().top + window.scrollY)
+  await page.evaluate(y => window.scrollTo(0, y + 100), filmY)
+  await page.locator('.scroll-film__calm').click()
+  await expect(film).toHaveClass(/scroll-film--static/)
+  await expect(film.locator('.scroll-film__static-frame')).toHaveCount(3)
+  await expect(film.locator('.scroll-film__static-frame img').first()).toHaveCSS('mask-image', /linear-gradient/)
+  const lineContent = await film.evaluate(el => getComputedStyle(el, '::after').content)
+  expect(lineContent).toBe('none')
+})

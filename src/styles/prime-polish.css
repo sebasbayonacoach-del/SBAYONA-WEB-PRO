@@ -235,12 +235,12 @@ body.award-mode .companion {
 }
 
 /* Ritmo: cada sección es un capítulo, no una pantalla completa obligatoria. */
-body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child) {
+body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child):not(.scroll-film) {
   min-block-size: 0 !important;
   padding-block: var(--prime-section-space) !important;
 }
 
-body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child)::after {
+body.award-mode .ds-frame[data-experience-scope='brand'] section:not(:first-child):not(.scroll-film)::after {
   opacity: .22;
   inset-inline: var(--prime-gutter);
 }

@@ -19,3 +19,18 @@ Fecha: 2026-10-04. Rama de trabajo: bayona-prime/hero-sky-dissolve-20261004.
 **Hallazgos posteriores:** sin P0/P1/P2 en el área de unión examinada; no supone auditoría completa de la portada ni de otras rutas.
 
 **Verificación visual:** Playwright `e2e/home-sky-seam.spec.js` pasó 3/3 con las resoluciones anteriores, tras reproducir un fallo inicial en tablet antes del cambio. Se mantienen accesibles las capturas para comparar. El build y la batería general se verifican por separado.
+
+## Auditoría adicional: corrección de la causa raíz
+La captura posterior del usuario mostró un filete visible pese a la máscara de la imagen. La primera evaluación no había aislado las decoraciones globales, por lo que la conclusión anterior no era suficiente.
+
+**Causa 1:** `award-experience.css`, regla `section:not(:first-child)::after`, dibujaba un filete naranja de 1px encima de `ScrollFilm`. La regla correspondiente de `prime-polish.css` también lo trataba como capítulo ordinario.
+
+**Causa 2:** las reglas de `section:not(:first-child)` añadían padding superior e inferior al capítulo sticky, separando 92 px la primera imagen del hero en la captura de 728×415.
+
+**Arreglo:** excluir `.scroll-film` de las seis reglas globales implicadas en `award-experience.css` y `prime-polish.css`, sin desactivar la decoración de los demás capítulos ni colocar superposiciones adicionales.
+
+**Regresión roja antes del arreglo:** Playwright devolvió `Expected: none; Received: "\"\""` para `::after` con altura de 1px.
+
+**Regresión verde después:** cuatro pruebas Playwright correctas (390, 686, 1440 px y modo calma). Comprobación separada con navegador a 728×415 y scroll Y=466: borde inferior del hero y borde superior del film ambos a 142,83 px; `paddingTop=paddingBottom=0px`; `::after.content=none`; `scroll-film__sticky.top=142,83px`. Nueva captura local: `/tmp/bayona-seam-728x415-after.png`.
+
+**Verificaciones completas:** npm run build exit 0; npm test: 111 suites, 780 correctas, 1 omitida, ninguna fallida; npm run lint exit 0, 0 errores, 823 advertencias preexistentes; git diff --check exit 0. Producción no modificada.
