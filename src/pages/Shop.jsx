@@ -509,7 +509,7 @@ export default function Shop() {
         <div className="shop-hero-content">
           <div id="shop-hero-title"><HeroTitle /></div>
           <motion.p
-            initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+            initial={reducedMotion ? false : { y: 8 }}
             animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.56, delay: reducedMotion ? 0 : 0.14 }}
           >
@@ -517,7 +517,7 @@ export default function Shop() {
           </motion.p>
           <motion.div
             className="shop-hero-concierge"
-            initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+            initial={reducedMotion ? false : { y: 9 }}
             animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.58, delay: reducedMotion ? 0 : 0.22 }}
             aria-label="Resumen de compra guiada BAYONA"
@@ -545,7 +545,7 @@ export default function Shop() {
           <motion.a
             className="shop-scroll-indicator"
             href="#shop-collections"
-            initial={reducedMotion ? false : { opacity: 0 }}
+            initial={reducedMotion ? false : { opacity: 0.74 }}
             animate={reducedMotion ? undefined : { opacity: 1 }}
             transition={{ duration: 0.5, delay: reducedMotion ? 0 : 0.32 }}
           >
@@ -643,27 +643,9 @@ export default function Shop() {
         )}
       </aside>
 
-      <motion.section 
-        className="shop-feature" 
+      <section
+        className="shop-feature"
         aria-labelledby="shop-feature-title"
-        initial={reducedMotion ? false : { opacity: 0 }}
-        whileInView={reducedMotion ? undefined : { opacity: 1 }}
-        viewport={{ 
-          once: true, 
-          margin: '-100px',
-          amount: 0.3 
-        }}
-        transition={{ 
-          duration: 0.8, 
-          ease: motionTokens.ease.entrance 
-        }}
-        onViewportEnter={(entry) => {
-          // Eliminar aria-hidden que Framer Motion aplica automáticamente
-          if (entry?.target) {
-            entry.target.removeAttribute('aria-hidden')
-            entry.target.removeAttribute('data-aria-hidden')
-          }
-        }}
       >
         <FeatureVisual product={featuredProduct} reducedMotion={reducedMotion} />
         <motion.div
@@ -698,7 +680,7 @@ export default function Shop() {
           </div>
           <small className="shop-feature-note">La pieza que marca el inicio.</small>
         </motion.div>
-      </motion.section>
+      </section>
 
       <section id="shop-catalog" className="shop-catalog section-shell" aria-labelledby="shop-catalog-title">
         <header className="shop-catalog-intro ds-reveal ds-reveal--mask">

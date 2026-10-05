@@ -393,7 +393,9 @@ export default function Programs() {
         title="ENTRENAMIENTO CON DIRECCIÓN CLARA."
         kicker="BAYONA • PROGRAMAS DE ENTRENAMIENTO"
         media={siteMedia.programs.hero}
-        scene={{ variant: 'showroom', particles: true, postProcessing: true }}
+        scene={compactMobile || reducedMotion
+          ? undefined
+          : { variant: 'showroom', particles: true, postProcessing: true }}
       >
         <p>Todos empiezan igual: evaluamos tu punto de partida, planificamos y revisamos. Lo que cambia es cuánto acompañamiento en vivo necesitas y con qué frecuencia quieres feedback.</p>
         <button className="text-button hero-cta" onClick={scrollToVisualization}>

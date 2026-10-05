@@ -21,9 +21,29 @@ import { resolveTranslationOffer, translatedUrl } from '../lib/i18n/visitorLocal
 import { trackEvent } from '../lib/analytics/analytics.js'
 import '../styles/translate-offer.css'
 
+const TRANSLATE_DISMISSED_KEY = 'bayona.translate-offer.dismissed'
+
+function wasTranslationDismissed() {
+  if (typeof window === 'undefined') return false
+  try {
+    return window.sessionStorage.getItem(TRANSLATE_DISMISSED_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
+function rememberTranslationDismissal() {
+  if (typeof window === 'undefined') return
+  try {
+    window.sessionStorage.setItem(TRANSLATE_DISMISSED_KEY, '1')
+  } catch {
+    // La oferta puede cerrarse igualmente si el navegador bloquea storage.
+  }
+}
+
 export default function TranslateOffer() {
   const [offer, setOffer] = useState(null)
-  const [dismissed, setDismissed] = useState(false)
+  const [dismissed, setDismissed] = useState(wasTranslationDismissed)
 
   /**
    * Se resuelve tras el montaje: `navigator.languages` no existe durante el
@@ -59,6 +79,7 @@ export default function TranslateOffer() {
         className="translate-offer-close"
         onClick={() => {
           setDismissed(true)
+          rememberTranslationDismissal()
           trackEvent('translate_dismiss', { language: offer.code })
         }}
         aria-label="Dismiss"
