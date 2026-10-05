@@ -9,15 +9,37 @@
 - Microetiquetas: `--type-family-mono`, mayúsculas, tracking hasta .16em solo en numeración/telemetría.
 - La identidad se construye con **silencio visual, instrumentación y trayectoria**, no con marcos grises repetidos ni decoración gratuita.
 
-## Escenas después de VisionShift
-1. **Punto de partida:** cuatro estaciones vectoriales de observación, avance lineal; no candados ni sensación artificial de bloqueo.
-2. **Comunidad:** interfaz original estilo terminal premium, preguntas/respuestas legibles en panel equilibrado, etiquetado como *conversación ilustrativa*. La salud no se diagnostica por chat.
-3. **El método:** vuelo orbital en tres estaciones `LEER → DISEÑAR → AJUSTAR`, cámara a través de profundidad y señalización verdaderamente secuencial.
-4. **Claridad:** estímulos comerciales ficticios se desprenden y aparece un sistema con tres hitos de lectura; el usuario recorre claridad, no saturación.
-5. **Experiencias:** personas/fotografías publicadas conservadas; retrato oscurecido para legibilidad, fotogramas siguientes se deslizan horizontalmente.
-6. **Kit gratuito:** el `RETO 30 DÍAS` abre una sala de proyección conceptual y paso visible hacia `/resources`, sin fingir que un vídeo está reproduciéndose.
-7. **Membresías 05:** entrada cinematográfica oscura con líneas de velocidad y objeto tipo pedestal de feria tecnológica; después mantiene el explorador y precios reales.
-8. **06 y cierre:** animaciones de llegada solo en cabeceras secundarias; las interacciones, precios, checkout y texto legal permanecen funcionales.
+## Recorrido editorial aprobado — 2026-10-05
+
+La home es una secuencia fotográfica, con objetos tangibles y transiciones que
+conectan el relato. Los títulos hablan de posibilidades y del proceso, no de
+resultados garantizados. Los precios y las prestaciones mantienen su fuente en
+`src/config/offerings.js`.
+
+1. **Visión:** dispositivos con una fotografía protagonista y cuerpo de texto visible.
+2. **Punto de partida:** la introducción y las cuatro situaciones tienen fondo fotográfico.
+3. **Comunidad:** cinco mensajes dentro de un móvil original. Al terminar, el scroll
+   amplía el dispositivo y funde su pantalla con la fotografía que abre el método.
+4. **Método:** entender, diseñar y acompañar; tres capítulos con fotografía y lectura clara.
+5. **Proceso:** cuaderno editorial completo, numeración correcta y límites de evidencia visibles.
+6. **Biblioteca:** tres recursos educativos y un dossier reales, descargables sin registro,
+   con portadas físicas; en móvil se apilan para mantener accesibles las descargas.
+7. **Acompañamiento:** cuatro niveles comparables, vídeos locales con controles y
+   folletos descargables. Se invita a explorar sin bloquear la elección.
+8. **Configuración:** decisiones separadas y un resumen cuyo precio siempre se lee completo.
+9. **Cierre:** dos preguntas locales para ordenar el punto de partida y abrir un dossier.
+   No se pide contacto, no se guardan respuestas, y existe descarga directa alternativa.
+   Se retira el segundo cierre repetido de `NextChapter` solo en la home.
+
+## Tipografía del recorrido
+
+`src/styles/home-master-journey.css` es el adaptador de Home sobre las familias
+canónicas `--type-family-display`, `--type-family-body` y `--type-family-mono`:
+Montserrat para títulos, Inter para lectura, DM Mono para etiquetas.
+Tres niveles: `--journey-display` (36–72 px según ancho), `--journey-body` (18 px),
+`--journey-label` (12 px). Los documentos físicos conservan una escala interna
+para que su contenido completo quepa en la portada; los importes se adaptan al
+espacio sin partir cifras ni divisa. Ningún párrafo largo se usa como etiqueta mono.
 
 ## Política de movimiento
 - Usar el motor StickyStage y Framer Motion ya existentes. No añadir GSAP en paralelo a StickyStage: el *pin* doble puede romper mediciones y generar jumps.

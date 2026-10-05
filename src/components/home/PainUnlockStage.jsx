@@ -1,3 +1,4 @@
+import NarrativeIntro from './NarrativeIntro.jsx'
 import { motion } from 'framer-motion'
 import { Activity, ArrowUpRight, Crosshair, Route, Target } from 'lucide-react'
 import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
@@ -60,11 +61,7 @@ export default function PainUnlockStage({ block }) {
 
   return (
     <div className="pain-unlock">
-      <header className="pain-unlock-intro">
-        <p>01 / ¿TE RECONOCES AQUÍ?</p>
-        <h2 id="transformation-heading">{block.heading}</h2>
-        <span>{block.body}</span>
-      </header>
+      <NarrativeIntro className="pain-unlock-intro" image="/images/bayona-generated/home-problem-no-time-1600.webp" label="01 / TU PUNTO DE PARTIDA" id="transformation-heading" title={block.heading} body={block.body} />
 
       <ol className="sr-only" aria-label="Situaciones que puedes transformar">
         {items.map((item) => (
@@ -80,7 +77,7 @@ export default function PainUnlockStage({ block }) {
         states={items.length}
         topOffset={66}
         allowMobile
-        className="pain-unlock-stage"
+        className="pain-unlock-stage photo-story-stage"
       >
         {({ index, isStatic }) => {
           const active = items[index] ?? items[0]
@@ -88,6 +85,7 @@ export default function PainUnlockStage({ block }) {
           return (
             <div className="pain-unlock-viewport">
               <div className="pain-unlock-visual">
+                <img className="photo-story-background" src={`/images/bayona-generated/${['home-problem-no-time', 'home-problem-fatigue', 'home-problem-no-results', 'home-problem-body-signals'][index] ?? 'home-problem-no-time'}-1600.webp`} alt="" width="1600" height="900" loading="lazy" decoding="async" />
                 <p className="pain-unlock-visual__caption">CUATRO PUNTOS DE PARTIDA / UNA DIRECCIÓN</p>
                 <ProgressRail items={items} activeIndex={index} />
                 <div className="pain-navigation-caption" aria-hidden="true"><span>IDENTIFICAR</span><ArrowUpRight size={15} /><span>AVANZAR</span></div>

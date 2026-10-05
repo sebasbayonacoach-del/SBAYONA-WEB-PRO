@@ -21,6 +21,7 @@ import ArrivalBonusCard from './components/rewards/ArrivalBonusCard.jsx'
 import GuideCompanion from './components/companion/GuideCompanion.jsx'
 import NextChapter from './components/NextChapter.jsx'
 import Breadcrumb from './components/navigation/Breadcrumb.jsx'
+import PreviewIntentExperience from './components/navigation/PreviewIntentExperience.jsx'
 import TranslateOffer from './components/TranslateOffer.jsx'
 import ShareInvite from './components/ShareInvite.jsx'
 import UniverseScaleBadge from './components/scale/UniverseScaleBadge.jsx'
@@ -238,6 +239,7 @@ function Site() {
       */}
       <MotionDebug />
       <CustomCursor />
+      <PreviewIntentExperience />
       <Navbar />
       <PageTransition>
         {/*

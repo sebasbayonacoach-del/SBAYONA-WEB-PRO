@@ -1,0 +1,413 @@
+/* Chapters 05–08 continue the photographic language of the opening. */
+body.premium-route--home {
+  --luxury-ink: #101310;
+  --luxury-surface: #191d18;
+  --luxury-white: #f7f7f3;
+  --luxury-muted: #c8cbc4;
+  --luxury-rule: rgba(247,247,243,.2);
+}
+
+body.premium-route--home :is(.home-memberships-section, .home-services-configurator) {
+  background: var(--luxury-ink) !important;
+  color: var(--luxury-white);
+  padding-block: 0 clamp(4rem, 8vw, 8rem) !important;
+}
+body.premium-route--home .home-memberships-section :is(.offer-bg-number, .home-vertical-word) { display: none; }
+body.premium-route--home .home-memberships-section::before,
+body.premium-route--home .home-memberships-section::after { display: none; }
+body.premium-route--home .home-memberships-section .home-offer-shell { padding-top: 0 !important; border: 0; }
+
+body.premium-route--home .luxury-chapter {
+  position: relative;
+  isolation: isolate;
+  width: 100vw !important;
+  max-width: none !important;
+  grid-column: 1 / -1;
+  flex-shrink: 0;
+  margin-inline: calc(50% - 50vw) !important;
+  min-height: clamp(640px, 86svh, 920px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--luxury-ink);
+  color: var(--luxury-white);
+}
+body.premium-route--home .luxury-chapter-photo {
+  position: absolute;
+  inset: -6%;
+  z-index: -3;
+  pointer-events: none;
+  max-width: none !important;
+}
+body.premium-route--home .luxury-chapter-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+body.premium-route--home .luxury-chapter-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(8,12,9,.94), rgba(8,12,9,.74) 35%, rgba(8,12,9,.12) 75%), linear-gradient(0deg, rgba(8,12,9,.3), transparent 50%);
+}
+body.premium-route--home .luxury-chapter-content {
+  width: min(1380px, 88%);
+  margin-inline: auto;
+  padding-block: clamp(3rem, 6vw, 6rem);
+}
+body.premium-route--home .luxury-chapter :is(.section-label, .eyebrow) {
+  justify-content: flex-start;
+  margin: 0 0 1.5rem;
+  color: #f4b078 !important;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-align: left;
+}
+body.premium-route--home .luxury-chapter .eyebrow::before { display: none; }
+body.premium-route--home .home-memberships-section .home-offer-heading-layout {
+  display: block !important;
+  width: min(52%, 650px);
+  margin: 0 !important;
+  animation: none !important;
+  translate: none !important;
+  filter: none !important;
+}
+body.premium-route--home .home-memberships-section #home-offer-heading,
+body.premium-route--home .luxury-configurator-intro h2 {
+  max-width: 17ch !important;
+  margin: 0 !important;
+  color: var(--luxury-white) !important;
+  -webkit-text-fill-color: var(--luxury-white) !important;
+  font-size: clamp(2.6rem, 4.6vw, 5.1rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -.045em;
+  font-weight: 700;
+  text-align: left !important;
+  text-wrap: balance;
+}
+body.premium-route--home .luxury-configurator-intro h2 { max-width: 14ch !important; }
+body.premium-route--home .luxury-configurator-intro h2 span { color: #f4b078; -webkit-text-fill-color: #f4b078; }
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro {
+  margin: 1.5rem 0 0 !important;
+  max-width: 43ch;
+  color: #e3e6de !important;
+  -webkit-text-fill-color: #e3e6de !important;
+  font-size: clamp(1rem, 1.3vw, 1.18rem) !important;
+  line-height: 1.65 !important;
+  text-align: left !important;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .home-offer-clarifier {
+  margin-top: 1.5rem !important;
+  padding: 0 0 0 1rem;
+  border-left-color: #f4b078;
+  color: var(--luxury-muted) !important;
+  -webkit-text-fill-color: var(--luxury-muted) !important;
+  font-size: .9rem;
+}
+body.premium-route--home .luxury-chapter-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 22%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f4b078, transparent);
+  pointer-events: none;
+}
+
+/* One active membership suite; the photography occupies its full right side. */
+body.premium-route--home .home-plan-interactions { padding-top: clamp(2.5rem, 5vw, 5rem); }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom { display: block !important; }
+body.premium-route--home .home-memberships-section .plan-showroom-selector {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+  gap: 0 !important;
+  border-top: 1px solid var(--luxury-rule);
+  border-bottom: 1px solid var(--luxury-rule);
+  position: relative !important;
+  top: auto !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none;
+}
+body.premium-route--home .home-memberships-section .plan-comparison-item { min-width: 0; width: auto; border: 0; background: transparent; }
+body.premium-route--home .home-memberships-section .plan-showroom-tab {
+  min-height: 130px;
+  height: 100%;
+  padding: 1.5rem;
+  border: 0;
+  border-right: 1px solid var(--luxury-rule);
+  color: var(--luxury-white);
+  background: transparent;
+  transition: background-color .35s ease, color .35s ease;
+}
+body.premium-route--home .home-memberships-section .plan-showroom-tab[aria-pressed='true'] { background: var(--luxury-surface); box-shadow: inset 0 -2px #f4b078; }
+body.premium-route--home .home-memberships-section .plan-showroom-tab-copy strong { color: var(--luxury-white); font-size: clamp(1.1rem,1.7vw,1.65rem); }
+body.premium-route--home .home-memberships-section .plan-showroom-tab-copy small { color: var(--luxury-muted); line-height: 1.4; }
+body.premium-route--home .home-memberships-section .plan-showroom-preview {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important;
+  border: 0;
+  background: #141812 !important;
+  box-shadow: none;
+  margin-top: 2rem;
+  animation: none;
+  transform: none;
+}
+body.premium-route--home .home-memberships-section .plan-showroom-primary { padding: clamp(1.5rem, 3.5vw, 3.5rem); }
+body.premium-route--home .home-memberships-section .plan-canonical-name { color: var(--luxury-white) !important; font-size: clamp(3rem, 5vw, 5.5rem); }
+body.premium-route--home .home-memberships-section .plan-descriptor { color: #f4b078 !important; font-size: clamp(1.1rem,1.6vw,1.5rem); }
+body.premium-route--home .home-memberships-section :is(.plan-summary-scope, .plan-summary-value, .plan-summary-jtbd p) { color: #e3e6de !important; line-height: 1.65; }
+body.premium-route--home .home-memberships-section .plan-showroom-meta { margin-bottom: 2rem; gap: 1rem; }
+body.premium-route--home .home-memberships-section .plan-showroom-price { margin-top: 2rem; }
+body.premium-route--home .home-memberships-section .plan-price { font-size: clamp(2.5rem,4.1vw,4.6rem) !important; line-height: 1 !important; }
+body.premium-route--home .home-memberships-section .plan-showroom-signature {
+  grid-column: auto;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 760px;
+  justify-content: flex-end;
+  margin: 0;
+  padding: clamp(1.5rem,3.5vw,3.5rem);
+}
+body.premium-route--home .home-memberships-section .plan-showroom-visual {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  min-height: 0;
+  padding: 0;
+  background-image: linear-gradient(180deg, rgba(10,13,10,.02), rgba(10,13,10,.35) 28%, rgba(10,13,10,.95) 65%), var(--plan-showroom-image);
+  background-size: cover;
+  background-position: center;
+}
+body.premium-route--home .home-memberships-section .plan-showroom-visual::after,
+body.premium-route--home .home-memberships-section .plan-showroom-visual > span,
+body.premium-route--home .home-memberships-section .plan-showroom-watermark { display: none; }
+body.premium-route--home .home-memberships-section .plan-showroom-facts > div { padding-block: .8rem; border-bottom: 1px solid var(--luxury-rule); }
+body.premium-route--home .home-memberships-section .plan-showroom-facts dt { color: var(--luxury-muted); }
+body.premium-route--home .home-memberships-section .plan-showroom-facts dd { color: var(--luxury-white); font-size: 1rem; line-height: 1.5; }
+body.premium-route--home .home-memberships-section .plan-showroom-inclusions { margin-top: 1.5rem; }
+body.premium-route--home .home-memberships-section .plan-details-panel { background: var(--luxury-ink); }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-preview :is(.plan-summary-scope, .plan-summary-value, .plan-showroom-signature-label, .plan-showroom-facts, .plan-showroom-inclusions, .plan-disclosure-button) { display: block !important; }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-preview .plan-presentation-link {
+  display: flex !important;
+  min-height: 52px;
+  width: 100%;
+  gap: 1rem;
+  padding: .8rem 1rem;
+  border: 1px solid var(--luxury-rule);
+  color: var(--luxury-white);
+}
+body.premium-route--home .home-memberships-section .plan-card-actions { grid-template-columns: minmax(0,1fr); }
+
+/* Configurator: a clear sequence, tactile choices and a quiet sticky total. */
+body.premium-route--home .home-services-configurator .home-configurator-guide {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 2rem;
+  margin: clamp(2rem,5vw,4rem) 0;
+  padding: 0;
+}
+body.premium-route--home .home-services-configurator .home-configurator-guide li {
+  display: block;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--luxury-rule) !important;
+}
+body.premium-route--home .home-services-configurator .home-configurator-guide li span { display: block; margin-bottom: 1.25rem; }
+body.premium-route--home .home-services-configurator .home-configurator-guide li strong { display: block; margin-bottom: .75rem; }
+body.premium-route--home .home-services-configurator .home-configurator-guide li p { color: var(--luxury-muted) !important; line-height: 1.6; }
+body.premium-route--home .home-services-configurator .extras-configurator { gap: clamp(2rem,4vw,4rem); }
+body.premium-route--home .home-services-configurator .extras-plan-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; border: 0; }
+body.premium-route--home .home-services-configurator .extras-plan-options label {
+  min-height: 116px;
+  padding: 1.25rem !important;
+  border: 1px solid var(--luxury-rule) !important;
+  background: var(--luxury-surface) !important;
+  transition: transform .3s ease, border-color .3s ease, background-color .3s ease;
+}
+body.premium-route--home .home-services-configurator .extras-plan-options label.is-selected { border-color: #f4b078 !important; background: #272c22 !important; }
+body.premium-route--home .home-services-configurator .extras-plan-options input { accent-color: #f4b078; width: 18px; height: 18px; flex-shrink: 0; }
+body.premium-route--home .home-services-configurator .extras-plan-options label strong { font-size: 1.25rem; letter-spacing: .025em; }
+body.premium-route--home .home-services-configurator .extras-plan-options label small { display: block; margin-top: .4rem; font-size: .8rem; color: var(--luxury-muted) !important; }
+body.premium-route--home .home-services-configurator .extras-category-navigation button { min-height: 48px; font-size: .85rem; }
+body.premium-route--home .home-services-configurator .extras-service-item { padding: 1.5rem 0; }
+body.premium-route--home .home-services-configurator .extras-service-heading { gap: 1.5rem; }
+body.premium-route--home .home-services-configurator .persistent-summary {
+  padding: 2rem;
+  border: 1px solid var(--luxury-rule) !important;
+  background: var(--luxury-surface);
+  box-shadow: none;
+}
+body.premium-route--home .home-services-configurator .persistent-summary h3 { font-size: clamp(1.8rem,2.2vw,2.5rem); }
+body.premium-route--home .home-services-configurator .persistent-summary-cop { font-size: clamp(1.8rem,2.6vw,3rem) !important; line-height: 1.25; }
+body.premium-route--home .home-services-configurator .request-preview {
+  margin-top: 3rem;
+  padding: clamp(1.5rem,3vw,3rem);
+  border: 1px solid var(--luxury-rule);
+  background: #191d18;
+}
+body.premium-route--home .home-services-configurator .request-preview h3 { max-width: 23ch; line-height: 1.1; }
+body.premium-route--home .home-services-configurator .request-preview-heading > p:last-child { max-width: 66ch; color: var(--luxury-muted); line-height: 1.6; }
+body.premium-route--home .home-services-configurator .request-preview-review { min-height: 52px; padding: 1rem 1.5rem; color: #101310; background: #f4b078; border: 1px solid #f4b078; }
+body.premium-route--home .home-services-configurator .request-preview-actions { justify-content: flex-start; }
+
+/* Closing chapter and footer form one considered ending. */
+body.premium-route--home .home-about-bridge { padding: 0 !important; background: var(--luxury-ink) !important; }
+body.premium-route--home .home-about-bridge::before,
+body.premium-route--home .home-about-bridge::after { display: none; }
+body.premium-route--home .home-about-bridge .luxury-closing { min-height: 920px; margin-inline: 0; width: 100%; }
+body.premium-route--home .home-about-bridge .luxury-closing .bayona-final-visual { inset: -6%; z-index: -3; }
+body.premium-route--home .home-about-bridge .luxury-closing .bayona-final-visual::after { display: none; }
+body.premium-route--home .home-about-bridge .luxury-closing .bayona-final-visual img { opacity: 1; filter: none; object-position: center; }
+body.premium-route--home .luxury-closing .luxury-chapter-content { width: 100%; }
+body.premium-route--home .home-about-bridge .final-curtain { padding: 0; width: min(1380px,88%); }
+body.premium-route--home .home-about-bridge .bayona-final-narrative { max-width: 650px; }
+body.premium-route--home .home-about-bridge h2 { max-width: 15ch !important; font-size: clamp(2.75rem,5vw,5.6rem) !important; line-height: 1.03 !important; font-weight: 700; }
+body.premium-route--home .home-about-bridge .bayona-final-narrative #home-about-bridge-title {
+  font-size: clamp(2.4rem,3.6vw,3.75rem) !important;
+  max-width: 25ch !important;
+  line-height: 1.1 !important;
+  margin: 0 !important;
+}
+body.premium-route--home .home-about-bridge #home-about-bridge-title span { font-size: inherit !important; line-height: inherit !important; }
+body.premium-route--home .home-about-bridge .offer-intro { max-width: 42ch !important; }
+body.premium-route--home .home-about-bridge .final-doors { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 2.5rem; }
+body.premium-route--home .home-about-bridge .final-doors a { min-height: 52px; font-size: 1rem; gap: 1.5rem; }
+body.premium-route--home .home-about-bridge .final-doors > div { width: auto; flex: 0 1 auto; }
+body.premium-route--home .home-about-bridge .final-doors a { padding: .8rem 1.2rem; border: 1px solid var(--luxury-rule); }
+body.premium-route--home .home-about-bridge .final-seal { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--luxury-rule); }
+body.premium-route--home .home-about-bridge .final-mark { font-size: clamp(3.2rem,8vw,7rem); line-height: 1; letter-spacing: .06em; }
+body.premium-route--home .home-about-bridge .final-seal .final-mark { margin: 0; font-size: clamp(3rem,5vw,5rem); color: var(--luxury-white); opacity: 1; }
+body.premium-route--home .home-about-bridge .final-tagline { color: var(--luxury-muted); margin-top: 1rem; }
+body.premium-route--home .home-disclaimer { margin: 0; background: var(--luxury-ink); }
+body.premium-route--home .footer { background: var(--luxury-ink); border-top: 1px solid var(--luxury-rule); padding-top: clamp(3rem,6vw,6rem); }
+body.premium-route--home .footer-top { align-items: end; padding-bottom: 2.5rem; }
+body.premium-route--home .footer-mark { font-size: clamp(3.5rem,9vw,9rem); letter-spacing: .035em; line-height: 1; }
+body.premium-route--home .footer-column a { min-height: 36px; color: var(--luxury-muted); }
+body.premium-route--home .footer-column a:is(:hover,:focus-visible) { color: #f4b078; }
+body.premium-route--home :is(.plan-showroom-tab, .extras-plan-options label, .final-doors a):focus-within { outline: 2px solid #f4b078; outline-offset: 4px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  body.premium-route--home .luxury-chapter-line { animation: luxury-line-pass 7s ease-in-out infinite; }
+  body.premium-route--home .home-configurator-guide li.is-visible { animation: luxury-step-arrive .7s cubic-bezier(.16,1,.3,1) both; }
+  body.premium-route--home .home-configurator-guide li:nth-child(2) { animation-delay: .1s; }
+  body.premium-route--home .home-configurator-guide li:nth-child(3) { animation-delay: .2s; }
+  body.premium-route--home .home-services-configurator .extras-plan-options label:hover { transform: translateY(-3px); }
+  body.premium-route--home .home-about-bridge .final-doors a svg { transition: transform .45s cubic-bezier(.16,1,.3,1); }
+  body.premium-route--home .home-about-bridge .final-doors a:hover svg { transform: translate(6px,-3px); }
+}
+@keyframes luxury-line-pass { 0%,100% { transform: translateX(-100%); opacity: 0; } 15%,80% { opacity: .8; } 90% { transform: translateX(460%); opacity: 0; } }
+@keyframes luxury-step-arrive { from { opacity: .55; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 980px) {
+  body.premium-route--home .home-memberships-section .plan-showroom-selector { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  body.premium-route--home .home-memberships-section .plan-showroom-preview { grid-template-columns: minmax(0,1fr) !important; }
+  body.premium-route--home .home-memberships-section .plan-showroom-signature { min-height: 580px; grid-row: 1; }
+  body.premium-route--home .home-memberships-section .plan-showroom-primary { grid-row: 2; }
+  body.premium-route--home .home-services-configurator .extras-configurator { grid-template-columns: minmax(0,1fr); }
+  body.premium-route--home .home-services-configurator .persistent-summary { position: relative; top: auto; }
+}
+@media (max-width: 760px) {
+  body.premium-route--home .luxury-chapter { align-items: flex-end; min-height: 780px; }
+  body.premium-route--home .luxury-chapter-content { padding-block: 3rem; }
+  body.premium-route--home .luxury-chapter-photo img { object-position: 65% center; }
+  body.premium-route--home .luxury-chapter-shade { background: linear-gradient(180deg, rgba(8,12,9,.04), rgba(8,12,9,.35) 25%, rgba(8,12,9,.88) 48%, rgba(8,12,9,.96)); }
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout { width: 100%; }
+  body.premium-route--home .home-memberships-section #home-offer-heading,
+  body.premium-route--home .luxury-configurator-intro h2 { max-width: 16ch !important; font-size: clamp(2rem,7.7vw,3.4rem) !important; }
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro { font-size: 1rem !important; }
+  body.premium-route--home .luxury-configurator-intro { min-height: 640px; }
+  body.premium-route--home .home-memberships-section .plan-showroom-tab { padding: 1.1rem; min-height: 140px; }
+  body.premium-route--home .home-memberships-section .plan-showroom-tab-price { font-size: .9rem; }
+  body.premium-route--home .home-memberships-section .plan-showroom-tab em { font-size: .55rem; }
+  body.premium-route--home .home-memberships-section .plan-showroom-signature { min-height: 650px; }
+  body.premium-route--home .home-memberships-section .plan-card-actions { grid-template-columns: minmax(0,1fr); }
+  body.premium-route--home .home-services-configurator .home-configurator-guide { grid-template-columns: minmax(0,1fr) !important; gap: 0; }
+  body.premium-route--home .home-services-configurator .home-configurator-guide li { padding: 1.5rem 0; }
+  body.premium-route--home .home-services-configurator .home-configurator-guide li span { margin-bottom: .5rem; }
+  body.premium-route--home .home-services-configurator .extras-plan-options label { padding: 1rem !important; }
+  body.premium-route--home .home-services-configurator .extras-plan-options label strong { font-size: 1.1rem; }
+  body.premium-route--home .home-services-configurator .extras-plan-options label small { font-size: .73rem; }
+  body.premium-route--home .home-services-configurator .extras-service-heading { grid-template-columns: minmax(0,1fr); gap: .75rem; }
+  body.premium-route--home .home-services-configurator .request-preview-actions { flex-direction: column; align-items: stretch; }
+  body.premium-route--home .home-about-bridge .luxury-closing { min-height: 900px; }
+  body.premium-route--home .home-about-bridge .luxury-closing .bayona-final-visual img { object-position: 50% center; }
+  body.premium-route--home .home-about-bridge .luxury-closing .luxury-chapter-shade { background: linear-gradient(180deg, rgba(8,12,9,.05), rgba(8,12,9,.75) 32%, rgba(8,12,9,.96)); }
+  body.premium-route--home .home-about-bridge h2 { font-size: clamp(2.3rem,8vw,3.5rem) !important; }
+  body.premium-route--home .home-about-bridge .bayona-final-narrative #home-about-bridge-title { font-size: clamp(2rem,7.2vw,3rem) !important; max-width: 20ch !important; }
+  body.premium-route--home .home-about-bridge .final-doors { display: grid; grid-template-columns: minmax(0,1fr); gap: .75rem; }
+  body.premium-route--home .home-about-bridge .final-doors a { justify-content: space-between; width: 100%; font-size: .9rem; }
+  body.premium-route--home .home-about-bridge .final-seal { margin-top: 2.5rem; }
+  body.premium-route--home .footer-top { display: block; }
+  body.premium-route--home .footer-top > p { margin-top: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.premium-route--home .luxury-chapter-photo { transform: none !important; }
+  body.premium-route--home .luxury-chapter-line { animation: none; width: 100%; opacity: .6; }
+  body.premium-route--home :is(.luxury-chapter-content, .home-configurator-guide li, .plan-showroom-preview) { opacity: 1 !important; transform: none !important; animation: none !important; }
+  body.premium-route--home :is(.plan-showroom-tab, .extras-plan-options label, .final-doors a svg) { transition: none; }
+}
+
+/* Resolve legacy paper and compact-card rules within the home suite. */
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-preview {
+  gap: 0 !important;
+  padding: 0 !important;
+  color: var(--luxury-white) !important;
+}
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-preview * {
+  -webkit-text-fill-color: currentColor !important;
+}
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-primary {
+  padding: clamp(1.5rem,3.5vw,3.5rem) !important;
+  max-width: none;
+  align-self: stretch;
+}
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom :is(.plan-canonical-name,.plan-price,.plan-unit,.plan-showroom-facts dd,.plan-showroom-inclusions strong,.plan-showroom-inclusions li,.plan-presentation-copy strong) { color: var(--luxury-white) !important; }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom :is(.plan-showroom-meta,.plan-showroom-facts dt,.plan-showroom-inclusions p,.plan-presentation-copy small) { color: var(--luxury-muted) !important; }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-canonical-name { font-size: clamp(3rem,5vw,5.5rem) !important; line-height: 1 !important; }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-summary-jtbd p { display: block !important; overflow: visible; max-width: 23ch; font-size: clamp(1.5rem,2vw,2rem) !important; line-height: 1.2 !important; }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-signature {
+  display: flex !important;
+  flex-direction: column;
+  position: relative;
+  padding: clamp(1.5rem,3.5vw,3.5rem) !important;
+  margin-top: 0 !important;
+}
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-visual { min-height: 0 !important; }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-card-actions { display: grid !important; grid-template-columns: minmax(0,1fr) !important; gap: 1rem !important; }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-cta { width: 100% !important; min-height: 52px !important; font-size: .85rem !important; }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-presentation-link { font-size: .85rem !important; }
+body.premium-route--home .home-services-configurator .extras-plan-options label input { position: relative; opacity: 1; pointer-events: auto; }
+body.premium-route--home .home-services-configurator .extras-plan-options label > span { grid-template-columns: minmax(0,1fr) !important; gap: .5rem !important; }
+body.premium-route--home .home-services-configurator .home-configurator-guide li p { display: block !important; }
+@media (max-width: 980px) {
+  body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-preview { grid-template-columns: minmax(0,1fr) !important; }
+  body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-primary { grid-row: 2; }
+  body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-signature { grid-row: 1; }
+}
+
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-visual {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  border: 0 !important;
+}
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-signature { justify-content: flex-end !important; }
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-meta span { color: var(--luxury-muted) !important; }
+@media (max-width: 980px) {
+  body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-preview { display: grid !important; }
+}
+
+body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-signature {
+  align-self: stretch !important;
+  min-height: 760px !important;
+  height: auto !important;
+  max-height: none !important;
+}
+@media (max-width: 980px) {
+  body.premium-route--home .home-memberships-section .plan-explorer.plan-showroom .plan-showroom-signature { min-height: 650px !important; }
+}

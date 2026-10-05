@@ -1,61 +1,21 @@
-import { motion, useMotionValue, useTransform } from 'framer-motion'
-import { Rocket } from 'lucide-react'
+import NarrativeIntro from './NarrativeIntro.jsx'
+import { motion } from 'framer-motion'
 import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
 import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
 import '../../styles/immersive-method-stage.css'
 
 const STEP_VERBS = ['LEER', 'DISEÑAR', 'AJUSTAR']
+const METHOD_PHOTOS = ['home-pillar-read', 'home-pillar-build', 'home-method']
 
-const ORBIT_STOPS = [
-  { title: 'ORIGEN', detail: 'LEER', x: '18%', y: '77%' },
-  { title: 'TRAYECTORIA', detail: 'DISEÑAR', x: '55%', y: '46%' },
-  { title: 'SIGUIENTE ÓRBITA', detail: 'AJUSTAR', x: '80%', y: '18%' },
-]
-
-function JourneyScene({ progress, activeIndex, staticMode = false }) {
-  const staticProgress = useMotionValue(activeIndex / 2)
-  const driver = staticMode ? staticProgress : progress
-  const left = useTransform(driver, [0, .5, 1], ['18%', '55%', '80%'])
-  const top = useTransform(driver, [0, .5, 1], ['77%', '46%', '18%'])
-  const rotate = useTransform(driver, [0, .5, 1], [-28, 0, 28])
-  const depth = useTransform(driver, [0, .5, 1], [.92, 1.15, .95])
+function JourneyScene({ activeIndex, staticMode = false }) {
   return (
-    <div className="bayona-voyage" data-flight={activeIndex + 1} aria-hidden="true">
-      <img
-        className="bayona-voyage-photographic-layer"
-        src="/images/burst/sunset-hike-to-the-summit-960.webp"
-        alt=""
-        width="960"
-        height="640"
-        loading="lazy"
-        decoding="async"
-      />
-      <div className="bayona-voyage-sky" />
-      <div className="bayona-voyage-stars">
-        {Array.from({length:24}, (_,i)=><span key={i} style={{'--star':i,left:`${(i*37+11)%96}%`,top:`${(i*29+9)%91}%`}} />)}
-      </div>
-      <svg className="bayona-voyage-route" viewBox="0 0 600 600" preserveAspectRatio="none">
-        <path d="M 105 474 C 176 470 230 310 334 280 S 435 170 480 105" fill="none" stroke="rgba(244,162,97,.23)" strokeWidth="2" strokeDasharray="6 9" />
-        <path d="M 105 474 C 176 470 230 310 334 280 S 435 170 480 105" fill="none" stroke="rgba(244,162,97,.85)" strokeWidth="2" pathLength="100" strokeDasharray={String(((activeIndex+1)/3)*100)+' 100'}/>
-      </svg>
-      {ORBIT_STOPS.map((stop,index)=>(
-        <div className="bayona-voyage-station" style={{left:stop.x,top:stop.y}} data-active={index===activeIndex?'true':undefined} data-past={index<activeIndex?'true':undefined} key={stop.title}>
-          <span className="bayona-voyage-station__ring" />
-          <span className="bayona-voyage-station__label">{String(index+1).padStart(2,'0')} / {stop.detail}</span>
-        </div>
-      ))}
-      {staticMode ? (
-        <div className="bayona-voyage-craft" style={{left:ORBIT_STOPS[activeIndex]?.x,top:ORBIT_STOPS[activeIndex]?.y}}>
-          <Rocket size={34} strokeWidth={1.4} />
-        </div>
-      ) : (
-        <motion.div className="bayona-voyage-craft" style={{left,top,rotate,scale:depth}}>
-          <Rocket size={34} strokeWidth={1.4} />
-          <span className="bayona-voyage-thrust" />
-        </motion.div>
-      )}
-      <span className="bayona-voyage-telemetry">BAYONA / NAVEGACIÓN DE PROGRESO</span>
-    </div>
+    <motion.div className="bayona-method-photograph" aria-hidden="true"
+      key={activeIndex} initial={staticMode ? false : { opacity: .6, scale: 1.035 }}
+      animate={{ opacity: 1, scale: 1 }} transition={{ duration: .85, ease: [.16, 1, .3, 1] }}>
+      <img className="bayona-voyage-photographic-layer"
+        src={`/images/bayona-generated/${METHOD_PHOTOS[activeIndex] ?? METHOD_PHOTOS[0]}-1600.webp`}
+        alt="" width="1600" height="900" loading="lazy" decoding="async" />
+    </motion.div>
   )
 }
 
@@ -105,11 +65,7 @@ export default function ImmersiveMethodStage({ items = [], heading, body }) {
 
   return (
     <div className="immersive-method">
-      <div className="immersive-method-intro">
-        <p className="immersive-method-kicker">02 / EL MÉTODO</p>
-        <h2 id="home-mechanism-heading">{heading}</h2>
-        <p>{body}</p>
-      </div>
+      <NarrativeIntro className="immersive-method-intro" image="/images/bayona-generated/home-method-1600.webp" label="02 / EL MÉTODO" id="home-mechanism-heading" title={heading} body={body} />
 
       <ol className="sr-only" aria-label="Método BAYONA en tres pasos">
         {safeItems.map((step) => (
@@ -125,7 +81,7 @@ export default function ImmersiveMethodStage({ items = [], heading, body }) {
         states={safeItems.length}
         topOffset={66}
         allowMobile
-        className="immersive-method-stage"
+        className="immersive-method-stage photo-story-stage"
       >
         {({ index, progress, isStatic }) => {
           const active = safeItems[index] ?? safeItems[0]

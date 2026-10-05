@@ -26,34 +26,142 @@ body.premium-route--home .bayona-challenge-screen__hero {
 }
 body.premium-route--home .bayona-challenge-screen > :not(.bayona-challenge-screen__hero) {position:relative;z-index:1;}
 
-/* 2. The keynote and pricing use ONE dark architectural setting. Only the
- * product sheets retain light paper surfaces and their original ink colors. */
+/* 2. A deliberate paper chapter gives the eye a rest after the dark journey. */
 body.premium-route--home .home-memberships-section {
-  background:#08090c !important;
-  background-image:radial-gradient(ellipse at 55% 8%,rgba(244,162,97,.11),transparent 54%),linear-gradient(#08090c,#111215 65%,#08090c) !important;
-  color:#f7f7f3;
+  background:#f1ece3 !important;
+  color:#171512;
 }
 body.premium-route--home .home-memberships-section::before,
-body.premium-route--home .home-memberships-section::after {background-color:transparent !important;}
+body.premium-route--home .home-memberships-section::after {opacity:.28;}
 body.premium-route--home .home-memberships-section .home-offer-shell {
-  background:#090a0d !important;
-  color:#f7f7f3;
-  border-top:1px solid rgba(244,162,97,.12);
-  padding-top:clamp(2rem,4vw,5rem) !important;
+  background:transparent !important;
+  color:#171512;
+  border-top:1px solid rgba(23,21,18,.18);
+  padding-top:clamp(3rem,6vw,6rem) !important;
 }
 body.premium-route--home .home-memberships-section .home-offer-heading-layout h2,
 body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro,
 body.premium-route--home .home-memberships-section .home-offer-heading-layout .home-offer-clarifier,
 body.premium-route--home .home-memberships-section .home-vertical-word {
-  color:#f7f7f3 !important;
-  -webkit-text-fill-color:#f7f7f3 !important;
+  color:#171512 !important;
+  -webkit-text-fill-color:#171512 !important;
 }
 body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro,
-body.premium-route--home .home-memberships-section .home-offer-heading-layout .home-offer-clarifier {opacity:.76;}
-body.premium-route--home .home-memberships-section .home-offer-heading-layout {margin:0 0 clamp(1.8rem,3.2vw,3.2rem) !important;min-height:0 !important;}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .home-offer-clarifier {opacity:1;}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout {
+  grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
+  gap:clamp(2rem,5vw,5rem);
+  align-items:end;
+  margin:0 0 clamp(2.5rem,5vw,5rem) !important;
+  min-height:0 !important;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout > div {
+  display:contents;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .eyebrow,
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .section-label {
+  grid-column:1 / -1;
+  color:#9a4f23 !important;
+}
+body.premium-route--home #home-offer-heading {
+  grid-column:1;
+  max-width:12ch !important;
+  margin:0 !important;
+  font-size:clamp(2.8rem,5.2vw,5rem) !important;
+  line-height:.95 !important;
+  text-align:left !important;
+  text-wrap:balance;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro {
+  grid-column:2;
+  max-width:36ch;
+  margin:0 0 .8rem !important;
+  color:#4f483f !important;
+  font-size:clamp(1rem,1.4vw,1.18rem) !important;
+  line-height:1.55 !important;
+  text-align:left !important;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .home-offer-clarifier {
+  grid-column:2;
+  max-width:36ch;
+  margin:0 !important;
+  padding:.8rem 0 .8rem 1rem;
+  border-left:2px solid #a95726;
+  color:#514940 !important;
+  font-size:.88rem;
+  line-height:1.45;
+  text-align:left;
+}
+body.premium-route--home .home-memberships-section .home-vertical-word {display:none;}
 body.premium-route--home .home-memberships-section .plan-explorer {isolation:isolate;}
 body.premium-route--home .home-memberships-section .plan-showroom-preview {
-  box-shadow:0 30px 85px rgba(0,0,0,.35);
+  box-shadow:0 30px 85px rgba(45,35,24,.13);
+}
+@media(max-width:980px){
+  body.premium-route--home .home-memberships-section .plan-showroom-selector {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+@media(max-width:1100px){
+  body.premium-route--home .home-memberships-section .plan-showroom-preview {
+    display:block !important;
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+  body.premium-route--home .home-memberships-section .plan-showroom-signature {
+    width:100%;
+    margin-top:clamp(2rem,5vw,4rem);
+    border-left:0;
+  }
+  body.premium-route--home .home-memberships-section .plan-showroom-visual-title {
+    max-width:14ch;
+    font-size:clamp(2.5rem,6vw,4.5rem) !important;
+    overflow-wrap:normal;
+  }
+}
+@media(max-width:760px){
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout {
+    display:block;
+  }
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout .eyebrow {
+    justify-content:flex-start;
+    text-align:left;
+  }
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout .eyebrow::before {display:none;}
+  body.premium-route--home #home-offer-heading {
+    max-width:14ch !important;
+    margin:.9rem 0 1.2rem !important;
+    font-size:clamp(2.25rem,8.8vw,3.5rem) !important;
+  }
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro {
+    margin-bottom:1rem !important;
+  }
+  body.premium-route--home .home-memberships-section .plan-showroom-selector {
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:.7rem !important;
+    overflow:visible !important;
+  }
+  body.premium-route--home .home-memberships-section .plan-showroom-selector .plan-comparison-item {
+    width:auto !important;
+    min-width:0 !important;
+  }
+}
+
+/* The decision controls need the same legibility as the chapter headline. */
+body.premium-route--home .home-services-configurator .home-configurator-guide li p,
+body.premium-route--home .home-services-configurator .extras-step-heading > span {
+  color:rgba(247,247,243,.72) !important;
+}
+body.premium-route--home .home-services-configurator .extras-plan-options small {
+  color:rgba(247,247,243,.72) !important;
+  font-size:clamp(.68rem,.85vw,.8rem);
+}
+body.premium-route--home .home-services-configurator .extras-category-navigation button {
+  color:#e8e4de !important;
+}
+body.premium-route--home .home-services-configurator .extras-category-navigation button:hover,
+body.premium-route--home .home-services-configurator .extras-category-navigation button:focus-visible {
+  color:#f4a261 !important;
 }
 
 /* 3. Closing words and real horizon photo always render, including on first

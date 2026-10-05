@@ -23,13 +23,6 @@ export default function PersistentSummary({ calculation }) {
       aria-labelledby={headingId}
       aria-live="polite"
       aria-atomic="true"
-      /*
-        El tabIndex es intencionado: este resumen se actualiza solo (aria-live) y
-        quien navega con teclado necesita poder pararse en él para leer su
-        selección y el total antes de enviar la solicitud. Tiene su propio
-        indicador de foco en home.css (.persistent-summary:focus-visible).
-      */
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       data-total-cop={calculation.totalCop}
     >

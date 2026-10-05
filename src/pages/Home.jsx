@@ -4,7 +4,8 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import { Link } from 'react-router-dom'
 import { GoldButton, SectionLabel } from '../components/Layout'
 import BenefitsOrbitStage from '../components/home/BenefitsOrbitStage.jsx'
-import CinematicOfferGate from '../components/home/CinematicOfferGate.jsx'
+import PhotographicChapter from '../components/home/PhotographicChapter.jsx'
+import StartingPointGift from '../components/home/StartingPointGift.jsx'
 import CommunityImmersiveStage from '../components/home/CommunityImmersiveStage.jsx'
 import ExperienceProof from '../components/home/ExperienceProof.jsx'
 import ImmersiveMethodStage from '../components/home/ImmersiveMethodStage.jsx'
@@ -42,6 +43,9 @@ import '../styles/home-art-direction-2026.css'
 import '../styles/bayona-cinematic-system.css'
 import '../styles/bayona-cinematic-motion.css'
 import '../styles/bayona-visual-audit.css'
+import '../styles/home-photographic.css'
+import '../styles/home-luxury-conversion.css'
+import '../styles/home-master-journey.css'
 
 /** Capa WebGL del hero — carga diferida para proteger el LCP (Fase 11.1). */
 const Hero3DLayer = lazy(() => import('../components/home/Hero3DLayer.jsx'))
@@ -196,7 +200,7 @@ function HomePlanExplorer() {
       onPointerMove={handlePlanPointerMove}
       onPointerLeave={resetPlanPreview}
     >
-      <PlanExplorer projections={stableProjections} />
+      <PlanExplorer projections={stableProjections} cinematic />
     </div>
   )
 }
@@ -681,31 +685,29 @@ export default function Home() {
         data-content-block={homeOfferBlock.id}
       >
         <div className="offer-bg-number" aria-hidden="true">05</div>
-        <CinematicOfferGate />
         <div className="section-shell home-offer-shell">
-          <div className="home-section-heading-grid home-offer-heading-layout" data-immersive="clip">
-            <span className="home-vertical-word" aria-hidden="true">MEMBRESÍAS</span>
-            <div>
+          <PhotographicChapter image="/images/bayona-generated/plan-elite-hero-1600.webp" className="luxury-offer-intro">
+            <div className="home-offer-heading-layout">
               <SectionLabel>05 / ELIGE EL ACOMPAÑAMIENTO</SectionLabel>
               <h2 id="home-offer-heading">{homeOfferBlock.heading}</h2>
               <p className="offer-intro">{homeOfferBlock.body}</p>
-              <p className="home-offer-clarifier">
-                Los servicios opcionales se suman después y nunca sustituyen la base.
-              </p>
+              <p className="home-offer-clarifier">Los servicios opcionales se suman después y nunca sustituyen la base.</p>
             </div>
-          </div>
+          </PhotographicChapter>
           <HomePlanExplorer />
         </div>
       </section>
 
       <section className="calculator-section home-services-configurator">
         <div className="section-shell">
-          <SectionLabel>06 / PERSONALIZA SIN CONFUNDIR</SectionLabel>
-          <h2>PRIMERO ELIGE LA BASE.<br /><span>DESPUÉS AÑADES PRECISIÓN.</span></h2>
+          <PhotographicChapter image="/images/bayona-generated/plan-fuerza-hero-1600.webp" className="luxury-configurator-intro">
+            <SectionLabel>06 / PERSONALIZA SIN CONFUNDIR</SectionLabel>
+            <h2>PRIMERO ELIGE LA BASE.<br /><span>DESPUÉS AÑADES PRECISIÓN.</span></h2>
+          </PhotographicChapter>
           <ol className="home-configurator-guide" aria-label="Cómo configurar tu experiencia BAYONA">
             <li><span>01</span><strong>MEMBRESÍA BASE</strong><p>El nivel de acompañamiento que sostiene el proceso.</p></li>
-            <li><span>02</span><strong>EXTRAS OPCIONALES</strong><p>Sesiones y servicios solo si aceleran tu objetivo.</p></li>
-            <li><span>03</span><strong>REVISIÓN FINAL</strong><p>Total y mensaje exacto visibles antes de abrir WhatsApp.</p></li>
+            <li><span>02</span><strong>EXTRAS OPCIONALES</strong><p>Añade solo lo que encaja con tu objetivo.</p></li>
+            <li><span>03</span><strong>REVISIÓN FINAL</strong><p>Revisa tu selección y el mensaje antes de enviarlo.</p></li>
           </ol>
           <HomeExperienceConfigurator />
         </div>
@@ -724,44 +726,14 @@ export default function Home() {
         data-content-stage={homeActionBlock.stage}
         data-content-block={homeActionBlock.id}
       >
-        <div className="bayona-final-visual" aria-hidden="true">
-          <img src="/images/burst/sunset-hike-to-the-summit-960.webp" alt="" width="960" height="640" loading="lazy" decoding="async" />
-          <span className="bayona-final-visual__caption">BAYONA / SIGUIENTE HORIZONTE</span>
-        </div>
-        <div className="section-shell final-curtain" data-immersive="clip">
-          {/*
-            IMMERSIVE LUXURY §52-53 · CIERRE CINEMATOGRÁFICO.
-            No es "compra ahora": es la última página de un libro. Declaración
-            final, sello de marca y las dos puertas, tipográficas, sin cajas.
-          */}
+        <PhotographicChapter image="/images/bayona-generated/home-free-kit-1600.webp" className="luxury-closing journey-gift-closing" visualClassName="bayona-final-visual">
           <div className="bayona-final-narrative">
-            <SectionLabel>07 / CONTINÚA LA HISTORIA</SectionLabel>
-            <h2 id="home-about-bridge-title">
-              {homeActionBlock.heading.split(', ')[0]}, <br />
-              <span>{homeActionBlock.heading.split(', ').slice(1).join(', ')}</span>
-            </h2>
-            <p className="offer-intro">
-              {homeActionBlock.body}
-            </p>
+            <SectionLabel>07 / TU SIGUIENTE PASO</SectionLabel>
+            <h2 id="home-about-bridge-title">Tu próxima semana.<br /><span>Empieza aquí.</span></h2>
           </div>
-
-          <div className="cta-stack final-doors">
-            <div>
-              <Link to="/about" className="cta-primary">CONOCER LA HISTORIA <ArrowUpRight size={18} aria-hidden="true" /></Link>
-            </div>
-            <div>
-              <Link to="/programs" className="cta-secondary">COMPARAR PROGRAMAS <Zap size={18} aria-hidden="true" /></Link>
-            </div>
-          </div>
-
-          <div className="final-seal" aria-hidden="true">
-            <p className="final-mark">BAYONA</p>
-            <p className="final-tagline">WHERE SCIENCE MEETS MOVEMENT.</p>
-          </div>
-        </div>
+          <StartingPointGift />
+        </PhotographicChapter>
       </section>
-
-
 
       <footer className="home-disclaimer" style={{ padding: '1.5rem 0', opacity: 0.62 }}>
         <div className="section-shell">

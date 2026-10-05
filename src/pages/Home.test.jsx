@@ -169,7 +169,7 @@ describe('Home — narrativa premium y contenido crítico', () => {
       'aria-labelledby',
       'transformation-heading',
     )
-    expect(screen.getByRole('link', { name: /CONOCER LA HISTORIA/i })).toHaveAttribute('href', '/about')
+    expect(screen.getByRole('link', { name: /Continuar con mi recorrido/i })).toHaveAttribute('href', '/onboarding')
     expect(screen.getByRole('link', { name: /COMPARAR PROGRAMAS/i })).toHaveAttribute('href', '/programs')
   })
 
@@ -198,7 +198,8 @@ describe('Home — narrativa premium y contenido crítico', () => {
     const footerNote = container.querySelector('.home-disclaimer-note')
     expect(footerNote).not.toHaveTextContent(/marco no médico/i)
     expect(footerNote).toHaveTextContent(/Los resultados dependen de tu contexto y de tu constancia/i)
-    expect(problemSection.querySelector('img')).toBeNull()
+    expect(problemSection.querySelector('img:not(.photo-story-background):not(.journey-intro-photo)')).toBeNull()
+    expect(problemSection.querySelector('.photo-story-background')).toHaveAttribute('alt', '')
   })
 
   it('declara el pasaje como prólogo sin alterar el flujo canónico del modelo', () => {
@@ -277,7 +278,8 @@ describe('Home — narrativa premium y contenido crítico', () => {
       && benefit.firstElementChild?.classList.contains('pillar-number')
       && !benefit.classList.contains('pillar-item-reverse')
     ))).toBe(true)
-    expect(benefitsSection.querySelector('img')).toBeNull()
+    expect(benefitsSection.querySelector('.journey-intro-photo')).toHaveAttribute('alt', '')
+    expect(benefitsSection.querySelector('.pillar-item img')).toBeNull()
     expect(benefitsSection).not.toHaveTextContent(/garantizamos|resultado asegurado|transformación garantizada/i)
   })
 

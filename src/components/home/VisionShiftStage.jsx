@@ -131,7 +131,7 @@ function VisionStep({ item, index, progress, isStatic, total }) {
       >
         <p>{VISION_LABELS[index] ?? item.marker}</p>
         <h3>{item.title}</h3>
-        {isStatic && <span className="vision-shift-summary">{item.body}</span>}
+        <span className="vision-shift-summary">{item.body}</span>
         {isContinuity && !isStatic && (
           <p className="vision-spatial-promise">
             Sin entrenar por rachas. Un proceso que puedes adaptar a tu vida, incluso cuando cambia tu semana.

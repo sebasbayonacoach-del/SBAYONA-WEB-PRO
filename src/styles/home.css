@@ -5666,6 +5666,7 @@ body.premium-route--home :is(
 }
 
 body.premium-route--home .vision-section > .vision-layout--immersive,
+body.premium-route--home .mechanism-section > .home-scene-content--immersive,
 body.premium-route--home .solution-section > .home-scene-content--immersive {
   display: block !important;
   grid-template-columns: none !important;

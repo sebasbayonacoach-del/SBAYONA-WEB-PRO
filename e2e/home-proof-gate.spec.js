@@ -30,7 +30,7 @@ for (const viewport of [
   })
 }
 
-test('Home: el proceso estático evita placas 3D repetidas y títulos fuera de pantalla', async ({ page }) => {
+test('Home: las fotografías de proceso ocupan el fondo y los pasos permanecen legibles', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/', { waitUntil: 'domcontentloaded' })
@@ -42,7 +42,10 @@ test('Home: el proceso estático evita placas 3D repetidas y títulos fuera de p
 
   for (let index = 0; index < 3; index += 1) {
     const frame = frames.nth(index)
-    await expect(frame.locator('.proof-process-visual')).toBeHidden()
+    await expect(frame.locator('.proof-process-visual')).toBeVisible()
+    const image = frame.locator('.photo-story-background')
+    await expect(image).toBeVisible()
+    expect((await image.boundingBox()).width).toBeGreaterThanOrEqual(388)
     await expect(frame.locator('.proof-process-copy')).toBeVisible()
     const title = await frame.locator('.proof-process-copy h3').boundingBox()
     expect(title).not.toBeNull()

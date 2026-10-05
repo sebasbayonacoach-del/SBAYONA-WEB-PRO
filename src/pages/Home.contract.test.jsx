@@ -95,9 +95,9 @@ describe('Home — contratos de composición premium', () => {
       .map((link) => link.getAttribute('href'))
       .filter((href) => href?.startsWith('/') || href?.startsWith('#'))
     const anchors = destinations.filter((destination) => destination.startsWith('#'))
-    const pdfs = destinations.filter((destination) => destination.startsWith('/docs/'))
+    const pdfs = destinations.filter((destination) => destination.endsWith('.pdf'))
     const routes = destinations.filter((destination) => (
-      destination.startsWith('/') && !destination.startsWith('/docs/')
+      destination.startsWith('/') && !destination.endsWith('.pdf')
     ))
 
     // Las presentaciones de plan son rutas internas (/plan/:id), no PDFs.
@@ -108,7 +108,8 @@ describe('Home — contratos de composición premium', () => {
     const featuredPlan = membershipPlans.find(({ featured }) => featured)
     expect(new Set(planRoutes.map((route) => route.toLowerCase())))
       .toEqual(new Set([`/plan/${featuredPlan.id.toLowerCase()}`]))
-    expect(pdfs).toHaveLength(0)
+    expect(pdfs.length).toBeGreaterThanOrEqual(4)
+    pdfs.forEach(path => expect(readFileSync(resolve(process.cwd(), 'public', path.slice(1))).subarray(0, 5).toString()).toBe('%PDF-'))
 
     anchors.forEach((destination) => {
       expect(container.querySelector(destination)).not.toBeNull()
@@ -262,10 +263,10 @@ describe('Home — contratos de composición premium', () => {
     // este contrato protege es que sigan siendo CUATRO y en este orden: la
     // portada abre con el problema y no con la oferta.
     expect(problemBlock.items.map(({ title }) => title)).toEqual([
-      'QUIERES CAMBIAR, PERO NO SABES POR DÓNDE EMPEZAR',
-      'ENTRENAS, PERO NO SABES SI VALE LA PENA',
-      'TU CUERPO TE HABLA Y YA NO QUIERES IGNORARLO',
-      'TU VIDA NO CABE EN UNA PLANTILLA DESCARGADA',
+      'Un comienzo posible.',
+      'Dale sentido a tu esfuerzo.',
+      'Escucha tu contexto.',
+      'Una ruta para tu vida.',
     ])
     expect(visionBlock).toMatchObject({
       claimType: 'aspiration',
@@ -276,22 +277,21 @@ describe('Home — contratos de composición premium', () => {
     // no se anuncia, el cuerpo habla en primera persona del plural y las cinco
     // frases se dicen como las dice una persona, sin marcador numérico.
     // Titular reescrito el 2026-09-22 con la reescritura comercial del dueño.
-    expect(visionBlock.heading).toBe('PROGRESAS MEJOR CUANDO DEJAS DE ENTRENAR A CIEGAS.')
+    expect(visionBlock.heading).toBe('Un siguiente paso. Con dirección.')
     expect(`${visionBlock.heading} ${visionBlock.body}`).not.toMatch(/90/i)
-    expect(visionBlock.body).toMatch(/juntos/i)
+    expect(visionBlock.body).toMatch(/siguiente paso/i)
     expect(visionBlock.body).not.toMatch(/esto no es una promesa/i)
     expect(visionBlock.items).toHaveLength(5)
     /*
-      Tres pasos del método. Reescritos el 2026-09-22: los rótulos nuevos dicen
-      qué recibe la persona («LEEMOS TU REALIDAD / DISEÑAMOS TU RUTA / AJUSTAMOS
-      CONTIGO») donde los viejos decían solo el verbo en genérico. La guarda que
-      importa —que sean TRES, en este orden, y el marco no médico de abajo— sigue
-      intacta.
+      Tres pasos del método. Reescritos de nuevo el 2026-10-05 dentro del
+      recorrido fotográfico con teléfono: ahora hablan en lenguaje natural y
+      explican la progresión del proceso. La guarda que importa —que sean TRES,
+      en este orden, y el marco no médico de abajo— sigue intacta.
     */
     expect(mechanismBlock.items.map(({ title }) => title)).toEqual([
-      'LEEMOS TU REALIDAD',
-      'DISEÑAMOS TU RUTA',
-      'AJUSTAMOS CONTIGO',
+      'Todo empieza contigo.',
+      'Tu semana toma forma.',
+      'El plan sigue contigo.',
     ])
     expect(mechanismBlock.boundary).toMatch(/marco no médico/i)
     expect(benefitsBlock.items.map(({ marker }) => marker)).toEqual(['01', '02', '03'])
@@ -327,7 +327,14 @@ describe('Home — contratos de composición premium', () => {
     expect(proofSection.querySelector('.proof-process-list')).not.toBeNull()
     expect(proofSection.querySelector('.evidence-list')).toBeNull()
     expect(container.querySelector('[data-evidence-slot], .evidence-slot')).toBeNull()
-    expect(container.querySelector('[data-content-block="home-action"]')).toHaveTextContent(actionBlock.body)
+    const actionSection = container.querySelector('[data-content-block="home-action"]')
+    expect(actionSection).not.toBeNull()
+    expect(actionBlock).toMatchObject({ id: 'home-action', state: 'verified' })
+    expect(actionSection.querySelector('.journey-gift-form')).not.toBeNull()
+    expect(within(actionSection).getByRole('button', {
+      name: /Preparar mi punto de partida/i,
+    })).toBeInTheDocument()
+    expect(actionSection.querySelector('a[download][href$="dossier-punto-de-partida.pdf"]')).not.toBeNull()
   })
 
   it('usa solo DOM y escenas premium, sin canvas ni componentes narrativos retirados', () => {

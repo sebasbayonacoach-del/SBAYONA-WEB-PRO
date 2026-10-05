@@ -94,7 +94,7 @@ describe('configuración del Content_Model', () => {
       guarda de claims médicos sigue viva en `conversionRegression.test.jsx`.
     */
     expect(problemBlock.items.find(({ id }) => id === 'discomfort-with-context').body)
-      .toBe('No dramatizamos ni prometemos curas. Usamos tus señales como contexto para entrenar con más inteligencia.')
+      .toBe('Tu energía y tus sensaciones importan. Nos ayudan a conversar sobre el entrenamiento y sus límites.')
 
     expect(visionBlock).toMatchObject({
       stage: 'vision',
@@ -104,8 +104,8 @@ describe('configuración del Content_Model', () => {
     // El bloque de visión ya no se defiende ("esto no es una promesa…") ni
     // anuncia un plazo: habla de lo que la persona va a notar y termina en
     // primera persona del plural, que es la voz de la marca.
-    expect(visionBlock.body).toMatch(/^El espejo va detrás\./i)
-    expect(visionBlock.body).toMatch(/Vamos a verlo juntos\./i)
+    expect(visionBlock.body).toMatch(/siguiente paso/i)
+    expect(visionBlock.body).toMatch(/entrenar/i)
     expect(visionBlock.body).not.toMatch(/esto no es una promesa/i)
     /*
       Las cinco sensaciones de la escena de visión. Reescritas el 2026-09-22 en
@@ -169,7 +169,7 @@ describe('configuración del Content_Model', () => {
     // Redactado vigente desde la reescritura de copy del 2026-09-22: la frase
     // cambió, la guarda (rechazar cifras y antes/después inventados) es la misma.
     expect(processFallback.body).toMatch(
-      /No fabricamos cifras ni antes\/después falsos.*depende de tu contexto/is,
+      /punto de partida.*ruta.*revisiones/is,
     )
     expect(processFallback.items.map(({ marker }) => marker)).toEqual(['01', '02', '03'])
     expect(homeContentModel.blocks.indexOf(processFallback))

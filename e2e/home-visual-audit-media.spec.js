@@ -14,10 +14,15 @@ for (const viewport of [
       if (r.request().resourceType() === 'image' && r.status() >= 400) broken.push(r.url())
     })
     await page.goto('/', { waitUntil: 'domcontentloaded' })
+    // Capturar la experiencia lista, después de la salida del overlay inicial.
+    await expect(page.getByRole('progressbar')).toHaveCount(0)
+    await expect(page.locator('.hero-tour-cta')).toBeVisible()
+
+    await page.screenshot({ path: `test-results/playwright/home-visual-audit/hero-${viewport.width}.png` })
 
     for (const [selector, imageSelector] of [
       ['.immersive-method-stage', '.bayona-voyage-photographic-layer'],
-      ['.proof-process-stage', '.proof-process-photo img'],
+      ['.proof-process-stage', '.photo-story-background'],
       ['.home-about-bridge', '.bayona-final-visual img'],
     ]) {
       const stage = page.locator(selector)
@@ -30,9 +35,11 @@ for (const viewport of [
         const opacity = Number(getComputedStyle(img).opacity)
         return { width: r.width, height: r.height, opacity }
       })
-      expect(display.width).toBeGreaterThan(50)
-      expect(display.height).toBeGreaterThan(50)
-      expect(display.opacity).toBeGreaterThan(0)
+      expect(display.width).toBeGreaterThanOrEqual(viewport.width - 2)
+      expect(display.height).toBeGreaterThan(500)
+      expect(display.opacity).toBe(1)
+      const surface = await stage.locator('.sticky-stage-viewport').count() ? stage.locator('.sticky-stage-viewport') : stage.locator('.sticky-stage-frame').first()
+      if (await surface.count()) await surface.screenshot({ path: `test-results/playwright/home-visual-audit/${selector.slice(1)}-${viewport.width}.png` })
     }
 
     const benefits = page.locator('.benefits-orbit-stage')
@@ -40,7 +47,7 @@ for (const viewport of [
     const photographicBackground = benefits.locator('.bayona-benefits-photographic-layer').first()
     await expect(photographicBackground).toBeAttached()
     const background = await photographicBackground.evaluate(el => getComputedStyle(el).backgroundImage)
-    expect(background).toContain('/images/burst/')
+    expect(background).toContain('/images/bayona-generated/')
     expect(background).toContain('.webp')
     // The design contract intentionally forbids <img> tags in this benefits section.
     await expect(benefits.locator('img')).toHaveCount(0)
@@ -50,24 +57,23 @@ for (const viewport of [
 
     const offers = page.locator('.home-memberships-section')
     await offers.scrollIntoViewIfNeeded()
-    expect(await offers.evaluate(el => getComputedStyle(el).backgroundColor)).toBe('rgb(8, 9, 12)')
+    expect(await offers.evaluate(el => getComputedStyle(el).backgroundColor)).toBe('rgb(16, 19, 16)')
     const offerHeading = offers.locator('#home-offer-heading')
     await expect(offerHeading).toBeAttached()
     expect(await offerHeading.evaluate(el => getComputedStyle(el).color)).toBe('rgb(247, 247, 243)')
 
     const proof = page.locator('.proof-section')
     await expect(proof).toHaveAttribute('data-evidence-gate', 'empty')
-    await expect(proof.getByText('PROCESO ILUSTRADO · NO EVIDENCIA DE RESULTADOS').first()).toBeAttached()
+    await expect(proof.getByText('DOCUMENTO ILUSTRATIVO · NO EVIDENCIA DE RESULTADOS').first()).toBeAttached()
 
     const closing = page.locator('.home-about-bridge')
     await closing.scrollIntoViewIfNeeded()
-    const paragraph = closing.locator('.bayona-final-narrative > .offer-intro')
-    await expect(paragraph).toBeVisible()
-    expect(await paragraph.evaluate(el => getComputedStyle(el).opacity)).toBe('1')
-    await page.evaluate(() => scrollBy(0, -300))
-    await page.waitForTimeout(100)
-    expect(await paragraph.evaluate(el => getComputedStyle(el).opacity)).toBe('1')
+    await expect(closing.getByRole('heading', { name: /TU PRÓXIMA SEMANA/i })).toBeVisible()
+    await expect(closing.locator('.journey-gift-form')).toBeVisible()
+    await expect(closing.getByRole('button', { name: /PREPARAR MI PUNTO DE PARTIDA/i })).toBeVisible()
+    await expect(closing.getByRole('link', { name: /CONTINUAR CON MI RECORRIDO/i })).toHaveAttribute('href', '/onboarding')
     await expect(closing.getByRole('link', { name: /COMPARAR PROGRAMAS/i })).toHaveAttribute('href', '/programs')
+    await expect(closing.locator('a[download][href$="dossier-punto-de-partida.pdf"]')).toBeAttached()
 
     const horizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2)
     expect(horizontalOverflow).toBe(false)
@@ -82,13 +88,62 @@ test('cinematic 30 day challenge displays a real image without hiding its resour
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   const stage = page.locator('.free-dossier-stage')
   await stage.scrollIntoViewIfNeeded()
-  const metrics = await stage.evaluate(el => ({
-    start: el.getBoundingClientRect().top + scrollY,
-    travel: el.getBoundingClientRect().height - el.querySelector('.sticky-stage-viewport').getBoundingClientRect().height,
-  }))
-  await page.evaluate(y => scrollTo(0, y), metrics.start + metrics.travel * .39)
+  const viewport = stage.locator('.sticky-stage-viewport')
+  if (await viewport.count()) {
+    const metrics = await stage.evaluate(el => {
+      const sticky = el.querySelector('.sticky-stage-viewport')
+      return {
+        start: el.getBoundingClientRect().top + scrollY,
+        travel: el.getBoundingClientRect().height - sticky.getBoundingClientRect().height,
+      }
+    })
+    await page.evaluate(y => scrollTo(0, y), metrics.start + metrics.travel * .39)
+  } else {
+    await stage.locator('.free-dossier-viewport[data-piece="reto"]').scrollIntoViewIfNeeded()
+  }
   const photo = stage.locator('.free-dossier-viewport[data-piece="reto"] .bayona-challenge-screen__hero')
   await expect(photo).toBeAttached()
   await expect.poll(() => photo.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true)
-  await expect(stage.getByRole('link', { name: /VER CONDICIONES/i })).toHaveAttribute('href', '/resources')
+  const download = stage.getByRole('link', { name: /DESCARGAR EL WORKBOOK/i })
+  await expect(download).toHaveAttribute('href', '/downloads/bayona-editorial/registro-30-dias.pdf')
+  await expect(download).toHaveAttribute('download', '')
 })
+
+for (const width of [390, 1440]) {
+  test(`four distinct photographic resources remain readable with reduced motion at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto('/', { waitUntil: 'domcontentloaded' })
+    const stage = page.locator('.free-dossier-stage')
+    await expect(stage).toHaveClass(/sticky-stage--static/)
+    const frames = stage.locator('.sticky-stage-frame')
+    await expect(frames).toHaveCount(4)
+    const sources = new Set()
+    const expectedDownloads = [
+      '/downloads/bayona-editorial/primera-semana.pdf',
+      '/downloads/bayona-editorial/registro-30-dias.pdf',
+      '/downloads/bayona-editorial/movilidad-y-habitos.pdf',
+      '/downloads/bayona-editorial/dossier-punto-de-partida.pdf',
+    ]
+    for (let i = 0; i < 4; i++) {
+      const frame = frames.nth(i)
+      await frame.scrollIntoViewIfNeeded()
+      const photo = frame.locator('.photo-story-background')
+      await expect.poll(() => photo.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true)
+      sources.add(await photo.getAttribute('src'))
+      const imageBox = await photo.boundingBox()
+      expect(imageBox.width).toBeGreaterThanOrEqual(width - 2)
+      expect(imageBox.height).toBeGreaterThan(600)
+      const title = await frame.locator('.free-dossier-copy h3').boundingBox()
+      expect(title.x).toBeGreaterThanOrEqual(0)
+      expect(title.x + title.width).toBeLessThanOrEqual(width)
+      const action = frame.locator('.free-dossier-action')
+      await expect(action).toBeVisible()
+      await expect(action).toHaveAttribute('href', expectedDownloads[i])
+      await expect(action).toHaveAttribute('download', '')
+      await frame.screenshot({ path: `test-results/playwright/home-visual-audit/resource-${i}-${width}.png` })
+    }
+    expect(sources.size).toBe(4)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2)).toBe(false)
+  })
+}

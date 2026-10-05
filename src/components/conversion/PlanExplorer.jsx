@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
 import { ChevronDown, MoveRight, Play } from 'lucide-react'
 import { useEffect, useId, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -7,10 +9,13 @@ import {
   COMMERCIAL_SCOPE_NOTICE,
   membershipComparisonRows,
 } from '../../config/offerings.js'
+import '../../styles/home-plan-atelier.css'
 
 function planAnchorId(planId) {
   return `plan-${String(planId).toLowerCase()}`
 }
+
+const MotionArticle = motion.article
 
 /**
  * Presenta los planes como un showroom: el selector conserva las cuatro rutas
@@ -18,9 +23,11 @@ function planAnchorId(planId) {
  * Los datos canónicos siguen procediendo de offerings.js y la capa editorial.
  */
 export default function PlanExplorer({
+  cinematic = false,
   projections = membershipPlanEditorialProjection,
   comparisonRows = membershipComparisonRows,
 }) {
+  const { reducedMotion } = useCapabilities()
   const instanceId = useId().replace(/[^a-zA-Z0-9_-]/g, '')
   const selectorRefs = useRef(new Map())
   const detailRef = useRef(null)
@@ -28,6 +35,7 @@ export default function PlanExplorer({
     ?? projections[0]?.plan.id
   const [activePlanId, setActivePlanId] = useState(defaultPlanId)
   const [detailsExpanded, setDetailsExpanded] = useState(false)
+  const [visitedPlanIds, setVisitedPlanIds] = useState(() => new Set(defaultPlanId ? [defaultPlanId] : []))
 
   useEffect(() => {
     if (projections.some(({ plan }) => plan.id === activePlanId)) return
@@ -54,6 +62,7 @@ export default function PlanExplorer({
       if (!projection) return
 
       setActivePlanId(projection.plan.id)
+      setVisitedPlanIds((current) => new Set([...current, projection.plan.id]))
       setDetailsExpanded(false)
       window.requestAnimationFrame(() => selectorRefs.current.get(projection.plan.id)?.focus())
     }
@@ -86,7 +95,15 @@ export default function PlanExplorer({
 
   const selectPlan = (planId) => {
     setActivePlanId(planId)
+    setVisitedPlanIds((current) => new Set([...current, planId]))
     setDetailsExpanded(false)
+  }
+
+  const movePlan = (offset) => {
+    const nextIndex = (activeIndex + offset + projections.length) % projections.length
+    const nextPlanId = projections[nextIndex].plan.id
+    selectPlan(nextPlanId)
+    selectorRefs.current.get(nextPlanId)?.focus()
   }
 
   const handleSelectorKeyDown = (event, currentIndex) => {
@@ -111,6 +128,14 @@ export default function PlanExplorer({
 
   return (
     <div className="plan-explorer plan-showroom">
+      <nav className="plan-atelier-navigation" aria-label="Recorrido de planes">
+        <p><span>{String(visitedPlanIds.size).padStart(2, '0')}</span> de {String(projections.length).padStart(2, '0')} planes explorados</p>
+        <div>
+          <button type="button" onClick={() => movePlan(-1)} aria-label="Ver plan anterior">← <span>Anterior</span></button>
+          <span className="plan-atelier-current">{String(activeIndex + 1).padStart(2, '0')} / {String(projections.length).padStart(2, '0')}</span>
+          <button type="button" onClick={() => movePlan(1)} aria-label="Ver plan siguiente"><span>Siguiente</span> →</button>
+        </div>
+      </nav>
       <ol
         className="plan-comparison-list plan-showroom-selector"
         aria-label="Comparación de planes por plan"
@@ -166,7 +191,11 @@ export default function PlanExplorer({
         aria-live="polite"
         aria-atomic="true"
       >
-        <article
+        <MotionArticle
+          key={cinematic ? plan.id : 'plan'}
+          initial={cinematic && !reducedMotion ? { opacity: .55, y: 18 } : false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: .65, ease: [.16, 1, .3, 1] }}
           ref={detailRef}
           id={previewId}
           className={`plan-showroom-preview is-visible${plan.featured ? ' is-featured' : ''}`}
@@ -226,26 +255,36 @@ export default function PlanExplorer({
                   <Play size={18} fill="currentColor" />
                 </span>
                 <span className="plan-presentation-copy">
-                  <small>VISTA EDITORIAL · PDF</small>
-                  <strong>VER PRESENTACIÓN</strong>
+                  <small>RECORRIDO EDITORIAL</small>
+                  <strong>ABRIR EXPERIENCIA</strong>
                 </span>
               </Link>
+              <a
+                href={`/downloads/bayona-editorial/plan-${plan.id.toLowerCase()}.pdf`}
+                className="plan-download-link"
+                download
+                aria-label={`Descargar dossier en PDF del plan ${plan.name}`}
+              >
+                <span>01</span> DESCARGAR DOSSIER <MoveRight size={15} aria-hidden="true" />
+              </a>
             </div>
           </div>
 
           <aside className="plan-showroom-signature" aria-label={`Vista previa de ${plan.name}`}>
-            <div
-              className="plan-showroom-visual"
-              style={{ '--plan-showroom-image': 'url(' + planPosterUrl + ')' }}
-              aria-label={planPoster?.alt ?? `Vista visual del plan ${plan.name}`}
-              role="img"
-            >
-              <span className="plan-showroom-visual-kicker">PREVIEW</span>
-              <span className="plan-showroom-visual-title">Experiencia en grande</span>
-              <span className="plan-showroom-visual-action">
-                Presentación completa <Play size={14} fill="currentColor" aria-hidden="true" />
-              </span>
-            </div>
+            <figure className="plan-atelier-film">
+              <video
+                controls
+                muted
+                playsInline
+                preload="none"
+                poster={planPosterUrl}
+                aria-label={`Vista previa en vídeo del plan ${plan.name}`}
+              >
+                <source src={`/videos/plan-atelier/plan-${plan.id.toLowerCase()}.mp4`} type="video/mp4" />
+                Tu navegador no puede reproducir este vídeo. Descarga el dossier para conocer el plan.
+              </video>
+              <figcaption><span>PREVIEW DE LA EXPERIENCIA</span><span>{String(activeIndex + 1).padStart(2, '0')} — {plan.name}</span></figcaption>
+            </figure>
 
             <span className="plan-showroom-watermark" aria-hidden="true">
               {String(activeIndex + 1).padStart(2, '0')}
@@ -325,7 +364,7 @@ export default function PlanExplorer({
               </dl>
             </section>
           </div>
-        </article>
+        </MotionArticle>
       </div>
     </div>
   )

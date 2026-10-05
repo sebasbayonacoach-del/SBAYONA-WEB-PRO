@@ -1,0 +1,203 @@
+/* BAYONA: full-width photographic chapters, with a quiet reading edge. */
+body.premium-route--home .photo-story-stage {
+  width: 100vw !important;
+  max-width: none !important;
+  margin-inline: calc(50% - 50vw) !important;
+  padding: 0 !important;
+  color: #f7f7f3;
+}
+
+body.premium-route--home .photo-story-stage :is(.immersive-method-viewport, .benefits-orbit-viewport, .pain-unlock-viewport, .proof-process-viewport, .free-dossier-viewport, .community-immersive-frame) {
+  position: relative;
+  isolation: isolate;
+  width: 100% !important;
+  max-width: none !important;
+  height: 100%;
+  min-height: min(760px, calc(100svh - 66px));
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: flex-end;
+  padding: clamp(2rem, 5vw, 6rem) max(6vw, calc((100vw - 1380px) / 2));
+  overflow: hidden;
+  background: #101210;
+  box-sizing: border-box;
+}
+
+body.premium-route--home .photo-story-stage :is(.immersive-method-visual, .benefits-orbit-visual, .pain-unlock-visual, .proof-process-visual, .free-dossier-visual) {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: block;
+  perspective: none;
+  z-index: -2;
+}
+
+body.premium-route--home .photo-story-stage :is(.photo-story-background, .bayona-method-photograph, .bayona-voyage-photographic-layer, .bayona-benefits-photographic-layer) {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none;
+  object-fit: cover;
+  object-position: 38% center;
+  background-size: cover;
+  background-position: 38% center;
+  opacity: 1 !important;
+  mask-image: none !important;
+  filter: none !important;
+  pointer-events: none;
+}
+
+body.premium-route--home .photo-story-stage :is(.immersive-method-viewport, .benefits-orbit-viewport, .pain-unlock-viewport, .proof-process-viewport, .free-dossier-viewport, .community-immersive-frame)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(8,10,9,.06) 0%, rgba(8,10,9,.12) 36%, rgba(8,10,9,.72) 62%, rgba(8,10,9,.91) 100%);
+}
+
+body.premium-route--home .photo-story-stage :is(.immersive-method-act, .benefits-orbit-copy, .pain-unlock-copy, .proof-process-copy, .free-dossier-copy) {
+  position: relative;
+  width: min(42%, 560px);
+  align-self: auto !important;
+  min-width: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: 0;
+  color: #f7f7f3 !important;
+}
+
+body.premium-route--home .photo-story-stage :is(.immersive-method-act, .benefits-orbit-copy, .pain-unlock-copy, .proof-process-copy, .free-dossier-copy) h3 {
+  max-width: 13ch !important;
+  font-size: clamp(2.7rem, 4.6vw, 5.2rem) !important;
+  line-height: .98 !important;
+  letter-spacing: -.045em;
+  font-weight: 700;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  text-wrap: balance;
+}
+
+body.premium-route--home .photo-story-stage :is(.immersive-method-act__copy > p:last-child, .benefits-orbit-body, .pain-unlock-copy > p:last-child, .proof-process-body, .free-dossier-body) {
+  max-width: 38ch;
+  margin-top: 1.5rem;
+  color: #eee !important;
+  font-size: clamp(1rem, 1.35vw, 1.2rem) !important;
+  line-height: 1.65 !important;
+}
+
+body.premium-route--home .photo-story-stage :is(.pain-unlock-copy__marker, .free-dossier-tag, .immersive-method-act__verb, .benefits-orbit-copy > p, .proof-process-copy > p) {
+  color: #f4b078 !important;
+  font-size: .72rem;
+  letter-spacing: .12em;
+}
+
+body.premium-route--home .photo-story-stage :is(.immersive-method-visual::before, .free-dossier-visual::before, .pain-unlock-visual__caption, .pain-navigation, .pain-navigation-caption, .pain-unlock-axis, .community-immersive-scrim) {
+  display: none !important;
+}
+
+body.premium-route--home .immersive-method-act__copy { min-height: 0; }
+body.premium-route--home .immersive-method-act__meta { margin-bottom: 2rem; color: #ddd; }
+body.premium-route--home .immersive-method-progress { margin-top: 2.5rem; }
+body.premium-route--home .free-dossier-action { margin-top: 2rem; color: #fff; border-color: rgba(255,255,255,.7); }
+body.premium-route--home .free-dossier-action:is(:hover, :focus-visible) { color: #f4b078; border-color: #f4b078; }
+body.premium-route--home .photo-story-stage .free-dossier-copy::before { display: none !important; }
+
+/* Keep the illustrative workbook available, with the photograph as the scene. */
+body.premium-route--home .photo-story-stage .proof-workbook {
+  position: absolute;
+  left: 5vw;
+  bottom: 6%;
+  width: min(33vw, 460px);
+  min-height: 0;
+  opacity: .96;
+}
+body.premium-route--home .photo-story-stage .proof-workbook__stack { width: 100%; }
+body.premium-route--home .photo-story-stage .community-immersive-transcript {
+  width: min(48%, 640px);
+  height: auto;
+  margin: 0;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  background: rgba(10,13,11,.8);
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow: none;
+}
+body.premium-route--home .photo-story-stage .community-immersive-progress { left: auto; right: 6vw; bottom: 1.5rem; }
+body.premium-route--home .community-immersive-frame > .photo-story-background { z-index: -2; }
+
+/* Give the existing hero, future scene and closing photograph the same clarity. */
+body.premium-route--home :is(.hero-module, .home-passage, .mechanism-section, .solution-section, .community-immersive, .free-dossier).scene-bg.scene-bg--after::after {
+  opacity: 1 !important;
+  filter: none !important;
+  mask-image: none !important;
+  background-image: linear-gradient(90deg, rgba(8,10,9,.85), rgba(8,10,9,.45) 45%, rgba(8,10,9,.08) 75%), var(--scene-image);
+  background-size: cover;
+  background-position: center, var(--scene-position);
+}
+body.premium-route--home .free-dossier::before { display: none; }
+body.premium-route--home .home-about-bridge .bayona-final-visual { inset: 0; mask-image: none; }
+body.premium-route--home .home-about-bridge .bayona-final-visual img { opacity: 1; filter: none; }
+body.premium-route--home .home-about-bridge .bayona-final-visual::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(8,10,9,.92), rgba(8,10,9,.7) 45%, rgba(8,10,9,.1));
+}
+
+body.premium-route--home .photo-story-stage.sticky-stage--static .sticky-stage-frame {
+  padding: 0;
+  border: 0;
+}
+body.premium-route--home #problemas .photo-story-stage .pain-unlock-copy > p:last-child,
+body.premium-route--home .photo-story-stage .proof-workbook__copy-summary { color: #eee !important; }
+body.premium-route--home .proof-process-stage.photo-story-stage.sticky-stage--static .sticky-stage-frame .proof-process-visual {
+  display: block !important;
+  height: 100% !important;
+  margin: 0;
+}
+body.premium-route--home .photo-story-stage .proof-workbook { height: 440px; }
+body.premium-route--home .photo-story-stage .proof-process-counter { position: absolute; bottom: 1.5rem; right: 6vw; }
+body.premium-route--home .photo-story-stage .community-interface { border-radius: 0 !important; }
+body.premium-route--home .home-memberships-section .plan-showroom-signature {
+  grid-column: 1 / -1;
+  width: 100%;
+  border-left: 0;
+  padding: 0;
+}
+body.premium-route--home .home-memberships-section .plan-showroom-visual {
+  min-height: clamp(440px, 70svh, 780px);
+  padding: clamp(2rem, 5vw, 5rem);
+  box-shadow: none;
+}
+body.premium-route--home .home-memberships-section .plan-showroom-visual::before { display: none; }
+body.premium-route--home .photo-story-stage.sticky-stage--static :is(.immersive-method-viewport, .benefits-orbit-viewport, .pain-unlock-viewport, .proof-process-viewport, .free-dossier-viewport, .community-immersive-frame) {
+  height: auto;
+  min-height: 680px;
+}
+
+@media (max-width: 900px) {
+  body.premium-route--home .photo-story-stage :is(.immersive-method-viewport, .benefits-orbit-viewport, .pain-unlock-viewport, .proof-process-viewport, .free-dossier-viewport, .community-immersive-frame) {
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 2rem 7vw 3rem;
+    min-height: calc(100svh - 66px);
+  }
+  body.premium-route--home .photo-story-stage :is(.immersive-method-viewport, .benefits-orbit-viewport, .pain-unlock-viewport, .proof-process-viewport, .free-dossier-viewport, .community-immersive-frame)::after {
+    background: linear-gradient(180deg, rgba(8,10,9,.03) 0%, rgba(8,10,9,.12) 28%, rgba(8,10,9,.76) 55%, rgba(8,10,9,.96) 100%);
+  }
+  body.premium-route--home .photo-story-stage :is(.immersive-method-act, .benefits-orbit-copy, .pain-unlock-copy, .proof-process-copy, .free-dossier-copy) { width: 100%; max-width: 540px; }
+  body.premium-route--home .photo-story-stage :is(.immersive-method-act, .benefits-orbit-copy, .pain-unlock-copy, .proof-process-copy, .free-dossier-copy) h3 { font-size: clamp(2.3rem, 8.5vw, 3.8rem) !important; }
+  body.premium-route--home .photo-story-stage :is(.photo-story-background, .bayona-voyage-photographic-layer, .bayona-benefits-photographic-layer) { object-position: 40% center; background-position: 40% center; }
+  body.premium-route--home .photo-story-stage .proof-workbook { display: none; }
+  body.premium-route--home .photo-story-stage .community-immersive-transcript { width: 100%; padding: 1.25rem; }
+  body.premium-route--home .photo-story-stage .community-immersive-progress { display: none; }
+  body.premium-route--home .photo-story-stage.sticky-stage--static :is(.immersive-method-viewport, .benefits-orbit-viewport, .pain-unlock-viewport, .proof-process-viewport, .free-dossier-viewport, .community-immersive-frame) { min-height: 720px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.premium-route--home .photo-story-stage * { animation: none !important; transition: none !important; }
+}

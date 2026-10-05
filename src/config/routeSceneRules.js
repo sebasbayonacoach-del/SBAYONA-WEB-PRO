@@ -42,22 +42,12 @@ const NADA = [null]
 
 const DEFAULTS = { rules: [], cycle: REAL }
 
+// La home final utiliza fotografía a pantalla completa (brief 2026-10-05).
+// No superponer los objetos del guion anterior ni abrir un contexto WebGL
+// detrás de estas imágenes. Las demás rutas conservan sus escenas.
 const HOME = {
   idPrefix: 'home-sec',
-  rules: [
-    // «No te vendo un plan y te dejo solo»: el saco es lo que aguanta el golpe
-    // contigo. Hueco medido 580 px.
-    [/no te vendo|dejo solo/i, 'punchbag'],
-    // «No es magia. Es método. Te leemos»: leer a alguien es medirlo. 2304 px.
-    [/magia|metodo|leemos/i, 'scale'],
-    // El vídeo «Método BAYONA en 2 min» queda deliberadamente sin objeto 3D:
-    // la pieza audiovisual ya es el foco visual de ese tramo.
-    // «Empieza hoy sin pagar nada»: la hilera baja de pesas rusas cabe en sus
-    // 382 px y es lo primero que se toca en una sala.
-    [/empieza hoy|sin pagar/i, 'kettlebell'],
-  ],
-  // Catorce tramos y cuatro con hueco real. El resto llevaba barra de pesas
-  // cruzando el titular («LO QUE CAMBIA», «AQUÍ NO HAY HUMO») o sobre tarjetas.
+  rules: [],
   cycle: NADA,
 }
 
