@@ -15,7 +15,7 @@ export const FREE_PIECES = [
 ]
 
 export default function FreeValue() {
-  const { mode } = useCapabilities()
+  const { mode, reducedMotion } = useCapabilities()
   return (
     <section className="free-value free-dossier journey-free" aria-labelledby="home-free-title">
       <NarrativeIntro className="free-dossier-intro" image="/images/bayona-generated/home-free-kit-1600.webp" label="TU BIBLIOTECA · TRES GUÍAS Y UN DOSSIER" id="home-free-title" title="Llévate un comienzo. Es gratis." body="Tres recursos para organizar tu entrenamiento y un dossier para entender desde dónde partes. Descárgalos, escribe sobre ellos y vuelve cuando quieras." />
@@ -41,7 +41,45 @@ export default function FreeValue() {
         }}
       </StickyStage>
       <div className="journey-library" aria-label="Todos los recursos gratuitos">
-        {FREE_PIECES.map(piece => <a href={`/downloads/bayona-editorial/${piece.document}.pdf`} download key={piece.id}><span className="journey-label">{piece.tag}</span><strong>{piece.title}</strong><Download size={20} aria-hidden="true" /><span>Descargar PDF</span></a>)}
+        {FREE_PIECES.map((piece, index) => {
+          const image = `/images/bayona-generated/${piece.photo}-1600.webp`
+          return (
+            <motion.a
+              href={`/downloads/bayona-editorial/${piece.document}.pdf`}
+              download
+              key={piece.id}
+              className="journey-library-entry"
+              data-piece={piece.id}
+              aria-label={`${piece.title} — ${piece.action}`}
+              initial={reducedMotion || mode !== 'desktop' ? false : { opacity: .68, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: .2 }}
+              transition={{ duration: .5, delay: reducedMotion ? 0 : index * .06, ease: [.16, 1, .3, 1] }}
+              whileHover={reducedMotion ? undefined : { y: -8 }}
+            >
+              <span className="journey-library-preview" aria-hidden="true">
+                <img src={image} alt="" width="900" height="1120" loading="lazy" decoding="async" />
+                <span className="journey-library-preview-shade" />
+                <span className="journey-library-preview-index">{piece.issue}</span>
+                <span className="journey-library-preview-sheet">
+                  <small>BAYONA · EDICIÓN {piece.issue}</small>
+                  <strong>{piece.title}</strong>
+                  <em>{piece.tag}</em>
+                </span>
+              </span>
+              <span className="journey-library-entry-copy">
+                <span className="journey-label">{piece.tag}</span>
+                <strong>{piece.title}</strong>
+                <span className="journey-library-entry-description">{piece.copy}</span>
+              </span>
+              <span className="journey-library-entry-action">
+                <Download size={19} aria-hidden="true" />
+                <span>{piece.action}</span>
+                <ArrowUpRight size={17} aria-hidden="true" />
+              </span>
+            </motion.a>
+          )
+        })}
       </div>
       <div className="free-dossier-footer"><Link to="/resources">Explorar toda la biblioteca <ArrowUpRight size={18} /></Link><p>Empieza sin cuenta, sin tarjeta y sin entregar tus datos.</p></div>
     </section>

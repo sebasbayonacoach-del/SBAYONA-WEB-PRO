@@ -17,6 +17,7 @@ import {
   verifiedEvidenceFixture,
 } from '../lib/conversion/evidence.testFixtures.js'
 import Home, { HomeProofSection } from './Home.jsx'
+import { FREE_PIECES } from '../components/home/FreeValue.jsx'
 
 vi.mock('framer-motion', () => {
   const ignoredProps = new Set(['initial', 'animate', 'exit', 'variants', 'whileInView', 'viewport', 'transition', 'whileHover', 'whileTap'])
@@ -324,6 +325,28 @@ describe('Home — narrativa premium y contenido crítico', () => {
     expect(within(proofSection).getByText(approvedRecord.sourceRef)).toBeInTheDocument()
     expect(within(proofSection).queryByText(draftRecord.attribution)).not.toBeInTheDocument()
     expect(proofSection.querySelector('.proof-process-list, [data-evidence-slot], .evidence-slot')).toBeNull()
+  })
+
+  it('presenta cada recurso gratuito como una escena visual descargable', () => {
+    const { container } = renderHome()
+    const library = container.querySelector('.journey-library')
+    const entries = [...library.querySelectorAll('.journey-library-entry')]
+
+    expect(entries).toHaveLength(FREE_PIECES.length)
+
+    FREE_PIECES.forEach((piece, index) => {
+      const entry = entries[index]
+      const image = entry.querySelector('.journey-library-preview img')
+
+      expect(entry).toHaveAttribute('href', `/downloads/bayona-editorial/${piece.document}.pdf`)
+      expect(entry).toHaveAttribute('download')
+      expect(entry).toHaveAttribute('data-piece', piece.id)
+      expect(entry).toHaveAccessibleName(`${piece.title} — ${piece.action}`)
+      expect(image).toHaveAttribute('src', `/images/bayona-generated/${piece.photo}-1600.webp`)
+      expect(entry.querySelector('.journey-library-preview-sheet')).not.toBeNull()
+      expect(entry).toHaveTextContent(piece.title)
+      expect(entry).toHaveTextContent(piece.copy)
+    })
   })
 
   it('integra los cuatro planes, precios accesibles y presentaciones PDF sin alterar sus fuentes', () => {
