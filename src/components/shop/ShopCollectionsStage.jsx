@@ -69,7 +69,7 @@ export default function ShopCollectionsStage({ collections = [], onSelect }) {
   const { mode } = useCapabilities()
   if (!collections.length) return null
 
-  const length = mode === 'desktop' ? '360vh' : '300vh'
+  const length = mode === 'desktop' ? '360vh' : '220vh'
 
   return (
     <div className="shop-collection-stage">

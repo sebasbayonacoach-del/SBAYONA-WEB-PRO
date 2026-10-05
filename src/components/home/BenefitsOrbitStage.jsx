@@ -16,7 +16,7 @@ export default function BenefitsOrbitStage({ block }) {
   const items = block?.items ?? []
   if (!items.length) return null
 
-  const length = mode === 'desktop' ? '300vh' : '320vh'
+  const length = mode === 'desktop' ? '300vh' : '200vh'
 
   return (
     <div className="benefits-orbit-stage-wrap">

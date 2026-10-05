@@ -121,7 +121,7 @@ function StoryFrame({ person, index, total, progress, isStatic }) {
 
 export default function ExperienceProof() {
   const { mode } = useCapabilities()
-  const length = mode === 'desktop' ? '310vh' : '325vh'
+  const length = mode === 'desktop' ? '310vh' : '210vh'
 
   return (
     <section

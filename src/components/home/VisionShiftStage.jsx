@@ -2,6 +2,7 @@ import { motion, useMotionValueEvent, useTransform } from 'framer-motion'
 import { useState } from 'react'
 import { resolveVisionChapter, resolveVisionGalleryProgress } from './visionPacing.js'
 import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
+import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
 import '../../styles/vision-shift-stage.css'
 import '../../styles/vision-shift-elite.css'
 import '../../styles/vision-spatial-gallery.css'
@@ -169,6 +170,7 @@ function AnimatedVisionSequence({ items, progress }) {
 }
 
 export default function VisionShiftStage({ block }) {
+  const { mode } = useCapabilities()
   const items = block?.items ?? []
   if (!items.length) return null
 
@@ -197,7 +199,7 @@ export default function VisionShiftStage({ block }) {
       </ol>
 
       <StickyStage
-        length="500vh"
+        length={mode === 'desktop' ? '500vh' : '260vh'}
         states={items.length}
         topOffset={66}
         allowMobile

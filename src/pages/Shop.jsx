@@ -411,7 +411,7 @@ export default function Shop() {
   const cartCount = useCartStore(selectCartCount)
   const cartTotalCOP = useCartStore(selectCartTotalCOP)
   const rewards = useRewards()
-  const { reducedMotion } = useCapabilities()
+  const { reducedMotion, mode } = useCapabilities()
   const featuredProduct = shopProducts.find(({ featured }) => featured) ?? shopProducts[0]
   const fuse = useMemo(() => new Fuse(shopProducts, {
     keys: ['name', 'description', 'category', 'collection', 'collectionTitle'],
@@ -758,7 +758,10 @@ export default function Shop() {
                       VER TODO <ArrowRight size={15} strokeWidth={1} aria-hidden="true" />
                     </button>
                   </header>
-                  <ProductGrid products={products} reducedMotion={reducedMotion} />
+                  <ProductGrid
+                    products={mode === 'desktop' ? products : products.slice(0, 3)}
+                    reducedMotion={reducedMotion}
+                  />
                 </section>
               ))}
             </div>

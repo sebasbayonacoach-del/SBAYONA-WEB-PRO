@@ -61,7 +61,7 @@ export default function ImmersiveMethodStage({ items = [], heading, body }) {
   const safeItems = Array.isArray(items) ? items.filter(Boolean) : []
   if (!safeItems.length) return null
 
-  const length = mode === 'desktop' ? '330vh' : '350vh'
+  const length = mode === 'desktop' ? '330vh' : '220vh'
 
   return (
     <div className="immersive-method">
