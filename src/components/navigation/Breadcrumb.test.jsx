@@ -22,20 +22,14 @@ function getBreadcrumb() {
 }
 
 describe('Breadcrumb (Fase 4)', () => {
-  it.each(['/shop', '/parkour-academy'])('identifica %s sin esperar al montaje de la página', (pathname) => {
+  it.each(['/parkour-academy', '/resources', '/community'])('identifica %s sin esperar al montaje de la página', (pathname) => {
     renderAt(pathname)
     expect(getBreadcrumb()).toHaveAttribute('data-route', pathname)
   })
 
-  it('muestra la posición en rutas de contenido con el último paso marcado como página actual', () => {
-    renderAt('/programs')
-
-    const nav = getBreadcrumb()
-    expect(nav).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Inicio' })).toHaveAttribute('href', '/')
-    const current = screen.getByText('Programas')
-    expect(current).toHaveAttribute('aria-current', 'page')
-    expect(current.tagName).toBe('SPAN')
+  it.each(['/about', '/programs', '/shop'])('no monta la miga en %s porque su hero ya resuelve posición', (pathname) => {
+    renderAt(pathname)
+    expect(getBreadcrumb()).not.toBeInTheDocument()
   })
 
   it('construye trails de varios niveles en las fichas de plan', () => {

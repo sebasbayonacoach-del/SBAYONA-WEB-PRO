@@ -1228,6 +1228,21 @@ body.award-mode :where(.about-page,.parkour-academy,.shop-page,.community-page,.
   body.award-mode .page-hero-title {
     font-size: clamp(2.75rem, 13vw, 4.7rem) !important;
   }
+
+  /* Titulares editoriales: en móvil se parten por palabras, no con guiones. */
+  body.award-mode :is(
+    .page-hero h1,
+    .resources-hero h1,
+    .community-hero h1,
+    .faq-hero h1,
+    .app-hero h1
+  ) {
+    max-width: 100% !important;
+    hyphens: none !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
   body.award-mode .page-hero-canvas,
   body.award-mode [data-scene-cycler] {
     opacity: .14 !important;
@@ -4989,7 +5004,7 @@ body.award-mode :where(a, button, summary):focus-visible {
 /* === PRIME MOBILE LANGUAGE MICRO-PILL === */
 @media (max-width: 950px) {
   body.award-mode .translate-offer {
-    position: fixed !important;
+    position: absolute !important;
     top: 70px !important;
     right: 12px !important;
     left: auto !important;
@@ -5186,5 +5201,46 @@ body.award-mode :where(
     .plan-accordion-item
   )::after {
     transition: none !important;
+  }
+}
+
+/* MOBILE TOUCH TARGETS · audit 2026-10-06 */
+@media (max-width: 760px) {
+  body.award-mode .nav-cart-button {
+    min-height: 44px !important;
+    height: 44px !important;
+    padding-block: 8px !important;
+  }
+
+  body.award-mode .translate-offer-action,
+  body.award-mode .translate-offer-close {
+    min-height: 44px !important;
+    height: 44px !important;
+  }
+
+  body.award-mode .translate-offer-action {
+    min-width: 44px !important;
+    width: 44px !important;
+  }
+
+  body.award-mode .translate-offer-close {
+    min-width: 44px !important;
+    width: 44px !important;
+  }
+
+  body.premium-route--programs .program-service-card .program-service-cart,
+  body.premium-route--programs .programs-method .text-button,
+  body.premium-route--shop .shop-add-to-cart,
+  body.premium-route--home .scroll-film__calm,
+  body.premium-route--home .plan-atelier-navigation button {
+    min-height: 44px !important;
+  }
+
+  body.premium-route--programs .program-service-card .program-service-cart {
+    padding: 10px 12px !important;
+  }
+
+  body.premium-route--shop .shop-add-to-cart {
+    padding-block: 12px !important;
   }
 }

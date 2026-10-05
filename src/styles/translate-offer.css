@@ -93,20 +93,54 @@
 
 @media (max-width: 950px) {
   .translate-offer {
-    top: 62px;
-    right: 16px;
-    left: 16px;
+    position: absolute;
+    top: 70px;
+    right: 12px;
+    left: auto;
+    gap: 4px;
+    width: auto;
     max-width: none;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    backdrop-filter: none;
   }
 
-  /* En móvil el texto de contexto sobra: la acción se explica sola. */
+  /* En móvil basta un acceso discreto al idioma; no debe perseguir al usuario. */
+  .translate-offer > svg,
   .translate-offer-copy {
     display: none;
   }
 
   .translate-offer-action {
-    flex: 1 1 auto;
+    width: 40px;
+    min-height: 30px;
+    display: grid;
+    place-items: center;
+    flex: none;
+    padding: 0;
+    border-color: rgba(244, 162, 97, 0.42);
+    border-radius: 0;
+    background: rgba(8, 8, 9, 0.9);
+    font-size: 0;
+    line-height: 0;
     text-align: center;
+  }
+
+  .translate-offer-action::after {
+    content: 'EN';
+    color: var(--gold);
+    font-size: 0.62rem;
+    line-height: 1;
+    letter-spacing: 0.12em;
+  }
+
+  .translate-offer-close {
+    width: 24px;
+    height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(8, 8, 9, 0.78);
+    opacity: 0.55;
   }
 }
 

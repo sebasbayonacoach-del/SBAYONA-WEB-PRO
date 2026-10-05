@@ -239,4 +239,16 @@ body.premium-route--shop .shop-product-variant small {
     backdrop-filter: none;
     box-shadow: none;
   }
+
+  /* Controles táctiles: 44px reales, no solo área visual aparente. */
+  body.premium-route--shop :is(
+    .shop-scroll-indicator,
+    .shop-add-to-cart,
+    .shop-pill-group button,
+    .shop-product-collection-heading > button,
+    .shop-product-actions > a,
+    .shop-service-actions > a
+  ) {
+    min-height: 44px !important;
+  }
 }

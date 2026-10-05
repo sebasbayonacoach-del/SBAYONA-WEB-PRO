@@ -15,6 +15,8 @@
  * · Home no pinta nada (su trail está vacío: ya estás en la raíz).
  * · Recepción (/onboarding, /entrar) es inmersiva y oculta el chrome.
  * · /design-system es interna; el 404 tiene su propia recuperación.
+ * · About, Programas y Shop ya resuelven posición dentro de su propio hero,
+ *   así que no montan una miga que el CSS acabaría ocultando tras hidratar.
  * · El embudo (/checkout, /order-confirmation) sí la muestra: incluso dentro
  *   del embudo la persona necesita saber dónde está y cómo volver.
  */
@@ -24,7 +26,7 @@ import { resolveRouteMeta } from '../../lib/seo/routeMeta.js'
 import '../../styles/breadcrumb.css'
 
 /** Rutas donde la miga estorba en lugar de orientar. */
-const HIDDEN_ON = new Set(['/onboarding', '/entrar', '/design-system'])
+const HIDDEN_ON = new Set(['/onboarding', '/entrar', '/design-system', '/about', '/programs', '/shop'])
 
 export default function Breadcrumb() {
   const { pathname } = useLocation()

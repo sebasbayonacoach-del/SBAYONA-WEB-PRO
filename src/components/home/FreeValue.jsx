@@ -19,7 +19,8 @@ export default function FreeValue() {
   return (
     <section className="free-value free-dossier journey-free" aria-labelledby="home-free-title">
       <NarrativeIntro className="free-dossier-intro" image="/images/bayona-generated/home-free-kit-1600.webp" label="TU BIBLIOTECA · TRES GUÍAS Y UN DOSSIER" id="home-free-title" title="Llévate un comienzo. Es gratis." body="Tres recursos para organizar tu entrenamiento y un dossier para entender desde dónde partes. Descárgalos, escribe sobre ellos y vuelve cuando quieras." />
-      <StickyStage length={mode === 'desktop' ? '360vh' : '240vh'} states={FREE_PIECES.length} topOffset={66} className="free-dossier-stage photo-story-stage">
+      {mode === 'desktop' && (
+        <StickyStage length="360vh" states={FREE_PIECES.length} topOffset={66} className="free-dossier-stage photo-story-stage">
         {({ index, isStatic }) => {
           const piece = FREE_PIECES[index] ?? FREE_PIECES[0]
           const image = `/images/bayona-generated/${piece.photo}-1600.webp`
@@ -39,7 +40,8 @@ export default function FreeValue() {
             </div>
           )
         }}
-      </StickyStage>
+        </StickyStage>
+      )}
       <div className="journey-library" aria-label="Todos los recursos gratuitos">
         {FREE_PIECES.map((piece, index) => {
           const image = `/images/bayona-generated/${piece.photo}-1600.webp`
