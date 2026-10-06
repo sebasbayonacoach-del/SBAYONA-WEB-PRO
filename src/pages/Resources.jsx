@@ -235,6 +235,13 @@ const FRESH_PUBLICATION_MEDIA = Object.freeze({
   'cuidarte-sin-castigo': siteMedia.resources.fresh[1],
 })
 
+const PUBLICATION_PRESENTATIONS = Object.freeze({
+  'protocolo-bayona-7-dias': Object.freeze({ tone: 'protocol', cue: 'START / 07' }),
+  'estructurar-tu-semana': Object.freeze({ tone: 'cadence', cue: 'RITMO / 7D' }),
+  'nutricion-sin-extremos': Object.freeze({ tone: 'balance', cue: 'BASE / REAL' }),
+  'cuidarte-sin-castigo': Object.freeze({ tone: 'reset', cue: 'RESET / MENTE' }),
+})
+
 const RESOURCE_TOPIC_MEDIA = siteMedia.resources.topics
 
 // The current editorial design has three topic shelves rather than the conceptual 12-card map.
@@ -1099,6 +1106,7 @@ export default function Resources() {
                     {section.publications.map((publication, index) => (
                       <article
                         className="resources-publication-card resources-card resources-spotlight resources-reveal"
+                        data-presentation={PUBLICATION_PRESENTATIONS[publication.id]?.tone ?? 'default'}
                         key={publication.id}
                         style={{ '--resources-stagger': `${index * 0.08}s` }}
                       >
@@ -1108,9 +1116,13 @@ export default function Resources() {
                             variant: 'accent',
                           })}
                           aria-hidden="true"
+                          data-presentation={PUBLICATION_PRESENTATIONS[publication.id]?.tone ?? 'default'}
                           data-topic={publication.topic}
                         >
                           <span>{publication.number}</span>
+                          <small className="resources-publication-cue">
+                            {PUBLICATION_PRESENTATIONS[publication.id]?.cue ?? 'BAYONA / NOTE'}
+                          </small>
                           <FileText size={30} strokeWidth={0.9} />
                           <i />
                         </div>
