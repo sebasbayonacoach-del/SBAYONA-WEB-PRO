@@ -30,6 +30,17 @@ describe('/resources — Empieza Gratis honesto', () => {
     expect(screen.getByRole('link', { name: /ABRIR BIBLIOTECA/i })).toHaveAttribute('href', '#revista')
   })
 
+  it('presenta las tres piezas de entrada como tarjetas visuales navegables', () => {
+    const { container } = renderPage()
+
+    const library = container.querySelector('.resources-hero-library')
+    expect(library).not.toBeNull()
+    expect(library.querySelectorAll('.resources-hero-library-visual')).toHaveLength(3)
+    expect(screen.getByRole('link', { name: /presentación del Protocolo BAYONA de 7 días/i })).toHaveAttribute('href', '#revista')
+    expect(screen.getByRole('link', { name: /presentación del Workbook BAYONA de 30 días/i })).toHaveAttribute('href', '#reto')
+    expect(screen.getByRole('link', { name: /presentación de la consulta experta gratuita/i })).toHaveAttribute('href', '#question-title')
+  })
+
   it('anuncia el Reto 30 días con sus reglas visibles antes de empezar', () => {
     const { container } = renderPage()
 

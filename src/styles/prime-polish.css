@@ -2059,7 +2059,7 @@ body.award-mode .checkout-subtitle {
 
   body.premium-route--resources .resources-hero-library {
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+    grid-template-columns: 1fr !important;
     gap: 1px !important;
     margin-top: 1.5rem !important;
     background: var(--prime-line);
@@ -2068,24 +2068,50 @@ body.award-mode .checkout-subtitle {
   body.premium-route--resources .resources-hero-library li {
     min-width: 0 !important;
     display: block !important;
-    padding: .9rem .7rem !important;
+    padding: 0 !important;
     border: 0 !important;
     background: #080809 !important;
   }
 
-  body.premium-route--resources .resources-hero-library span {
-    display: block !important;
-    margin-bottom: .45rem;
+  body.premium-route--resources .resources-hero-library-card {
+    min-height: 118px !important;
+    grid-template-columns: 62px minmax(0,1fr) auto !important;
+    gap: 15px !important;
+    padding: 15px 16px !important;
   }
 
-  body.premium-route--resources .resources-hero-library strong {
-    display: block !important;
-    font-size: .72rem !important;
-    line-height: 1.25 !important;
+  body.premium-route--resources .resources-hero-library-visual {
+    display: grid !important;
+    width: 62px !important;
+    margin: 0 !important;
   }
 
-  body.premium-route--resources .resources-hero-library small {
-    display: none !important;
+  body.premium-route--resources .resources-hero-library-copy {
+    display: block !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  body.premium-route--resources .resources-hero-library-copy > span {
+    display: block !important;
+    margin: 0 0 .45rem !important;
+  }
+
+  body.premium-route--resources .resources-hero-library-copy strong {
+    display: block !important;
+    font-size: .9rem !important;
+    line-height: 1.12 !important;
+  }
+
+  body.premium-route--resources .resources-hero-library-copy small {
+    display: block !important;
+    margin-top: .45rem !important;
+    font-size: .54rem !important;
+    line-height: 1.4 !important;
+  }
+
+  body.premium-route--resources .resources-hero-library-arrow {
+    display: block !important;
   }
 
   /* PLAN: decisión y precio primero; dossier detallado después. */

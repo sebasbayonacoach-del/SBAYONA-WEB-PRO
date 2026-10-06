@@ -717,9 +717,51 @@ export default function Resources() {
             </motion.div>
 
             <motion.ul className="resources-hero-library" variants={HERO_ITEM_VARIANTS} aria-label="Piezas incluidas en la biblioteca BAYONA">
-              <li><span>01</span><strong>Protocolo 7 días</strong><small>Acción inmediata</small></li>
-              <li><span>02</span><strong>Workbook 30 días</strong><small>Ruta con pruebas</small></li>
-              <li><span>03</span><strong>Consulta experta</strong><small>WhatsApp con contexto</small></li>
+              <li data-presentation="protocol">
+                <a className="resources-hero-library-card" href="#revista" aria-label="Ver presentación del Protocolo BAYONA de 7 días">
+                  <span className="resources-hero-library-visual resources-hero-library-visual--protocol" aria-hidden="true">
+                    <FileCheck2 size={20} strokeWidth={1.25} />
+                    <b>07</b>
+                    <i />
+                  </span>
+                  <span className="resources-hero-library-copy">
+                    <span>01</span>
+                    <strong>Protocolo 7 días</strong>
+                    <small>Acción inmediata</small>
+                  </span>
+                  <ArrowUpRight className="resources-hero-library-arrow" aria-hidden="true" size={16} strokeWidth={1.2} />
+                </a>
+              </li>
+              <li data-presentation="workbook">
+                <a className="resources-hero-library-card" href="#reto" aria-label="Ver presentación del Workbook BAYONA de 30 días">
+                  <span className="resources-hero-library-visual resources-hero-library-visual--workbook" aria-hidden="true">
+                    <FileText size={20} strokeWidth={1.25} />
+                    <b>30</b>
+                    <i />
+                  </span>
+                  <span className="resources-hero-library-copy">
+                    <span>02</span>
+                    <strong>Workbook 30 días</strong>
+                    <small>Ruta con pruebas</small>
+                  </span>
+                  <ArrowUpRight className="resources-hero-library-arrow" aria-hidden="true" size={16} strokeWidth={1.2} />
+                </a>
+              </li>
+              <li data-presentation="consultation">
+                <a className="resources-hero-library-card" href="#question-title" aria-label="Ver presentación de la consulta experta gratuita">
+                  <span className="resources-hero-library-visual resources-hero-library-visual--consultation" aria-hidden="true">
+                    <MessageCircle size={20} strokeWidth={1.25} />
+                    <b>1:1</b>
+                    <i />
+                  </span>
+                  <span className="resources-hero-library-copy">
+                    <span>03</span>
+                    <strong>Consulta experta</strong>
+                    <small>WhatsApp con contexto</small>
+                  </span>
+                  <ArrowUpRight className="resources-hero-library-arrow" aria-hidden="true" size={16} strokeWidth={1.2} />
+                </a>
+              </li>
             </motion.ul>
 
             <motion.div className="resources-hero-actions" variants={HERO_ITEM_VARIANTS}>
