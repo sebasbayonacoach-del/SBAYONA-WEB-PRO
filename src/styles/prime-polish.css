@@ -309,11 +309,6 @@ body.premium-route-active main :is(
   content: none !important;
 }
 
-/* PROGRAMAS: el 3D acompaña; nunca tapa la propuesta. */
-body.premium-route--programs [data-scene-cycler] {
-  opacity: .26 !important;
-}
-
 body.premium-route--programs .programs-choice-rail-heading h2 {
   max-width: 11ch;
   font-size: clamp(2.75rem, 5.2vw, 5.8rem);
@@ -454,10 +449,10 @@ body.premium-route-active:not(.onboarding-route) .companion-orb {
 }
 
 /* Programas: el lienzo espacial ocupa el silencio visual de la derecha,
-   pero sigue por debajo del copy. */
+   pero sigue por debajo del copy. Una sola intensidad: la foto manda. */
 body.premium-route--programs [data-scene-cycler] {
-  opacity: .42 !important;
-  filter: saturate(.82) contrast(.96);
+  opacity: .24 !important;
+  filter: saturate(.74) contrast(.94);
 }
 
 @media (max-width: 760px) {

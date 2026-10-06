@@ -395,7 +395,7 @@ export default function Programs() {
         media={siteMedia.programs.hero}
         scene={compactMobile || reducedMotion
           ? undefined
-          : { variant: 'showroom', particles: true, postProcessing: true }}
+          : { variant: 'showroom', particles: false, postProcessing: false }}
       >
         <p>Todos empiezan igual: evaluamos tu punto de partida, planificamos y revisamos. Lo que cambia es cuánto acompañamiento en vivo necesitas y con qué frecuencia quieres feedback.</p>
         <button className="text-button hero-cta" onClick={scrollToVisualization}>
@@ -568,7 +568,7 @@ export default function Programs() {
             {PLAN_DECISION_PATHS.map((path) => (
               <li key={path.planId}>
                 <span>{path.situation}</span>
-                <a href={`#plan-${path.planId.toLowerCase()}`}>{path.plan}<ArrowUpRight size={15} aria-hidden="true" /></a>
+                <Link to={`/plan/${path.planId.toLowerCase()}`}>{path.plan}<ArrowUpRight size={15} aria-hidden="true" /></Link>
               </li>
             ))}
           </ul>
