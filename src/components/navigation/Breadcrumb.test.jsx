@@ -22,12 +22,12 @@ function getBreadcrumb() {
 }
 
 describe('Breadcrumb (Fase 4)', () => {
-  it.each(['/parkour-academy', '/resources', '/community'])('identifica %s sin esperar al montaje de la página', (pathname) => {
-    renderAt(pathname)
-    expect(getBreadcrumb()).toHaveAttribute('data-route', pathname)
+  it('identifica /parkour-academy sin esperar al montaje de la página', () => {
+    renderAt('/parkour-academy')
+    expect(getBreadcrumb()).toHaveAttribute('data-route', '/parkour-academy')
   })
 
-  it.each(['/about', '/programs', '/shop'])('no monta la miga en %s porque su hero ya resuelve posición', (pathname) => {
+  it.each(['/about', '/programs', '/resources', '/shop', '/community'])('no monta la miga en %s porque su hero ya resuelve posición', (pathname) => {
     renderAt(pathname)
     expect(getBreadcrumb()).not.toBeInTheDocument()
   })

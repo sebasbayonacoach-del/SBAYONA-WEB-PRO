@@ -83,67 +83,67 @@ for (const viewport of [
   })
 }
 
-test('cinematic 30 day challenge displays a real image without hiding its resources action', async ({ page }) => {
+test('30 day resource has its own photographic presentation and real PDF', async ({ page }) => {
   await page.setViewportSize({ width: 726, height: 950 })
   await page.goto('/', { waitUntil: 'domcontentloaded' })
-  const stage = page.locator('.free-dossier-stage')
-  await stage.scrollIntoViewIfNeeded()
-  const viewport = stage.locator('.sticky-stage-viewport')
-  if (await viewport.count()) {
-    const metrics = await stage.evaluate(el => {
-      const sticky = el.querySelector('.sticky-stage-viewport')
-      return {
-        start: el.getBoundingClientRect().top + scrollY,
-        travel: el.getBoundingClientRect().height - sticky.getBoundingClientRect().height,
-      }
-    })
-    await page.evaluate(y => scrollTo(0, y), metrics.start + metrics.travel * .39)
-  } else {
-    await stage.locator('.free-dossier-viewport[data-piece="reto"]').scrollIntoViewIfNeeded()
-  }
-  const photo = stage.locator('.free-dossier-viewport[data-piece="reto"] .bayona-challenge-screen__hero')
-  await expect(photo).toBeAttached()
+  const library = page.locator('.journey-library')
+  await library.scrollIntoViewIfNeeded()
+  const card = library.locator('.journey-library-entry[data-piece="reto"]')
+  await expect(card).toBeVisible()
+  const photo = card.locator('.journey-library-preview img')
   await expect.poll(() => photo.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true)
-  const download = stage.getByRole('link', { name: /DESCARGAR EL WORKBOOK/i })
-  await expect(download).toHaveAttribute('href', '/downloads/bayona-editorial/registro-30-dias.pdf')
-  await expect(download).toHaveAttribute('download', '')
+  await expect(card.locator('.journey-library-preview-sheet')).toContainText('30 días, por escrito.')
+  await expect(card).toHaveAttribute('href', '/downloads/bayona-editorial/registro-30-dias.pdf')
+  await expect(card).toHaveAttribute('download', '')
 })
 
 for (const width of [390, 1440]) {
-  test(`four distinct photographic resources remain readable with reduced motion at ${width}px`, async ({ page }) => {
+  test(`four distinct resource presentations remain readable with reduced motion at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.goto('/', { waitUntil: 'domcontentloaded' })
-    const stage = page.locator('.free-dossier-stage')
-    await expect(stage).toHaveClass(/sticky-stage--static/)
-    const frames = stage.locator('.sticky-stage-frame')
-    await expect(frames).toHaveCount(4)
-    const sources = new Set()
+
+    const library = page.locator('.journey-library')
+    await library.scrollIntoViewIfNeeded()
+    const cards = library.locator('.journey-library-entry')
+    await expect(cards).toHaveCount(4)
+
     const expectedDownloads = [
       '/downloads/bayona-editorial/primera-semana.pdf',
       '/downloads/bayona-editorial/registro-30-dias.pdf',
       '/downloads/bayona-editorial/movilidad-y-habitos.pdf',
       '/downloads/bayona-editorial/dossier-punto-de-partida.pdf',
     ]
+    const sources = new Set()
+
     for (let i = 0; i < 4; i++) {
-      const frame = frames.nth(i)
-      await frame.scrollIntoViewIfNeeded()
-      const photo = frame.locator('.photo-story-background')
+      const card = cards.nth(i)
+      await card.scrollIntoViewIfNeeded()
+      const photo = card.locator('.journey-library-preview img')
       await expect.poll(() => photo.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true)
       sources.add(await photo.getAttribute('src'))
       const imageBox = await photo.boundingBox()
-      expect(imageBox.width).toBeGreaterThanOrEqual(width - 2)
-      expect(imageBox.height).toBeGreaterThan(600)
-      const title = await frame.locator('.free-dossier-copy h3').boundingBox()
+      expect(imageBox.width).toBeGreaterThan(100)
+      expect(imageBox.height).toBeGreaterThan(120)
+      const sheet = card.locator('.journey-library-preview-sheet')
+      await expect(sheet).toBeVisible()
+      const title = await sheet.locator('strong').boundingBox()
       expect(title.x).toBeGreaterThanOrEqual(0)
-      expect(title.x + title.width).toBeLessThanOrEqual(width)
-      const action = frame.locator('.free-dossier-action')
-      await expect(action).toBeVisible()
-      await expect(action).toHaveAttribute('href', expectedDownloads[i])
-      await expect(action).toHaveAttribute('download', '')
-      await frame.screenshot({ path: `test-results/playwright/home-visual-audit/resource-${i}-${width}.png` })
+      expect(title.x + title.width).toBeLessThanOrEqual(width + 1)
+      await expect(card).toHaveAttribute('href', expectedDownloads[i])
+      await expect(card).toHaveAttribute('download', '')
+      await card.screenshot({ path: `test-results/playwright/home-visual-audit/resource-${i}-${width}.png` })
     }
+
     expect(sources.size).toBe(4)
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2)).toBe(false)
+
+    const stage = page.locator('.free-dossier-stage')
+    if (width > 768) {
+      await expect(stage).toHaveClass(/sticky-stage--static/)
+      await expect(stage.locator('.sticky-stage-frame')).toHaveCount(4)
+    } else {
+      await expect(stage).toHaveCount(0)
+    }
   })
 }
