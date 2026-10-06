@@ -77,7 +77,7 @@ export default function ProofProcessStage({ block }) {
         {items.map(item => <li key={item.id}><h3>{item.title}</h3><p>{item.body}</p></li>)}
       </ol>
 
-      <StickyStage length={mode === 'desktop' ? '210vh' : '150vh'}
+      <StickyStage length={mode === 'desktop' ? '175vh' : '135vh'}
         states={items.length} topOffset={66} className="proof-process-stage photo-story-stage">
         {({ index, progress, isStatic }) => {
           const item = items[index] ?? items[0]

@@ -57,7 +57,7 @@ export default function CommunityImmersiveStage() {
   return (
     <section className="community-immersive journey-community" aria-labelledby="community-immersive-title">
       <NarrativeIntro image="/images/bayona-generated/community-hero-1600.webp" className="community-immersive-intro" label="COMUNIDAD · UN PRIMER ENCUENTRO" id="community-immersive-title" title="Entrenar empieza por entenderte." body="Entra, conoce la forma de trabajar y encuentra preguntas que también son las tuyas. Puedes mirar antes de decidir." />
-      <StickyStage length={mode === 'desktop' ? '340vh' : '200vh'} states={reducedMotion ? 1 : THREAD.length} topOffset={66} allowMobile className="community-immersive-stage photo-story-stage">
+      <StickyStage length={mode === 'desktop' ? '270vh' : '180vh'} states={reducedMotion ? 1 : THREAD.length} topOffset={66} allowMobile className="community-immersive-stage photo-story-stage">
         {state => <PhoneScene {...state} />}
       </StickyStage>
       <p className="community-immersive-note">Conversación ilustrativa. El seguimiento individual depende del plan elegido.</p>

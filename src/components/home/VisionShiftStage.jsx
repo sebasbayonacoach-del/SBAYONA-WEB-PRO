@@ -199,7 +199,7 @@ export default function VisionShiftStage({ block }) {
       </ol>
 
       <StickyStage
-        length={mode === 'desktop' ? '500vh' : '260vh'}
+        length={mode === 'desktop' ? '400vh' : '230vh'}
         states={items.length}
         topOffset={66}
         allowMobile

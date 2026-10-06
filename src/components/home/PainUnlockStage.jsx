@@ -57,7 +57,7 @@ export default function PainUnlockStage({ block }) {
   const items = block?.items ?? []
   if (!items.length) return null
 
-  const length = mode === 'desktop' ? '280vh' : '180vh'
+  const length = mode === 'desktop' ? '230vh' : '160vh'
 
   return (
     <div className="pain-unlock">
