@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 const BRAND_TAGLINE = 'BAYONA · NO ES FITNESS · ES TRANSFORMACIÓN'
@@ -101,7 +101,7 @@ function queryTargets(root, selectors) {
 }
 
 function usePremiumRouteEnhancements(config) {
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!config) return undefined
 
     const main = document.getElementById('main-content')
