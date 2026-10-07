@@ -81,7 +81,7 @@ const STATIC_ROUTES = {
   '/faq': {
     title: 'Preguntas frecuentes',
     description:
-      'Programas, precios, métodos de pago, lesiones, sesiones presenciales y BAYONA+. Respuestas directas para comparar antes de decidir.',
+      'Servicios, precios, formas de contacto, entrenamiento presencial, online y BAYONA+. Respuestas directas antes de decidir.',
     breadcrumb: [['Preguntas frecuentes', '/faq']],
   },
   '/onboarding': {
@@ -94,14 +94,14 @@ const STATIC_ROUTES = {
   '/entrar': {
     title: 'Entrar — Tu centro de mando BAYONA',
     description:
-      'Accede o crea tu cuenta para guardar recursos, créditos, compras y próximos pasos dentro de tu centro de mando BAYONA.',
+      'Acceso privado BAYONA para clientes y miembros. La navegación pública no requiere crear una cuenta.',
     noindex: true,
     breadcrumb: [['Entrar', '/entrar']],
   },
   '/checkout': {
-    title: 'Configura tu experiencia',
+    title: 'Revisa tu solicitud',
     description:
-      'Arma tu plan base, tus clases y tus extras y revisa el total antes de enviarlo. Esta página prepara una solicitud: aquí no se procesa ningún pago.',
+      'Revisa el servicio, las opciones y el total antes de enviarlo. Esta página prepara una solicitud: aquí no se procesa ningún pago.',
     noindex: true,
     breadcrumb: [['Configurar', '/checkout']],
   },
