@@ -6,7 +6,7 @@ import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
-import { bookingLink } from '../config/site.config.js'
+import { bookingLink, isBookingEnabled } from '../config/site.config.js'
 import { trackEvent } from '../lib/analytics/analytics.js'
 import '../styles/home.css'
 import '../styles/home-luxury-conversion.css'
@@ -255,9 +255,9 @@ export default function Home() {
             href={evaluationUrl}
             target="_blank"
             rel="noreferrer"
-            onClick={() => trackEvent('valuation_request_click', { source: 'home_fallback' })}
+            onClick={() => trackEvent('valuation_request_click', { source: 'home_fallback', channel: isBookingEnabled() ? 'booking' : 'whatsapp' })}
           >
-            AGENDAR POR WHATSAPP <ArrowUpRight size={17} aria-hidden="true" />
+            {isBookingEnabled() ? 'RESERVAR VALORACIÓN' : 'AGENDAR POR WHATSAPP'} <ArrowUpRight size={17} aria-hidden="true" />
           </a>
         </div>
       </section>
