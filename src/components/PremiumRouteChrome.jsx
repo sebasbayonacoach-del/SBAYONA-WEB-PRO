@@ -16,6 +16,7 @@ const BRAND_TAGLINE = 'BAYONA · ENTRENA CON DIRECCIÓN · AVANZA CON MÉTODO'
 const ROUTE_CONFIG = Object.freeze({
   '/': Object.freeze({
     key: 'home',
+    marquee: false,
     revealSelectors: [],
     cardSelectors: ['.gym-service-card', '.gym-process-step', '.gym-gift-card'],
     spotlightSelectors: ['.gym-service-card', '.gym-gift-card'],
@@ -30,6 +31,7 @@ const ROUTE_CONFIG = Object.freeze({
   }),
   '/programs': Object.freeze({
     key: 'programs',
+    marquee: false,
     revealSelectors: [],
     cardSelectors: ['.services-overview-card', '.services-card'],
     spotlightSelectors: ['.services-overview-card', '.services-card'],
@@ -44,6 +46,7 @@ const ROUTE_CONFIG = Object.freeze({
   }),
   '/shop': Object.freeze({
     key: 'shop',
+    marquee: false,
     revealSelectors: [],
     cardSelectors: ['.shop-product-card', '.shop-category-shortcuts button'],
     spotlightSelectors: ['.shop-product-card'],
@@ -234,7 +237,7 @@ export default function PremiumRouteChrome() {
   const config = ROUTE_CONFIG[pathname]
   usePremiumRouteEnhancements(config)
 
-  if (!config) return null
+  if (!config || config.marquee === false) return null
 
   return <BrandMarquee />
 }
