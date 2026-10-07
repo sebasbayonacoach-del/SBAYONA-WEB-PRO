@@ -435,7 +435,11 @@ export function PageHero({ title, kicker, media, children, compact = false, scen
         el orden de pintado la deja delante de la imagen de fondo y detrás
         del contenido (z-index 1). Si fuera antes, el backdrop opaco la taparía.
       */}
-      {scene ? (\n        <Suspense fallback={null}>\n          <SceneMount config={scene} className="page-hero-canvas" />\n        </Suspense>\n      ) : null}
+      {scene ? (
+        <Suspense fallback={null}>
+          <SceneMount config={scene} className="page-hero-canvas" />
+        </Suspense>
+      ) : null}
       <div className="page-hero-content" style={{ position: 'relative', zIndex: 1 }}>
         {kicker && (
           <motion.div {...introMotion}>
