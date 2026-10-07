@@ -1,0 +1,79 @@
+/* BAYONA SHOP · GYM FUNNEL V2 */
+
+.shop-product-visual {
+  position: relative;
+  isolation: isolate;
+}
+
+.shop-product-visual picture,
+.shop-product-visual .shop-product-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.shop-product-visual picture {
+  display: block;
+}
+
+.shop-product-visual .shop-product-image {
+  object-fit: cover;
+  filter: saturate(.76) contrast(1.04) brightness(.82);
+  transition: transform .6s cubic-bezier(.16,1,.3,1), filter .35s ease;
+}
+
+.shop-product-card:hover .shop-product-image {
+  transform: scale(1.035);
+  filter: saturate(.9) contrast(1.04) brightness(.88);
+}
+
+.shop-product-image-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.12) 45%,rgba(0,0,0,.78) 100%);
+}
+
+.shop-product-mark,
+.shop-product-chip {
+  position: absolute !important;
+  z-index: 2 !important;
+}
+
+.shop-product-mark {
+  top: 14px;
+  left: 14px;
+  max-width: calc(100% - 28px);
+  padding: .45rem .55rem;
+  background: rgba(5,5,5,.74);
+  color: rgba(255,255,255,.82);
+  backdrop-filter: blur(8px);
+}
+
+.shop-product-chip {
+  right: 14px;
+  bottom: 14px;
+  padding: .45rem .55rem;
+  background: #f4a261;
+  color: #050505 !important;
+}
+
+@media (max-width: 700px) {
+  .shop-product-visual {
+    aspect-ratio: 4 / 5;
+  }
+
+  .shop-product-card:hover .shop-product-image {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-product-visual .shop-product-image {
+    transition: none;
+  }
+}
