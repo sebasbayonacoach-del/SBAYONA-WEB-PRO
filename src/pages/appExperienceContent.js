@@ -137,7 +137,7 @@ export const BAYONA_PLUS_SUBSCRIBER_TIER = Object.freeze([
   Object.freeze({ title: 'FUNCIONES AVANZADAS', copy: 'Lectura de carga, recuperación y contexto de la semana. En definición.' }),
   Object.freeze({ title: 'ANÁLISIS DEL PROCESO', copy: 'Tendencias conversables con tu entrenador, no diagnósticos automáticos.' }),
   Object.freeze({ title: 'PERSONALIZACIÓN', copy: 'Pantallas ordenadas por tu plan, tu equipo y tu horario.' }),
-  Object.freeze({ title: 'INTEGRACIÓN CON PROGRAMAS', copy: 'Sesión asignada, revisión y resultado en un mismo hilo. Sin confirmar.' }),
+  Object.freeze({ title: 'INTEGRACIÓN CON PLANES', copy: 'Sesión asignada, revisión y resultado en un mismo hilo. Sin confirmar.' }),
 ])
 
 export const BAYONA_PLUS_POSSIBLE_BENEFITS = Object.freeze([

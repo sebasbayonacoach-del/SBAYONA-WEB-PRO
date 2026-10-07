@@ -71,7 +71,7 @@ export default function OrderConfirmation() {
             <li>
               <span aria-hidden="true">02</span>
               <div>
-                <h3>ENTRA EN EL ECOSISTEMA</h3>
+                <h3>CONOCE LA COMUNIDAD</h3>
                 <p>
                   Conoce el espacio comunitario y la información vigente mientras se revisa tu solicitud.
                 </p>

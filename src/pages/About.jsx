@@ -6,7 +6,6 @@ import AboutValuesStage from '../components/about/AboutValuesStage.jsx'
 import AboutMethodStage from '../components/about/AboutMethodStage.jsx'
 import { MethodSequence } from '../components/method/MethodSequence.jsx'
 import { StickyStage } from '../engine/scroll/StickyStage.jsx'
-import Bridge from '../components/Bridge'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import { PageHero, SectionLabel } from '../components/Layout'
 import { siteMedia } from '../config/siteMedia.js'
@@ -187,7 +186,7 @@ export default function About() {
           estática legible por diseño del componente.
         */}
         <StickyStage
-          length="400vh"
+          length="200vh"
           states={stages.length}
           className="about-timeline about-timeline--stage section-shell"
         >
@@ -252,22 +251,7 @@ export default function About() {
         <GlobeTestimonials />
       </section>
 
-      <Bridge
-        className="about-community-bridge"
-        media={siteMedia.about.values[1]}
-        eyebrow="COMUNIDAD ABIERTA"
-        title="ENTRENAMOS, REGISTRAMOS Y AJUSTAMOS."
-        /*
-          El espacio inicial es del contrato de About: la frase se lee entera,
-          «ENTRENAMOS, REGISTRAMOS Y AJUSTAMOS. JUNTOS.», y `Bridge` pega el
-          acento al título sin espacio intermedio.
-        */
-        titleAccent=" JUNTOS."
-        hook="Entra gratis, mira cómo pensamos y decide después si quieres acompañamiento individual."
-        free
-        ctaLabel="CONOCER LA COMUNIDAD"
-        ctaHref="/community"
-      />
+
 
       <section
         {...sceneBackgroundProps(siteMedia.about.values[0], {

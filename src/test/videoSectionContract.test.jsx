@@ -1,15 +1,13 @@
 // Contrato de integración de material humano — Fase 10.1 PREP (Turno 003).
 //
 // CONTEXTO: FASE 10.0 detectó que los 3 VideoSection (Home, Programs, App)
-// están montados SIN videoId/videoUrl — son placeholders honestos ("VIDEO
-// PRÓXIMAMENTE", botón deshabilitado) hasta que Sebastián entregue el material
-// real. ESTA FASE NO AÑADE VIDEO: prepara el mecanismo para que la
-// integración sea quirúrgica y para que NADIE pueda fingir que está hecho.
+// pueden montarse SIN videoId/videoUrl. En ese estado se presentan como una
+// guía visual editorial: no se promete un vídeo futuro y no se pinta un botón
+// que no puede hacer nada. Cuando existe una fuente real, el reproductor aparece.
 //
 // Regla del arquitecto (Turno 003): READY ≠ CONFIGURED ≠ RUNNING ≠ PROVEN.
 // Este test fija los tres primeros estados del contrato:
-//   1. READY: sin videoId → placeholder legítimo, botón deshabilitado,
-//      aria-label "Video próximamente" — NUNCA un embed vacío.
+//   1. READY: sin videoId → guía visual, sin botón de reproducción y sin embed.
 //   2. CONFIGURED: con videoId válido → embed youtube-nocookie correcto,
 //      botón activo, label "VIDEO BAYONA".
 //   3. CONFIGURED-rechazos: ID inválido (URL completa, ID con espacios,
@@ -32,7 +30,7 @@ vi.mock('framer-motion', () => ({
 const POSTER = '/images/burst/test-poster.jpg'
 
 describe('contrato VideoSection — material humano 10.1 (READY/CONFIGURED)', () => {
-  it('READY: sin videoId/videoUrl renderiza placeholder honesto con botón deshabilitado', () => {
+  it('READY: sin videoId/videoUrl renderiza guía visual sin botón falso', () => {
     render(
       <VideoSection
         title="EL MÉTODO BAYONA EN 2 MIN"
@@ -41,14 +39,9 @@ describe('contrato VideoSection — material humano 10.1 (READY/CONFIGURED)', ()
         duration="2 MIN"
       />,
     )
-    expect(screen.getByText('VIDEO PRÓXIMAMENTE')).toBeInTheDocument()
-    const play = screen.getByRole('button')
-    expect(play).toBeDisabled()
-    expect(play).toHaveAttribute(
-      'aria-label',
-      'Video próximamente: EL MÉTODO BAYONA EN 2 MIN',
-    )
-    // Sin iframe y sin <video>: el placeholder NUNCA monta un reproductor.
+    expect(screen.getByText('GUÍA VISUAL BAYONA')).toBeInTheDocument()
+    expect(screen.queryByRole('button')).toBeNull()
+    // Sin iframe y sin <video>: la guía nunca monta un reproductor.
     expect(document.querySelector('iframe')).toBeNull()
     expect(document.querySelector('video')).toBeNull()
   })
@@ -101,16 +94,18 @@ describe('contrato VideoSection — material humano 10.1 (READY/CONFIGURED)', ()
         videoId="https://www.youtube.com/watch?v=abc123XYZ_9"
       />,
     )
-    expect(screen.getByText('VIDEO PRÓXIMAMENTE')).toBeInTheDocument()
-    expect(screen.getByRole('button')).toBeDisabled()
+    expect(screen.getByText('GUÍA VISUAL BAYONA')).toBeInTheDocument()
+    expect(screen.queryByRole('button')).toBeNull()
     expect(document.querySelector('iframe')).toBeNull()
   })
 
   it('fail-closed: ID con espacios o demasiado corto no pasa la validación', () => {
     const { rerender } = render(<VideoSection title="T" poster={POSTER} videoId="abc 123" />)
-    expect(screen.getByRole('button')).toBeDisabled()
+    expect(screen.queryByRole('button')).toBeNull()
+    expect(screen.getByText('GUÍA VISUAL BAYONA')).toBeInTheDocument()
     rerender(<VideoSection title="T" poster={POSTER} videoId="ab" />)
-    expect(screen.getByRole('button')).toBeDisabled()
+    expect(screen.queryByRole('button')).toBeNull()
+    expect(screen.getByText('GUÍA VISUAL BAYONA')).toBeInTheDocument()
     expect(document.querySelector('iframe')).toBeNull()
   })
 

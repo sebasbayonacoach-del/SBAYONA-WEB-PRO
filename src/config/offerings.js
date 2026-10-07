@@ -152,34 +152,28 @@ export const membershipPlans = [
     priceCop: 899000,
     eurDisplay: '≈ €209',
     usd: 226,
-    tag: 'PRIVADO · DIRECTO · MÁXIMO 10 CUPOS',
-    badge: 'ACOMPAÑAMIENTO PRIVADO · MÁXIMO 10 CUPOS',
+    tag: 'PRIVADO · DIRECTO · CAPACIDAD LIMITADA',
+    badge: 'ACOMPAÑAMIENTO PRIVADO · CAPACIDAD LIMITADA',
     presentationUrl: '/docs/plan-elite.pdf',
     shortDescription: 'La experiencia más cercana: decisiones rápidas, contacto directo y un proceso diseñado alrededor de tu vida.',
     audience: 'Para quien quiere prioridad, máxima cercanía y una experiencia privada sin ruido ni plantillas.',
     problem: 'Dejas de delegar tu proceso a fórmulas genéricas. Cada detalle importante se decide contigo.',
     feeling: 'Sientes que tu entrenamiento tiene dirección ejecutiva: claro, cercano y exigente.',
     /**
-     * `scarcity` es el tope publicado del plan: un dato real y estable.
-     *
-     * Aquí había además `urgency: 'Quedan 3 cupos de 10'`, un contador
-     * hardcodeado que nadie actualiza. Afirmar una disponibilidad concreta que
-     * no se comprueba es una promesa que la web no puede sostener y, en España,
-     * entra en el terreno de la publicidad engañosa. Si algún día hay un
-     * recuento real, debe venir de una fuente viva, no de una constante.
+     * La disponibilidad no se expresa como contador estático. Se confirma con
+     * agenda real antes de aceptar el alta.
      */
-    scarcity: 'SOLO 10 CUPOS DISPONIBLES',
+    scarcity: 'DISPONIBILIDAD SUJETA A AGENDA',
     includedLead: 'Todo RENDIMIENTO más:',
     included: [
-      '8 sesiones privadas al mes (virtuales, o presenciales en Bogotá)',
-      'WhatsApp DIRECTO con Sebastián (chat privado)',
-      'Plan 100% personalizado con biohacking avanzado',
-      'Eventos privados VIP',
-      'Acceso de por vida al contenido',
-      'SOLO 10 CUPOS DISPONIBLES',
+      'Hasta 12 sesiones privadas al mes (virtuales o presenciales en España)',
+      'WhatsApp directo con Sebastián',
+      'Seguimiento semanal y ajustes prioritarios',
+      'Hábitos de sueño, recuperación y longevidad dentro de un marco general',
+      'Prioridad de agenda según disponibilidad',
     ],
     excluded: [
-      'Sesiones presenciales fuera de Bogotá (en España: online y grupo)',
+      'Atención clínica, diagnóstico o tratamiento médico',
       'BAYONA+ instalada: el acceso anticipado se activa cuando exista una versión utilizable',
     ],
   }),

@@ -8,25 +8,25 @@ import { test, expect } from '@playwright/test'
 const CHECKS = [
   {
     route: '/',
-    name: 'H — el hero respira (partículas + drift)',
-    selector: '.hero-particles span',
-    css: 'hero-particle-drift',
+    name: 'H — la Home comercial directa vive en el DOM servido',
+    selector: '.gym-home-hero',
+    css: null,
   },
   {
     route: '/',
-    name: 'E — el método se recorre (sticky stage)',
-    selector: '.mechanism-steps--stage',
+    name: 'E — el proceso de inicio se entiende en tres pasos',
+    selector: '.gym-process-grid',
     css: null,
   },
   {
     route: '/parkour-academy',
-    name: 'F — la escalera (sticky vertical)',
+    name: 'F — la escalera de niveles conserva su sticky vertical',
     selector: '.academy-level-grid--stage',
     css: null,
   },
   {
     route: '/about',
-    name: 'G — la línea de vida (sello de año)',
+    name: 'G — la línea de vida conserva su sticky narrativo',
     selector: '.about-timeline--stage',
     css: null,
   },
@@ -61,26 +61,26 @@ for (const check of CHECKS) {
   })
 }
 
-// Auditoría de ritmo mobile: los 3 sticky degradan a pila estática (clase
-// .sticky-stage--static) en viewport móvil — verificar que la degradación
-// existe de verdad en el DOM móvil, no solo en teoría.
-test('consolidación: móvil degrada los sticky a pila estática (sin altura artificial)', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/', { waitUntil: 'domcontentloaded' })
-  const staticMode = await page.locator('.sticky-stage--static').count()
-  expect(staticMode, 'En móvil el StickyStage debería renderizar la pila estática legible').toBeGreaterThan(0)
-})
+// La Home V2 ya no usa storytelling sticky. Parkour y About sí conservan
+// StickyStage y deben degradar a pila estática legible en móvil.
+for (const route of ['/parkour-academy', '/about']) {
+  test(`consolidación: ${route} degrada sticky a pila estática en móvil`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto(route, { waitUntil: 'networkidle' })
+    const staticMode = await page.locator('.sticky-stage--static').count()
+    expect(staticMode, `${route}: StickyStage debe degradar a pila estática legible`).toBeGreaterThan(0)
+  })
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FASE 9.0-A — CONTRATO DE CARDINALIDAD DEL FALLBACK MÓVIL (regresión del
 // hallazgo del arquitecto: duplicación N×N). Antes del fix, cada frame
-// estático pintaba TODOS los estados: Home 3×3=9, Parkour 3×3=9, About
-// 4×4=16 bloques VISIBLES en 390px. El contrato isStatic de StickyStage
-// (isStatic=true => el frame pinta SOLO su estado) es lo que este test
-// protege: exactamente N elementos por página, jamás N×N.
+// estático podía multiplicar estados en Parkour/About. Home V2 ya no usa
+// StickyStage y protege su proceso directo de tres pasos. En las rutas sticky,
+// isStatic=true debe seguir pintando SOLO su estado: exactamente N elementos.
 // ─────────────────────────────────────────────────────────────────────────────
 const CARDINALITY = [
-  { route: '/', selector: '.mechanism-step--stage', expected: 3, label: 'pasos del método' },
+  { route: '/', selector: '.gym-process-grid > li', expected: 3, label: 'pasos para empezar' },
   { route: '/parkour-academy', selector: '.academy-level--stage', expected: 3, label: 'niveles' },
   { route: '/about', selector: '.about-timeline-entry--stage', expected: 4, label: 'etapas de la línea de vida' },
 ]

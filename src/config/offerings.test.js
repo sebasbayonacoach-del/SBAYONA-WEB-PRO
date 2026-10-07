@@ -19,10 +19,17 @@ describe('configuración compartida de planes y servicios', () => {
       { id: 'ELITE', name: 'ELITE', priceCop: 899000, priceDisplay: '$899.000', eur: '≈ €209' },
     ])
 
-    // ⚠️ Pendiente de decisión comercial: ELITE publica "Acceso de por vida al
-    // contenido". El contrato histórico prohibía claims "de por vida"; se
-    // relajó el patrón para reflejar el catálogo vigente hasta revisión.
-    expect(JSON.stringify(membershipPlans)).not.toMatch(/FOUNDATIONS|ESSA|para siempre/i)
+    // Sin marcas heredadas, disponibilidad ficticia ni promesas perpetuas.
+    expect(JSON.stringify(membershipPlans)).not.toMatch(/FOUNDATIONS|ESSA|para siempre|SOLO 10 CUPOS|MÁXIMO 10 CUPOS/i)
+
+    const elite = membershipPlans.find(({ id }) => id === 'ELITE')
+    expect(elite.included).toEqual(expect.arrayContaining([
+      expect.stringMatching(/Hasta 12 sesiones privadas al mes/i),
+      expect.stringMatching(/presenciales en España/i),
+      expect.stringMatching(/sueño, recuperación y longevidad/i),
+    ]))
+    expect(elite.scarcity).toBe('DISPONIBILIDAD SUJETA A AGENDA')
+    expect(JSON.stringify(elite)).not.toMatch(/Bogotá|eventos privados VIP|acceso de por vida|biohacking avanzado/i)
   })
 
   it('define la categoría Rendimiento y sincroniza el catálogo editorial con los servicios calculables', () => {

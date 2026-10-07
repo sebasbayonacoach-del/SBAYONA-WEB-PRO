@@ -1,49 +1,28 @@
 import { test, expect } from '@playwright/test'
 
-test('Home presenta el titular de visión con anchura editorial en tablet', async ({ page }) => {
+test('Home V2 presenta una jerarquía editorial clara en tablet', async ({ page }) => {
   await page.setViewportSize({ width: 726, height: 950 })
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.goto('/', { waitUntil: 'domcontentloaded' })
-  const intro = page.locator('.vision-shift-intro')
-  await expect(intro).toBeVisible()
-  const bounds = await intro.evaluate((el) => {
-    const heading = el.querySelector('h2')
-    return { heading: heading.getBoundingClientRect().width, container: el.getBoundingClientRect().width }
-  })
-  expect(bounds.heading / bounds.container).toBeGreaterThan(0.75)
-  const staticStage = page.locator('.vision-shift-stage.sticky-stage--static')
-  await expect(staticStage.locator('.sticky-stage-frame')).toHaveCount(5)
-  const firstRow = staticStage.locator('.sticky-stage-frame').first()
-  const rowHeight = await firstRow.evaluate((node) => node.getBoundingClientRect().height)
-  expect(rowHeight, 'la secuencia estática no debe reservar una fila visual vacía').toBeLessThan(260)
-  const frames = await staticStage.locator('.sticky-stage-frame').evaluateAll((nodes) => nodes.map((node) => {
-    const rect = node.getBoundingClientRect()
-    const copy = node.querySelector('.vision-shift-copy').getBoundingClientRect()
-    return { top: rect.top, bottom: rect.bottom, copyTop: copy.top, copyBottom: copy.bottom }
-  }))
-  for (let i = 0; i < frames.length; i++) {
-    expect(frames[i].copyTop).toBeGreaterThanOrEqual(frames[i].top - 2)
-    expect(frames[i].copyBottom).toBeLessThanOrEqual(frames[i].bottom + 2)
-    if (i > 0) expect(frames[i].top).toBeGreaterThanOrEqual(frames[i - 1].bottom - 2)
-  }
-  await intro.scrollIntoViewIfNeeded()
-  await page.screenshot({ path: 'test-results/playwright/vision-elite/vision-726.png' })
+  await page.goto('/', { waitUntil: 'networkidle' })
+
+  const hero = page.locator('.gym-home-hero__content')
+  await expect(hero).toBeVisible()
+  const h1 = hero.locator('h1')
+  await expect(h1).toHaveText('ENTRENA CON DIRECCIÓN.')
+  const box = await h1.boundingBox()
+  expect(box.width).toBeLessThanOrEqual(726)
+
+  await expect(page.locator('.gym-process-grid > li')).toHaveCount(3)
+  await expect(page.locator('.home-memberships-section .plan-explorer')).toBeAttached()
 })
 
-test('Home conserva una secuencia editorial legible en móvil y escritorio', async ({ page }) => {
+test('Home V2 conserva una secuencia comercial legible en móvil y escritorio', async ({ page }) => {
   for (const width of [390, 1440]) {
     await page.setViewportSize({ width, height: 900 })
-    await page.emulateMedia({ reducedMotion: 'reduce' })
-    await page.goto('/', { waitUntil: 'domcontentloaded' })
-    const intro = page.locator('.vision-shift-intro')
-    await expect(intro.locator('h2')).toContainText('PROGRESAS MEJOR')
-    await expect(intro.getByRole('link', { name: /VAMOS A VER CÓMO FUNCIONA/i })).toHaveAttribute('href', '#problemas')
-    const staticStage = page.locator('.vision-shift-stage.sticky-stage--static')
-    await expect(staticStage.locator('.vision-shift-visual:visible')).toHaveCount(0)
-    await expect(staticStage.locator('.vision-shift-copy')).toHaveCount(5)
-    const horizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 2)
-    expect(horizontalOverflow).toBe(false)
-    await intro.scrollIntoViewIfNeeded()
-    await page.screenshot({ path: `test-results/playwright/vision-elite/vision-${width}.png` })
+    await page.goto('/', { waitUntil: 'networkidle' })
+
+    await expect(page.getByRole('heading', { level: 2, name: /ELIGE CÓMO QUIERES ENTRENAR/i })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 2, name: /TRES PASOS PARA EMPEZAR/i })).toBeAttached()
+    await expect(page.getByRole('heading', { level: 2, name: /PRIMERO RECIBES VALOR/i })).toBeAttached()
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2)).toBe(false)
   }
 })

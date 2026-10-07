@@ -96,23 +96,23 @@ export default function VideoSection({
           {poster && <img src={poster} alt="" loading="lazy" decoding="async" />}
           <div className="video-section__poster-grid" aria-hidden="true" />
           <div className="video-section__meta">
-            <span>{hasVideo ? 'VIDEO BAYONA' : 'VIDEO PRÓXIMAMENTE'}</span>
-            {durationLabel && <span>{durationLabel}</span>}
+            <span>{hasVideo ? 'VIDEO BAYONA' : 'GUÍA VISUAL BAYONA'}</span>
+            {hasVideo && durationLabel && <span>{durationLabel}</span>}
           </div>
           <div className="video-section__copy">
-            {!hasVideo && <p>VIDEO PRÓXIMAMENTE · {title}</p>}
             <h2 id={titleId}>{title}</h2>
             {subtitle && <p className="video-section__subtitle">{subtitle}</p>}
           </div>
-          <button
-            className="video-section__play"
-            type="button"
-            disabled={!hasVideo}
-            onClick={() => setHasStarted(true)}
-            aria-label={hasVideo ? `Reproducir ${title}` : `Video próximamente: ${title}`}
-          >
-            <Play size={30} fill="currentColor" strokeWidth={1} aria-hidden="true" />
-          </button>
+          {hasVideo && (
+            <button
+              className="video-section__play"
+              type="button"
+              onClick={() => setHasStarted(true)}
+              aria-label={`Reproducir ${title}`}
+            >
+              <Play size={30} fill="currentColor" strokeWidth={1} aria-hidden="true" />
+            </button>
+          )}
         </div>
       </div>
     </div>

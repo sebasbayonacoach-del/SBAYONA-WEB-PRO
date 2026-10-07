@@ -628,3 +628,16 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Gym Funnel V2 recupera fotografía dentro de sus tarjetas.
+   bayona-visual-unity oculta por defecto media dentro de cualquier *-card;
+   estas dos familias son una excepción deliberada del rediseño gym-first. */
+body.premium-route--home .gym-service-card > img,
+body.premium-route--home .gym-gift-card > img {
+  display: block !important;
+}
+
+body.premium-route--home .ds-frame:not([data-experience-scope='system']) .gym-service-card > img,
+body.premium-route--home .ds-frame:not([data-experience-scope='system']) .gym-gift-card > img {
+  display: block !important;
+}

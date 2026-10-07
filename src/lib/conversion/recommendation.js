@@ -165,12 +165,12 @@ export const PUBLISHED_RECOMMENDATION_FEATURES = Object.freeze({
   'ELITE.private-sessions': publishedIncludedFeature(
     'ELITE.private-sessions',
     'ELITE',
-    '8 sesiones privadas al mes (virtuales, o presenciales en Bogotá)',
+    'Hasta 12 sesiones privadas al mes (virtuales o presenciales en España)',
   ),
   'ELITE.direct-contact': publishedIncludedFeature(
     'ELITE.direct-contact',
     'ELITE',
-    'WhatsApp DIRECTO con Sebastián (chat privado)',
+    'WhatsApp directo con Sebastián',
   ),
 })
 

@@ -12,14 +12,14 @@ import { GUARANTEE_FAQ_ANSWER } from './commitments.js'
 
 export const questionCategories = [
   {
-    title: 'PROGRAMAS',
+    title: 'SERVICIOS',
     questions: [
       {
         q: '¿Necesito experiencia previa?',
         a: 'No. Hay propuestas desde iniciación hasta rendimiento. Antes de contratar revisamos tu punto de partida, objetivo y disponibilidad para orientar la elección.',
       },
       {
-        q: '¿Hay programas para niños?',
+        q: '¿Hay servicios para niños y jóvenes?',
         a: 'Sí. La oferta publicada contempla niños de 5 a 11 años y jóvenes de 12 a 17, además de adultos, deportistas y personas de 60 años o más. La actividad concreta depende de nivel, ubicación y disponibilidad.',
       },
       {
@@ -90,7 +90,7 @@ export const questionCategories = [
       },
       {
         q: '¿Qué material necesito?',
-        a: 'Depende del programa y del objetivo. Puede incluir peso corporal, bandas o mancuernas. Antes de empezar te confirmamos el material y las alternativas disponibles.',
+        a: 'Depende del servicio y del objetivo. Puede incluir peso corporal, bandas o mancuernas. Antes de empezar te confirmamos el material y las alternativas disponibles.',
       },
       {
         q: '¿Hay clases presenciales?',

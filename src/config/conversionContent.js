@@ -447,7 +447,7 @@ export const homeContentModel = Object.freeze({
   primaryAction: Object.freeze({
     label: 'QUIERO EMPEZAR CON DIRECCIÓN',
     destination: '/programs',
-    consequence: 'Abre Programas para elegir cómo quieres empezar tu transformación.',
+    consequence: 'Abre Servicios para elegir cómo quieres empezar.',
   }),
   metadataKey: '/',
 })

@@ -25,11 +25,11 @@
   border-radius: 0;
 }
 
-/* Una tarjeta comunica con jerarquía, numeración e iconos, no con fotografías.
-   Ocultamos también media heredada por inline style y pseudoelementos. */
+/* Las tarjetas editoriales siguen siendo tipográficas. Las tres familias
+   gym-first son una excepción deliberada: su fotografía es parte del producto. */
 .ds-frame:not([data-experience-scope='system']) :is(
   .ds-card,
-  [class*='-card'],
+  [class*='-card']:not(.gym-service-card):not(.gym-gift-card):not(.shop-product-card),
   [class*='-tile']
 ) :is(img, picture, video, canvas, iframe) {
   display: none !important;

@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import VideoSection from '../components/VideoSection.jsx'
-import { sceneBackgroundProps, StockImage } from '../components/SceneBackground.jsx'
+import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import Glyph from '../components/social/Glyph'
 import { siteMedia } from '../config/siteMedia.js'
 import { whatsAppLink } from '../config/site.config.js'
@@ -43,82 +43,6 @@ const tiktokProfile = profiles.find(profile => profile.id === 'tiktok')
 const youtubeUrl = youtubeProfile?.url || 'https://youtube.com/@sevisionari'
 const instagramUrl = instagramProfile?.url || 'https://instagram.com/sebasbayona'
 const tiktokUrl = tiktokProfile?.url || 'https://tiktok.com/@sebasbayona'
-
-/**
- * Los cuatro sentimientos de la comunidad contados como una escena, no como
- * tarjetas: cada uno es un momento del día con su hora. La idea de «imagina
- * esto: llegas un lunes» solo funciona si se lee en orden y en voz baja, así
- * que el bloque se compone como narrativa (hora · qué pasa · qué te lleva) y
- * la imagen grande va aparte, de fondo de escena, no metida en cada caja.
- */
-const communityFeelings = [
-  {
-    moment: 'LUNES · 06:40',
-    title: 'LLEGAS CON UNA DUDA.',
-    detail: 'No entras a mirar desde fuera. Entras a un círculo donde empezar no da vergüenza y sostener cuenta.',
-    icon: Users,
-  },
-  {
-    moment: 'MARTES · 19:10',
-    title: 'ALGUIEN COMPARTE UN LOGRO.',
-    detail: 'Cada semana una idea útil: menos ruido, más criterio para entrenar, comer y cuidarte.',
-    icon: BookOpen,
-  },
-  {
-    moment: 'MIÉRCOLES · 08:00',
-    title: 'ALGUIEN TE RESPONDE.',
-    detail: 'Cuando baja la motivación, el grupo te devuelve contexto, ejemplo y siguiente acción.',
-    icon: TrendingUp,
-  },
-  {
-    moment: 'SÁBADO · SIN HORA',
-    title: 'VUELVES A MOVERTE.',
-    detail: 'Fuerza, mente y carácter se entrenan mejor cuando hay gente mirando hacia la misma dirección.',
-    icon: Sprout,
-  },
-]
-
-const identityMarkers = [
-  {
-    title: 'PERSONAS REALES',
-    detail: 'Distintas edades, historias y puntos de partida unidos por una idea: moverse con intención.',
-  },
-  {
-    title: '+8 AÑOS',
-    detail: 'Años construyendo cultura de movimiento, cercanía y aprendizaje práctico.',
-  },
-  {
-    title: 'ABIERTO PARA TODOS',
-    detail: 'Puedes entrar sin comprar. Si te da claridad, ya empieza a valer.',
-  },
-  {
-    title: 'CADA SEMANA',
-    detail: 'Contenido vivo para que el proceso no se enfríe entre una decisión y la siguiente.',
-  },
-]
-
-const bayonaTraits = [
-  {
-    title: 'APRENDE',
-    detail: 'La comunidad no presume perfección: busca entender mejor.',
-    icon: BookOpen,
-  },
-  {
-    title: 'PRACTICA',
-    detail: 'No se queda en inspiración. Hay movimiento, pruebas y aplicación.',
-    icon: Activity,
-  },
-  {
-    title: 'RESPETA',
-    detail: 'Cada cuerpo llega con historia. Por eso aquí no se ridiculiza el punto de partida.',
-    icon: HeartHandshake,
-  },
-  {
-    title: 'COMPARTE',
-    detail: 'Compartimos avances, dudas, comidas, entrenamientos y hallazgos para que nadie tenga que descifrarlo todo solo.',
-    icon: Share2,
-  },
-]
 
 /**
  * La pinta de cada casilla. Lo que antes marcaba `active` ahora lo decide la
@@ -207,26 +131,11 @@ const accessLevels = [
     tag: 'PARA ELITE',
     index: '03',
     description: 'Chat privado con Sebastián, criterio cercano y acompañamiento ELITE.',
-    condition: 'EXCLUSIVO ELITE · 10 CUPOS',
+    condition: 'EXCLUSIVO ELITE · DISPONIBILIDAD LIMITADA',
     scope: ['Chat privado con Sebastián', 'Criterio cercano y continuo', 'Acompañamiento ELITE completo'],
     feeling: 'Para quien quiere cercanía, criterio y una experiencia más privada.',
     icon: HeartHandshake,
     featured: true,
-  },
-]
-
-const communityEvidenceState = [
-  {
-    title: 'SIN CITAS PUBLICADAS',
-    detail: 'Todavía no hay testimonios publicados aquí.',
-  },
-  {
-    title: 'CRITERIO DE PUBLICACIÓN',
-    detail: 'Cuando publiquemos, será con permiso y con sus propias palabras.',
-  },
-  {
-    title: 'MIENTRAS TANTO',
-    detail: 'Mira los canales o entra al grupo y conócenos.',
   },
 ]
 
@@ -276,36 +185,6 @@ function LuxuryReveal({ as = 'div', children, className, index, reducedMotion, s
     >
       {children}
     </Wrapper>
-  )
-}
-
-/**
- * Momento de la escena semanal. Antes era una `lux-card` con la foto de la
- * comunidad metida dentro como fondo: cuatro cajas iguales con la misma
- * imagen. Aquí la caja desaparece y queda la línea narrativa: hora, lo que
- * pasa y lo que te lleva. La imagen grande vive fuera, en el panel de escena.
- */
-function ClubMoment({ moment, index, reducedMotion }) {
-  const MomentIcon = moment.icon
-
-  return (
-    <LuxuryReveal
-      as="li"
-      className="community-moment"
-      index={index}
-      reducedMotion={reducedMotion}
-      step={0.09}
-    >
-      <span className="community-moment-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-      <div className="community-moment-body">
-        <p className="community-moment-time">
-          <MomentIcon aria-hidden="true" size={15} strokeWidth={1.2} />
-          {moment.moment}
-        </p>
-        <h3 className="community-moment-title">{moment.title}</h3>
-        <p className="community-moment-desc">{moment.detail}</p>
-      </div>
-    </LuxuryReveal>
   )
 }
 
@@ -372,7 +251,7 @@ function CommunityLiveFeed() {
   return (
     <section
       className="community-section community-reveal community-live community-rail-section"
-      data-section-number="07"
+      data-section-number="04"
       aria-labelledby="community-live-title"
     >
       <div className="community-shell container community-section-content community-number-layer">
@@ -623,120 +502,11 @@ export default function Community() {
         </div>
       </section>
 
-      <section className="community-section community-reveal community-scene-block" data-section-number="02" aria-labelledby="community-feeling-title">
-        <div className="community-shell container community-section-content community-number-layer">
-          <header className="community-section-header community-header" data-immersive="clip">
-            <p className="community-overline community-eyebrow">CÓMO SE SIENTE</p>
-            <h2 id="community-feeling-title" className="community-title">IMAGINA <span>ESTO:</span></h2>
-            <p className="community-section-subtitle community-subtitle">
-              Una semana cualquiera dentro del grupo, contada de corrido.
-            </p>
-          </header>
 
-          {/*
-            La escena en dos piezas: la foto humana grande, de verdad grande y a
-            sangre (no recortada dentro de una card), y al lado la narrativa en
-            cuatro momentos numerados. Era una rejilla de cuatro tarjetas con la
-            misma foto dentro cuatro veces.
-          */}
-          <div className="community-scene">
-            <figure className="community-scene-photo">
-              <StockImage media={siteMedia.community.feelings[0]} priority={false} sizes="(max-width: 900px) 92vw, 42vw" />
-              <figcaption>
-                <strong>UN MIÉRCOLES CUALQUIERA.</strong>
-                <span>Alguien escribe antes de entrenar. Alguien contesta antes de que termine.</span>
-              </figcaption>
-            </figure>
 
-            <ol className="community-moments" aria-label="Una semana dentro de la comunidad, contada en cuatro momentos">
-              {communityFeelings.map((moment, index) => (
-                <ClubMoment
-                  moment={moment}
-                  index={index}
-                  key={moment.title}
-                  reducedMotion={reducedMotion}
-                />
-              ))}
-            </ol>
-          </div>
-          <p className="community-marketing-line community-loss-question">Esa pregunta ya es tuya.</p>
 
-          <div className="community-proof-strip community-stagger" aria-label="Señales de identidad de la comunidad">
-            {identityMarkers.map((marker, index) => (
-              <article key={marker.title} style={{ '--i': index }}>
-                <strong>{marker.title}</strong>
-                <p>{marker.detail}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="community-section community-reveal community-person community-manifest-section" data-section-number="03" aria-labelledby="community-person-title">
-        <div className="community-shell container community-section-content">
-          {/*
-            El manifiesto de abajo lista los rasgos uno detrás de otro. Esta
-            figura los dice a la vez: cada arista del polígono ES un rasgo, así
-            que la forma se completa con la misma lista y no con adorno.
-          */}
-          <svg
-            className="community-figure community-figure--rasgos"
-            viewBox="0 0 260 200"
-            role="img"
-            aria-label={`Polígono de ${bayonaTraits.length} aristas, una por cada rasgo del manifiesto, alrededor de una persona.`}
-          >
-            {bayonaTraits.map((trait, index) => {
-              const paso = (360 / bayonaTraits.length) * Math.PI / 180
-              const angulo = -Math.PI / 2 + index * paso
-              const x = 130 + 76 * Math.cos(angulo)
-              const y = 100 + 76 * Math.sin(angulo)
-              const xSiguiente = 130 + 76 * Math.cos(angulo + paso)
-              const ySiguiente = 100 + 76 * Math.sin(angulo + paso)
-              return (
-                <g className="community-rasgo" key={`arista-${trait.title}`} style={{ '--i': index }}>
-                  <line className="community-rasgo-arista" x1={x} y1={y} x2={xSiguiente} y2={ySiguiente} />
-                  <circle className="community-rasgo-nodo" cx={x} cy={y} r="4.5" />
-                </g>
-              )
-            })}
-            <circle className="community-rasgo-nucleo" cx="130" cy="100" r="11" />
-          </svg>
-          <header className="community-section-header community-header" data-immersive="clip">
-            <p className="community-overline community-eyebrow">QUIÉN ERES AQUÍ</p>
-            <h2 id="community-person-title" className="community-title">UNA PERSONA <span>BAYONA:</span></h2>
-            <p className="community-section-subtitle community-subtitle">No hace falta ser cliente ni tener experiencia. Solo ganas de dejar de empezar cada lunes.</p>
-          </header>
-
-          {/*
-            Manifiesto numerado, no parrilla de tarjetas. La sección de al lado
-            («imagina esto») ya es una rejilla de piezas: repetir rejilla aquí
-            convertía el recorrido en un muro igual. Aquí cada rasgo es una línea
-            que se descubre sola, con su número y su regla, y se lee de arriba
-            abajo como un listado, no como un mosaico.
-          */}
-          <ol className="community-manifest" aria-label="Rasgos de una persona BAYONA">
-            {bayonaTraits.map((trait, index) => {
-              const TraitIcon = trait.icon
-              return (
-                <li className="community-manifest-line" key={trait.title} style={{ '--i': index }}>
-                  <span className="community-manifest-index" aria-hidden="true">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <div className="community-manifest-body">
-                    <h3 className="community-trait-name">{trait.title}</h3>
-                    <p className="community-trait-desc">{trait.detail}</p>
-                  </div>
-                  <TraitIcon className="community-manifest-icon" aria-hidden="true" size={26} strokeWidth={1} />
-                </li>
-              )
-            })}
-          </ol>
-          <p className="community-aspiration-line">Si reconoces algo de ti en esta lista, ya eres parte. Solo falta que entres.</p>
-          <p className="community-marketing-line is-mono community-identity-entry">NO HAY EXAMEN DE ENTRADA. SOLO LA DECISIÓN DE EMPEZAR.</p>
-        </div>
-      </section>
-
-      <section className="community-section community-reveal community-week" data-section-number="04" id="semana" aria-labelledby="community-week-title">
+      <section className="community-section community-reveal community-week" data-section-number="02" id="semana" aria-labelledby="community-week-title">
         <div className="community-shell container community-section-content community-number-layer">
           <header className="community-section-header community-header" data-immersive="clip">
             <p className="community-overline community-eyebrow"><CalendarDays aria-hidden="true" size={17} /> EL PULSO</p>
@@ -827,7 +597,7 @@ export default function Community() {
         </div>
       </section>
 
-      <section className="community-section community-reveal community-access" data-section-number="05" aria-labelledby="community-access-title">
+      <section className="community-section community-reveal community-access" data-section-number="03" aria-labelledby="community-access-title">
         <div className="community-shell container community-section-content community-number-layer">
           {/*
             «Tres niveles, un mismo espíritu» se leía mejor en una diana que en
@@ -930,44 +700,11 @@ export default function Community() {
             })}
           </ol>
           <p className="community-marketing-line is-italic community-tier-access-note">El grupo es gratis. Lo que cambia es cuánto nos acercamos.</p>
-          <Link to="/programs" className="community-inline-link">¿VEMOS TU NIVEL? · PROGRAMAS<ArrowUpRight aria-hidden="true" size={16} /></Link>
+          <Link to="/programs" className="community-inline-link">¿VEMOS TU NIVEL? · SERVICIOS<ArrowUpRight aria-hidden="true" size={16} /></Link>
         </div>
       </section>
 
-      <section
-        {...sceneBackgroundProps(siteMedia.community.stories, {
-          className: 'community-section community-reveal community-stories',
-          variant: 'subtle',
-          pseudo: 'after',
-        })}
-        data-section-number="06"
-        aria-labelledby="community-stories-title"
-      >
-        <div className="community-shell container community-section-content community-number-layer">
-          {/*
-            Era un carrusel que duplicaba las mismas fichas para simular movimiento
-            sobre una casilla que está vacía a propósito. Ahora es una página partida:
-            a la izquierda la regla, a la derecha el índice de evidencias tal cual está.
-          */}
-          <div className="community-stories-split">
-            <header className="community-section-header community-header" data-immersive="clip">
-              <p className="community-overline community-eyebrow">TESTIMONIOS</p>
-              <h2 id="community-stories-title" className="community-title">HISTORIAS REALES,<br /><span>CUANDO TOQUE.</span></h2>
-              <p className="community-section-subtitle community-subtitle">Cuando publiquemos historias, serán reales y con permiso.</p>
-              <p className="community-marketing-line is-mono community-testimonial-intro">AÚN NO HAY TESTIMONIOS PUBLICADOS.</p>
-            </header>
 
-            <ol className="community-stories-indice">
-              {communityEvidenceState.map((entry, index) => (
-                <li key={entry.title} style={{ '--i': index }}>
-                  <p className="testimonial-quote">{entry.detail}</p>
-                  <span className="testimonial-author">{entry.title}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
 
       <CommunityLiveFeed />
 
@@ -977,7 +714,7 @@ export default function Community() {
           variant: 'subtle',
           pseudo: 'after',
         })}
-        data-section-number="08"
+        data-section-number="05"
         aria-labelledby="community-group-title"
       >
         <div className="community-shell container community-section-content community-number-layer">
@@ -1043,39 +780,7 @@ export default function Community() {
         </div>
       </section>
 
-      <section className="community-section community-reveal community-entry" data-section-number="09" aria-labelledby="community-entry-title">
-        <div className="community-shell container community-section-content community-number-layer">
-          <header className="community-section-header community-header" data-immersive="clip">
-            <p className="community-overline community-eyebrow">TU PRIMER PASO</p>
-            <h2 id="community-entry-title" className="community-title">ENTRAR ES <span>SIMPLE.</span></h2>
-            <p className="community-section-subtitle community-subtitle">Un mensaje. Eso es todo.</p>
-          </header>
 
-          {/*
-            El CSS de la lista ya reservaba una columna de 40px para un número
-            por paso; el JSX nunca lo pintaba, así que la secuencia se leía como
-            tres filas de texto más. Con los números y el hilo vertical vuelve a
-            ser lo que dice el titular: un orden.
-          */}
-          <ol className="community-entry-steps community-stagger">
-            <li style={{ '--i': 0 }}>
-              <span aria-hidden="true">01</span>
-              <strong>ESCRÍBENOS POR WHATSAPP</strong>
-            </li>
-            <li style={{ '--i': 1 }}>
-              <span aria-hidden="true">02</span>
-              <strong>DINOS QUE QUIERES ENTRAR</strong>
-            </li>
-            <li style={{ '--i': 2 }}>
-              <span aria-hidden="true">03</span>
-              <strong>RECIBES EL ACCESO</strong>
-            </li>
-          </ol>
-          <a className="community-button community-button-primary community-entry-cta" href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle aria-hidden="true" size={21} />EMPEZAMOS EN 30 SEGUNDOS<ArrowUpRight aria-hidden="true" size={18} /></a>
-          <p className="community-marketing-line is-mono community-entry-speed">TOMA 30 SEGUNDOS. MÁS RÁPIDO QUE TU ÚLTIMO REEL.</p>
-          <p className="community-entry-note">Sin formularios. Sin requisitos. Solo un mensaje.</p>
-        </div>
-      </section>
 
       {/*
         Esta sección no cierra la página —eso lo hacen «PÁSALO» y la firma del
@@ -1084,7 +789,7 @@ export default function Community() {
         se abre en dos salidas, que es literalmente lo que dice el texto de
         abajo. Planta PUENTE por composición, no por etiqueta.
       */}
-      <section className="community-section community-reveal community-closing community-bridge" data-section-number="10" aria-labelledby="community-closing-title">
+      <section className="community-section community-reveal community-closing community-bridge" data-section-number="06" aria-labelledby="community-closing-title">
         <div className="community-shell container community-section-content community-number-layer">
           <svg
             className="community-bridge-horquilla"
@@ -1106,7 +811,7 @@ export default function Community() {
           <p className="community-section-subtitle community-subtitle">Pide las normas y el enlace por WhatsApp. Si quieres seguimiento, vemos juntos el plan.</p>
           <div className="community-closing-actions">
             <a className="community-button community-button-primary" href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle aria-hidden="true" size={20} />ENTRA AL GRUPO GRATIS<ArrowUpRight aria-hidden="true" size={18} /></a>
-            <Link to="/programs" className="community-button community-button-secondary">COMPARAR PROGRAMAS<ArrowUpRight aria-hidden="true" size={18} /></Link>
+            <Link to="/programs" className="community-button community-button-secondary">VER SERVICIOS<ArrowUpRight aria-hidden="true" size={18} /></Link>
           </div>
         </div>
       </section>

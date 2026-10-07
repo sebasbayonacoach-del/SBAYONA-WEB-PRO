@@ -4574,3 +4574,39 @@
 .community-orbit:hover .community-orbit-ring {
   stroke: var(--bayona-orange);
 }
+
+/* ==========================================================================
+   PRO FINAL 2026-10-07 · comunidad más directa
+   ========================================================================== */
+@media (min-width: 769px) {
+  .community-page .community-section {
+    padding-block: clamp(54px, 5vw, 80px);
+  }
+
+  .community-page .community-day {
+    min-height: 205px;
+  }
+
+  .community-page .community-tier {
+    min-height: 310px;
+  }
+
+  .community-page .community-group-traits article {
+    min-height: 150px;
+  }
+
+  .community-page .community-closing,
+  .community-page .community-bridge {
+    min-height: 58vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .community-page .community-section {
+    padding-block: 52px;
+  }
+
+  .community-page .community-closing {
+    min-height: 0;
+  }
+}
