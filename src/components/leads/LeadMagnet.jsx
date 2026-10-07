@@ -7,7 +7,7 @@
  */
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { whatsAppLink } from '../../config/site.config.js'
+import { bookingLink, isBookingEnabled } from '../../config/site.config.js'
 import { isCloudEnabled, supabase } from '../../lib/supabase.js'
 import '../../styles/auth-members.css'
 
@@ -95,7 +95,7 @@ export default function LeadMagnet({
     }
   }
 
-  const evaluationUrl = whatsAppLink(
+  const evaluationUrl = bookingLink(
     `Hola BAYONA, soy ${String(name).trim() || 'un nuevo contacto'}. Ya abrí mis recursos y quiero agendar una valoración inicial. Mi contacto es: ${String(contact).trim() || 'por confirmar'}.`,
   )
 
@@ -153,7 +153,11 @@ export default function LeadMagnet({
               </a>
               <Link to="/programs">VER SERVICIOS</Link>
             </div>
-            <small>La cita se confirma por WhatsApp según disponibilidad.</small>
+            <small>
+              {isBookingEnabled()
+                ? 'La disponibilidad y la confirmación se gestionan en el calendario.'
+                : 'La cita se coordina por WhatsApp según disponibilidad.'}
+            </small>
           </div>
         ) : (
           <>
