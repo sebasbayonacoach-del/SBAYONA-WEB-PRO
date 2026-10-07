@@ -16,18 +16,8 @@ import { useRecedeWhileScrolling } from './lib/ui/useRecedeWhileScrolling.js'
 import RouteSeo from './components/seo/RouteSeo.jsx'
 import RouteEffects from './components/RouteEffects.jsx'
 import ConsentBanner from './components/consent/ConsentBanner.jsx'
-import JourneyRibbon from './components/onboarding/JourneyRibbon.jsx'
-import ArrivalBonusCard from './components/rewards/ArrivalBonusCard.jsx'
-import GuideCompanion from './components/companion/GuideCompanion.jsx'
-import NextChapter from './components/NextChapter.jsx'
 import Breadcrumb from './components/navigation/Breadcrumb.jsx'
-import PreviewIntentExperience from './components/navigation/PreviewIntentExperience.jsx'
 import TranslateOffer from './components/TranslateOffer.jsx'
-import ShareInvite from './components/ShareInvite.jsx'
-import UniverseScaleBadge from './components/scale/UniverseScaleBadge.jsx'
-import UniverseScaleSights from './components/scale/UniverseScaleSights.jsx'
-import AwardExperience from './components/AwardExperience.jsx'
-import { UniverseScaleProvider } from './lib/scale/UniverseScaleProvider.jsx'
 import Home from './pages/Home'
 
 /**
@@ -231,7 +221,6 @@ function Site() {
       <a href="#main-content" className="skip-link">Saltar al contenido</a>
       <RouteSeo />
       <RouteEffects />
-      <AwardExperience />
       <ScrollProgress />
       {/*
         Debug del Motion Engine (Fase 5): solo existe en desarrollo y con el
@@ -239,7 +228,6 @@ function Site() {
       */}
       <MotionDebug />
       <CustomCursor />
-      <PreviewIntentExperience />
       <Navbar />
       <PageTransition>
         {/*
@@ -326,12 +314,6 @@ function Site() {
             invita a seguir. Solo en las rutas del itinerario, igual que
             NextChapter, para no aparecer en el embudo ni en el 404.
           */}
-          {showEditorialChrome ? (
-            <>
-              <ShareInvite />
-              <NextChapter />
-            </>
-          ) : null}
           {showEditorialChrome ? <PremiumRouteChrome /> : null}
         </main>
       </PageTransition>
@@ -342,33 +324,8 @@ function Site() {
           <EditMode />
         </Suspense>
       ) : null}
-      {/* Solo se muestra si el navegador del visitante no entiende español. */}
+      {/* Traducción contextual solo cuando hace falta. */}
       <TranslateOffer />
-      {/* Acompaña la visita cuando la persona ya pasó por recepción. */}
-      {showEditorialChrome ? <JourneyRibbon /> : null}
-      {/*
-        Bono de llegada: tarjeta de crédito BAYONA + widget flotante con los
-        sellos. Solo se monta en rutas editoriales para no contaminar paneles,
-        compra, acceso ni onboarding.
-      */}
-      {showEditorialChrome ? <ArrivalBonusCard /> : null}
-      {/*
-        Escala del universo: BAYONA se abre conforme la persona explora. Se monta
-        una sola vez y sobrevive a la navegación, así que la fase no se reinicia
-        al cambiar de página. Ver lib/scale/universeScale.js.
-      */}
-      {showEditorialChrome ? (
-        <UniverseScaleProvider>
-          <UniverseScaleSights />
-          <UniverseScaleBadge />
-        </UniverseScaleProvider>
-      ) : null}
-      {/*
-        La asesora del recorrido: habla según el scroll y usa el nombre que la
-        persona dio en la recepción. Decide por ruta en su interior, así que
-        calla donde no hay guion (recepción, acceso, área de miembros, 404).
-      */}
-      {showEditorialChrome ? <GuideCompanion /> : null}
       <ConsentBanner />
     </>
   )
