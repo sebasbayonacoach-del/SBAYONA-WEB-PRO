@@ -63,11 +63,15 @@ async function insertCloudLead(lead) {
   if (!isCloudEnabled() || !supabase) return false
   try {
     const { error } = await supabase.from('leads').insert({
+      id: lead.id,
       name: lead.name,
       contact: lead.contact,
       source: LEAD_SOURCE,
+      created_at: lead.created_at,
     })
-    return !error
+    // 23505 = el mismo UUID ya fue guardado en un intento anterior. Para la
+    // cola de reintento cuenta como éxito: no creamos un segundo lead.
+    return !error || error.code === '23505'
   } catch {
     return false
   }
