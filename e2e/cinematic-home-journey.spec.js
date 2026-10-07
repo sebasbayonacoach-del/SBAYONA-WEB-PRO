@@ -23,6 +23,8 @@ for (const viewport of VIEWPORTS) {
     await expect(page.locator('.gym-home > section')).toHaveCount(7)
     await expect(page.locator('.gym-service-card')).toHaveCount(4)
     await expect(page.locator('.gym-gift-card')).toHaveCount(3)
+    await expect(page.locator('.gym-gift-card[download]')).toHaveCount(0)
+    await expect(page.locator('.gym-gift-card[href="#empieza"]')).toHaveCount(3)
     await expect(page.locator('.home-memberships-section .plan-showroom')).toBeVisible()
     await expect(page.locator('#empieza')).toBeAttached()
     await expect(page.getByText(/BIENVENIDO A BAYONA|UNIVERSO|ECOSISTEMA/i)).toHaveCount(0)
