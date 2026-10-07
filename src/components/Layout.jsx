@@ -14,10 +14,11 @@ const CartDrawer = lazy(() => import('./cart/CartDrawer.jsx'))
 // + fallback null. Los toasts de Programs/Shop (toast.success desde 'sonner')
 // siguen funcionando: el Toaster se monta en paralelo tras el primer pintado.
 const Toaster = lazy(() => import('sonner').then((module) => ({ default: module.Toaster })))
+const SceneMount = lazy(() =>
+  import('../engine/scene/SceneMount.jsx').then((module) => ({ default: module.SceneMount })),
+)
 import { sceneBackgroundProps } from './SceneBackground.jsx'
 import Glyph from './social/Glyph'
-// Import DIRECTO del montador (no el barrel): preserva el code-splitting de R3F.
-import { SceneMount } from '../engine/scene/SceneMount.jsx'
 // Import DIRECTO del primitivo (no el barrel), mismo criterio que arriba.
 import { TextMask } from '../engine/motion/TextMask.jsx'
 // Import DIRECTO del hook (no el barrel): magnetismo del CTA compartido.
@@ -434,7 +435,7 @@ export function PageHero({ title, kicker, media, children, compact = false, scen
         el orden de pintado la deja delante de la imagen de fondo y detrás
         del contenido (z-index 1). Si fuera antes, el backdrop opaco la taparía.
       */}
-      {scene && <SceneMount config={scene} className="page-hero-canvas" />}
+      {scene ? (\n        <Suspense fallback={null}>\n          <SceneMount config={scene} className="page-hero-canvas" />\n        </Suspense>\n      ) : null}
       <div className="page-hero-content" style={{ position: 'relative', zIndex: 1 }}>
         {kicker && (
           <motion.div {...introMotion}>
