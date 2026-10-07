@@ -7,6 +7,8 @@ import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { whatsAppLink } from '../config/site.config.js'
+import '../styles/home.css'
+import '../styles/home-luxury-conversion.css'
 import '../styles/home-gym-funnel-v2.css'
 
 const SERVICES = Object.freeze([
