@@ -235,7 +235,7 @@ export function Navbar() {
             </div>
             <div className="gym-mobile-nav-conversion">
               <p>Tu primera decisión no cuesta nada.</p>
-              <span>Déjanos tus datos, recibe tus recursos de inicio y agenda tu valoración.</span>
+              <span>Déjanos tus datos, recibe tus recursos de inicio y pide tu valoración.</span>
               <a href="/#empieza" onClick={close}>
                 EMPIEZA GRATIS <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
               </a>
@@ -289,7 +289,6 @@ export function Footer() {
         <nav className="footer-column" aria-label="Ayuda">
           <p>AYUDA</p>
           <Link to="/faq">Preguntas frecuentes</Link>
-          <Link to="/resources">Recursos gratis</Link>
           <a href={whatsAppLink('Hola BAYONA, quiero información sobre sus servicios de entrenamiento.')} target="_blank" rel="noreferrer">
             WhatsApp
           </a>
@@ -297,8 +296,6 @@ export function Footer() {
         <div className="footer-column footer-entry">
           <p>EMPIEZA</p>
           <a href="/#empieza">RECIBIR MIS RECURSOS</a>
-          <Link to="/programs">VER SERVICIOS</Link>
-          <Link to="/shop">IR A LA TIENDA</Link>
         </div>
       </div>
       {profiles.length > 0 && (
