@@ -45,15 +45,16 @@ function appendToQueue(lead) {
 }
 
 async function insertCloudLead(lead) {
-  if (!isCloudEnabled() || !supabase) return
+  if (!isCloudEnabled() || !supabase) return false
   try {
-    await supabase.from('leads').insert({
+    const { error } = await supabase.from('leads').insert({
       name: lead.name,
       contact: lead.contact,
       source: LEAD_SOURCE,
     })
+    return !error
   } catch {
-    // La cola local ya guardó el lead; la nube reintentará otro día.
+    return false
   }
 }
 
@@ -65,6 +66,7 @@ export default function LeadMagnet({
   const [contact, setContact] = useState('')
   const [errors, setErrors] = useState([])
   const [done, setDone] = useState(false)
+  const [captureState, setCaptureState] = useState('idle')
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -81,9 +83,21 @@ export default function LeadMagnet({
       created_at: new Date().toISOString(),
     }
     appendToQueue(lead)
-    insertCloudLead(lead)
     setDone(true)
+
+    if (isCloudEnabled()) {
+      setCaptureState('sending')
+      insertCloudLead(lead).then((saved) => {
+        setCaptureState(saved ? 'cloud' : 'local')
+      })
+    } else {
+      setCaptureState('local')
+    }
   }
+
+  const evaluationUrl = whatsAppLink(
+    `Hola BAYONA, soy ${String(name).trim() || 'un nuevo contacto'}. Ya abrí mis recursos y quiero agendar una valoración inicial. Mi contacto es: ${String(contact).trim() || 'por confirmar'}.`,
+  )
 
   return (
     <section className="lead-magnet" aria-labelledby="lead-magnet-title">
@@ -114,7 +128,16 @@ export default function LeadMagnet({
         {done ? (
           <div className="lead-magnet-success" role="status">
             <strong>Listo, {String(name).trim()}. Ya puedes llevarte tus recursos.</strong>
-            <p>Guardamos tu contacto. No necesitas crear una cuenta ni esperar para empezar.</p>
+            {captureState === 'cloud' ? (
+              <p>Tu contacto quedó registrado en BAYONA. No necesitas crear una cuenta ni esperar para empezar.</p>
+            ) : captureState === 'sending' ? (
+              <p>Tus recursos ya están listos. Estamos registrando tu contacto.</p>
+            ) : (
+              <p>
+                Tus recursos ya están listos. El registro automático no está disponible ahora;
+                confirma por WhatsApp para que podamos responderte.
+              </p>
+            )}
             <div className="lead-magnet-rewards">
               <a href="/downloads/bayona-editorial/primera-semana.pdf" download>DESCARGAR · PRIMERA SEMANA</a>
               <a href="/downloads/bayona-editorial/registro-30-dias.pdf" download>DESCARGAR · REGISTRO 30 DÍAS</a>
@@ -122,7 +145,7 @@ export default function LeadMagnet({
             </div>
             <div className="lead-magnet-next-actions">
               <a
-                href={whatsAppLink('Hola BAYONA, ya dejé mis datos y quiero agendar una valoración inicial.')}
+                href={evaluationUrl}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -171,7 +194,7 @@ export default function LeadMagnet({
               </button>
             </form>
             <p className="lead-magnet-note">
-              Solo la usamos para enviarte tu rutina. Nada de spam, nada de presión.
+              Usamos estos datos para responder a tu solicitud. Si el registro automático no está disponible, podrás confirmarla por WhatsApp.
             </p>
           </>
         )}
