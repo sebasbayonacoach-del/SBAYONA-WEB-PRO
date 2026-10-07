@@ -58,7 +58,7 @@ describe('/resources — Empieza Gratis honesto', () => {
 
     // La recompensa se nombra —puede ser un programa personalizado— y sigue
     // condicionada a lo que la edición confirme por escrito.
-    expect(challenge.textContent).toContain('PROGRAMA PERSONALIZADO')
+    expect(challenge.textContent).toContain('PLAN PERSONALIZADO')
     expect(challenge.textContent).toMatch(/se comunica por escrito antes de entrar/i)
 
     // Sin promesas de resultado ni lenguaje médico en la sección del reto.
@@ -73,9 +73,12 @@ describe('/resources — Empieza Gratis honesto', () => {
     expect(magazine.querySelector('#magazine-title')).not.toBeNull()
     expect(magazine.textContent).toContain('NO UN CALENDARIO RÍGIDO.')
 
-    // El material descargable existe (§19) pero no finge una descarga: se pide.
+    // El material se presenta antes de la captura y los tres CTA llevan al mismo formulario.
     expect(magazine.querySelector('#downloads-title')).not.toBeNull()
     expect(magazine.querySelectorAll('a[download]')).toHaveLength(0)
+    const giftLinks = [...magazine.querySelectorAll('.resources-downloads a[href="#resources-lead"]')]
+    expect(giftLinks).toHaveLength(3)
+    expect(document.querySelector('#resources-lead')).not.toBeNull()
   })
 
   it('prepara la consulta con contexto y bloquea datos sensibles antes de WhatsApp', () => {
