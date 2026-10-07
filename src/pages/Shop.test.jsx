@@ -3,7 +3,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useCartStore } from '../store/cartStore.js'
-import { shopCollections, shopProducts } from '../config/shopProducts.js'
+import { shopCategoryFilters, shopProducts } from '../config/shopProducts.js'
 import Shop from './Shop.jsx'
 
 vi.mock('framer-motion', () => {
@@ -51,15 +51,17 @@ describe('/shop — tienda de producto Gym Funnel V2', () => {
     expect(container.textContent).not.toMatch(/MOSTRADOR DE SERVICIOS|CRÉDITO BAYONA|RECLAMAR MI PASE/i)
   })
 
-  it('mantiene las colecciones y el catálogo consultable', () => {
+  it('entra por categorías fitness reconocibles y conserva filtros secundarios', () => {
     renderShop()
 
-    const semanticCollections = screen.getByRole('list', { name: /Colecciones BAYONA/i })
-    for (const collection of shopCollections) {
-      expect(within(semanticCollections).getByRole('heading', { name: collection.title })).toBeInTheDocument()
-    }
+    const shortcuts = screen.getByRole('group', { name: /Categorías principales de tienda/i })
+    expect(within(shortcuts).getAllByRole('button')).toHaveLength(shopCategoryFilters.length - 1)
+    shopCategoryFilters.filter((item) => item !== 'Todo').forEach((category) => {
+      expect(within(shortcuts).getByRole('button', { name: new RegExp(category, 'i') })).toBeInTheDocument()
+    })
 
-    expect(screen.getByRole('heading', { name: /ENCUENTRA LO\s*QUE TE REPRESENTA/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /ENCUENTRA LO QUE NECESITAS/i })).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: 'Por colección' })).toBeInTheDocument()
   })
 
   it('muestra fotografía de producto en todas las fichas que tienen media', () => {
