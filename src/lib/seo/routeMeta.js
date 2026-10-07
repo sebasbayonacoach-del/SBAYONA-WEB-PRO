@@ -19,10 +19,10 @@ import { BRAND } from '../../config/site.config.js'
 export const TITLE_SUFFIX = `${BRAND.name}`
 
 /** Título de la home: se usa tal cual, sin sufijo, porque ya contiene la marca. */
-const HOME_TITLE = 'BAYONA — Construye tu versión más fuerte con método'
+const HOME_TITLE = 'BAYONA — Entrenamiento personal con dirección'
 
 const HOME_DESCRIPTION =
-  'Método de movimiento con dirección: plan mensual personalizado, seguimiento humano y cuatro niveles de acompañamiento. Sin humo ni promesas de resultado.'
+  'Entrenamiento personal y online con planes claros, seguimiento humano, parkour, movilidad, recuperación y recursos gratuitos para empezar.'
 
 /**
  * Rutas con contenido propio. La clave es el pathname exacto.
@@ -43,10 +43,10 @@ const STATIC_ROUTES = {
     breadcrumb: [['Nosotros', '/about']],
   },
   '/programs': {
-    title: 'Programas BAYONA — acompañamiento con dirección',
+    title: 'Servicios BAYONA — entrenamiento personal y online',
     description:
-      'Programas BAYONA para elegir cuánta dirección quieres cerca: diagnóstico, membresías, servicios opcionales y primer mes configurado antes de abrir WhatsApp.',
-    breadcrumb: [['Programas', '/programs']],
+      'Servicios BAYONA: entrenamiento personal, online, membresías, recuperación, movilidad, parkour y rendimiento con precios y alcance visibles.',
+    breadcrumb: [['Servicios', '/programs']],
   },
   '/parkour-academy': {
     title: 'Academia de Parkour',
@@ -85,10 +85,11 @@ const STATIC_ROUTES = {
     breadcrumb: [['Preguntas frecuentes', '/faq']],
   },
   '/onboarding': {
-    title: 'Entrar a BAYONA',
+    title: 'Empieza gratis',
     description:
-      'Un recorrido corto para orientarte: cuéntanos tu punto de partida y te sugerimos por dónde empezar. Sin crear cuenta y sin compromiso.',
-    breadcrumb: [['Entrar', '/onboarding']],
+      'Ruta antigua redirigida al inicio gratuito de BAYONA.',
+    noindex: true,
+    breadcrumb: [],
   },
   '/entrar': {
     title: 'Entrar — Tu centro de mando BAYONA',
@@ -179,7 +180,7 @@ function buildPlanRoutes() {
       ogType: 'product',
       planId: plan.id,
       breadcrumb: [
-        ['Programas', '/programs'],
+        ['Servicios', '/programs'],
         [`Plan ${plan.name}`, path],
       ],
     }
