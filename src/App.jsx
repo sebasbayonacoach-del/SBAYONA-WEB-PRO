@@ -114,8 +114,8 @@ function RouteFallback() {
       <div className="route-fallback__frame">
         <span className="route-fallback__brand" aria-hidden="true">BAYONA</span>
         <div className="route-fallback__copy">
-          <small>PREPARANDO EXPERIENCIA</small>
-          <strong>ENTRANDO.</strong>
+          <small>PREPARANDO BAYONA</small>
+          <strong>CARGANDO.</strong>
         </div>
         <span className="route-fallback__track" aria-hidden="true">
           <i />
@@ -155,6 +155,9 @@ const PRODUCT_ROUTES = Object.freeze([
 const FOOTER_ROUTES = Object.freeze(['/panel'])
 const ROUTE_SCENE_DISABLED_ROUTES = Object.freeze([
   ...PRODUCT_ROUTES,
+  '/',
+  '/programs',
+  '/shop',
   '/app',
   '/entrar',
   '/design-system',
@@ -286,8 +289,8 @@ function Site() {
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/onboarding" element={<Navigate to="/#empieza" replace />} />
               {/*
-                Fase 2 SaaS: /entrar es la pantalla de acceso (correo +
-                contraseña). La recepción sigue viva en /onboarding.
+                /entrar conserva el acceso privado. /onboarding queda solo como
+                compatibilidad histórica y redirige al inicio gratuito.
               */}
               <Route path="/entrar" element={<Entrar />} />
               <Route path="/design-system" element={<DesignSystem />} />
