@@ -7,6 +7,7 @@ import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink } from '../config/site.config.js'
+import { trackEvent } from '../lib/analytics/analytics.js'
 import '../styles/home.css'
 import '../styles/home-luxury-conversion.css'
 import '../styles/home-gym-funnel-v2.css'
@@ -113,14 +114,22 @@ export default function Home() {
             Fuerza, movimiento y acompañamiento para dejar de improvisar y empezar con un plan que sí cabe en tu vida.
           </p>
           <div className="gym-home-hero__actions">
-            <a className="gym-primary-button" href="#empieza">
+            <a
+              className="gym-primary-button"
+              href="#empieza"
+              onClick={() => trackEvent('funnel_start_click', { source: 'home_hero' })}
+            >
               EMPIEZA GRATIS <ArrowUpRight size={18} aria-hidden="true" />
             </a>
             <Link className="gym-secondary-button" to="/programs">
               VER SERVICIOS <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
-          <a className="gym-home-reward" href="#regalos">
+          <a
+            className="gym-home-reward"
+            href="#regalos"
+            onClick={() => trackEvent('reward_preview_click', { source: 'home_hero' })}
+          >
             <Gift size={18} aria-hidden="true" />
             <span><strong>Tu visita tiene recompensa.</strong> Llévate 3 recursos de inicio gratis.</span>
           </a>
@@ -209,7 +218,12 @@ export default function Home() {
           </div>
           <div className="gym-gift-grid">
             {GIFTS.map((gift) => (
-              <a className="gym-gift-card" href="#empieza" key={gift.href}>
+              <a
+                className="gym-gift-card"
+                href="#empieza"
+                key={gift.href}
+                onClick={() => trackEvent('gift_claim_click', { gift: gift.title })}
+              >
                 <img src={gift.image} alt="" width="1600" height="900" loading="lazy" decoding="async" />
                 <div>
                   <span>{gift.tag}</span>
@@ -237,7 +251,12 @@ export default function Home() {
         />
         <div className="gym-home-lead__fallback gym-home-shell">
           <span>¿Prefieres hablar primero?</span>
-          <a href={evaluationUrl} target="_blank" rel="noreferrer">
+          <a
+            href={evaluationUrl}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => trackEvent('valuation_request_click', { source: 'home_fallback' })}
+          >
             AGENDAR POR WHATSAPP <ArrowUpRight size={17} aria-hidden="true" />
           </a>
         </div>
