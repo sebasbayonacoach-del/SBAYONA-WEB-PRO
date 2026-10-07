@@ -48,16 +48,15 @@ describe('Home — contrato Gym Funnel V2', () => {
     expect(container.querySelectorAll('.gym-gift-card')).toHaveLength(3)
   })
 
-  it('todos los regalos son PDFs descargables reales desde rutas públicas', () => {
+  it('los regalos de Home son previews y la descarga queda detrás de captación', () => {
     const { container } = renderHome()
-    const links = [...container.querySelectorAll('.gym-gift-card[download]')]
+    const links = [...container.querySelectorAll('.gym-gift-card')]
 
     expect(links).toHaveLength(3)
-    expect(links.map((link) => link.getAttribute('href'))).toEqual([
-      '/downloads/bayona-editorial/primera-semana.pdf',
-      '/downloads/bayona-editorial/registro-30-dias.pdf',
-      '/downloads/bayona-editorial/dossier-punto-de-partida.pdf',
-    ])
+    links.forEach((link) => {
+      expect(link).toHaveAttribute('href', '#empieza')
+      expect(link).not.toHaveAttribute('download')
+    })
   })
 
   it('no reintroduce componentes narrativos y configuradores retirados', () => {
