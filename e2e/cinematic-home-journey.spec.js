@@ -16,11 +16,10 @@ for (const view of screenSet) {
 
     const checkpoints = [
       ['.pain-unlock-stage','.pain-navigation-stop',4],
-      ['.community-immersive-stage','.community-interface',1],
-      ['.immersive-method-stage','.bayona-voyage',1],
-      ['.benefits-orbit-stage','.bayona-noise-field',1],
+      ['.community-immersive-stage','.journey-phone',1],
+      ['.immersive-method-stage','.immersive-method-viewport',1],
+      ['.benefits-orbit-stage','.benefits-orbit-viewport',1],
       ['.experience-story__stage','.bayona-experience-film__slide',2],
-      ['.free-dossier-stage','.free-dossier-viewport',1],
     ]
     for (const [stageSelector,target,count] of checkpoints) {
       const stage=page.locator(stageSelector)
@@ -30,24 +29,33 @@ for (const view of screenSet) {
       const issue=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+3)
       expect(issue,`horizontal overflow at ${stageSelector} on ${view.width}px`).toBe(false)
     }
+    if (view.width >= 1024) {
+      const freeStage=page.locator('.free-dossier-stage')
+      await expect(freeStage).toBeAttached()
+      await expect(freeStage.locator('.free-dossier-viewport')).toHaveCount(1)
+    } else {
+      const freeValue=page.locator('.free-value')
+      await expect(freeValue.locator('.free-dossier-stage')).toHaveCount(0)
+      await expect(freeValue.locator('.journey-library-entry')).toHaveCount(4)
+    }
     await expect(page.locator('.pain-unlock-stage .pain-unlock-lock')).toHaveCount(0)
-    await expect(page.getByText('CONVERSACIÓN ILUSTRATIVA')).toBeAttached()
-    await expect(page.locator('.bayona-offer-gate__plinth')).toBeAttached()
+    await expect(page.getByText(/Conversación ilustrativa/i)).toBeAttached()
+    await expect(page.locator('.home-memberships-section .plan-showroom')).toBeAttached()
     expect(exceptions).toEqual([])
     await page.screenshot({path:`test-results/playwright/cinematic-home-journey/${view.width}.png`})
   })
 }
 
-test('reto 30 días proyectado en cine y llamada a recurso',async({page})=>{
- await page.setViewportSize({width:726,height:950})
+test('reto 30 días proyectado como workbook y descarga real',async({page})=>{
+ await page.setViewportSize({width:1440,height:900})
  await page.goto('/',{waitUntil:'domcontentloaded'})
  const stage=page.locator('.free-dossier-stage')
  await stage.scrollIntoViewIfNeeded()
  const pos=await stage.evaluate(el=>({start:el.getBoundingClientRect().top+scrollY,dist:el.getBoundingClientRect().height-el.querySelector('.sticky-stage-viewport').getBoundingClientRect().height}))
  await page.evaluate(y=>scrollTo(0,y),pos.start+pos.dist*.39)
  await expect(stage.locator('.free-dossier-viewport[data-piece="reto"]')).toBeAttached()
- await expect(stage.locator('.bayona-challenge-theater')).toBeVisible()
- await expect(stage.getByRole('link',{name:/VER CONDICIONES/i})).toHaveAttribute('href','/resources')
+ await expect(stage.locator('.free-dossier-viewport[data-piece="reto"] .journey-dossier')).toBeVisible()
+ await expect(stage.getByRole('link',{name:/DESCARGAR EL WORKBOOK/i})).toHaveAttribute('href','/downloads/bayona-editorial/registro-30-dias.pdf')
  await page.screenshot({path:'test-results/playwright/cinematic-home-journey/reto-cinema.png'})
 })
 
@@ -57,30 +65,23 @@ test('prefers reduced motion still shows chapters, no moving layers',async({page
  await page.goto('/',{waitUntil:'domcontentloaded'})
  await expect(page.locator('.pain-unlock-stage.sticky-stage--static .sticky-stage-frame')).toHaveCount(4)
  await expect(page.locator('.immersive-method-stage.sticky-stage--static .sticky-stage-frame')).toHaveCount(3)
- await expect(page.locator('.free-dossier-stage.sticky-stage--static .sticky-stage-frame')).toHaveCount(4)
+ await expect(page.locator('.free-dossier-stage')).toHaveCount(0)
+ await expect(page.locator('.free-value .journey-library-entry')).toHaveCount(4)
  await expect(page.locator('.bayona-noise-field')).toHaveCount(0)
- await expect(page.getByRole('link',{name:/CONOCER EL GRUPO/i})).toBeAttached()
+ await expect(page.getByRole('link',{name:/CONOCER LA COMUNIDAD/i})).toBeAttached()
 })
 
-test('capítulo 05 aproxima la cámara según scroll y respeta modo calma', async ({ page }) => {
+test('capítulo 05 mantiene el showroom estable y alcanzable', async ({ page }) => {
   await page.setViewportSize({ width: 726, height: 950 })
   await page.emulateMedia({ reducedMotion: 'no-preference' })
   await page.goto('/', { waitUntil: 'domcontentloaded' })
-  const gate = page.locator('.bayona-offer-gate')
-  const metrics = await gate.evaluate(el => ({ top: el.getBoundingClientRect().top + scrollY, height: el.getBoundingClientRect().height }))
-  await page.evaluate(y => scrollTo(0, y), metrics.top - 950 * .8)
-  await page.waitForTimeout(450)
-  const approach = await gate.locator('.bayona-offer-gate__stage').evaluate(el => getComputedStyle(el).transform)
-  expect(approach).not.toBe('none')
-
-  await page.evaluate(y => scrollTo(0, y), metrics.top + metrics.height * .78)
-  await page.waitForTimeout(450)
-  const settled = await gate.locator('.bayona-offer-gate__stage').evaluate(el => getComputedStyle(el).transform)
-  expect(settled).toBe('none')
-  await expect(page.locator('#home-offer-heading')).toBeAttached()
+  const offer = page.locator('.home-memberships-section')
+  await offer.scrollIntoViewIfNeeded({ timeout: 25000 })
+  await expect(offer.locator('#home-offer-heading')).toBeVisible()
+  await expect(offer.locator('.plan-showroom-selector')).toBeVisible()
+  await expect(offer.locator('.plan-showroom-preview')).toHaveCount(1)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 3)).toBe(false)
 
   await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.waitForTimeout(250)
-  expect(await gate.locator('.bayona-offer-gate__stage').evaluate(el => getComputedStyle(el).transform)).toBe('none')
-  expect(await gate.locator('.bayona-offer-gate__dive').evaluate(el => getComputedStyle(el).display)).toBe('none')
+  await expect(offer.locator('.plan-showroom-preview')).toBeVisible()
 })
