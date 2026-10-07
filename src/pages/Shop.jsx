@@ -24,7 +24,7 @@ import Tilt from 'react-parallax-tilt'
 import Marquee from 'react-fast-marquee'
 import { toast } from 'sonner'
 import { SectionLabel } from '../components/Layout'
-import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
+import { sceneBackgroundProps, StockImage } from '../components/SceneBackground.jsx'
 import ShopCollectionsStage from '../components/shop/ShopCollectionsStage.jsx'
 import { editorialServices } from '../config/offerings.js'
 import { whatsAppLink } from '../config/site.config.js'
@@ -284,9 +284,18 @@ function ProductCard({ product, reducedMotion }) {
         onPointerMove={pointerEffects ? updateCardSpotlight : undefined}
         onPointerLeave={pointerEffects ? resetCardSpotlight : undefined}
       >
-        <div className="shop-product-visual" aria-hidden="true">
+        <div className="shop-product-visual">
+          {product.media ? (
+            <StockImage
+              media={product.media}
+              className="shop-product-image stock-media-image"
+              sizes="(max-width: 720px) 92vw, (max-width: 1180px) 46vw, 30vw"
+            />
+          ) : (
+            <ShopIcon name={product.icon} size={46} className="shop-product-icon" />
+          )}
+          <span className="shop-product-image-shade" aria-hidden="true" />
           <span className="shop-product-mark">BAYONA / {product.collectionTitle}</span>
-          <ShopIcon name={product.icon} size={46} className="shop-product-icon" />
           <span className="shop-product-chip">{product.category}</span>
         </div>
         <h3>{product.name}</h3>
