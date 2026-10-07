@@ -546,3 +546,85 @@
     transform: none;
   }
 }
+
+
+/* Captura: el éxito entrega valor inmediatamente y deja la agenda como siguiente paso. */
+.gym-home-lead .lead-magnet-success {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.25rem,3vw,2rem);
+  border: 1px solid rgba(244,162,97,.34);
+  background: rgba(244,162,97,.055);
+}
+
+.gym-home-lead .lead-magnet-success > strong {
+  font-family: var(--font-display, sans-serif);
+  font-size: clamp(1.7rem,3vw,2.7rem);
+  line-height: 1;
+}
+
+.gym-home-lead .lead-magnet-success > p {
+  margin: 0;
+  color: var(--gym-muted);
+}
+
+.gym-home-lead .lead-magnet-rewards {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: .6rem;
+}
+
+.gym-home-lead .lead-magnet-rewards a {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .8rem 1rem;
+  border: 1px solid rgba(255,255,255,.14);
+  color: #fff;
+  font: 800 .64rem/1.25 var(--font-label, monospace);
+  letter-spacing: .045em;
+  text-align: center;
+}
+
+.gym-home-lead .lead-magnet-rewards a:hover {
+  border-color: var(--gym-orange);
+}
+
+.gym-home-lead .lead-magnet-next-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .7rem;
+}
+
+.gym-home-lead .lead-magnet-next-actions a {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .8rem 1rem;
+  border: 1px solid var(--gym-orange);
+  font: 900 .68rem/1 var(--font-label, monospace);
+  letter-spacing: .055em;
+  text-align: center;
+}
+
+.gym-home-lead .lead-magnet-next-actions a:first-child {
+  background: var(--gym-orange);
+  color: #060606;
+}
+
+.gym-home-lead .lead-magnet-next-actions a:last-child {
+  color: #fff;
+}
+
+.gym-home-lead .lead-magnet-success > small {
+  color: rgba(255,255,255,.5);
+}
+
+@media (max-width: 720px) {
+  .gym-home-lead .lead-magnet-rewards,
+  .gym-home-lead .lead-magnet-next-actions {
+    grid-template-columns: 1fr;
+  }
+}
