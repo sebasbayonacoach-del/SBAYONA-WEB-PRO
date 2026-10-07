@@ -80,7 +80,7 @@ describe('Home — Gym Funnel V2', () => {
     expect(lead).not.toBeNull()
     expect(within(lead).getByRole('heading', { name: /DEJA TUS DATOS/i })).toBeInTheDocument()
     expect(within(lead).getByLabelText('Formulario de inicio')).toBeInTheDocument()
-    expect(within(lead).getByRole('link', { name: /AGENDAR POR WHATSAPP/i })).toHaveAttribute('href', expect.stringContaining('https://wa.me/'))
+    expect(within(lead).getByRole('link', { name: /AGENDAR POR WHATSAPP/i }).getAttribute('href')).toContain('https://wa.me/')
     expect(container.textContent).not.toMatch(/crear cuenta|registrarte|bienvenido/i)
   })
 })
