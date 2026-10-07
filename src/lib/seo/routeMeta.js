@@ -55,9 +55,9 @@ const STATIC_ROUTES = {
     breadcrumb: [['Academia Parkour', '/parkour-academy']],
   },
   '/shop': {
-    title: 'Boutique BAYONA — sesiones, servicios y equipo',
+    title: 'Tienda BAYONA — ropa, calzado y equipamiento fitness',
     description:
-      'Boutique guiada BAYONA: sesiones, evaluación, recuperación y equipo para construir tu primer pedido con dirección. Precios en COP, se confirma por WhatsApp.',
+      'Tienda BAYONA de ropa, calzado, equipamiento, máquinas y nutrición. Explora por categoría, revisa precios en COP y confirma disponibilidad por WhatsApp.',
     breadcrumb: [['Tienda', '/shop']],
   },
   '/app': {

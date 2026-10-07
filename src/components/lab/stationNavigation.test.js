@@ -73,7 +73,8 @@ describe('trajectoryStations — procedencia real del contenido', () => {
 
   it('apunta cada estación a una ruta real del registro de rutas', () => {
     STATIONS.forEach((station) => {
-      const meta = ROUTE_META[station.to]
+      const pathname = new URL(station.to, 'https://bayona.test').pathname
+      const meta = ROUTE_META[pathname]
       expect(meta, `ruta inexistente: ${station.to}`).toBeTruthy()
       expect(
         meta.noindex,

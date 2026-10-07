@@ -13,8 +13,14 @@ vi.mock('framer-motion', () => {
     return React.createElement(tag, { ...domProps, ref }, children)
   })
 
+  const motion = new Proxy({}, {
+    get: (_, tag) => tag === 'create'
+      ? (BaseComponent) => React.forwardRef((props, ref) => React.createElement(BaseComponent, { ...props, ref }))
+      : component(tag),
+  })
+
   return {
-    motion: new Proxy({}, { get: (_, tag) => component(tag) }),
+    motion,
     AnimatePresence: ({ children }) => children,
     useReducedMotion: () => false,
   }

@@ -599,7 +599,14 @@ export default function Shop() {
                       <h3 id={`collection-${collection.id}-title`}>{collection.title}</h3>
                       <p>{collection.statement}</p>
                     </div>
-                    <button type="button" onClick={() => selectCollectionCard(collection.id)}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCollectionId(collection.id)
+                        setCategory('Todo')
+                        window.requestAnimationFrame(scrollToCatalog)
+                      }}
+                    >
                       VER TODO <ArrowRight size={15} strokeWidth={1} aria-hidden="true" />
                     </button>
                   </header>
