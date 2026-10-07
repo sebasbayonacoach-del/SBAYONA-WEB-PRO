@@ -39,7 +39,7 @@ describe('Navbar — Gym Funnel V2', () => {
     expect(within(navList).getByRole('link', { name: /Inicio/i })).toHaveAttribute('href', '/')
     expect(mobile.textContent).not.toMatch(/RECORRIDO|ECOSISTEMA|DECIDIR|MI CUENTA/i)
     expect(within(mobile).getByRole('link', { name: /EMPIEZA GRATIS/i })).toHaveAttribute('href', '/#empieza')
-    expect(within(mobile).getByRole('link', { name: /HABLAR POR WHATSAPP/i })).toHaveAttribute('href', expect.stringContaining('https://wa.me/'))
+    expect(within(mobile).getByRole('link', { name: /HABLAR POR WHATSAPP/i }).getAttribute('href')).toContain('https://wa.me/')
   })
 })
 
