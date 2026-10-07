@@ -5,7 +5,7 @@
  * local `bayona_leads` y, si hay nube, inserta en la tabla `leads` con
  * `source='lead-magnet'`. Éxito en pantalla sin recargar.
  */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { bookingLink, isBookingEnabled } from '../../config/site.config.js'
 import { isCloudEnabled, supabase } from '../../lib/supabase.js'
@@ -34,14 +34,28 @@ function readQueue() {
   }
 }
 
-function appendToQueue(lead) {
+function leadKey(lead) {
+  return lead?.id || `${lead?.created_at ?? ''}:${lead?.contact ?? ''}`
+}
+
+function writeQueue(queue) {
   try {
-    const queue = readQueue()
-    queue.push(lead)
     window?.localStorage?.setItem(LEADS_KEY, JSON.stringify(queue))
+    return true
   } catch {
-    // localStorage lleno o bloqueado: el éxito en pantalla se mantiene.
+    return false
   }
+}
+
+function appendToQueue(lead) {
+  const queue = readQueue()
+  if (!queue.some((item) => leadKey(item) === leadKey(lead))) queue.push(lead)
+  return writeQueue(queue)
+}
+
+function removeFromQueue(lead) {
+  const key = leadKey(lead)
+  return writeQueue(readQueue().filter((item) => leadKey(item) !== key))
 }
 
 async function insertCloudLead(lead) {
@@ -58,6 +72,15 @@ async function insertCloudLead(lead) {
   }
 }
 
+async function flushPendingLeads() {
+  if (!isCloudEnabled() || !supabase) return
+  const queue = readQueue()
+  for (const lead of queue) {
+    const saved = await insertCloudLead(lead)
+    if (saved) removeFromQueue(lead)
+  }
+}
+
 export default function LeadMagnet({
   heading = 'Empieza gratis.',
   copy = 'Déjanos tu nombre y un contacto. Tus recursos quedan disponibles al instante y puedes pedir una valoración sin compromiso.',
@@ -68,6 +91,10 @@ export default function LeadMagnet({
   const [done, setDone] = useState(false)
   const [captureState, setCaptureState] = useState('idle')
 
+  useEffect(() => {
+    flushPendingLeads()
+  }, [])
+
   function handleSubmit(event) {
     event.preventDefault()
     const nextErrors = []
@@ -77,6 +104,9 @@ export default function LeadMagnet({
     if (nextErrors.length > 0) return
 
     const lead = {
+      id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
       name: String(name).trim(),
       contact: String(contact).trim(),
       source: LEAD_SOURCE,
@@ -88,6 +118,7 @@ export default function LeadMagnet({
     if (isCloudEnabled()) {
       setCaptureState('sending')
       insertCloudLead(lead).then((saved) => {
+        if (saved) removeFromQueue(lead)
         setCaptureState(saved ? 'cloud' : 'local')
       })
     } else {
