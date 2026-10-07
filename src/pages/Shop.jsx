@@ -26,8 +26,6 @@ import { toast } from 'sonner'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps, StockImage } from '../components/SceneBackground.jsx'
 import ShopCollectionsStage from '../components/shop/ShopCollectionsStage.jsx'
-import { editorialServices } from '../config/offerings.js'
-import { whatsAppLink } from '../config/site.config.js'
 import {
   filterShopProducts,
   shopCategoryFilters,
@@ -38,7 +36,6 @@ import {
 import { siteMedia } from '../config/siteMedia.js'
 import { motionTokens } from '../engine/config/motionTokens.js'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
-import { ARRIVAL_BONUS_EUR, useRewards } from '../lib/rewards/RewardsProvider.jsx'
 import { selectCartCount, selectCartTotalCOP, useCartStore } from '../store/cartStore.js'
 import '../styles/shop.css'
 import '../styles/shop-catalog-editorial.css'
@@ -70,94 +67,6 @@ const CART_PRODUCT_VARIANTS = Object.freeze({
     Object.freeze({ label: '24 kg', priceIndex: 1 }),
   ]),
 })
-
-const shopConciergeItems = Object.freeze([
-  ['01', 'Sesión o evaluación', 'Primero eliges la intención: fuerza, movilidad, técnica o recuperación.'],
-  ['02', 'Equipo útil', 'Añades solo piezas que puedas usar de verdad en tu semana.'],
-  ['03', 'Crédito BAYONA', 'Si reclamaste tu pase, lo guardamos como cortesía para tu primer plan.'],
-])
-
-/*
- * §16 — «la tienda no es solo mercancía: también puede ser puerta a sesiones
- * sueltas, evaluaciones, recuperación, consulta o paquetes». El mostrador de
- * servicios se deriva de `editorialServices` (config/offerings.js), así que
- * nombre, precio y enlace de WhatsApp son los mismos que usa el configurador:
- * no hay ni un euro inventado aquí. Los paquetes se compran en el configurador
- * de programas y la consulta experta en recursos, y se dice en vez de simular.
- */
-const SHOP_COUNTER = Object.freeze([
-  Object.freeze({
-    id: 'sesiones',
-    title: 'SESIONES SUELTAS',
-    note: 'Entras, corriges y sales con una acción clara. Sin mensualidad.',
-    ids: ['virtual-1to1', 'presencial-bogota-1to1', 'grupal-virtual'],
-  }),
-  Object.freeze({
-    id: 'evaluaciones',
-    title: 'EVALUACIONES',
-    note: 'Antes de añadir carga, saber dónde estás. Lectura, no etiqueta.',
-    ids: ['evaluacion-biomecanica', 'composicion-corporal'],
-  }),
-  Object.freeze({
-    id: 'recuperacion',
-    title: 'RECUPERACIÓN',
-    note: 'Lo que sostiene el entrenamiento: tejido, movilidad y ruta.',
-    ids: ['masaje-deportivo', 'movilidad-asistida', 'protocolo-recuperacion'],
-  }),
-  Object.freeze({
-    id: 'rendimiento',
-    title: 'TÉCNICA Y RENDIMIENTO',
-    note: 'Habilidad concreta guiada por Sebastián: técnica antes que volumen.',
-    ids: ['parkour-tecnico', 'calistenia-avanzada', 'boxeo-funcional'],
-  }),
-])
-
-const shopServiceById = new Map(editorialServices.map((service) => [service.id, service]))
-
-const shopCounterGroups = SHOP_COUNTER.map((group) => ({
-  ...group,
-  services: group.ids.map((id) => shopServiceById.get(id)).filter(Boolean),
-})).filter((group) => group.services.length > 0)
-
-const shopCounterLinks = Object.freeze([
-  { to: '/programs', label: 'COMBINAR PLAN + SESIONES', detail: 'El configurador suma plan, extras y crédito en una sola petición.' },
-  { to: '/resources', label: 'CONSULTA EXPERTA GRATIS', detail: 'Una duda concreta sobre tu caso, con contexto y sin compromiso.' },
-  { to: '/faq', label: 'DUDAS ANTES DE PAGAR', detail: 'Condiciones, permanencia, garantía y formas de confirmar.' },
-])
-
-const shopWhatsAppHelpUrl = whatsAppLink('Hola BAYONA, tengo una duda antes de comprar en la tienda (producto, sesión o servicio).')
-
-function ShopServiceCard({ service }) {
-  const addItem = useCartStore((state) => state.addItem)
-
-  const handleAdd = () => {
-    addItem({ type: 'servicio', name: service.label, priceCOP: service.priceCop, qty: 1 })
-    toast.success('Añadido', { description: `${service.label} está en tu selección.` })
-  }
-
-  return (
-    <article className="shop-service-card" data-shop-service={service.id}>
-      <header>
-        <h4>{service.label}</h4>
-        {service.presencial && <span className="shop-service-flag">PRESENCIAL</span>}
-      </header>
-      <p>{service.description}</p>
-      <div className="shop-service-price">
-        <strong>{service.priceDisplay} COP</strong>
-        <small>Sesión suelta · disponibilidad confirmada por WhatsApp</small>
-      </div>
-      <div className="shop-service-actions">
-        <button className="shop-add-to-cart" type="button" onClick={handleAdd} aria-label={`Añadir ${service.label} al carrito`}>
-          <ShoppingCart size={15} strokeWidth={1} aria-hidden="true" />
-          AÑADIR
-        </button>
-        <a href={service.cta} target="_blank" rel="noreferrer">
-          LO QUIERO <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" />
-        </a>
-      </div>
-    </article>
-  )
-}
 
 function ShopIcon({ name, size = 28, className = '' }) {
   const Icon = SHOP_ICONS[name] ?? Package
@@ -420,7 +329,6 @@ export default function Shop() {
   const addItem = useCartStore((state) => state.addItem)
   const cartCount = useCartStore(selectCartCount)
   const cartTotalCOP = useCartStore(selectCartTotalCOP)
-  const rewards = useRewards()
   const { reducedMotion, mode } = useCapabilities()
   const featuredProduct = shopProducts.find(({ featured }) => featured) ?? shopProducts[0]
   const fuse = useMemo(() => new Fuse(shopProducts, {
@@ -447,7 +355,6 @@ export default function Shop() {
   )
   const hasFilters = collectionId !== 'all' || category !== 'Todo' || query.trim() !== ''
   const groupedView = collectionId === 'all' && category === 'Todo' && query.trim() === ''
-  const creditLabel = rewards.bonusClaimed ? rewards.format(ARRIVAL_BONUS_EUR) : 'Pase pendiente'
   const cartTotalLabel = `$${cartTotalCOP.toLocaleString('es-CO')} COP`
 
   const scrollToCatalog = () => {
@@ -523,7 +430,7 @@ export default function Shop() {
             animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.56, delay: reducedMotion ? 0 : 0.14 }}
           >
-            Boutique de sesiones, evaluación, recuperación y equipo.<br />No compras piezas sueltas: construyes tu primer pedido con dirección.
+            Ropa, calzado y equipamiento para entrenar dentro y fuera del gimnasio.<br />Elige tu pieza, revisa el precio y confirma disponibilidad antes de pagar.
           </motion.p>
           <motion.div
             className="shop-hero-concierge"
@@ -545,10 +452,6 @@ export default function Shop() {
               <div>
                 <dt>Total visible</dt>
                 <dd>{cartTotalLabel}</dd>
-              </div>
-              <div>
-                <dt>Crédito</dt>
-                <dd>{creditLabel}</dd>
               </div>
             </dl>
           </motion.div>
@@ -582,76 +485,6 @@ export default function Shop() {
         />
 
       </section>
-
-      {/*
-        El mostrador: la otra mitad de la boutique. La anotación 61 pedía que
-        tienda y sesiones fueran el mismo paso coherente, y aquí está: sesión
-        suelta, evaluación, recuperación y técnica con el precio que ya publica
-        el configurador, añadido al mismo carrito de las piezas físicas.
-      */}
-      <section id="shop-counter" className="shop-counter section-shell" aria-labelledby="shop-counter-title">
-        <header className="shop-catalog-intro">
-          <div>
-            <SectionLabel>MOSTRADOR DE SERVICIOS</SectionLabel>
-            <h2 id="shop-counter-title">LA TIENDA TAMBIÉN<br />{' '}<span>VENDE SESIONES.</span></h2>
-          </div>
-          <p>No hace falta contratar un plan para entrenar con nosotros. Pides una sesión, una evaluación o una recuperación y la confirmamos contigo.</p>
-        </header>
-
-        <div className="shop-counter-groups">
-          {shopCounterGroups.map((group) => (
-            <section className="shop-counter-group" key={group.id} aria-labelledby={`shop-counter-${group.id}`}>
-              <header className="shop-counter-group-head">
-                <h3 id={`shop-counter-${group.id}`}>{group.title}</h3>
-                <p>{group.note}</p>
-              </header>
-              <div className="shop-counter-list">
-                {group.services.map((service) => (
-                  <ShopServiceCard key={service.id} service={service} />
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
-
-        <ul className="shop-counter-links" aria-label="Otras formas de comprar en BAYONA">
-          {shopCounterLinks.map((link) => (
-            <li key={link.to}>
-              <Link to={link.to}>{link.label} <ArrowRight size={15} strokeWidth={1} aria-hidden="true" /></Link>
-              <p>{link.detail}</p>
-            </li>
-          ))}
-        </ul>
-
-        <div className="shop-counter-help">
-          <p>¿Duda entre una sesión, una evaluación o un plan? Escríbenos antes de añadir nada.</p>
-          <a href={shopWhatsAppHelpUrl} target="_blank" rel="noreferrer">
-            PREGUNTAR POR WHATSAPP <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" />
-          </a>
-        </div>
-      </section>
-
-      {/*
-        Crédito a la vista, no escondido: §16 pide que el beneficio se vea. El
-        número lo manda RewardsProvider (bono de llegada + sellos + compartir) y
-        solo se puede canjear en un plan, que es el límite que puso Sebastián.
-      */}
-      <aside className="shop-credit section-shell" aria-label="Crédito BAYONA disponible">
-        <div className="shop-credit-figure">
-          <span>CRÉDITO BAYONA</span>
-          <strong>{rewards.bonusClaimed || rewards.sealCount ? rewards.format(rewards.totalEur) : 'PENDIENTE DE RECLAMAR'}</strong>
-          <small>{rewards.bonusClaimed ? `Incluye ${rewards.sealCount} ${rewards.sealCount === 1 ? 'sello' : 'sellos'} de tu recorrido.` : 'Reclama tu pase de bienvenida para guardarlo.'}</small>
-        </div>
-        <p className="shop-credit-copy">
-          Es una cortesía canjeable en tu primer plan, no dinero retirable y no un descuento aplicable al equipo de la tienda. Lo confirmamos por escrito antes de cerrar nada.
-        </p>
-        {!rewards.bonusClaimed && (
-          <button type="button" onClick={rewards.claimBonus}>RECLAMAR MI PASE</button>
-        )}
-        {rewards.bonusClaimed && (
-          <Link to="/programs">APLICARLO A UN PLAN</Link>
-        )}
-      </aside>
 
       <section
         className="shop-feature"
@@ -833,11 +666,11 @@ export default function Shop() {
         Precios en COP. Tu carrito es una selección, no un cobro automático: disponibilidad, variantes, crédito y envío se confirman por WhatsApp.
       </aside>
 
-      <aside className="shop-training-bridge section-shell" data-immersive="clip" aria-label="Enlace a programas de entrenamiento">
-        <p>¿Quieres que este pedido tenga plan detrás?</p>
+      <aside className="shop-training-bridge section-shell" data-immersive="clip" aria-label="Enlace a servicios de entrenamiento">
+        <p>¿Buscas entrenamiento además de equipamiento?</p>
         <div className="shop-training-bridge-actions">
-          <Link to="/programs">VER PROGRAMAS <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></Link>
-          <Link to="/entrar">GUARDAR EN MI CUENTA <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></Link>
+          <Link to="/programs">VER SERVICIOS <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></Link>
+          <a href="/#empieza">EMPIEZA GRATIS <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></a>
         </div>
       </aside>
 
