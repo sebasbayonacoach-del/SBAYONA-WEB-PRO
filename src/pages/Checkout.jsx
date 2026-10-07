@@ -11,9 +11,6 @@ import {
 } from '../config/offerings.js'
 import { trackEvent, trackLead } from '../lib/analytics/analytics.js'
 import { clearPendingLead, openWhatsApp, rememberPendingLead } from '../lib/conversion/whatsappBridge.js'
-import CheckoutPanel from '../components/commerce/CheckoutPanel.jsx'
-import { ZERO_FIRST_MONTH_OFFER } from '../lib/commerce/index.js'
-import { useRewards } from '../lib/rewards/RewardsProvider.jsx'
 import '../styles/checkout-handoff.css'
 
 const INITIAL_CONTACT = {
@@ -54,20 +51,6 @@ export default function Checkout() {
   )
   const calculation = useMemo(() => calculateExperience(selection), [selection])
   const selectedSessions = calculation.sessions.filter(({ quantity }) => quantity > 0)
-  /**
-   * El plan gratuito no vive en el configurador: llega por ?plan=GRATIS y se lo
-   * queda la pasarela. En cuanto la persona marca un plan de pago, la pasarela
-   * sigue esa elección.
-   */
-  const commercePlanId = searchParams.get('plan') === 'GRATIS' ? 'GRATIS' : planId
-  /**
-   * Todo el crédito BAYONA del recorrido —bono de llegada, sellos y premio por
-   * compartir— se resta del precio aquí mismo, delante de la persona.
-   * `useRewards` devuelve un objeto neutro si no hay proveedor, así que la caja
-   * sigue funcionando aislada.
-   */
-  const { totalEur } = useRewards()
-
   const handleContactChange = (event) => {
     const { name, value } = event.target
     setContact((current) => ({ ...current, [name]: value }))
@@ -124,10 +107,10 @@ export default function Checkout() {
   return (
     <>
       <section className="checkout-hero section-shell">
-        <SectionLabel>BAYONA OS · CONFIGURADOR</SectionLabel>
-        <h1>Diseña tu sistema de acompañamiento.</h1>
+        <SectionLabel>SERVICIOS BAYONA</SectionLabel>
+        <h1>PREPARA TU SOLICITUD.</h1>
         <p className="checkout-subtitle">
-          Elige la base, suma solo lo que aporta valor y revisa el total antes de hablar con BAYONA.
+          Elige una membresía, añade solo lo que necesitas y revisa el total antes de enviarnos tu solicitud.
         </p>
       </section>
 
@@ -141,7 +124,7 @@ export default function Checkout() {
               elección después, lo que invertía el embudo de decisión.
             */}
             <fieldset className="checkout-fieldset">
-              <legend id="checkout-form-title">1. Define tu base mensual</legend>
+              <legend id="checkout-form-title">1. Elige tu membresía</legend>
               <div className="checkout-plans">
                 {membershipPlans.map((plan) => (
                   <label key={plan.id} className={planId === plan.id ? 'selected' : ''}>
@@ -180,7 +163,7 @@ export default function Checkout() {
             </fieldset>
 
             <fieldset className="checkout-fieldset">
-              <legend>2. Suma sesiones cuando tengan sentido</legend>
+              <legend>2. Añade sesiones si las necesitas</legend>
               <div className="checkout-service-list">
                 {sessionServices.map((service) => (
                   <label
@@ -213,7 +196,7 @@ export default function Checkout() {
             </fieldset>
 
             <fieldset className="checkout-fieldset">
-              <legend>3. Añade soporte específico</legend>
+              <legend>3. Añade servicios complementarios</legend>
               <div className="checkout-extra-list">
                 {extraServices.map((service) => {
                   const isSelected = extraIds.includes(service.id)
@@ -239,7 +222,7 @@ export default function Checkout() {
             </fieldset>
 
             <fieldset className="checkout-fieldset">
-              <legend>4. Datos mínimos para preparar tu solicitud</legend>
+              <legend>4. Tus datos</legend>
               <p id="checkout-data-note" className="checkout-help">
                 Se usan únicamente para dejar tu mensaje claro antes de abrir WhatsApp. No hay cobro aquí.
               </p>
@@ -367,7 +350,7 @@ export default function Checkout() {
           </form>
 
           <aside className="order-summary" aria-labelledby="checkout-summary-title">
-            <p id="checkout-summary-title">TU SISTEMA BAYONA</p>
+            <p id="checkout-summary-title">RESUMEN DE TU SOLICITUD</p>
 
             <div className="summary-program">
               <span aria-hidden="true">B</span>
@@ -396,7 +379,7 @@ export default function Checkout() {
                 </div>
               ))}
               {!selectedSessions.length && !calculation.extras.length && (
-                <p className="checkout-empty-selection">Sin servicios extra seleccionados.</p>
+                <p className="checkout-empty-selection">Sin servicios adicionales seleccionados.</p>
               )}
             </div>
 
@@ -414,23 +397,15 @@ export default function Checkout() {
             <p className="checkout-eur-note">Equivalencias EUR y USD aproximadas y no contractuales. El detalle final se confirma contigo.</p>
 
             <ul>
-              <li><Check aria-hidden="true" /> Plan, extras y total visibles antes de enviar</li>
+              <li><Check aria-hidden="true" /> Membresía, servicios y total visibles antes de enviar</li>
               <li><Check aria-hidden="true" /> Sin cobro ni inscripción automática en este paso</li>
-              <li><Check aria-hidden="true" /> Primer mes sin coste · después, el precio publicado del plan</li>
+              <li><Check aria-hidden="true" /> La disponibilidad y las condiciones se confirman antes de cualquier pago</li>
             </ul>
           </aside>
         </div>
       </section>
 
-      <CheckoutPanel
-        className="checkout-gateway"
-        planId={commercePlanId}
-        period="month"
-        currency="EUR"
-        creditEur={totalEur}
-        introOffer={ZERO_FIRST_MONTH_OFFER}
-        initialShareCode={searchParams.get('codigo') ?? ''}
-      />
+
     </>
   )
 }
