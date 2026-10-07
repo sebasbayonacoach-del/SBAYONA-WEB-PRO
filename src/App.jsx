@@ -27,7 +27,10 @@ import Home from './pages/Home'
  * así que la primera visita descargaba las 16 páginas y sus 24 hojas de estilo
  * aunque solo se viera una. Con `lazy` cada ruta baja su propio chunk y su CSS.
  */
-const RouteSceneCycler = lazy(() =>\n  import('./components/RouteSceneCycler.jsx').then((module) => ({ default: module.RouteSceneCycler })),\n)\nconst About = lazy(() => import('./pages/About'))
+const RouteSceneCycler = lazy(() =>
+  import('./components/RouteSceneCycler.jsx').then((module) => ({ default: module.RouteSceneCycler })),
+)
+const About = lazy(() => import('./pages/About'))
 const Programs = lazy(() => import('./pages/Programs'))
 const ParkourAcademy = lazy(() => import('./pages/ParkourAcademy'))
 const PlanPresentation = lazy(() => import('./pages/PlanPresentation'))
@@ -303,7 +306,11 @@ function Site() {
           {/* UN lienzo WebGL por ruta editorial: ver RouteSceneCycler.jsx.
               Las rutas de producto no llevan decorado global porque compiten
               con formularios, panel, compra y estados operativos. */}
-          {routeSceneEnabled ? (\n            <Suspense fallback={null}>\n              <RouteSceneCycler key={pathname} {...routeSceneRules(pathname)} />\n            </Suspense>\n          ) : null}
+          {routeSceneEnabled ? (
+            <Suspense fallback={null}>
+              <RouteSceneCycler key={pathname} {...routeSceneRules(pathname)} />
+            </Suspense>
+          ) : null}
           {/*
             Cierre del recorrido: anuncia la siguiente parada. Montado aquí una
             sola vez, así las 9 páginas del itinerario lo reciben sin tocar su
