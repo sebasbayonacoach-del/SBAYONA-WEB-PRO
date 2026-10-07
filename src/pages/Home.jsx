@@ -205,17 +205,17 @@ export default function Home() {
           <div className="gym-section-heading">
             <SectionLabel>RECURSOS DE INICIO</SectionLabel>
             <h2 id="gym-gifts-title">PRIMERO RECIBES VALOR.</h2>
-            <p>Explora la web y, cuando quieras empezar, estos tres recursos ya son tuyos.</p>
+            <p>Mira lo que vas a recibir. Para llevártelo, deja tu nombre y un contacto al final.</p>
           </div>
           <div className="gym-gift-grid">
             {GIFTS.map((gift) => (
-              <a className="gym-gift-card" href={gift.href} download key={gift.href}>
+              <a className="gym-gift-card" href="#empieza" key={gift.href}>
                 <img src={gift.image} alt="" width="1600" height="900" loading="lazy" decoding="async" />
                 <div>
                   <span>{gift.tag}</span>
                   <h3>{gift.title}</h3>
                   <p>{gift.copy}</p>
-                  <strong>DESCARGAR <Download size={17} aria-hidden="true" /></strong>
+                  <strong>RECIBIR GRATIS <Download size={17} aria-hidden="true" /></strong>
                 </div>
               </a>
             ))}
@@ -228,7 +228,7 @@ export default function Home() {
           <SectionLabel>TU SIGUIENTE PASO</SectionLabel>
           <h2>DEJA TUS DATOS. RECIBE TODO. AGENDA CUANDO QUIERAS.</h2>
           <p>
-            Sin registro, sin contraseña y sin obligarte a comprar. Te enviamos el punto de partida y dejamos abierta la valoración.
+            Sin registro, sin contraseña y sin obligarte a comprar. Tus recursos se habilitan al enviar el formulario y después puedes pedir una valoración.
           </p>
         </div>
         <LeadMagnet
