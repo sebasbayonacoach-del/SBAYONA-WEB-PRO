@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { bookingLink, isBookingEnabled } from '../../config/site.config.js'
 import { isCloudEnabled, supabase } from '../../lib/supabase.js'
+import { trackEvent, trackLead } from '../../lib/analytics/analytics.js'
 import '../../styles/auth-members.css'
 
 export const LEADS_KEY = 'bayona_leads'
@@ -114,15 +115,24 @@ export default function LeadMagnet({
     }
     appendToQueue(lead)
     setDone(true)
+    trackLead({ source: LEAD_SOURCE })
 
     if (isCloudEnabled()) {
       setCaptureState('sending')
       insertCloudLead(lead).then((saved) => {
         if (saved) removeFromQueue(lead)
         setCaptureState(saved ? 'cloud' : 'local')
+        trackEvent('lead_capture_status', {
+          source: LEAD_SOURCE,
+          status: saved ? 'cloud' : 'local_fallback',
+        })
       })
     } else {
       setCaptureState('local')
+      trackEvent('lead_capture_status', {
+        source: LEAD_SOURCE,
+        status: 'local_fallback',
+      })
     }
   }
 
@@ -179,6 +189,10 @@ export default function LeadMagnet({
                 href={evaluationUrl}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackEvent('valuation_request_click', {
+                  source: LEAD_SOURCE,
+                  channel: isBookingEnabled() ? 'booking' : 'whatsapp',
+                })}
               >
                 AGENDAR VALORACIÓN
               </a>
