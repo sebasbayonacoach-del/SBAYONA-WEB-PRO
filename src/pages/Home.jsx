@@ -6,7 +6,7 @@ import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
-import { whatsAppLink } from '../config/site.config.js'
+import { bookingLink } from '../config/site.config.js'
 import '../styles/home.css'
 import '../styles/home-luxury-conversion.css'
 import '../styles/home-gym-funnel-v2.css'
@@ -92,7 +92,7 @@ const TRUST_POINTS = Object.freeze([
 ])
 
 export default function Home() {
-  const evaluationUrl = whatsAppLink('Hola BAYONA, quiero agendar una valoración inicial y saber qué servicio encaja conmigo.')
+  const evaluationUrl = bookingLink('Hola BAYONA, quiero agendar una valoración inicial y saber qué servicio encaja conmigo.')
 
   return (
     <div className="gym-home">
