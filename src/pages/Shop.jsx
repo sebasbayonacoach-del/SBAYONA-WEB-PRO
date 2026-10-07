@@ -44,6 +44,7 @@ import '../styles/shop.css'
 import '../styles/shop-catalog-editorial.css'
 import '../styles/shop-art-direction-2026.css'
 import '../styles/shop-unified-catalog.css'
+import '../styles/shop-gym-funnel-v2.css'
 
 /** Capa WebGL holográfica — carga diferida para proteger el LCP (Fase 11.6). */
 const ShopHologramLayer = lazy(() => import('../components/shop/ShopHologramLayer.jsx'))
