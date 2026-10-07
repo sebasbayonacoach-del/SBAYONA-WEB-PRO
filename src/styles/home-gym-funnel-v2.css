@@ -1,0 +1,548 @@
+/* BAYONA HOME · GYM FUNNEL V2 */
+
+.gym-home {
+  --gym-orange: #f4a261;
+  --gym-white: #f7f5f1;
+  --gym-black: #050505;
+  --gym-panel: #0d0d0e;
+  --gym-line: rgba(255,255,255,.13);
+  --gym-muted: rgba(247,245,241,.64);
+  background: var(--gym-black);
+  color: var(--gym-white);
+}
+
+.gym-home-shell {
+  width: min(1360px, calc(100% - clamp(2rem,8vw,10rem)));
+  margin-inline: auto;
+}
+
+.gym-home-hero {
+  position: relative;
+  min-height: min(900px, 92svh);
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.gym-home-hero::after {
+  filter: saturate(.72) contrast(1.06);
+}
+
+.gym-home-hero__content {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(8rem,17vh,12rem) clamp(4rem,10vh,7rem);
+}
+
+.gym-home-kicker {
+  margin: 0 0 1.25rem;
+  color: var(--gym-orange);
+  font: 800 .68rem/1 var(--font-label, monospace);
+  letter-spacing: .17em;
+}
+
+.gym-home-hero h1 {
+  max-width: 9ch;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(4.3rem,10vw,10.5rem) !important;
+  line-height: .82 !important;
+  letter-spacing: -.075em !important;
+}
+
+.gym-home-hero__lead {
+  max-width: 650px;
+  margin: clamp(1.5rem,3vw,2.3rem) 0 0;
+  color: rgba(255,255,255,.8);
+  font-size: clamp(1.05rem,1.8vw,1.35rem);
+  line-height: 1.55;
+}
+
+.gym-home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem;
+  margin-top: 2rem;
+}
+
+.gym-primary-button,
+.gym-secondary-button {
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  padding: 0 1.35rem;
+  font: 900 .72rem/1 var(--font-label, monospace);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border: 1px solid var(--gym-orange);
+  transition: transform .25s ease, background .25s ease, color .25s ease;
+}
+
+.gym-primary-button {
+  background: var(--gym-orange);
+  color: #080808;
+}
+
+.gym-secondary-button {
+  background: rgba(0,0,0,.26);
+  color: #fff;
+  backdrop-filter: blur(10px);
+}
+
+.gym-primary-button:hover,
+.gym-secondary-button:hover {
+  transform: translateY(-2px);
+}
+
+.gym-secondary-button:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #050505;
+}
+
+.gym-home-reward {
+  width: fit-content;
+  max-width: 560px;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-top: 1.2rem;
+  padding: .8rem 1rem;
+  border-left: 2px solid var(--gym-orange);
+  background: rgba(0,0,0,.34);
+  color: rgba(255,255,255,.72);
+  font-size: .86rem;
+  line-height: 1.35;
+}
+
+.gym-home-reward strong {
+  color: #fff;
+}
+
+.gym-home-services,
+.gym-home-process,
+.gym-home-plans,
+.gym-home-trust,
+.gym-home-gifts,
+.gym-home-lead {
+  padding-block: clamp(5rem,10vw,9rem);
+  border-top: 1px solid var(--gym-line);
+}
+
+.gym-section-heading {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: clamp(2.2rem,5vw,4.5rem);
+}
+
+.gym-section-heading .eyebrow {
+  margin: 0;
+}
+
+.gym-section-heading h2,
+.gym-trust-layout h2,
+.gym-home-lead__intro h2 {
+  max-width: 13ch;
+  margin: 0;
+  font-size: clamp(3.1rem,7vw,7.6rem) !important;
+  line-height: .86 !important;
+  letter-spacing: -.065em !important;
+}
+
+.gym-section-heading > p,
+.gym-home-lead__intro > p {
+  max-width: 650px;
+  margin: 0;
+  color: var(--gym-muted);
+  font-size: clamp(1rem,1.4vw,1.15rem);
+  line-height: 1.6;
+}
+
+.gym-service-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 1px;
+  background: var(--gym-line);
+  border: 1px solid var(--gym-line);
+}
+
+.gym-service-card {
+  position: relative;
+  min-height: clamp(360px,43vw,590px);
+  display: flex;
+  align-items: end;
+  overflow: hidden;
+  background: #0b0b0c;
+  color: #fff;
+}
+
+.gym-service-card > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.72) brightness(.72);
+  transition: transform .7s cubic-bezier(.16,1,.3,1), filter .45s ease;
+}
+
+.gym-service-card:hover > img {
+  transform: scale(1.035);
+  filter: saturate(.85) brightness(.8);
+}
+
+.gym-service-card__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,transparent 30%,rgba(0,0,0,.92) 100%);
+}
+
+.gym-service-card > div {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: clamp(1.5rem,4vw,3.2rem);
+}
+
+.gym-service-card h3 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(2rem,4vw,4rem);
+  line-height: .95;
+}
+
+.gym-service-card p {
+  max-width: 45ch;
+  margin: 1rem 0;
+  color: rgba(255,255,255,.7);
+  font-size: .95rem;
+  line-height: 1.55;
+}
+
+.gym-service-card__action,
+.gym-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  color: var(--gym-orange);
+  font: 800 .67rem/1 var(--font-label, monospace);
+  letter-spacing: .08em;
+}
+
+.gym-inline-link {
+  margin-top: 1.6rem;
+  padding-block: .75rem;
+  border-bottom: 1px solid rgba(244,162,97,.45);
+}
+
+.gym-home-process {
+  background:
+    radial-gradient(circle at 85% 15%,rgba(244,162,97,.08),transparent 30%),
+    #080808;
+}
+
+.gym-process-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+  border-block: 1px solid var(--gym-line);
+}
+
+.gym-process-grid li {
+  min-height: 250px;
+  padding: 2rem;
+  border-right: 1px solid var(--gym-line);
+}
+
+.gym-process-grid li:last-child {
+  border-right: 0;
+}
+
+.gym-process-grid li > span {
+  color: var(--gym-orange);
+  font: 800 .72rem/1 var(--font-label, monospace);
+}
+
+.gym-process-grid h3 {
+  margin: 4rem 0 1rem;
+  font-size: clamp(1.6rem,2.4vw,2.6rem);
+}
+
+.gym-process-grid p {
+  margin: 0;
+  color: var(--gym-muted);
+  line-height: 1.6;
+}
+
+.gym-home-plans {
+  background: #070707;
+}
+
+.gym-home-plans .plan-atelier-navigation {
+  margin-top: 0;
+}
+
+.gym-home-plans .plan-showroom {
+  margin-top: 1rem;
+}
+
+.gym-home-trust {
+  background: #f0ece5;
+  color: #111;
+}
+
+.gym-home-trust .eyebrow {
+  color: #8d592b;
+}
+
+.gym-trust-layout {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(320px,.8fr);
+  gap: clamp(2rem,8vw,8rem);
+  align-items: start;
+}
+
+.gym-trust-layout ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(0,0,0,.18);
+}
+
+.gym-trust-layout li {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: .8rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(0,0,0,.18);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.gym-trust-layout li svg {
+  color: #b46b31;
+}
+
+.gym-gift-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.gym-gift-card {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: minmax(260px,38vw) auto;
+  overflow: hidden;
+  border: 1px solid var(--gym-line);
+  background: var(--gym-panel);
+  color: #fff;
+}
+
+.gym-gift-card > img {
+  width: 100%;
+  height: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  filter: saturate(.64) brightness(.72);
+}
+
+.gym-gift-card > div {
+  padding: 1.4rem;
+}
+
+.gym-gift-card span {
+  color: var(--gym-orange);
+  font: 800 .62rem/1 var(--font-label, monospace);
+  letter-spacing: .11em;
+}
+
+.gym-gift-card h3 {
+  margin: .9rem 0 .65rem;
+  font-size: clamp(1.5rem,2.3vw,2.3rem);
+}
+
+.gym-gift-card p {
+  min-height: 3em;
+  margin: 0;
+  color: var(--gym-muted);
+  font-size: .9rem;
+  line-height: 1.55;
+}
+
+.gym-gift-card strong {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  margin-top: 1.25rem;
+  color: #fff;
+  font: 800 .66rem/1 var(--font-label, monospace);
+  letter-spacing: .06em;
+}
+
+.gym-home-lead {
+  background:
+    linear-gradient(120deg,rgba(244,162,97,.09),transparent 40%),
+    #050505;
+}
+
+.gym-home-lead__intro {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.gym-home-lead .lead-magnet {
+  border: 0;
+  background: transparent;
+}
+
+.gym-home-lead .lead-magnet-inner {
+  width: min(900px,calc(100% - 2rem));
+  margin-inline: auto;
+  border: 1px solid rgba(244,162,97,.26);
+  background: rgba(255,255,255,.035);
+}
+
+.gym-home-lead .lead-magnet-figure,
+.gym-home-lead .lead-magnet-inner > .eyebrow {
+  display: none;
+}
+
+.gym-home-lead__fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  color: var(--gym-muted);
+  font-size: .85rem;
+}
+
+.gym-home-lead__fallback a {
+  color: var(--gym-orange);
+  font: 800 .66rem/1 var(--font-label, monospace);
+  letter-spacing: .06em;
+}
+
+@media (max-width: 900px) {
+  .gym-home-shell {
+    width: min(100% - 2rem, 760px);
+  }
+
+  .gym-home-hero {
+    min-height: 78svh;
+  }
+
+  .gym-home-hero h1 {
+    font-size: clamp(4rem,17vw,7.5rem) !important;
+  }
+
+  .gym-service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gym-service-card {
+    min-height: 440px;
+  }
+
+  .gym-process-grid,
+  .gym-gift-grid,
+  .gym-trust-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .gym-process-grid li {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--gym-line);
+  }
+
+  .gym-process-grid li:last-child {
+    border-bottom: 0;
+  }
+
+  .gym-process-grid h3 {
+    margin-top: 2rem;
+  }
+
+  .gym-gift-card {
+    grid-template-columns: minmax(120px,.75fr) minmax(0,1.25fr);
+    grid-template-rows: auto;
+  }
+
+  .gym-gift-card > img {
+    min-height: 240px;
+    max-height: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .gym-home-shell {
+    width: calc(100% - 1.5rem);
+  }
+
+  .gym-home-hero {
+    min-height: 82svh;
+  }
+
+  .gym-home-hero__content {
+    padding-bottom: 3.2rem;
+  }
+
+  .gym-home-hero h1 {
+    font-size: clamp(3.7rem,19vw,6.1rem) !important;
+  }
+
+  .gym-home-hero__actions {
+    display: grid;
+  }
+
+  .gym-primary-button,
+  .gym-secondary-button {
+    width: 100%;
+  }
+
+  .gym-section-heading h2,
+  .gym-trust-layout h2,
+  .gym-home-lead__intro h2 {
+    font-size: clamp(2.8rem,15vw,5rem) !important;
+  }
+
+  .gym-service-card {
+    min-height: 390px;
+  }
+
+  .gym-gift-card {
+    grid-template-columns: 1fr;
+  }
+
+  .gym-gift-card > img {
+    min-height: 250px;
+    max-height: 340px;
+  }
+
+  .gym-home-lead__fallback {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gym-service-card > img,
+  .gym-primary-button,
+  .gym-secondary-button {
+    transition: none;
+  }
+
+  .gym-service-card:hover > img,
+  .gym-primary-button:hover,
+  .gym-secondary-button:hover {
+    transform: none;
+  }
+}
