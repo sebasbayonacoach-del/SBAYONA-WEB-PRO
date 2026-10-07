@@ -158,14 +158,16 @@
     grid-template-columns: 1fr;
   }
 
-  .shop-category-shortcuts button,
-  .shop-category-shortcuts button:last-child {
-    min-height: 76px;
-    grid-column: auto;
-    align-items: center;
-  }
 
-  .shop-categories-head h2 {
-    font-size: clamp(2.8rem,14vw,4.6rem);
-  }
+/* Gym Funnel V2: la tienda usa fotografía real de producto.
+   Las capas editoriales antiguas ocultan media dentro de *-card por defecto;
+   esta superficie es una excepción deliberada. */
+body.premium-route--shop .ds-frame:not([data-experience-scope='system']) .shop-product-card .shop-product-visual,
+body.premium-route--shop .shop-product-visual:has(.shop-product-image) {
+  display: flex !important;
+}
+
+body.premium-route--shop .ds-frame:not([data-experience-scope='system']) .shop-product-card .shop-product-visual picture,
+body.premium-route--shop .ds-frame:not([data-experience-scope='system']) .shop-product-card .shop-product-image {
+  display: block !important;
 }

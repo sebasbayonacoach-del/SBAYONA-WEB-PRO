@@ -14,7 +14,6 @@ import {
   ArrowUpRight,
   BookOpen,
   Check,
-  ExternalLink,
   FileCheck2,
   FileText,
   KeyRound,
@@ -27,11 +26,8 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { buildWhatsAppUrl } from '../config/offerings.js'
-import { socialLinks } from '../config/social.config.js'
-import { resolveProfiles } from '../lib/social/platforms.js'
 import { RESOURCE_QUESTION_TOPICS } from '../lib/forms/privacy.js'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
-import Glyph from '../components/social/Glyph.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import ProtocoloCheckIn from '../components/checkin/ProtocoloCheckIn.jsx'
 import VideoSection from '../components/VideoSection.jsx'
@@ -249,22 +245,8 @@ const EDITORIAL_TOPIC_MEDIA = Object.freeze({
   conversation: RESOURCE_TOPIC_MEDIA[6],
   reflection: RESOURCE_TOPIC_MEDIA[7],
   health: RESOURCE_TOPIC_MEDIA[8],
-  decision: RESOURCE_TOPIC_MEDIA[9],
-  channels: RESOURCE_TOPIC_MEDIA[10],
   magazine: RESOURCE_TOPIC_MEDIA[11],
 })
-
-const OFFICIAL_CHANNELS = Object.freeze([
-  Object.freeze({ id: 'instagram', handle: '@sebasbayona' }),
-  Object.freeze({ id: 'youtube', handle: '@sevisionari' }),
-  Object.freeze({ id: 'tiktok', handle: '@sebasbayona' }),
-])
-
-const configuredProfiles = resolveProfiles(socialLinks)
-const officialProfiles = OFFICIAL_CHANNELS.map((channel) => {
-  const profile = configuredProfiles.find(({ id }) => id === channel.id)
-  return profile ? { ...profile, handle: channel.handle } : null
-}).filter(Boolean)
 
 function validateQuestionForm(values) {
   const errors = {}
@@ -844,7 +826,7 @@ export default function Resources() {
             <header className="resources-section-header resources-reveal">
               <p className="resources-eyebrow">01 · DOSSIER 30 DÍAS · WORKBOOK GUIADO</p>
               <h2 id="challenge-title">30 DÍAS.<br /><span>UN WORKBOOK, NO UNA PROMESA.</span></h2>
-              <p>Taller de 30 días para entrenar por tu cuenta con guía diaria. Mandas sesiones, fotos, comidas o dudas cuando quieras, y al final puedes desbloquear un programa personalizado. Las reglas y el premio se entregan por escrito antes del día uno.</p>
+              <p>Taller de 30 días para entrenar por tu cuenta con guía diaria. Mandas sesiones, fotos, comidas o dudas cuando quieras, y al final puedes solicitar acompañamiento personalizado. Las reglas y el premio se entregan por escrito antes del día uno.</p>
             </header>
 
             <div className="resources-game-opening">
@@ -1425,79 +1407,7 @@ export default function Resources() {
           </div>
         </section>
 
-        <section
-          {...sceneBackgroundProps(EDITORIAL_TOPIC_MEDIA.channels, {
-            className: 'resources-section resources-channels',
-            variant: 'subtle',
-            pseudo: 'after',
-          })}
-          data-section-number="04"
-          aria-labelledby="channels-title"
-        >
-          <div className="resources-shell" data-immersive="clip">
-            <header className="resources-section-header resources-reveal">
-              <p className="resources-eyebrow">04 · SÍGUEME</p>
-              <h2 id="channels-title">TODO SE ANUNCIA<br /><span>EN REDES.</span></h2>
-              <p>Las publicaciones, los regalos y los documentos nuevos se avisan en Instagram, YouTube y TikTok. Sígueme para enterarte primero.</p>
-            </header>
 
-            {officialProfiles.length > 0 ? (
-              <ul className="resources-channel-list" aria-label="Canales sociales oficiales">
-                {officialProfiles.map((profile, index) => (
-                  <li className="resources-reveal" key={profile.id} style={{ '--resources-stagger': `${index * 0.08}s` }}>
-                    <a className="resources-card resources-spotlight" href={profile.url} target="_blank" rel="noopener noreferrer">
-                      <Glyph name={profile.glyph} size={25} />
-                      <span>
-                        <small>{profile.label}</small>
-                        <strong>{profile.handle}</strong>
-                      </span>
-                      <ExternalLink aria-hidden="true" size={18} strokeWidth={1.2} />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="resources-channel-empty" role="status">Los canales oficiales se publicarán aquí cuando estén configurados.</p>
-            )}
-          </div>
-        </section>
-
-        <section
-          {...sceneBackgroundProps(EDITORIAL_TOPIC_MEDIA.decision, {
-            className: 'resources-section resources-decision',
-            variant: 'accent',
-            pseudo: 'after',
-          })}
-          data-section-number="05"
-          aria-labelledby="decision-title"
-        >
-          <div className="resources-shell resources-decision-inner resources-reveal">
-            <p className="resources-eyebrow">05 · SIGUIENTE PASO</p>
-            <h2 id="decision-title">¿NECESITAS MÁS ESTRUCTURA?<br /><span>COMPARA LOS PROGRAMAS.</span></h2>
-            <p className="resources-decision-hook">Si un recurso te resultó útil, revisa las sesiones, el seguimiento y el precio de cada plan. La comunidad abierta sigue disponible sin compra.</p>
-            <p className="resources-free-band">COMUNIDAD ABIERTA · NO REQUIERE UN PLAN</p>
-            <div className="resources-decision-actions">
-              <MagneticLink
-                className="resources-action resources-action--primary"
-                enabled={interactiveEffects}
-                to="/programs"
-              >
-                VER PROGRAMAS <ArrowUpRight aria-hidden="true" size={17} strokeWidth={1.2} />
-              </MagneticLink>
-              <MagneticLink
-                className="resources-action resources-action--ghost"
-                enabled={interactiveEffects}
-                to="/community"
-              >
-                UNIRME A LA COMUNIDAD <ArrowUpRight aria-hidden="true" size={17} strokeWidth={1.2} />
-              </MagneticLink>
-            </div>
-            <blockquote>
-              <p>EL CAMBIO NO EMPIEZA CON UN PLAN PERFECTO. EMPIEZA CON UNA DECISIÓN.</p>
-              <cite>— SEBASTIÁN</cite>
-            </blockquote>
-          </div>
-        </section>
 
         <section id="resources-lead" className="resources-lead-capture" aria-label="Recibir recursos gratuitos">
           <LeadMagnet

@@ -3614,3 +3614,70 @@ body:has(.resources-page) .bayona-cursor {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* ==========================================================================
+   PRO FINAL 2026-10-07 · biblioteca premium, no página interminable
+   ========================================================================== */
+@media (min-width: 769px) {
+  .resources-page .resources-section {
+    padding-block: clamp(68px, 6vw, 96px);
+  }
+
+  .resources-page .resources-game-progress {
+    margin-top: clamp(42px, 5vw, 68px);
+  }
+
+  .resources-page .resources-game-progress li {
+    min-height: 118px;
+  }
+
+  .resources-page .resources-manual li {
+    min-height: 210px;
+  }
+
+  .resources-page .resources-magazine-feature {
+    min-height: 520px;
+  }
+
+  .resources-page .resources-feature-visual {
+    min-height: 420px;
+  }
+
+  .resources-page .resources-publication-card {
+    min-height: 430px;
+  }
+
+  .resources-page .resources-publication-cover {
+    min-height: 220px;
+  }
+
+  .resources-page .resources-channel-list a {
+    min-height: 160px;
+  }
+
+  .resources-page .resources-decision {
+    min-height: 640px;
+  }
+}
+
+@media (max-width: 768px) {
+  .resources-page .resources-section {
+    padding-block: 64px;
+  }
+
+  .resources-page .resources-manual li {
+    min-height: 0;
+  }
+
+  .resources-page .resources-publication-card {
+    min-height: 430px;
+  }
+
+  .resources-page .resources-channel-list a {
+    min-height: 132px;
+  }
+
+  .resources-page .resources-decision {
+    min-height: 0;
+  }
+}

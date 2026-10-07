@@ -2,8 +2,6 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import Resources from './Resources.jsx'
-import { socialLinks } from '../config/social.config.js'
-import { resolveProfiles } from '../lib/social/platforms.js'
 
 function renderPage() {
   return render(
@@ -89,20 +87,12 @@ describe('/resources — Empieza Gratis honesto', () => {
     expect(screen.getByText(/Nada se envía solo\. Tú revisas el mensaje y decides abrir WhatsApp\./i)).toBeInTheDocument()
   })
 
-  it('deriva los canales publicados de social.config.js sin inventar métricas', () => {
+  it('cierra en captación y servicios sin duplicar un directorio de redes', () => {
     const { container } = renderPage()
-    const configuredProfiles = resolveProfiles(socialLinks)
-    const channelsSection = container.querySelector('.resources-channels')
 
-    if (configuredProfiles.length > 0) {
-      expect(channelsSection).not.toBeNull()
-      for (const profile of configuredProfiles) {
-        const link = channelsSection.querySelector(`a[href*="${profile.url}"]`)
-        expect(link).not.toBeNull()
-      }
-    }
-
-    // Nunca se muestran conteos de seguidores ni publicaciones falsas.
+    expect(container.querySelector('.resources-channels')).toBeNull()
+    expect(container.querySelector('.resources-decision')).toBeNull()
+    expect(container.querySelector('#resources-lead')).not.toBeNull()
     expect(container.textContent).not.toMatch(/\d+[.,]\d+\s*(seguidores|followers)/i)
   })
 })

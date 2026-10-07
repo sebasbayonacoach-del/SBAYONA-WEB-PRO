@@ -330,8 +330,7 @@ export default function ParkourAcademy() {
         </div>
         {/* Anotación 35: «puedes hacer un espacio para un vídeo». Entra el
             mismo módulo que ya usa / y /programs —`VideoSection`, con el marco
-            de reproductor, el rótulo de duración y el estado «próximamente»—,
-            que es la forma honesta de reservar el hueco sin inventarse una
+            de media y el rótulo editorial cuando no hay vídeo real, sin inventar una
             reproducción. Se queda dentro del método: es ahí donde una progresión
             se entiende mirándola y no leyéndola. */}
         <VideoSection
@@ -381,7 +380,7 @@ export default function ParkourAcademy() {
           <a className="academy-action academy-action--primary" href={interestUrl} target="_blank" rel="noreferrer">
             EMPEZAMOS JUNTOS <ArrowRight size={18} aria-hidden="true" />
           </a>
-          <Link className="academy-program-link" to="/programs">Mientras tanto, veamos los programas</Link>
+          <Link className="academy-program-link" to="/programs">Mientras tanto, conoce los servicios</Link>
         </div>
       </section>
     </div>

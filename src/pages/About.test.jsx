@@ -81,7 +81,7 @@ describe('/about — historia, honestidad y conversión', () => {
     expect(screen.getByText('5', { selector: '.globe-impact-stat strong' })).toBeInTheDocument()
     expect(container.querySelectorAll('.globe-testimonials-world-point')).toHaveLength(10)
     expect(screen.getByRole('heading', { name: /NO ES UNA RUTINA\.\s*ES UNA DECISIÓN TRAS OTRA\./i })).toBeInTheDocument()
-    expect(container.textContent).toContain('ENTRENAMOS, REGISTRAMOS Y AJUSTAMOS. JUNTOS.')
+    expect(container.textContent).not.toContain('ENTRENAMOS, REGISTRAMOS Y AJUSTAMOS. JUNTOS.')
 
     expect(screen.getByRole('link', { name: /EMPEZAR JUNTOS/i })).toHaveAttribute('href', '/programs')
 

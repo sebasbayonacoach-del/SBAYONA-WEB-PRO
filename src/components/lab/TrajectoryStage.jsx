@@ -74,27 +74,43 @@ export default function TrajectoryStage({ stationKey, onVerified, onFailed }) {
     callbacksRef.current = { onVerified, onFailed }
   })
 
-  // Verificación post-montaje, sin temporizadores: se comprueba en el commit en
-  // el que la escena debería estar. Si la barrera del motor se tragó un fallo,
-  // aquí no hay <canvas> y el estado pasa a `error` con explicación.
+  // SceneMount resuelve Scene3D con React.lazy. El canvas puede aparecer
+  // después del primer commit, así que una lectura síncrona aquí produciría un
+  // falso fallo. MutationObserver espera únicamente a que exista el canvas.
   useEffect(() => {
     const host = hostRef.current
-    const canvas = host && typeof host.querySelector === 'function' ? host.querySelector('canvas') : null
-    if (canvas && hasLiveWebGLContext(canvas)) {
-      callbacksRef.current.onVerified?.(canvas)
-    } else {
-      callbacksRef.current.onFailed?.(
-        canvas
-          ? 'El lienzo está montado, pero su contexto WebGL no está disponible.'
-          : 'El motor se descargó, pero no pudo montar un lienzo WebGL.',
-      )
+    if (!host) return undefined
+
+    let settled = false
+    const verify = () => {
+      if (settled) return true
+      const canvas = host.querySelector('canvas')
+      if (!canvas) return false
+
+      settled = true
+      if (hasLiveWebGLContext(canvas)) {
+        callbacksRef.current.onVerified?.(canvas)
+      } else {
+        callbacksRef.current.onFailed?.('El lienzo está montado, pero su contexto WebGL no está disponible.')
+      }
+      return true
     }
-    // Sin dependencias: es la comprobación de MONTAJE, no un vigilante del
-    // render loop. Tampoco hay temporizador: un lienzo tardío no es un fallo.
+
+    if (verify()) return undefined
+
+    const observer = new MutationObserver(() => {
+      if (verify()) observer.disconnect()
+    })
+    observer.observe(host, { childList: true, subtree: true })
+
+    return () => {
+      settled = true
+      observer.disconnect()
+    }
   }, [])
 
   return (
-    <div className="lab-spatial" ref={hostRef} data-lab-stage="trajectory">
+    <div className="lab-spatial" ref={hostRef} data-lab-stage="trajectory" data-station={config.params.stationKey}>
       <SceneMount config={config} />
     </div>
   )

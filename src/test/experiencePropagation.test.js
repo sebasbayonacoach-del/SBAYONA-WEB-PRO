@@ -59,9 +59,11 @@ describe('Propagación de la capa de experiencia (FASE 4 · 4.2 y 4.5)', () => {
 
   it('las rutas de producto no montan chrome editorial global', () => {
     expect(appSource).toMatch(/const PRODUCT_ROUTES = Object.freeze\(\[/)
-    for (const route of ['/app', '/entrar', '/checkout', '/order-confirmation', '/onboarding']) {
+    for (const route of ['/panel', '/checkout', '/order-confirmation', '/onboarding']) {
       expect(appSource).toContain(`'${route}'`)
     }
+    expect(appSource).toContain("<Route path=\"/app\" element={<AppEntry />} />")
+    expect(appSource).toContain("<Route path=\"/entrar\" element={<Entrar />} />")
     expect(appSource).toContain('const showEditorialChrome = !isProductRoute && !isSystemRoute')
     expect(appSource).toMatch(/\{showEditorialChrome \? <WhatsAppButton \/> : null\}/)
     expect(appSource).not.toMatch(/import\s+.*(?:ArrivalBonusCard|JourneyRibbon|GuideCompanion|UniverseScaleBadge|UniverseScaleSights|ShareInvite|NextChapter)/)
@@ -96,11 +98,10 @@ describe('Propagación de la capa de experiencia (FASE 4 · 4.2 y 4.5)', () => {
     expect(appSource).not.toMatch(/'<\/checkout>'[^]*FOOTER_ROUTES/)
   })
 
-  it('el WebGL narrativo global no se monta en móvil ni con reduced motion', () => {
+  it('el WebGL narrativo global queda fuera del shell público', () => {
+    expect(appSource).not.toContain('RouteSceneCycler')
+    expect(appSource).not.toContain('routeSceneRules')
     expect(routeSceneCyclerSource).toContain("import { useCapabilities } from '../engine/hooks/useCapabilities.js'")
-    expect(routeSceneCyclerSource).toContain("caps.mode === 'desktop' && caps.reducedMotion === false")
-    expect(routeSceneCyclerSource).toMatch(/if \(!canRunNarrativeWebGL\) \{\s*setSteps\(\[\]\)/)
-    expect(routeSceneCyclerSource).toMatch(/if \(!canRunNarrativeWebGL \|\| !steps\.length\) return null/)
   })
 
   it('la capa nueva no abre peticiones ni dependencias: es CSS y DOM', () => {

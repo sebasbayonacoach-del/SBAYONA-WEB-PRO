@@ -65,7 +65,7 @@ export default function AboutMethodStage({ items = [] }) {
   const { mode } = useCapabilities()
   if (!items.length) return null
 
-  const length = mode === 'desktop' ? '250vh' : '220vh'
+  const length = mode === 'desktop' ? '150vh' : '140vh'
 
   return (
     <div className="about-decision-stage">

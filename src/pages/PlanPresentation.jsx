@@ -192,7 +192,7 @@ function InvalidPlan() {
     <section className="plan-presentation-invalid" aria-labelledby="invalid-plan-title">
       <span>404 / PLAN NO ENCONTRADO</span>
       <h1 id="invalid-plan-title">ESE CAMINO NO EXISTE.<br /><em>PERO EL TUYO SÍ.</em></h1>
-      <p>Vuelve a los programas y elige la transformación que encaja contigo.</p>
+      <p>Vuelve a Servicios y elige el acompañamiento que encaja contigo.</p>
       <Link to="/programs" className="plan-presentation-button">
         VER LOS PLANES <ArrowRight size={18} aria-hidden="true" />
       </Link>
@@ -482,7 +482,7 @@ export default function PlanPresentation({ planId }) {
                 ))}
               </ul>
               <p>
-                Se puede añadir como servicio suelto desde el catálogo de programas, o subir de nivel cuando
+                Se puede añadir como servicio suelto desde el catálogo de servicios, o subir de nivel cuando
                 lo que falta sea de verdad lo que te frena.
               </p>
             </Reveal>
@@ -594,8 +594,8 @@ export default function PlanPresentation({ planId }) {
             </blockquote>
           </Reveal>
           <p className="plan-presentation-testimonial-notice">
-            Historias compartidas por alumnos. Ejemplos representativos, con nombres simplificados para
-            proteger la privacidad. Testimonios verificados próximamente.
+            Historias compartidas por alumnos. Algunos nombres o detalles pueden simplificarse para
+            proteger la privacidad. No representan resultados garantizados.
           </p>
         </div>
       </section>

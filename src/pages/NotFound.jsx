@@ -17,10 +17,10 @@ import { whatsAppLink } from '../config/site.config.js'
 import '../styles/not-found.css'
 
 const DESTINATIONS = [
-  ['Programas y planes', '/programs', 'Compara los cuatro niveles de acompañamiento.'],
+  ['Servicios y planes', '/programs', 'Explora entrenamiento personal, online, parkour y recuperación.'],
   ['Recursos gratuitos', '/resources', 'Empieza sin pagar nada.'],
   ['Preguntas frecuentes', '/faq', 'Precios, lesiones, presencialidad y BAYONA+.'],
-  ['Entrar a BAYONA', '/onboarding', 'Un recorrido corto para orientarte.'],
+  ['Empieza gratis', '/#empieza', 'Recibe recursos y cuéntanos qué buscas.'],
 ]
 
 const helpUrl = whatsAppLink(

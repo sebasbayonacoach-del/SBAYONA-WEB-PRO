@@ -2,7 +2,6 @@ import { Suspense, lazy, useEffect } from 'react'
 import './styles/route-fallback-prime.css'
 import './styles/shop-boutique-prime.css'
 import './styles/faq-prime-fix.css'
-import { routeSceneRules } from './config/routeSceneRules.js'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Footer, Navbar, WhatsAppButton } from './components/Layout'
 import { ScrollProgress } from './components/Experience'
@@ -27,9 +26,6 @@ import Home from './pages/Home'
  * así que la primera visita descargaba las 16 páginas y sus 24 hojas de estilo
  * aunque solo se viera una. Con `lazy` cada ruta baja su propio chunk y su CSS.
  */
-const RouteSceneCycler = lazy(() =>
-  import('./components/RouteSceneCycler.jsx').then((module) => ({ default: module.RouteSceneCycler })),
-)
 const About = lazy(() => import('./pages/About'))
 const Programs = lazy(() => import('./pages/Programs'))
 const ParkourAcademy = lazy(() => import('./pages/ParkourAcademy'))
@@ -155,16 +151,6 @@ const PRODUCT_ROUTES = Object.freeze([
   el pie es una salida antes de tiempo.
 */
 const FOOTER_ROUTES = Object.freeze(['/panel'])
-const ROUTE_SCENE_DISABLED_ROUTES = Object.freeze([
-  ...PRODUCT_ROUTES,
-  '/',
-  '/programs',
-  '/shop',
-  '/app',
-  '/entrar',
-  '/design-system',
-])
-
 function routeStartsWith(pathname, routes) {
   return routes.some((route) => pathname === route || pathname.startsWith(`${route}/`))
 }
@@ -176,7 +162,6 @@ function Site() {
   const showEditorialChrome = !isProductRoute && !isSystemRoute
   const showSiteFooter = showEditorialChrome || routeStartsWith(pathname, FOOTER_ROUTES)
   const experienceScope = isSystemRoute || isProductRoute ? 'system' : 'brand'
-  const routeSceneEnabled = !routeStartsWith(pathname, ROUTE_SCENE_DISABLED_ROUTES)
 
   /*
    * Señal global para las capas fijas que estorban el clic. `WhatsAppButton`
@@ -269,8 +254,8 @@ function Site() {
                 El mando de cinco pantallas con la dirección que su propio
                 comentario le prometía desde el 18-sep (`/panel` es el mando
                 nuevo… solo se le da su propia dirección`). No estaba
-                declarada: el único sitio vivo era `/app`, y `routeSceneRules`
-                tenía una entrada para una ruta inexistente. `RequireAuth` es el
+                declarada: el único sitio vivo era `/app`; la configuración espacial histórica
+                incluso contemplaba una ruta que todavía no existía. `RequireAuth` es el
                 mismo guardia del resto de destinos privados: sin sesión devuelve
                 a `/entrar?next=/panel`. `/app` no cambia de comportamiento.
               */}
@@ -303,14 +288,6 @@ function Site() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
-          {/* UN lienzo WebGL por ruta editorial: ver RouteSceneCycler.jsx.
-              Las rutas de producto no llevan decorado global porque compiten
-              con formularios, panel, compra y estados operativos. */}
-          {routeSceneEnabled ? (
-            <Suspense fallback={null}>
-              <RouteSceneCycler key={pathname} {...routeSceneRules(pathname)} />
-            </Suspense>
-          ) : null}
           {/*
             Cierre del recorrido: anuncia la siguiente parada. Montado aquí una
             sola vez, así las 9 páginas del itinerario lo reciben sin tocar su
