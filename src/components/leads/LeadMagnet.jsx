@@ -7,6 +7,7 @@
  */
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { whatsAppLink } from '../../config/site.config.js'
 import { isCloudEnabled, supabase } from '../../lib/supabase.js'
 import '../../styles/auth-members.css'
 
@@ -57,8 +58,8 @@ async function insertCloudLead(lead) {
 }
 
 export default function LeadMagnet({
-  heading = 'Tu primera acción clara, gratis.',
-  copy = 'Déjanos tu nombre y tu contacto. Te escribimos con una rutina simple para empezar esta semana con dirección, no con otra promesa vacía.',
+  heading = 'Empieza gratis.',
+  copy = 'Déjanos tu nombre y un contacto. Tus recursos quedan disponibles al instante y puedes pedir una valoración sin compromiso.',
 }) {
   const [name, setName] = useState('')
   const [contact, setContact] = useState('')
@@ -111,10 +112,26 @@ export default function LeadMagnet({
         <p className="eyebrow"><span />EMPIEZA GRATIS</p>
         <h2 id="lead-magnet-title">{heading}</h2>
         {done ? (
-          <p className="lead-magnet-success" role="status">
-            Listo, {String(name).trim()}. Guardamos tu contacto y te escribimos con tu primera rutina clara.{' '}
-            Mientras tanto puedes <Link to="/resources">explorar los recursos gratis</Link>.
-          </p>
+          <div className="lead-magnet-success" role="status">
+            <strong>Listo, {String(name).trim()}. Ya puedes llevarte tus recursos.</strong>
+            <p>Guardamos tu contacto. No necesitas crear una cuenta ni esperar para empezar.</p>
+            <div className="lead-magnet-rewards">
+              <a href="/downloads/bayona-editorial/primera-semana.pdf" download>DESCARGAR · PRIMERA SEMANA</a>
+              <a href="/downloads/bayona-editorial/registro-30-dias.pdf" download>DESCARGAR · REGISTRO 30 DÍAS</a>
+              <a href="/downloads/bayona-editorial/dossier-punto-de-partida.pdf" download>DESCARGAR · PUNTO DE PARTIDA</a>
+            </div>
+            <div className="lead-magnet-next-actions">
+              <a
+                href={whatsAppLink('Hola BAYONA, ya dejé mis datos y quiero agendar una valoración inicial.')}
+                target="_blank"
+                rel="noreferrer"
+              >
+                AGENDAR VALORACIÓN
+              </a>
+              <Link to="/programs">VER SERVICIOS</Link>
+            </div>
+            <small>La cita se confirma por WhatsApp según disponibilidad.</small>
+          </div>
         ) : (
           <>
             <p>{copy}</p>
@@ -150,7 +167,7 @@ export default function LeadMagnet({
                 </div>
               )}
               <button type="submit" className="gold-button">
-                QUIERO MI PRIMERA RUTINA
+                RECIBIR MIS RECURSOS
               </button>
             </form>
             <p className="lead-magnet-note">
