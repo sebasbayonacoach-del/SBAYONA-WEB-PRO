@@ -77,3 +77,95 @@
     transition: none;
   }
 }
+
+
+/* Entrada de tienda: categorías reconocibles antes que storytelling de colección. */
+.shop-categories {
+  padding-block: clamp(4.5rem,8vw,7rem);
+}
+
+.shop-categories-head {
+  display: grid;
+  gap: .9rem;
+  margin-bottom: clamp(1.8rem,4vw,3rem);
+}
+
+.shop-categories-head h2 {
+  max-width: 13ch;
+  margin: 0;
+  font-size: clamp(3rem,6.5vw,6.6rem);
+  line-height: .88;
+  letter-spacing: -.06em;
+}
+
+.shop-categories-head > p {
+  max-width: 650px;
+  margin: 0;
+  color: rgba(247,245,241,.62);
+  line-height: 1.6;
+}
+
+.shop-category-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.14);
+  gap: 1px;
+}
+
+.shop-category-shortcuts button {
+  min-height: 132px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: .8rem;
+  padding: 1.25rem;
+  border: 0;
+  background: #0b0b0c;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease;
+}
+
+.shop-category-shortcuts button:hover,
+.shop-category-shortcuts button:focus-visible {
+  background: #f4a261;
+  color: #050505;
+  outline: none;
+}
+
+.shop-category-shortcuts button span {
+  max-width: 11ch;
+  font-family: var(--font-display, sans-serif);
+  font-size: clamp(1.05rem,1.7vw,1.5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+@media (max-width: 900px) {
+  .shop-category-shortcuts {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .shop-category-shortcuts button:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .shop-category-shortcuts {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-category-shortcuts button,
+  .shop-category-shortcuts button:last-child {
+    min-height: 76px;
+    grid-column: auto;
+    align-items: center;
+  }
+
+  .shop-categories-head h2 {
+    font-size: clamp(2.8rem,14vw,4.6rem);
+  }
+}
