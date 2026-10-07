@@ -300,9 +300,10 @@ describe('Honestidad · el precio recurrente no se escribe a mano en una pantall
     expect(culpables).toEqual([])
   })
 
-  it('el paso de pago enlaza el después con el precio publicado, no con una cifra propia', () => {
-    expect(checkoutSource).toMatch(/despu[eé]s,\s*el precio publicado del plan/i)
+  it('la solicitud pública no monta una segunda pasarela ni una promoción paralela', () => {
+    expect(checkoutSource).not.toMatch(/CheckoutPanel|ZERO_FIRST_MONTH_OFFER|useRewards/)
     expect(checkoutSource).not.toMatch(PRECIO_A_MANO[0])
+    expect(checkoutSource).toContain('No hay cobro aquí.')
   })
 
   /*
