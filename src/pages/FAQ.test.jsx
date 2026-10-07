@@ -110,17 +110,15 @@ describe('/faq — preguntas frecuentes verificables', () => {
     el punto del recorrido». Cuatro salidas, todas a rutas reales del itinerario
     y ninguna hacia el inicio (era la queja de la anotación 47).
   */
-  it('cierra enviando a recursos, comunidad, servicios sueltos o acceso privado', () => {
+  it('cierra enviando a recursos, comunidad o servicios sueltos', () => {
     renderPage()
 
-    expect(screen.getAllByRole('heading', { level: 3, name: /AÚN NO HAS ENTRENADO|TE FALTA CONTEXTO|SOLO QUIERES UNA SESIÓN|YA ESTÁS DENTRO/i }))
-      .toHaveLength(4)
+    expect(screen.getAllByRole('heading', { level: 3, name: /AÚN NO HAS ENTRENADO|TE FALTA CONTEXTO|SOLO QUIERES UNA SESIÓN/i }))
+      .toHaveLength(3)
 
     expect(screen.getByRole('link', { name: /EMPEZAR POR LOS RECURSOS/i })).toHaveAttribute('href', '/resources')
     expect(screen.getByRole('link', { name: /ENTRAR A LA COMUNIDAD/i })).toHaveAttribute('href', '/community')
     expect(screen.getByRole('link', { name: /VER SERVICIOS SUELTOS/i })).toHaveAttribute('href', '/programs#servicios')
-    expect(screen.getByRole('link', { name: /IR A MI CUENTA/i })).toHaveAttribute('href', '/entrar')
-
     // La página ya no devuelve al inicio desde el cierre de confianza.
     const inicios = [...document.querySelectorAll('.faq-exits-grid a')].filter((link) => link.getAttribute('href') === '/')
     expect(inicios).toHaveLength(0)
