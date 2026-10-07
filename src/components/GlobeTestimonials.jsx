@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight, X, Play } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
 import { TESTIMONIALS, testimonialVariant } from '../config/testimonials.js'
 
@@ -15,30 +15,82 @@ const EARTH_TEXTURE_URL = '/images/system/earth-dark.jpg'
 export { testimonialVariant }
 export const GLOBE_TESTIMONIALS = TESTIMONIALS
 
-export const WORLD_MAP_MARKERS = Object.freeze([
-  Object.freeze({ id: 'co-bogota-centro', country: 'Colombia', lat: 4.711, lng: -74.072, testimonialId: 0 }),
-  Object.freeze({ id: 'co-bogota-chapinero', country: 'Colombia', lat: 4.649, lng: -74.063, testimonialId: 0 }),
-  Object.freeze({ id: 'co-bogota-usaquen', country: 'Colombia', lat: 4.695, lng: -74.031, testimonialId: 1 }),
-  Object.freeze({ id: 'co-bogota-suba', country: 'Colombia', lat: 4.741, lng: -74.084, testimonialId: 1 }),
-  Object.freeze({ id: 'co-bogota-engativa', country: 'Colombia', lat: 4.701, lng: -74.113, testimonialId: 2 }),
-  Object.freeze({ id: 'co-bogota-teusaquillo', country: 'Colombia', lat: 4.641, lng: -74.085, testimonialId: 2 }),
-  Object.freeze({ id: 'co-bogota-fontibon', country: 'Colombia', lat: 4.679, lng: -74.141, testimonialId: 3 }),
-  Object.freeze({ id: 'co-bogota-kennedy', country: 'Colombia', lat: 4.627, lng: -74.157, testimonialId: 3 }),
-  Object.freeze({ id: 'co-bogota-bosa', country: 'Colombia', lat: 4.617, lng: -74.19, testimonialId: 4 }),
-  Object.freeze({ id: 'co-bogota-san-cristobal', country: 'Colombia', lat: 4.565, lng: -74.083, testimonialId: 4 }),
-  Object.freeze({ id: 'es-valencia-family', country: 'España', lat: 39.47, lng: -0.38, testimonialId: 5 }),
-  Object.freeze({ id: 'es-valencia-nestor', country: 'España', lat: 39.5, lng: -0.42, testimonialId: 6 }),
-  Object.freeze({ id: 'es-madrid-laura', country: 'España', lat: 40.42, lng: -3.7, testimonialId: 7 }),
-  Object.freeze({ id: 'us-miami', country: 'Miami', lat: 25.76, lng: -80.19, testimonialId: 8 }),
-  Object.freeze({ id: 'ar-buenos-aires', country: 'Argentina', lat: -34.61, lng: -58.38, testimonialId: 9 }),
+const CITY_MARKER_OFFSETS = Object.freeze([
+  Object.freeze([0, 0]),
+  Object.freeze([0.022, 0.024]),
+  Object.freeze([-0.022, 0.024]),
+  Object.freeze([0.022, -0.024]),
+  Object.freeze([-0.022, -0.024]),
 ])
 
+function buildWorldMapMarkers() {
+  const cityCounts = new Map()
+
+  return TESTIMONIALS.map((testimonial) => {
+    const cityKey = `${testimonial.city}|${testimonial.country}`
+    const cityIndex = cityCounts.get(cityKey) ?? 0
+    cityCounts.set(cityKey, cityIndex + 1)
+    const [latOffset, lngOffset] = CITY_MARKER_OFFSETS[cityIndex % CITY_MARKER_OFFSETS.length]
+
+    return Object.freeze({
+      id: `story-${testimonial.id}`,
+      country: testimonial.country,
+      city: testimonial.city,
+      lat: testimonial.lat + latOffset,
+      lng: testimonial.lng + lngOffset,
+      testimonialId: testimonial.id,
+    })
+  })
+}
+
+/**
+ * Un punto por experiencia publicada. Cuando varias historias comparten ciudad,
+ * se separan unos píxeles mediante un desplazamiento visual mínimo; no se
+ * inventan barrios ni ubicaciones personales.
+ */
+export const WORLD_MAP_MARKERS = Object.freeze(buildWorldMapMarkers())
+
 const MAP_FOCUS_PRESETS = Object.freeze({
-  Colombia: Object.freeze({ zoom: 7.2, label: 'Colombia', eyebrow: 'País en foco' }),
-  España: Object.freeze({ zoom: 6.4, label: 'España', eyebrow: 'País en foco' }),
-  Miami: Object.freeze({ zoom: 9.2, label: 'Miami', eyebrow: 'Ciudad en foco' }),
-  Argentina: Object.freeze({ zoom: 5.8, label: 'Argentina', eyebrow: 'País en foco' }),
+  Colombia: Object.freeze({ zoom: 7.2, label: 'Colombia', eyebrow: 'Origen' }),
+  España: Object.freeze({ zoom: 6.4, label: 'España', eyebrow: 'Etapa actual' }),
+  EEUU: Object.freeze({ zoom: 7.8, label: 'Miami · EEUU', eyebrow: 'Historia internacional' }),
+  Argentina: Object.freeze({ zoom: 5.8, label: 'Buenos Aires · Argentina', eyebrow: 'Historia internacional' }),
 })
+
+const publishedCountries = new Set(TESTIMONIALS.map((testimonial) => testimonial.country))
+const publishedCities = new Set(TESTIMONIALS.map((testimonial) => `${testimonial.city}|${testimonial.country}`))
+
+export const IMPACT_STATS = Object.freeze([
+  Object.freeze({ value: TESTIMONIALS.length, label: 'historias publicadas' }),
+  Object.freeze({ value: publishedCountries.size, label: 'países representados' }),
+  Object.freeze({ value: publishedCities.size, label: 'ciudades en el mapa' }),
+])
+
+export const TRAJECTORY_STOPS = Object.freeze([
+  Object.freeze({
+    id: 'colombia',
+    eyebrow: 'ORIGEN',
+    title: 'Colombia',
+    copy: `Bogotá · ${TESTIMONIALS.filter((item) => item.country === 'Colombia').length} historias publicadas`,
+    testimonialId: TESTIMONIALS.find((item) => item.country === 'Colombia')?.id ?? 0,
+  }),
+  Object.freeze({
+    id: 'spain',
+    eyebrow: 'ETAPA ACTUAL',
+    title: 'España',
+    copy: `Valencia + Madrid · ${TESTIMONIALS.filter((item) => item.country === 'España').length} historias publicadas`,
+    testimonialId: TESTIMONIALS.find((item) => item.country === 'España')?.id ?? 0,
+  }),
+  Object.freeze({
+    id: 'international',
+    eyebrow: 'PROYECCIÓN REAL',
+    title: 'Internacional',
+    copy: `Miami + Buenos Aires · ${TESTIMONIALS.filter((item) => !['Colombia', 'España'].includes(item.country)).length} historias publicadas`,
+    testimonialId: TESTIMONIALS.find((item) => item.country === 'EEUU')?.id
+      ?? TESTIMONIALS.find((item) => item.country === 'Argentina')?.id
+      ?? 0,
+  }),
+])
 
 function testimonialInitials(name) {
   return String(name ?? '')
@@ -161,7 +213,7 @@ function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect }) {
     <div
       className={`globe-testimonials-world${focusedMarker ? ' is-focused' : ''}`}
       role="group"
-      aria-label="Mapa mundial interactivo con quince puntos de impacto"
+      aria-label="Mapa mundial interactivo con experiencias publicadas"
       data-focused-region={focusedMarker?.country ?? 'Mundo'}
     >
       <div
@@ -281,6 +333,105 @@ export default function GlobeTestimonials() {
           max-width: 720px;
           color: #c8c4bd;
           font-size: clamp(1rem, 1.6vw, 1.25rem);
+        }
+
+        .globe-impact-overview {
+          display: grid;
+          grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+          border: 1px solid rgba(244, 162, 97, 0.22);
+          border-bottom: 0;
+          background: #080808;
+        }
+
+        .globe-impact-stats {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          border-right: 1px solid rgba(244, 162, 97, 0.18);
+        }
+
+        .globe-impact-stat {
+          display: grid;
+          align-content: end;
+          min-height: 132px;
+          gap: 0.4rem;
+          padding: 1.2rem;
+          border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .globe-impact-stat:last-child { border-right: 0; }
+
+        .globe-impact-stat strong {
+          color: #F4A261;
+          font: 900 clamp(2rem, 3.6vw, 3.7rem)/0.9 'Montserrat', Arial, sans-serif;
+          letter-spacing: -0.06em;
+        }
+
+        .globe-impact-stat span {
+          max-width: 12ch;
+          color: rgba(255,255,255,.58);
+          font: 700 .58rem/1.35 'DM Mono', monospace;
+          letter-spacing: .07em;
+          text-transform: uppercase;
+        }
+
+        .globe-trajectory {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .globe-trajectory-stop {
+          display: grid;
+          grid-template-columns: auto minmax(0,1fr) auto;
+          gap: .8rem;
+          align-items: start;
+          min-height: 132px;
+          padding: 1.15rem;
+          border: 0;
+          border-right: 1px solid rgba(255,255,255,.08);
+          background: transparent;
+          color: #fff;
+          text-align: left;
+          cursor: pointer;
+          transition: background 180ms ease, color 180ms ease;
+        }
+
+        .globe-trajectory-stop:last-child { border-right: 0; }
+
+        .globe-trajectory-stop:hover,
+        .globe-trajectory-stop:focus-visible {
+          background: rgba(244,162,97,.1);
+          outline: none;
+        }
+
+        .globe-trajectory-index {
+          color: #F4A261;
+          font: 700 .58rem/1 'DM Mono', monospace;
+        }
+
+        .globe-trajectory-copy {
+          display: grid;
+          gap: .34rem;
+        }
+
+        .globe-trajectory-copy small {
+          color: rgba(255,255,255,.42);
+          font: 700 .5rem/1 'DM Mono', monospace;
+          letter-spacing: .1em;
+        }
+
+        .globe-trajectory-copy strong {
+          font: 900 clamp(1.05rem,1.7vw,1.5rem)/1 'Montserrat', Arial, sans-serif;
+          letter-spacing: -.035em;
+        }
+
+        .globe-trajectory-copy > span {
+          color: rgba(255,255,255,.58);
+          font: 500 .68rem/1.45 'Inter', Arial, sans-serif;
+        }
+
+        .globe-trajectory-arrow {
+          color: #F4A261;
+          font-size: 1rem;
         }
 
         .globe-testimonials-experience {
@@ -855,7 +1006,39 @@ export default function GlobeTestimonials() {
           }
         }
 
+        @media (max-width: 900px) {
+          .globe-impact-overview {
+            grid-template-columns: 1fr;
+          }
+          .globe-impact-stats {
+            border-right: 0;
+            border-bottom: 1px solid rgba(244,162,97,.18);
+          }
+        }
+
         @media (max-width: 700px) {
+          .globe-impact-stats {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+          }
+          .globe-impact-stat {
+            min-height: 104px;
+            padding: .85rem;
+          }
+          .globe-impact-stat strong {
+            font-size: clamp(1.6rem, 9vw, 2.5rem);
+          }
+          .globe-impact-stat span {
+            font-size: .48rem;
+          }
+          .globe-trajectory {
+            grid-template-columns: 1fr;
+          }
+          .globe-trajectory-stop {
+            min-height: 82px;
+            border-right: 0;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+          }
+          .globe-trajectory-stop:last-child { border-bottom: 0; }
           .globe-testimonials-experience { overflow: visible; }
           .globe-testimonials-canvas { height: 370px; }
           .globe-testimonials-world { padding: 48px 0 34px; }
@@ -910,6 +1093,35 @@ export default function GlobeTestimonials() {
           .globe-testimonials-navigation button { transition: none; }
         }
       `}</style>
+      <div className="globe-impact-overview" aria-label="Resumen de trayectoria e historias publicadas">
+        <div className="globe-impact-stats">
+          {IMPACT_STATS.map((stat) => (
+            <div className="globe-impact-stat" key={stat.label}>
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </div>
+          ))}
+        </div>
+        <div className="globe-trajectory" aria-label="Trayectoria BAYONA">
+          {TRAJECTORY_STOPS.map((stop, index) => (
+            <button
+              key={stop.id}
+              type="button"
+              className="globe-trajectory-stop"
+              onClick={() => selectAndOpen(stop.testimonialId)}
+            >
+              <span className="globe-trajectory-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <span className="globe-trajectory-copy">
+                <small>{stop.eyebrow}</small>
+                <strong>{stop.title}</strong>
+                <span>{stop.copy}</span>
+              </span>
+              <span className="globe-trajectory-arrow" aria-hidden="true">↗</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className={`globe-testimonials-stage${isOverlayOpen ? ' is-overlay-open' : ''}`}>
         <div className="globe-testimonials-canvas">
           <InteractiveWorldMap
@@ -941,8 +1153,8 @@ export default function GlobeTestimonials() {
           <div className="globe-testimonials-map-meta" aria-label="Información del mapa de historias">
             <span className="globe-testimonials-map-meta-icon" aria-hidden="true">+</span>
             <span className="globe-testimonials-map-meta-copy">
-              <strong>Explora el mapa</strong>
-              <small>15 puntos · 10 Colombia · 3 España · Miami · Argentina</small>
+              <strong>Explora historias reales</strong>
+              <small>{GLOBE_TESTIMONIALS.length} historias · {publishedCountries.size} países · {publishedCities.size} ciudades</small>
             </span>
           </div>
 
@@ -1018,13 +1230,6 @@ export default function GlobeTestimonials() {
                           />
                         )}
                         <span className="globe-testimonials-media-scrim" aria-hidden="true" />
-                        
-                        <div className="globe-testimonials-video-placeholder" aria-label="Espacio reservado para video testimonial">
-                          <span className="globe-testimonials-video-play-icon">
-                            <Play size={40} strokeWidth={1.5} aria-hidden="true" />
-                          </span>
-                          <span className="globe-testimonials-video-text">VIDEO PRÓXIMAMENTE</span>
-                        </div>
 
                         <div className="globe-testimonials-portrait-wrap">
                           <TestimonialAvatar testimonial={activeTestimonial} />
@@ -1051,7 +1256,7 @@ export default function GlobeTestimonials() {
                           “{activeTestimonial.quote}”
                         </blockquote>
                         <p className="globe-testimonials-result">
-                          <strong>Resultado:</strong> {activeTestimonial.result}
+                          <strong>Lo que destaca:</strong> {activeTestimonial.result}
                         </p>
                       </div>
                     </motion.article>
