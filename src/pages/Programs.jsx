@@ -21,9 +21,9 @@ const CATEGORY_ICONS = Object.freeze({
 })
 
 const CATEGORY_COPY = Object.freeze({
-  CLASES: 'Entrenamiento guiado para corregir, aprender y avanzar con alguien mirando tu ejecución.',
-  RECUPERACIÓN: 'Movilidad y recuperación para sostener el trabajo que haces dentro y fuera del gimnasio.',
-  RENDIMIENTO: 'Parkour, calistenia, preparación física y evaluaciones para objetivos más específicos.',
+  CLASES: 'Entrenamiento personal y sesiones guiadas para avanzar con técnica y correcciones.',
+  RECUPERACIÓN: 'Movilidad y recuperación para complementar el entrenamiento y mantener continuidad.',
+  RENDIMIENTO: 'Parkour, calistenia, preparación física y evaluaciones para objetivos específicos.',
 })
 
 const CATEGORY_IMAGES = Object.freeze({
@@ -46,7 +46,7 @@ export default function Programs() {
         media={siteMedia.programs.hero}
       >
         <p>
-          Entrenamiento personal, online, recuperación y rendimiento. Elige una membresía si quieres seguimiento continuo o una sesión suelta si necesitas algo puntual.
+          Entrenamiento personal, online, recuperación y rendimiento. Elige seguimiento continuo o una sesión puntual. Precios y alcance visibles antes de consultar.
         </p>
         <div className="services-hero-actions">
           <a className="services-primary-cta" href="#membresias">
@@ -61,9 +61,9 @@ export default function Programs() {
       <section className="services-overview" aria-labelledby="services-overview-title">
         <div className="services-shell">
           <div className="services-heading">
-            <SectionLabel>ENTRENA COMO NECESITAS</SectionLabel>
-            <h2 id="services-overview-title">TRES ÁREAS. UNA SOLA DIRECCIÓN.</h2>
-            <p>Primero eliges qué necesitas. Después decides cuánto acompañamiento quieres.</p>
+            <SectionLabel>ELIGE TU NECESIDAD</SectionLabel>
+            <h2 id="services-overview-title">ENTRENAMIENTO. RECUPERACIÓN. RENDIMIENTO.</h2>
+            <p>Entra por el objetivo que tienes hoy. Los detalles vienen después.</p>
           </div>
           <div className="services-overview-grid">
             {SERVICE_GROUPS.map((group) => {
@@ -90,8 +90,8 @@ export default function Programs() {
         <div className="services-shell">
           <div className="services-heading">
             <SectionLabel>ACOMPAÑAMIENTO CONTINUO</SectionLabel>
-            <h2 id="services-memberships-title">ELIGE CUÁNTO APOYO QUIERES.</h2>
-            <p>Los planes cambian en frecuencia de seguimiento, sesiones y cercanía. La base sigue siendo entrenar con dirección.</p>
+            <h2 id="services-memberships-title">ELIGE TU NIVEL DE ACOMPAÑAMIENTO.</h2>
+            <p>Compara frecuencia de seguimiento, sesiones incluidas y precio.</p>
           </div>
           <PlanExplorer projections={membershipPlanEditorialProjection} cinematic />
         </div>
@@ -101,8 +101,8 @@ export default function Programs() {
         <div className="services-shell">
           <div className="services-heading">
             <SectionLabel>SERVICIOS SUELTOS</SectionLabel>
-            <h2 id="services-catalog-title">AÑADE SOLO LO QUE TE HACE FALTA.</h2>
-            <p>Sin duplicar planes. Una sesión, evaluación o trabajo complementario cuando tiene sentido para tu objetivo.</p>
+            <h2 id="services-catalog-title">UNA SESIÓN CUANDO LA NECESITAS.</h2>
+            <p>Entrenamiento, evaluación o recuperación sin contratar más de lo que necesitas.</p>
           </div>
 
           <div className="services-catalog-groups">
@@ -151,8 +151,8 @@ export default function Programs() {
       <section className="services-final">
         <div className="services-shell">
           <SectionLabel>EMPIEZA SIN COMPRAR</SectionLabel>
-          <h2>RECIBE TUS RECURSOS Y HABLAMOS DE TU OBJETIVO.</h2>
-          <p>Deja tus datos en la Home. Tendrás los recursos de inicio disponibles y podrás pedir una valoración.</p>
+          <h2>EMPIEZA GRATIS. DESPUÉS DECIDE.</h2>
+          <p>Recibe tres recursos de inicio y pide una valoración cuando quieras.</p>
           <div>
             <a className="services-primary-cta" href="/#empieza">
               EMPIEZA GRATIS <ArrowUpRight size={17} aria-hidden="true" />
