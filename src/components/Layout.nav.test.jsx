@@ -2,152 +2,55 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { Footer, Navbar } from './Layout.jsx'
-import { ROUTE_ALIASES, ROUTE_META } from '../lib/seo/routeMeta.js'
 
-/**
- * Fase 4: contrato de la arquitectura de navegación.
- *
- * Fija en tests las decisiones D1/D2/D10:
- * · La barra declara la estructura real del sitio en cuatro grupos por
- *   intención (RECORRIDO / ENTRENAR / ECOSISTEMA / DECIDIR).
- * · El CTA de la barra lleva a recepción (/onboarding), no a comprar.
- * · El menú móvil numera todos los destinos y remata con la entrada.
- * · El pie repite la arquitectura de grupos + bloque de entrada con WhatsApp.
- * · Todo destino de la navegación existe en el registro de rutas (routeMeta):
- *   la navegación nunca apunta a una ruta muerta.
- *
- * 2026-09-22 · los grupos se renombran de ENTRENAR/EXPERIENCIAS/CONOCER/
- * APRENDER a RECORRIDO/ENTRENAR/ECOSISTEMA/DECIDIR para que el orden de la
- * barra sea el orden del viaje (comentario 4 del brief de 70 anotaciones:
- * «el menú superior se siente confuso y no siempre acompaña el recorrido»).
- * La etiqueta vieja ya no existe en `NAV_GROUPS`, así que el contrato se
- * actualiza a la nueva arquitectura; lo que sigue vigente es lo que esta
- * familia comprueba: cuatro grupos, destinos reales y entrada en su sitio.
- */
-const KNOWN_ROUTES = new Set([...Object.keys(ROUTE_META), ...Object.keys(ROUTE_ALIASES)])
-const GROUP_LABELS = ['RECORRIDO', 'ENTRENAR', 'ECOSISTEMA', 'DECIDIR']
+const DESKTOP_LABELS = ['Servicios', 'Parkour', 'Tienda', 'Recursos', 'Nosotros']
 
-describe('Navbar — arquitectura de navegación (Fase 4)', () => {
-  it('organiza la navegación de escritorio en los cuatro grupos por intención', () => {
+describe('Navbar — Gym Funnel V2', () => {
+  it('usa cinco destinos públicos claros y elimina los grupos abstractos', () => {
     render(<MemoryRouter><Navbar /></MemoryRouter>)
-
-    const nav = screen.getByRole('navigation', { name: 'Navegación principal' })
-    GROUP_LABELS.forEach((label) => {
-      expect(within(nav).getByRole('group', { name: label })).toBeInTheDocument()
-    })
-
-    // La oferta de entrenamiento vive en ENTRENAR.
-    const entrenar = within(nav).getByRole('group', { name: 'ENTRENAR' })
-    expect(within(entrenar).getByRole('link', { name: 'Programas' })).toHaveAttribute('href', '/programs')
-    expect(within(entrenar).getByRole('link', { name: 'Academia Parkour' })).toHaveAttribute('href', '/parkour-academy')
-  })
-
-  it('cada destino de la navegación existe en el registro de rutas', () => {
-    render(<MemoryRouter><Navbar /></MemoryRouter>)
-
     const nav = screen.getByRole('navigation', { name: 'Navegación principal' })
     const links = within(nav).getAllByRole('link')
-    expect(links.length).toBeGreaterThanOrEqual(8)
-
-    links.forEach((link) => {
-      expect(KNOWN_ROUTES.has(link.getAttribute('href'))).toBe(true)
-    })
+    expect(links.map((link) => link.textContent.trim())).toEqual(DESKTOP_LABELS)
+    expect(nav.textContent).not.toMatch(/RECORRIDO|ECOSISTEMA|DECIDIR|PROGRAMAS/i)
   })
 
-  it('el CTA de la barra orienta hacia recepción, no hacia la compra', () => {
+  it('usa Empieza gratis como CTA y no muestra Mi cuenta', () => {
     render(<MemoryRouter><Navbar /></MemoryRouter>)
-
-    const cta = screen.getByRole('link', { name: 'Entrar a BAYONA: recepción y orientación' })
-    expect(cta).toHaveAttribute('href', '/onboarding')
-    expect(cta).toHaveTextContent('Entrar')
+    expect(screen.getByRole('link', { name: /Empieza gratis con BAYONA/i })).toHaveAttribute('href', '/#empieza')
+    expect(screen.queryByRole('link', { name: /Mi cuenta/i })).toBeNull()
+    expect(screen.queryByRole('link', { name: /Entrar a BAYONA/i })).toBeNull()
   })
 
-  it('el menú móvil numera los destinos, muestra los grupos y remata con la entrada', () => {
-    render(<MemoryRouter><Navbar /></MemoryRouter>)
+  it('solo muestra el carrito en contexto de tienda', () => {
+    const { unmount } = render(<MemoryRouter initialEntries={['/']}><Navbar /></MemoryRouter>)
+    expect(screen.queryByRole('button', { name: /Abrir carrito/i })).toBeNull()
+    unmount()
 
+    render(<MemoryRouter initialEntries={['/shop']}><Navbar /></MemoryRouter>)
+    expect(screen.getByRole('button', { name: /Abrir carrito/i })).toBeInTheDocument()
+  })
+
+  it('abre un menú móvil con Inicio + cinco destinos y CTA de captación', () => {
+    render(<MemoryRouter><Navbar /></MemoryRouter>)
     fireEvent.click(screen.getByRole('button', { name: 'Abrir menú' }))
-
     const mobile = screen.getByRole('navigation', { name: 'Navegación móvil' })
-    // Inicio explícito en móvil (en escritorio lo cubre la marca). El número
-    // decorativo es aria-hidden: el nombre accesible es solo el destino.
-    expect(within(mobile).getByRole('link', { name: /^inicio$/i })).toHaveAttribute('href', '/')
-    expect(within(mobile).getByText('01', { selector: 'span[aria-hidden="true"]' })).toBeInTheDocument()
-    // Las etiquetas de grupo separan visualmente los destinos.
-    GROUP_LABELS.forEach((label) => {
-      expect(within(mobile).getByText(label, { selector: '.mobile-nav-group-label' })).toBeInTheDocument()
-    })
-    // La entrada cierra el menú y apunta a recepción.
-    const entry = within(mobile).getByRole('link', { name: /entrar a bayona/i })
-    expect(entry).toHaveAttribute('href', '/onboarding')
-    // Todos los destinos del menú móvil son rutas reales.
-    within(mobile).getAllByRole('link').forEach((link) => {
-      expect(KNOWN_ROUTES.has(link.getAttribute('href'))).toBe(true)
-    })
+    const navList = mobile.querySelector('.gym-mobile-nav-list')
+    expect(within(navList).getAllByRole('link')).toHaveLength(6)
+    expect(within(navList).getByRole('link', { name: /Inicio/i })).toHaveAttribute('href', '/')
+    expect(mobile.textContent).not.toMatch(/RECORRIDO|ECOSISTEMA|DECIDIR|MI CUENTA/i)
+    expect(within(mobile).getByRole('link', { name: /EMPIEZA GRATIS/i })).toHaveAttribute('href', '/#empieza')
+    expect(within(mobile).getByRole('link', { name: /HABLAR POR WHATSAPP/i })).toHaveAttribute('href', expect.stringContaining('https://wa.me/'))
   })
 })
 
-describe('Footer — arquitectura de navegación (Fase 4)', () => {
-  it('repite los cuatro grupos y añade el bloque de entrada con recepción y WhatsApp', () => {
+describe('Footer — Gym Funnel V2', () => {
+  it('repite una arquitectura simple sin registro ni onboarding', () => {
     render(<MemoryRouter><Footer /></MemoryRouter>)
-
-    GROUP_LABELS.forEach((label) => {
-      expect(screen.getByRole('navigation', { name: `Pie de página: ${label}` })).toBeInTheDocument()
+    const explore = screen.getByRole('navigation', { name: 'Explorar BAYONA' })
+    DESKTOP_LABELS.forEach((label) => {
+      expect(within(explore).getByRole('link', { name: label })).toBeInTheDocument()
     })
-
-    const entry = screen.getByText('ENTRAR A BAYONA').closest('a')
-    expect(entry).toHaveAttribute('href', '/onboarding')
-
-    const whatsapp = screen.getByRole('link', { name: /hablar por whatsapp/i })
-    const url = new URL(whatsapp.href)
-    expect(url.origin).toBe('https://wa.me')
-    expect(url.pathname).toBe('/34641698332')
-  })
-
-  it('cada destino del pie existe en el registro de rutas', () => {    render(<MemoryRouter><Footer /></MemoryRouter>)
-
-    const columns = GROUP_LABELS.flatMap((label) => (
-      within(screen.getByRole('navigation', { name: `Pie de página: ${label}` })).getAllByRole('link')
-    ))
-    expect(columns.length).toBeGreaterThanOrEqual(8)
-
-    columns.forEach((link) => {
-      expect(KNOWN_ROUTES.has(link.getAttribute('href'))).toBe(true)
-    })
-  })
-})
-
-/**
- * AR-005: puerta visible /entrar ("Mi cuenta").
- * La pantalla de acceso deja de ser solo URL directa: header de escritorio,
- * menú móvil numerado y bloque ENTRAR del pie la enlazan. Los cuatro grupos
- * y el CTA a recepción quedan intactos.
- */
-describe('Puerta visible /entrar — AR-005', () => {
-  it('el header de escritorio enlaza Mi cuenta a /entrar sin mover el CTA', () => {
-    render(<MemoryRouter><Navbar /></MemoryRouter>)
-
-    const account = screen.getByRole('link', { name: 'Mi cuenta' })
-    expect(account).toHaveAttribute('href', '/entrar')
-    expect(KNOWN_ROUTES.has('/entrar')).toBe(true)
-
-    const cta = screen.getByRole('link', { name: 'Entrar a BAYONA: recepción y orientación' })
-    expect(cta).toHaveAttribute('href', '/onboarding')
-  })
-
-  it('el menú móvil incluye Mi cuenta antes de la entrada', () => {
-    render(<MemoryRouter><Navbar /></MemoryRouter>)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Abrir menú' }))
-
-    const mobile = screen.getByRole('navigation', { name: 'Navegación móvil' })
-    expect(within(mobile).getByRole('link', { name: 'Mi cuenta' })).toHaveAttribute('href', '/entrar')
-    expect(within(mobile).getByRole('link', { name: /entrar a bayona/i })).toHaveAttribute('href', '/onboarding')
-  })
-
-  it('el pie enlaza MI CUENTA a /entrar junto a la recepción', () => {
-    render(<MemoryRouter><Footer /></MemoryRouter>)
-
-    const account = screen.getByRole('link', { name: 'MI CUENTA' })
-    expect(account).toHaveAttribute('href', '/entrar')
+    expect(screen.queryByRole('link', { name: /MI CUENTA|ENTRAR A BAYONA/i })).toBeNull()
+    expect(screen.getByRole('link', { name: 'RECIBIR MIS RECURSOS' })).toHaveAttribute('href', '/#empieza')
   })
 })
