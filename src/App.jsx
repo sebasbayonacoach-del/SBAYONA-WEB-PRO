@@ -4,7 +4,7 @@ import './styles/shop-boutique-prime.css'
 import './styles/faq-prime-fix.css'
 import { RouteSceneCycler } from './components/RouteSceneCycler.jsx'
 import { routeSceneRules } from './config/routeSceneRules.js'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Footer, Navbar, WhatsAppButton } from './components/Layout'
 import { ScrollProgress } from './components/Experience'
 import { PageTransition, CustomCursor } from './engine'
@@ -84,7 +84,6 @@ const Resources = lazy(() => import('./pages/Resources'))
 const FAQ = lazy(() => import('./pages/FAQ'))
 const Checkout = lazy(() => import('./pages/Checkout'))
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'))
-const Onboarding = lazy(() => import('./pages/Onboarding'))
 const Entrar = lazy(() => import('./pages/Entrar'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 /*
@@ -285,7 +284,7 @@ function Site() {
                   precio corta el embudo en el peor sitio. `/app` sigue protegido. */}
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
-              <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/onboarding" element={<Navigate to="/#empieza" replace />} />
               {/*
                 Fase 2 SaaS: /entrar es la pantalla de acceso (correo +
                 contraseña). La recepción sigue viva en /onboarding.
