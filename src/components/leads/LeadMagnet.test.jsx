@@ -40,7 +40,7 @@ describe('LeadMagnet — captura, recursos y valoración', () => {
     const downloads = within(status).getAllByRole('link', { name: /DESCARGAR/i })
     expect(downloads).toHaveLength(3)
     downloads.forEach((link) => expect(link).toHaveAttribute('download'))
-    expect(within(status).getByRole('link', { name: /AGENDAR VALORACIÓN/i })).toHaveAttribute('href', expect.stringContaining('https://wa.me/'))
+    expect(within(status).getByRole('link', { name: /AGENDAR VALORACIÓN/i }).getAttribute('href')).toContain('https://wa.me/')
     expect(within(status).getByRole('link', { name: /VER SERVICIOS/i })).toHaveAttribute('href', '/programs')
 
     const queue = JSON.parse(window.localStorage.getItem(LEADS_KEY))
