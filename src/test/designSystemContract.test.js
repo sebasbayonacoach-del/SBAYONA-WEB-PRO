@@ -149,7 +149,8 @@ describe('Design System 2.0 — playground interno', () => {
     expect(indexableRoutes()).not.toContain('/design-system')
   })
 
-  it('el sitemap conserva las 14 rutas indexables', () => {
-    expect(indexableRoutes()).toHaveLength(14)
+  it('el sitemap conserva 13 rutas indexables tras retirar onboarding del funnel público', () => {
+    expect(indexableRoutes()).toHaveLength(13)
+    expect(indexableRoutes()).not.toContain('/onboarding')
   })
 })

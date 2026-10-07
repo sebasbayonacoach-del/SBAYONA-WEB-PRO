@@ -317,7 +317,7 @@ export default function TrajectoryLab() {
         <p className="lab-boundary">{TRAJECTORY.boundary}</p>
         <p className="lab-foot__meta">
           Motor gráfico solo bajo demanda · <Link to="/programs">programas</Link> ·{' '}
-          <Link to="/onboarding">recepción</Link> · <Link to="/community">comunidad</Link>
+          <Link to="/#empieza">empieza gratis</Link> · <Link to="/community">comunidad</Link>
         </p>
       </footer>
     </section>

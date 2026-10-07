@@ -94,14 +94,13 @@ describe('sincronización comercial: catálogo → rutas → recomendador → PD
     unmount()
   })
 
-  // Fase 4 (DP-2 y DP-3): los activos comerciales dejan de estar huérfanos.
-  it('la ficha de plan enlaza el PDF de presentación y el configurador, y el embudo queda conectado de punta a punta', () => {
-    // DP-2: el PDF ya no es un activo muerto — la ficha lo expone.
+  // Gym Funnel V2: la ficha puede ir al checkout, pero Servicios prioriza
+  // captación gratuita antes de pedir una compra.
+  it('conecta presentación, captación gratuita y checkout sin activos comerciales huérfanos', () => {
     expect(planPresentationSource).toContain('plan.presentationUrl')
-    // DP-3: la ficha y los programas llevan al configurador con el plan precargado.
     expect(planPresentationSource).toContain('/checkout?plan=')
-    expect(programsSource).toContain('to="/checkout"')
-    // El configurador acepta la precarga y ofrece el siguiente paso del embudo.
+    expect(programsSource).toContain('href="/#empieza"')
+    expect(programsSource).toContain('PlanExplorer')
     expect(checkoutSource).toContain("searchParams.get('plan')")
     expect(checkoutSource).toContain('to="/order-confirmation"')
   })

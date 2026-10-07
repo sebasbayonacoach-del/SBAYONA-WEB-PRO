@@ -36,7 +36,7 @@ describe('Breadcrumb (Fase 4)', () => {
     renderAt('/plan/fuerza')
 
     expect(getBreadcrumb()).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Programas' })).toHaveAttribute('href', '/programs')
+    expect(screen.getByRole('link', { name: 'Servicios' })).toHaveAttribute('href', '/programs')
     expect(screen.getByText(/plan fuerza/i)).toHaveAttribute('aria-current', 'page')
   })
 

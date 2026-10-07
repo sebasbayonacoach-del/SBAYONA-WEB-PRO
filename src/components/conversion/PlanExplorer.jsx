@@ -35,7 +35,6 @@ export default function PlanExplorer({
     ?? projections[0]?.plan.id
   const [activePlanId, setActivePlanId] = useState(defaultPlanId)
   const [detailsExpanded, setDetailsExpanded] = useState(false)
-  const [visitedPlanIds, setVisitedPlanIds] = useState(() => new Set(defaultPlanId ? [defaultPlanId] : []))
 
   useEffect(() => {
     if (projections.some(({ plan }) => plan.id === activePlanId)) return
@@ -62,7 +61,6 @@ export default function PlanExplorer({
       if (!projection) return
 
       setActivePlanId(projection.plan.id)
-      setVisitedPlanIds((current) => new Set([...current, projection.plan.id]))
       setDetailsExpanded(false)
       window.requestAnimationFrame(() => selectorRefs.current.get(projection.plan.id)?.focus())
     }
@@ -95,7 +93,6 @@ export default function PlanExplorer({
 
   const selectPlan = (planId) => {
     setActivePlanId(planId)
-    setVisitedPlanIds((current) => new Set([...current, planId]))
     setDetailsExpanded(false)
   }
 
@@ -128,8 +125,8 @@ export default function PlanExplorer({
 
   return (
     <div className="plan-explorer plan-showroom">
-      <nav className="plan-atelier-navigation" aria-label="Recorrido de planes">
-        <p><span>{String(visitedPlanIds.size).padStart(2, '0')}</span> de {String(projections.length).padStart(2, '0')} planes explorados</p>
+      <nav className="plan-atelier-navigation" aria-label="Planes BAYONA">
+        <p><span>{String(activeIndex + 1).padStart(2, '0')}</span> de {String(projections.length).padStart(2, '0')} planes</p>
         <div>
           <button type="button" onClick={() => movePlan(-1)} aria-label="Ver plan anterior">← <span>Anterior</span></button>
           <span className="plan-atelier-current">{String(activeIndex + 1).padStart(2, '0')} / {String(projections.length).padStart(2, '0')}</span>
@@ -255,8 +252,8 @@ export default function PlanExplorer({
                   <Play size={18} fill="currentColor" />
                 </span>
                 <span className="plan-presentation-copy">
-                  <small>RECORRIDO EDITORIAL</small>
-                  <strong>ABRIR EXPERIENCIA</strong>
+                  <small>DETALLE DEL PLAN</small>
+                  <strong>VER PRESENTACIÓN</strong>
                 </span>
               </Link>
               <a
@@ -283,13 +280,13 @@ export default function PlanExplorer({
                 <source src={`/videos/plan-atelier/plan-${plan.id.toLowerCase()}.mp4`} type="video/mp4" />
                 Tu navegador no puede reproducir este vídeo. Descarga el dossier para conocer el plan.
               </video>
-              <figcaption><span>PREVIEW DE LA EXPERIENCIA</span><span>{String(activeIndex + 1).padStart(2, '0')} — {plan.name}</span></figcaption>
+              <figcaption><span>VISTA PREVIA DEL PLAN</span><span>{String(activeIndex + 1).padStart(2, '0')} — {plan.name}</span></figcaption>
             </figure>
 
             <span className="plan-showroom-watermark" aria-hidden="true">
               {String(activeIndex + 1).padStart(2, '0')}
             </span>
-            <p className="plan-showroom-signature-label">TU EXPERIENCIA</p>
+            <p className="plan-showroom-signature-label">QUÉ INCLUYE</p>
             <dl className="plan-showroom-facts">
               {signatureAttributes.map(({ label, value }) => (
                 <div key={label}>

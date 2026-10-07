@@ -184,8 +184,8 @@ export default function VisionShiftStage({ block }) {
           ) : block.heading}
         </h2>
         <span>{block.body}</span>
-        <a className="vision-shift-follow" href="#problemas">
-          VAMOS A VER CÓMO FUNCIONA <span aria-hidden="true">↓</span>
+        <a className="vision-shift-follow" href="#servicios">
+          VER SERVICIOS <span aria-hidden="true">↓</span>
         </a>
       </header>
 

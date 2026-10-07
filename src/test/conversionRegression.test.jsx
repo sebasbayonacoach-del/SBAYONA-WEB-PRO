@@ -258,10 +258,10 @@ describe('Regression_Gate acumulativo de conversión', () => {
     expect(affirmativeClaimsCopy).not.toMatch(
       /diagnosticamos|prescribimos|curamos|tratamos el dolor|cura garantizada|resultado garantizado/i,
     )
-    // Garantía: el canvas de Home se carga de forma diferida y nunca bloquea LCP.
-    // Prohíbe import ESTÁTICO de SceneMount o Canvas; permite lazy() + Suspense.
-    expect(homeSource).not.toMatch(/import\s+.*SceneMount|import\s+.*<canvas\b/i)
-    expect(homeSource).toMatch(/lazy\s*\(\s*\(\s*\)\s*=>\s*import|Suspense/)
+    // Gym Funnel V2: Home ya no necesita canvas narrativo. La fotografía y el
+    // DOM son la capa primaria, así que tampoco necesita lazy/Suspense para 3D.
+    expect(homeSource).not.toMatch(/SceneMount|<canvas\b|from ['"]three|@react-three/i)
+    expect(homeSource).not.toMatch(/lazy\s*\(\s*\(\s*\)\s*=>\s*import|Suspense/)
   })
 })
 
@@ -300,9 +300,10 @@ describe('Honestidad · el precio recurrente no se escribe a mano en una pantall
     expect(culpables).toEqual([])
   })
 
-  it('el paso de pago enlaza el después con el precio publicado, no con una cifra propia', () => {
-    expect(checkoutSource).toMatch(/despu[eé]s,\s*el precio publicado del plan/i)
+  it('la solicitud pública no monta una segunda pasarela ni una promoción paralela', () => {
+    expect(checkoutSource).not.toMatch(/CheckoutPanel|ZERO_FIRST_MONTH_OFFER|useRewards/)
     expect(checkoutSource).not.toMatch(PRECIO_A_MANO[0])
+    expect(checkoutSource).toContain('No hay cobro aquí.')
   })
 
   /*

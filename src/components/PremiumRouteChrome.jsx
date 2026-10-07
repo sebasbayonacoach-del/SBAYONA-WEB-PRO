@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-const BRAND_TAGLINE = 'BAYONA · NO ES FITNESS · ES TRANSFORMACIÓN'
+const BRAND_TAGLINE = 'BAYONA · ENTRENA CON DIRECCIÓN · AVANZA CON MÉTODO'
 
 /*
  * Fase 4: aquí vivía ROUTE_CONTINUATIONS, un segundo sistema de cierre de
@@ -16,15 +16,10 @@ const BRAND_TAGLINE = 'BAYONA · NO ES FITNESS · ES TRANSFORMACIÓN'
 const ROUTE_CONFIG = Object.freeze({
   '/': Object.freeze({
     key: 'home',
+    marquee: false,
     revealSelectors: [],
-    cardSelectors: [
-      '.pain-item',
-      '.mechanism-step',
-      '.pillar-item',
-      '.evidence-record',
-      '.proof-process-item',
-    ],
-    spotlightSelectors: ['.pain-item', '.pillar-item', '.evidence-record'],
+    cardSelectors: ['.gym-service-card', '.gym-process-step', '.gym-gift-card'],
+    spotlightSelectors: ['.gym-service-card', '.gym-gift-card'],
     tiltSelectors: [],
   }),
   '/about': Object.freeze({
@@ -36,10 +31,11 @@ const ROUTE_CONFIG = Object.freeze({
   }),
   '/programs': Object.freeze({
     key: 'programs',
+    marquee: false,
     revealSelectors: [],
-    cardSelectors: ['.age-path-item', '.pillar', '.plan-accordion-item', '.program-service-category'],
-    spotlightSelectors: ['.pillar', '.plan-accordion-item', '.program-service-category'],
-    tiltSelectors: ['.plan-accordion-item.featured'],
+    cardSelectors: ['.services-overview-card', '.services-card'],
+    spotlightSelectors: ['.services-overview-card', '.services-card'],
+    tiltSelectors: [],
   }),
   '/parkour-academy': Object.freeze({
     key: 'parkour-academy',
@@ -50,9 +46,10 @@ const ROUTE_CONFIG = Object.freeze({
   }),
   '/shop': Object.freeze({
     key: 'shop',
+    marquee: false,
     revealSelectors: [],
-    cardSelectors: ['.shop-collection-card'],
-    spotlightSelectors: ['.shop-collection-card'],
+    cardSelectors: ['.shop-product-card', '.shop-category-shortcuts button'],
+    spotlightSelectors: ['.shop-product-card'],
     tiltSelectors: [],
   }),
   '/app': Object.freeze({
@@ -240,7 +237,7 @@ export default function PremiumRouteChrome() {
   const config = ROUTE_CONFIG[pathname]
   usePremiumRouteEnhancements(config)
 
-  if (!config) return null
+  if (!config || config.marquee === false) return null
 
   return <BrandMarquee />
 }

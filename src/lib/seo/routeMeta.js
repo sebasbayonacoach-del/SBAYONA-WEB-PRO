@@ -19,10 +19,10 @@ import { BRAND } from '../../config/site.config.js'
 export const TITLE_SUFFIX = `${BRAND.name}`
 
 /** Título de la home: se usa tal cual, sin sufijo, porque ya contiene la marca. */
-const HOME_TITLE = 'BAYONA — Construye tu versión más fuerte con método'
+const HOME_TITLE = 'BAYONA — Entrenamiento personal con dirección'
 
 const HOME_DESCRIPTION =
-  'Método de movimiento con dirección: plan mensual personalizado, seguimiento humano y cuatro niveles de acompañamiento. Sin humo ni promesas de resultado.'
+  'Entrenamiento personal y online con planes claros, seguimiento humano, parkour, movilidad, recuperación y recursos gratuitos para empezar.'
 
 /**
  * Rutas con contenido propio. La clave es el pathname exacto.
@@ -43,10 +43,10 @@ const STATIC_ROUTES = {
     breadcrumb: [['Nosotros', '/about']],
   },
   '/programs': {
-    title: 'Programas BAYONA — acompañamiento con dirección',
+    title: 'Servicios BAYONA — entrenamiento personal y online',
     description:
-      'Programas BAYONA para elegir cuánta dirección quieres cerca: diagnóstico, membresías, servicios opcionales y primer mes configurado antes de abrir WhatsApp.',
-    breadcrumb: [['Programas', '/programs']],
+      'Servicios BAYONA: entrenamiento personal, online, membresías, recuperación, movilidad, parkour y rendimiento con precios y alcance visibles.',
+    breadcrumb: [['Servicios', '/programs']],
   },
   '/parkour-academy': {
     title: 'Academia de Parkour',
@@ -55,9 +55,9 @@ const STATIC_ROUTES = {
     breadcrumb: [['Academia Parkour', '/parkour-academy']],
   },
   '/shop': {
-    title: 'Boutique BAYONA — sesiones, servicios y equipo',
+    title: 'Tienda BAYONA — ropa, calzado y equipamiento fitness',
     description:
-      'Boutique guiada BAYONA: sesiones, evaluación, recuperación y equipo para construir tu primer pedido con dirección. Precios en COP, se confirma por WhatsApp.',
+      'Tienda BAYONA de ropa, calzado, equipamiento, máquinas y nutrición. Explora por categoría, revisa precios en COP y confirma disponibilidad por WhatsApp.',
     breadcrumb: [['Tienda', '/shop']],
   },
   '/app': {
@@ -81,26 +81,27 @@ const STATIC_ROUTES = {
   '/faq': {
     title: 'Preguntas frecuentes',
     description:
-      'Programas, precios, métodos de pago, lesiones, sesiones presenciales y BAYONA+. Respuestas directas para comparar antes de decidir.',
+      'Servicios, precios, formas de contacto, entrenamiento presencial, online y BAYONA+. Respuestas directas antes de decidir.',
     breadcrumb: [['Preguntas frecuentes', '/faq']],
   },
   '/onboarding': {
-    title: 'Entrar a BAYONA',
+    title: 'Empieza gratis',
     description:
-      'Un recorrido corto para orientarte: cuéntanos tu punto de partida y te sugerimos por dónde empezar. Sin crear cuenta y sin compromiso.',
-    breadcrumb: [['Entrar', '/onboarding']],
+      'Ruta antigua redirigida al inicio gratuito de BAYONA.',
+    noindex: true,
+    breadcrumb: [],
   },
   '/entrar': {
     title: 'Entrar — Tu centro de mando BAYONA',
     description:
-      'Accede o crea tu cuenta para guardar recursos, créditos, compras y próximos pasos dentro de tu centro de mando BAYONA.',
+      'Acceso privado BAYONA para clientes y miembros. La navegación pública no requiere crear una cuenta.',
     noindex: true,
     breadcrumb: [['Entrar', '/entrar']],
   },
   '/checkout': {
-    title: 'Configura tu experiencia',
+    title: 'Revisa tu solicitud',
     description:
-      'Arma tu plan base, tus clases y tus extras y revisa el total antes de enviarlo. Esta página prepara una solicitud: aquí no se procesa ningún pago.',
+      'Revisa el servicio, las opciones y el total antes de enviarlo. Esta página prepara una solicitud: aquí no se procesa ningún pago.',
     noindex: true,
     breadcrumb: [['Configurar', '/checkout']],
   },
@@ -179,7 +180,7 @@ function buildPlanRoutes() {
       ogType: 'product',
       planId: plan.id,
       breadcrumb: [
-        ['Programas', '/programs'],
+        ['Servicios', '/programs'],
         [`Plan ${plan.name}`, path],
       ],
     }

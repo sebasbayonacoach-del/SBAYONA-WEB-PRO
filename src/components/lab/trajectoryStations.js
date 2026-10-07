@@ -43,7 +43,7 @@ if (!methodBlock) {
  */
 const STATION_DIRECTIONS = {
   understand: {
-    to: '/onboarding',
+    to: '/#empieza',
     ctaLabel: 'Contar tu punto de partida',
     hotspot: { x: 16, y: 66 },
     spatial: {

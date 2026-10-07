@@ -38,7 +38,7 @@ import VideoSection from '../components/VideoSection.jsx'
 import { siteMedia } from '../config/siteMedia.js'
 import '../styles/resources.css'
 
-const BRAND_TAGLINE = 'BAYONA · NO ES FITNESS · ES TRANSFORMACIÓN'
+const BRAND_TAGLINE = 'BAYONA · ENTRENA CON DIRECCIÓN · MUÉVETE CON PROPÓSITO'
 const RESOURCES_EASE = [0.16, 1, 0.3, 1]
 
 const HERO_CONTAINER_VARIANTS = Object.freeze({
@@ -115,8 +115,8 @@ const CHALLENGE_EVIDENCE = Object.freeze([
  * aplica el premio que BAYONA confirme por escrito antes de entrar.
  */
 const CHALLENGE_PRIZE = Object.freeze({
-  heading: 'EL PREMIO PUEDE SER UN PROGRAMA PERSONALIZADO.',
-  copy: 'Si completas las condiciones de tu edición, el premio vigente puede ser un programa BAYONA hecho con lo que el propio reto reveló de ti: tu fuerza real, tu recuperación y tus hábitos. No se entrega un plan genérico ni se improvisa al final.',
+  heading: 'EL PREMIO PUEDE SER UN PLAN PERSONALIZADO.',
+  copy: 'Si completas las condiciones de tu edición, el premio vigente puede ser un plan BAYONA construido con lo que el propio reto reveló de ti: tu fuerza real, tu recuperación y tus hábitos. No se entrega una plantilla genérica ni se improvisa al final.',
   guard: 'El premio se comunica por escrito antes de entrar. Si tu edición tiene otro premio vigente, aplica ese y solo ese.',
 })
 
@@ -130,10 +130,6 @@ const CHALLENGE_LEVELS = Object.freeze([
 
 const challengeWhatsAppUrl = buildWhatsAppUrl(
   'Hola BAYONA, quiero conocer las reglas, el uso de las evidencias y el premio vigente del Reto 30 Días antes de decidir si entro.',
-)
-
-const protocolWhatsAppUrl = buildWhatsAppUrl(
-  'Hola BAYONA, quiero recibir El Protocolo BAYONA de 7 días en PDF.',
 )
 
 const MAGAZINE_PUBLICATIONS = Object.freeze([
@@ -460,14 +456,22 @@ function PublicationReader({ closeRef, interactiveEffects, onClose, publication,
         <footer className="resources-reader-footer">
           {publication.kind === 'pdf' ? (
             <>
-              <p>La guía gratuita se entrega por WhatsApp para que puedas guardarla y volver a ella cuando quieras.</p>
-              <ExternalWhatsAppLink
-                href={protocolWhatsAppUrl}
+              <p>La guía gratuita se desbloquea al dejar tu nombre y un contacto. Sin cuenta y sin compra.</p>
+              <button
+                type="button"
                 className="resources-action resources-action--primary"
-                magnetic={interactiveEffects}
+                onClick={() => {
+                  onClose()
+                  window.requestAnimationFrame(() => {
+                    document.getElementById('resources-lead')?.scrollIntoView({
+                      behavior: reducedMotion ? 'auto' : 'smooth',
+                      block: 'start',
+                    })
+                  })
+                }}
               >
-                DESCARGAR PDF <ArrowUpRight aria-hidden="true" size={17} strokeWidth={1.2} />
-              </ExternalWhatsAppLink>
+                RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={17} strokeWidth={1.2} />
+              </button>
             </>
           ) : (
             <button className="resources-reader-return" type="button" onClick={onClose}>
@@ -1160,26 +1164,26 @@ export default function Resources() {
               <header className="resources-subsection-heading">
                 <span>MATERIAL DESCARGABLE</span>
                 <h3 id="downloads-title">PARA GUARDAR, NO PARA VER UNA VEZ.</h3>
-                <p>Tres piezas que se entregan en PDF por WhatsApp: las abres en el móvil, las imprimes o las dejas en tu cuenta y vuelves cuando te haga falta.</p>
+                <p>Tres piezas gratuitas. Déjanos tu nombre y un contacto al final y se habilitan para descargar sin crear una cuenta.</p>
               </header>
               <ol>
                 <li>
                   <span>01 · PDF</span>
                   <strong>El Protocolo BAYONA de 7 días</strong>
                   <p>Una acción concreta por día: movimiento, comida real y recuperación.</p>
-                  <a href={protocolWhatsAppUrl} target="_blank" rel="noopener noreferrer">PEDIRLO POR WHATSAPP <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
+                  <a href="#resources-lead">RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>
                 <li>
                   <span>02 · WORKBOOK</span>
                   <strong>Cuaderno de ruta del Reto 30 días</strong>
                   <p>Rutina diaria por nivel, check-ins y condiciones de la edición.</p>
-                  <a href={challengeWhatsAppUrl} target="_blank" rel="noopener noreferrer">PEDIRLO POR WHATSAPP <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
+                  <a href="#resources-lead">RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>
                 <li>
                   <span>03 · GUÍA</span>
                   <strong>Guía nutricional general del reto</strong>
                   <p>Estructura de platos simple y repetible. No sustituye un plan individual.</p>
-                  <a href={challengeWhatsAppUrl} target="_blank" rel="noopener noreferrer">PEDIRLA POR WHATSAPP <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
+                  <a href="#resources-lead">RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>
               </ol>
             </section>
@@ -1495,8 +1499,12 @@ export default function Resources() {
           </div>
         </section>
 
-        {/* Embudo freemium (Fase 2 SaaS): cierra la página sin tocar el flujo de decisión. */}
-        <LeadMagnet />
+        <section id="resources-lead" className="resources-lead-capture" aria-label="Recibir recursos gratuitos">
+          <LeadMagnet
+            heading="Recibe tus recursos gratis."
+            copy="Déjanos tu nombre y un contacto. Tus tres recursos se habilitan al instante y puedes pedir una valoración cuando quieras."
+          />
+        </section>
       </div>
 
       <AnimatePresence>
