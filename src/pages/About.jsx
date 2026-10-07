@@ -238,9 +238,12 @@ export default function About() {
         aria-labelledby="about-globe-title"
       >
         <div className="about-globe-copy about-globe-testimonials-heading ds-reveal ds-reveal--spatial">
-          <SectionLabel>EXPERIENCIAS</SectionLabel>
-          <h2 id="about-globe-title">HISTORIAS<br /><span>EN MOVIMIENTO</span></h2>
-          <p>Personas reales, puntos de partida distintos y una misma idea: el proceso importa más que el espectáculo.</p>
+          <SectionLabel>TRAYECTORIA E IMPACTO</SectionLabel>
+          <h2 id="about-globe-title">DE COLOMBIA A ESPAÑA.<br /><span>HISTORIAS QUE SIGUEN.</span></h2>
+          <p>
+            Cada punto abre una experiencia publicada. El mapa muestra el recorrido que hoy podemos enseñar:
+            Bogotá, Valencia, Madrid, Miami y Buenos Aires.
+          </p>
         </div>
         {/* Capa WebGL 3D — atmósfera detrás del mapa interactivo (Fase 11.2). */}
         <Suspense fallback={null}>
