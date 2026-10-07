@@ -45,7 +45,8 @@ describe('flujo de solicitud por WhatsApp', () => {
     expect(decodedUrl).toContain('Plan base: ELITE — $899.000 COP/mes')
     expect(target).toBe('_blank')
     expect(features).toBe('noopener,noreferrer')
-    expect(screen.getByText(/No hay cobro aquí/i)).toBeInTheDocument()\n    expect(document.querySelector('.cx-panel')).not.toBeInTheDocument()
+    expect(screen.getByText(/No hay cobro aquí/i)).toBeInTheDocument()
+    expect(document.querySelector('.cx-panel')).not.toBeInTheDocument()
   })
 
   it('OrderConfirmation confirma solo la recepción y deriva la conversación a WhatsApp', () => {
