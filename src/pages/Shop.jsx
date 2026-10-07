@@ -423,12 +423,12 @@ export default function Shop() {
             initial={reducedMotion ? false : { y: 9 }}
             animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.58, delay: reducedMotion ? 0 : 0.22 }}
-            aria-label="Resumen de compra guiada BAYONA"
+            aria-label="Resumen de compra BAYONA"
           >
             <div className="shop-hero-ticket">
-              <span>BOUTIQUE BAYONA</span>
-              <strong>Pedido con criterio.</strong>
-              <small>Lo confirmamos por WhatsApp antes de pagar.</small>
+              <span>TIENDA BAYONA</span>
+              <strong>Compra clara.</strong>
+              <small>Disponibilidad, talla y entrega se confirman antes de pagar.</small>
             </div>
             <dl className="shop-hero-ledger">
               <div>
@@ -448,14 +448,14 @@ export default function Shop() {
             animate={reducedMotion ? undefined : { opacity: 1 }}
             transition={{ duration: 0.5, delay: reducedMotion ? 0 : 0.32 }}
           >
-            <span>ARMA TU PEDIDO</span>
+            <span>VER CATEGORÍAS</span>
             <ArrowDown size={16} strokeWidth={1} aria-hidden="true" />
           </motion.a>
         </div>
 
-        <div className="shop-hero-marquee" aria-label="BAYONA, built to move">
+        <div className="shop-hero-marquee" aria-label="BAYONA, hecho para moverte">
           <Marquee autoFill gradient={false} speed={32} pauseOnHover play={!reducedMotion}>
-            <span>BAYONA</span><i>•</i><span>BUILT TO MOVE</span><i>•</i>
+            <span>BAYONA</span><i>•</i><span>HECHO PARA MOVERTE</span><i>•</i>
           </Marquee>
         </div>
       </section>
@@ -523,17 +523,17 @@ export default function Shop() {
               LO QUIERO <ArrowUpRight size={18} strokeWidth={1} aria-hidden="true" />
             </motion.a>
           </div>
-          <small className="shop-feature-note">La pieza que marca el inicio.</small>
+          <small className="shop-feature-note">Pieza destacada del catálogo.</small>
         </motion.div>
       </section>
 
       <section id="shop-catalog" className="shop-catalog section-shell" aria-labelledby="shop-catalog-title">
         <header className="shop-catalog-intro ds-reveal ds-reveal--mask">
           <div>
-            <SectionLabel>BAYONA COLLECTION</SectionLabel>
-            <h2 id="shop-catalog-title">ENCUENTRA LO<br /><span>QUE TE REPRESENTA.</span></h2>
+            <SectionLabel>CATÁLOGO BAYONA</SectionLabel>
+            <h2 id="shop-catalog-title">TODO PARA<br /><span>ENTRENAR.</span></h2>
           </div>
-          <p>{PRODUCT_COUNT} referencias de ropa, movimiento, fuerza y recuperación.</p>
+          <p>{PRODUCT_COUNT} referencias de ropa, calzado, equipamiento y recuperación.</p>
         </header>
 
         <p className="shop-catalog-availability">
@@ -667,12 +667,12 @@ export default function Shop() {
         </svg>
 
         <SectionLabel>CÓMO COMPRAR</SectionLabel>
-        <h2 id="shop-process-title">SIMPLE. RÁPIDO.<br /><span>TUYO.</span></h2>
+        <h2 id="shop-process-title">SIMPLE. CLARO.<br /><span>TUYO.</span></h2>
         <p>Eliges, nos escribes y confirmamos juntos talla y envío.</p>
       </section>
 
       <aside className="shop-commercial-note section-shell" aria-label="Información comercial">
-        Precios en COP. Tu carrito es una selección, no un cobro automático: disponibilidad, variantes, crédito y envío se confirman por WhatsApp.
+        Precios en COP. Tu carrito es una selección, no un cobro automático: disponibilidad, variantes y envío se confirman por WhatsApp.
       </aside>
 
       <aside className="shop-training-bridge section-shell" data-immersive="clip" aria-label="Enlace a servicios de entrenamiento">
