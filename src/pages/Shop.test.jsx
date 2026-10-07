@@ -3,12 +3,11 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useCartStore } from '../store/cartStore.js'
-import { editorialServices } from '../config/offerings.js'
 import { shopCollections, shopProducts } from '../config/shopProducts.js'
 import Shop from './Shop.jsx'
 
 vi.mock('framer-motion', () => {
-  const ignoredProps = new Set(['initial', 'animate', 'exit', 'variants', 'whileInView', 'viewport', 'transition', 'whileHover', 'whileTap'])
+  const ignoredProps = new Set(['initial', 'animate', 'exit', 'variants', 'whileInView', 'viewport', 'transition', 'whileHover', 'whileTap', 'layout'])
   const component = (tag) => React.forwardRef(({ children, ...props }, ref) => {
     const domProps = Object.fromEntries(Object.entries(props).filter(([key]) => !ignoredProps.has(key)))
     return React.createElement(tag, { ...domProps, ref }, children)
@@ -21,17 +20,16 @@ vi.mock('framer-motion', () => {
   }
 })
 
-vi.mock('../components/Layout', () => ({
-  PageHero: ({ title, kicker, children }) => <section><p>{kicker}</p><h1>{title}</h1>{children}</section>,
-  SectionLabel: ({ children }) => <p>{children}</p>,
-}))
-
 vi.mock('../engine/hooks/useCapabilities.js', () => ({
   useCapabilities: () => ({ reducedMotion: false, mode: 'desktop' }),
 }))
 
 vi.mock('../engine/scroll/StickyStage.jsx', () => ({
   StickyStage: ({ children }) => children({ index: 0, progress: {}, isStatic: true }),
+}))
+
+vi.mock('../components/shop/ShopHologramLayer.jsx', () => ({
+  default: () => null,
 }))
 
 function renderShop() {
@@ -43,68 +41,52 @@ beforeEach(() => {
   useCartStore.getState().setOpen(false)
 })
 
-// La tienda es un catálogo editorial consultable (sin pagos ni inventario).
-// Este contrato protege su estructura real y sus salidas verificables.
-//
-// 22-09 (lane C): §16 pide boutique y relación con sesiones/servicios/planes.
-// El titular de colecciones cambió de literal, así que la aserción se ancla a
-// lo que de verdad garantiza «colecciones claras»: una tarjeta por cada
-// colección definida en config/shopProducts.js, y el mostrador de servicios
-// con los precios que publica config/offerings.js.
-describe('/shop — landing editorial y catálogo consultable', () => {
-  it('presenta hero, colecciones y catálogo sin claims médicos ni de pago', () => {
+describe('/shop — tienda de producto Gym Funnel V2', () => {
+  it('separa producto físico de servicios y elimina crédito gamificado', () => {
     const { container } = renderShop()
-    const copy = container.textContent
 
     expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /ELIGE POR USO\.\s*NO POR IMPULSO\./i })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /ENCUENTRA LO\s*QUE TE REPRESENTA/i })).toBeInTheDocument()
+    expect(container.querySelector('#shop-counter')).toBeNull()
+    expect(container.querySelector('.shop-credit')).toBeNull()
+    expect(container.textContent).not.toMatch(/MOSTRADOR DE SERVICIOS|CRÉDITO BAYONA|RECLAMAR MI PASE/i)
+  })
 
-    // El selector visual ahora es una galería sticky de una colección por acto,
-    // pero el contrato completo permanece en la lista semántica.
-    expect(container.querySelector('.shop-collection-stage')).not.toBeNull()
+  it('mantiene las colecciones y el catálogo consultable', () => {
+    renderShop()
+
     const semanticCollections = screen.getByRole('list', { name: /Colecciones BAYONA/i })
     for (const collection of shopCollections) {
       expect(within(semanticCollections).getByRole('heading', { name: collection.title })).toBeInTheDocument()
-      expect(within(semanticCollections).getByRole('button', { name: new RegExp(`Explorar ${collection.name}`, 'i') })).toBeInTheDocument()
     }
 
-    // Catálogo editorial: nada de diagnóstico médico ni promesas de resultado.
-    expect(copy).not.toMatch(/diagn[oó]stico|cura garantizada|resultados asegurados|pago seguro/i)
+    expect(screen.getByRole('heading', { name: /ENCUENTRA LO\s*QUE TE REPRESENTA/i })).toBeInTheDocument()
   })
 
-  it('vende también sesiones y servicios con el precio publicado en el catálogo comercial', () => {
+  it('muestra fotografía de producto en todas las fichas que tienen media', () => {
     const { container } = renderShop()
+    const cards = [...container.querySelectorAll('[data-product-id]')]
 
-    const counter = container.querySelector('#shop-counter')
-    expect(counter).not.toBeNull()
+    expect(cards).toHaveLength(shopProducts.length)
 
-    // Cada servicio del mostrador existe en config/offerings.js y cuesta lo que
-    // cuesta allí: la tienda no inventa precios ni sesiones que no hay.
-    const serviceCards = [...counter.querySelectorAll('[data-shop-service]')]
-    expect(serviceCards.length).toBeGreaterThan(0)
-    for (const card of serviceCards) {
-      const service = editorialServices.find(({ id }) => id === card.dataset.shopService)
-      expect(service).toBeDefined()
-      expect(card.textContent).toContain(service.label)
-      expect(card.textContent).toContain(service.priceDisplay)
+    for (const product of shopProducts) {
+      const card = cards.find((node) => node.dataset.productId === product.id)
+      expect(card).toBeDefined()
+      expect(card).toHaveTextContent(product.name)
+      expect(card).toHaveTextContent(/COP/)
+
+      if (product.media) {
+        const image = card.querySelector('.shop-product-image')
+        expect(image).not.toBeNull()
+        expect(image).toHaveAttribute('src', product.media.src)
+      }
     }
-
-    // Y el carrito admite la pieza como servicio, no como mercancía.
-    fireEvent.click(screen.getByRole('button', { name: /^Añadir Clase virtual 1:1 extra al carrito$/i }))
-    const [item] = useCartStore.getState().items
-    expect(item.type).toBe('servicio')
-    expect(item.name).toBe('Clase virtual 1:1 extra')
   })
 
-  it('expone un enlace WhatsApp propio por producto con el número oficial', () => {
+  it('expone un WhatsApp propio por producto con el número oficial', () => {
     renderShop()
 
     const productLinks = [...document.querySelectorAll('a[data-shop-product]')]
-    // El producto destacado aparece dos veces (colección + catálogo): los
-    // identificadores únicos deben cubrir el catálogo completo.
-    expect(new Set(productLinks.map((link) => link.dataset.shopProduct)).size)
-      .toBe(shopProducts.length)
+    expect(new Set(productLinks.map((link) => link.dataset.shopProduct)).size).toBe(shopProducts.length)
 
     for (const link of productLinks) {
       const url = new URL(link.getAttribute('href'))
@@ -114,7 +96,7 @@ describe('/shop — landing editorial y catálogo consultable', () => {
     }
   })
 
-  it('permite filtrar por categoría y buscar, comunicando el estado vacío', () => {
+  it('permite filtrar y buscar productos', () => {
     renderShop()
 
     expect(screen.getByRole('group', { name: 'Por categoría' })).toBeInTheDocument()
@@ -129,19 +111,7 @@ describe('/shop — landing editorial y catálogo consultable', () => {
     expect(screen.queryByText('NO ENCONTRAMOS ESA PIEZA.')).not.toBeInTheDocument()
   })
 
-  it('utiliza fichas editoriales sin fotografías ni vídeos incrustados', () => {
-    const { container } = renderShop()
-    const cards = [...container.querySelectorAll('[data-product-id]')]
-    expect(cards).toHaveLength(shopProducts.length)
-    for (const card of cards) {
-      expect(card.querySelector('img, picture, video, canvas')).toBeNull()
-      expect(card.querySelector('.shop-product-visual svg')).not.toBeNull()
-      expect(card).toHaveTextContent(/COP/)
-    }
-    expect(container.querySelector('#shop-catalog')).toHaveTextContent(/disponibilidad.*confirm/i)
-  })
-
-  it('añade productos al carrito con su variante y abre el carrito', () => {
+  it('añade productos al carrito y lo abre', () => {
     renderShop()
 
     const addButtons = screen.getAllByRole('button', { name: /^Añadir .+ al carrito$/i })
@@ -150,6 +120,16 @@ describe('/shop — landing editorial y catálogo consultable', () => {
 
     const state = useCartStore.getState()
     expect(state.items).toHaveLength(1)
+    expect(state.items[0].type).toBe('producto')
     expect(state.isOpen).toBe(true)
+  })
+
+  it('cierra conectando con Servicios y Empieza gratis, no con cuenta o Programas', () => {
+    renderShop()
+
+    const bridge = document.querySelector('.shop-training-bridge')
+    expect(within(bridge).getByRole('link', { name: /VER SERVICIOS/i })).toHaveAttribute('href', '/programs')
+    expect(within(bridge).getByRole('link', { name: /EMPIEZA GRATIS/i })).toHaveAttribute('href', '/#empieza')
+    expect(bridge.textContent).not.toMatch(/VER PROGRAMAS|GUARDAR EN MI CUENTA/i)
   })
 })
