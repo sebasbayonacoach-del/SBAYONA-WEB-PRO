@@ -18,7 +18,7 @@ const pricingPlans = membershipPlans.map((plan) => ({
   eur: plan.eur,
   usd: plan.usdDisplay,
   featured: plan.id === 'FUERZA',
-  badge: plan.id === 'FUERZA' ? 'DESTACADO' : plan.id === 'ELITE' ? '10 CUPOS' : '',
+  badge: plan.id === 'FUERZA' ? 'DESTACADO' : '',
 }))
 
 const videoCallUrl = buildWhatsAppUrl([
@@ -27,7 +27,7 @@ const videoCallUrl = buildWhatsAppUrl([
 ].join('\n'))
 
 const quickQuestionUrl = buildWhatsAppUrl([
-  'Hola BAYONA, tengo una pregunta concreta sobre los programas y servicios.',
+  'Hola BAYONA, tengo una pregunta concreta sobre sus servicios y membresías.',
   '¿Podéis ayudarme?',
 ].join('\n'))
 
@@ -56,14 +56,14 @@ const journeyExits = [
   {
     number: '03',
     title: 'SOLO QUIERES UNA SESIÓN SUELTA',
-    copy: 'Clase 1:1, evaluación, recuperación o análisis corporal sin atarte a una mensualidad. Se confirma disponibilidad por WhatsApp.',
-    to: '/shop',
-    action: 'VER SESIONES Y EQUIPO',
+    copy: 'Clase 1:1, evaluación o recuperación sin contratar una mensualidad. Se confirma disponibilidad antes de reservar.',
+    to: '/programs#servicios',
+    action: 'VER SERVICIOS SUELTOS',
   },
   {
     number: '04',
     title: 'YA ESTÁS DENTRO',
-    copy: 'En tu cuenta quedan el plan, las compras, el crédito y lo que vayas guardando del recorrido.',
+    copy: 'Si ya eres cliente, el acceso privado reúne la información disponible de tu servicio y tu cuenta.',
     to: '/entrar',
     action: 'IR A MI CUENTA',
   },
@@ -139,10 +139,10 @@ export default function FAQ() {
         */}
         <Reveal as="h1" aria-label="FAQ / Decide sin dudas"><span>FAQ /</span>{' '}<br />DECIDE SIN DUDAS</Reveal>
         <Reveal as="p" delay={0.18}>
-          No necesitas tenerlo todo claro. Necesitas dar el siguiente paso correcto: programas, precios, condiciones, seguridad y dudas de antes de empezar, resueltas aquí y con la misma información que te daremos por WhatsApp.
+          No necesitas tenerlo todo claro. Aquí tienes servicios, precios, condiciones y respuestas directas antes de empezar.
         </Reveal>
         <Reveal as="ul" className="faq-hero-anchors" delay={0.28}>
-          <li>PROGRAMAS Y PRECIOS</li>
+          <li>SERVICIOS Y PRECIOS</li>
           <li>CONDICIONES Y PAGO</li>
           <li>SEGURIDAD DE TUS DATOS</li>
         </Reveal>
@@ -247,7 +247,7 @@ export default function FAQ() {
         <SectionLabel>03 / RESUELVE LO QUE FALTA</SectionLabel>
         <div className="faq-contact-heading">
           <h2 id="faq-contact-title">ELIGE TU<br />{' '}<span>SIGUIENTE PASO.</span></h2>
-          <p>Compara los programas, plantea una duda concreta o empieza gratis si todavía necesitas probar el método.</p>
+          <p>Compara los servicios, plantea una duda concreta o empieza gratis antes de decidir.</p>
         </div>
 
         <div className="faq-contact-grid">
