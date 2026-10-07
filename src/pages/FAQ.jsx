@@ -60,13 +60,6 @@ const journeyExits = [
     to: '/programs#servicios',
     action: 'VER SERVICIOS SUELTOS',
   },
-  {
-    number: '04',
-    title: 'YA ESTÁS DENTRO',
-    copy: 'Si ya eres cliente, el acceso privado reúne la información disponible de tu servicio y tu cuenta.',
-    to: '/entrar',
-    action: 'IR A MI CUENTA',
-  },
 ]
 
 function PricingBlock() {
