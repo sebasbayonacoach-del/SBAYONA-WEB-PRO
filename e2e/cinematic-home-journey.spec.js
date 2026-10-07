@@ -60,7 +60,7 @@ test('Gym Funnel V2 · Servicios funciona como una sola jerarquía comercial', a
   await expect(page.getByRole('heading', { level: 1, name: 'NUESTROS SERVICIOS.' })).toBeVisible()
   await expect(page.locator('.services-overview-card')).toHaveCount(3)
   await expect(page.locator('.services-memberships .plan-showroom')).toHaveCount(1)
-  await expect(page.locator('.services-card')).toHaveCount(9)
+  await expect(page.locator('.services-card')).toHaveCount(16)
   await expect(page.getByText(/COMPARAR PROGRAMAS|ENTRA GRATIS ANTES DE PAGAR/i)).toHaveCount(0)
   await expectNoHorizontalOverflow(page, 'Servicios desktop')
 })
@@ -71,7 +71,7 @@ test('Gym Funnel V2 · Tienda entra por categorías y usa fotografía de product
 
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   const shortcuts = page.getByRole('group', { name: 'Categorías principales de tienda' })
-  await expect(shortcuts.getByRole('button')).toHaveCount(5)
+  await expect(shortcuts.getByRole('button')).toHaveCount(6)
   await expect(page.locator('.shop-product-card')).toHaveCount(18)
   await expect(page.locator('.shop-product-card .shop-product-image')).toHaveCount(18)
   await expect(page.getByText(/MOSTRADOR DE SERVICIOS|CRÉDITO BAYONA|RECLAMAR MI PASE/i)).toHaveCount(0)
