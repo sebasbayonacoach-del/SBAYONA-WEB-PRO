@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Fuse from 'fuse.js'
@@ -25,7 +25,6 @@ import Marquee from 'react-fast-marquee'
 import { toast } from 'sonner'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps, StockImage } from '../components/SceneBackground.jsx'
-import ShopCollectionsStage from '../components/shop/ShopCollectionsStage.jsx'
 import {
   filterShopProducts,
   shopCategoryFilters,
@@ -42,9 +41,6 @@ import '../styles/shop-catalog-editorial.css'
 import '../styles/shop-art-direction-2026.css'
 import '../styles/shop-unified-catalog.css'
 import '../styles/shop-gym-funnel-v2.css'
-
-/** Capa WebGL holográfica — carga diferida para proteger el LCP (Fase 11.6). */
-const ShopHologramLayer = lazy(() => import('../components/shop/ShopHologramLayer.jsx'))
 
 const HERO_LINES = ['EQUIPAMOS', 'TU MOVIMIENTO.']
 const PRODUCT_COUNT = shopProducts.length
@@ -361,12 +357,6 @@ export default function Shop() {
     document.querySelector('#shop-catalog')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' })
   }
 
-  const selectCollectionCard = (nextCollectionId) => {
-    setCollectionId(nextCollectionId)
-    setCategory('Todo')
-    window.requestAnimationFrame(scrollToCatalog)
-  }
-
   const selectCategory = (nextCategory) => {
     setCategory(nextCategory)
     if (nextCategory === 'Todo') setCollectionId('all')
@@ -419,10 +409,6 @@ export default function Shop() {
         })}
         aria-labelledby="shop-hero-title"
       >
-        {/* Capa WebGL 3D — holograma de producto detrás del hero (Fase 11.6). */}
-        <Suspense fallback={null}>
-          <ShopHologramLayer />
-        </Suspense>
         <div className="shop-hero-content">
           <div id="shop-hero-title"><HeroTitle /></div>
           <motion.p
@@ -476,14 +462,30 @@ export default function Shop() {
 
       <section
         id="shop-collections"
-        className="shop-collections section-shell"
-        aria-labelledby="shop-collections-title"
+        className="shop-categories section-shell"
+        aria-labelledby="shop-categories-title"
       >
-        <ShopCollectionsStage
-          collections={shopCollections}
-          onSelect={selectCollectionCard}
-        />
-
+        <header className="shop-categories-head">
+          <SectionLabel>COMPRA POR CATEGORÍA</SectionLabel>
+          <h2 id="shop-categories-title">ENCUENTRA LO QUE NECESITAS.</h2>
+          <p>Empieza por el tipo de producto. Las colecciones BAYONA quedan como filtro secundario dentro del catálogo.</p>
+        </header>
+        <div className="shop-category-shortcuts" role="group" aria-label="Categorías principales de tienda">
+          {shopCategoryFilters.filter((item) => item !== 'Todo').map((item) => (
+            <button
+              type="button"
+              key={item}
+              onClick={() => {
+                setCollectionId('all')
+                setCategory(item)
+                window.requestAnimationFrame(scrollToCatalog)
+              }}
+            >
+              <span>{item}</span>
+              <ArrowUpRight size={18} strokeWidth={1} aria-hidden="true" />
+            </button>
+          ))}
+        </div>
       </section>
 
       <section
