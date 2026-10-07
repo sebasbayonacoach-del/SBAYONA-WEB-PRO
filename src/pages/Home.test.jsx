@@ -61,17 +61,15 @@ describe('Home — Gym Funnel V2', () => {
     expect(screen.getAllByTestId('plan-explorer')).toHaveLength(1)
   })
 
-  it('ofrece exactamente tres recursos gratuitos y descargables', () => {
+  it('presenta tres regalos y lleva a captación antes de habilitar las descargas', () => {
     renderHome()
     const section = screen.getByRole('heading', { level: 2, name: /PRIMERO RECIBES VALOR/i }).closest('section')
-    const downloads = within(section).getAllByRole('link')
-    expect(downloads).toHaveLength(3)
-    expect(downloads.map((link) => link.getAttribute('href'))).toEqual([
-      '/downloads/bayona-editorial/primera-semana.pdf',
-      '/downloads/bayona-editorial/registro-30-dias.pdf',
-      '/downloads/bayona-editorial/dossier-punto-de-partida.pdf',
-    ])
-    downloads.forEach((link) => expect(link).toHaveAttribute('download'))
+    const giftLinks = within(section).getAllByRole('link')
+    expect(giftLinks).toHaveLength(3)
+    giftLinks.forEach((link) => {
+      expect(link).toHaveAttribute('href', '#empieza')
+      expect(link).not.toHaveAttribute('download')
+    })
   })
 
   it('cierra con captura de datos y valoración, no con registro o bienvenida', () => {
