@@ -131,8 +131,10 @@ describe('FASE 4B · propagación selectiva a las rutas comerciales', () => {
     expect(aboutSource).toContain('MethodSequence')
     const programs = read('pages', 'Programs.jsx')
 
-    expect(programs).toContain('services-overview-grid')
-    expect(programs).toContain('siteMedia.programs.services')
+    expect(programs).toContain('services-path-grid')
+    expect(programs).toContain('services-catalog-details')
+    expect(programs).toContain('siteMedia.programs.hero')
+    expect(programs).toContain('parkour-hero-1600.webp')
     expect(programs).toContain('NUESTROS SERVICIOS.')
     expect(programs).not.toContain('method-pillars ds-sequence')
   })

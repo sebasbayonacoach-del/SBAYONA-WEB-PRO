@@ -20,12 +20,16 @@ describe('/programs — Servicios BAYONA', () => {
     expect(container.textContent).not.toMatch(/PROGRAMAS DE ENTRENAMIENTO|COMPARAR PROGRAMAS/i)
   })
 
-  it('organiza la oferta en tres áreas visuales', () => {
+  it('presenta cuatro servicios principales y categorías secundarias entendibles', () => {
     const { container } = render(<MemoryRouter><Programs /></MemoryRouter>)
+    expect(container.querySelectorAll('.services-path-card')).toHaveLength(4)
+    for (const name of ['Entrenamiento personal', 'Entrenamiento online', 'Parkour y rendimiento', 'Movilidad y recuperación']) {
+      expect(screen.getByRole('heading', { level: 3, name })).toBeInTheDocument()
+    }
     expect(container.querySelectorAll('.services-overview-card')).toHaveLength(serviceCategoryDefinitions.length)
-    serviceCategoryDefinitions.forEach(({ title }) => {
-      expect(screen.getAllByRole('heading', { name: title }).length).toBeGreaterThan(0)
-    })
+    for (const name of ['Sesiones guiadas', 'Movilidad y recuperación', 'Parkour y preparación']) {
+      expect(screen.getAllByText(name, { exact: true }).length).toBeGreaterThan(0)
+    }
   })
 
   it('mantiene una única comparación de membresías', () => {
@@ -34,18 +38,21 @@ describe('/programs — Servicios BAYONA', () => {
     expect(screen.getAllByTestId('plan-explorer')).toHaveLength(1)
   })
 
-  it('publica todos los servicios sueltos con precio y consulta', () => {
+  it('publica todos los servicios adicionales sin alterar sus precios ni destinos de consulta', () => {
     const { container } = render(<MemoryRouter><Programs /></MemoryRouter>)
     const cards = [...container.querySelectorAll('.services-card')]
     expect(cards).toHaveLength(editorialServices.length)
 
     editorialServices.forEach((service) => {
-      const card = cards.find((node) => node.textContent.includes(service.label))
-      expect(card).toBeDefined()
+      const card = container.querySelector(`[data-service-id="${service.id}"]`)
+      expect(card).not.toBeNull()
       expect(card).toHaveTextContent(service.priceDisplay)
-      const link = within(card).getByRole('link', { name: /CONSULTAR DISPONIBILIDAD/i })
-      expect(link).toHaveAttribute('href', service.cta)
+      const link = within(card).getByRole('link', { name: /CONSULTAR ESTE SERVICIO/i })
+      expect(link.getAttribute('href')).toMatch(/^https:\/\/wa\.me\//)
+      expect(decodeURIComponent(link.getAttribute('href'))).toContain(service.priceDisplay)
     })
+    expect(within(container).queryByRole('heading', { name: 'Biohacking' })).toBeNull()
+    expect(within(container).getByRole('heading', { name: 'Hábitos para el rendimiento' })).toBeInTheDocument()
   })
 
   it('no repite configurador, comunidad ni calculadora dentro de Servicios', () => {
