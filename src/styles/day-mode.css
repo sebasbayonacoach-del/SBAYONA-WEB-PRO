@@ -223,6 +223,7 @@ html[data-bayona-theme='day'] .community-page {
 html[data-bayona-theme='day'] .community-hero {
   --community-text: #fff;
   --community-muted: rgba(255,255,255,.76);
+  color: #fff;
 }
 html[data-bayona-theme='day'] .community-page::after { opacity: .1; }
 
@@ -243,7 +244,10 @@ html[data-bayona-theme='day'] .resources-hero {
   --resources-muted: rgba(255,255,255,.8);
   --resources-orange: #f4a261;
   --resources-black: #050505;
+  color: #fff;
 }
+html[data-bayona-theme='day'] .resources-page .resources-eyebrow { color: #91451b; }
+html[data-bayona-theme='day'] .resources-page .resources-hero .resources-eyebrow { color: #ffc08a; }
 html[data-bayona-theme='day'] .resources-page .resources-section h2 { color: #201b17; }
 
 /* Nosotros y BAYONA+: zonas de lectura claras, visuales espaciales oscuros. */
