@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import App from './App'
+import { initializeSiteTheme } from './lib/ui/siteTheme.js'
 import AppErrorBoundary from './components/AppErrorBoundary.jsx'
 import { ExperienceProvider } from './engine'
 import { VisitorJourneyProvider } from './lib/onboarding/VisitorJourneyProvider.jsx'
@@ -139,6 +140,7 @@ import './styles/bayona-visual-unity.css'
  * de las 18 rutas sin reescribir ninguna hoja de página ni abrir una guerra de
  * `!important`. El laboratorio (`.lab-*`) conserva su propia hoja.
  */
+import './styles/day-mode.css'
 import './styles/ds-experience.css'
 /*
  * Pase atelier (FASE 4C). Detrás de la capa de experiencia porque la afina:
@@ -163,6 +165,7 @@ import './styles/home-atelier.css'
  * explícito (RGPD) y es no-op si no hay IDs configurados en el entorno.
  */
 initAnalytics()
+initializeSiteTheme()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
