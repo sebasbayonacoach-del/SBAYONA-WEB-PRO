@@ -3,6 +3,7 @@ const routeLoaders = {
   '/programs': () => import('../../pages/Programs.jsx'),
   '/parkour-academy': () => import('../../pages/ParkourAcademy.jsx'),
   '/shop': () => import('../../pages/Shop.jsx'),
+  '/app': () => import('../../pages/AppExperience.jsx'),
   '/community': () => import('../../pages/Community.jsx'),
   '/resources': () => import('../../pages/Resources.jsx'),
   '/faq': () => import('../../pages/FAQ.jsx'),

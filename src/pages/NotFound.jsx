@@ -9,7 +9,7 @@
  * recupera la visita ofreciendo las rutas que de verdad importan.
  */
 
-import { Link, useLocation } from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 import { ArrowUpRight, MessageCircle } from 'lucide-react'
 import { SectionLabel } from '../components/Layout'
 import { trackEvent } from '../lib/analytics/analytics.js'
@@ -29,6 +29,12 @@ const helpUrl = whatsAppLink(
 
 export default function NotFound() {
   const { pathname } = useLocation()
+
+  // Enlaces de preview que copian literalmente el comodín /** no son rutas
+  // reales: recuperamos Inicio sin convertir todos los 404 en falsos 200.
+  if (pathname === '/**' || pathname.toLowerCase() === '/%2a%2a') {
+    return <Navigate to="/" replace />
+  }
 
   return (
     <div className="not-found-page">
