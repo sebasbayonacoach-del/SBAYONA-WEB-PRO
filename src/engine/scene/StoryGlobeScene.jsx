@@ -37,7 +37,7 @@ function AtlasPoint({ marker, onSelect, active, count = 1 }) {
   )
 }
 
-function Earth({ markers, selectedId, onSelect }) {
+function Earth({ markers, selectedId, onSelect, storyStage = -1, reducedMotion }) {
   const texture = useLoader(TextureLoader, EARTH)
   texture.colorSpace = SRGBColorSpace
   const places = useMemo(() => {
@@ -50,8 +50,16 @@ function Earth({ markers, selectedId, onSelect }) {
     }
     return [...cities.values()]
   }, [markers])
+  const groupRef = useRef(null)
+  useFrame((_, delta) => {
+    if (!groupRef.current || storyStage < 0 || reducedMotion) return
+    const angles = [-.75, .58, 1.2, -.3]
+    const target = angles[storyStage] ?? -.75
+    const factor = 1 - Math.exp(-1.65 * delta)
+    groupRef.current.rotation.y += (target - groupRef.current.rotation.y) * factor
+  })
   return (
-    <group rotation={[0, -.75, 0]}>
+    <group ref={groupRef} rotation={[0, -.75, 0]}>
       <mesh>
         <sphereGeometry args={[RADIUS, 96, 64]} />
         <shaderMaterial
@@ -110,7 +118,7 @@ function CameraMotion({ reducedMotion }) {
   )
 }
 
-export default function StoryGlobe3D({ markers, selectedId, onSelect, reducedMotion, compact, onReady }) {
+export default function StoryGlobe3D({ markers, selectedId, onSelect, reducedMotion, compact, storyStage = -1, onReady }) {
   return (
     <div className="bayona-globe-three" aria-label="Globo terrestre tridimensional con lugares de historias publicadas">
       <Canvas dpr={[1, 1.5]} camera={{ position: [0, .15, compact ? 6.45 : 4.65], fov: 44 }}
@@ -120,9 +128,9 @@ export default function StoryGlobe3D({ markers, selectedId, onSelect, reducedMot
         <directionalLight position={[-3, 4, 5]} intensity={2.2} color="#ffe5c5" />
         <pointLight position={[3, -1, 3]} intensity={1.5} color="#f4a261" />
         <Suspense fallback={null}>
-          <Earth markers={markers} selectedId={selectedId} onSelect={onSelect} />
+          <Earth markers={markers} selectedId={selectedId} onSelect={onSelect} storyStage={storyStage} reducedMotion={reducedMotion} />
         </Suspense>
-        <CameraMotion reducedMotion={reducedMotion} />
+        <CameraMotion reducedMotion={reducedMotion || storyStage >= 0} />
       </Canvas>
     </div>
   )

@@ -2,6 +2,7 @@ import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
+import GlobeScrollDirector from './about/GlobeScrollDirector.jsx'
 import './globe-integrated.css'
 
 const StoryGlobe3D = lazy(() => import('../engine/scene/StoryGlobeScene.jsx'))
@@ -275,6 +276,7 @@ export default function GlobeTestimonials() {
   const capabilities = useCapabilities()
   const reducedMotion = capabilities.reducedMotion
   const [activeId, setActiveId] = useState(0)
+  const [globeStoryStage, setGlobeStoryStage] = useState(-1)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [focusedMarker, setFocusedMarker] = useState(null)
   const touchStartX = useRef(null)
@@ -292,6 +294,18 @@ export default function GlobeTestimonials() {
       context?.getExtension('WEBGL_lose_context')?.loseContext()
     } catch { setHasWebGL(false) }
   }, [])
+  const selectScrollChapter = (chapter) => {
+    if (isOverlayOpen) return
+    setGlobeStoryStage(chapter)
+    const stop = TRAJECTORY_STOPS[Math.min(chapter, TRAJECTORY_STOPS.length - 1)]
+    if (chapter === 3) {
+      setFocusedMarker(null)
+      return
+    }
+    const marker = markerForTestimonial(stop.testimonialId)
+    setActiveId((current) => current === stop.testimonialId ? current : stop.testimonialId)
+    setFocusedMarker((current) => current?.testimonialId === marker?.testimonialId ? current : marker)
+  }
   const activeTestimonial = GLOBE_TESTIMONIALS[activeId]
   const activeFocusPreset = focusedMarker ? MAP_FOCUS_PRESETS[focusedMarker.country] : null
 
@@ -1159,7 +1173,8 @@ export default function GlobeTestimonials() {
               <Suspense fallback={null}>
                 <StoryGlobe3D markers={WORLD_MAP_MARKERS} selectedId={activeId}
                   onSelect={selectMapMarker} reducedMotion={reducedMotion}
-                  compact={capabilities.mode !== 'desktop'} onReady={() => setThreeReady(true)} />
+                  compact={capabilities.mode !== 'desktop'} storyStage={globeStoryStage}
+                  onReady={() => setThreeReady(true)} />
               </Suspense>
             </GlobeFallbackBoundary>
           )}
@@ -1213,6 +1228,7 @@ export default function GlobeTestimonials() {
             ))}
           </div>
         </div>
+        <GlobeScrollDirector reducedMotion={reducedMotion} onStageChange={selectScrollChapter} />
 
         <AnimatePresence>
           {isOverlayOpen && (

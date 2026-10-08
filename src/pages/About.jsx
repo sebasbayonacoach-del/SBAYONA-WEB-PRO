@@ -2,6 +2,7 @@ import { ArrowUpRight, Award, BrainCircuit, GraduationCap, ShieldCheck } from 'l
 import { Link } from 'react-router-dom'
 import GlobeTestimonials from '../components/GlobeTestimonials.jsx'
 import AboutValuesStage from '../components/about/AboutValuesStage.jsx'
+import AboutJourneyRail from '../components/about/AboutJourneyRail.jsx'
 import AboutMethodStage from '../components/about/AboutMethodStage.jsx'
 import { MethodSequence } from '../components/method/MethodSequence.jsx'
 import { StickyStage } from '../engine/scroll/StickyStage.jsx'
@@ -99,6 +100,7 @@ export default function About() {
 
   return (
     <div className="about-page">
+      <AboutJourneyRail reducedMotion={reducedMotion} />
       <PageHero
         title="DETRÁS DEL MOVIMIENTO."
         kicker="CAPÍTULO 02 · NOSOTROS"
@@ -189,6 +191,7 @@ export default function About() {
           blur: 1,
         })}
         aria-labelledby="about-story-title"
+        id="el-recorrido"
       >
         <div className="about-story-heading section-shell ds-reveal" data-immersive="clip">
           <span className="about-vertical-word about-vertical-word--light" aria-hidden="true">RECORRIDO</span>
@@ -264,13 +267,8 @@ export default function About() {
         </ol>
       </section>
 
-      <section className="about-values-section" aria-labelledby="about-values-title">
-        <div className="about-values section-shell">
-          <AboutValuesStage items={values} />
-        </div>
-      </section>
-
       <section
+        id="el-mundo"
         className="about-globe-section about-globe-testimonials-section section-shell"
         aria-labelledby="about-globe-title"
       >
@@ -286,6 +284,12 @@ export default function About() {
       </section>
 
 
+
+      <section className="about-values-section" id="nuestros-valores" aria-labelledby="about-values-title">
+        <div className="about-values section-shell">
+          <AboutValuesStage items={values} />
+        </div>
+      </section>
 
       <section
         {...sceneBackgroundProps(siteMedia.about.values[0], {
@@ -303,6 +307,7 @@ export default function About() {
           blur: 1,
         })}
         aria-labelledby="about-method-title"
+        id="el-metodo"
       >
         <div className="about-method-inner section-shell" data-immersive="clip">
           <span className="about-vertical-word about-vertical-word--light" aria-hidden="true">PROCESO</span>
@@ -320,7 +325,7 @@ export default function About() {
             EL CAMINO NO EMPIEZA CON EXIGIRTE MÁS. EMPIEZA CON ENTENDER POR DÓNDE SEGUIR.
           </blockquote>
 
-          <div className="about-cta-actions">
+          <div className="about-cta-actions" id="empezar">
             <Link to="/programs" className="cta-primary">
               EMPEZAR JUNTOS
               <ArrowUpRight size={18} aria-hidden="true" />

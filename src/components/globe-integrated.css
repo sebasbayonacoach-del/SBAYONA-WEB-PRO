@@ -69,3 +69,39 @@ body.premium-route--about .about-globe-section .globe-testimonials-canvas {heigh
 /* Coincident testimonials live at the same five true city coordinates. One
    map pin per city; the 10-story selector remains available underneath. */
 .globe-testimonials-world-point[data-representative='false']{display:none!important;}
+
+/* Documentary pin: the map and the spoken narrative occupy one physical scene. */
+body.premium-route--about .globe-testimonials-stage {isolation:isolate;}
+body.premium-route--about .globe-testimonials-canvas .globe-atlas-caption {display:none;}
+.globe-scroll-story {position:absolute;z-index:5;left:clamp(26px,4.4vw,70px);top:0;bottom:0;width:min(35%,460px);pointer-events:none;}
+.globe-scroll-story__chapter {position:absolute;left:0;top:50%;transform:translateY(-50%);width:100%;padding:clamp(21px,2.8vw,40px) clamp(21px,2.5vw,34px);background:linear-gradient(110deg,rgba(7,9,10,.93),rgba(7,9,10,.73));border-left:2px solid #f4a261;box-shadow:0 32px 80px rgba(0,0,0,.18);}
+.globe-scroll-story__chapter:not(:first-child) {visibility:hidden;}
+.globe-scroll-story__eyebrow {display:block;margin-bottom:22px;color:#f4a261;font:650 .67rem/1.4 'DM Mono',monospace;letter-spacing:.16em;}
+.globe-scroll-story__chapter h3 {margin:0 0 22px;max-width:14ch;color:#faf7f0;font:900 clamp(2.3rem,3.3vw,4.3rem)/1.01 'Montserrat',sans-serif;letter-spacing:-.055em;text-wrap:balance;}
+.globe-scroll-story__chapter p {margin:0;max-width:43ch;color:#ded9d1;font:400 clamp(.95rem,1.1vw,1.08rem)/1.7 'Inter',sans-serif;}
+.globe-scroll-story__index {display:block;margin-top:26px;color:rgba(255,255,255,.53);font:700 .65rem/1.2 'DM Mono',monospace;letter-spacing:.1em;}
+.globe-scroll-story__hint {position:absolute;bottom:20px;left:0;color:#f5c29c;font:600 .64rem/1.3 'DM Mono',monospace;letter-spacing:.08em;}
+body.premium-route--about .globe-testimonials-canvas .globe-testimonials-location-index {z-index:10;}
+body.premium-route--about .globe-testimonials-map-meta {z-index:6;}
+body.premium-route--about .globe-testimonials-overlay {z-index:15;}
+@media(max-width:1023px), (prefers-reduced-motion:reduce) {
+  .globe-scroll-story {position:relative;z-index:auto;inset:auto;display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;background:#121413;border-top:1px solid rgba(244,162,97,.24);}
+  .globe-scroll-story__chapter {position:relative;visibility:visible !important;inset:auto;transform:none !important;opacity:1 !important;min-height:180px;padding:22px 24px;background:none;border-left:none;border-bottom:1px solid rgba(244,162,97,.18);box-shadow:none;}
+  .globe-scroll-story__chapter:nth-child(odd) {border-right:1px solid rgba(244,162,97,.18);}
+  .globe-scroll-story__eyebrow {margin-bottom:10px;font-size:.6rem;}
+  .globe-scroll-story__chapter h3 {font-size:clamp(1.35rem,2.25vw,2.1rem);margin-bottom:10px;max-width:22ch;}
+  .globe-scroll-story__chapter p {font-size:.9rem;line-height:1.55;}
+  .globe-scroll-story__index {margin-top:14px;}
+  .globe-scroll-story__hint {display:none;}
+}
+@media(max-width:680px){
+ .globe-scroll-story {grid-template-columns:minmax(0,1fr);}
+ .globe-scroll-story__chapter {min-height:0;padding:24px 20px;}
+ .globe-scroll-story__chapter:nth-child(odd){border-right:0;}
+ .globe-scroll-story__chapter h3 {font-size:1.85rem;max-width:20ch;}
+}
+/* Keep typography calmly editorial; generic globe styles use uppercase body. */
+body.premium-route--about .globe-scroll-story__chapter p {text-transform:none !important;letter-spacing:normal !important;font-family:'Inter',sans-serif !important;font-weight:400 !important;}
+@media(min-width:1024px) and (prefers-reduced-motion:no-preference){
+ body.premium-route--about .bayona-globe-three {left:8%;width:94%;}
+}
