@@ -304,3 +304,99 @@ html[data-bayona-theme='day'] .footer.gym-footer a:hover { color: #91451b; }
   .site-theme-toggle { transition: none; }
   .site-theme-toggle:hover { transform: none; }
 }
+
+
+/* CIERRE DE CONTRASTE · los catálogos fotográficos son islas oscuras. */
+html[data-bayona-theme='day'] .services-page .services-catalog-group {
+  --services-muted: rgba(247,245,241,.78);
+  background-color: #11100f;
+  color: #f7f5f1;
+}
+html[data-bayona-theme='day'] .services-page .services-catalog-group :is(h3,h4),
+html[data-bayona-theme='day'] .services-page .services-catalog-group .services-card > a {
+  color: #fff;
+}
+html[data-bayona-theme='day'] .services-page .services-catalog-group header p,
+html[data-bayona-theme='day'] .services-page .services-catalog-group .services-card > p,
+html[data-bayona-theme='day'] .services-page .services-catalog-group .services-scope-note {
+  color: rgba(247,245,241,.78);
+}
+html[data-bayona-theme='day'] .services-page .services-final { background: #eee5d9; }
+html[data-bayona-theme='day'] .services-page .services-final .services-secondary-cta { color: #201b17; }
+
+/* La capa de BAYONA+ emplea background !important: resolver en el mismo nivel. */
+html[data-bayona-theme='day'] .app-experience {
+  --bg-deep: #f7f3eb;
+  --bg-section: #eee6da;
+}
+html[data-bayona-theme='day'] .app-experience.app-page .app-section {
+  background: #f7f3eb !important;
+}
+html[data-bayona-theme='day'] .app-experience.app-page .app-section:nth-of-type(even),
+html[data-bayona-theme='day'] .app-experience.app-page .app-section[data-section-number='02'],
+html[data-bayona-theme='day'] .app-experience.app-page .app-section[data-section-number='04'],
+html[data-bayona-theme='day'] .app-experience.app-page .app-section[data-section-number='06'] {
+  background: #eee6da !important;
+}
+html[data-bayona-theme='day'] .app-experience .app-section .app-status-note {
+  color: #201b17 !important;
+}
+
+/* El 404 mantiene su identidad nocturna, con tipografía clara real. */
+html[data-bayona-theme='day'] .ds-frame .not-found-page {
+  --bayona-white: #fff;
+  color: #f7f5f1;
+}
+html[data-bayona-theme='day'] .not-found-page h1,
+html[data-bayona-theme='day'] .not-found-page .not-found-card strong {
+  color: #fff;
+}
+html[data-bayona-theme='day'] .not-found-page :is(.not-found-lead,.not-found-card small,.not-found-help) {
+  color: #d5d0c8;
+}
+
+/* El breakpoint real de navegación móvil es 1180px, no 1050px. */
+@media (max-width: 1180px) {
+  html[data-bayona-theme='day'] .navbar .site-theme-toggle {
+    margin-left: auto;
+  }
+  html[data-bayona-theme='day'] .navbar .menu-button {
+    margin-left: 0 !important;
+  }
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open {
+    background: #f7f3eb !important;
+  }
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav {
+    background: linear-gradient(135deg,#f7f3eb,#eae0d2) !important;
+    background-size: auto !important;
+    color: #201b17 !important;
+    grid-template-columns: minmax(0,1fr) !important;
+    grid-template-rows: auto minmax(0,1fr) auto !important;
+  }
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-list,
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-conversion {
+    grid-column: 1 !important;
+  }
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-list > a {
+    color: #201b17 !important;
+    border-bottom-color: rgba(44,34,25,.2) !important;
+  }
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-list > a > span {
+    color: #91451b !important;
+  }
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-conversion > p {
+    color: #201b17 !important;
+  }
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-conversion > span {
+    color: #5b5147 !important;
+  }
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-whatsapp {
+    color: #91451b !important;
+  }
+  html[data-bayona-theme='day'] .gym-mobile-nav-conversion .mobile-cart-action,
+  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .mobile-cart-action {
+    color: #201b17 !important;
+    background: #fffdf8 !important;
+    border: 1px solid rgba(44,34,25,.27) !important;
+  }
+}
