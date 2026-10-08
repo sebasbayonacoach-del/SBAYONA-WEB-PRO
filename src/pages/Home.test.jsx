@@ -39,7 +39,7 @@ describe('Home — Gym Funnel V2', () => {
 
   it('presenta cuatro servicios claros sin repetir Programas', () => {
     renderHome()
-    const section = screen.getByRole('heading', { level: 2, name: /ELIGE CÓMO QUIERES ENTRENAR/i }).closest('section')
+    const section = screen.getByRole('heading', { level: 2, name: /TU OBJETIVO.*TU FORMA DE MOVERTE/i }).closest('section')
     const cards = section.querySelectorAll('.gym-service-card')
     expect(cards).toHaveLength(4)
     ;['Entrenamiento personal', 'Entrenamiento online', 'Parkour y rendimiento', 'Movilidad y recuperación']
