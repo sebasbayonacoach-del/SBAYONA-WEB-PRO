@@ -256,6 +256,10 @@ html[data-bayona-theme='day'] .app-experience {
   background: var(--bayona-day-paper);
   color: var(--bayona-day-ink);
 }
+/* La portada de Nosotros usa una capa editorial heredada muy específica. */
+html[data-bayona-theme='day'] .ds-frame .about-page {
+  background: var(--bayona-day-paper) !important;
+}
 html[data-bayona-theme='day'] .about-page :is(.about-problem,.about-values,.about-method,.about-cta) {
   background-color: var(--bayona-day-paper);
   color: var(--bayona-day-ink);
