@@ -1,0 +1,291 @@
+/*
+ * BAYONA · EDICIÓN LUZ
+ * Capa exclusivamente opt-in. Noche no cambia.
+ * Papel cálido para lectura y decisión; héroes de fotografía/3D conservan
+ * su fondo oscuro y contraste. Sin invertir imágenes ni usar filter: invert().
+ */
+
+/* Selector visible en desktop y móvil, siempre dentro del header. */
+.site-theme-toggle {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 44px;
+  min-width: 84px;
+  padding: .65rem .75rem;
+  color: #f7f5f1;
+  border: 1px solid rgba(247,245,241,.28);
+  background: rgba(8,8,8,.55);
+  font: 800 .65rem/1 var(--font-label, monospace);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .24s ease, border-color .24s ease, transform .24s ease;
+}
+.site-theme-toggle:hover { border-color: #f4a261; transform: translateY(-1px); }
+.site-theme-toggle:focus-visible { outline: 2px solid #f4a261; outline-offset: 3px; }
+.site-theme-toggle svg { color: #f4a261; flex: 0 0 auto; }
+@media (max-width: 1050px) {
+  .navbar .site-theme-toggle { margin-left: auto; }
+  .navbar .menu-button { margin-left: 0; }
+}
+@media (max-width: 520px) {
+  .navbar .site-theme-toggle { min-width: 44px; padding-inline: .55rem; }
+  .site-theme-toggle span { display: none; }
+}
+
+html[data-bayona-theme='day'] {
+  color-scheme: light;
+  --bayona-day-paper: #f7f3eb;
+  --bayona-day-sheet: #ede6da;
+  --bayona-day-card: #fffdf8;
+  --bayona-day-ink: #201b17;
+  --bayona-day-muted: #5b5147;
+  --bayona-day-rule: rgba(44,34,25,.2);
+  --bayona-day-orange-ink: #91451b;
+  --ds-surface-background: var(--bayona-day-paper);
+  --ds-surface-deep: var(--bayona-day-sheet);
+  --ds-surface-raised: var(--bayona-day-card);
+  --ds-surface-content: var(--bayona-day-card);
+  --ds-surface-overlay: #fffaf1;
+  --ds-color-ink: var(--bayona-day-ink);
+  --ds-color-muted: var(--bayona-day-muted);
+  --ds-color-dim: #73685d;
+  --ds-border-color: var(--bayona-day-rule);
+  --bayona-surface-0: var(--bayona-day-paper);
+  --bayona-surface-1: var(--bayona-day-sheet);
+  --bayona-surface-2: var(--bayona-day-card);
+  --bayona-surface-content: var(--bayona-day-card);
+  --bayona-hairline-color: var(--bayona-day-rule);
+  background: var(--bayona-day-paper);
+}
+
+html[data-bayona-theme='day'] body,
+html[data-bayona-theme='day'] .ds-frame:not([data-experience-scope='system']) {
+  background-color: var(--bayona-day-paper);
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .ds-frame:not([data-experience-scope='system']) {
+  --bayona-white: var(--bayona-day-ink);
+  --bayona-unity-border-color: var(--bayona-day-rule);
+  --bayona-unity-accent: var(--bayona-day-orange-ink);
+}
+html[data-bayona-theme='day'] .navbar {
+  background: linear-gradient(180deg, rgba(249,245,238,.98), rgba(249,245,238,.91));
+  border-bottom: 1px solid var(--bayona-day-rule);
+  box-shadow: 0 8px 36px rgba(56,35,18,.09);
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .navbar .brand,
+html[data-bayona-theme='day'] .navbar .gym-primary-nav a {
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .navbar .gym-primary-nav a:hover,
+html[data-bayona-theme='day'] .navbar .gym-primary-nav a.active { color: #91451b; }
+html[data-bayona-theme='day'] .navbar .site-theme-toggle {
+  color: var(--bayona-day-ink);
+  background: rgba(255,255,255,.72);
+  border-color: var(--bayona-day-rule);
+}
+html[data-bayona-theme='day'] .navbar .site-theme-toggle svg { color: #91451b; }
+html[data-bayona-theme='day'] .navbar .menu-button { color: var(--bayona-day-ink); }
+html[data-bayona-theme='day'] .navbar .nav-cart-button {
+  color: var(--bayona-day-ink);
+  border-color: var(--bayona-day-rule);
+}
+
+/* El menú móvil deja de ser una pantalla negra en modo día. */
+@media (max-width: 1050px) {
+  html[data-bayona-theme='day'] .navbar .mobile-nav {
+    background: linear-gradient(135deg,#f7f3eb,#eae0d2) !important;
+    color: var(--bayona-day-ink);
+  }
+  html[data-bayona-theme='day'] .gym-mobile-nav-head,
+  html[data-bayona-theme='day'] .gym-mobile-nav-conversion {
+    border-color: var(--bayona-day-rule);
+  }
+  html[data-bayona-theme='day'] .gym-mobile-nav-head span,
+  html[data-bayona-theme='day'] .gym-mobile-nav-conversion > span { color: var(--bayona-day-muted); }
+  html[data-bayona-theme='day'] .gym-mobile-nav-conversion > p { color: var(--bayona-day-ink); }
+  html[data-bayona-theme='day'] .gym-mobile-nav-list > a {
+    color: var(--bayona-day-ink) !important;
+    border-color: var(--bayona-day-rule) !important;
+  }
+  html[data-bayona-theme='day'] .gym-mobile-nav-whatsapp { color: #91451b; }
+}
+
+/* Home: álbum fotográfico oscuro + capítulos de lectura iluminados. */
+html[data-bayona-theme='day'] .gym-home {
+  --gym-black: var(--bayona-day-paper);
+  --gym-white: var(--bayona-day-ink);
+  --gym-panel: var(--bayona-day-card);
+  --gym-line: var(--bayona-day-rule);
+  --gym-muted: var(--bayona-day-muted);
+}
+html[data-bayona-theme='day'] .gym-home-hero {
+  background: #080706;
+  color: #fff;
+}
+html[data-bayona-theme='day'] .gym-home-hero h1,
+html[data-bayona-theme='day'] .gym-home-hero .gym-home-kicker { color: #fff; }
+html[data-bayona-theme='day'] .gym-home-hero .gym-home-kicker { color: #ffc08a; }
+html[data-bayona-theme='day'] .gym-home-process {
+  background: radial-gradient(circle at 87% 12%,rgba(244,162,97,.12),transparent 38%),#efe9df;
+}
+html[data-bayona-theme='day'] .gym-home-plans { background: #f7f3eb; }
+html[data-bayona-theme='day'] .gym-home-trust { background: #e8ddce; color: #201b17; }
+html[data-bayona-theme='day'] .gym-gift-card {
+  background: var(--bayona-day-card);
+  color: var(--bayona-day-ink);
+  box-shadow: 0 18px 48px rgba(68,46,31,.07);
+}
+html[data-bayona-theme='day'] .gym-gift-card p { color: var(--bayona-day-muted); }
+html[data-bayona-theme='day'] .gym-home-lead .lead-magnet-inner {
+  background: var(--bayona-day-card);
+  border-color: var(--bayona-day-rule);
+}
+html[data-bayona-theme='day'] :is(.gym-inline-link,.gym-gift-card span,.gym-process-grid li > span) {
+  color: var(--bayona-day-orange-ink);
+}
+html[data-bayona-theme='day'] .gym-service-card { color: #fff; }
+html[data-bayona-theme='day'] .gym-service-card > img,
+html[data-bayona-theme='day'] .gym-gift-card > img {
+  filter: saturate(.86) contrast(1.02) brightness(.9);
+}
+html[data-bayona-theme='day'] .gym-service-card__action { color: #ffc08a; }
+html[data-bayona-theme='day'] .gym-service-card h3 { color: #fff; }
+
+/* Servicios: tarjetas fotográficas intactas, comparativa en papel. */
+html[data-bayona-theme='day'] .services-page {
+  --services-line: var(--bayona-day-rule);
+  --services-muted: var(--bayona-day-muted);
+  background: var(--bayona-day-paper);
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .services-page .page-hero {
+  --bayona-white: #fff;
+  color: #fff;
+}
+html[data-bayona-theme='day'] .services-page .page-hero-content > p { color: rgba(255,255,255,.82); }
+html[data-bayona-theme='day'] .services-memberships { background: #efe8dd; }
+html[data-bayona-theme='day'] .services-overview-card {
+  color: #fff;
+  background: #10100f;
+}
+html[data-bayona-theme='day'] .services-overview-card h3 { color: #fff; }
+html[data-bayona-theme='day'] .services-catalog-group header p { color: var(--bayona-day-muted); }
+
+/* Tienda: producto en primer plano, navegación de categorías legible. */
+html[data-bayona-theme='day'] .shop-page {
+  background: var(--bayona-day-paper);
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .shop-hero { --bayona-white: #fff; color: #fff; }
+html[data-bayona-theme='day'] .shop-categories-head > p { color: var(--bayona-day-muted); }
+html[data-bayona-theme='day'] .shop-category-shortcuts {
+  background: var(--bayona-day-rule);
+  border-color: var(--bayona-day-rule);
+}
+html[data-bayona-theme='day'] .shop-category-shortcuts button {
+  background: var(--bayona-day-sheet);
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .shop-category-shortcuts button:hover,
+html[data-bayona-theme='day'] .shop-category-shortcuts button:focus-visible {
+  background: #f4a261;
+  color: #171310;
+}
+html[data-bayona-theme='day'] .shop-product-card {
+  background: var(--bayona-day-card);
+  color: var(--bayona-day-ink);
+  border-color: var(--bayona-day-rule);
+}
+html[data-bayona-theme='day'] .shop-product-card :is(h3,p,small) { color: var(--bayona-day-ink); }
+html[data-bayona-theme='day'] .shop-product-mark { color: #fff; }
+html[data-bayona-theme='day'] .shop-product-chip { color: #101010; }
+
+/* Rutas editoriales: variables nativas primero para respetar sus componentes. */
+html[data-bayona-theme='day'] .community-page {
+  --community-bg: #f7f3eb;
+  --community-bg-alt: #ece3d7;
+  --community-card: #fffdf8;
+  --community-thumb: #e0d5c8;
+  --community-text: #201b17;
+  --community-muted: #5b5147;
+  --community-dim: #73685d;
+  --community-line: rgba(44,34,25,.14);
+  --community-line-soft: rgba(44,34,25,.09);
+}
+html[data-bayona-theme='day'] .community-hero {
+  --community-text: #fff;
+  --community-muted: rgba(255,255,255,.76);
+}
+html[data-bayona-theme='day'] .community-page::after { opacity: .1; }
+
+html[data-bayona-theme='day'] .resources-page {
+  --resources-black: #f7f3eb;
+  --resources-panel: #fffdf8;
+  --resources-panel-raised: #eee5d9;
+  --resources-text: #201b17;
+  --resources-muted: #5b5147;
+  --resources-dim: #73685d;
+  --resources-orange: #91451b;
+  --resources-orange-hover: #b35723;
+  --resources-line: rgba(44,34,25,.12);
+  --resources-line-visible: rgba(44,34,25,.2);
+}
+html[data-bayona-theme='day'] .resources-hero {
+  --resources-text: #fff;
+  --resources-muted: rgba(255,255,255,.8);
+  --resources-orange: #f4a261;
+  --resources-black: #050505;
+}
+html[data-bayona-theme='day'] .resources-page .resources-section h2 { color: #201b17; }
+
+/* Nosotros y BAYONA+: zonas de lectura claras, visuales espaciales oscuros. */
+html[data-bayona-theme='day'] .about-page,
+html[data-bayona-theme='day'] .app-experience {
+  background: var(--bayona-day-paper);
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .about-page :is(.about-problem,.about-values,.about-method,.about-cta) {
+  background-color: var(--bayona-day-paper);
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .about-page :is(.about-problem,.about-values,.about-method,.about-cta) :is(h2,h3) {
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .about-page .about-problem-copy { color: var(--bayona-day-muted); }
+html[data-bayona-theme='day'] .about-page :is(.page-hero,.about-story,.about-globe-section) {
+  --bayona-white: #fff;
+  color: #fff;
+}
+html[data-bayona-theme='day'] .app-experience .app-section {
+  background-color: var(--bayona-day-paper);
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .app-experience .app-section :is(.app-section-title,.app-section-subtitle) {
+  color: var(--bayona-day-ink) !important;
+}
+html[data-bayona-theme='day'] .app-experience :is(.app-hero,.app-device-stage) {
+  --bayona-white: #fff;
+}
+html[data-bayona-theme='day'] .app-experience .app-hero { color: #fff; }
+
+/* Footer: cierre cálido en vez de segunda pared negra. */
+html[data-bayona-theme='day'] .footer.gym-footer {
+  background: #e9dfd1;
+  border-color: var(--bayona-day-rule);
+  color: var(--bayona-day-ink);
+}
+html[data-bayona-theme='day'] .footer.gym-footer :is(a,p,small,strong) { color: var(--bayona-day-ink); }
+html[data-bayona-theme='day'] .footer.gym-footer a:hover { color: #91451b; }
+
+/* Mantener microinteracciones solo cuando la persona las permite. */
+@media (prefers-reduced-motion: reduce) {
+  .site-theme-toggle { transition: none; }
+  .site-theme-toggle:hover { transform: none; }
+}
