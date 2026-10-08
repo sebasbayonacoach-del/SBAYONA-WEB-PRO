@@ -8,6 +8,7 @@ import { ScrollProgress } from './components/Experience'
 import { PageTransition, CustomCursor } from './engine'
 import { MotionDebug } from './engine/debug/MotionDebug.jsx'
 import PremiumRouteChrome from './components/PremiumRouteChrome'
+import EditorialOutro from './components/EditorialOutro.jsx'
 import { useAuth } from './lib/auth/AuthContext.jsx'
 import RequireAuth from './components/auth/RequireAuth.jsx'
 import { useRecedeWhileScrolling } from './lib/ui/useRecedeWhileScrolling.js'
@@ -300,6 +301,7 @@ function Site() {
             NextChapter, para no aparecer en el embudo ni en el 404.
           */}
           {showEditorialChrome ? <PremiumRouteChrome /> : null}
+          {showEditorialChrome ? <EditorialOutro /> : null}
         </main>
       </PageTransition>
       {showEditorialChrome ? <WhatsAppButton /> : null}
