@@ -54,3 +54,28 @@
   .resources-page .resources-hero-library-card,
   .community-page .community-hero-pass li { transition: none; }
 }
+
+/* Screenshot-reviewed night heroes: their cinematic image layer was visually
+   lost behind dark overlays. The existing photo assets now paint on the actual
+   hero planes, with directional darkness only underneath the copy. */
+html[data-bayona-theme='night'] body.premium-route--about .about-page .page-hero .page-hero-backdrop {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.94) 0%, rgba(4,4,4,.72) 37%, rgba(4,4,4,.18) 100%), url('/images/bayona-generated/about-hero-1600.webp');
+  background-size: cover;
+  background-position: center 44%;
+}
+html[data-bayona-theme='night'] body.premium-route--about .about-page .page-hero .page-hero-backdrop::before,
+html[data-bayona-theme='night'] body.premium-route--about .about-page .page-hero .page-hero-backdrop::after { opacity: .15; }
+html[data-bayona-theme='night'] body.premium-route--programs .services-page .page-hero {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.94), rgba(4,4,4,.68) 42%, rgba(4,4,4,.2)), url('/images/bayona-generated/home-method-1600.webp');
+  background-size: cover;
+  background-position: center 50%;
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-page .page-hero .page-hero-backdrop { opacity: .22; }
+@media (max-width: 720px) {
+  html[data-bayona-theme='night'] body.premium-route--about .about-page .page-hero .page-hero-backdrop {
+    background-position: 60% center;
+  }
+  html[data-bayona-theme='night'] body.premium-route--programs .services-page .page-hero {
+    background-position: 63% center;
+  }
+}
