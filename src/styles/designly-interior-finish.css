@@ -192,3 +192,87 @@ body.premium-route--resources .resources-page .resources-hero-copy h1 { max-widt
     margin-left: 0;
   }
 }
+
+/* Editorial art direction, verified against middle-of-page desktop captures:
+   page sections should use both columns rather than leave half the frame empty.
+   No content is added or invented: the existing claim and three real club values
+   receive a coherent paired reading order. */
+@media (min-width: 1000px) {
+  body.premium-route--community .community-why .community-section-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+    column-gap: clamp(3.5rem, 7vw, 8rem);
+    align-items: start;
+  }
+  body.premium-route--community .community-why .community-figure--why {
+    grid-column: 1 / -1;
+    width: min(100%, 760px);
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+  body.premium-route--community .community-why .community-section-header {
+    grid-column: 1;
+    grid-row: 2;
+    max-width: none;
+    margin: 0;
+  }
+  body.premium-route--community .community-why .community-section-header .community-title {
+    max-width: 16ch !important;
+    font-size: clamp(2.75rem, 3.75vw, 4.5rem) !important;
+    line-height: 1.02 !important;
+    text-wrap: balance;
+  }
+  body.premium-route--community .community-why .community-section-header .community-subtitle {
+    margin-bottom: 0;
+    max-width: 46ch;
+  }
+  body.premium-route--community .community-why .community-identity-points {
+    grid-column: 2;
+    grid-row: 2;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+  body.premium-route--community .community-why .community-identity-points > li:first-child {
+    padding-top: 0;
+  }
+  body.premium-route--community .community-why :is(.community-founder-note,.community-founder-closure,.community-movement-line) {
+    grid-column: 1 / -1;
+    max-width: 960px;
+    margin-inline: auto;
+  }
+}
+/* The purpose section's cream canvas is an editorial statement, not a full
+   additional viewport of empty background underneath a short paragraph. */
+@media (min-width: 1000px) {
+  body.premium-route--about .about-problem-section {
+    padding-block: clamp(2.5rem, 4vw, 4.5rem) !important;
+  }
+  body.premium-route--about .about-problem-section .about-problem {
+    padding-block: clamp(3.25rem, 5vw, 5.5rem) !important;
+    align-items: center !important;
+  }
+  body.premium-route--about .about-problem-section .about-problem-heading h2 {
+    font-size: clamp(2.7rem, 4.35vw, 4.9rem) !important;
+    line-height: 1.03 !important;
+  }
+}
+@media (min-width: 1000px) {
+  body.premium-route--about .about-problem-section .about-problem {
+    grid-template-columns: minmax(0, 1.22fr) minmax(0, .78fr) !important;
+    column-gap: clamp(3rem, 5vw, 5rem) !important;
+  }
+}
+/* Mobile Community: the inherited 10ch headline limit and automatic hyphens
+   split Spanish words in the middle. Keep words intact and let the headline
+   use the available content column, preserving the intended line break. */
+@media (max-width: 760px) {
+  body.premium-route--community .community-why .community-section-header h2 {
+    max-width: 100% !important;
+    font-size: clamp(2.2rem, 8.1vw, 2.9rem) !important;
+    line-height: 1.06 !important;
+    hyphens: none !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    text-wrap: balance;
+  }
+}
