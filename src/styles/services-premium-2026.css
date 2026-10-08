@@ -572,3 +572,58 @@ html[data-bayona-theme='day'] body.premium-route--programs .services-page .servi
   color: #201b17;
   border-color: #a35629;
 }
+
+/* DESIGNLY · octubre 2026 · los cuatro caminos dejan de parecer cuatro
+   anuncios idénticos. El protagonismo sigue siendo la fotografía, la lectura
+   y la decisión, no el borde de la tarjeta. */
+@media (min-width: 1024px) {
+  .services-page .services-path-card:nth-child(1),
+  .services-page .services-path-card:nth-child(4) {
+    min-height: clamp(510px, 47vw, 690px);
+  }
+  .services-page .services-path-card:nth-child(2),
+  .services-page .services-path-card:nth-child(3) {
+    min-height: clamp(510px, 47vw, 690px);
+  }
+  .services-page .services-path-card:nth-child(2) > img {
+    object-position: 60% center;
+  }
+}
+.services-page .services-path-card__shade {
+  background: linear-gradient(180deg, rgba(3,3,3,.42) 0%, transparent 36%),
+    linear-gradient(0deg, rgba(3,3,3,.94) 0%, rgba(3,3,3,.67) 28%, transparent 80%);
+}
+.services-page .services-path-card__body {
+  gap: clamp(.85rem, 1.4vw, 1.35rem);
+}
+.services-page .services-path-card__action {
+  min-height: 45px;
+}
+.services-page .services-path-card__action svg {
+  flex: 0 0 auto;
+  transition: transform .25s ease;
+}
+.services-page .services-path-card:is(:hover, :focus-visible) .services-path-card__action svg {
+  transform: translate(3px,-3px);
+}
+.services-page .services-catalog-summary:focus-visible {
+  outline: 2px solid #f4a261;
+  outline-offset: -3px;
+}
+@media (max-width: 720px) {
+  .services-page .services-path-card:nth-child(n) {
+    min-height: min(480px, 68svh);
+  }
+  .services-page .services-path-card h3 {
+    max-width: 12ch;
+    font-size: clamp(2.2rem, 9vw, 3.25rem);
+    line-height: 1;
+  }
+  .services-page .services-path-card__meta > span:last-child {
+    max-width: 19ch;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .services-page .services-path-card__action svg { transition: none; }
+  .services-page .services-path-card:is(:hover, :focus-visible) .services-path-card__action svg { transform: none; }
+}
