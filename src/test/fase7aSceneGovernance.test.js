@@ -462,6 +462,8 @@ describe('gobernanza de escenas 3D (Fase 7A)', () => {
       // Nuevas escenas 3D aprobadas en Fase 11 (PLAN_3D_INMERSIVO.md).
       // Todas viven en engine/scene/ y se cargan SOLO vía lazy().
       'src/engine/scene/GlobeScene.jsx',
+      // Chapter 02 — mapa 3D geográfico conectado por lazy() al módulo editorial.
+      'src/engine/scene/StoryGlobeScene.jsx',
       'src/engine/scene/HeroScene.jsx',
       'src/engine/scene/HologramCard.jsx',
       'src/engine/scene/ParkourScene.jsx',

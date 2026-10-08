@@ -1,7 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
+import './globe-integrated.css'
+
+const StoryGlobe3D = lazy(() => import('../engine/scene/StoryGlobeScene.jsx'))
+
+class GlobeFallbackBoundary extends Component {
+  constructor(props) { super(props); this.state = { failed: false } }
+  static getDerivedStateFromError() { return { failed: true } }
+  componentDidCatch() { this.props.onError?.() }
+  render() { return this.state.failed ? null : this.props.children }
+}
 import { TESTIMONIALS, testimonialVariant } from '../config/testimonials.js'
 
 const EARTH_TEXTURE_URL = '/images/system/earth-dark.jpg'
@@ -203,7 +213,7 @@ function mapPosition(lat, lng) {
   }
 }
 
-function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect }) {
+function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect, inactive = false }) {
   const focusPreset = focusedMarker ? MAP_FOCUS_PRESETS[focusedMarker.country] : null
   const focusPosition = focusedMarker ? mapPosition(focusedMarker.lat, focusedMarker.lng) : { left: '50%', top: '50%' }
   const zoom = focusPreset?.zoom ?? 1
@@ -215,6 +225,8 @@ function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect }) {
       role="group"
       aria-label="Mapa mundial interactivo con experiencias publicadas"
       data-focused-region={focusedMarker?.country ?? 'Mundo'}
+      aria-hidden={inactive}
+      inert={inactive ? true : undefined}
     >
       <div
         className={`globe-testimonials-world-map${focusedMarker ? ' is-focused' : ''}`}
@@ -230,8 +242,9 @@ function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect }) {
         <span className="globe-testimonials-world-map-grid" aria-hidden="true" />
         {WORLD_MAP_MARKERS.map((marker, index) => {
           const testimonial = GLOBE_TESTIMONIALS[marker.testimonialId]
-          const active = testimonial.id === activeTestimonial.id
-          const focused = marker.id === focusedMarker?.id
+          const representative = WORLD_MAP_MARKERS.findIndex((place) => place.city === marker.city && place.country === marker.country) === index
+          const active = marker.city === activeTestimonial.city && marker.country === activeTestimonial.country
+          const focused = marker.city === focusedMarker?.city && marker.country === focusedMarker?.country
           const inFocusedRegion = marker.country === focusedMarker?.country
 
           return (
@@ -242,7 +255,10 @@ function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect }) {
               style={{ ...mapPosition(marker.lat, marker.lng), '--point-delay': `${index * -0.17}s` }}
               data-country={marker.country}
               data-marker-id={marker.id}
-              aria-label={`Abrir historia de ${testimonial.name} desde ${marker.country}`}
+              data-representative={representative}
+              aria-hidden={!representative}
+              tabIndex={inactive || !representative ? -1 : undefined}
+              aria-label={representative ? `Abrir historias de ${marker.city}, ${marker.country}` : undefined}
               aria-pressed={active}
               onClick={() => onSelect(marker)}
             >
@@ -262,6 +278,20 @@ export default function GlobeTestimonials() {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [focusedMarker, setFocusedMarker] = useState(null)
   const touchStartX = useRef(null)
+  const [threeReady, setThreeReady] = useState(false)
+  const [hasWebGL, setHasWebGL] = useState(false)
+  useEffect(() => {
+    try {
+      if (typeof window.WebGLRenderingContext === 'undefined') {
+        setHasWebGL(false)
+        return
+      }
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('webgl2') || canvas.getContext('webgl')
+      setHasWebGL(Boolean(context))
+      context?.getExtension('WEBGL_lose_context')?.loseContext()
+    } catch { setHasWebGL(false) }
+  }, [])
   const activeTestimonial = GLOBE_TESTIMONIALS[activeId]
   const activeFocusPreset = focusedMarker ? MAP_FOCUS_PRESETS[focusedMarker.country] : null
 
@@ -1123,11 +1153,22 @@ export default function GlobeTestimonials() {
       </div>
 
       <div className={`globe-testimonials-stage${isOverlayOpen ? ' is-overlay-open' : ''}`}>
-        <div className="globe-testimonials-canvas">
+        <div className={`globe-testimonials-canvas${threeReady ? ' globe-is-three-ready' : ''}`}>
+          {hasWebGL && (
+            <GlobeFallbackBoundary onError={() => setThreeReady(false)}>
+              <Suspense fallback={null}>
+                <StoryGlobe3D markers={WORLD_MAP_MARKERS} selectedId={activeId}
+                  onSelect={selectMapMarker} reducedMotion={reducedMotion}
+                  compact={capabilities.mode !== 'desktop'} onReady={() => setThreeReady(true)} />
+              </Suspense>
+            </GlobeFallbackBoundary>
+          )}
+          <div className="globe-atlas-caption" aria-hidden="true"><span>EL MUNDO, EN UN SOLO LUGAR.</span><small>ARRASTRA EL GLOBO · TOCA UN PUNTO · DESCUBRE UNA HISTORIA</small></div>
           <InteractiveWorldMap
             activeTestimonial={activeTestimonial}
             focusedMarker={focusedMarker}
             onSelect={selectMapMarker}
+            inactive={threeReady}
           />
 
           <AnimatePresence mode="wait">
@@ -1225,7 +1266,7 @@ export default function GlobeTestimonials() {
                             className="globe-testimonials-media-visual"
                             width="960"
                             height="540"
-                            loading="lazy"
+                            loading="eager"
                             decoding="async"
                           />
                         )}

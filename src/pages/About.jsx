@@ -1,4 +1,3 @@
-import { Suspense, lazy } from 'react'
 import { ArrowUpRight, Award, BrainCircuit, GraduationCap, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import GlobeTestimonials from '../components/GlobeTestimonials.jsx'
@@ -87,7 +86,7 @@ const methodSteps = [
 const sebastianWhatsAppUrl = whatsAppLink('Hola Sebastián, quiero que empecemos juntos con BAYONA.')
 
 /** Capa WebGL del globo — carga diferida para proteger el LCP (Fase 11.2). */
-const AboutGlobeLayer = lazy(() => import('../components/about/AboutGlobeLayer.jsx'))
+// El globo cartográfico interactivo se monta desde GlobeTestimonials.
 
 /**
  * Los cuatro principios ya tenían su foco escrito en about.css (`.about-value
@@ -162,7 +161,7 @@ export default function About() {
       <section className="about-founder" id="la-persona" aria-labelledby="about-founder-title">
         <div className="about-founder__layout section-shell">
           <div className="about-founder__visual">
-            <img src="/images/bayona-generated/about-timeline-movement-1600.webp" alt="Persona en movimiento frente al mar durante el atardecer" loading="lazy" decoding="async" />
+            <img src="/images/scenes/escena-parkour-gandia-cierre.webp" alt="Deportista de espaldas observando el mar al atardecer en un entorno de parkour" loading="lazy" decoding="async" />
             <span className="about-founder__image-marker">EL MOVIMIENTO COMO PUNTO DE PARTIDA</span>
             <span className="about-founder__image-number" aria-hidden="true">MOVIMIENTO / ORIGEN</span>
           </div>
@@ -279,10 +278,6 @@ export default function About() {
             Bogotá, Valencia, Madrid, Miami y Buenos Aires.
           </p>
         </div>
-        {/* Capa WebGL 3D — atmósfera detrás del mapa interactivo (Fase 11.2). */}
-        <Suspense fallback={null}>
-          <AboutGlobeLayer />
-        </Suspense>
         <GlobeTestimonials />
       </section>
 
