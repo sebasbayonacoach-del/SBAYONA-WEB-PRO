@@ -65,3 +65,24 @@ test('el modo día no oculta la fotografía de los servicios ni los regalos', as
   await expect(page.locator('.gym-home-hero h1')).toBeVisible()
   await expect(page.locator('#empieza')).toBeAttached()
 })
+
+test('las cinco rutas editoriales adoptan papel claro sin desbordamiento', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'networkidle' })
+  await page.getByRole('button', { name: 'Activar modo día' }).click()
+
+  for (const [route, selector] of [
+    ['/programs', '.services-page'],
+    ['/about', '.about-page'],
+    ['/resources', '.resources-page'],
+    ['/community', '.community-page'],
+    ['/app', '.app-experience'],
+  ]) {
+    await page.goto(route, { waitUntil: 'networkidle' })
+    await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'day')
+    await expect(page.locator(selector)).toHaveCSS('background-color', 'rgb(247, 243, 235)')
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 3),
+      route + ' no debe tener overflow lateral',
+    ).toBe(false)
+  }
+})
