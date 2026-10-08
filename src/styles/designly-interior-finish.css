@@ -79,3 +79,35 @@ html[data-bayona-theme='night'] body.premium-route--programs .services-page .pag
     background-position: 63% center;
   }
 }
+
+/* Visual-review closure: photographic Parkour first impression, no orphaned
+   headline syllables in the club and resource library. */
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .parkour-academy .academy-hero {
+  background-image: linear-gradient(90deg,rgba(4,4,4,.94) 0%,rgba(4,4,4,.72) 37%,rgba(4,4,4,.25) 100%),url('/images/bayona-generated/parkour-hero-1600.webp');
+  background-position: center, 60% center;
+  background-size: cover;
+}
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .parkour-academy .academy-hero.scene-bg::before { opacity: .12; }
+body.premium-route--parkour-academy .parkour-academy .academy-hero h1 {
+  max-width: 19ch;
+  font-size: clamp(2.7rem, 5.2vw, 5.7rem);
+  line-height: 1.03;
+  overflow-wrap: normal;
+}
+body.premium-route--community .community-page .community-hero-title,
+body.premium-route--resources .resources-page .resources-hero-copy h1 {
+  hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+@media (min-width: 1024px) {
+  body.premium-route--community .community-page .community-hero-copy { max-width: 650px; }
+  body.premium-route--community .community-page .community-hero-title { font-size: clamp(3.4rem, 4.25vw, 5.7rem); line-height: 1.03; }
+  body.premium-route--resources .resources-page .resources-hero-copy h1 { font-size: clamp(3.25rem, 4.4vw, 5.8rem); line-height: 1.04; }
+}
+@media (max-width: 720px) {
+  body.premium-route--parkour-academy .parkour-academy .academy-hero h1 { max-width: 17ch; font-size: clamp(2.2rem, 8.4vw, 3.15rem); }
+  body.premium-route--community .community-page .community-hero-title,
+  body.premium-route--resources .resources-page .resources-hero-copy h1 { font-size: clamp(2rem, 8vw, 3.2rem); }
+}
