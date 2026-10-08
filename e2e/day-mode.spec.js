@@ -4,9 +4,9 @@ test('el modo noche es el predeterminado y cambiar a día ilumina Home', async (
   await page.goto('/', { waitUntil: 'networkidle' })
   await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'night')
 
-  await page.getByRole('button', { name: 'Activar modo día' }).click()
+  await page.getByRole('button', { name: 'Modo día' }).click()
   await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'day')
-  await expect(page.getByRole('button', { name: 'Activar modo noche' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('button', { name: 'Modo día' })).toHaveAttribute('aria-pressed', 'true')
 
   const colors = await page.evaluate(() => ({
     sheet: getComputedStyle(document.querySelector('.gym-home')).backgroundColor,
@@ -20,7 +20,7 @@ test('el modo noche es el predeterminado y cambiar a día ilumina Home', async (
 
 test('el día persiste al recargar y navegar; noche restaura el tema original', async ({ page }) => {
   await page.goto('/', { waitUntil: 'networkidle' })
-  await page.getByRole('button', { name: 'Activar modo día' }).click()
+  await page.getByRole('button', { name: 'Modo día' }).click()
 
   await page.reload({ waitUntil: 'networkidle' })
   await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'day')
@@ -30,7 +30,7 @@ test('el día persiste al recargar y navegar; noche restaura el tema original', 
   await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'day')
   await expect(page.locator('.shop-page')).toHaveCSS('background-color', 'rgb(247, 243, 235)')
 
-  await page.getByRole('button', { name: 'Activar modo noche' }).click()
+  await page.getByRole('button', { name: 'Modo día' }).click()
   await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'night')
   await page.reload({ waitUntil: 'networkidle' })
   await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'night')
@@ -39,7 +39,7 @@ test('el día persiste al recargar y navegar; noche restaura el tema original', 
 test('el selector está disponible en móvil y convive con el menú', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/', { waitUntil: 'networkidle' })
-  const toggle = page.getByRole('button', { name: 'Activar modo día' })
+  const toggle = page.getByRole('button', { name: 'Modo día' })
   await expect(toggle).toBeVisible()
   const box = await toggle.boundingBox()
   expect(box.width).toBeGreaterThanOrEqual(44)
@@ -54,7 +54,7 @@ test('el selector está disponible en móvil y convive con el menú', async ({ p
 
 test('el modo día no oculta la fotografía de los servicios ni los regalos', async ({ page }) => {
   await page.goto('/', { waitUntil: 'networkidle' })
-  await page.getByRole('button', { name: 'Activar modo día' }).click()
+  await page.getByRole('button', { name: 'Modo día' }).click()
 
   for (const selector of ['.gym-service-card img', '.gym-gift-card img']) {
     const image = page.locator(selector).first()
@@ -68,7 +68,7 @@ test('el modo día no oculta la fotografía de los servicios ni los regalos', as
 
 test('las cinco rutas editoriales adoptan papel claro sin desbordamiento', async ({ page }) => {
   await page.goto('/', { waitUntil: 'networkidle' })
-  await page.getByRole('button', { name: 'Activar modo día' }).click()
+  await page.getByRole('button', { name: 'Modo día' }).click()
 
   const failures = []
   for (const [route, selector] of [
@@ -89,4 +89,40 @@ test('las cinco rutas editoriales adoptan papel claro sin desbordamiento', async
     }
   }
   expect(failures).toEqual([])
+})
+
+test('modo día conserva contraste en catálogos oscuros y secciones BAYONA+', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'networkidle' })
+  await page.getByRole('button', { name: 'Modo día' }).click()
+
+  await page.goto('/programs', { waitUntil: 'networkidle' })
+  await expect(page.locator('.services-catalog-group').first()).toHaveCSS('color', 'rgb(247, 245, 241)')
+  await expect(page.locator('.services-catalog-group h3').first()).toHaveCSS('color', 'rgb(255, 255, 255)')
+  await expect(page.locator('.services-card > p').first()).toHaveCSS('color', 'rgba(247, 245, 241, 0.78)')
+
+  await page.goto('/app', { waitUntil: 'networkidle' })
+  await expect(page.locator('.app-experience .app-section').first()).toHaveCSS('background-color', 'rgb(247, 243, 235)')
+  await expect(page.locator('.app-experience .app-section-title').first()).toHaveCSS('color', 'rgb(32, 27, 23)')
+
+  await page.goto('/ruta-que-no-existe', { waitUntil: 'networkidle' })
+  await expect(page.locator('.not-found-page h1')).toHaveCSS('color', 'rgb(255, 255, 255)')
+})
+
+test('el menú modo día es legible también en tablet y portátil pequeño', async ({ page }) => {
+  for (const width of [1000, 1100]) {
+    await page.setViewportSize({ width, height: 860 })
+    await page.goto('/', { waitUntil: 'networkidle' })
+    if (await page.locator('html').getAttribute('data-bayona-theme') !== 'day') {
+      await page.getByRole('button', { name: 'Modo día' }).click()
+    }
+    await page.getByRole('button', { name: 'Abrir menú' }).click()
+    const menu = page.getByRole('navigation', { name: 'Navegación móvil' })
+    await expect(menu).toBeVisible()
+    const appearance = await menu.evaluate((el) => ({
+      color: getComputedStyle(el).color,
+      background: getComputedStyle(el).backgroundImage,
+    }))
+    expect(appearance.color).toBe('rgb(32, 27, 23)')
+    expect(appearance.background).toContain('rgb(247, 243, 235)')
+  }
 })
