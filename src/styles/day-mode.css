@@ -363,38 +363,38 @@ html[data-bayona-theme='day'] .not-found-page :is(.not-found-lead,.not-found-car
   html[data-bayona-theme='day'] .navbar .menu-button {
     margin-left: 0 !important;
   }
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open {
+  html[data-bayona-theme='day'] .navbar.is-open {
     background: #f7f3eb !important;
   }
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav {
+  html[data-bayona-theme='day'] .navbar.is-open .mobile-nav {
     background: linear-gradient(135deg,#f7f3eb,#eae0d2) !important;
     background-size: auto !important;
     color: #201b17 !important;
     grid-template-columns: minmax(0,1fr) !important;
     grid-template-rows: auto minmax(0,1fr) auto !important;
   }
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-list,
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-conversion {
+  html[data-bayona-theme='day'] .navbar.is-open .mobile-nav .gym-mobile-nav-list,
+  html[data-bayona-theme='day'] .navbar.is-open .mobile-nav .gym-mobile-nav-conversion {
     grid-column: 1 !important;
   }
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-list > a {
+  html[data-bayona-theme='day'] .navbar.is-open .mobile-nav .gym-mobile-nav-list > a {
     color: #201b17 !important;
     border-bottom-color: rgba(44,34,25,.2) !important;
   }
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-list > a > span {
+  html[data-bayona-theme='day'] .navbar.is-open .mobile-nav .gym-mobile-nav-list > a > span {
     color: #91451b !important;
   }
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-conversion > p {
+  html[data-bayona-theme='day'] .navbar.is-open .mobile-nav .gym-mobile-nav-conversion > p {
     color: #201b17 !important;
   }
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-conversion > span {
+  html[data-bayona-theme='day'] .navbar.is-open .mobile-nav .gym-mobile-nav-conversion > span {
     color: #5b5147 !important;
   }
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .gym-mobile-nav-whatsapp {
+  html[data-bayona-theme='day'] .navbar.is-open .mobile-nav .gym-mobile-nav-whatsapp {
     color: #91451b !important;
   }
   html[data-bayona-theme='day'] .gym-mobile-nav-conversion .mobile-cart-action,
-  html[data-bayona-theme='day'] body.award-mode .navbar.is-open .mobile-nav .mobile-cart-action {
+  html[data-bayona-theme='day'] .navbar.is-open .mobile-nav .mobile-cart-action {
     color: #201b17 !important;
     background: #fffdf8 !important;
     border: 1px solid rgba(44,34,25,.27) !important;

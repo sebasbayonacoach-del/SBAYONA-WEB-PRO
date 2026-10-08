@@ -101,7 +101,7 @@ test('modo día conserva contraste en catálogos oscuros y secciones BAYONA+', a
   await expect(page.locator('.services-card > p').first()).toHaveCSS('color', 'rgba(247, 245, 241, 0.78)')
 
   await page.goto('/app', { waitUntil: 'networkidle' })
-  await expect(page.locator('.app-experience .app-section').first()).toHaveCSS('background-color', 'rgb(247, 243, 235)')
+  await expect(page.locator('.app-experience .app-section').first()).toHaveCSS('background-color', 'rgb(238, 230, 218)')
   await expect(page.locator('.app-experience .app-section-title').first()).toHaveCSS('color', 'rgb(32, 27, 23)')
 
   await page.goto('/ruta-que-no-existe', { waitUntil: 'networkidle' })
