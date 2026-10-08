@@ -70,6 +70,7 @@ test('las cinco rutas editoriales adoptan papel claro sin desbordamiento', async
   await page.goto('/', { waitUntil: 'networkidle' })
   await page.getByRole('button', { name: 'Activar modo día' }).click()
 
+  const failures = []
   for (const [route, selector] of [
     ['/programs', '.services-page'],
     ['/about', '.about-page'],
@@ -78,11 +79,14 @@ test('las cinco rutas editoriales adoptan papel claro sin desbordamiento', async
     ['/app', '.app-experience'],
   ]) {
     await page.goto(route, { waitUntil: 'networkidle' })
-    await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'day')
-    await expect(page.locator(selector)).toHaveCSS('background-color', 'rgb(247, 243, 235)')
-    expect(
-      await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 3),
-      route + ' no debe tener overflow lateral',
-    ).toBe(false)
+    const visualState = await page.evaluate((target) => ({
+      theme: document.documentElement.dataset.bayonaTheme,
+      background: getComputedStyle(document.querySelector(target)).backgroundColor,
+      overflow: document.documentElement.scrollWidth > innerWidth + 3,
+    }), selector)
+    if (visualState.theme !== 'day' || visualState.background !== 'rgb(247, 243, 235)' || visualState.overflow) {
+      failures.push({ route, ...visualState })
+    }
   }
+  expect(failures).toEqual([])
 })
