@@ -101,18 +101,18 @@ test('las cinco rutas editoriales adoptan papel claro sin desbordamiento', async
   expect(failures).toEqual([])
 })
 
-test('modo día conserva contraste en catálogos oscuros y secciones BAYONA+', async ({ page }) => {
+test('modo día conserva contraste en catálogos claros y las escenas oscuras BAYONA+', async ({ page }) => {
   await page.goto('/', { waitUntil: 'networkidle' })
   await page.getByRole('button', { name: 'Modo día' }).click()
 
   await page.goto('/programs', { waitUntil: 'networkidle' })
-  await expect(page.locator('.services-catalog-group').first()).toHaveCSS('color', 'rgb(247, 245, 241)')
-  await expect(page.locator('.services-catalog-group h3').first()).toHaveCSS('color', 'rgb(255, 255, 255)')
-  await expect(page.locator('.services-card > p').first()).toHaveCSS('color', 'rgba(247, 245, 241, 0.78)')
+  await expect(page.locator('.services-catalog-group').first()).toHaveCSS('color', 'rgb(32, 27, 23)')
+  await expect(page.locator('.services-catalog-summary__name strong').first()).toHaveCSS('color', 'rgb(32, 27, 23)')
+  await expect(page.locator('.services-card > p').first()).toHaveCSS('color', 'rgb(100, 88, 78)')
 
   await page.goto('/app', { waitUntil: 'networkidle' })
   await expect(page.locator('.app-experience .app-section').first()).toHaveCSS('background-color', 'rgb(238, 230, 218)')
-  await expect(page.locator('.app-experience .app-section-title').first()).toHaveCSS('color', 'rgb(32, 27, 23)')
+  await expect(page.locator('.app-experience .app-section-title').first()).toHaveCSS('color', 'rgb(247, 245, 241)')
 
   await page.goto('/ruta-que-no-existe', { waitUntil: 'networkidle' })
   await expect(page.locator('.not-found-page h1')).toHaveCSS('color', 'rgb(255, 255, 255)')
