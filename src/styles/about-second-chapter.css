@@ -176,3 +176,260 @@ body.premium-route--about .about-values-stage__intro small {
   font-weight:400 !important;
   line-height:1.65 !important;
 }
+
+/* Chapter 02 / Recorrido — 2026-10-08 screenshot correction.
+   The old 34px ornamental grid column survived after its vertical word was
+   hidden by the premium shell, so the ENTIRE title and lede fell inside 34px.
+   Establish a one-track editorial layout rather than reserving a ghost rail. */
+body.premium-route--about .about-page .about-story-scene {
+  min-height: 0 !important;
+  padding-top: clamp(100px, 10vw, 160px) !important;
+  padding-bottom: clamp(85px, 9vw, 136px) !important;
+}
+body.premium-route--about .about-page .about-story-scene.scene-bg.scene-bg--after::after {
+  background-image:
+    linear-gradient(180deg,rgba(5,7,8,.73) 0%,rgba(5,7,8,.6) 28%,rgba(5,7,8,.75) 65%,#080909 100%),
+    linear-gradient(90deg,rgba(5,7,8,.84),rgba(5,7,8,.40) 58%,rgba(5,7,8,.16)),
+    url('/images/bayona-generated/about-timeline-parkour-1600.webp') !important;
+  background-position: center, center, center 48% !important;
+  background-size: cover !important;
+  opacity:1 !important;
+}
+body.premium-route--about .about-page .about-story-heading {
+  display: block !important;
+  max-width: 1320px !important;
+  min-width: 0 !important;
+  margin-bottom: clamp(48px, 6vw, 86px) !important;
+  padding-block-start: 0 !important;
+  border-top: 0 !important;
+}
+body.premium-route--about .about-page .about-story-heading > div {
+  display:block;
+  width:min(100%,780px) !important;
+  max-width:100% !important;
+  min-width:0 !important;
+}
+body.premium-route--about .about-page .about-story-heading h2 {
+  width:100%;
+  max-width:16ch !important;
+  margin:clamp(24px,3.5vw,50px) 0 25px !important;
+  font-size:clamp(3rem,5.2vw,6rem) !important;
+  line-height:1.02 !important;
+  letter-spacing:-.058em !important;
+  overflow-wrap:normal !important;
+  text-wrap:balance;
+}
+body.premium-route--about .about-page .about-story-heading .about-problem-copy {
+  display:block;
+  width:min(100%,620px) !important;
+  max-width:62ch !important;
+  margin:0 !important;
+  color:#ece8df !important;
+  font:400 clamp(1.06rem,1.4vw,1.26rem)/1.65 'Inter',Arial,sans-serif !important;
+  letter-spacing:normal !important;
+  text-transform:none !important;
+}
+/* Original grid declared 4 columns for 4 cards. The StickyStage now overlays
+   each state, so that grid squeezed each article to one quarter of the width. */
+body.premium-route--about .about-page .about-story-scene .about-timeline--stage {
+  display:block !important;
+  border:0 !important;
+  background:transparent !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+body.premium-route--about .about-page .about-timeline--stage .about-timeline-stage {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) !important;
+  grid-template-rows:minmax(0,1fr) !important;
+  min-height:min(48vh,460px) !important;
+  align-items:center !important;
+}
+body.premium-route--about .about-page .about-timeline--stage .about-timeline-entry--stage {
+  grid-column:1 !important;
+  grid-row:1 !important;
+  width:100% !important;
+  max-width:none !important;
+  box-sizing:border-box !important;
+  min-height:320px !important;
+  display:grid !important;
+  grid-template-columns:minmax(150px,.38fr) minmax(0,.62fr) !important;
+  gap:clamp(18px,4.5vw,72px) !important;
+  align-items:center !important;
+  padding:clamp(30px,4.5vw,68px) !important;
+  border:1px solid rgba(244,162,97,.23) !important;
+  background:rgba(7,10,11,.83) !important;
+  box-shadow:0 24px 90px rgba(0,0,0,.24);
+}
+body.premium-route--about .about-page .about-timeline--stage .about-timeline-meta {
+  display:flex !important;
+  align-items:flex-start !important;
+  min-height:0 !important;
+  width:auto !important;
+  margin:0 !important;
+}
+body.premium-route--about .about-page .about-timeline--stage .about-timeline-meta time {
+  color:#f4a261 !important;
+  text-align:left !important;
+  font:800 clamp(2.5rem,5.4vw,6.2rem)/.95 'Montserrat',Arial,sans-serif !important;
+  letter-spacing:-.06em !important;
+}
+body.premium-route--about .about-page .about-timeline--stage .about-timeline-copy {
+  max-width:700px;
+  margin:0 !important;
+  min-width:0;
+}
+body.premium-route--about .about-page .about-timeline--stage .about-timeline-copy h3 {
+  margin:0 0 18px !important;
+  font-size:clamp(1.8rem,3.25vw,3.5rem) !important;
+  line-height:1.04 !important;
+  overflow-wrap:normal !important;
+}
+body.premium-route--about .about-page .about-timeline--stage .about-timeline-copy p {
+  font:400 clamp(1rem,1.28vw,1.17rem)/1.65 'Inter',Arial,sans-serif !important;
+  letter-spacing:normal !important;
+  text-transform:none !important;
+  color:#d8d8d5 !important;
+  margin:0;
+}
+@media(max-width:760px){
+  body.premium-route--about .about-page .about-story-scene {padding-top:75px !important;padding-bottom:74px !important;}
+  body.premium-route--about .about-page .about-story-heading {width:calc(100% - 36px) !important;margin:0 auto 30px !important;}
+  body.premium-route--about .about-page .about-story-heading > div {width:100% !important;}
+  body.premium-route--about .about-page .about-story-heading h2 {font-size:clamp(2.4rem,9vw,3.9rem) !important;max-width:12ch !important;}
+  body.premium-route--about .about-page .about-story-heading .about-problem-copy {width:100% !important;font-size:1rem !important;}
+  body.premium-route--about .about-page .about-story-scene.scene-bg.scene-bg--after::after {background-position:center,center,58% center !important;}
+}
+
+/* One controlled art-directed photo, not a giant person enlarged beneath the
+   copy. The warm visual sits BESIDE the story and cannot collapse typography. */
+body.premium-route--about .about-page .about-story-scene.scene-bg.scene-bg--after::after {
+  background-image:radial-gradient(ellipse at 78% 24%,rgba(137,80,40,.13),transparent 53%),linear-gradient(180deg,#101414 0%,#080a0b 67%,#080909 100%) !important;
+  background-size:cover !important;
+}
+body.premium-route--about .about-page .about-story-heading {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.07fr) minmax(0,.93fr) !important;
+  gap:clamp(38px,6vw,98px) !important;
+  align-items:center;
+  border:0 !important;
+  margin-bottom:clamp(42px,5vw,70px) !important;
+}
+body.premium-route--about .about-page .about-story-heading > div {
+  grid-column:1 !important;
+  width:100% !important;
+  min-width:0 !important;
+}
+body.premium-route--about .about-page .about-story-heading h2 {
+  max-width:12ch !important;
+  font-size:clamp(3.1rem,4.5vw,5.6rem) !important;
+  letter-spacing:-.055em !important;
+}
+body.premium-route--about .about-page .about-story-heading .about-problem-copy {
+  width:min(100%,560px) !important;
+  font-size:clamp(1.07rem,1.4vw,1.22rem) !important;
+}
+body.premium-route--about .about-page .about-story-heading__art {
+  grid-column:2;
+  position:relative;
+  width:100%;
+  min-width:0;
+  aspect-ratio:4/4.45;
+  margin:0;
+  overflow:hidden;
+  border:1px solid rgba(244,162,97,.20);
+  background:#1b1d1b;
+}
+body.premium-route--about .about-page .about-story-heading__art img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:45% center;
+  filter:saturate(.88) contrast(1.05);
+}
+body.premium-route--about .about-page .about-story-heading__art::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 48%,rgba(3,3,3,.72) 100%);
+  pointer-events:none;
+}
+body.premium-route--about .about-page .about-story-heading__art figcaption {
+  position:absolute;
+  z-index:1;
+  bottom:clamp(19px,2.1vw,33px);
+  left:clamp(18px,2vw,33px);
+  right:clamp(18px,2vw,33px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  color:#f7f3ec;
+  font:600 clamp(.58rem,.78vw,.72rem)/1.55 'DM Mono',monospace;
+  letter-spacing:.1em;
+}
+body.premium-route--about .about-page .about-story-heading__art figcaption span {color:#f4a261;white-space:nowrap;}
+/* Reduced-motion replaces 4 giant full-height biography frames with a compact
+   2-by-2 editorial timeline; the interactive desktop stage stays unchanged. */
+body.premium-route--about .about-page .about-story-scene .about-timeline--stage.sticky-stage--static {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:16px !important;
+  height:auto !important;
+  align-items:stretch;
+}
+body.premium-route--about .about-page .about-story-scene .about-timeline--stage.sticky-stage--static .sticky-stage-frame {
+  min-width:0;
+  min-height:0 !important;
+  padding:0 !important;
+  border:0 !important;
+}
+body.premium-route--about .about-page .about-timeline--stage.sticky-stage--static .about-timeline-stage {
+  display:block !important;
+  min-height:0 !important;
+  height:100%;
+}
+body.premium-route--about .about-page .about-timeline--stage.sticky-stage--static .about-timeline-entry--stage {
+  position:relative;
+  display:flex !important;
+  flex-direction:column;
+  gap:27px !important;
+  height:100%;
+  min-height:255px !important;
+  align-items:flex-start !important;
+  opacity:1 !important;
+  transform:none !important;
+  padding:clamp(23px,2.6vw,38px) !important;
+}
+body.premium-route--about .about-page .about-timeline--stage.sticky-stage--static .about-timeline-meta time {
+  font-size:clamp(2rem,3.3vw,3.2rem) !important;
+}
+body.premium-route--about .about-page .about-timeline--stage.sticky-stage--static .about-timeline-copy h3 {
+  font-size:clamp(1.5rem,2.4vw,2.3rem) !important;
+}
+@media(max-width:950px){
+  body.premium-route--about .about-page .about-story-heading {
+    grid-template-columns:minmax(0,1fr) minmax(0,.9fr) !important;
+    gap:clamp(22px,4vw,42px) !important;
+  }
+  body.premium-route--about .about-page .about-story-heading h2 {font-size:clamp(2.4rem,4.6vw,3.4rem) !important;}
+  body.premium-route--about .about-page .about-timeline--stage.sticky-stage--static .about-timeline-copy p {font-size:.96rem !important;}
+}
+@media(max-width:760px){
+  body.premium-route--about .about-page .about-story-heading {
+    display:flex !important;
+    flex-direction:column;
+    align-items:stretch;
+    gap:32px !important;
+    width:calc(100% - 36px) !important;
+  }
+  body.premium-route--about .about-page .about-story-heading h2 {font-size:clamp(2.35rem,8.9vw,3.6rem) !important;max-width:13ch !important;}
+  body.premium-route--about .about-page .about-story-heading__art {width:100%;aspect-ratio:16/10;}
+  body.premium-route--about .about-page .about-story-heading__art figcaption {font-size:.57rem;}
+  body.premium-route--about .about-page .about-story-scene .about-timeline--stage.sticky-stage--static {display:none !important;}
+}
+
+@media (min-width:761px) {
+ body.premium-route--about .about-page .about-story-heading h2 { max-width:100% !important; font-size:clamp(2.7rem,4.2vw,5rem) !important; }
+}

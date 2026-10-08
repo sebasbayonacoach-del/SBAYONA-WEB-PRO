@@ -199,6 +199,10 @@ export default function About() {
               Una historia de práctica, preguntas y aprendizaje. Cada etapa explica por qué el método de hoy empieza escuchando y termina ajustándose a la vida real.
             </p>
           </div>
+          <figure className="about-story-heading__art">
+            <img src="/images/bayona-generated/about-timeline-parkour-1600.webp" alt="Atleta practicando parkour junto al mar al atardecer" loading="lazy" decoding="async" />
+            <figcaption>EL MOVIMIENTO NOS ENSEÑÓ EL CAMINO <span>01 — 04</span></figcaption>
+          </figure>
         </div>
         {/*
           FASE 8 · BLOQUE G — "LA LÍNEA DE VIDA" (sección RECORRIDO de About).

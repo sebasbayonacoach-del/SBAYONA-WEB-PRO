@@ -226,7 +226,7 @@ function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect, inact
       aria-label="Mapa mundial interactivo con experiencias publicadas"
       data-focused-region={focusedMarker?.country ?? 'Mundo'}
       aria-hidden={inactive}
-      inert={inactive ? true : undefined}
+      inert={inactive ? '' : undefined}
     >
       <div
         className={`globe-testimonials-world-map${focusedMarker ? ' is-focused' : ''}`}
