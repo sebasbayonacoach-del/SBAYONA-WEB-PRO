@@ -29,24 +29,17 @@ import '../styles/gym-funnel-v2.css'
 const MotionLink = motion.create(Link)
 
 /**
- * Arquitectura de navegación (Fase 4).
- *
- * La barra anterior listaba 10 destinos planos con un `slice` frágil y un CTA
- * que llevaba a comprar (/programs). Ahora la navegación declara la estructura
- * real del sitio: cuatro grupos por intención + una sola entrada a recepción.
- *
- * · RECORRIDO   — la casa se lee de izquierda a derecha.
- * · ENTRENAR    — programas y academia.
- * · ECOSISTEMA  — comunidad, BAYONA+ y tienda.
- * · DECIDIR     — recursos, FAQ y cuenta.
- *
- * Inicio no se repite como enlace de escritorio: la marca ya es el enlace al
- * inicio. En móvil sí aparece explícito y numerado.
+ * Una navegación, páginas hermanas. Sin submenús ni "mundos" anidados.
+ * La marca lleva a Inicio. En móvil Inicio aparece explícitamente.
+ * Las rutas de compra y el panel autenticado no se confunden con el sitio
+ * público: se accede a ellas desde sus CTA o su entrada propia.
  */
 const NAV_ITEMS = Object.freeze([
   { label: 'Servicios', href: '/programs' },
   { label: 'Parkour', href: '/parkour-academy' },
   { label: 'Tienda', href: '/shop' },
+  { label: 'La app', href: '/app' },
+  { label: 'Comunidad', href: '/community' },
   { label: 'Recursos', href: '/resources' },
   { label: 'Nosotros', href: '/about' },
 ])
@@ -243,8 +236,8 @@ export function Navbar() {
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="gym-mobile-nav-head">
-              <p>MENÚ</p>
-              <span>Entrenamiento · fuerza · movimiento</span>
+              <p>EXPLORAR BAYONA</p>
+              <span>Cada opción abre una página. Sin submenús.</span>
             </div>
             <div className="mobile-nav-list gym-mobile-nav-list">
               {MOBILE_NAV_ITEMS.map((item, index) => (
@@ -316,6 +309,7 @@ export function Footer() {
         <nav className="footer-column" aria-label="Ayuda">
           <p>AYUDA</p>
           <Link to="/faq">Preguntas frecuentes</Link>
+          <Link to="/entrar">Acceso clientes</Link>
           <a href={whatsAppLink('Hola BAYONA, quiero información sobre sus servicios de entrenamiento.')} target="_blank" rel="noreferrer">
             WhatsApp
           </a>

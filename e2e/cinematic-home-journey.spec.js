@@ -46,7 +46,7 @@ test('Gym Funnel V2 · menú móvil ocupa solo el viewport disponible', async ({
 
   const mobile = page.getByRole('navigation', { name: 'Navegación móvil' })
   await expect(mobile).toBeVisible()
-  await expect(mobile.locator('.gym-mobile-nav-list a')).toHaveCount(6)
+  await expect(mobile.locator('.gym-mobile-nav-list a')).toHaveCount(8)
   await expect(mobile.getByRole('link', { name: /EMPIEZA GRATIS/i })).toBeVisible()
 
   const box = await mobile.boundingBox()

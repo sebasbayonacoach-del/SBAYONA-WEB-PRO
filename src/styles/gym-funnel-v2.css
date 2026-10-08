@@ -59,7 +59,7 @@
   text-transform: none;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1180px) {
   .gym-primary-nav { display: none; }
 
   .mobile-nav {
@@ -249,4 +249,52 @@
   .gym-footer-columns {
     grid-template-columns: 1fr !important;
   }
+}
+
+/* CLARIDAD DE NAVEGACIÓN · Todas las páginas públicas a un clic. */
+.gym-primary-nav {
+  gap: clamp(.65rem, 1.25vw, 1.65rem);
+}
+.gym-primary-nav a {
+  font-size: clamp(.62rem,.68vw,.72rem);
+  white-space: nowrap;
+}
+
+@media (max-width: 1180px) {
+  .gym-primary-nav {
+    display: none !important;
+  }
+  .gym-mobile-nav-list {
+    align-content: start !important;
+  }
+  .gym-mobile-nav-list > a {
+    min-height: 55px !important;
+  }
+  .gym-mobile-nav-list > a > strong {
+    font-size: clamp(1.75rem, 3.3vw, 2.8rem);
+    line-height: 1;
+  }
+  .gym-mobile-nav-head span {
+    max-width: 32ch;
+  }
+}
+@media (max-width: 620px) {
+  .gym-mobile-nav-list > a {
+    min-height: 53px !important;
+  }
+  .gym-mobile-nav-list > a > strong {
+    font-size: clamp(1.7rem, 7.5vw, 2.65rem);
+  }
+  .gym-mobile-nav-head span {
+    font-size: .72rem;
+  }
+  .gym-mobile-nav-conversion {
+    gap: .5rem .75rem;
+  }
+}
+
+@media (min-width: 1181px) {
+  /* The desktop bar already shows every public destination. No second menu. */
+  .navbar .menu-button { display: none !important; }
+  .navbar .gym-primary-nav { display: flex !important; }
 }
