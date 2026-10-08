@@ -1,0 +1,56 @@
+/* Designly 2026-10-08: editorial finishing pass for the five interior routes.
+   Only component-scoped overrides: home and checkout keep their established art direction. */
+:where(.parkour-academy, .app-experience-page, .shop-page, .community-page, .resources-page)
+  :is(a, button, summary):focus-visible {
+  outline: 3px solid #f4a261;
+  outline-offset: 4px;
+}
+
+/* First impression: give one lead sentence a protected, readable text zone. */
+.parkour-academy .academy-hero-copy > p,
+.shop-page .shop-hero-content > p,
+.community-page .community-hero-subtitle,
+.resources-page .resources-hero-intro,
+.app-hero .app-hero-subtitle {
+  max-width: 57ch;
+  line-height: 1.58;
+  text-wrap: pretty;
+}
+
+/* Editorial cards: visible interaction without exaggerated movement. */
+.shop-page .shop-collection-card,
+.resources-page .resources-hero-library-card,
+.community-page .community-hero-pass li {
+  transition: border-color .2s ease, background-color .2s ease, transform .25s ease;
+}
+@media (hover:hover) and (prefers-reduced-motion: no-preference) {
+  .shop-page .shop-collection-card:hover,
+  .resources-page .resources-hero-library-card:hover { transform: translateY(-3px); }
+}
+
+/* Small-screen typography: no long lines at the expense of readability. */
+@media (max-width: 720px) {
+  .parkour-academy .academy-hero-copy,
+  .shop-page .shop-hero-content,
+  .community-page .community-hero-copy,
+  .resources-page .resources-hero-copy,
+  .app-hero .app-hero-content { min-width: 0; }
+
+  .parkour-academy .academy-hero-copy > p,
+  .shop-page .shop-hero-content > p,
+  .community-page .community-hero-subtitle,
+  .resources-page .resources-hero-intro,
+  .app-hero .app-hero-subtitle {
+    font-size: clamp(1rem, 3.7vw, 1.125rem);
+    line-height: 1.55;
+    max-width: 36ch;
+  }
+  .resources-page .resources-hero-library-card,
+  .shop-page .shop-collection-card { min-width: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-page .shop-collection-card,
+  .resources-page .resources-hero-library-card,
+  .community-page .community-hero-pass li { transition: none; }
+}
