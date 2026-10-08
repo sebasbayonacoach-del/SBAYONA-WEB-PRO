@@ -525,3 +525,36 @@ html[data-bayona-theme='day'] .consent-banner,
 html[data-bayona-theme='day'] .consent-banner .consent-copy p:last-child {
   color: #f7f5f1 !important;
 }
+
+/* Complete the daylight footer even under the legacy award-mode chrome. */
+html[data-bayona-theme='day'] body.award-mode .footer.gym-footer,
+html[data-bayona-theme='day'] body .footer.gym-footer {
+  background: #e9dfd1 !important;
+  border-top-color: rgba(44,34,25,.2) !important;
+  color: #201b17;
+}
+
+/* BAYONA OS remains a coherent dark product, never a half-inverted panel.
+   Marketing pages may be light, but private controls keep their tested ink. */
+html[data-bayona-theme='day'] .ds-frame:has(.os-shell) {
+  --ds-surface-background: #050505;
+  --ds-surface-deep: #0b0b0c;
+  --ds-surface-raised: #0c0c0d;
+  --ds-color-ink: #f7f5f1;
+  --ds-color-muted: #c4c4c4;
+  --ds-color-dim: #949494;
+  background: #050505 !important;
+}
+html[data-bayona-theme='day'] .os-shell {
+  --ds-surface-background: #050505;
+  --ds-surface-deep: #0b0b0c;
+  --ds-surface-raised: #0c0c0d;
+  --ds-color-ink: #f7f5f1;
+  --ds-color-muted: #c4c4c4;
+  --ds-color-dim: #949494;
+  --bayona-white: #fff;
+  --bayona-surface-0: #050505;
+  --bayona-surface-1: #0b0b0c;
+  background-color: #050505;
+  color: #f7f5f1;
+}

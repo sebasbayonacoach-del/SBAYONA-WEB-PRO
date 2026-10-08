@@ -167,3 +167,25 @@ test('las pantallas internas y los planes mantienen paneles oscuros legibles', a
   await expect(page.locator('.checkout-page')).toHaveCSS('background-color', 'rgb(5, 5, 5)')
   await expect(page.locator('.checkout-page')).toHaveCSS('color', 'rgb(255, 255, 255)')
 })
+
+test('el pie claro y BAYONA OS privado mantienen su contraste incluso en capas antiguas', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'networkidle' })
+  await page.getByRole('button', { name: 'Modo día' }).click()
+
+  await page.evaluate(() => document.body.classList.add('award-mode'))
+  await expect(page.locator('.footer.gym-footer')).toHaveCSS('background-color', 'rgb(233, 223, 209)')
+  await expect(page.locator('.footer.gym-footer')).toHaveCSS('color', 'rgb(32, 27, 23)')
+
+  await page.evaluate(() => {
+    document.body.classList.remove('award-mode')
+    const shell = document.createElement('div')
+    shell.id = 'os-theme-regression-fixture'
+    shell.className = 'os-shell'
+    shell.innerHTML = '<span id="os-theme-ink" style="color:var(--ds-color-ink)">BAYONA OS</span>'
+    document.querySelector('main.ds-frame').append(shell)
+  })
+  await expect(page.locator('#os-theme-regression-fixture')).toHaveCSS('background-color', 'rgb(5, 5, 5)')
+  await expect(page.locator('#os-theme-regression-fixture')).toHaveCSS('color', 'rgb(247, 245, 241)')
+  await expect(page.locator('#os-theme-ink')).toHaveCSS('color', 'rgb(247, 245, 241)')
+  await expect(page.locator('main.ds-frame')).toHaveCSS('background-color', 'rgb(5, 5, 5)')
+})
