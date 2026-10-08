@@ -220,6 +220,12 @@ html[data-bayona-theme='day'] .community-page {
   --community-line: rgba(44,34,25,.14);
   --community-line-soft: rgba(44,34,25,.09);
 }
+/* La escena de Comunidad tenía un fondo fijo ajeno a sus tokens. */
+html[data-bayona-theme='day'] .ds-frame .community-page {
+  --community-bg: var(--bayona-day-paper);
+  background: var(--bayona-day-paper) !important;
+  color: var(--bayona-day-ink);
+}
 html[data-bayona-theme='day'] .community-hero {
   --community-text: #fff;
   --community-muted: rgba(255,255,255,.76);
