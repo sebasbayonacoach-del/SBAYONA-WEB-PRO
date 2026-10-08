@@ -42,5 +42,5 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Gym funnel browser contract
-        run: npx playwright test e2e/cinematic-home-journey.spec.js --reporter=line
+      - name: Gym funnel and daylight browser contracts
+        run: npx playwright test e2e/cinematic-home-journey.spec.js e2e/day-mode.spec.js --reporter=line

@@ -1,12 +1,13 @@
 import { Fragment, Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, Menu, ShoppingCart, X } from 'lucide-react'
+import { ArrowUpRight, Menu, Moon, ShoppingCart, Sun, X } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { socialLinks } from '../config/social.config'
 import { whatsAppLink } from '../config/site.config.js'
 import { resolveProfiles } from '../lib/social/platforms'
 import { selectCartCount, useCartStore } from '../store/cartStore.js'
 import { prefetchRoute } from '../lib/perf/routePrefetch.js'
+import { applySiteTheme, readSiteTheme, SITE_THEME_KEY } from '../lib/ui/siteTheme.js'
 // ÍTEM 1 (perf): CartDrawer (vaul) fuera del entry — el drawer está cerrado en
 // el primer pintado, así que va con lazy + Suspense fallback null.
 const CartDrawer = lazy(() => import('./cart/CartDrawer.jsx'))
@@ -59,6 +60,7 @@ export function Navbar() {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [siteTheme, setSiteTheme] = useState(readSiteTheme)
   const cartCount = useCartStore(selectCartCount)
   const shopContext = pathname === '/shop' || pathname.startsWith('/shop/')
   const cartOpen = useCartStore((state) => state.isOpen)
@@ -81,6 +83,16 @@ export function Navbar() {
     updateScrolledState()
     window.addEventListener('scroll', updateScrolledState, { passive: true })
     return () => window.removeEventListener('scroll', updateScrolledState)
+  }, [])
+
+  useEffect(() => {
+    const synchronizeTheme = (event) => {
+      if (event.key === SITE_THEME_KEY || event.key === null) {
+        setSiteTheme(applySiteTheme(readSiteTheme()))
+      }
+    }
+    window.addEventListener('storage', synchronizeTheme)
+    return () => window.removeEventListener('storage', synchronizeTheme)
   }, [])
 
   useEffect(() => {
@@ -177,6 +189,21 @@ export function Navbar() {
           </NavLink>
         ))}
       </nav>
+      <button
+        className="site-theme-toggle"
+        type="button"
+        aria-label="Modo día"
+        aria-pressed={siteTheme === 'day'}
+        title={siteTheme === 'day' ? 'Cambiar a modo noche' : 'Cambiar a modo día'}
+        onClick={() => {
+          setSiteTheme((current) =>
+            applySiteTheme(current === 'day' ? 'night' : 'day', { persist: true }),
+          )
+        }}
+      >
+        {siteTheme === 'day' ? <Moon size={17} strokeWidth={1.7} aria-hidden="true" /> : <Sun size={17} strokeWidth={1.7} aria-hidden="true" />}
+        <span>{siteTheme === 'day' ? 'NOCHE' : 'DÍA'}</span>
+      </button>
       {shopContext ? (
         <button
           className="nav-cart-button"
@@ -267,7 +294,7 @@ export function Navbar() {
         <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
       </Suspense>
       <Suspense fallback={null}>
-        <Toaster position="bottom-center" theme="dark" richColors />
+        <Toaster position="bottom-center" theme={siteTheme === 'day' ? 'light' : 'dark'} richColors />
       </Suspense>
     </header>
   )

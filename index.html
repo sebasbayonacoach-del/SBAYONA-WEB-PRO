@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
+    <!-- Aplica la preferencia antes del CSS para evitar el destello nocturno. -->
+    <script>
+      (() => {
+        let theme = 'night'
+        try {
+          if (localStorage.getItem('bayona-site-theme') === 'day') theme = 'day'
+        } catch {
+          // El almacenamiento puede estar bloqueado; noche sigue disponible.
+        }
+        document.documentElement.dataset.bayonaTheme = theme
+        document.documentElement.style.colorScheme = theme === 'day' ? 'light' : 'dark'
+      })()
+    </script>
+
     <!-- Iconos y app instalable -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
