@@ -1389,9 +1389,9 @@ body.premium-route--community .community-hero-club-grid {
 }
 
 body.premium-route--community .community-hero-title {
-  max-width: 10ch;
-  font-size: clamp(4rem,7vw,7.2rem) !important;
-  line-height: .89 !important;
+  max-width: 16ch;
+  font-size: clamp(3.25rem,4.55vw,5.35rem) !important;
+  line-height: .99 !important;
 }
 
 body.premium-route--community .community-pass {
@@ -1424,9 +1424,9 @@ body.premium-route--resources .resources-hero-layout {
 }
 
 body.premium-route--resources .resources-hero-copy h1 {
-  max-width: 9ch;
-  font-size: clamp(4rem,7vw,7.5rem) !important;
-  line-height: .88 !important;
+  max-width: 16ch;
+  font-size: clamp(3.35rem,4.55vw,5.7rem) !important;
+  line-height: 1 !important;
 }
 
 body.premium-route--resources .resources-secret-key,
@@ -1447,9 +1447,9 @@ body.premium-route--app .app-hero-content {
 }
 
 body.premium-route--app .app-hero-title {
-  max-width: 10ch;
-  font-size: clamp(4rem,7vw,7.4rem) !important;
-  line-height: .88 !important;
+  max-width: 17ch;
+  font-size: clamp(3.7rem,5.2vw,6.5rem) !important;
+  line-height: .98 !important;
 }
 
 body.premium-route--app .app-section {

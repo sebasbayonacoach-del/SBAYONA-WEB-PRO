@@ -111,3 +111,84 @@ body.premium-route--resources .resources-page .resources-hero-copy h1 {
   body.premium-route--community .community-page .community-hero-title,
   body.premium-route--resources .resources-page .resources-hero-copy h1 { font-size: clamp(2rem, 8vw, 3.2rem); }
 }
+
+/* Commercial close · verified project image assets, not stock placeholders.
+   Provide an actual visual focal plane under the content and preserve strong
+   left-side contrast for legibility; pseudo scenes remain decorative only. */
+html[data-bayona-theme='night'] body.premium-route--shop .shop-page .shop-hero {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.94) 0%, rgba(4,4,4,.78) 40%, rgba(4,4,4,.2) 100%), url('/images/bayona-generated/shop-hero-1600.webp') !important;
+  background-position: center, 61% center !important;
+  background-size: cover !important;
+}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-page .shop-hero.scene-bg::after { opacity: .14; }
+html[data-bayona-theme='night'] body.premium-route--app .app-page .app-hero {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.96) 0%, rgba(4,4,4,.84) 37%, rgba(4,4,4,.3) 100%), url('/images/bayona-generated/app-hero-1600.webp') !important;
+  background-position: center, 65% center !important;
+  background-size: cover !important;
+}
+html[data-bayona-theme='night'] body.premium-route--community .community-page .community-hero {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.94) 0%, rgba(4,4,4,.74) 42%, rgba(4,4,4,.25) 100%), url('/images/bayona-generated/community-hero-1600.webp') !important;
+  background-position: center, 59% center !important;
+  background-size: cover !important;
+}
+html[data-bayona-theme='night'] body.premium-route--community .community-page .community-hero.scene-bg::before { opacity: .18; }
+/* Titles must never insert automated hyphens in brand headlines. */
+body.premium-route--community .community-page .community-hero-title,
+body.premium-route--resources .resources-page .resources-hero-copy h1 {
+  hyphens: none !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+body.premium-route--community .community-page .community-hero-copy { max-width: min(100%, 45rem); }
+body.premium-route--resources .resources-page .resources-hero-copy h1 { max-width: 16ch !important; }
+@media (min-width: 1050px) {
+  body.premium-route--shop .shop-page .shop-hero-content { justify-items: start; text-align: left; }
+  body.premium-route--shop .shop-page .shop-hero-content > div { max-width: 940px; }
+  body.premium-route--shop .shop-page .shop-hero h1 { max-width: 17ch; }
+  body.premium-route--app .app-page .app-hero-content { text-align: left; max-width: 1320px; }
+  body.premium-route--app .app-page .app-hero-title { margin-left: 0; }
+  body.premium-route--app .app-page .app-hero-subtitle { margin-left: 0; }
+  body.premium-route--app .app-page .app-hero-cta { justify-content: flex-start; }
+}
+@media (max-width: 720px) {
+  html[data-bayona-theme='night'] body.premium-route--shop .shop-page .shop-hero,
+  html[data-bayona-theme='night'] body.premium-route--app .app-page .app-hero,
+  html[data-bayona-theme='night'] body.premium-route--community .community-page .community-hero {
+    background-position: center, 67% center !important;
+  }
+  body.premium-route--community .community-page .community-hero-title { max-width: 15ch; }
+  body.premium-route--resources .resources-page .resources-hero-copy h1 { max-width: 16ch !important; }
+}
+
+/* Mobile store title must clear the fixed navigation and the language utility. */
+@media (max-width: 720px) {
+  body.premium-route--shop .shop-page .shop-hero-content {
+    padding-top: clamp(140px, 18svh, 176px) !important;
+  }
+}
+/* The desktop app CTA belongs to the hero copy, not the centre of the frame. */
+@media (min-width: 1050px) {
+  body.premium-route--app .app-page .app-hero-cta { align-items: flex-start; }
+}
+
+/* The extra store cart caused the mobile navbar's grid to wrap the menu
+   onto a second row. Keep all four controls on the same physical toolbar. */
+@media (max-width: 760px) {
+  body.premium-route--shop .navbar {
+    display: flex !important;
+    align-items: center;
+    flex-wrap: nowrap !important;
+    gap: .55rem;
+  }
+  body.premium-route--shop .navbar .brand {
+    flex: 0 1 auto;
+    min-width: 0;
+    margin-right: auto;
+  }
+  body.premium-route--shop .navbar .site-theme-toggle,
+  body.premium-route--shop .navbar .nav-cart-button,
+  body.premium-route--shop .navbar .menu-button {
+    flex-shrink: 0;
+    margin-left: 0;
+  }
+}
