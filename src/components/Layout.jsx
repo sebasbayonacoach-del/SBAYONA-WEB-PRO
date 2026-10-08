@@ -192,7 +192,7 @@ export function Navbar() {
       <button
         className="site-theme-toggle"
         type="button"
-        aria-label={siteTheme === 'day' ? 'Activar modo noche' : 'Activar modo día'}
+        aria-label="Modo día"
         aria-pressed={siteTheme === 'day'}
         title={siteTheme === 'day' ? 'Cambiar a modo noche' : 'Cambiar a modo día'}
         onClick={() => {
