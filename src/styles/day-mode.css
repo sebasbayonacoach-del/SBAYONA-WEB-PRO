@@ -13,7 +13,8 @@
   align-items: center;
   justify-content: center;
   gap: .5rem;
-  min-height: 44px;
+  height: 44px !important;
+  min-height: 44px !important;
   min-width: 84px;
   padding: .65rem .75rem;
   color: #f7f5f1;
