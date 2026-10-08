@@ -11,6 +11,7 @@ import { trackEvent } from '../lib/analytics/analytics.js'
 import '../styles/home.css'
 import '../styles/home-luxury-conversion.css'
 import '../styles/home-gym-funnel-v2.css'
+import '../styles/home-visual-rescue.css'
 
 const SERVICES = Object.freeze([
   {

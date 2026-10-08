@@ -8,14 +8,24 @@ test('el modo noche es el predeterminado y cambiar a día ilumina Home', async (
   await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'day')
   await expect(page.getByRole('button', { name: 'Modo día' })).toHaveAttribute('aria-pressed', 'true')
 
-  const colors = await page.evaluate(() => ({
+  const visual = await page.evaluate(() => ({
     sheet: getComputedStyle(document.querySelector('.gym-home')).backgroundColor,
-    process: getComputedStyle(document.querySelector('.gym-home-process')).backgroundColor,
-    hero: getComputedStyle(document.querySelector('.gym-home-hero')).backgroundColor,
+    services: getComputedStyle(document.querySelector('.gym-home-services')).backgroundColor,
+    servicesInk: getComputedStyle(document.querySelector('.gym-home-services h2')).color,
+    gifts: getComputedStyle(document.querySelector('.gym-home-gifts')).backgroundColor,
+    giftsInk: getComputedStyle(document.querySelector('.gym-home-gifts h2')).color,
+    lead: getComputedStyle(document.querySelector('.gym-home-lead')).backgroundColor,
+    leadInk: getComputedStyle(document.querySelector('.gym-home-lead__intro h2')).color,
+    heroPhoto: getComputedStyle(document.querySelector('.gym-home-hero'), '::after').backgroundImage,
   }))
-  expect(colors.sheet).toBe('rgb(247, 243, 235)')
-  expect(colors.process).toBe('rgb(239, 233, 223)')
-  expect(colors.hero).toBe('rgb(8, 7, 6)')
+  expect(visual.sheet).toBe('rgb(247, 243, 235)')
+  expect(visual.services).toBe('rgb(247, 243, 235)')
+  expect(visual.gifts).toBe('rgb(235, 226, 214)')
+  expect(visual.lead).toBe('rgb(245, 238, 228)')
+  expect(visual.servicesInk).toBe('rgb(32, 27, 23)')
+  expect(visual.giftsInk).toBe('rgb(32, 27, 23)')
+  expect(visual.leadInk).toBe('rgb(32, 27, 23)')
+  expect(visual.heroPhoto).toContain('home-hero-1600.webp')
 })
 
 test('el día persiste al recargar y navegar; noche restaura el tema original', async ({ page }) => {
@@ -188,4 +198,33 @@ test('el pie claro y BAYONA OS privado mantienen su contraste incluso en capas a
   await expect(page.locator('#os-theme-regression-fixture')).toHaveCSS('color', 'rgb(247, 245, 241)')
   await expect(page.locator('#os-theme-ink')).toHaveCSS('color', 'rgb(247, 245, 241)')
   await expect(page.locator('main.ds-frame')).toHaveCSS('background-color', 'rgb(5, 5, 5)')
+})
+
+
+test('la portada del día recupera fotografía sin alterar la composición nocturna', async ({ page }) => {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1200, height: 800 }]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/', { waitUntil: 'networkidle' })
+    await page.evaluate(() => localStorage.removeItem('bayona-site-theme'))
+    await page.reload({ waitUntil: 'networkidle' })
+    await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'night')
+    const original = await page.locator('.gym-home-hero').evaluate((el) =>
+      getComputedStyle(el, '::after').backgroundImage,
+    )
+    expect(original).not.toContain('/images/bayona-generated/home-hero-1600.webp')
+    await page.getByRole('button', { name: 'Modo día' }).click()
+    await expect(page.locator('.gym-home-hero h1')).toBeVisible()
+    const image = await page.locator('.gym-home-hero').evaluate((el) => ({
+      source: getComputedStyle(el, '::after').backgroundImage,
+      visible: getComputedStyle(el, '::after').display !== 'none',
+      headline: getComputedStyle(el.querySelector('h1')).color,
+      overflow: document.documentElement.scrollWidth > innerWidth + 3,
+    }))
+    expect(image.source).toContain('/images/bayona-generated/home-hero-1600.webp')
+    expect(image.visible).toBe(true)
+    expect(image.headline).toBe('rgb(255, 255, 255)')
+    expect(image.overflow).toBe(false)
+  }
+  const response = await page.request.get('/images/bayona-generated/home-hero-1600.webp')
+  expect(response.ok()).toBe(true)
 })
