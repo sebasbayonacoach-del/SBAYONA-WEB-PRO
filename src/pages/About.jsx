@@ -13,6 +13,7 @@ import { whatsAppLink } from '../config/site.config.js'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
 import '../styles/about.css'
 import '../styles/about-art-direction-2026.css'
+import '../styles/about-second-chapter.css'
 
 /**
  * Los tres fundamentos, en la única forma que tienen de decirse: lo primero va
@@ -100,11 +101,16 @@ export default function About() {
   return (
     <div className="about-page">
       <PageHero
-        title="MOVIMIENTO. FORMACIÓN. MÉTODO."
-        kicker="BAYONA • SOBRE EL MÉTODO"
+        title="DETRÁS DEL MOVIMIENTO."
+        kicker="CAPÍTULO 02 · NOSOTROS"
         media={siteMedia.about.hero}
       >
-        <p className="hero-subtitle">Entrenamiento, fuerza y nutrición desde tu punto de partida. Vamos juntos.</p>
+        <p className="hero-subtitle">Antes de hablar de resultados, queremos entender a la persona que viene a entrenar. Así nace BAYONA.</p>
+        <div className="about-editorial-hero-actions">
+          <a href="#la-persona" className="about-editorial-primary">CONOCE QUIÉN ESTÁ DETRÁS <ArrowUpRight size={18} aria-hidden="true" /></a>
+          <a href="#about-purpose-title" className="about-editorial-secondary">DESCUBRE EL PORQUÉ <span aria-hidden="true">↘</span></a>
+        </div>
+        <div className="about-editorial-hero-index" aria-hidden="true"><span>02</span><span>UNA HISTORIA / UN MÉTODO</span></div>
       </PageHero>
 
       <section className="about-problem-section" aria-labelledby="about-purpose-title">
@@ -148,8 +154,29 @@ export default function About() {
             <h2 id="about-purpose-title">UN PLAN SIRVE<br aria-hidden="true" /> <span>CUANDO ENCAJA CONTIGO.</span></h2>
           </div>
           <p className="about-problem-copy">
-            Casi nunca falta motivación: falta una estructura que puedas cumplir cuando trabajas, viajas, dudas o no tienes ganas. Ahí empieza BAYONA.
+            No necesitas encajar en un plan diseñado para otra persona. Necesitas un camino que entienda tu trabajo, tu energía, tu historia y tus objetivos. Por eso primero escuchamos; después diseñamos.
           </p>
+        </div>
+      </section>
+
+      <section className="about-founder" id="la-persona" aria-labelledby="about-founder-title">
+        <div className="about-founder__layout section-shell">
+          <div className="about-founder__visual">
+            <img src="/images/bayona-generated/about-timeline-movement-1600.webp" alt="Persona en movimiento frente al mar durante el atardecer" loading="lazy" decoding="async" />
+            <span className="about-founder__image-marker">EL MOVIMIENTO COMO PUNTO DE PARTIDA</span>
+            <span className="about-founder__image-number" aria-hidden="true">MOVIMIENTO / ORIGEN</span>
+          </div>
+          <div className="about-founder__editorial">
+            <span className="about-founder__eyebrow">LA PERSONA DETRÁS DE BAYONA</span>
+            <h2 id="about-founder-title">UNA MARCA.<br /><em>UNA PERSONA REAL.</em></h2>
+            <p className="about-founder__lead">Soy Sebastián Bayona. El movimiento fue mi primera forma de aprender, y hoy es la base del trabajo que comparto con quienes entrenan conmigo.</p>
+            <p className="about-founder__copy">El parkour me enseñó a observar antes de actuar. El entrenamiento y el estudio me llevaron a transformar esa experiencia en algo más útil: una estructura que pueda adaptarse a distintas personas, capacidades y momentos de la vida.</p>
+            <div className="about-founder__signature">
+              <span className="about-founder__signature-mark" aria-hidden="true">SB.</span>
+              <span><strong>SEBASTIÁN BAYONA</strong><small>CREADOR DE BAYONA · ENTRENAMIENTO Y MOVIMIENTO</small></span>
+            </div>
+            <Link to="/programs" className="about-founder__link">CONOCE CÓMO TRABAJAMOS <ArrowUpRight size={18} aria-hidden="true" /></Link>
+          </div>
         </div>
       </section>
 
@@ -168,9 +195,9 @@ export default function About() {
           <span className="about-vertical-word about-vertical-word--light" aria-hidden="true">RECORRIDO</span>
           <div>
             <SectionLabel>EL RECORRIDO</SectionLabel>
-            <h2 id="about-story-title">DEL PARKOUR A<br /><span>UN MÉTODO QUE VENDE CLARIDAD</span></h2>
+            <h2 id="about-story-title">DEL PRIMER SALTO<br /><span>A UN MÉTODO CON DIRECCIÓN.</span></h2>
             <p className="about-problem-copy">
-              Práctica, oficio y estudio. Así convertimos movimiento, entrenamiento y nutrición en una ruta que puedes entender antes de pagar.
+              Una historia de práctica, preguntas y aprendizaje. Cada etapa explica por qué el método de hoy empieza escuchando y termina ajustándose a la vida real.
             </p>
           </div>
         </div>
@@ -186,7 +213,7 @@ export default function About() {
           estática legible por diseño del componente.
         */}
         <StickyStage
-          length="200vh"
+          length="160vh"
           states={stages.length}
           className="about-timeline about-timeline--stage section-shell"
         >
@@ -224,6 +251,14 @@ export default function About() {
             )
           }}
         </StickyStage>
+        <ol className="about-chronicle-mobile section-shell" aria-label="Los cuatro hitos del recorrido BAYONA">
+          {stages.map((stage) => (
+            <li key={stage.number} className="about-chronicle-mobile__item">
+              <div className="about-chronicle-mobile__index"><span>{stage.number}</span><time>{stage.year}</time></div>
+              <div className="about-chronicle-mobile__story"><h3>{stage.title}</h3><p>{stage.copy}</p></div>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <section className="about-values-section" aria-labelledby="about-values-title">
@@ -283,7 +318,7 @@ export default function About() {
           <AboutMethodStage items={methodSteps} />
 
           <blockquote>
-            ENTRENAR CON MÉTODO ES DEJAR DE NEGOCIAR TU CUERPO CON EL CAOS.
+            EL CAMINO NO EMPIEZA CON EXIGIRTE MÁS. EMPIEZA CON ENTENDER POR DÓNDE SEGUIR.
           </blockquote>
 
           <div className="about-cta-actions">

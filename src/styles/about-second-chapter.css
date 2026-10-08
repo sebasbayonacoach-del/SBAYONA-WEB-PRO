@@ -1,0 +1,141 @@
+/* BAYONA / CAPÍTULO 02 · Dirección editorial renovada.
+   No altera la Home, no inventa testimonios ni identifica modelos fotográficos
+   como retratos del fundador. El texto y la figura humana se leen por separado. */
+.about-page { --about-copper: #d17c45; --about-cream-page: #f2eee6; }
+body.premium-route--about .about-page .page-hero {
+  min-height: min(920px, 100svh);
+  background: #0c0d0d;
+  overflow: hidden;
+  isolation: isolate;
+}
+body.premium-route--about .about-page .page-hero .page-hero-backdrop {
+  background-image: linear-gradient(90deg, rgba(4,5,5,.90) 0%, rgba(4,5,5,.72) 38%, rgba(4,5,5,.1) 100%), url('/images/bayona-generated/about-hero-1600.webp') !important;
+  background-size: cover !important;
+  background-position: center 42% !important;
+  opacity: 1 !important;
+}
+body.premium-route--about .about-page .page-hero .page-hero-backdrop::before,
+body.premium-route--about .about-page .page-hero .page-hero-backdrop::after { opacity: .15 !important; }
+body.premium-route--about .about-page .page-hero-content {
+  width: min(100%, 1500px);
+  min-height: min(920px, 100svh);
+  padding: clamp(138px, 13vw, 220px) clamp(26px, 6.3vw, 100px) clamp(50px, 5.5vw, 84px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+body.premium-route--about .about-page .page-hero-content > div:first-child .eyebrow { color: #f4a261; }
+body.premium-route--about .about-page .page-hero-title {
+  max-width: 11ch;
+  font-size: clamp(3.9rem, 8.2vw, 8.9rem) !important;
+  line-height: .94 !important;
+  letter-spacing: -.07em;
+  text-wrap: balance;
+  color: #f8f5ee;
+  text-shadow: 0 6px 44px rgba(0,0,0,.35);
+}
+body.premium-route--about .about-page .page-hero .page-hero-support {
+  width: min(100%, 730px);
+  margin-top: clamp(22px, 2.7vw, 44px);
+}
+body.premium-route--about .about-page .page-hero .hero-subtitle {
+  max-width: 41ch;
+  margin: 0;
+  font-size: clamp(1.13rem, 1.7vw, 1.55rem);
+  color: rgba(255,255,255,.94);
+  line-height: 1.48;
+}
+.about-editorial-hero-actions { display:flex; align-items:center; flex-wrap:wrap; gap:16px 30px; margin-top:clamp(24px,3.6vw,50px); }
+.about-editorial-primary,.about-editorial-secondary {display:inline-flex; align-items:center; gap:18px; min-height:51px; text-decoration:none; font:700 .75rem/1.45 'DM Mono',monospace; letter-spacing:.1em;}
+.about-editorial-primary { padding:12px 19px; background:#f4a261; color:#10100e; }
+.about-editorial-secondary { border-bottom:1px solid rgba(255,255,255,.68); color:#fff; }
+.about-editorial-primary:hover {background:#ffc58f;}
+.about-editorial-secondary:hover {border-bottom-color:#f4a261; color:#f4a261;}
+.about-editorial-primary:focus-visible,.about-editorial-secondary:focus-visible {outline:3px solid #fff; outline-offset:4px;}
+.about-editorial-hero-index { position:absolute; right:clamp(20px,5vw,90px); bottom:clamp(24px,4vw,60px); display:flex; align-items:baseline; gap:18px; font:600 .67rem/1.3 'DM Mono',monospace; letter-spacing:.15em; color:rgba(255,255,255,.79); }
+.about-editorial-hero-index span:first-child {font:800 clamp(2rem,3.5vw,3.7rem)/1 'Montserrat',sans-serif; color:rgba(255,255,255,.9);}
+
+/* Manifiesto como transición de luz después de la portada. */
+body.premium-route--about .about-page .about-problem-section { background: #f1ece3 !important; }
+body.premium-route--about .about-page .about-reason-strip { border-color:rgba(14,16,16,.16); }
+body.premium-route--about .about-page .about-problem-heading h2 { letter-spacing:-.057em; max-width:17ch; }
+body.premium-route--about .about-page .about-problem-copy { max-width:46ch; font-size:clamp(1.05rem,1.4vw,1.25rem); line-height:1.66; }
+
+/* La persona sin un retrato inventado: una foto de movimiento + una carta en voz
+   del fundador, con pie editorial y firma tipográfica. */
+body.premium-route--about .about-founder {padding:clamp(78px,9vw,150px) 0; background:#111313; color:#f6f3ec;}
+body.premium-route--about .about-founder__layout {display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); align-items:center; gap:clamp(40px,6.2vw,108px); width:min(1450px,calc(100% - 6vw)); margin:auto;}
+.about-founder__visual {position:relative; min-height:clamp(560px,50vw,760px); overflow:hidden; background:#242320;}
+.about-founder__visual::after {content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,3,3,.12),transparent 50%,rgba(3,3,3,.6));pointer-events:none;}
+.about-founder__visual img {display:block; width:100%;height:100%;position:absolute;inset:0;object-fit:cover; object-position:55% center;}
+.about-founder__image-marker,.about-founder__image-number {position:absolute; z-index:1; font:600 .65rem/1.5 'DM Mono',monospace;letter-spacing:.16em; color:#fff;}
+.about-founder__image-marker {bottom:clamp(24px,3vw,48px);left:clamp(22px,3vw,46px);max-width:30ch;}
+.about-founder__image-number {top:clamp(24px,3vw,48px);right:clamp(22px,3vw,46px);color:#f4a261;}
+.about-founder__editorial {padding:clamp(20px,2vw,45px) 0;}
+.about-founder__eyebrow {display:inline-flex; align-items:center; gap:14px; font:600 .72rem/1.4 'DM Mono',monospace;letter-spacing:.19em;color:#f4a261;}
+.about-founder__eyebrow::before {content:'';width:30px;height:1px;background:currentColor;}
+.about-founder__editorial h2 {max-width:12ch;margin:clamp(26px,3vw,49px) 0; font:900 clamp(3rem,5.35vw,6.3rem)/.98 'Montserrat',sans-serif;letter-spacing:-.064em; color:#fff;}
+.about-founder__editorial h2 em {font-style:normal;color:#f4a261;}
+.about-founder__lead {font-size:clamp(1.26rem,1.8vw,1.78rem);line-height:1.5;letter-spacing:-.025em;max-width:34ch;color:#f5f3ed;}
+.about-founder__copy {font-size:clamp(1rem,1.19vw,1.15rem);line-height:1.75;max-width:55ch;color:#c7c8c4;margin:25px 0 0;}
+.about-founder__signature {display:flex;align-items:center;gap:18px;margin:clamp(28px,4vw,55px) 0 32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.19);}
+.about-founder__signature-mark {font:italic 500 clamp(2.5rem,3.5vw,4.4rem)/1 Georgia,serif;color:#f4a261;}
+.about-founder__signature strong,.about-founder__signature small {display:block;}
+.about-founder__signature strong {font:800 .85rem/1.3 'Montserrat',sans-serif;letter-spacing:.07em;}
+.about-founder__signature small {margin-top:7px;font:600 .64rem/1.6 'DM Mono',monospace;letter-spacing:.09em;color:#abb0ae;}
+.about-founder__link {display:inline-flex;align-items:center;justify-content:space-between;gap:28px;min-height:48px;border-bottom:1px solid #f4a261;text-decoration:none;color:#f6f3ee;font:700 .75rem/1.4 'DM Mono',monospace;letter-spacing:.12em;}
+.about-founder__link:hover {color:#f4a261;}
+.about-founder__link:focus-visible {outline:3px solid #f4a261;outline-offset:4px;}
+
+/* Timeline y método preservados; menos frase publicitaria, más lectura editorial. */
+body.premium-route--about .about-page .about-story-heading h2 {font-size:clamp(2.8rem,4.9vw,5.8rem);line-height:1.01;max-width:20ch;letter-spacing:-.055em;}
+body.premium-route--about .about-page .about-story-heading h2 span {color:#f4a261;}
+@media(max-width:950px){
+ body.premium-route--about .about-founder__layout {grid-template-columns:1fr;width:min(680px,calc(100% - 40px));gap:35px;}
+ .about-founder__visual {min-height:560px;}
+ .about-founder__editorial h2 {max-width:15ch;}
+}
+@media(max-width:720px){
+ body.premium-route--about .about-page .page-hero {min-height: min(790px,100svh);}
+ body.premium-route--about .about-page .page-hero-content {min-height:min(790px,100svh);padding:118px 22px 75px;justify-content:center;}
+ body.premium-route--about .about-page .page-hero-title {font-size:clamp(3.3rem,12.2vw,5.2rem) !important;max-width:10ch;line-height:.94 !important;}
+ body.premium-route--about .about-page .page-hero .page-hero-backdrop {background-image:linear-gradient(0deg,rgba(4,5,5,.83),rgba(4,5,5,.27) 88%),url('/images/bayona-generated/about-hero-1600.webp') !important;background-position:60% center !important;}
+ body.premium-route--about .about-page .page-hero .hero-subtitle {font-size:1.06rem;line-height:1.55;max-width:31ch;}
+ .about-editorial-hero-index {display:none;}
+ .about-editorial-hero-actions {align-items:stretch;flex-direction:column;gap:8px;margin-top:30px;}
+ .about-editorial-primary,.about-editorial-secondary {font-size:.67rem;}
+ .about-editorial-secondary {width:max-content;}
+ body.premium-route--about .about-founder {padding:60px 0 74px;}
+ .about-founder__visual {min-height:clamp(330px,100vw,520px);}
+ .about-founder__editorial h2 {font-size:clamp(2.55rem,10vw,4.2rem);}
+ .about-founder__lead {font-size:1.2rem;}
+ .about-founder__signature small {font-size:.59rem;}
+}
+@media(prefers-reduced-motion:reduce){
+ .about-founder img {transition:none;}
+}
+
+/* La línea de vida móvil reemplaza el escenario estático gigantesco, con 4
+   hitos compactos y tipografía sin palabras cortadas. En escritorio se mantiene
+   el StickyStage cinematográfico original y su fallback reducido. */
+.about-chronicle-mobile {display:none;}
+@media(min-width:1000px){
+ body.premium-route--about .about-page .about-problem-heading h2 {max-width:none !important;}
+}
+@media(max-width:760px){
+ body.premium-route--about .about-page .about-story-scene {
+   padding-top:clamp(82px,13vw,110px) !important;
+   padding-bottom:80px !important;
+   min-height:0 !important;
+ }
+ body.premium-route--about .about-page .about-story-scene .about-timeline--stage {display:none !important;}
+ body.premium-route--about .about-page .about-story-heading {margin-bottom:30px;}
+ body.premium-route--about .about-page .about-story-heading h2 {font-size:clamp(2.15rem,8.6vw,3.15rem) !important;line-height:1.04 !important;}
+ .about-chronicle-mobile {display:grid; width:calc(100% - 36px);margin:30px auto 0;padding:0;list-style:none;border-top:1px solid rgba(255,255,255,.32);}
+ .about-chronicle-mobile__item {display:grid; grid-template-columns:minmax(0,1fr); gap:16px; padding:24px 0 27px; border-bottom:1px solid rgba(255,255,255,.19);}
+ .about-chronicle-mobile__index {display:flex; justify-content:space-between; align-items:center; gap:20px; font:700 .67rem/1.5 'DM Mono',monospace; letter-spacing:.16em; color:#f4a261;}
+ .about-chronicle-mobile__index time {color:rgba(255,255,255,.58);}
+ .about-chronicle-mobile__story h3 {margin:0 0 9px; font:800 clamp(1.33rem,6vw,1.95rem)/1.12 'Montserrat',sans-serif;letter-spacing:-.04em;color:#fff;overflow-wrap:normal;}
+ .about-chronicle-mobile__story p {margin:0;max-width:40ch;font-size:.97rem;line-height:1.6;color:#c8c9c8;}
+}
