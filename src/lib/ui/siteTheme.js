@@ -19,6 +19,8 @@ export function applySiteTheme(value, { persist = false } = {}) {
   if (typeof document !== 'undefined') {
     document.documentElement.dataset.bayonaTheme = theme
     document.documentElement.style.colorScheme = theme === 'day' ? 'light' : 'dark'
+    const browserBar = document.querySelector('meta[name="theme-color"]')
+    browserBar?.setAttribute('content', theme === 'day' ? '#f7f3eb' : '#050505')
   }
 
   if (persist) {
