@@ -400,3 +400,128 @@ html[data-bayona-theme='day'] .not-found-page :is(.not-found-lead,.not-found-car
     border: 1px solid rgba(44,34,25,.27) !important;
   }
 }
+/* DAY MODE · verified dark islands and conversion contrast (2026-10-08). */
+
+/* A dark lead card on a warm-white page keeps existing accessible form fields. */
+html[data-bayona-theme='day'] .gym-home-lead .lead-magnet-inner {
+  background: #11100f !important;
+  color: #f5f1e8 !important;
+  border-color: rgba(244,162,97,.36);
+}
+html[data-bayona-theme='day'] .gym-home-lead .lead-magnet-inner :is(h2, h3, label, p) {
+  color: #f5f1e8;
+}
+html[data-bayona-theme='day'] .gym-home-lead .lead-magnet-inner :is(input, textarea) {
+  color: #fff;
+  background-color: #161616;
+  border-color: rgba(255,255,255,.35);
+}
+
+/* Premium dark-on-light rhythm: membership showroom remains a dark gallery. */
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-plans {
+  background: #101310 !important;
+  color: #f7f5f1;
+  --gym-white: #f7f5f1;
+  --gym-muted: rgba(247,245,241,.78);
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-plans .plan-explorer.plan-showroom {
+  --atelier-ink: #f5f1e8;
+  --atelier-muted: rgba(245,241,232,.74);
+  --bayona-white: #f5f1e8;
+  color: #f5f1e8 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-plans .plan-atelier-navigation :is(p, button),
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-plans .plan-showroom-tab {
+  color: #f5f1e8 !important;
+}
+html[data-bayona-theme='day'] .gym-gift-card strong {
+  color: #91451b !important;
+}
+
+/* Keep every element of the featured-product black showcase readable. */
+html[data-bayona-theme='day'] .shop-page .shop-feature {
+  color: #f7f5f1 !important;
+}
+html[data-bayona-theme='day'] .shop-page .shop-feature :is(h2,h3,strong) {
+  color: #fff !important;
+}
+html[data-bayona-theme='day'] body.premium-route--shop .shop-product-card > p {
+  color: #51483f !important;
+}
+
+/* Club access is an intentionally dark interlude, not ivory UI. */
+html[data-bayona-theme='day'] body.premium-route--community .community-access {
+  --community-text: #f5f5f5;
+  --community-muted: #c7c0b9;
+  --community-dim: #a9a097;
+  color: #f5f5f5 !important;
+}
+html[data-bayona-theme='day'] .community-access :is(h2,h3,strong) {
+  color: #fff !important;
+}
+html[data-bayona-theme='day'] .community-access :is(p,small) {
+  color: #cec6bc;
+}
+
+/* Resources: eliminate dark sections with inherited ink from the day palette. */
+html[data-bayona-theme='day'] .resources-page .resources-section:nth-child(even) {
+  background: #eee5d9 !important;
+  color: #201b17;
+}
+html[data-bayona-theme='day'] .resources-page .resources-section:nth-child(even) :is(h2,h3) {
+  color: #201b17;
+}
+
+/* About: the method scene uses a full-bleed photo + dark gradient. */
+html[data-bayona-theme='day'] .about-page .about-method.about-method-scene {
+  background: #050505 !important;
+  color: #f7f5f1 !important;
+}
+html[data-bayona-theme='day'] .about-page .about-method-scene :is(h2,h3) {
+  color: #fff !important;
+}
+html[data-bayona-theme='day'] .about-page .about-method-scene :is(p,blockquote) {
+  color: #e4ded4 !important;
+}
+
+/* Parkour levels and closing now use ink compatible with their paper surfaces. */
+html[data-bayona-theme='day'] :is(.academy-levels,.academy-closing) {
+  color: #201b17;
+}
+html[data-bayona-theme='day'] :is(.academy-levels,.academy-closing) :is(h2,h3,p,small,strong) {
+  color: #201b17 !important;
+}
+
+/* Commercial plan detail keeps its guarantee and summary plates dark. */
+html[data-bayona-theme='day'] .plan-presentation :is(
+  .plan-presentation-hero-offer,
+  .plan-presentation-guarantee-box,
+  .plan-presentation-final-summary
+) {
+  --bayona-surface-1: #0c0c0d;
+  background: #0c0c0d !important;
+  color: #f7f5f1;
+}
+
+/* Checkout/account/system UI is not yet a daylight view: no half-themed pages. */
+html[data-bayona-theme='day']:has(.ds-frame[data-experience-scope='system']),
+html[data-bayona-theme='day'] body:has(.ds-frame[data-experience-scope='system']) {
+  background: #050505;
+}
+html[data-bayona-theme='day'] .ds-frame[data-experience-scope='system'] {
+  --ds-surface-background: #050505;
+  --ds-surface-deep: #0b0b0c;
+  --ds-surface-raised: #0c0c0d;
+  --bayona-surface-0: #050505;
+  --bayona-surface-1: #0b0b0c;
+  --bayona-surface-2: #0c0c0d;
+  --bayona-white: #fff;
+  background-color: #050505 !important;
+  color: #fff;
+}
+
+/* Consent wording always sits over an opaque black legal banner. */
+html[data-bayona-theme='day'] .consent-banner,
+html[data-bayona-theme='day'] .consent-banner .consent-copy p:last-child {
+  color: #f7f5f1 !important;
+}

@@ -126,3 +126,44 @@ test('el menú modo día es legible también en tablet y portátil pequeño', as
     expect(appearance.background).toContain('rgb(247, 243, 235)')
   }
 })
+
+test('modo día mantiene contraste en conversión, tienda y secciones editoriales', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'networkidle' })
+  await page.getByRole('button', { name: 'Modo día' }).click()
+  await expect(page.locator('.gym-home-lead .lead-magnet-inner')).toHaveCSS('background-color', 'rgb(17, 16, 15)')
+  await expect(page.locator('.lead-magnet-inner h2')).toHaveCSS('color', 'rgb(245, 241, 232)')
+  await expect(page.locator('.gym-home-plans .plan-showroom')).toHaveCSS('color', 'rgb(245, 241, 232)')
+  await expect(page.locator('.gym-gift-card strong').first()).toHaveCSS('color', 'rgb(145, 69, 27)')
+
+  await page.goto('/shop', { waitUntil: 'networkidle' })
+  await expect(page.locator('.shop-feature h2')).toHaveCSS('color', 'rgb(255, 255, 255)')
+  await expect(page.locator('.shop-product-card > p').first()).toHaveCSS('color', 'rgb(81, 72, 63)')
+
+  await page.goto('/community', { waitUntil: 'networkidle' })
+  await expect(page.locator('.community-access h2')).toHaveCSS('color', 'rgb(255, 255, 255)')
+
+  await page.goto('/resources', { waitUntil: 'networkidle' })
+  await expect(page.locator('.resources-section:nth-child(even)').first()).toHaveCSS('background-color', 'rgb(238, 229, 217)')
+  await expect(page.locator('.resources-section:nth-child(even) h2').first()).toHaveCSS('color', 'rgb(32, 27, 23)')
+
+  await page.goto('/about', { waitUntil: 'networkidle' })
+  await expect(page.locator('.about-method-scene h2')).toHaveCSS('color', 'rgb(255, 255, 255)')
+
+  await page.goto('/parkour-academy', { waitUntil: 'networkidle' })
+  await expect(page.locator('.academy-levels h2')).toHaveCSS('color', 'rgb(32, 27, 23)')
+  await expect(page.locator('.academy-closing h2')).toHaveCSS('color', 'rgb(32, 27, 23)')
+})
+
+test('las pantallas internas y los planes mantienen paneles oscuros legibles', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'networkidle' })
+  await page.getByRole('button', { name: 'Modo día' }).click()
+
+  await page.goto('/plan/raiz', { waitUntil: 'networkidle' })
+  await expect(page.locator('.plan-presentation-guarantee-box')).toHaveCSS('background-color', 'rgb(12, 12, 13)')
+  await expect(page.locator('.plan-presentation-guarantee-box h2')).toHaveCSS('color', 'rgb(247, 245, 241)')
+  await expect(page.locator('.plan-presentation-final-summary')).toHaveCSS('background-color', 'rgb(12, 12, 13)')
+
+  await page.goto('/checkout', { waitUntil: 'networkidle' })
+  await expect(page.locator('.checkout-page')).toHaveCSS('background-color', 'rgb(5, 5, 5)')
+  await expect(page.locator('.checkout-page')).toHaveCSS('color', 'rgb(255, 255, 255)')
+})
