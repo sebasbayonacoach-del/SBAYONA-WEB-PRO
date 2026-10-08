@@ -126,6 +126,49 @@
   will-change: transform;
 }
 
+/* Each free resource gets its own editorial cover, while sharing the BAYONA kit palette. */
+.free-piece-art {
+  position: relative;
+  width: min(100%, 660px);
+  aspect-ratio: 1.12;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.free-piece-art__frame {
+  position: relative;
+  width: 82%;
+  height: 84%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(1.2rem, 4vw, 3.5rem);
+  border: 1px solid rgba(244,162,97,.38);
+  background: #111;
+  box-shadow: 0 35px 100px rgba(0,0,0,.5);
+  transform: rotate(-3deg);
+}
+
+.free-piece-art--comunidad .free-piece-art__frame { transform: rotate(2deg); }
+.free-piece-art--dossier .free-piece-art__frame { transform: rotate(-1deg); }
+
+.free-piece-art__frame img,
+.free-piece-art__shade { position: absolute; inset: 0; width: 100%; height: 100%; }
+.free-piece-art__frame img { object-fit: cover; filter: saturate(.72) contrast(1.08); }
+.free-piece-art__shade { background: linear-gradient(180deg, rgba(5,5,5,.06) 10%, rgba(5,5,5,.24) 40%, rgba(5,5,5,.94) 100%); }
+.free-piece-art__eyebrow,
+.free-piece-art__frame strong,
+.free-piece-art__seal { position: relative; z-index: 1; }
+.free-piece-art__eyebrow,
+.free-piece-art__seal { color: var(--bayona-orange,#f4a261); font: 700 .62rem/1.4 var(--type-family-mono,monospace); letter-spacing: .16em; }
+.free-piece-art__frame strong { max-width: 9ch; margin-top: .75rem; color: #f7f7f3; font-size: clamp(2.1rem,5vw,4.8rem); font-weight: 900; line-height: .88; letter-spacing: -.055em; white-space: pre-line; }
+.free-piece-art__seal { position: absolute; top: 1.3rem; right: 1.3rem; padding: .55rem .7rem; border: 1px solid rgba(244,162,97,.55); background: rgba(5,5,5,.65); }
+.free-piece-art__orbit { position: absolute; z-index: -1; inset: 3%; border: 1px solid rgba(244,162,97,.18); border-radius: 50%; transform: rotate(-18deg) scaleY(.72); }
+.free-piece-art--comunidad .free-piece-art__orbit { transform: rotate(16deg) scaleY(.78); }
+.free-piece-art--dossier .free-piece-art__orbit { transform: rotate(-8deg) scaleY(.82); border-style: dashed; }
+
 .free-dossier-sheet {
   --offset: calc(var(--sheet-index) * 18px);
   position: absolute;
@@ -345,6 +388,12 @@
     width: min(88vw, 370px);
   }
 
+  .free-piece-art { position: absolute; top: 0; width: min(94vw, 480px); height: 54%; aspect-ratio: auto; }
+  .free-piece-art__frame { width: 76%; height: 88%; padding: 1.15rem; }
+  .free-piece-art__frame strong { font-size: clamp(1.8rem, 8vw, 3rem); }
+  .free-piece-art__eyebrow, .free-piece-art__seal { font-size: .5rem; }
+  .free-piece-art__seal { top: .8rem; right: .8rem; }
+
   .free-dossier-copy {
     position: absolute;
     z-index: 4;
@@ -409,4 +458,8 @@
   .free-dossier-object {
     transform: none !important;
   }
+  .free-piece-art { transform: none !important; }
+  .free-piece-art__frame,
+  .free-piece-art--comunidad .free-piece-art__frame,
+  .free-piece-art--dossier .free-piece-art__frame { transform: none; }
 }

@@ -1,0 +1,96 @@
+/* BAYONA PROCESS | documented training, not an unsupported before/after claim. */
+body.premium-route--home .proof-workbook {
+ position:relative;width:100%;height:100%;display:grid;place-items:center;overflow:hidden;
+ background:radial-gradient(ellipse at 50% 49%,rgba(244,162,97,.055),transparent 67%)
+}
+body.premium-route--home .proof-workbook__stack{position:relative;display:grid;place-items:center;width:min(92%,570px);height:clamp(350px,42vw,580px);transform-style:preserve-3d;perspective:1300px}
+body.premium-route--home .proof-workbook__back,
+body.premium-route--home .proof-workbook__middle{
+ position:absolute;inset:10% 5% 0;box-sizing:border-box;border:1px solid rgba(244,162,97,.18);
+ background:linear-gradient(145deg,#232324,#121416);
+ transform:rotate(-8deg) translate(-13px,9px);
+}
+body.premium-route--home .proof-workbook__middle{
+ inset:6% 3% 2%;background:#1d1f22;transform:rotate(4deg) translate(13px,-2px)
+}
+body.premium-route--home .proof-workbook__front {
+ position:relative;z-index:3;display:flex;flex-direction:column;justify-content:space-between;
+ box-sizing:border-box;width:90%;height:91%;min-height:0;padding:clamp(17px,2.5vw,30px);
+ background:linear-gradient(145deg,#ebe5db 0%,#d5d0c6 100%);
+ border:1px solid #c9b9a2;box-shadow:0 45px 80px rgba(0,0,0,.55),0 0 0 1px rgba(0,0,0,.18) inset;
+ color:#171717;overflow:hidden;
+}
+body.premium-route--home .proof-workbook__front > header,
+body.premium-route--home .proof-workbook__front > footer {
+ display:flex;justify-content:space-between;gap:10px;padding-bottom:13px;border-bottom:1px solid rgba(0,0,0,.32);
+ font:750 clamp(.49rem,.8vw,.63rem)/1.4 var(--type-family-mono,monospace);letter-spacing:.1em;text-transform:uppercase;
+}
+body.premium-route--home .proof-workbook__front > footer{
+ border-top:1px solid rgba(0,0,0,.26);border-bottom:0;padding:12px 0 0;color:#353333;font-size:clamp(.43rem,.64vw,.58rem);
+}
+body.premium-route--home .proof-workbook__mark{color:#c16e35}
+body.premium-route--home .proof-workbook__issue {
+ display:flex;justify-content:space-between;align-items:baseline;margin-top:auto;padding:17px 0 12px;
+ font:750 clamp(.65rem,1vw,.85rem)/1.2 var(--type-family-mono,monospace);letter-spacing:.12em
+}
+body.premium-route--home .proof-workbook__issue span{color:#a5683b}
+body.premium-route--home .proof-workbook__spread{
+ display:grid;grid-template-columns:1fr .65fr;align-items:stretch;gap:12px;min-height:39%;margin:0 0 auto;
+}
+body.premium-route--home .proof-workbook__statement{display:flex;flex-direction:column;justify-content:center;gap:14px;padding:14px 0}
+body.premium-route--home .proof-workbook__statement span{
+ font:800 .61rem/1.2 var(--type-family-mono,monospace);letter-spacing:.12em;color:#a5683b
+}
+body.premium-route--home .proof-workbook__statement strong{
+ max-width:14ch;font:900 clamp(1.2rem,2.5vw,2.45rem)/1 var(--type-family-display,sans-serif);
+ letter-spacing:-.045em;text-wrap:balance
+}
+body.premium-route--home .proof-workbook__statement p{font-size:clamp(.71rem,.9vw,.93rem);line-height:1.4;color:#494643;margin:0}
+body.premium-route--home .proof-workbook__photograph{margin:0;overflow:hidden;border:1px solid rgba(0,0,0,.17);background:#a79d8c}
+body.premium-route--home .proof-workbook__photograph img{
+ width:100%;height:100%;object-fit:cover;object-position:center;filter:grayscale(.35) contrast(1.13);display:block
+}
+body.premium-route--home .proof-workbook__stages{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:18px 0}
+body.premium-route--home .proof-workbook__stages > div{
+ border-top:1px solid #7d7872;padding-top:8px;display:grid;gap:8px;
+ font:800 .58rem/1.2 var(--type-family-mono,monospace);letter-spacing:.045em;
+ color:#555
+}
+body.premium-route--home .proof-workbook__stages > div span{color:#9b938a}
+body.premium-route--home .proof-workbook__stages > div[data-active=true]{border-color:#b9642c;color:#191716}
+body.premium-route--home .proof-workbook__stages > div[data-active=true] span{color:#b9642c}
+body.premium-route--home .proof-workbook__copy-summary{text-transform:none!important;font-family:var(--type-family-body,Arial,sans-serif);letter-spacing:0!important;font-weight:400;max-width:48ch;margin-top:1rem;color:rgba(247,247,243,.74);font-size:clamp(1rem,1.2vw,1.15rem);line-height:1.53;max-width:43ch}
+body.premium-route--home .proof-process-copy h3{max-width:22ch!important;font-size:clamp(1.9rem,3.3vw,3.8rem)!important;line-height:1.12!important}
+body.premium-route--home .proof-process-copy{z-index:2}
+body.premium-route--home .proof-process-stage.sticky-stage--static .sticky-stage-frame:first-child .proof-process-visual{
+ display:grid!important;height:clamp(255px,43svh,385px)!important;min-height:0;
+}
+body.premium-route--home .proof-process-stage.sticky-stage--static .sticky-stage-frame:not(:first-child) .proof-process-visual{display:none!important}
+body.premium-route--home .proof-process-stage.sticky-stage--static .proof-process-viewport{gap:1rem!important}
+body.premium-route--home .proof-process-stage.sticky-stage--static .proof-workbook__stack{width:min(95%,510px);height:100%}
+body.premium-route--home .proof-process-stage.sticky-stage--static .proof-workbook__front{height:92%}
+body.premium-route--home .proof-process-stage.sticky-stage--static .proof-workbook__back,
+body.premium-route--home .proof-process-stage.sticky-stage--static .proof-workbook__middle{inset:8% 5% 2%}
+@media(max-width:760px){
+ body.premium-route--home .proof-workbook__front{padding:clamp(12px,3vw,20px)}
+ body.premium-route--home .proof-workbook__statement{gap:6px}
+ body.premium-route--home .proof-workbook__statement strong{font-size:clamp(1rem,4vw,1.7rem)}
+ body.premium-route--home .proof-workbook__statement p{font-size:.68rem}
+ body.premium-route--home .proof-workbook__spread{min-height:32%;gap:8px}
+ body.premium-route--home .proof-workbook__issue{padding:8px 0}
+ body.premium-route--home .proof-workbook__stages{margin:10px 0}
+ body.premium-route--home .proof-workbook__stages > div{font-size:.52rem}
+ body.premium-route--home .proof-workbook__front > footer{font-size:.43rem}
+ body.premium-route--home .proof-workbook__front > header span:last-child{display:none}
+}
+@media(max-width:480px){
+ body.premium-route--home .proof-workbook__front{padding:12px}
+ body.premium-route--home .proof-workbook__spread{min-height:33%}
+ body.premium-route--home .proof-workbook__statement strong{font-size:1.05rem}
+ body.premium-route--home .proof-workbook__statement p{font-size:.59rem}
+ body.premium-route--home .proof-workbook__stages > div strong{font-size:.53rem}
+ body.premium-route--home .proof-workbook__front > footer span{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ body.premium-route--home .proof-workbook__stack{transition:none!important;transform:none!important}
+}

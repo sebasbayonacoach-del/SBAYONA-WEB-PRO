@@ -164,4 +164,14 @@ body.premium-route--programs .page-hero-title.text-mask {
     margin-top: 1.4rem;
     max-width: 28rem;
   }
+
+  body.premium-route--programs :is(
+    .program-service-card .program-service-cart,
+    .programs-method .text-button,
+    .programs-comparison-section .text-button
+  ) {
+    min-height: 44px !important;
+    display: inline-flex;
+    align-items: center;
+  }
 }

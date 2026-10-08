@@ -1,0 +1,46 @@
+name: Gym Funnel V2 CI
+
+on:
+  pull_request:
+    branches:
+      - bayona-prime/shop-unified-20261004
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gym-funnel-v2-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Unit and integration tests
+        run: npm test
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Production build
+        run: npm run build
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Gym funnel and daylight browser contracts
+        run: npx playwright test e2e/cinematic-home-journey.spec.js e2e/day-mode.spec.js --reporter=line

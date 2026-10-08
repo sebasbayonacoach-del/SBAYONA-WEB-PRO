@@ -124,3 +124,34 @@
 @media (prefers-reduced-motion: reduce) {
   .scroll-film__frame, .scroll-film__image, .scroll-film__copy { animation: none !important; transition: none !important; }
 }
+
+/* BAYONA PRIME · COSTURA CINEMATOGRÁFICA
+   El primer fotograma nace del negro real del hero. En vez de empujar secciones
+   o dibujar un velo por encima de los controles, fundimos la propia imagen
+   (y su viñeta) durante los primeros 35svh de la escena. El resto permanece
+   sin máscara, incluidos el título, el control MODO CALMA y los fotogramas 2–3. */
+body.premium-route--home .scroll-film {
+  background-color: #050505;
+}
+body.premium-route--home .scroll-film__frame:first-of-type {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    rgba(0, 0, 0, .08) 6svh,
+    rgba(0, 0, 0, .32) 13svh,
+    rgba(0, 0, 0, .72) 24svh,
+    #000 35svh
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    rgba(0, 0, 0, .08) 6svh,
+    rgba(0, 0, 0, .32) 13svh,
+    rgba(0, 0, 0, .72) 24svh,
+    #000 35svh
+  );
+}
+body.premium-route--home .scroll-film--static .scroll-film__static-frame:first-of-type > img {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 35svh);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 35svh);
+}

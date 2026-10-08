@@ -1,0 +1,227 @@
+/* BAYONA PRIME — surgical corrections after screenshot-by-screenshot QA.
+ * The original hero, ScrollFilm and VisionShift remain unchanged. */
+
+/* 1. Photographic grounding for atmospheric geometry (no gallery of cards). */
+body.premium-route--home .bayona-voyage-photographic-layer {
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+  opacity:.26;filter:grayscale(.3) sepia(.18) saturate(.72) contrast(1.3);
+  mask-image:linear-gradient(180deg,transparent,black 16%,black 74%,transparent);
+  pointer-events:none;
+}
+body.premium-route--home .bayona-voyage-sky { z-index:1; pointer-events:none; }
+body.premium-route--home .bayona-voyage-route { z-index:2; }
+body.premium-route--home .bayona-benefits-photographic-layer {
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;
+  opacity:.22;filter:saturate(.53) brightness(.55) contrast(1.24);
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+  mask-image:linear-gradient(to right,black,rgba(0,0,0,.35) 70%,transparent);
+  pointer-events:none;z-index:0;
+}
+body.premium-route--home .bayona-challenge-screen {overflow:hidden;isolation:isolate;}
+body.premium-route--home .bayona-challenge-screen__hero {
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32;
+  filter:grayscale(.4) sepia(.25) brightness(.6) contrast(1.3);
+  mask-image:linear-gradient(to right,transparent,black 35%,black);
+  pointer-events:none;z-index:-1;
+}
+body.premium-route--home .bayona-challenge-screen > :not(.bayona-challenge-screen__hero) {position:relative;z-index:1;}
+
+/* 2. A deliberate paper chapter gives the eye a rest after the dark journey. */
+body.premium-route--home .home-memberships-section {
+  background:#f1ece3 !important;
+  color:#171512;
+}
+body.premium-route--home .home-memberships-section::before,
+body.premium-route--home .home-memberships-section::after {opacity:.28;}
+body.premium-route--home .home-memberships-section .home-offer-shell {
+  background:transparent !important;
+  color:#171512;
+  border-top:1px solid rgba(23,21,18,.18);
+  padding-top:clamp(3rem,6vw,6rem) !important;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout h2,
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro,
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .home-offer-clarifier,
+body.premium-route--home .home-memberships-section .home-vertical-word {
+  color:#171512 !important;
+  -webkit-text-fill-color:#171512 !important;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro,
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .home-offer-clarifier {opacity:1;}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout {
+  grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
+  gap:clamp(2rem,5vw,5rem);
+  align-items:end;
+  margin:0 0 clamp(2.5rem,5vw,5rem) !important;
+  min-height:0 !important;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout > div {
+  display:contents;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .eyebrow,
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .section-label {
+  grid-column:1 / -1;
+  color:#9a4f23 !important;
+}
+body.premium-route--home #home-offer-heading {
+  grid-column:1;
+  max-width:12ch !important;
+  margin:0 !important;
+  font-size:clamp(2.8rem,5.2vw,5rem) !important;
+  line-height:.95 !important;
+  text-align:left !important;
+  text-wrap:balance;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro {
+  grid-column:2;
+  max-width:36ch;
+  margin:0 0 .8rem !important;
+  color:#4f483f !important;
+  font-size:clamp(1rem,1.4vw,1.18rem) !important;
+  line-height:1.55 !important;
+  text-align:left !important;
+}
+body.premium-route--home .home-memberships-section .home-offer-heading-layout .home-offer-clarifier {
+  grid-column:2;
+  max-width:36ch;
+  margin:0 !important;
+  padding:.8rem 0 .8rem 1rem;
+  border-left:2px solid #a95726;
+  color:#514940 !important;
+  font-size:.88rem;
+  line-height:1.45;
+  text-align:left;
+}
+body.premium-route--home .home-memberships-section .home-vertical-word {display:none;}
+body.premium-route--home .home-memberships-section .plan-explorer {isolation:isolate;}
+body.premium-route--home .home-memberships-section .plan-showroom-preview {
+  box-shadow:0 30px 85px rgba(45,35,24,.13);
+}
+@media(max-width:980px){
+  body.premium-route--home .home-memberships-section .plan-showroom-selector {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+@media(max-width:1100px){
+  body.premium-route--home .home-memberships-section .plan-showroom-preview {
+    display:block !important;
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+  body.premium-route--home .home-memberships-section .plan-showroom-signature {
+    width:100%;
+    margin-top:clamp(2rem,5vw,4rem);
+    border-left:0;
+  }
+  body.premium-route--home .home-memberships-section .plan-showroom-visual-title {
+    max-width:14ch;
+    font-size:clamp(2.5rem,6vw,4.5rem) !important;
+    overflow-wrap:normal;
+  }
+}
+@media(max-width:760px){
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout {
+    display:block;
+  }
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout .eyebrow {
+    justify-content:flex-start;
+    text-align:left;
+  }
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout .eyebrow::before {display:none;}
+  body.premium-route--home #home-offer-heading {
+    max-width:14ch !important;
+    margin:.9rem 0 1.2rem !important;
+    font-size:clamp(2.25rem,8.8vw,3.5rem) !important;
+  }
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout .offer-intro {
+    margin-bottom:1rem !important;
+  }
+  body.premium-route--home .home-memberships-section .plan-showroom-selector {
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:.7rem !important;
+    overflow:visible !important;
+  }
+  body.premium-route--home .home-memberships-section .plan-showroom-selector .plan-comparison-item {
+    width:auto !important;
+    min-width:0 !important;
+  }
+}
+
+/* The decision controls need the same legibility as the chapter headline. */
+body.premium-route--home .home-services-configurator .home-configurator-guide li p,
+body.premium-route--home .home-services-configurator .extras-step-heading > span {
+  color:rgba(247,247,243,.72) !important;
+}
+body.premium-route--home .home-services-configurator .extras-plan-options small {
+  color:rgba(247,247,243,.72) !important;
+  font-size:clamp(.68rem,.85vw,.8rem);
+}
+body.premium-route--home .home-services-configurator .extras-category-navigation button {
+  color:#e8e4de !important;
+}
+body.premium-route--home .home-services-configurator .extras-category-navigation button:hover,
+body.premium-route--home .home-services-configurator .extras-category-navigation button:focus-visible {
+  color:#f4a261 !important;
+}
+
+/* 3. Closing words and real horizon photo always render, including on first
+ * visit, reversed scrolling, browser back and reduced-motion. */
+body.premium-route--home .home-about-bridge {position:relative;isolation:isolate;background:#070809 !important;overflow:hidden;}
+body.premium-route--home .home-about-bridge .bayona-final-visual {
+  position:absolute;inset:0 0 0 37%;pointer-events:none;z-index:0;
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.65) 18%,black 100%);
+}
+body.premium-route--home .home-about-bridge .bayona-final-visual img {
+  width:100%;height:100%;display:block;object-fit:cover;object-position:56% 50%;
+  opacity:.56;filter:grayscale(.12) sepia(.2) saturate(.78) brightness(.68);
+}
+body.premium-route--home .home-about-bridge .bayona-final-visual__caption {
+  position:absolute;bottom:2rem;right:clamp(1rem,3vw,3rem);color:rgba(247,247,243,.85);
+  font:700 .61rem/1.4 var(--type-family-mono,monospace);letter-spacing:.15em;
+}
+body.premium-route--home .home-about-bridge .final-curtain {position:relative;z-index:3;}
+body.premium-route--home .home-about-bridge .bayona-final-narrative > h2,
+body.premium-route--home .home-about-bridge .bayona-final-narrative > .offer-intro {
+  opacity:1 !important;transform:none !important;translate:none !important;visibility:visible !important;
+}
+body.premium-route--home .home-about-bridge .bayona-final-narrative > .offer-intro {
+  max-width:53ch;font-size:clamp(1.05rem,1.45vw,1.25rem) !important;line-height:1.65 !important;
+  color:rgba(247,247,243,.84) !important;
+}
+body.premium-route--home .home-about-bridge .final-doors {
+  position:relative;opacity:1 !important;transform:none !important;
+}
+body.premium-route--home .home-about-bridge .final-doors a {min-height:44px;}
+@media(max-width:760px){
+  body.premium-route--home .home-about-bridge .bayona-final-visual {inset:0;mask-image:linear-gradient(180deg,transparent 0%,black 23%,black 68%,transparent 100%);}
+  body.premium-route--home .home-about-bridge .bayona-final-visual img {opacity:.24;object-position:60% center;}
+  body.premium-route--home .home-about-bridge .bayona-final-visual__caption {display:none;}
+  body.premium-route--home .home-memberships-section .home-offer-shell {padding-top:clamp(1.8rem,4.5vw,2.8rem) !important;}
+  body.premium-route--home .home-memberships-section .home-offer-heading-layout {margin-bottom:1.75rem!important;}
+  body.premium-route--home .bayona-voyage-photographic-layer {opacity:.23;}
+  body.premium-route--home .bayona-benefits-photographic-layer {opacity:.18;}
+}
+@media(prefers-reduced-motion:reduce){
+  body.premium-route--home .home-about-bridge .bayona-final-narrative,
+  body.premium-route--home .home-about-bridge .final-doors {animation:none!important;}
+}
+
+/* 4. Evidence gate is not allowed to invent testimonials. The process itself
+ * can still have a truthful, explicitly illustrative visual introduction. */
+body.premium-route--home .proof-process-visual {isolation:isolate;overflow:clip;}
+body.premium-route--home .proof-process-photo {position:absolute;inset:3% 4%;overflow:hidden;z-index:0;pointer-events:none;}
+body.premium-route--home .proof-process-photo::after {content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,6,8,.32),rgba(5,6,8,.75)),linear-gradient(0deg,rgba(5,6,8,.78),transparent 60%);}
+body.premium-route--home .proof-process-photo img {width:100%;height:100%;object-fit:cover;object-position:55% 35%;display:block;opacity:.47;filter:grayscale(.28) sepia(.16) contrast(1.15);}
+body.premium-route--home .proof-process-photo span {position:absolute;z-index:1;bottom:14px;left:16px;color:rgba(247,247,243,.75);font:700 .55rem/1.35 var(--type-family-mono,monospace);letter-spacing:.1em;}
+body.premium-route--home .proof-process-object {z-index:1;}
+body.premium-route--home .proof-process-stage.sticky-stage--static .sticky-stage-frame:first-child .proof-process-visual {
+  position:relative;display:block!important;width:100%;height:clamp(210px,36svh,340px);min-height:0;margin-bottom:1rem;
+}
+body.premium-route--home .proof-process-stage.sticky-stage--static .sticky-stage-frame:first-child .proof-process-photo {inset:0;}
+body.premium-route--home .proof-process-stage.sticky-stage--static .sticky-stage-frame:first-child .proof-process-photo img {opacity:.76;}
+body.premium-route--home .proof-process-stage.sticky-stage--static .proof-process-object--static {display:none;}
+body.premium-route--home .proof-process-stage.sticky-stage--static .sticky-stage-frame:not(:first-child) {padding-block:clamp(1rem,3vw,1.8rem);}
+@media(max-width:480px){
+  body.premium-route--home .proof-process-stage.sticky-stage--static .sticky-stage-frame:first-child .proof-process-visual {height:clamp(200px,34svh,285px);}
+  body.premium-route--home .proof-process-photo span {font-size:.48rem;left:10px;bottom:10px;}
+}

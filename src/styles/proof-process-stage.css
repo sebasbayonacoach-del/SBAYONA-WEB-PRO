@@ -270,3 +270,43 @@
   padding: 0 !important;
   margin-inline: 0 !important;
 }
+
+/* Fallback honesto: móvil y movimiento reducido muestran tres pasos legibles.
+   Evita repetir la misma maqueta 3D en cada tarjeta de la secuencia estática. */
+.proof-process-stage.sticky-stage--static .sticky-stage-frame {
+  padding-block: clamp(1.4rem, 4vw, 2.6rem);
+}
+
+.proof-process-stage.sticky-stage--static .proof-process-viewport {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: .65rem;
+  width: min(calc(100% - 32px), 720px);
+  height: auto;
+  min-height: 0;
+}
+
+.proof-process-stage.sticky-stage--static .proof-process-visual {
+  display: none;
+}
+
+.proof-process-stage.sticky-stage--static .proof-process-copy {
+  width: 100%;
+  min-width: 0;
+}
+
+.proof-process-stage.sticky-stage--static .proof-process-copy h3 {
+  max-width: 22ch;
+  font-size: clamp(1.55rem, 5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -.035em;
+  overflow-wrap: anywhere;
+}
+
+.proof-process-stage.sticky-stage--static .proof-process-counter {
+  position: static;
+  margin-top: .7rem;
+  text-align: right;
+}

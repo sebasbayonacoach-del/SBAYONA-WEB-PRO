@@ -2,8 +2,6 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import Resources from './Resources.jsx'
-import { socialLinks } from '../config/social.config.js'
-import { resolveProfiles } from '../lib/social/platforms.js'
 
 function renderPage() {
   return render(
@@ -30,6 +28,17 @@ describe('/resources — Empieza Gratis honesto', () => {
     expect(screen.getByRole('link', { name: /ABRIR BIBLIOTECA/i })).toHaveAttribute('href', '#revista')
   })
 
+  it('presenta las tres piezas de entrada como tarjetas visuales navegables', () => {
+    const { container } = renderPage()
+
+    const library = container.querySelector('.resources-hero-library')
+    expect(library).not.toBeNull()
+    expect(library.querySelectorAll('.resources-hero-library-visual')).toHaveLength(3)
+    expect(screen.getByRole('link', { name: /presentación del Protocolo BAYONA de 7 días/i })).toHaveAttribute('href', '#revista')
+    expect(screen.getByRole('link', { name: /presentación del Workbook BAYONA de 30 días/i })).toHaveAttribute('href', '#reto')
+    expect(screen.getByRole('link', { name: /presentación de la consulta experta gratuita/i })).toHaveAttribute('href', '#question-title')
+  })
+
   it('anuncia el Reto 30 días con sus reglas visibles antes de empezar', () => {
     const { container } = renderPage()
 
@@ -47,7 +56,7 @@ describe('/resources — Empieza Gratis honesto', () => {
 
     // La recompensa se nombra —puede ser un programa personalizado— y sigue
     // condicionada a lo que la edición confirme por escrito.
-    expect(challenge.textContent).toContain('PROGRAMA PERSONALIZADO')
+    expect(challenge.textContent).toContain('PLAN PERSONALIZADO')
     expect(challenge.textContent).toMatch(/se comunica por escrito antes de entrar/i)
 
     // Sin promesas de resultado ni lenguaje médico en la sección del reto.
@@ -62,9 +71,12 @@ describe('/resources — Empieza Gratis honesto', () => {
     expect(magazine.querySelector('#magazine-title')).not.toBeNull()
     expect(magazine.textContent).toContain('NO UN CALENDARIO RÍGIDO.')
 
-    // El material descargable existe (§19) pero no finge una descarga: se pide.
+    // El material se presenta antes de la captura y los tres CTA llevan al mismo formulario.
     expect(magazine.querySelector('#downloads-title')).not.toBeNull()
     expect(magazine.querySelectorAll('a[download]')).toHaveLength(0)
+    const giftLinks = [...magazine.querySelectorAll('.resources-downloads a[href="#resources-lead"]')]
+    expect(giftLinks).toHaveLength(3)
+    expect(document.querySelector('#resources-lead')).not.toBeNull()
   })
 
   it('prepara la consulta con contexto y bloquea datos sensibles antes de WhatsApp', () => {
@@ -75,20 +87,12 @@ describe('/resources — Empieza Gratis honesto', () => {
     expect(screen.getByText(/Nada se envía solo\. Tú revisas el mensaje y decides abrir WhatsApp\./i)).toBeInTheDocument()
   })
 
-  it('deriva los canales publicados de social.config.js sin inventar métricas', () => {
+  it('cierra en captación y servicios sin duplicar un directorio de redes', () => {
     const { container } = renderPage()
-    const configuredProfiles = resolveProfiles(socialLinks)
-    const channelsSection = container.querySelector('.resources-channels')
 
-    if (configuredProfiles.length > 0) {
-      expect(channelsSection).not.toBeNull()
-      for (const profile of configuredProfiles) {
-        const link = channelsSection.querySelector(`a[href*="${profile.url}"]`)
-        expect(link).not.toBeNull()
-      }
-    }
-
-    // Nunca se muestran conteos de seguidores ni publicaciones falsas.
+    expect(container.querySelector('.resources-channels')).toBeNull()
+    expect(container.querySelector('.resources-decision')).toBeNull()
+    expect(container.querySelector('#resources-lead')).not.toBeNull()
     expect(container.textContent).not.toMatch(/\d+[.,]\d+\s*(seguidores|followers)/i)
   })
 })

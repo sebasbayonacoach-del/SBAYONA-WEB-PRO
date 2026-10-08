@@ -791,11 +791,11 @@ body.premium-route--home .home-memberships-section .plan-showroom-visual-title {
 
 /* RITMO · misma narrativa, menos scroll vacío. */
 body.premium-route--home .scroll-film {
-  height: 300svh !important;
+  height: 240svh !important;
 }
 
 @media (max-width:760px) {
   body.premium-route--home .scroll-film {
-    height: 320svh !important;
+    height: 280svh !important;
   }
 }

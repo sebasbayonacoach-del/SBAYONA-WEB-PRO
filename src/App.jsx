@@ -2,9 +2,7 @@ import { Suspense, lazy, useEffect } from 'react'
 import './styles/route-fallback-prime.css'
 import './styles/shop-boutique-prime.css'
 import './styles/faq-prime-fix.css'
-import { RouteSceneCycler } from './components/RouteSceneCycler.jsx'
-import { routeSceneRules } from './config/routeSceneRules.js'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Footer, Navbar, WhatsAppButton } from './components/Layout'
 import { ScrollProgress } from './components/Experience'
 import { PageTransition, CustomCursor } from './engine'
@@ -16,17 +14,8 @@ import { useRecedeWhileScrolling } from './lib/ui/useRecedeWhileScrolling.js'
 import RouteSeo from './components/seo/RouteSeo.jsx'
 import RouteEffects from './components/RouteEffects.jsx'
 import ConsentBanner from './components/consent/ConsentBanner.jsx'
-import JourneyRibbon from './components/onboarding/JourneyRibbon.jsx'
-import ArrivalBonusCard from './components/rewards/ArrivalBonusCard.jsx'
-import GuideCompanion from './components/companion/GuideCompanion.jsx'
-import NextChapter from './components/NextChapter.jsx'
 import Breadcrumb from './components/navigation/Breadcrumb.jsx'
 import TranslateOffer from './components/TranslateOffer.jsx'
-import ShareInvite from './components/ShareInvite.jsx'
-import UniverseScaleBadge from './components/scale/UniverseScaleBadge.jsx'
-import UniverseScaleSights from './components/scale/UniverseScaleSights.jsx'
-import AwardExperience from './components/AwardExperience.jsx'
-import { UniverseScaleProvider } from './lib/scale/UniverseScaleProvider.jsx'
 import Home from './pages/Home'
 
 /**
@@ -93,7 +82,6 @@ const Resources = lazy(() => import('./pages/Resources'))
 const FAQ = lazy(() => import('./pages/FAQ'))
 const Checkout = lazy(() => import('./pages/Checkout'))
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'))
-const Onboarding = lazy(() => import('./pages/Onboarding'))
 const Entrar = lazy(() => import('./pages/Entrar'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 /*
@@ -124,8 +112,8 @@ function RouteFallback() {
       <div className="route-fallback__frame">
         <span className="route-fallback__brand" aria-hidden="true">BAYONA</span>
         <div className="route-fallback__copy">
-          <small>PREPARANDO EXPERIENCIA</small>
-          <strong>ENTRANDO.</strong>
+          <small>PREPARANDO BAYONA</small>
+          <strong>CARGANDO.</strong>
         </div>
         <span className="route-fallback__track" aria-hidden="true">
           <i />
@@ -163,13 +151,6 @@ const PRODUCT_ROUTES = Object.freeze([
   el pie es una salida antes de tiempo.
 */
 const FOOTER_ROUTES = Object.freeze(['/panel'])
-const ROUTE_SCENE_DISABLED_ROUTES = Object.freeze([
-  ...PRODUCT_ROUTES,
-  '/app',
-  '/entrar',
-  '/design-system',
-])
-
 function routeStartsWith(pathname, routes) {
   return routes.some((route) => pathname === route || pathname.startsWith(`${route}/`))
 }
@@ -181,7 +162,6 @@ function Site() {
   const showEditorialChrome = !isProductRoute && !isSystemRoute
   const showSiteFooter = showEditorialChrome || routeStartsWith(pathname, FOOTER_ROUTES)
   const experienceScope = isSystemRoute || isProductRoute ? 'system' : 'brand'
-  const routeSceneEnabled = !routeStartsWith(pathname, ROUTE_SCENE_DISABLED_ROUTES)
 
   /*
    * Señal global para las capas fijas que estorban el clic. `WhatsAppButton`
@@ -230,7 +210,6 @@ function Site() {
       <a href="#main-content" className="skip-link">Saltar al contenido</a>
       <RouteSeo />
       <RouteEffects />
-      <AwardExperience />
       <ScrollProgress />
       {/*
         Debug del Motion Engine (Fase 5): solo existe en desarrollo y con el
@@ -275,8 +254,8 @@ function Site() {
                 El mando de cinco pantallas con la dirección que su propio
                 comentario le prometía desde el 18-sep (`/panel` es el mando
                 nuevo… solo se le da su propia dirección`). No estaba
-                declarada: el único sitio vivo era `/app`, y `routeSceneRules`
-                tenía una entrada para una ruta inexistente. `RequireAuth` es el
+                declarada: el único sitio vivo era `/app`; la configuración espacial histórica
+                incluso contemplaba una ruta que todavía no existía. `RequireAuth` es el
                 mismo guardia del resto de destinos privados: sin sesión devuelve
                 a `/entrar?next=/panel`. `/app` no cambia de comportamiento.
               */}
@@ -295,10 +274,10 @@ function Site() {
                   precio corta el embudo en el peor sitio. `/app` sigue protegido. */}
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
-              <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/onboarding" element={<Navigate to="/#empieza" replace />} />
               {/*
-                Fase 2 SaaS: /entrar es la pantalla de acceso (correo +
-                contraseña). La recepción sigue viva en /onboarding.
+                /entrar conserva el acceso privado. /onboarding queda solo como
+                compatibilidad histórica y redirige al inicio gratuito.
               */}
               <Route path="/entrar" element={<Entrar />} />
               <Route path="/design-system" element={<DesignSystem />} />
@@ -309,10 +288,6 @@ function Site() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
-          {/* UN lienzo WebGL por ruta editorial: ver RouteSceneCycler.jsx.
-              Las rutas de producto no llevan decorado global porque compiten
-              con formularios, panel, compra y estados operativos. */}
-          {routeSceneEnabled ? <RouteSceneCycler key={pathname} {...routeSceneRules(pathname)} /> : null}
           {/*
             Cierre del recorrido: anuncia la siguiente parada. Montado aquí una
             sola vez, así las 9 páginas del itinerario lo reciben sin tocar su
@@ -324,12 +299,6 @@ function Site() {
             invita a seguir. Solo en las rutas del itinerario, igual que
             NextChapter, para no aparecer en el embudo ni en el 404.
           */}
-          {showEditorialChrome ? (
-            <>
-              <ShareInvite />
-              <NextChapter />
-            </>
-          ) : null}
           {showEditorialChrome ? <PremiumRouteChrome /> : null}
         </main>
       </PageTransition>
@@ -340,33 +309,8 @@ function Site() {
           <EditMode />
         </Suspense>
       ) : null}
-      {/* Solo se muestra si el navegador del visitante no entiende español. */}
+      {/* Traducción contextual solo cuando hace falta. */}
       <TranslateOffer />
-      {/* Acompaña la visita cuando la persona ya pasó por recepción. */}
-      {showEditorialChrome ? <JourneyRibbon /> : null}
-      {/*
-        Bono de llegada: tarjeta de crédito BAYONA + widget flotante con los
-        sellos. Solo se monta en rutas editoriales para no contaminar paneles,
-        compra, acceso ni onboarding.
-      */}
-      {showEditorialChrome ? <ArrivalBonusCard /> : null}
-      {/*
-        Escala del universo: BAYONA se abre conforme la persona explora. Se monta
-        una sola vez y sobrevive a la navegación, así que la fase no se reinicia
-        al cambiar de página. Ver lib/scale/universeScale.js.
-      */}
-      {showEditorialChrome ? (
-        <UniverseScaleProvider>
-          <UniverseScaleSights />
-          <UniverseScaleBadge />
-        </UniverseScaleProvider>
-      ) : null}
-      {/*
-        La asesora del recorrido: habla según el scroll y usa el nombre que la
-        persona dio en la recepción. Decide por ruta en su interior, así que
-        calla donde no hay guion (recepción, acceso, área de miembros, 404).
-      */}
-      {showEditorialChrome ? <GuideCompanion /> : null}
       <ConsentBanner />
     </>
   )

@@ -3,9 +3,9 @@
   ===========================================================================
   DOS REGLAS DE MARCA
 
-  1. Ninguna imagen dentro de un cuadro.
-     Las tarjetas son tipográficas: letra, número, línea y espacio.
-  2. Las imágenes viven fuera de las cajas, a sangre, y se mueven.
+  1. Las tarjetas editoriales priorizan letra, número, línea y espacio.
+     Las superficies comerciales gym-first (Home/Tienda) sí usan fotografía.
+  2. Las imágenes narrativas viven a sangre; las de producto identifican la pieza.
 
   POR QUÉ FUNCIONA
 
@@ -25,25 +25,12 @@
    ========================================================================= */
 .holo-card .holo-image,
 .shop-feature-image,
-.shop-product-image,
 .experience-proof-portrait,
 .cart-item-visual.has-media .cart-item-media,
 .value-card img,
 .resource-card img,
 .evidence-record img {
   display: none !important;
-}
-
-/* Retirar la foto de la ficha de producto dejaba el hueco que ella ocupaba:
-   `.shop-product-visual` es una rejilla con `aspect-ratio` y fondo propio, así
-   que al ocultar el `img` (que vive DENTRO) el contenedor seguía midiendo
-   302×326 y se pintaba como una losa negra por cada uno de los 41 productos.
-   La compensación tipográfica de arriba está escrita para `.holo-card`, que es
-   otro componente, y nunca llegó a estas fichas. Se colapsa el contenedor solo
-   cuando su contenido era la foto: los productos SIN media conservan su icono
-   de respaldo (`.shop-product-visual > svg`), que es lo que los representa. */
-.shop-product-visual:has(.shop-product-image) {
-  display: none;
 }
 
 /*

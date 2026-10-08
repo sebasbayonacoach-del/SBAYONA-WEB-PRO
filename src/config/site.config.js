@@ -18,6 +18,21 @@ const RAW_SITE_URL =
 /** Normaliza a origen sin barra final para poder concatenar rutas con seguridad. */
 export const SITE_URL = String(RAW_SITE_URL).replace(/\/+$/, '')
 
+/**
+ * URL de agenda externa. Puede apuntar a Calendly, TidyCal u otro proveedor
+ * cuando exista una cuenta real. Vacía = fallback honesto a WhatsApp.
+ */
+const RAW_BOOKING_URL =
+  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_BOOKING_URL) || ''
+
+export const BOOKING_URL = /^https?:\/\//i.test(String(RAW_BOOKING_URL).trim())
+  ? String(RAW_BOOKING_URL).trim()
+  : ''
+
+export function isBookingEnabled() {
+  return BOOKING_URL !== ''
+}
+
 /** Número de WhatsApp en formato internacional sin signos (E.164 sin '+'). */
 export const WHATSAPP_NUMBER = '34641698332'
 
@@ -96,4 +111,13 @@ export function whatsAppLink(message) {
   return text === ''
     ? `https://wa.me/${WHATSAPP_NUMBER}`
     : `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
+}
+
+
+/**
+ * Destino de valoración: calendario real cuando está configurado y WhatsApp
+ * cuando todavía no existe proveedor. Nunca fabrica disponibilidad.
+ */
+export function bookingLink(fallbackMessage) {
+  return isBookingEnabled() ? BOOKING_URL : whatsAppLink(fallbackMessage)
 }

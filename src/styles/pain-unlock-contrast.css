@@ -1,0 +1,38 @@
+/* Home / PUNTO DE PARTIDA — contraste adaptado al lienzo oscuro.
+   El texto heredaba tinta negra de una etapa en papel crema. */
+body.premium-route--home #problemas .pain-unlock {
+  --pain-ink: #f7f7f3;
+  color: #f7f7f3;
+}
+body.premium-route--home #problemas .pain-unlock-intro > p {
+  color: #f4a261 !important;
+}
+body.premium-route--home #problemas .pain-unlock-intro h2 {
+  color: #f7f7f3 !important;
+  -webkit-text-fill-color: #f7f7f3 !important;
+  max-width: min(100%, 19ch) !important;
+  font-size: clamp(2.25rem, 5.7vw, 5.5rem);
+  line-height: .98;
+  text-wrap: balance;
+}
+body.premium-route--home #problemas .pain-unlock-intro > span {
+  color: rgba(247,247,243,.78) !important;
+  -webkit-text-fill-color: rgba(247,247,243,.78) !important;
+  max-width: 61ch;
+  margin-top: clamp(1.2rem,2.5vw,2rem);
+  font-size: clamp(1rem,1.3vw,1.16rem);
+  line-height: 1.66;
+}
+@media(max-width:760px) {
+  body.premium-route--home #problemas .pain-unlock-intro h2 {
+    font-size: clamp(2.05rem, 6.2vw, 3.5rem);
+    max-width: 100% !important;
+    letter-spacing: -.047em;
+  }
+}
+@media(max-width:480px) {
+  body.premium-route--home #problemas .pain-unlock-intro h2 {
+    font-size: clamp(1.9rem, 8vw, 2.65rem);
+    line-height: 1;
+  }
+}

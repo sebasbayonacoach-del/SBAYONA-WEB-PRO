@@ -37,7 +37,7 @@ body.premium-route--shop .shop-hero-line:nth-child(2)::first-letter {
 body.premium-route--shop .shop-hero-content > p {
   max-width: 42rem;
   margin-top: 1.5rem;
-  color: rgba(247,247,243,.68);
+  color: rgba(247,247,243,.84);
   font-size: clamp(1rem,1.2vw,1.15rem);
   line-height: 1.6;
 }
@@ -72,7 +72,7 @@ body.premium-route--shop .shop-hero-ticket strong {
 
 body.premium-route--shop .shop-hero-ticket small {
   max-width: 34rem;
-  color: rgba(247,247,243,.42);
+  color: rgba(247,247,243,.68);
   font-size: .6rem;
 }
 

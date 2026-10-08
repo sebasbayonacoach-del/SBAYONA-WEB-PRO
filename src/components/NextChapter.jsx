@@ -22,7 +22,7 @@ export default function NextChapter() {
   const { pathname } = useLocation()
   const chapter = nextChapter(pathname)
 
-  if (!chapter) return null
+  if (!chapter || pathname === '/') return null
 
   return (
     <aside className="next-chapter" aria-label="Siguiente parada del recorrido">

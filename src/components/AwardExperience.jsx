@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 const ROUTES = Object.freeze({
@@ -28,7 +28,9 @@ export default function AwardExperience() {
   const lastScrollY = useRef(0)
   const [number, label] = routeIdentity(pathname)
 
-  useEffect(() => {
+  // Clase de composición: debe existir antes del primer paint para no mover
+  // navbar/hero después de que el navegador ya haya calculado el layout.
+  useLayoutEffect(() => {
     document.body.classList.add('award-mode')
     return () => document.body.classList.remove('award-mode')
   }, [])

@@ -14,7 +14,6 @@ import {
   ArrowUpRight,
   BookOpen,
   Check,
-  ExternalLink,
   FileCheck2,
   FileText,
   KeyRound,
@@ -27,18 +26,15 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { buildWhatsAppUrl } from '../config/offerings.js'
-import { socialLinks } from '../config/social.config.js'
-import { resolveProfiles } from '../lib/social/platforms.js'
 import { RESOURCE_QUESTION_TOPICS } from '../lib/forms/privacy.js'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
-import Glyph from '../components/social/Glyph.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import ProtocoloCheckIn from '../components/checkin/ProtocoloCheckIn.jsx'
 import VideoSection from '../components/VideoSection.jsx'
 import { siteMedia } from '../config/siteMedia.js'
 import '../styles/resources.css'
 
-const BRAND_TAGLINE = 'BAYONA · NO ES FITNESS · ES TRANSFORMACIÓN'
+const BRAND_TAGLINE = 'BAYONA · ENTRENA CON DIRECCIÓN · MUÉVETE CON PROPÓSITO'
 const RESOURCES_EASE = [0.16, 1, 0.3, 1]
 
 const HERO_CONTAINER_VARIANTS = Object.freeze({
@@ -115,8 +111,8 @@ const CHALLENGE_EVIDENCE = Object.freeze([
  * aplica el premio que BAYONA confirme por escrito antes de entrar.
  */
 const CHALLENGE_PRIZE = Object.freeze({
-  heading: 'EL PREMIO PUEDE SER UN PROGRAMA PERSONALIZADO.',
-  copy: 'Si completas las condiciones de tu edición, el premio vigente puede ser un programa BAYONA hecho con lo que el propio reto reveló de ti: tu fuerza real, tu recuperación y tus hábitos. No se entrega un plan genérico ni se improvisa al final.',
+  heading: 'EL PREMIO PUEDE SER UN PLAN PERSONALIZADO.',
+  copy: 'Si completas las condiciones de tu edición, el premio vigente puede ser un plan BAYONA construido con lo que el propio reto reveló de ti: tu fuerza real, tu recuperación y tus hábitos. No se entrega una plantilla genérica ni se improvisa al final.',
   guard: 'El premio se comunica por escrito antes de entrar. Si tu edición tiene otro premio vigente, aplica ese y solo ese.',
 })
 
@@ -130,10 +126,6 @@ const CHALLENGE_LEVELS = Object.freeze([
 
 const challengeWhatsAppUrl = buildWhatsAppUrl(
   'Hola BAYONA, quiero conocer las reglas, el uso de las evidencias y el premio vigente del Reto 30 Días antes de decidir si entro.',
-)
-
-const protocolWhatsAppUrl = buildWhatsAppUrl(
-  'Hola BAYONA, quiero recibir El Protocolo BAYONA de 7 días en PDF.',
 )
 
 const MAGAZINE_PUBLICATIONS = Object.freeze([
@@ -235,6 +227,13 @@ const FRESH_PUBLICATION_MEDIA = Object.freeze({
   'cuidarte-sin-castigo': siteMedia.resources.fresh[1],
 })
 
+const PUBLICATION_PRESENTATIONS = Object.freeze({
+  'protocolo-bayona-7-dias': Object.freeze({ tone: 'protocol', cue: 'START / 07' }),
+  'estructurar-tu-semana': Object.freeze({ tone: 'cadence', cue: 'RITMO / 7D' }),
+  'nutricion-sin-extremos': Object.freeze({ tone: 'balance', cue: 'BASE / REAL' }),
+  'cuidarte-sin-castigo': Object.freeze({ tone: 'reset', cue: 'RESET / MENTE' }),
+})
+
 const RESOURCE_TOPIC_MEDIA = siteMedia.resources.topics
 
 // The current editorial design has three topic shelves rather than the conceptual 12-card map.
@@ -246,22 +245,8 @@ const EDITORIAL_TOPIC_MEDIA = Object.freeze({
   conversation: RESOURCE_TOPIC_MEDIA[6],
   reflection: RESOURCE_TOPIC_MEDIA[7],
   health: RESOURCE_TOPIC_MEDIA[8],
-  decision: RESOURCE_TOPIC_MEDIA[9],
-  channels: RESOURCE_TOPIC_MEDIA[10],
   magazine: RESOURCE_TOPIC_MEDIA[11],
 })
-
-const OFFICIAL_CHANNELS = Object.freeze([
-  Object.freeze({ id: 'instagram', handle: '@sebasbayona' }),
-  Object.freeze({ id: 'youtube', handle: '@sevisionari' }),
-  Object.freeze({ id: 'tiktok', handle: '@sebasbayona' }),
-])
-
-const configuredProfiles = resolveProfiles(socialLinks)
-const officialProfiles = OFFICIAL_CHANNELS.map((channel) => {
-  const profile = configuredProfiles.find(({ id }) => id === channel.id)
-  return profile ? { ...profile, handle: channel.handle } : null
-}).filter(Boolean)
 
 function validateQuestionForm(values) {
   const errors = {}
@@ -453,14 +438,22 @@ function PublicationReader({ closeRef, interactiveEffects, onClose, publication,
         <footer className="resources-reader-footer">
           {publication.kind === 'pdf' ? (
             <>
-              <p>La guía gratuita se entrega por WhatsApp para que puedas guardarla y volver a ella cuando quieras.</p>
-              <ExternalWhatsAppLink
-                href={protocolWhatsAppUrl}
+              <p>La guía gratuita se desbloquea al dejar tu nombre y un contacto. Sin cuenta y sin compra.</p>
+              <button
+                type="button"
                 className="resources-action resources-action--primary"
-                magnetic={interactiveEffects}
+                onClick={() => {
+                  onClose()
+                  window.requestAnimationFrame(() => {
+                    document.getElementById('resources-lead')?.scrollIntoView({
+                      behavior: reducedMotion ? 'auto' : 'smooth',
+                      block: 'start',
+                    })
+                  })
+                }}
               >
-                DESCARGAR PDF <ArrowUpRight aria-hidden="true" size={17} strokeWidth={1.2} />
-              </ExternalWhatsAppLink>
+                RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={17} strokeWidth={1.2} />
+              </button>
             </>
           ) : (
             <button className="resources-reader-return" type="button" onClick={onClose}>
@@ -717,9 +710,51 @@ export default function Resources() {
             </motion.div>
 
             <motion.ul className="resources-hero-library" variants={HERO_ITEM_VARIANTS} aria-label="Piezas incluidas en la biblioteca BAYONA">
-              <li><span>01</span><strong>Protocolo 7 días</strong><small>Acción inmediata</small></li>
-              <li><span>02</span><strong>Workbook 30 días</strong><small>Ruta con pruebas</small></li>
-              <li><span>03</span><strong>Consulta experta</strong><small>WhatsApp con contexto</small></li>
+              <li data-presentation="protocol">
+                <a className="resources-hero-library-card" href="#revista" aria-label="Ver presentación del Protocolo BAYONA de 7 días">
+                  <span className="resources-hero-library-visual resources-hero-library-visual--protocol" aria-hidden="true">
+                    <FileCheck2 size={20} strokeWidth={1.25} />
+                    <b>07</b>
+                    <i />
+                  </span>
+                  <span className="resources-hero-library-copy">
+                    <span>01</span>
+                    <strong>Protocolo 7 días</strong>
+                    <small>Acción inmediata</small>
+                  </span>
+                  <ArrowUpRight className="resources-hero-library-arrow" aria-hidden="true" size={16} strokeWidth={1.2} />
+                </a>
+              </li>
+              <li data-presentation="workbook">
+                <a className="resources-hero-library-card" href="#reto" aria-label="Ver presentación del Workbook BAYONA de 30 días">
+                  <span className="resources-hero-library-visual resources-hero-library-visual--workbook" aria-hidden="true">
+                    <FileText size={20} strokeWidth={1.25} />
+                    <b>30</b>
+                    <i />
+                  </span>
+                  <span className="resources-hero-library-copy">
+                    <span>02</span>
+                    <strong>Workbook 30 días</strong>
+                    <small>Ruta con pruebas</small>
+                  </span>
+                  <ArrowUpRight className="resources-hero-library-arrow" aria-hidden="true" size={16} strokeWidth={1.2} />
+                </a>
+              </li>
+              <li data-presentation="consultation">
+                <a className="resources-hero-library-card" href="#question-title" aria-label="Ver presentación de la consulta experta gratuita">
+                  <span className="resources-hero-library-visual resources-hero-library-visual--consultation" aria-hidden="true">
+                    <MessageCircle size={20} strokeWidth={1.25} />
+                    <b>1:1</b>
+                    <i />
+                  </span>
+                  <span className="resources-hero-library-copy">
+                    <span>03</span>
+                    <strong>Consulta experta</strong>
+                    <small>WhatsApp con contexto</small>
+                  </span>
+                  <ArrowUpRight className="resources-hero-library-arrow" aria-hidden="true" size={16} strokeWidth={1.2} />
+                </a>
+              </li>
             </motion.ul>
 
             <motion.div className="resources-hero-actions" variants={HERO_ITEM_VARIANTS}>
@@ -791,7 +826,7 @@ export default function Resources() {
             <header className="resources-section-header resources-reveal">
               <p className="resources-eyebrow">01 · DOSSIER 30 DÍAS · WORKBOOK GUIADO</p>
               <h2 id="challenge-title">30 DÍAS.<br /><span>UN WORKBOOK, NO UNA PROMESA.</span></h2>
-              <p>Taller de 30 días para entrenar por tu cuenta con guía diaria. Mandas sesiones, fotos, comidas o dudas cuando quieras, y al final puedes desbloquear un programa personalizado. Las reglas y el premio se entregan por escrito antes del día uno.</p>
+              <p>Taller de 30 días para entrenar por tu cuenta con guía diaria. Mandas sesiones, fotos, comidas o dudas cuando quieras, y al final puedes solicitar acompañamiento personalizado. Las reglas y el premio se entregan por escrito antes del día uno.</p>
             </header>
 
             <div className="resources-game-opening">
@@ -1057,6 +1092,7 @@ export default function Resources() {
                     {section.publications.map((publication, index) => (
                       <article
                         className="resources-publication-card resources-card resources-spotlight resources-reveal"
+                        data-presentation={PUBLICATION_PRESENTATIONS[publication.id]?.tone ?? 'default'}
                         key={publication.id}
                         style={{ '--resources-stagger': `${index * 0.08}s` }}
                       >
@@ -1066,9 +1102,13 @@ export default function Resources() {
                             variant: 'accent',
                           })}
                           aria-hidden="true"
+                          data-presentation={PUBLICATION_PRESENTATIONS[publication.id]?.tone ?? 'default'}
                           data-topic={publication.topic}
                         >
                           <span>{publication.number}</span>
+                          <small className="resources-publication-cue">
+                            {PUBLICATION_PRESENTATIONS[publication.id]?.cue ?? 'BAYONA / NOTE'}
+                          </small>
                           <FileText size={30} strokeWidth={0.9} />
                           <i />
                         </div>
@@ -1106,26 +1146,26 @@ export default function Resources() {
               <header className="resources-subsection-heading">
                 <span>MATERIAL DESCARGABLE</span>
                 <h3 id="downloads-title">PARA GUARDAR, NO PARA VER UNA VEZ.</h3>
-                <p>Tres piezas que se entregan en PDF por WhatsApp: las abres en el móvil, las imprimes o las dejas en tu cuenta y vuelves cuando te haga falta.</p>
+                <p>Tres piezas gratuitas. Déjanos tu nombre y un contacto al final y se habilitan para descargar sin crear una cuenta.</p>
               </header>
               <ol>
                 <li>
                   <span>01 · PDF</span>
                   <strong>El Protocolo BAYONA de 7 días</strong>
                   <p>Una acción concreta por día: movimiento, comida real y recuperación.</p>
-                  <a href={protocolWhatsAppUrl} target="_blank" rel="noopener noreferrer">PEDIRLO POR WHATSAPP <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
+                  <a href="#resources-lead">RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>
                 <li>
                   <span>02 · WORKBOOK</span>
                   <strong>Cuaderno de ruta del Reto 30 días</strong>
                   <p>Rutina diaria por nivel, check-ins y condiciones de la edición.</p>
-                  <a href={challengeWhatsAppUrl} target="_blank" rel="noopener noreferrer">PEDIRLO POR WHATSAPP <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
+                  <a href="#resources-lead">RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>
                 <li>
                   <span>03 · GUÍA</span>
                   <strong>Guía nutricional general del reto</strong>
                   <p>Estructura de platos simple y repetible. No sustituye un plan individual.</p>
-                  <a href={challengeWhatsAppUrl} target="_blank" rel="noopener noreferrer">PEDIRLA POR WHATSAPP <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
+                  <a href="#resources-lead">RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>
               </ol>
             </section>
@@ -1367,82 +1407,14 @@ export default function Resources() {
           </div>
         </section>
 
-        <section
-          {...sceneBackgroundProps(EDITORIAL_TOPIC_MEDIA.channels, {
-            className: 'resources-section resources-channels',
-            variant: 'subtle',
-            pseudo: 'after',
-          })}
-          data-section-number="04"
-          aria-labelledby="channels-title"
-        >
-          <div className="resources-shell" data-immersive="clip">
-            <header className="resources-section-header resources-reveal">
-              <p className="resources-eyebrow">04 · SÍGUEME</p>
-              <h2 id="channels-title">TODO SE ANUNCIA<br /><span>EN REDES.</span></h2>
-              <p>Las publicaciones, los regalos y los documentos nuevos se avisan en Instagram, YouTube y TikTok. Sígueme para enterarte primero.</p>
-            </header>
 
-            {officialProfiles.length > 0 ? (
-              <ul className="resources-channel-list" aria-label="Canales sociales oficiales">
-                {officialProfiles.map((profile, index) => (
-                  <li className="resources-reveal" key={profile.id} style={{ '--resources-stagger': `${index * 0.08}s` }}>
-                    <a className="resources-card resources-spotlight" href={profile.url} target="_blank" rel="noopener noreferrer">
-                      <Glyph name={profile.glyph} size={25} />
-                      <span>
-                        <small>{profile.label}</small>
-                        <strong>{profile.handle}</strong>
-                      </span>
-                      <ExternalLink aria-hidden="true" size={18} strokeWidth={1.2} />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="resources-channel-empty" role="status">Los canales oficiales se publicarán aquí cuando estén configurados.</p>
-            )}
-          </div>
+
+        <section id="resources-lead" className="resources-lead-capture" aria-label="Recibir recursos gratuitos">
+          <LeadMagnet
+            heading="Recibe tus recursos gratis."
+            copy="Déjanos tu nombre y un contacto. Tus tres recursos se habilitan al instante y puedes pedir una valoración cuando quieras."
+          />
         </section>
-
-        <section
-          {...sceneBackgroundProps(EDITORIAL_TOPIC_MEDIA.decision, {
-            className: 'resources-section resources-decision',
-            variant: 'accent',
-            pseudo: 'after',
-          })}
-          data-section-number="05"
-          aria-labelledby="decision-title"
-        >
-          <div className="resources-shell resources-decision-inner resources-reveal">
-            <p className="resources-eyebrow">05 · SIGUIENTE PASO</p>
-            <h2 id="decision-title">¿NECESITAS MÁS ESTRUCTURA?<br /><span>COMPARA LOS PROGRAMAS.</span></h2>
-            <p className="resources-decision-hook">Si un recurso te resultó útil, revisa las sesiones, el seguimiento y el precio de cada plan. La comunidad abierta sigue disponible sin compra.</p>
-            <p className="resources-free-band">COMUNIDAD ABIERTA · NO REQUIERE UN PLAN</p>
-            <div className="resources-decision-actions">
-              <MagneticLink
-                className="resources-action resources-action--primary"
-                enabled={interactiveEffects}
-                to="/programs"
-              >
-                VER PROGRAMAS <ArrowUpRight aria-hidden="true" size={17} strokeWidth={1.2} />
-              </MagneticLink>
-              <MagneticLink
-                className="resources-action resources-action--ghost"
-                enabled={interactiveEffects}
-                to="/community"
-              >
-                UNIRME A LA COMUNIDAD <ArrowUpRight aria-hidden="true" size={17} strokeWidth={1.2} />
-              </MagneticLink>
-            </div>
-            <blockquote>
-              <p>EL CAMBIO NO EMPIEZA CON UN PLAN PERFECTO. EMPIEZA CON UNA DECISIÓN.</p>
-              <cite>— SEBASTIÁN</cite>
-            </blockquote>
-          </div>
-        </section>
-
-        {/* Embudo freemium (Fase 2 SaaS): cierra la página sin tocar el flujo de decisión. */}
-        <LeadMagnet />
       </div>
 
       <AnimatePresence>

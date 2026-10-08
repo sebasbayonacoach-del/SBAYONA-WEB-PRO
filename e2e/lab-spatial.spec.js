@@ -37,7 +37,7 @@ const ENGINE_PATTERNS = [
   /postprocessing/i,
   /Scene3D/i,
   /TrajectoryScene/i,
-  /TrajectoryStage/i,
+  /\/TrajectoryStage\.jsx(?:\?|$)/i,
 ]
 const isEngineRequest = (url) => ENGINE_PATTERNS.some((pattern) => pattern.test(url))
 
@@ -99,7 +99,7 @@ test.describe('laboratorio espacial · aislamiento por intención', () => {
 
     // El contenido no se fue con la escena: sigue legible y seleccionable.
     await expect(page.locator('.lab-panel__body').first()).toContainText(/./)
-    await expect(page.getByRole('status').first()).toContainText(/Vista espacial activa/i)
+    await expect(page.locator('.lab-mode__status')).toContainText(/Vista espacial activa/i)
 
     const info = await page.evaluate(() => {
       const canvas = document.querySelector('[data-lab-stage="trajectory"] canvas')
@@ -125,7 +125,10 @@ test.describe('laboratorio espacial · aislamiento por intención', () => {
   test('cambiar de estación no vuelve a pedir el motor', async ({ page }) => {
     await openLab(page, { width: 1440, height: 900 })
     await page.getByRole('button', { name: /^Activar vista espacial$/ }).click()
-    await expect(page.locator('[data-lab-stage="trajectory"]')).toBeVisible({ timeout: 15_000 })
+    const stage = page.locator('[data-lab-stage="trajectory"]')
+    await expect(stage).toBeVisible({ timeout: 15_000 })
+    await expect(stage.locator('canvas')).toHaveCount(1)
+    await page.waitForLoadState('networkidle')
 
     const requests = []
     collect(page, requests, [])
@@ -161,7 +164,10 @@ test.describe('laboratorio espacial · aislamiento por intención', () => {
   test('salir del laboratorio hacia una ruta protegida no arrastra el motor a esa ruta', async ({ page }) => {
     await openLab(page, { width: 1440, height: 900 })
     await page.getByRole('button', { name: /^Activar vista espacial$/ }).click()
-    await expect(page.locator('[data-lab-stage="trajectory"]')).toBeVisible({ timeout: 15_000 })
+    const stage = page.locator('[data-lab-stage="trajectory"]')
+    await expect(stage).toBeVisible({ timeout: 15_000 })
+    await expect(stage.locator('canvas')).toHaveCount(1)
+    await page.waitForLoadState('networkidle')
 
     // Diferencia clave: una descarga EMPEZADA ANTES que termine después de navegar
     // no es una fuga de la nueva ruta. Solo se imputan las peticiones iniciadas
@@ -192,7 +198,7 @@ test.describe('laboratorio espacial · aislamiento por intención', () => {
     await page.keyboard.press('End')
     await expect(page.locator('[data-lab-stage="trajectory"]')).toHaveAttribute('data-station', 'support')
     const focusedTitle = await page.evaluate(() => document.activeElement?.innerText ?? '')
-    expect(focusedTitle).toMatch(/ACOMPAÑAMOS|acompañamos/i)
+    expect(focusedTitle).toMatch(/EL PLAN SIGUE CONTIGO|PLAN SIGUE CONTIGO/i)
     await page.keyboard.press('Escape')
     await expect(page.locator('[data-lab-stage="trajectory"]')).toHaveAttribute('data-station', 'understand')
     await page.keyboard.press('Tab')
@@ -203,8 +209,10 @@ test.describe('laboratorio espacial · aislamiento por intención', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await openLab(page, { width: 1440, height: 900 })
     await page.getByRole('button', { name: /^Activar vista espacial$/ }).click()
-    await expect(page.locator('[data-lab-stage="trajectory"]')).toBeVisible({ timeout: 15_000 })
-    await expect(page.getByRole('status').first()).toContainText(/movimiento reducido/i)
+    const stage = page.locator('[data-lab-stage="trajectory"]')
+    await expect(stage).toBeVisible({ timeout: 15_000 })
+    await expect(stage.locator('canvas')).toHaveCount(1)
+    await expect(page.locator('.lab-mode__status')).toContainText(/movimiento reducido/i)
 
     // El encuadre debe ser distinto por estación (corte) sin animación continua:
     // dos lecturas seguidas del mismo estado tienen que coincidir.

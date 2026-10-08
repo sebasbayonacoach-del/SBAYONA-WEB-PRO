@@ -104,7 +104,7 @@ body.premium-route--home :is(
   }
 
   body.premium-route--home .benefits-orbit-viewport,
-  body.premium-route--home .proof-process-viewport {
+  body.premium-route--home .proof-process-stage:not(.sticky-stage--static) .proof-process-viewport {
     position: relative;
     display: block !important;
     width: 100% !important;
@@ -113,7 +113,7 @@ body.premium-route--home :is(
   }
 
   body.premium-route--home .benefits-orbit-visual,
-  body.premium-route--home .proof-process-visual {
+  body.premium-route--home .proof-process-stage:not(.sticky-stage--static) .proof-process-visual {
     position: absolute;
     inset: 2.5rem 0 auto;
     min-height: 0 !important;
@@ -134,7 +134,7 @@ body.premium-route--home :is(
   }
 
   body.premium-route--home .benefits-orbit-copy,
-  body.premium-route--home .proof-process-copy {
+  body.premium-route--home .proof-process-stage:not(.sticky-stage--static) .proof-process-copy {
     position: absolute;
     z-index: 4;
     left: 1rem;
@@ -145,7 +145,7 @@ body.premium-route--home :is(
   }
 
   body.premium-route--home .benefits-orbit-copy::before,
-  body.premium-route--home .proof-process-copy::before {
+  body.premium-route--home .proof-process-stage:not(.sticky-stage--static) .proof-process-copy::before {
     content: '';
     position: absolute;
     z-index: -1;
@@ -155,7 +155,7 @@ body.premium-route--home :is(
   }
 
   body.premium-route--home .benefits-orbit-copy h3,
-  body.premium-route--home .proof-process-copy h3 {
+  body.premium-route--home .proof-process-stage:not(.sticky-stage--static) .proof-process-copy h3 {
     max-width: 11ch;
     font-size: clamp(2.4rem, 10.5vw, 3.7rem);
     line-height: .9;
@@ -168,7 +168,7 @@ body.premium-route--home :is(
     color: rgba(247,247,243,.72);
   }
 
-  body.premium-route--home .proof-process-counter {
+  body.premium-route--home .proof-process-stage:not(.sticky-stage--static) .proof-process-counter {
     right: 1rem;
     bottom: 1.25rem;
     z-index: 5;

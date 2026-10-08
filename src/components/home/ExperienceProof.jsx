@@ -34,6 +34,22 @@ function DynamicPortrait({ person, progress }) {
   )
 }
 
+function LateralFilm({ index, progress }) {
+  const travel = useTransform(progress,[0,1],['17%','-18%'])
+  const next = homeTestimonials[(index+1)%homeTestimonials.length]
+  const after = homeTestimonials[(index+2)%homeTestimonials.length]
+  return (
+    <motion.div className="bayona-experience-film" style={{x:travel}} aria-hidden="true">
+      {[next,after].map((person,i)=>(
+        <figure className="bayona-experience-film__slide" key={person.id} style={{'--film-order':i}}>
+          <img src={testimonialVariant(person.image,256)} alt="" loading="lazy" decoding="async" width="256" height="144" />
+          <figcaption>{String((index+i+1)%homeTestimonials.length+1).padStart(2,'0')} / SIGUIENTE HISTORIA</figcaption>
+        </figure>
+      ))}
+    </motion.div>
+  )
+}
+
 function StoryFrame({ person, index, total, progress, isStatic }) {
   return (
     <div className="experience-story__frame">
@@ -54,6 +70,7 @@ function StoryFrame({ person, index, total, progress, isStatic }) {
         <div className="experience-story__scrim" />
       </div>
 
+      {!isStatic && <LateralFilm index={index} progress={progress} />}
       <div className="experience-story__chrome" aria-hidden="true">
         <span>EXPERIENCIA {String(index + 1).padStart(2, '0')}</span>
         <span>{String(total).padStart(2, '0')} VOCES</span>
@@ -104,7 +121,7 @@ function StoryFrame({ person, index, total, progress, isStatic }) {
 
 export default function ExperienceProof() {
   const { mode } = useCapabilities()
-  const length = mode === 'desktop' ? '155vh' : '165vh'
+  const length = mode === 'desktop' ? '250vh' : '185vh'
 
   return (
     <section
@@ -118,7 +135,7 @@ export default function ExperienceProof() {
           GENTE REAL.
           <span>CUATRO PUNTOS DE PARTIDA.</span>
         </h2>
-        <small>DESLIZA. UNA HISTORIA POR VEZ.</small>
+        <small>HISTORIAS QUE AVANZAN CONTIGO</small>
       </div>
 
       <StickyStage

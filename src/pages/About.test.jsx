@@ -74,9 +74,14 @@ describe('/about — historia, honestidad y conversión', () => {
   it('cierra con el método y CTAs verificables hacia planes y WhatsApp', () => {
     const { container } = render(<MemoryRouter><About /></MemoryRouter>)
 
-    expect(screen.getByRole('heading', { name: /HISTORIAS\s*EN MOVIMIENTO/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /DE COLOMBIA A ESPAÑA\.\s*HISTORIAS QUE SIGUEN\./i })).toBeInTheDocument()
+    expect(screen.getByText('TRAYECTORIA E IMPACTO')).toBeInTheDocument()
+    expect(screen.getByText('10', { selector: '.globe-impact-stat strong' })).toBeInTheDocument()
+    expect(screen.getByText('4', { selector: '.globe-impact-stat strong' })).toBeInTheDocument()
+    expect(screen.getByText('5', { selector: '.globe-impact-stat strong' })).toBeInTheDocument()
+    expect(container.querySelectorAll('.globe-testimonials-world-point')).toHaveLength(10)
     expect(screen.getByRole('heading', { name: /NO ES UNA RUTINA\.\s*ES UNA DECISIÓN TRAS OTRA\./i })).toBeInTheDocument()
-    expect(container.textContent).toContain('ENTRENAMOS, REGISTRAMOS Y AJUSTAMOS. JUNTOS.')
+    expect(container.textContent).not.toContain('ENTRENAMOS, REGISTRAMOS Y AJUSTAMOS. JUNTOS.')
 
     expect(screen.getByRole('link', { name: /EMPEZAR JUNTOS/i })).toHaveAttribute('href', '/programs')
 

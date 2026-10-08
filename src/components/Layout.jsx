@@ -1,12 +1,13 @@
 import { Fragment, Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, Menu, ShoppingCart, X } from 'lucide-react'
-import { Link, NavLink } from 'react-router-dom'
+import { ArrowUpRight, Menu, Moon, ShoppingCart, Sun, X } from 'lucide-react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { socialLinks } from '../config/social.config'
 import { whatsAppLink } from '../config/site.config.js'
 import { resolveProfiles } from '../lib/social/platforms'
 import { selectCartCount, useCartStore } from '../store/cartStore.js'
 import { prefetchRoute } from '../lib/perf/routePrefetch.js'
+import { applySiteTheme, readSiteTheme, SITE_THEME_KEY } from '../lib/ui/siteTheme.js'
 // ÍTEM 1 (perf): CartDrawer (vaul) fuera del entry — el drawer está cerrado en
 // el primer pintado, así que va con lazy + Suspense fallback null.
 const CartDrawer = lazy(() => import('./cart/CartDrawer.jsx'))
@@ -14,14 +15,16 @@ const CartDrawer = lazy(() => import('./cart/CartDrawer.jsx'))
 // + fallback null. Los toasts de Programs/Shop (toast.success desde 'sonner')
 // siguen funcionando: el Toaster se monta en paralelo tras el primer pintado.
 const Toaster = lazy(() => import('sonner').then((module) => ({ default: module.Toaster })))
+const SceneMount = lazy(() =>
+  import('../engine/scene/SceneMount.jsx').then((module) => ({ default: module.SceneMount })),
+)
 import { sceneBackgroundProps } from './SceneBackground.jsx'
 import Glyph from './social/Glyph'
-// Import DIRECTO del montador (no el barrel): preserva el code-splitting de R3F.
-import { SceneMount } from '../engine/scene/SceneMount.jsx'
 // Import DIRECTO del primitivo (no el barrel), mismo criterio que arriba.
 import { TextMask } from '../engine/motion/TextMask.jsx'
 // Import DIRECTO del hook (no el barrel): magnetismo del CTA compartido.
 import { useMagnetic } from '../engine/hooks/useMagnetic.js'
+import '../styles/gym-funnel-v2.css'
 
 const MotionLink = motion.create(Link)
 
@@ -40,57 +43,26 @@ const MotionLink = motion.create(Link)
  * Inicio no se repite como enlace de escritorio: la marca ya es el enlace al
  * inicio. En móvil sí aparece explícito y numerado.
  */
-const NAV_GROUPS = [
-  {
-    id: 'recorrido',
-    label: 'RECORRIDO',
-    links: [
-      ['Método', '/about'],
-    ],
-  },
-  {
-    id: 'entrenar',
-    label: 'ENTRENAR',
-    links: [
-      ['Programas', '/programs'],
-      ['Academia Parkour', '/parkour-academy'],
-    ],
-  },
-  {
-    id: 'ecosistema',
-    label: 'ECOSISTEMA',
-    links: [
-      ['Comunidad', '/community'],
-      ['BAYONA+', '/app'],
-      ['Tienda', '/shop'],
-    ],
-  },
-  {
-    id: 'decidir',
-    label: 'DECIDIR',
-    links: [
-      ['Recursos', '/resources'],
-      ['FAQ', '/faq'],
-    ],
-  },
-]
+const NAV_ITEMS = Object.freeze([
+  { label: 'Servicios', href: '/programs' },
+  { label: 'Parkour', href: '/parkour-academy' },
+  { label: 'Tienda', href: '/shop' },
+  { label: 'Recursos', href: '/resources' },
+  { label: 'Nosotros', href: '/about' },
+])
 
-/** Lista plana del menú móvil: inicio + grupos + entrada, siempre numerada. */
-const MOBILE_NAV_ITEMS = [
+const MOBILE_NAV_ITEMS = Object.freeze([
   { label: 'Inicio', href: '/' },
-  ...NAV_GROUPS.flatMap((group) => group.links.map(([label, href]) => ({
-    label,
-    href,
-    groupLabel: group.label,
-  }))),
-  { label: 'Mi cuenta', href: '/entrar' },
-  { label: 'ENTRAR A BAYONA', href: '/onboarding', entry: true },
-]
+  ...NAV_ITEMS,
+])
 
 export function Navbar() {
+  const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [siteTheme, setSiteTheme] = useState(readSiteTheme)
   const cartCount = useCartStore(selectCartCount)
+  const shopContext = pathname === '/shop' || pathname.startsWith('/shop/')
   const cartOpen = useCartStore((state) => state.isOpen)
   const setCartOpen = useCartStore((state) => state.setOpen)
   const menuButtonRef = useRef(null)
@@ -111,6 +83,16 @@ export function Navbar() {
     updateScrolledState()
     window.addEventListener('scroll', updateScrolledState, { passive: true })
     return () => window.removeEventListener('scroll', updateScrolledState)
+  }, [])
+
+  useEffect(() => {
+    const synchronizeTheme = (event) => {
+      if (event.key === SITE_THEME_KEY || event.key === null) {
+        setSiteTheme(applySiteTheme(readSiteTheme()))
+      }
+    }
+    window.addEventListener('storage', synchronizeTheme)
+    return () => window.removeEventListener('storage', synchronizeTheme)
   }, [])
 
   useEffect(() => {
@@ -200,39 +182,43 @@ export function Navbar() {
       <Link className="brand" to="/" onClick={close} aria-label="BAYONA, ir al inicio">
         <span aria-hidden="true">B.</span><strong>BAYONA</strong>
       </Link>
-      <nav className="desktop-nav" aria-label="Navegación principal">
-        {NAV_GROUPS.map((group) => (
-          <div className="nav-group" role="group" aria-label={group.label} key={group.id}>
-            <span className="nav-group-label" aria-hidden="true">{group.label}</span>
-            {group.links.map(([label, href]) => <NavLink key={href} to={href} onMouseEnter={() => prefetchRoute(href)}>{label}</NavLink>)}
-          </div>
+      <nav className="desktop-nav gym-primary-nav" aria-label="Navegación principal">
+        {NAV_ITEMS.map(({ label, href }) => (
+          <NavLink key={href} to={href} onMouseEnter={() => prefetchRoute(href)}>
+            {label}
+          </NavLink>
         ))}
       </nav>
       <button
-        className="nav-cart-button"
+        className="site-theme-toggle"
         type="button"
-        onClick={openCart}
-        aria-label={`Abrir carrito${cartCount > 0 ? `, ${cartCount} ${cartCount === 1 ? 'artículo' : 'artículos'}` : ', vacío'}`}
+        aria-label="Modo día"
+        aria-pressed={siteTheme === 'day'}
+        title={siteTheme === 'day' ? 'Cambiar a modo noche' : 'Cambiar a modo día'}
+        onClick={() => {
+          setSiteTheme((current) =>
+            applySiteTheme(current === 'day' ? 'night' : 'day', { persist: true }),
+          )
+        }}
       >
-        <ShoppingCart size={18} strokeWidth={1} aria-hidden="true" />
-        <span className="nav-cart-label">Carrito</span>
-        <span className="nav-cart-count" aria-hidden="true">{cartCount}</span>
+        {siteTheme === 'day' ? <Moon size={17} strokeWidth={1.7} aria-hidden="true" /> : <Sun size={17} strokeWidth={1.7} aria-hidden="true" />}
+        <span>{siteTheme === 'day' ? 'NOCHE' : 'DÍA'}</span>
       </button>
-      {/*
-        AR-005 · PUERTA VISIBLE /entrar. "Mi cuenta" discreto junto al
-        carrito: la pantalla de acceso deja de ser solo URL directa.
-        Los cuatro grupos por intención quedan intactos; el CTA sigue
-        apuntando a recepción (/onboarding), no a comprar.
-      */}
-      <Link className="nav-account" to="/entrar" onMouseEnter={() => prefetchRoute('/entrar')}>Mi cuenta</Link>
-      {/*
-        El CTA de la barra lleva a recepción, no a comprar: quien entra desde
-        cualquier página primero orienta su camino (tres preguntas, sin cuenta)
-        y después decide. La compra directa ya vive en Programas y en los planes.
-      */}
-      <Link className="nav-cta" to="/onboarding" onMouseEnter={() => prefetchRoute('/onboarding')} aria-label="Entrar a BAYONA: recepción y orientación">
-        Entrar <ArrowUpRight size={15} strokeWidth={1} />
-      </Link>
+      {shopContext ? (
+        <button
+          className="nav-cart-button"
+          type="button"
+          onClick={openCart}
+          aria-label={`Abrir carrito${cartCount > 0 ? `, ${cartCount} ${cartCount === 1 ? 'artículo' : 'artículos'}` : ', vacío'}`}
+        >
+          <ShoppingCart size={18} strokeWidth={1} aria-hidden="true" />
+          <span className="nav-cart-label">Carrito</span>
+          <span className="nav-cart-count" aria-hidden="true">{cartCount}</span>
+        </button>
+      ) : null}
+      <a className="nav-cta gym-nav-cta" href="/#empieza" aria-label="Empieza gratis con BAYONA">
+        Empieza gratis <ArrowUpRight size={15} strokeWidth={1} />
+      </a>
       <button
         ref={menuButtonRef}
         className="menu-button"
@@ -256,57 +242,51 @@ export function Navbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p>BAYONA / NAVEGACIÓN</p>
-            <div className="mobile-nav-list">
-              {MOBILE_NAV_ITEMS.map((item, index) => (
-                <Fragment key={item.href}>
-                  {item.groupLabel && item.groupLabel !== MOBILE_NAV_ITEMS[index - 1]?.groupLabel && (
-                    <p className="mobile-nav-group-label">{item.groupLabel}</p>
-                  )}
-                  <NavLink
-                    to={item.href}
-                    onClick={close}
-                    onMouseEnter={() => prefetchRoute(item.href)}
-                    className={item.entry ? 'mobile-nav-entry' : undefined}
-                  >
-                    <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{item.label}
-                  </NavLink>
-                </Fragment>
-              ))}
-              <button
-                className="mobile-cart-action"
-                type="button"
-                onClick={openCart}
-                aria-label={`Abrir carrito${cartCount > 0 ? `, ${cartCount} ${cartCount === 1 ? 'artículo' : 'artículos'}` : ', vacío'}`}
-              >
-                <span aria-hidden="true">{String(MOBILE_NAV_ITEMS.length + 1).padStart(2, '0')}</span>
-                <span className="mobile-cart-copy">
-                  <strong>Carrito</strong>
-                  <small>{cartCount > 0 ? `${cartCount} ${cartCount === 1 ? 'artículo' : 'artículos'}` : 'Vacío'}</small>
-                </span>
-                <ShoppingCart size={22} strokeWidth={1} aria-hidden="true" />
-              </button>
+            <div className="gym-mobile-nav-head">
+              <p>MENÚ</p>
+              <span>Entrenamiento · fuerza · movimiento</span>
             </div>
-            <aside className="mobile-nav-spotlight" aria-label="Empezar con BAYONA">
-              <span className="mobile-nav-spotlight-index">B / 01</span>
-              <div className="mobile-nav-spotlight-copy">
-                <p>UN SISTEMA. UNA DIRECCIÓN.</p>
-                <h2>ENTRENA CON DIRECCIÓN.</h2>
-                <span>
-                  Evaluamos tu punto de partida, construimos una ruta y la ajustamos contigo.
-                  Sin ruido. Sin rutinas copiadas.
-                </span>
-              </div>
-              <div className="mobile-nav-spotlight-steps" aria-hidden="true">
-                <span>01&nbsp;&nbsp;LEER</span>
-                <span>02&nbsp;&nbsp;DISEÑAR</span>
-                <span>03&nbsp;&nbsp;AJUSTAR</span>
-              </div>
-              <Link className="mobile-nav-spotlight-cta" to="/onboarding" onClick={close} onMouseEnter={() => prefetchRoute('/onboarding')}>
-                EMPEZAR EL RECORRIDO <ArrowUpRight size={18} strokeWidth={1.2} aria-hidden="true" />
-              </Link>
-            </aside>
-            <small>BAYONA · MOVIMIENTO, CIENCIA Y PROPÓSITO HUMANO.</small>
+            <div className="mobile-nav-list gym-mobile-nav-list">
+              {MOBILE_NAV_ITEMS.map((item, index) => (
+                <NavLink
+                  key={item.href}
+                  to={item.href}
+                  onClick={close}
+                  onMouseEnter={() => prefetchRoute(item.href)}
+                >
+                  <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  <strong>{item.label}</strong>
+                  <ArrowUpRight size={22} strokeWidth={1} aria-hidden="true" />
+                </NavLink>
+              ))}
+            </div>
+            <div className="gym-mobile-nav-conversion">
+              <p>Tu primera decisión no cuesta nada.</p>
+              <span>Déjanos tus datos, recibe tus recursos de inicio y pide tu valoración.</span>
+              <a href="/#empieza" onClick={close}>
+                EMPIEZA GRATIS <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
+              </a>
+              <a
+                className="gym-mobile-nav-whatsapp"
+                href={whatsAppLink('Hola BAYONA, quiero información sobre sus servicios de entrenamiento.')}
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+              >
+                HABLAR POR WHATSAPP
+              </a>
+              {shopContext ? (
+                <button
+                  className="mobile-cart-action"
+                  type="button"
+                  onClick={openCart}
+                  aria-label={`Abrir carrito${cartCount > 0 ? `, ${cartCount} artículos` : ', vacío'}`}
+                >
+                  <ShoppingCart size={20} strokeWidth={1} aria-hidden="true" />
+                  <span>Carrito · {cartCount}</span>
+                </button>
+              ) : null}
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>
@@ -314,7 +294,7 @@ export function Navbar() {
         <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
       </Suspense>
       <Suspense fallback={null}>
-        <Toaster position="bottom-center" theme="dark" richColors />
+        <Toaster position="bottom-center" theme={siteTheme === 'day' ? 'light' : 'dark'} richColors />
       </Suspense>
     </header>
   )
@@ -323,35 +303,26 @@ export function Navbar() {
 export function Footer() {
   const profiles = useMemo(() => resolveProfiles(socialLinks), [])
   return (
-    <footer className="footer">
+    <footer className="footer gym-footer">
       <div className="footer-top">
         <Link className="footer-mark" to="/" aria-label="BAYONA, ir al inicio">BAYONA</Link>
-        <p>Movimiento, ciencia y propósito humano.</p>
+        <p>Entrenamiento personal, fuerza, movimiento y acompañamiento.</p>
       </div>
-      {/*
-        El pie repite la arquitectura de la barra (Fase 4): los cuatro grupos
-        por intención más el bloque de entrada. El pie anterior solo ofrecía
-        cinco enlaces y dejaba fuera la recepción y el canal humano.
-      */}
-      <div className="footer-columns">
-        {NAV_GROUPS.map((group) => (
-          <nav className="footer-column" aria-label={`Pie de página: ${group.label}`} key={group.id}>
-            <p>{group.label}</p>
-            {group.links.map(([label, href]) => <Link key={href} to={href}>{label}</Link>)}
-          </nav>
-        ))}
-        <div className="footer-column footer-entry">
-          <p>ENTRAR</p>
-          <Link to="/onboarding">ENTRAR A BAYONA</Link>
-          {/* AR-005: la puerta de acceso también visible en el pie. */}
-          <Link to="/entrar">MI CUENTA</Link>
-          <a
-            href={whatsAppLink('Hola BAYONA, quiero conocer el camino que mejor encaja conmigo.')}
-            target="_blank"
-            rel="noreferrer"
-          >
-            HABLAR POR WHATSAPP
+      <div className="footer-columns gym-footer-columns">
+        <nav className="footer-column" aria-label="Explorar BAYONA">
+          <p>EXPLORAR</p>
+          {NAV_ITEMS.map(({ label, href }) => <Link key={href} to={href}>{label}</Link>)}
+        </nav>
+        <nav className="footer-column" aria-label="Ayuda">
+          <p>AYUDA</p>
+          <Link to="/faq">Preguntas frecuentes</Link>
+          <a href={whatsAppLink('Hola BAYONA, quiero información sobre sus servicios de entrenamiento.')} target="_blank" rel="noreferrer">
+            WhatsApp
           </a>
+        </nav>
+        <div className="footer-column footer-entry">
+          <p>EMPIEZA</p>
+          <a href="/#empieza">RECIBIR MIS RECURSOS</a>
         </div>
       </div>
       {profiles.length > 0 && (
@@ -365,7 +336,7 @@ export function Footer() {
       )}
       <div className="footer-bottom">
         <small>© {new Date().getFullYear()} BAYONA</small>
-        <small>DISEÑADO PARA AVANZAR</small>
+        <small>ENTRENA CON DIRECCIÓN</small>
       </div>
     </footer>
   )
@@ -488,7 +459,11 @@ export function PageHero({ title, kicker, media, children, compact = false, scen
         el orden de pintado la deja delante de la imagen de fondo y detrás
         del contenido (z-index 1). Si fuera antes, el backdrop opaco la taparía.
       */}
-      {scene && <SceneMount config={scene} className="page-hero-canvas" />}
+      {scene ? (
+        <Suspense fallback={null}>
+          <SceneMount config={scene} className="page-hero-canvas" />
+        </Suspense>
+      ) : null}
       <div className="page-hero-content" style={{ position: 'relative', zIndex: 1 }}>
         {kicker && (
           <motion.div {...introMotion}>

@@ -22,27 +22,21 @@ function getBreadcrumb() {
 }
 
 describe('Breadcrumb (Fase 4)', () => {
-  it.each(['/shop', '/parkour-academy'])('identifica %s sin esperar al montaje de la página', (pathname) => {
-    renderAt(pathname)
-    expect(getBreadcrumb()).toHaveAttribute('data-route', pathname)
+  it('identifica /parkour-academy sin esperar al montaje de la página', () => {
+    renderAt('/parkour-academy')
+    expect(getBreadcrumb()).toHaveAttribute('data-route', '/parkour-academy')
   })
 
-  it('muestra la posición en rutas de contenido con el último paso marcado como página actual', () => {
-    renderAt('/programs')
-
-    const nav = getBreadcrumb()
-    expect(nav).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Inicio' })).toHaveAttribute('href', '/')
-    const current = screen.getByText('Programas')
-    expect(current).toHaveAttribute('aria-current', 'page')
-    expect(current.tagName).toBe('SPAN')
+  it.each(['/about', '/programs', '/resources', '/shop', '/community'])('no monta la miga en %s porque su hero ya resuelve posición', (pathname) => {
+    renderAt(pathname)
+    expect(getBreadcrumb()).not.toBeInTheDocument()
   })
 
   it('construye trails de varios niveles en las fichas de plan', () => {
     renderAt('/plan/fuerza')
 
     expect(getBreadcrumb()).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Programas' })).toHaveAttribute('href', '/programs')
+    expect(screen.getByRole('link', { name: 'Servicios' })).toHaveAttribute('href', '/programs')
     expect(screen.getByText(/plan fuerza/i)).toHaveAttribute('aria-current', 'page')
   })
 

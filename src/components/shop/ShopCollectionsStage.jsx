@@ -2,35 +2,29 @@ import { motion, useTransform } from 'framer-motion'
 import { ArrowDownRight } from 'lucide-react'
 import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
 import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
-import { mediaHeroUrls } from '../../config/siteMedia.js'
 import '../../styles/shop-collections-stage.css'
 
-function MovingBackdrop({ collection, progress }) {
+function MovingBackdrop({ progress }) {
   const scale = useTransform(progress, [0, 1], [1.08, 1.02])
   const x = useTransform(progress, [0, 1], ['-1.5%', '1.5%'])
-  const src = mediaHeroUrls(collection.media).retina || collection.media?.src
   return (
     <motion.div
       className="shop-collection-stage__backdrop"
-      style={{ scale, x, backgroundImage: src ? `url("${src}")` : undefined }}
+      style={{ scale, x }}
       aria-hidden="true"
     />
   )
 }
 
 function CollectionFrame({ collection, index, total, progress, isStatic, onSelect }) {
-  const src = mediaHeroUrls(collection.media).retina || collection.media?.src
 
   return (
     <div className="shop-collection-stage__frame">
       <div className="shop-collection-stage__media" aria-hidden="true">
         {isStatic ? (
-          <div
-            className="shop-collection-stage__backdrop"
-            style={{ backgroundImage: src ? `url("${src}")` : undefined }}
-          />
+          <div className="shop-collection-stage__backdrop" />
         ) : (
-          <MovingBackdrop collection={collection} progress={progress} />
+          <MovingBackdrop progress={progress} />
         )}
         <div className="shop-collection-stage__scrim" />
       </div>
@@ -75,7 +69,7 @@ export default function ShopCollectionsStage({ collections = [], onSelect }) {
   const { mode } = useCapabilities()
   if (!collections.length) return null
 
-  const length = mode === 'desktop' ? '360vh' : '300vh'
+  const length = mode === 'desktop' ? '360vh' : '220vh'
 
   return (
     <div className="shop-collection-stage">

@@ -16,11 +16,13 @@
 //
 // Fase 7B: la fuga 7A-01 (entry importando vendor-three estáticamente vía
 // Loader→drei) fue ERRADICADA. La aserción dura está reactivada como contrato
-// permanente: ninguna ruta puede solicitar chunks 3D sin registro de admisión
-// aprobado en 3D-ADMISSION-RECORD.md.
+// permanente: ninguna ruta puede solicitar chunks 3D salvo las dos superficies
+// con admisión explícita de PRO FINAL (/about y /app).
 
 import { test, expect } from '@playwright/test'
 import { writeFileSync, mkdirSync } from 'node:fs'
+
+const ALLOWED_3D_ROUTES = new Set(['/about', '/app'])
 
 const ROUTES = [
   '/',
@@ -135,15 +137,19 @@ for (const route of ROUTES) {
       jsUrls: js.map((r) => r.url),
     })
 
-    // CONTRATO ACTIVO (Fase 7B): con la fuga 7A-01 erradicada (Loader sin drei,
-    // barrel sin escenas, manualChunks por función), NINGUNA ruta puede solicitar
-    // chunks 3D. Si este test se pone rojo en el futuro, es porque alguien montó
-    // o arrastró una escena/dependencia 3D sin pasar por el gate de admisión:
-    // buscar su 3D-ADMISSION-RECORD.md o la cadena de imports estática nueva.
-    expect(
-      threeByName,
-      `La ruta ${route} solicitó chunks 3D: ${JSON.stringify(threeByName, null, 2)}`,
-    ).toHaveLength(0)
+    // PRO FINAL: no hay WebGL narrativo global. Solo dos rutas tienen admisión
+    // explícita: /about (atmósfera del mapa) y /app (showcase BAYONA+).
+    if (ALLOWED_3D_ROUTES.has(route)) {
+      expect(
+        threeByName.length,
+        `La ruta ${route} debería cargar su escena 3D deliberada.`,
+      ).toBeGreaterThan(0)
+    } else {
+      expect(
+        threeByName,
+        `La ruta ${route} solicitó 3D sin admisión: ${JSON.stringify(threeByName, null, 2)}`,
+      ).toHaveLength(0)
+    }
 
     // La página no debe reventar en ninguna ruta.
     expect(

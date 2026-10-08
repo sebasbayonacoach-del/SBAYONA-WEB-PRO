@@ -1,5 +1,5 @@
 import { Suspense, lazy, useContext, useEffect, useState } from 'react'
-import { ArrowUpRight, Bell, Check, ChevronDown, Lock, MessageCircle, Monitor, Smartphone, Tablet, Watch } from 'lucide-react'
+import { ArrowUpRight, Bell, ChevronDown, MessageCircle, Monitor, Smartphone, Tablet, Watch } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthContext from '../lib/auth/AuthContext.jsx'
 import { isCloudEnabled, supabase } from '../lib/supabase.js'
@@ -10,9 +10,6 @@ import VideoSection from '../components/VideoSection.jsx'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import { siteMedia } from '../config/siteMedia.js'
 import {
-  BAYONA_PLUS_FREE_TIER,
-  BAYONA_PLUS_PLAN_OPTIONS,
-  BAYONA_PLUS_SUBSCRIBER_TIER,
   BAYONA_PLUS_UPDATES_URL,
 } from './appExperienceContent.js'
 // app.css era global en main.jsx (88 kB en todas las rutas). Ahora viaja con /app.
@@ -33,40 +30,6 @@ const VISION_POINTS = [
   'Conectar el acompañamiento con el nivel de plan contratado, no perderlo en mil chats.',
   'Unir comunidad, recursos y seguimiento en una experiencia que se sienta premium de verdad.',
   'Ver el cuerpo como un sistema: carga, nutrición, recuperación, movimiento y dirección.',
-]
-
-const PAIN_POINTS = [
-  {
-    title: 'DATOS QUE NO DECIDEN POR TI',
-    copy: 'Pasos, calorías o gráficas sueltas no te dicen qué hacer mañana. BAYONA+ nace para convertir información en criterio accionable.',
-  },
-  {
-    title: 'RUTINAS QUE NO ENTIENDEN TU SEMANA',
-    copy: 'Una lista de ejercicios no sabe si dormiste, viajaste, comiste mal o llegaste reventado. La app apunta a mostrar contexto antes que repetición.',
-  },
-  {
-    title: 'TODO SE PIERDE SI NO HAY UN CENTRO',
-    copy: 'Plan, registro, chat y recursos no deberían vivir separados. La visión es una cabina única para sostener continuidad.',
-  },
-]
-
-const DIFFERENTIATORS = [
-  {
-    title: 'MOVIMIENTO REAL, NO FITNESS DE PLANTILLA',
-    copy: 'Parkour, fuerza y preparación física aportan una idea central: observar, adaptarse y progresar con técnica.',
-  },
-  {
-    title: 'CUERPO COMPLETO, DECISIONES CLARAS',
-    copy: 'Entrenamiento, nutrición y recuperación se ordenan dentro del alcance de cada plan, sin vender diagnósticos ni promesas clínicas.',
-  },
-  {
-    title: 'FORMACIÓN CONVERTIDA EN PRODUCTO',
-    copy: 'La experiencia práctica no se queda en teoría: se traduce en pantallas, rutas, criterios y decisiones más fáciles de sostener.',
-  },
-  {
-    title: 'VISTA PREVIA, VISIÓN EN SERIO',
-    copy: 'Las funciones finales siguen en definición. Esta página muestra la dirección: una app de fitness con sensación de producto premium, no otra plantilla.',
-  },
 ]
 
 export const APP_FEATURES = [
@@ -760,67 +723,15 @@ export default function AppExperience() {
 
       <AppDivider />
 
-      <section className="app-problem app-section app-reveal" data-section-number="02" aria-labelledby="app-problem-title">
+
+
+
+
+      <section className="app-features app-section app-reveal" data-section-number="02" aria-labelledby="app-features-title">
         <AppSectionNumber>02</AppSectionNumber>
         <div className="section-shell app-section-content container">
-          <div className="app-problem-layout">
-            <div className="app-problem-title-col">
-              <SectionLabel>02 / EL RETO DE DISEÑO</SectionLabel>
-              <h2 id="app-problem-title" className="app-section-title">MUCHOS DATOS.<br /> <span>POCO CONTEXTO.</span></h2>
-              <p className="app-section-subtitle">El objetivo del concepto es ordenar la información útil para el entrenamiento.</p>
-              <p className="app-problem-closing">BAYONA+ explora una forma de reunir plan, registro y conversación.</p>
-            </div>
-            <div className="app-pain-list app-reveal-stagger">
-              {PAIN_POINTS.map((point, index) => (
-                <article
-                  {...sceneBackgroundProps(siteMedia.app.pain[index], {
-                    className: 'app-pain-item',
-                    style: { '--i': index },
-                    variant: 'accent',
-                  })}
-                  key={point.title}
-                >
-                  <span className="app-pain-number">{String(index + 1).padStart(2, '0')}</span>
-                  <div>
-                    <h3 className="app-pain-title">{point.title}</h3>
-                    <p className="app-pain-desc">{point.copy}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <AppDivider />
-
-      <section className="app-difference app-section app-reveal" data-section-number="03" aria-labelledby="app-difference-title">
-        <AppSectionNumber>03</AppSectionNumber>
-        <div className="section-shell app-section-content container">
-          <header className="app-section-header">
-            <SectionLabel>03 / LÍNEAS DE TRABAJO</SectionLabel>
-            <h2 id="app-difference-title" className="app-section-title">LO QUE ESTAMOS<br /> <span>EXPLORANDO.</span></h2>
-            <p className="app-authority-intro">Movimiento, entrenamiento, nutrición y seguimiento dentro de un producto cuyo alcance aún está en definición.</p>
-          </header>
-          <div className="app-differentiators app-reveal-stagger">
-            {DIFFERENTIATORS.map((item, index) => (
-              <article className="app-differentiator" key={item.title} style={{ '--i': index }}>
-                <span className="app-diff-number">{String(index + 1).padStart(2, '0')}</span>
-                <h3 className="app-diff-title">{item.title}</h3>
-                <p className="app-diff-desc">{item.copy}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <AppDivider />
-
-      <section className="app-features app-section app-reveal" data-section-number="04" aria-labelledby="app-features-title">
-        <AppSectionNumber>04</AppSectionNumber>
-        <div className="section-shell app-section-content container">
           <header className="app-section-header app-features-header">
-            <SectionLabel>04 / FUNCIONES EN EXPLORACIÓN</SectionLabel>
+            <SectionLabel>02 / FUNCIONES EN EXPLORACIÓN</SectionLabel>
             <h2 id="app-features-title" className="app-section-title">POSIBLES MÓDULOS.<br /> <span>NO FUNCIONES CONFIRMADAS.</span></h2>
           </header>
           <div className="app-features-grid app-reveal-stagger" role="list" aria-label="Funciones conceptuales en evaluación para BAYONA+">
@@ -859,8 +770,8 @@ export default function AppExperience() {
 
       <AppDivider />
 
-      <section id="experiencia-bayona-plus" className="app-concept app-mockup-stage app-section app-reveal" data-section-number="05" aria-labelledby="app-experience-title">
-        <AppSectionNumber>05</AppSectionNumber>
+      <section id="experiencia-bayona-plus" className="app-concept app-mockup-stage app-section app-reveal" data-section-number="03" aria-labelledby="app-experience-title">
+        <AppSectionNumber>03</AppSectionNumber>
         <div
           {...sceneBackgroundProps(siteMedia.app.features[siteMedia.app.features.length - 1], {
             className: 'section-shell app-section-content container',
@@ -868,7 +779,7 @@ export default function AppExperience() {
           })}
         >
           <header className="app-section-header app-concept-heading">
-            <SectionLabel>05 / MOCKUPS CONCEPTUALES</SectionLabel>
+            <SectionLabel>03 / MOCKUPS CONCEPTUALES</SectionLabel>
             <h2 id="app-experience-title" className="app-section-title">UNA DIRECCIÓN VISUAL<br /> <span>EN CUATRO FORMATOS.</span></h2>
             <p className="app-section-subtitle">Teléfono, escritorio, tablet y reloj ilustran una posible experiencia. No confirman dispositivos compatibles, integraciones ni funciones finales.</p>
           </header>
@@ -1008,71 +919,13 @@ export default function AppExperience() {
 
       <AppDivider />
 
-      <section className="app-tiers app-section app-reveal" data-section-number="06" aria-labelledby="app-tiers-title">
-        <AppSectionNumber>06</AppSectionNumber>
-        <div className="section-shell app-section-content container">
-          <header className="app-section-header">
-            <SectionLabel>06 / NIVELES PENSADOS</SectionLabel>
-            <h2 id="app-tiers-title" className="app-section-title">LO QUE ENTRA<br /> <span>CON Y SIN PLAN.</span></h2>
-            <p className="app-section-subtitle">
-              BAYONA+ se dibuja en dos capas: una abierta para quien entrena con la web, y otra
-              con funciones avanzadas para quien ya tiene un acompañamiento contratado.
-            </p>
-          </header>
 
-          <div className="app-tier-grid app-reveal-stagger">
-            <article className="app-tier app-tier--free">
-              <p className="app-tier-kicker">SIN CONTRATAR NADA</p>
-              <h3 className="app-tier-title">Acceso base</h3>
-              <ul className="app-tier-list">
-                {BAYONA_PLUS_FREE_TIER.map((item) => (
-                  <li key={item.title}>
-                    <Check size={15} strokeWidth={1.6} aria-hidden="true" />
-                    <span>
-                      <strong>{item.title}</strong>
-                      <small>{item.copy}</small>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="app-tier-foot">Esto ya funciona hoy en la web: no es una promesa de app.</p>
-            </article>
 
-            <article className="app-tier app-tier--paid">
-              <p className="app-tier-kicker">FUNCIONES EN PREPARACIÓN</p>
-              <h3 className="app-tier-title">Acceso de suscriptor</h3>
-              <ul className="app-tier-list">
-                {BAYONA_PLUS_SUBSCRIBER_TIER.map((item) => (
-                  <li key={item.title}>
-                    <Lock size={15} strokeWidth={1.6} aria-hidden="true" />
-                    <span>
-                      <strong>{item.title}</strong>
-                      <small>{item.copy}</small>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="app-tier-foot">
-                {BAYONA_PLUS_PLAN_OPTIONS.length > 0
-                  ? `Hoy el acceso anticipado está publicado como beneficio de ${BAYONA_PLUS_PLAN_OPTIONS.map((plan) => plan.name).join(' y ')}. Ninguna de estas funciones se ha entregado todavía.`
-                  : 'Ninguna de estas funciones se ha entregado todavía.'}
-              </p>
-              <Link to="/programs" className="app-tier-link">
-                VER QUÉ INCLUYE CADA PLAN
-                <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" />
-              </Link>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <AppDivider />
-
-      <section className="app-founding app-section app-reveal" data-section-number="07" aria-labelledby="app-founding-title">
-        <AppSectionNumber>07</AppSectionNumber>
+      <section className="app-founding app-section app-reveal" data-section-number="04" aria-labelledby="app-founding-title">
+        <AppSectionNumber>04</AppSectionNumber>
         <div className="section-shell app-section-content container">
           <div className="app-founding-card">
-            <SectionLabel>07 / ACCESO PRIORITARIO</SectionLabel>
+            <SectionLabel>04 / ACCESO PRIORITARIO</SectionLabel>
             <h2 id="app-founding-title" className="app-founding-title">ENTRA EN<br /> <span>LA LISTA PRIORITARIA.</span></h2>
             <p className="app-founding-intro app-founding-subtitle">Es una lista corta y leída por personas: cuando haya una prueba, un cambio de alcance o una fecha real, se avisa aquí antes de publicarlo. Apuntarte no reserva plaza, no activa una compra y no garantiza acceso a una prueba.</p>
             <ol className="app-founding-benefits app-reveal-stagger">
@@ -1110,16 +963,16 @@ export default function AppExperience() {
 
       <AppDivider />
 
-      <section className="app-program-connection app-section app-reveal" data-section-number="08" aria-labelledby="app-program-connection-title">
-        <AppSectionNumber>08</AppSectionNumber>
+      <section className="app-program-connection app-section app-reveal" data-section-number="05" aria-labelledby="app-program-connection-title">
+        <AppSectionNumber>05</AppSectionNumber>
         <div className="section-shell app-section-content container">
-          <SectionLabel>08 / CONEXIÓN PREVISTA</SectionLabel>
+          <SectionLabel>05 / CONEXIÓN PREVISTA</SectionLabel>
           <div className="app-program-connection-grid">
             <h2 id="app-program-connection-title" className="app-section-title">PLAN, REGISTRO<br /> <span>Y RECURSOS.</span></h2>
             <div className="app-program-connection-copy">
               <p className="app-section-subtitle">La dirección de producto es conectar los planes RAÍZ, FUERZA, RENDIMIENTO y ELITE con herramientas de seguimiento. La integración final aún no está confirmada.</p>
               <Link to="/programs" className="app-secondary-cta">
-                VER PROGRAMAS ACTUALES
+                VER SERVICIOS ACTUALES
                 <ArrowUpRight size={18} strokeWidth={1} aria-hidden="true" />
               </Link>
             </div>
@@ -1137,10 +990,10 @@ export default function AppExperience() {
         lado y la salida real a continuación. El otro sitio donde vive la frase es
         el mensaje preescrito de WhatsApp, que exige el contrato de honestidad.
       */}
-      <section className="app-final-cta app-closing app-section app-reveal" data-section-number="09" aria-labelledby="app-final-title">
-        <AppSectionNumber>09</AppSectionNumber>
+      <section className="app-final-cta app-closing app-section app-reveal" data-section-number="06" aria-labelledby="app-final-title">
+        <AppSectionNumber>06</AppSectionNumber>
         <div className="section-shell app-section-content app-closing-content container">
-          <SectionLabel>09 / ESTADO Y SIGUIENTE PARADA</SectionLabel>
+          <SectionLabel>06 / ESTADO Y SIGUIENTE PARADA</SectionLabel>
           <p className="app-state-chip">
             <span className="app-state-chip__pulse" aria-hidden="true" />
             PRODUCTO EN DESARROLLO · VISTA PREVIA CONCEPTUAL
@@ -1183,7 +1036,7 @@ export default function AppExperience() {
             </a>
             <Link to="/programs" className="app-closing-program-link">
               <span>¿Quieres entrenar ahora?</span>
-              <strong>VER PROGRAMAS</strong>
+              <strong>VER SERVICIOS</strong>
               <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" />
             </Link>
           </div>

@@ -1,5 +1,6 @@
+import NarrativeIntro from './NarrativeIntro.jsx'
 import { Activity, Atom, Users } from 'lucide-react'
-import { motion, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
 import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
 import '../../styles/benefits-orbit-stage.css'
@@ -10,47 +11,16 @@ const SIGNALS = Object.freeze([
   { label: 'SOPORTE', Icon: Users },
 ])
 
-function OrbitSystem({ progress, activeIndex }) {
-  const rotate = useTransform(progress, [0, 1], [-24, 336])
-  const scale = useTransform(progress, [0, .5, 1], [.9, 1.06, .94])
-
-  return (
-    <motion.div className="benefits-orbit-system" style={{ rotate, scale }} aria-hidden="true">
-      <div className="benefits-orbit benefits-orbit--one" />
-      <div className="benefits-orbit benefits-orbit--two" />
-      <div className="benefits-orbit benefits-orbit--three" />
-      <div className="benefits-orbit-core">
-        <span>{String(activeIndex + 1).padStart(2, '0')}</span>
-      </div>
-      {SIGNALS.map(({ label, Icon }, index) => (
-        <div
-          className="benefits-orbit-node"
-          data-active={index === activeIndex ? 'true' : undefined}
-          data-node={index}
-          key={label}
-        >
-          <Icon size={20} strokeWidth={1.2} />
-          <span>{label}</span>
-        </div>
-      ))}
-    </motion.div>
-  )
-}
-
 export default function BenefitsOrbitStage({ block }) {
   const { mode } = useCapabilities()
   const items = block?.items ?? []
   if (!items.length) return null
 
-  const length = mode === 'desktop' ? '150vh' : '160vh'
+  const length = mode === 'desktop' ? '240vh' : '180vh'
 
   return (
     <div className="benefits-orbit-stage-wrap">
-      <header className="benefits-orbit-intro">
-        <p>03 / LO QUE CAMBIA</p>
-        <h2 id="home-benefits-heading">{block.heading}</h2>
-        <span>{block.body}</span>
-      </header>
+      <NarrativeIntro className="benefits-orbit-intro" image="/images/bayona-generated/home-pillar-track-1600.webp" label="03 / LO QUE CAMBIA" id="home-benefits-heading" title={block.heading} body={block.body} />
 
       <ol className="pillars-stack sr-only" aria-label="Lo que cambia con el método BAYONA">
         {items.map((benefit) => (
@@ -73,7 +43,7 @@ export default function BenefitsOrbitStage({ block }) {
         states={items.length}
         topOffset={66}
         allowMobile
-        className="benefits-orbit-stage"
+        className="benefits-orbit-stage photo-story-stage"
       >
         {({ index, progress, isStatic }) => {
           const benefit = items[index] ?? items[0]
@@ -82,18 +52,18 @@ export default function BenefitsOrbitStage({ block }) {
           return (
             <div className="benefits-orbit-viewport">
               <div className="benefits-orbit-visual">
-                {isStatic ? (
-                  <div className="benefits-orbit-system benefits-orbit-system--static" aria-hidden="true">
-                    <div className="benefits-orbit benefits-orbit--one" />
-                    <div className="benefits-orbit benefits-orbit--two" />
-                    <div className="benefits-orbit benefits-orbit--three" />
-                    <div className="benefits-orbit-core">
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                    </div>
-                  </div>
-                ) : (
-                  <OrbitSystem progress={progress} activeIndex={index} />
-                )}
+                <div
+                  className="bayona-benefits-photographic-layer"
+                  style={{
+                    backgroundImage: `url("${[
+                      '/images/bayona-generated/home-method-1600.webp',
+                      '/images/bayona-generated/home-pillar-track-1600.webp',
+                      '/images/bayona-generated/home-pillar-build-1600.webp',
+                    ][index] ?? '/images/bayona-generated/home-pillar-track-1600.webp'}")`,
+                  }}
+                  aria-hidden="true"
+                />
+
               </div>
 
               <motion.article

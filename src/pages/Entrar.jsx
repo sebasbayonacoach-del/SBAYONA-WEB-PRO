@@ -200,7 +200,7 @@ export default function Entrar() {
           <ul className="entrar-locker" aria-label="Qué se guarda en tu cuenta">
             <li><span />Recursos y dossiers que reclames</li>
             <li><span />Créditos, cupones y consultas pendientes</li>
-            <li><span />Compras, sesiones y programas activos</li>
+            <li><span />Compras, sesiones y planes activos</li>
             <li><span />Acceso a BAYONA+ cuando esté disponible</li>
           </ul>
 

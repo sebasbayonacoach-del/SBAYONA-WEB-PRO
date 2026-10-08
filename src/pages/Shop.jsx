@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Fuse from 'fuse.js'
@@ -9,7 +9,6 @@ import {
   Cpu,
   Download,
   Dumbbell,
-  Eye,
   Footprints,
   Leaf,
   Move,
@@ -26,10 +25,6 @@ import Marquee from 'react-fast-marquee'
 import { toast } from 'sonner'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps, StockImage } from '../components/SceneBackground.jsx'
-import VideoSection from '../components/VideoSection.jsx'
-import ShopCollectionsStage from '../components/shop/ShopCollectionsStage.jsx'
-import { editorialServices } from '../config/offerings.js'
-import { whatsAppLink } from '../config/site.config.js'
 import {
   filterShopProducts,
   shopCategoryFilters,
@@ -37,17 +32,15 @@ import {
   shopCollections,
   shopProducts,
 } from '../config/shopProducts.js'
-import { mediaHeroUrls, siteMedia } from '../config/siteMedia.js'
+import { siteMedia } from '../config/siteMedia.js'
 import { motionTokens } from '../engine/config/motionTokens.js'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
-import { ARRIVAL_BONUS_EUR, useRewards } from '../lib/rewards/RewardsProvider.jsx'
 import { selectCartCount, selectCartTotalCOP, useCartStore } from '../store/cartStore.js'
 import '../styles/shop.css'
 import '../styles/shop-catalog-editorial.css'
 import '../styles/shop-art-direction-2026.css'
-
-/** Capa WebGL holográfica — carga diferida para proteger el LCP (Fase 11.6). */
-const ShopHologramLayer = lazy(() => import('../components/shop/ShopHologramLayer.jsx'))
+import '../styles/shop-unified-catalog.css'
+import '../styles/shop-gym-funnel-v2.css'
 
 const HERO_LINES = ['EQUIPAMOS', 'TU MOVIMIENTO.']
 const PRODUCT_COUNT = shopProducts.length
@@ -71,94 +64,6 @@ const CART_PRODUCT_VARIANTS = Object.freeze({
   ]),
 })
 
-const shopConciergeItems = Object.freeze([
-  ['01', 'Sesión o evaluación', 'Primero eliges la intención: fuerza, movilidad, técnica o recuperación.'],
-  ['02', 'Equipo útil', 'Añades solo piezas que puedas usar de verdad en tu semana.'],
-  ['03', 'Crédito BAYONA', 'Si reclamaste tu pase, lo guardamos como cortesía para tu primer plan.'],
-])
-
-/*
- * §16 — «la tienda no es solo mercancía: también puede ser puerta a sesiones
- * sueltas, evaluaciones, recuperación, consulta o paquetes». El mostrador de
- * servicios se deriva de `editorialServices` (config/offerings.js), así que
- * nombre, precio y enlace de WhatsApp son los mismos que usa el configurador:
- * no hay ni un euro inventado aquí. Los paquetes se compran en el configurador
- * de programas y la consulta experta en recursos, y se dice en vez de simular.
- */
-const SHOP_COUNTER = Object.freeze([
-  Object.freeze({
-    id: 'sesiones',
-    title: 'SESIONES SUELTAS',
-    note: 'Entras, corriges y sales con una acción clara. Sin mensualidad.',
-    ids: ['virtual-1to1', 'presencial-bogota-1to1', 'grupal-virtual'],
-  }),
-  Object.freeze({
-    id: 'evaluaciones',
-    title: 'EVALUACIONES',
-    note: 'Antes de añadir carga, saber dónde estás. Lectura, no etiqueta.',
-    ids: ['evaluacion-biomecanica', 'composicion-corporal'],
-  }),
-  Object.freeze({
-    id: 'recuperacion',
-    title: 'RECUPERACIÓN',
-    note: 'Lo que sostiene el entrenamiento: tejido, movilidad y ruta.',
-    ids: ['masaje-deportivo', 'movilidad-asistida', 'protocolo-recuperacion'],
-  }),
-  Object.freeze({
-    id: 'rendimiento',
-    title: 'TÉCNICA Y RENDIMIENTO',
-    note: 'Habilidad concreta guiada por Sebastián: técnica antes que volumen.',
-    ids: ['parkour-tecnico', 'calistenia-avanzada', 'boxeo-funcional'],
-  }),
-])
-
-const shopServiceById = new Map(editorialServices.map((service) => [service.id, service]))
-
-const shopCounterGroups = SHOP_COUNTER.map((group) => ({
-  ...group,
-  services: group.ids.map((id) => shopServiceById.get(id)).filter(Boolean),
-})).filter((group) => group.services.length > 0)
-
-const shopCounterLinks = Object.freeze([
-  { to: '/programs', label: 'COMBINAR PLAN + SESIONES', detail: 'El configurador suma plan, extras y crédito en una sola petición.' },
-  { to: '/resources', label: 'CONSULTA EXPERTA GRATIS', detail: 'Una duda concreta sobre tu caso, con contexto y sin compromiso.' },
-  { to: '/faq', label: 'DUDAS ANTES DE PAGAR', detail: 'Condiciones, permanencia, garantía y formas de confirmar.' },
-])
-
-const shopWhatsAppHelpUrl = whatsAppLink('Hola BAYONA, tengo una duda antes de comprar en la tienda (producto, sesión o servicio).')
-
-function ShopServiceCard({ service }) {
-  const addItem = useCartStore((state) => state.addItem)
-
-  const handleAdd = () => {
-    addItem({ type: 'servicio', name: service.label, priceCOP: service.priceCop, qty: 1 })
-    toast.success('Añadido', { description: `${service.label} está en tu selección.` })
-  }
-
-  return (
-    <article className="shop-service-card" data-shop-service={service.id}>
-      <header>
-        <h4>{service.label}</h4>
-        {service.presencial && <span className="shop-service-flag">PRESENCIAL</span>}
-      </header>
-      <p>{service.description}</p>
-      <div className="shop-service-price">
-        <strong>{service.priceDisplay} COP</strong>
-        <small>Sesión suelta · disponibilidad confirmada por WhatsApp</small>
-      </div>
-      <div className="shop-service-actions">
-        <button className="shop-add-to-cart" type="button" onClick={handleAdd} aria-label={`Añadir ${service.label} al carrito`}>
-          <ShoppingCart size={15} strokeWidth={1} aria-hidden="true" />
-          AÑADIR
-        </button>
-        <a href={service.cta} target="_blank" rel="noreferrer">
-          LO QUIERO <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" />
-        </a>
-      </div>
-    </article>
-  )
-}
-
 function ShopIcon({ name, size = 28, className = '' }) {
   const Icon = SHOP_ICONS[name] ?? Package
   return <Icon className={className} size={size} strokeWidth={1} aria-hidden="true" />
@@ -179,11 +84,7 @@ function HeroTitle() {
 function CollectionCard({ collection, active, onSelect, reducedMotion }) {
   return (
     <motion.button
-      {...sceneBackgroundProps(collection.media, {
-        className: 'shop-collection-card',
-        variant: 'subtle',
-        pseudo: 'after',
-      })}
+      className="shop-collection-card"
       data-collection={collection.id}
       type="button"
       aria-pressed={active}
@@ -244,7 +145,6 @@ function ProductCard({ product, reducedMotion }) {
   const { finePointer, mode } = useCapabilities()
   const addItem = useCartStore((state) => state.addItem)
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0)
-  const [previewOpen, setPreviewOpen] = useState(false)
   const pointerEffects = mode === 'desktop' && finePointer && !reducedMotion
   const variantDefinitions = CART_PRODUCT_VARIANTS[product.id] ?? []
   const variantDefinition = variantDefinitions[selectedVariantIndex]
@@ -256,7 +156,6 @@ function ProductCard({ product, reducedMotion }) {
   const cartItemName = selectedVariant ? `${baseProductName} — ${selectedVariant.label}` : product.name
   const canAddToCart = Number.isFinite(cartPriceCOP)
   const cartHelpId = `shop-cart-help-${product.id}`
-  const previewId = `shop-product-preview-${product.id}`
 
   const handleAddToCart = () => {
     if (!canAddToCart) return
@@ -266,7 +165,6 @@ function ProductCard({ product, reducedMotion }) {
       name: cartItemName,
       priceCOP: cartPriceCOP,
       qty: 1,
-      media: product.media,
       icon: product.icon,
     })
     toast.success('Añadido', { description: `${cartItemName} está en tu carrito.` })
@@ -287,38 +185,24 @@ function ProductCard({ product, reducedMotion }) {
       glareBorderRadius="0"
     >
       <article
-        className={`shop-product-card ds-reveal${previewOpen ? ' is-preview-open' : ''}`}
+        className="shop-product-card ds-reveal"
         data-product-id={product.id}
         onPointerMove={pointerEffects ? updateCardSpotlight : undefined}
         onPointerLeave={pointerEffects ? resetCardSpotlight : undefined}
       >
-        <div className="shop-product-visual" id={previewId}>
-          {product.media?.src ? (
+        <div className="shop-product-visual">
+          {product.media ? (
             <StockImage
-              className="shop-product-image stock-media-image"
               media={product.media}
-              sizes="(max-width: 760px) 78vw, 32vw"
+              className="shop-product-image stock-media-image"
+              sizes="(max-width: 720px) 92vw, (max-width: 1180px) 46vw, 30vw"
             />
           ) : (
-            <ShopIcon name={product.icon} size={32} />
+            <ShopIcon name={product.icon} size={46} className="shop-product-icon" />
           )}
-          {/*
-            Etiqueta de colección cosida a la propia pieza: sin ella las 43
-            fichas eran anonadas iguales y la página se leía como rejilla de
-            e-commerce. Con ella cada card dice de qué vitrina es.
-          */}
-          <span className="shop-product-chip" aria-hidden="true">{product.collection}</span>
-          <button
-            className="shop-product-preview-toggle"
-            type="button"
-            aria-expanded={previewOpen}
-            aria-controls={previewId}
-            aria-label={`${previewOpen ? 'Contraer' : 'Ampliar'} vista de ${product.name}`}
-            onClick={() => setPreviewOpen((current) => !current)}
-          >
-            <Eye size={15} strokeWidth={1.2} aria-hidden="true" />
-            <span>{previewOpen ? 'CERRAR' : 'AMPLIAR'}</span>
-          </button>
+          <span className="shop-product-image-shade" aria-hidden="true" />
+          <span className="shop-product-mark">BAYONA / {product.collectionTitle}</span>
+          <span className="shop-product-chip">{product.category}</span>
         </div>
         <h3>{product.name}</h3>
         <p>{product.description}</p>
@@ -404,15 +288,8 @@ function FeatureVisual({ product, reducedMotion }) {
       onPointerLeave={parallaxEnabled ? resetFeatureParallax : undefined}
     >
       <span className="shop-feature-aura" aria-hidden="true" />
-      {product.media?.src ? (
-        <StockImage
-          className="shop-feature-image stock-media-image"
-          media={product.media}
-          sizes="(max-width: 699px) 78vw, 46vw"
-        />
-      ) : (
-        <ShopIcon className="shop-feature-icon" name={product.icon} size={32} aria-hidden="true" />
-      )}
+      <ShopIcon className="shop-feature-icon" name={product.icon} size={70} />
+      <span className="shop-feature-wordmark" aria-hidden="true">BAYONA</span>
       <span className="shop-feature-shadow" aria-hidden="true" />
     </div>
   )
@@ -448,8 +325,7 @@ export default function Shop() {
   const addItem = useCartStore((state) => state.addItem)
   const cartCount = useCartStore(selectCartCount)
   const cartTotalCOP = useCartStore(selectCartTotalCOP)
-  const rewards = useRewards()
-  const { reducedMotion } = useCapabilities()
+  const { reducedMotion, mode } = useCapabilities()
   const featuredProduct = shopProducts.find(({ featured }) => featured) ?? shopProducts[0]
   const fuse = useMemo(() => new Fuse(shopProducts, {
     keys: ['name', 'description', 'category', 'collection', 'collectionTitle'],
@@ -475,17 +351,10 @@ export default function Shop() {
   )
   const hasFilters = collectionId !== 'all' || category !== 'Todo' || query.trim() !== ''
   const groupedView = collectionId === 'all' && category === 'Todo' && query.trim() === ''
-  const creditLabel = rewards.bonusClaimed ? rewards.format(ARRIVAL_BONUS_EUR) : 'Pase pendiente'
   const cartTotalLabel = `$${cartTotalCOP.toLocaleString('es-CO')} COP`
 
   const scrollToCatalog = () => {
     document.querySelector('#shop-catalog')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' })
-  }
-
-  const selectCollectionCard = (nextCollectionId) => {
-    setCollectionId(nextCollectionId)
-    setCategory('Todo')
-    window.requestAnimationFrame(scrollToCatalog)
   }
 
   const selectCategory = (nextCategory) => {
@@ -523,7 +392,6 @@ export default function Shop() {
       name: featuredProduct.name,
       priceCOP: featuredProduct.priceCop,
       qty: 1,
-      media: featuredProduct.media,
       icon: featuredProduct.icon,
     })
     toast.success('Añadido', { description: `${featuredProduct.name} está en tu carrito.` })
@@ -541,30 +409,26 @@ export default function Shop() {
         })}
         aria-labelledby="shop-hero-title"
       >
-        {/* Capa WebGL 3D — holograma de producto detrás del hero (Fase 11.6). */}
-        <Suspense fallback={null}>
-          <ShopHologramLayer />
-        </Suspense>
         <div className="shop-hero-content">
           <div id="shop-hero-title"><HeroTitle /></div>
           <motion.p
-            initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+            initial={reducedMotion ? false : { y: 8 }}
             animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.56, delay: reducedMotion ? 0 : 0.14 }}
           >
-            Boutique de sesiones, evaluación, recuperación y equipo.<br />No compras piezas sueltas: construyes tu primer pedido con dirección.
+            Ropa, calzado y equipamiento para entrenar dentro y fuera del gimnasio.<br />Elige tu pieza, revisa el precio y confirma disponibilidad antes de pagar.
           </motion.p>
           <motion.div
             className="shop-hero-concierge"
-            initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+            initial={reducedMotion ? false : { y: 9 }}
             animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.58, delay: reducedMotion ? 0 : 0.22 }}
-            aria-label="Resumen de compra guiada BAYONA"
+            aria-label="Resumen de compra BAYONA"
           >
             <div className="shop-hero-ticket">
-              <span>BOUTIQUE BAYONA</span>
-              <strong>Pedido con criterio.</strong>
-              <small>Lo confirmamos por WhatsApp antes de pagar.</small>
+              <span>TIENDA BAYONA</span>
+              <strong>Compra clara.</strong>
+              <small>Disponibilidad, talla y entrega se confirman antes de pagar.</small>
             </div>
             <dl className="shop-hero-ledger">
               <div>
@@ -575,141 +439,58 @@ export default function Shop() {
                 <dt>Total visible</dt>
                 <dd>{cartTotalLabel}</dd>
               </div>
-              <div>
-                <dt>Crédito</dt>
-                <dd>{creditLabel}</dd>
-              </div>
             </dl>
           </motion.div>
           <motion.a
             className="shop-scroll-indicator"
             href="#shop-collections"
-            initial={reducedMotion ? false : { opacity: 0 }}
+            initial={reducedMotion ? false : { opacity: 0.74 }}
             animate={reducedMotion ? undefined : { opacity: 1 }}
             transition={{ duration: 0.5, delay: reducedMotion ? 0 : 0.32 }}
           >
-            <span>ARMA TU PEDIDO</span>
+            <span>VER CATEGORÍAS</span>
             <ArrowDown size={16} strokeWidth={1} aria-hidden="true" />
           </motion.a>
         </div>
 
-        <div className="shop-hero-marquee" aria-label="BAYONA, built to move">
+        <div className="shop-hero-marquee" aria-label="BAYONA, hecho para moverte">
           <Marquee autoFill gradient={false} speed={32} pauseOnHover play={!reducedMotion}>
-            <span>BAYONA</span><i>•</i><span>BUILT TO MOVE</span><i>•</i>
+            <span>BAYONA</span><i>•</i><span>HECHO PARA MOVERTE</span><i>•</i>
           </Marquee>
         </div>
       </section>
 
       <section
         id="shop-collections"
-        className="shop-collections section-shell"
-        aria-labelledby="shop-collections-title"
+        className="shop-categories section-shell"
+        aria-labelledby="shop-categories-title"
       >
-        <ShopCollectionsStage
-          collections={shopCollections}
-          onSelect={selectCollectionCard}
-        />
-
-        <VideoSection
-          title="LA COLECCIÓN"
-          subtitle="Sebastián presenta la identidad detrás de cada pieza."
-          poster={mediaHeroUrls(siteMedia.shop.collections.movement).retina}
-          duration="90 SEG"
-          placement="contained"
-        />
-      </section>
-
-      {/*
-        El mostrador: la otra mitad de la boutique. La anotación 61 pedía que
-        tienda y sesiones fueran el mismo paso coherente, y aquí está: sesión
-        suelta, evaluación, recuperación y técnica con el precio que ya publica
-        el configurador, añadido al mismo carrito de las piezas físicas.
-      */}
-      <section id="shop-counter" className="shop-counter section-shell" aria-labelledby="shop-counter-title">
-        <header className="shop-catalog-intro">
-          <div>
-            <SectionLabel>MOSTRADOR DE SERVICIOS</SectionLabel>
-            <h2 id="shop-counter-title">LA TIENDA TAMBIÉN<br />{' '}<span>VENDE SESIONES.</span></h2>
-          </div>
-          <p>No hace falta contratar un plan para entrenar con nosotros. Pides una sesión, una evaluación o una recuperación y la confirmamos contigo.</p>
+        <header className="shop-categories-head">
+          <SectionLabel>COMPRA POR CATEGORÍA</SectionLabel>
+          <h2 id="shop-categories-title">ENCUENTRA LO QUE NECESITAS.</h2>
+          <p>Empieza por el tipo de producto. Las colecciones BAYONA quedan como filtro secundario dentro del catálogo.</p>
         </header>
-
-        <div className="shop-counter-groups">
-          {shopCounterGroups.map((group) => (
-            <section className="shop-counter-group" key={group.id} aria-labelledby={`shop-counter-${group.id}`}>
-              <header className="shop-counter-group-head">
-                <h3 id={`shop-counter-${group.id}`}>{group.title}</h3>
-                <p>{group.note}</p>
-              </header>
-              <div className="shop-counter-list">
-                {group.services.map((service) => (
-                  <ShopServiceCard key={service.id} service={service} />
-                ))}
-              </div>
-            </section>
+        <div className="shop-category-shortcuts" role="group" aria-label="Categorías principales de tienda">
+          {shopCategoryFilters.filter((item) => item !== 'Todo').map((item) => (
+            <button
+              type="button"
+              key={item}
+              onClick={() => {
+                setCollectionId('all')
+                setCategory(item)
+                window.requestAnimationFrame(scrollToCatalog)
+              }}
+            >
+              <span>{item}</span>
+              <ArrowUpRight size={18} strokeWidth={1} aria-hidden="true" />
+            </button>
           ))}
-        </div>
-
-        <ul className="shop-counter-links" aria-label="Otras formas de comprar en BAYONA">
-          {shopCounterLinks.map((link) => (
-            <li key={link.to}>
-              <Link to={link.to}>{link.label} <ArrowRight size={15} strokeWidth={1} aria-hidden="true" /></Link>
-              <p>{link.detail}</p>
-            </li>
-          ))}
-        </ul>
-
-        <div className="shop-counter-help">
-          <p>¿Duda entre una sesión, una evaluación o un plan? Escríbenos antes de añadir nada.</p>
-          <a href={shopWhatsAppHelpUrl} target="_blank" rel="noreferrer">
-            PREGUNTAR POR WHATSAPP <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" />
-          </a>
         </div>
       </section>
 
-      {/*
-        Crédito a la vista, no escondido: §16 pide que el beneficio se vea. El
-        número lo manda RewardsProvider (bono de llegada + sellos + compartir) y
-        solo se puede canjear en un plan, que es el límite que puso Sebastián.
-      */}
-      <aside className="shop-credit section-shell" aria-label="Crédito BAYONA disponible">
-        <div className="shop-credit-figure">
-          <span>CRÉDITO BAYONA</span>
-          <strong>{rewards.bonusClaimed || rewards.sealCount ? rewards.format(rewards.totalEur) : 'PENDIENTE DE RECLAMAR'}</strong>
-          <small>{rewards.bonusClaimed ? `Incluye ${rewards.sealCount} ${rewards.sealCount === 1 ? 'sello' : 'sellos'} de tu recorrido.` : 'Reclama tu pase de bienvenida para guardarlo.'}</small>
-        </div>
-        <p className="shop-credit-copy">
-          Es una cortesía canjeable en tu primer plan, no dinero retirable y no un descuento aplicable al equipo de la tienda. Lo confirmamos por escrito antes de cerrar nada.
-        </p>
-        {!rewards.bonusClaimed && (
-          <button type="button" onClick={rewards.claimBonus}>RECLAMAR MI PASE</button>
-        )}
-        {rewards.bonusClaimed && (
-          <Link to="/programs">APLICARLO A UN PLAN</Link>
-        )}
-      </aside>
-
-      <motion.section 
-        className="shop-feature" 
+      <section
+        className="shop-feature"
         aria-labelledby="shop-feature-title"
-        initial={reducedMotion ? false : { opacity: 0 }}
-        whileInView={reducedMotion ? undefined : { opacity: 1 }}
-        viewport={{ 
-          once: true, 
-          margin: '-100px',
-          amount: 0.3 
-        }}
-        transition={{ 
-          duration: 0.8, 
-          ease: motionTokens.ease.entrance 
-        }}
-        onViewportEnter={(entry) => {
-          // Eliminar aria-hidden que Framer Motion aplica automáticamente
-          if (entry?.target) {
-            entry.target.removeAttribute('aria-hidden')
-            entry.target.removeAttribute('data-aria-hidden')
-          }
-        }}
       >
         <FeatureVisual product={featuredProduct} reducedMotion={reducedMotion} />
         <motion.div
@@ -742,18 +523,22 @@ export default function Shop() {
               LO QUIERO <ArrowUpRight size={18} strokeWidth={1} aria-hidden="true" />
             </motion.a>
           </div>
-          <small className="shop-feature-note">La pieza que marca el inicio.</small>
+          <small className="shop-feature-note">Pieza destacada del catálogo.</small>
         </motion.div>
-      </motion.section>
+      </section>
 
       <section id="shop-catalog" className="shop-catalog section-shell" aria-labelledby="shop-catalog-title">
         <header className="shop-catalog-intro ds-reveal ds-reveal--mask">
           <div>
-            <SectionLabel>BAYONA COLLECTION</SectionLabel>
-            <h2 id="shop-catalog-title">ENCUENTRA LO<br /><span>QUE TE REPRESENTA.</span></h2>
+            <SectionLabel>CATÁLOGO BAYONA</SectionLabel>
+            <h2 id="shop-catalog-title">TODO PARA<br /><span>ENTRENAR.</span></h2>
           </div>
-          <p>{PRODUCT_COUNT} piezas para llevar contigo.</p>
+          <p>{PRODUCT_COUNT} referencias de ropa, calzado, equipamiento y recuperación.</p>
         </header>
+
+        <p className="shop-catalog-availability">
+          Catálogo consultable. Precio, disponibilidad, características, tallas y entrega se confirman antes de finalizar el pedido.
+        </p>
 
         <div className="shop-filter-bar">
           <PillGroup
@@ -814,11 +599,21 @@ export default function Shop() {
                       <h3 id={`collection-${collection.id}-title`}>{collection.title}</h3>
                       <p>{collection.statement}</p>
                     </div>
-                    <button type="button" onClick={() => selectCollectionCard(collection.id)}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCollectionId(collection.id)
+                        setCategory('Todo')
+                        window.requestAnimationFrame(scrollToCatalog)
+                      }}
+                    >
                       VER TODO <ArrowRight size={15} strokeWidth={1} aria-hidden="true" />
                     </button>
                   </header>
-                  <ProductGrid products={products} reducedMotion={reducedMotion} />
+                  <ProductGrid
+                    products={mode === 'desktop' ? products : products.slice(0, 3)}
+                    reducedMotion={reducedMotion}
+                  />
                 </section>
               ))}
             </div>
@@ -872,19 +667,19 @@ export default function Shop() {
         </svg>
 
         <SectionLabel>CÓMO COMPRAR</SectionLabel>
-        <h2 id="shop-process-title">SIMPLE. RÁPIDO.<br /><span>TUYO.</span></h2>
+        <h2 id="shop-process-title">SIMPLE. CLARO.<br /><span>TUYO.</span></h2>
         <p>Eliges, nos escribes y confirmamos juntos talla y envío.</p>
       </section>
 
       <aside className="shop-commercial-note section-shell" aria-label="Información comercial">
-        Precios en COP. Tu carrito es una selección, no un cobro automático: disponibilidad, variantes, crédito y envío se confirman por WhatsApp.
+        Precios en COP. Tu carrito es una selección, no un cobro automático: disponibilidad, variantes y envío se confirman por WhatsApp.
       </aside>
 
-      <aside className="shop-training-bridge section-shell" data-immersive="clip" aria-label="Enlace a programas de entrenamiento">
-        <p>¿Quieres que este pedido tenga plan detrás?</p>
+      <aside className="shop-training-bridge section-shell" data-immersive="clip" aria-label="Enlace a servicios de entrenamiento">
+        <p>¿Buscas entrenamiento además de equipamiento?</p>
         <div className="shop-training-bridge-actions">
-          <Link to="/programs">VER PROGRAMAS <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></Link>
-          <Link to="/entrar">GUARDAR EN MI CUENTA <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></Link>
+          <Link to="/programs">VER SERVICIOS <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></Link>
+          <a href="/#empieza">EMPIEZA GRATIS <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></a>
         </div>
       </aside>
 

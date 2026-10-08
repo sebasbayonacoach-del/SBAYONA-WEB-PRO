@@ -31,7 +31,7 @@ function ValueFrame({ item, index, total, isStatic }) {
 export default function AboutValuesStage({ items = [] }) {
   const { mode } = useCapabilities()
   if (!items.length) return null
-  const length = mode === 'desktop' ? '300vh' : '250vh'
+  const length = mode === 'desktop' ? '160vh' : '150vh'
 
   return (
     <div className="about-values-stage">

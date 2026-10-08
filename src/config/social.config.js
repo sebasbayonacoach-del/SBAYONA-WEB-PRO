@@ -52,7 +52,7 @@ export const socialLinks = {
  */
 export const overrides = {
   instagram: {
-    description: 'Diario visual del ecosistema BAYONA.',
+    description: 'Diario visual de movimiento y método BAYONA.',
   },
   youtube: {
     description: 'Documentales y clases sobre ciencia del movimiento.',
@@ -65,9 +65,9 @@ export const overrides = {
 
 /** Texto del hub y de los estados vacíos / de carga. */
 export const hubCopy = {
-  kicker: 'ECOSISTEMA DIGITAL · SEDE DE REDES',
-  titleLine1: 'UN UNIVERSO,',
-  titleLine2: 'UNA IDENTIDAD.',
+  kicker: 'CANALES BAYONA · REDES Y CONTENIDO',
+  titleLine1: 'UNA MARCA,',
+  titleLine2: 'UNA DIRECCIÓN.',
   intro:
     'Cada plataforma refuerza la misma idea: moverse con propósito. Reúne aquí todo lo que BAYONA crea, enseña y comparte.',
   emptyTitle: 'AÚN NO HEMOS ENLAZADO ESTA PLATAFORMA',

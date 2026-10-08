@@ -1,0 +1,173 @@
+/* BAYONA SHOP · GYM FUNNEL V2 */
+
+.shop-product-visual {
+  position: relative;
+  isolation: isolate;
+}
+
+.shop-product-visual picture,
+.shop-product-visual .shop-product-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.shop-product-visual picture {
+  display: block;
+}
+
+.shop-product-visual .shop-product-image {
+  object-fit: cover;
+  filter: saturate(.76) contrast(1.04) brightness(.82);
+  transition: transform .6s cubic-bezier(.16,1,.3,1), filter .35s ease;
+}
+
+.shop-product-card:hover .shop-product-image {
+  transform: scale(1.035);
+  filter: saturate(.9) contrast(1.04) brightness(.88);
+}
+
+.shop-product-image-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.12) 45%,rgba(0,0,0,.78) 100%);
+}
+
+.shop-product-mark,
+.shop-product-chip {
+  position: absolute !important;
+  z-index: 2 !important;
+}
+
+.shop-product-mark {
+  top: 14px;
+  left: 14px;
+  max-width: calc(100% - 28px);
+  padding: .45rem .55rem;
+  background: rgba(5,5,5,.74);
+  color: rgba(255,255,255,.82);
+  backdrop-filter: blur(8px);
+}
+
+.shop-product-chip {
+  right: 14px;
+  bottom: 14px;
+  padding: .45rem .55rem;
+  background: #f4a261;
+  color: #050505 !important;
+}
+
+@media (max-width: 700px) {
+  .shop-product-visual {
+    aspect-ratio: 4 / 5;
+  }
+
+  .shop-product-card:hover .shop-product-image {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-product-visual .shop-product-image {
+    transition: none;
+  }
+}
+
+
+/* Entrada de tienda: categorías reconocibles antes que storytelling de colección. */
+.shop-categories {
+  padding-block: clamp(4.5rem,8vw,7rem);
+}
+
+.shop-categories-head {
+  display: grid;
+  gap: .9rem;
+  margin-bottom: clamp(1.8rem,4vw,3rem);
+}
+
+.shop-categories-head h2 {
+  max-width: 13ch;
+  margin: 0;
+  font-size: clamp(3rem,6.5vw,6.6rem);
+  line-height: .88;
+  letter-spacing: -.06em;
+}
+
+.shop-categories-head > p {
+  max-width: 650px;
+  margin: 0;
+  color: rgba(247,245,241,.62);
+  line-height: 1.6;
+}
+
+.shop-category-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.14);
+  gap: 1px;
+}
+
+.shop-category-shortcuts button {
+  min-height: 132px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: .8rem;
+  padding: 1.25rem;
+  border: 0;
+  background: #0b0b0c;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease;
+}
+
+.shop-category-shortcuts button:hover,
+.shop-category-shortcuts button:focus-visible {
+  background: #f4a261;
+  color: #050505;
+  outline: none;
+}
+
+.shop-category-shortcuts button span {
+  max-width: 11ch;
+  font-family: var(--font-display, sans-serif);
+  font-size: clamp(1.05rem,1.7vw,1.5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+@media (max-width: 900px) {
+  .shop-category-shortcuts {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .shop-category-shortcuts button:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .shop-category-shortcuts {
+    grid-template-columns: 1fr;
+  }
+
+
+/* Gym Funnel V2: la tienda usa fotografía real de producto.
+   Las capas editoriales antiguas ocultan media dentro de *-card por defecto;
+   esta superficie es una excepción deliberada. */
+body.premium-route--shop .ds-frame:not([data-experience-scope='system']) .shop-product-card .shop-product-visual,
+body.premium-route--shop .shop-product-visual:has(.shop-product-image) {
+  display: flex !important;
+}
+
+body.premium-route--shop .ds-frame:not([data-experience-scope='system']) .shop-product-card .shop-product-visual picture,
+body.premium-route--shop .ds-frame:not([data-experience-scope='system']) .shop-product-card .shop-product-image {
+  display: block !important;
+}

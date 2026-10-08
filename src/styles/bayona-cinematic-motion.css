@@ -1,0 +1,108 @@
+/* Chapter III: flight through the training method — CSS 3D, no new WebGL renderer. */
+body.premium-route--home .bayona-voyage{position:relative;width:min(100%,640px);height:min(67svh,610px);min-height:320px;overflow:hidden;isolation:isolate;perspective:1000px;background:radial-gradient(ellipse at 56% 43%,rgba(244,162,97,.15),transparent 39%),radial-gradient(ellipse at 20% 90%,rgba(105,111,129,.16),transparent 54%),#070809;mask-image:linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent)}
+body.premium-route--home .bayona-voyage-sky{position:absolute;inset:10% 0 0;background:repeating-radial-gradient(circle at 50% 90%,transparent 0,transparent 58px,rgba(244,162,97,.085) 59px,transparent 60px);transform:perspective(760px) rotateX(47deg);opacity:.6}
+body.premium-route--home .bayona-voyage-stars{position:absolute;inset:0}
+body.premium-route--home .bayona-voyage-stars span{position:absolute;left:calc(mod(var(--star) * 37,96) * 1%);top:calc(mod(var(--star) * 29,91) * 1%);height:2px;width:2px;background:#f5d4ba;box-shadow:0 0 12px rgba(244,162,97,.8);opacity:.56}
+body.premium-route--home .bayona-voyage-route{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 0 9px rgba(244,162,97,.28))}
+body.premium-route--home .bayona-voyage-station{position:absolute;z-index:3;transform:translate(-50%,-50%);display:flex;align-items:center;gap:.65rem}
+body.premium-route--home .bayona-voyage-station__ring{display:block;width:23px;aspect-ratio:1;border:2px solid rgba(244,162,97,.28);border-radius:50%!important;box-shadow:0 0 0 10px rgba(244,162,97,.03);transition:background .55s ease,border .55s ease}
+body.premium-route--home .bayona-voyage-station[data-active='true'] .bayona-voyage-station__ring{border-color:#f4a261;background:rgba(244,162,97,.65);box-shadow:0 0 36px rgba(244,162,97,.42)}
+body.premium-route--home .bayona-voyage-station__label{color:rgba(247,247,243,.82);font:700 .62rem/1.35 var(--type-family-mono,monospace);letter-spacing:.09em;white-space:nowrap}
+body.premium-route--home .bayona-voyage-craft{position:absolute;z-index:4;transform:translate(-50%,-50%);display:grid;place-items:center;width:76px;aspect-ratio:1;background:radial-gradient(circle,rgba(244,162,97,.28),transparent 65%);color:#f4a261;filter:drop-shadow(0 0 18px rgba(244,162,97,.32))}
+body.premium-route--home .bayona-voyage-craft svg{transform:rotate(42deg)}
+body.premium-route--home .bayona-voyage-thrust{position:absolute;top:55%;left:48%;width:2px;height:40px;background:linear-gradient(#f4a261,transparent);transform:rotate(42deg);filter:blur(2px)}
+body.premium-route--home .bayona-voyage-telemetry{position:absolute;bottom:4%;left:5%;color:rgba(247,247,243,.48);font:700 .59rem/1.2 var(--type-family-mono,monospace);letter-spacing:.17em}
+body.premium-route--home .immersive-method-act{z-index:2}
+body.premium-route--home .immersive-method-act__copy{min-height:0}
+body.premium-route--home .immersive-method-act h3{color:#f7f7f3}
+body.premium-route--home .immersive-method-act__meta{margin-bottom:clamp(1rem,2vw,1.8rem)}
+/* Chapter IV: distractions drop away; a camera rises through knowledge stations. */
+body.premium-route--home .benefits-orbit-visual{overflow:hidden;isolation:isolate}
+body.premium-route--home .bayona-noise-field{position:absolute;z-index:4;inset:0;pointer-events:none;will-change:transform,opacity}
+body.premium-route--home .bayona-noise-billboard{position:absolute;left:calc(5% + var(--noise-index) * 6%);top:calc(10% + var(--noise-index) * 16%);transform:rotate(calc((var(--noise-index) - 2) * 7deg));display:block;padding:.5rem 1rem;color:rgba(247,247,243,.78);border:1px solid rgba(247,247,243,.24);background:rgba(12,15,18,.9);box-shadow:0 13px 32px rgba(0,0,0,.25);font:800 clamp(.8rem,1.7vw,1.4rem)/1 var(--type-family-display,sans-serif);letter-spacing:-.02em;white-space:nowrap}
+body.premium-route--home .bayona-ascent-steps{position:absolute;z-index:1;right:1%;bottom:8%;display:grid;gap:clamp(1rem,4vw,2.2rem)}
+body.premium-route--home .bayona-ascent-steps span{display:block;min-width:98px;padding:0 0 .5rem 1.1rem;border-left:2px solid rgba(244,162,97,.7);border-bottom:1px solid rgba(244,162,97,.18);color:rgba(247,247,243,.73);font:700 .55rem/1.4 var(--type-family-mono,monospace);letter-spacing:.12em;transform:translateY(calc(-1 * var(--ascent,0) * 2px))}
+body.premium-route--home .benefits-orbit-system{max-width:min(80%,520px);transform-origin:center center}
+body.premium-route--home .benefits-orbit-copy h3{color:#f7f7f3}
+/* Chapter V: genuine stories, lateral magazine strip. */
+body.premium-route--home .bayona-experience-film{position:absolute;z-index:1;top:24%;right:4%;width:min(35vw,520px);display:flex;gap:clamp(.8rem,2vw,2rem);pointer-events:none;opacity:.85}
+body.premium-route--home .bayona-experience-film__slide{flex:0 0 60%;margin:0;aspect-ratio:3/4;overflow:hidden;position:relative;border:1px solid rgba(244,162,97,.23);background:#151515;transform:rotate(calc((var(--film-order) - .5) * 4deg))}
+body.premium-route--home .bayona-experience-film__slide img{width:100%;height:100%;object-fit:cover;filter:saturate(.58) brightness(.62)}
+body.premium-route--home .bayona-experience-film__slide figcaption{position:absolute;bottom:.8rem;left:.75rem;color:#f4a261;font:700 .55rem/1.3 var(--type-family-mono,monospace);letter-spacing:.1em}
+body.premium-route--home .experience-story__copy{max-width:58%;width:min(58%,660px)}
+body.premium-route--home .experience-story blockquote{max-width:18ch;font-size:clamp(2.6rem,4.1vw,4.85rem)!important;line-height:1.03!important}
+/* Chapter VI: 30 day programme opens as a cinema with a speed arrival. */
+body.premium-route--home .bayona-challenge-theater{position:relative;width:min(100%,650px);height:min(63vh,510px);min-height:295px;display:grid;place-items:center;perspective:900px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 28%,rgba(244,162,97,.12),transparent 58%),#090a0c}
+body.premium-route--home .bayona-challenge-beams{position:absolute;inset:0;transform:perspective(560px) rotateX(38deg)}
+body.premium-route--home .bayona-challenge-beams span{position:absolute;top:45%;left:calc(6% + var(--beam)*11%);width:1px;height:66%;transform:rotate(calc((var(--beam) - 4)*10deg));transform-origin:top;background:linear-gradient(transparent,rgba(244,162,97,.22),transparent)}
+body.premium-route--home .bayona-challenge-screen{position:relative;z-index:3;width:74%;aspect-ratio:16/10;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1rem;padding:clamp(1rem,2vw,2.4rem);border:1px solid rgba(244,162,97,.48);background:radial-gradient(circle at center,rgba(233,143,70,.20),transparent 64%),linear-gradient(145deg,#191a1d,#050607);box-shadow:0 30px 90px rgba(0,0,0,.7),0 0 50px rgba(244,162,97,.07);text-align:center;transform-origin:center}
+body.premium-route--home .bayona-challenge-screen > span{color:rgba(247,247,243,.65);font:700 .55rem/1.5 var(--type-family-mono,monospace);letter-spacing:.16em}
+body.premium-route--home .bayona-challenge-screen strong{color:#f4a261;font:900 clamp(2.7rem,5.8vw,6rem)/.9 var(--type-family-display,sans-serif);letter-spacing:-.065em}
+body.premium-route--home .bayona-challenge-screen p{color:#f7f7f3;font:700 .58rem/1.5 var(--type-family-mono,monospace);letter-spacing:.11em}
+body.premium-route--home .bayona-challenge-screen__rows{display:flex;gap:4px;width:85%}
+body.premium-route--home .bayona-challenge-screen__rows i{display:block;flex:1;height:2px;background:#f4a261;opacity:.6}
+body.premium-route--home .bayona-challenge-seats{position:absolute;bottom:-4%;left:5%;width:90%;display:flex;justify-content:space-between;gap:3%;transform:perspective(650px) rotateX(64deg)}
+body.premium-route--home .bayona-challenge-seats span{display:block;width:22%;height:55px;background:linear-gradient(#24262b,#0b0d10);border-top:1px solid rgba(247,247,243,.13)}
+@media(max-width:900px){
+body.premium-route--home .bayona-voyage{width:100%;height:min(43vh,380px);min-height:220px}
+body.premium-route--home .bayona-voyage-station__label{font-size:.48rem}
+body.premium-route--home .bayona-voyage-craft{width:54px}
+body.premium-route--home .bayona-noise-billboard{font-size:.8rem}
+body.premium-route--home .bayona-ascent-steps{right:0;bottom:3%;gap:.8rem}
+body.premium-route--home .bayona-ascent-steps span{min-width:78px;font-size:.45rem}
+body.premium-route--home .bayona-experience-film{right:-4%;top:11%;width:52%;opacity:.37}
+body.premium-route--home .experience-story__copy{width:min(100% - 36px,600px);max-width:none}
+body.premium-route--home .experience-story blockquote{font-size:clamp(2rem,7vw,3.6rem)!important;max-width:20ch}
+body.premium-route--home .bayona-challenge-theater{height:min(42vh,370px);min-height:230px}
+}
+@media(prefers-reduced-motion:reduce){.bayona-noise-field,.bayona-challenge-beams{display:none!important}}
+
+/* Final art-direction corrections from real 390/726 screenshot review. */
+body.premium-route--home .community-immersive-frame {
+  display:grid;
+  place-items:center;
+}
+body.premium-route--home .community-immersive .community-interface {
+  justify-content:center;
+  min-height:min(64svh,610px)!important;
+  max-height:calc(100svh - 132px);
+}
+body.premium-route--home .community-immersive-progress{z-index:5}
+body.premium-route--home .experience-story__portrait {
+  filter:saturate(.55) contrast(1.08) brightness(.44)!important;
+  object-position:64% 38%;
+}
+body.premium-route--home .experience-story__scrim {
+  background:linear-gradient(90deg,rgba(3,4,5,.95),rgba(3,4,5,.83) 52%,rgba(3,4,5,.40) 100%),linear-gradient(0deg,rgba(3,4,5,.72),transparent 54%)!important;
+}
+body.premium-route--home .experience-story blockquote {
+  max-width:20ch!important;
+  font-size:clamp(2rem,4.2vw,4.5rem)!important;
+  line-height:1.05!important;
+}
+body.premium-route--home .experience-story__copy {max-width:min(64vw,760px);}
+body.premium-route--home .bayona-experience-film {
+  right:1%;
+  opacity:.78;
+  top:20%;
+}
+body.premium-route--home .bayona-offer-gate {
+  background:radial-gradient(ellipse at 50% 44%,rgba(244,162,97,.15),transparent 45%),linear-gradient(180deg,#050607 0%,#121316 72%,#070809 100%)!important;
+  border-top:1px solid rgba(244,162,97,.16);
+  border-bottom:1px solid rgba(244,162,97,.19);
+}
+body.premium-route--home .bayona-offer-gate__kicker,
+body.premium-route--home .bayona-offer-gate__stage > p {
+ color:#f7f7f3!important;
+ opacity:.85;
+ text-shadow:0 1px 8px rgba(0,0,0,.48);
+}
+@media(max-width:760px){
+ body.premium-route--home .community-immersive .community-interface {
+   min-height:min(59svh,510px)!important;
+   max-height:calc(100svh - 128px);
+ }
+ body.premium-route--home .experience-story__copy {max-width:none;width:calc(100% - 36px);}
+ body.premium-route--home .experience-story blockquote{font-size:clamp(1.92rem,6vw,2.85rem)!important;}
+ body.premium-route--home .bayona-experience-film{width:45%;opacity:.56;top:14%;}
+}

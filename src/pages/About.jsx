@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import GlobeTestimonials from '../components/GlobeTestimonials.jsx'
 import AboutValuesStage from '../components/about/AboutValuesStage.jsx'
 import AboutMethodStage from '../components/about/AboutMethodStage.jsx'
+import { MethodSequence } from '../components/method/MethodSequence.jsx'
 import { StickyStage } from '../engine/scroll/StickyStage.jsx'
-import Bridge from '../components/Bridge'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import { PageHero, SectionLabel } from '../components/Layout'
 import { siteMedia } from '../config/siteMedia.js'
@@ -186,7 +186,7 @@ export default function About() {
           estática legible por diseño del componente.
         */}
         <StickyStage
-          length="400vh"
+          length="200vh"
           states={stages.length}
           className="about-timeline about-timeline--stage section-shell"
         >
@@ -237,9 +237,12 @@ export default function About() {
         aria-labelledby="about-globe-title"
       >
         <div className="about-globe-copy about-globe-testimonials-heading ds-reveal ds-reveal--spatial">
-          <SectionLabel>EXPERIENCIAS</SectionLabel>
-          <h2 id="about-globe-title">HISTORIAS<br /><span>EN MOVIMIENTO</span></h2>
-          <p>Personas reales, puntos de partida distintos y una misma idea: el proceso importa más que el espectáculo.</p>
+          <SectionLabel>TRAYECTORIA E IMPACTO</SectionLabel>
+          <h2 id="about-globe-title">DE COLOMBIA A ESPAÑA.<br /><span>HISTORIAS QUE SIGUEN.</span></h2>
+          <p>
+            Cada punto abre una experiencia publicada. El mapa muestra el recorrido que hoy podemos enseñar:
+            Bogotá, Valencia, Madrid, Miami y Buenos Aires.
+          </p>
         </div>
         {/* Capa WebGL 3D — atmósfera detrás del mapa interactivo (Fase 11.2). */}
         <Suspense fallback={null}>
@@ -248,22 +251,7 @@ export default function About() {
         <GlobeTestimonials />
       </section>
 
-      <Bridge
-        className="about-community-bridge"
-        media={siteMedia.about.values[1]}
-        eyebrow="COMUNIDAD ABIERTA"
-        title="ENTRENAMOS, REGISTRAMOS Y AJUSTAMOS."
-        /*
-          El espacio inicial es del contrato de About: la frase se lee entera,
-          «ENTRENAMOS, REGISTRAMOS Y AJUSTAMOS. JUNTOS.», y `Bridge` pega el
-          acento al título sin espacio intermedio.
-        */
-        titleAccent=" JUNTOS."
-        hook="Entra gratis, mira cómo pensamos y decide después si quieres acompañamiento individual."
-        free
-        ctaLabel="CONOCER LA COMUNIDAD"
-        ctaHref="/community"
-      />
+
 
       <section
         {...sceneBackgroundProps(siteMedia.about.values[0], {
@@ -290,6 +278,8 @@ export default function About() {
             <p>Qué miramos, qué decidimos con eso y cómo seguimos cuando la vida real aparece.</p>
           </div>
 
+          {/* Fuente semántica compartida para lectura accesible del método. */}
+          <MethodSequence items={methodSteps} className="sr-only" label="Las tres fases del método BAYONA" />
           <AboutMethodStage items={methodSteps} />
 
           <blockquote>

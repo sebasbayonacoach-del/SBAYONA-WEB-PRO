@@ -1961,3 +1961,13 @@
     opacity: .7;
   }
 }
+
+/* ==========================================================================
+   PRO FINAL 2026-10-07 · recorrido premium sin scroll de relleno
+   ========================================================================== */
+.about-page .about-problem,
+.about-page .about-values,
+.about-page .about-method,
+.about-page .about-cta {
+  padding-block: clamp(72px, 8vw, 112px);
+}

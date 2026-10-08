@@ -7,3 +7,9 @@ artifacts/
 .netlify/
 *.log
 .DS_Store
+
+# Informes y capturas de verificación reproducibles; no son código fuente.
+test-results/
+playwright-report/
+.vercel/
+.env.local

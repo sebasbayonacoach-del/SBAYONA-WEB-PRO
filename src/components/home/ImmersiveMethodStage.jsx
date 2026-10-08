@@ -1,52 +1,21 @@
-import { motion, useTransform } from 'framer-motion'
+import NarrativeIntro from './NarrativeIntro.jsx'
+import { motion } from 'framer-motion'
 import { StickyStage } from '../../engine/scroll/StickyStage.jsx'
 import { useCapabilities } from '../../engine/hooks/useCapabilities.js'
 import '../../styles/immersive-method-stage.css'
 
 const STEP_VERBS = ['LEER', 'DISEÑAR', 'AJUSTAR']
+const METHOD_PHOTOS = ['home-pillar-read', 'home-pillar-build', 'home-method']
 
-function DynamicMethodObject({ progress, activeIndex }) {
-  const rotateX = useTransform(progress, [0, 1], [58, 18])
-  const rotateY = useTransform(progress, [0, 1], [-34, 326])
-  const rotateZ = useTransform(progress, [0, 1], [-8, 8])
-  const coreScale = useTransform(progress, [0, 0.5, 1], [0.82, 1.08, 0.92])
-  const coreY = useTransform(progress, [0, 1], ['10%', '-10%'])
-
+function JourneyScene({ activeIndex, staticMode = false }) {
   return (
-    <motion.div
-      className="immersive-method-object"
-      style={{ rotateX, rotateY, rotateZ }}
-      aria-hidden="true"
-    >
-      <div className="immersive-method-ring immersive-method-ring--outer" />
-      <div className="immersive-method-ring immersive-method-ring--mid" />
-      <div className="immersive-method-ring immersive-method-ring--inner" />
-      <motion.div className="immersive-method-core" style={{ scale: coreScale, y: coreY }}>
-        <span>{String(activeIndex + 1).padStart(2, '0')}</span>
-      </motion.div>
-      {STEP_VERBS.map((verb, index) => (
-        <span
-          className="immersive-method-node"
-          data-active={activeIndex === index ? 'true' : undefined}
-          key={verb}
-        >
-          {verb}
-        </span>
-      ))}
+    <motion.div className="bayona-method-photograph" aria-hidden="true"
+      key={activeIndex} initial={staticMode ? false : { opacity: .6, scale: 1.035 }}
+      animate={{ opacity: 1, scale: 1 }} transition={{ duration: .85, ease: [.16, 1, .3, 1] }}>
+      <img className="bayona-voyage-photographic-layer"
+        src={`/images/bayona-generated/${METHOD_PHOTOS[activeIndex] ?? METHOD_PHOTOS[0]}-1600.webp`}
+        alt="" width="1600" height="900" loading="lazy" decoding="async" />
     </motion.div>
-  )
-}
-
-function StaticMethodObject({ activeIndex }) {
-  return (
-    <div className="immersive-method-object immersive-method-object--static" aria-hidden="true">
-      <div className="immersive-method-ring immersive-method-ring--outer" />
-      <div className="immersive-method-ring immersive-method-ring--mid" />
-      <div className="immersive-method-ring immersive-method-ring--inner" />
-      <div className="immersive-method-core">
-        <span>{String(activeIndex + 1).padStart(2, '0')}</span>
-      </div>
-    </div>
   )
 }
 
@@ -92,15 +61,11 @@ export default function ImmersiveMethodStage({ items = [], heading, body }) {
   const safeItems = Array.isArray(items) ? items.filter(Boolean) : []
   if (!safeItems.length) return null
 
-  const length = mode === 'desktop' ? '150vh' : '160vh'
+  const length = mode === 'desktop' ? '260vh' : '190vh'
 
   return (
     <div className="immersive-method">
-      <div className="immersive-method-intro">
-        <p className="immersive-method-kicker">02 / EL MÉTODO</p>
-        <h2 id="home-mechanism-heading">{heading}</h2>
-        <p>{body}</p>
-      </div>
+      <NarrativeIntro className="immersive-method-intro" image="/images/bayona-generated/home-method-1600.webp" label="02 / EL MÉTODO" id="home-mechanism-heading" title={heading} body={body} />
 
       <ol className="sr-only" aria-label="Método BAYONA en tres pasos">
         {safeItems.map((step) => (
@@ -116,7 +81,7 @@ export default function ImmersiveMethodStage({ items = [], heading, body }) {
         states={safeItems.length}
         topOffset={66}
         allowMobile
-        className="immersive-method-stage"
+        className="immersive-method-stage photo-story-stage"
       >
         {({ index, progress, isStatic }) => {
           const active = safeItems[index] ?? safeItems[0]
@@ -125,9 +90,9 @@ export default function ImmersiveMethodStage({ items = [], heading, body }) {
             <div className="immersive-method-viewport">
               <div className="immersive-method-visual">
                 {isStatic ? (
-                  <StaticMethodObject activeIndex={index} />
+                  <JourneyScene progress={progress} activeIndex={index} staticMode />
                 ) : (
-                  <DynamicMethodObject progress={progress} activeIndex={index} />
+                  <JourneyScene progress={progress} activeIndex={index} />
                 )}
               </div>
 

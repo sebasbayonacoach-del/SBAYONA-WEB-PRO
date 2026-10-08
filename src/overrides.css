@@ -276,8 +276,8 @@ video {
   display: inline-flex;
   align-items: center;
   color: #a7a29b;
-  font: 600 8px/1 'DM Mono', monospace;
-  letter-spacing: 0.08em;
+  font: 600 clamp(8px, 0.7vw, 10px)/1 'DM Mono', monospace;
+  letter-spacing: 0.075em;
   text-transform: uppercase;
 }
 

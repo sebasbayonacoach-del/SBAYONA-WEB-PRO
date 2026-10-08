@@ -1,0 +1,327 @@
+/* BAYONA · SPATIAL STORY / una galería de diez momentos, no un carrusel.
+   Perspectiva CSS 3D con escenas existentes. El único gesto protagonista
+   es que la fotografía atraviesa un túnel espacial al avanzar el scroll. */
+
+body.premium-route--home .vision-shift-stage--spatial {
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse 46% 63% at 29% 42%, rgba(199, 105, 43, .095), transparent 80%),
+    linear-gradient(165deg, #08090b 10%, #111113 60%, #070809 100%);
+}
+
+body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-viewport {
+  grid-template-columns: minmax(0, 1.22fr) minmax(270px, .78fr);
+  gap: clamp(1rem, 4vw, 4.5rem);
+  align-items: center;
+}
+
+body.premium-route--home .vision-shift-stage--spatial .vision-shift-visual {
+  min-width: 0;
+  min-height: min(66vh, 680px);
+  overflow: visible;
+  perspective: 1250px;
+  transform-style: preserve-3d;
+}
+
+/* El marco de una fotografía antigua ya no está presente: el espacio es
+   una cámara abierta y profunda, no una tarjeta inclinada. */
+body.premium-route--home .vision-shift-stage--spatial .vision-shift-visual::before {
+  display: none;
+}
+
+.vision-spatial-environment {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 830px);
+  height: clamp(300px, 55vw, 625px);
+  max-height: min(65vh, 670px);
+  perspective: 1300px;
+  perspective-origin: 49% 45%;
+  transform-style: preserve-3d;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.vision-spatial-depth {
+  position: absolute;
+  inset: 2% -12% 0;
+  transform-style: preserve-3d;
+  opacity: .7;
+  background: radial-gradient(ellipse at 50% 42%, rgba(239, 151, 83, .085), transparent 54%);
+}
+
+.vision-spatial-depth__plane {
+  position: absolute;
+  inset: 17% 6%;
+  border: 1px solid rgba(239, 151, 83, .17);
+  background: linear-gradient(127deg, rgba(239,151,83,.045), transparent 55%);
+  transform-origin: center;
+}
+
+.vision-spatial-depth__plane--rear {
+  transform: translate3d(-4%, -4%, -290px) rotateY(-18deg) rotateZ(-4deg);
+}
+
+.vision-spatial-depth__plane--middle {
+  transform: translate3d(6%, 4%, -160px) rotateY(12deg) rotateZ(2deg);
+  border-color: rgba(247,247,243,.08);
+}
+
+.vision-spatial-depth__floor {
+  position: absolute;
+  inset: 60% -16% -35%;
+  background-image:
+    linear-gradient(rgba(239,151,83,.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239,151,83,.11) 1px, transparent 1px);
+  background-size: 46px 46px;
+  opacity: .37;
+  transform: rotateX(76deg) translate3d(0, 26%, -110px);
+  mask-image: linear-gradient(to bottom, transparent, #000 25%, transparent 93%);
+}
+
+.vision-spatial-track {
+  position: relative;
+  width: min(67%, 460px);
+  aspect-ratio: 4 / 4.6;
+  transform-style: preserve-3d;
+  display: grid;
+  place-items: center;
+}
+
+.vision-spatial-frame {
+  position: absolute;
+  grid-area: 1 / 1;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(244,162,97,.58);
+  background: #0b0c0f;
+  backface-visibility: hidden;
+  box-shadow: 0 24px 70px rgba(0,0,0,.38), 0 0 0 1px rgba(255,255,255,.05) inset;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.vision-spatial-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.76) contrast(1.1) brightness(.79);
+  transform: scale(1.012);
+}
+
+.vision-spatial-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 58%, rgba(3,4,5,.82));
+  pointer-events: none;
+}
+
+.vision-spatial-frame figcaption {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(10px, 1.2vw, 18px);
+  color: rgba(247,247,243,.9);
+  font-family: var(--type-family-mono, monospace);
+  font-size: clamp(.58rem, .8vw, .72rem);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  gap: 1rem;
+}
+
+.vision-spatial-frame figcaption span:first-child {
+  color: #f4a261;
+  flex-shrink: 0;
+}
+
+.vision-spatial-timeline {
+  position: absolute;
+  z-index: 11;
+  inset: auto 9% 1%;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 4px;
+  align-items: start;
+}
+
+.vision-spatial-timeline > span {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
+}
+
+.vision-spatial-timeline__line {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: rgba(247,247,243,.24);
+}
+
+.vision-spatial-timeline small {
+  color: rgba(247,247,243,.52);
+  font-size: .6rem;
+  letter-spacing: .08em;
+}
+
+/* Copy de venta — titular completo, sin letras huérfanas y sin claims de resultados. */
+body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-copy {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  align-self: center;
+  text-shadow: none;
+}
+
+body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-copy h3 {
+  width: auto;
+  max-width: 17ch;
+  font-size: clamp(2.15rem, 3.6vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+  overflow-wrap: normal;
+  hyphens: none;
+  text-wrap: balance;
+}
+
+.vision-spatial-promise {
+  max-width: 34ch;
+  margin: clamp(1rem, 2vw, 1.4rem) 0 0 !important;
+  color: rgba(247,247,243,.8) !important;
+  font-family: var(--type-family-body, sans-serif) !important;
+  font-size: clamp(.9rem, 1.15vw, 1.06rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.65 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.vision-spatial-cta {
+  position: absolute;
+  z-index: 5;
+  right: max(2px, 0%);
+  bottom: max(9%, 3rem);
+  min-height: 44px;
+  padding: .85rem 1.2rem;
+  display: inline-flex;
+  gap: 1.3rem;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--type-family-mono, monospace);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  font-weight: 700;
+  color: #090a0b;
+  background: #f4a261;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+}
+
+.vision-spatial-cta:hover,
+.vision-spatial-cta:focus-visible {
+  background: #f7f7f3;
+  color: #090a0b;
+}
+
+.vision-spatial-cta:focus-visible {
+  outline: 2px solid #f4a261;
+  outline-offset: 4px;
+}
+
+body.premium-route--home .vision-shift-stage--spatial .vision-shift-counter {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  z-index: 2;
+}
+
+@media (max-width: 760px) {
+  body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-viewport {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(230px, 46svh) auto;
+    gap: .2rem;
+    align-content: center;
+    padding-bottom: 6.5rem;
+  }
+  body.premium-route--home .vision-shift-stage--spatial .vision-shift-visual {
+    min-height: 0;
+    width: 100%;
+  }
+  .vision-spatial-environment {
+    width: 100%;
+    height: min(45svh, 470px);
+  }
+  .vision-spatial-track { width: min(58%, 340px); }
+  .vision-spatial-timeline { bottom: -1%; inset-inline: 10%; }
+  body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-copy h3 {
+    font-size: clamp(1.8rem, 5.9vw, 2.8rem);
+    max-width: 24ch;
+    line-height: 1.08;
+  }
+  .vision-spatial-promise { line-height: 1.35 !important; margin-top: .6rem !important; }
+  .vision-spatial-cta { bottom: 4rem; right: 0; font-size: .65rem; }
+  .vision-spatial-depth__floor { opacity: .19; }
+}
+
+@media (max-width: 480px) {
+  .vision-spatial-track { width: min(69%, 280px); }
+  .vision-spatial-frame figcaption { padding: 8px; font-size: .52rem; }
+  .vision-spatial-environment { height: min(43svh, 350px); }
+  body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-viewport {
+    grid-template-rows: minmax(225px, 43svh) auto;
+  }
+  body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-copy h3 {
+    font-size: clamp(1.6rem, 7.2vw, 2.4rem);
+  }
+  .vision-spatial-promise { font-size: .82rem !important; }
+  .vision-spatial-timeline { display: none; }
+}
+
+/* El motor StickyStage ya degrada a cinco filas de lectura. */
+body.premium-route--home .vision-shift-stage--spatial.sticky-stage--static .vision-spatial-cta {
+  position: relative;
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+  margin: .65rem 0 0;
+  right: auto;
+  bottom: auto;
+}
+
+body.premium-route--home .vision-shift-stage--spatial.sticky-stage--static .vision-shift-viewport {
+  grid-template-rows: auto auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vision-spatial-frame,
+  .vision-spatial-track { transition: none !important; will-change: auto; }
+}
+
+/* Esta escena NO comparte el posicionamiento absoluto de las fotografías
+   heredadas; la galería participa en la malla y no tapa los titulares. */
+body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-visual {
+  position: relative !important;
+  inset: auto !important;
+  grid-column: 1;
+  grid-row: 1;
+}
+body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-copy {
+  grid-column: 2;
+  grid-row: 1;
+}
+@media (max-width: 760px) {
+  body.premium-route--home .vision-shift-stage--spatial:not(.sticky-stage--static) .vision-shift-copy {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+  }
+}

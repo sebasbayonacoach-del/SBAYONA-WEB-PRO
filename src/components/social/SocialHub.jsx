@@ -20,7 +20,7 @@ const KIND_LABEL = {
 
 /** Default editorial copy when no override is supplied. */
 const DEFAULT_DESC = {
-  instagram: 'Movimiento, método y diario visual del ecosistema BAYONA.',
+  instagram: 'Movimiento, método y diario visual de BAYONA.',
   youtube: 'Documentales y clases sobre ciencia del movimiento y el rendimiento.',
   tiktok: 'Píldoras de entrenamiento, parkour y mentalidad.',
   linkedin: 'Visión, método y dirección de BAYONA como empresa.',
@@ -30,16 +30,16 @@ const DEFAULT_DESC = {
   x: 'Pensamiento en corto y señales desde el núcleo de BAYONA.',
   spotify: 'Podcast y playlists para entrenar, crear y recuperar.',
   discord: 'El espacio de conversación de la comunidad BAYONA.',
-  behance: 'Identidad, dirección de arte y diseño del universo BAYONA.',
+  behance: 'Identidad, dirección de arte y diseño de BAYONA.',
   dribbble: 'Detalles de producto e interfaces en evolución.',
   medium: 'Ensayos sobre rendimiento humano, ciencia y disciplina.',
   substack: 'Cartas largas sobre método, biología y propósito.',
   patreon: 'Acceso exclusivo a archivos, sesiones y procesos internos.',
-  gumroad: 'Programas, guías y herramientas digitales.',
+  gumroad: 'Planes, guías y herramientas digitales.',
   calendly: 'Reserva una sesión o una llamada de orientación.',
   twitch: 'Directos de entrenamiento, creación y proceso.',
   pinterest: 'Tablero visual de inspiración y estética BAYONA.',
-  website: 'La sede digital de todo el ecosistema BAYONA.',
+  website: 'La sede digital principal de BAYONA.',
 }
 
 function withDefaults(profile) {
@@ -47,7 +47,7 @@ function withDefaults(profile) {
   return {
     ...profile,
     description: o.description || '',
-    fallbackDesc: DEFAULT_DESC[profile.id] || 'Parte del ecosistema BAYONA.',
+    fallbackDesc: DEFAULT_DESC[profile.id] || 'Parte de BAYONA.',
     followers: o.followers || '',
     verified: Boolean(o.verified),
     accent: o.accent || profile.accent,

@@ -5,9 +5,11 @@
  * local `bayona_leads` y, si hay nube, inserta en la tabla `leads` con
  * `source='lead-magnet'`. Éxito en pantalla sin recargar.
  */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { bookingLink, isBookingEnabled } from '../../config/site.config.js'
 import { isCloudEnabled, supabase } from '../../lib/supabase.js'
+import { trackEvent, trackLead } from '../../lib/analytics/analytics.js'
 import '../../styles/auth-members.css'
 
 export const LEADS_KEY = 'bayona_leads'
@@ -33,37 +35,70 @@ function readQueue() {
   }
 }
 
-function appendToQueue(lead) {
+function leadKey(lead) {
+  return lead?.id || `${lead?.created_at ?? ''}:${lead?.contact ?? ''}`
+}
+
+function writeQueue(queue) {
   try {
-    const queue = readQueue()
-    queue.push(lead)
     window?.localStorage?.setItem(LEADS_KEY, JSON.stringify(queue))
+    return true
   } catch {
-    // localStorage lleno o bloqueado: el éxito en pantalla se mantiene.
+    return false
   }
 }
 
+function appendToQueue(lead) {
+  const queue = readQueue()
+  if (!queue.some((item) => leadKey(item) === leadKey(lead))) queue.push(lead)
+  return writeQueue(queue)
+}
+
+function removeFromQueue(lead) {
+  const key = leadKey(lead)
+  return writeQueue(readQueue().filter((item) => leadKey(item) !== key))
+}
+
 async function insertCloudLead(lead) {
-  if (!isCloudEnabled() || !supabase) return
+  if (!isCloudEnabled() || !supabase) return false
   try {
-    await supabase.from('leads').insert({
+    const { error } = await supabase.from('leads').insert({
+      id: lead.id,
       name: lead.name,
       contact: lead.contact,
       source: LEAD_SOURCE,
+      created_at: lead.created_at,
     })
+    // 23505 = el mismo UUID ya fue guardado en un intento anterior. Para la
+    // cola de reintento cuenta como éxito: no creamos un segundo lead.
+    return !error || error.code === '23505'
   } catch {
-    // La cola local ya guardó el lead; la nube reintentará otro día.
+    return false
+  }
+}
+
+async function flushPendingLeads() {
+  if (!isCloudEnabled() || !supabase) return
+  const queue = readQueue()
+  for (const lead of queue) {
+    const saved = await insertCloudLead(lead)
+    if (saved) removeFromQueue(lead)
   }
 }
 
 export default function LeadMagnet({
-  heading = 'Tu primera acción clara, gratis.',
-  copy = 'Déjanos tu nombre y tu contacto. Te escribimos con una rutina simple para empezar esta semana con dirección, no con otra promesa vacía.',
+  heading = 'Empieza gratis.',
+  copy = 'Déjanos tu nombre y un contacto. Tus recursos quedan disponibles al instante y puedes pedir una valoración sin compromiso.',
 }) {
   const [name, setName] = useState('')
   const [contact, setContact] = useState('')
   const [errors, setErrors] = useState([])
   const [done, setDone] = useState(false)
+  const [captureState, setCaptureState] = useState('idle')
+
+  useEffect(() => {
+    flushPendingLeads()
+  }, [])
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -74,15 +109,40 @@ export default function LeadMagnet({
     if (nextErrors.length > 0) return
 
     const lead = {
+      id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
       name: String(name).trim(),
       contact: String(contact).trim(),
       source: LEAD_SOURCE,
       created_at: new Date().toISOString(),
     }
     appendToQueue(lead)
-    insertCloudLead(lead)
     setDone(true)
+    trackLead({ source: LEAD_SOURCE })
+
+    if (isCloudEnabled()) {
+      setCaptureState('sending')
+      insertCloudLead(lead).then((saved) => {
+        if (saved) removeFromQueue(lead)
+        setCaptureState(saved ? 'cloud' : 'local')
+        trackEvent('lead_capture_status', {
+          source: LEAD_SOURCE,
+          status: saved ? 'cloud' : 'local_fallback',
+        })
+      })
+    } else {
+      setCaptureState('local')
+      trackEvent('lead_capture_status', {
+        source: LEAD_SOURCE,
+        status: 'local_fallback',
+      })
+    }
   }
+
+  const evaluationUrl = bookingLink(
+    `Hola BAYONA, soy ${String(name).trim() || 'un nuevo contacto'}. Ya abrí mis recursos y quiero agendar una valoración inicial. Mi contacto es: ${String(contact).trim() || 'por confirmar'}.`,
+  )
 
   return (
     <section className="lead-magnet" aria-labelledby="lead-magnet-title">
@@ -111,10 +171,43 @@ export default function LeadMagnet({
         <p className="eyebrow"><span />EMPIEZA GRATIS</p>
         <h2 id="lead-magnet-title">{heading}</h2>
         {done ? (
-          <p className="lead-magnet-success" role="status">
-            Listo, {String(name).trim()}. Guardamos tu contacto y te escribimos con tu primera rutina clara.{' '}
-            Mientras tanto puedes <Link to="/resources">explorar los recursos gratis</Link>.
-          </p>
+          <div className="lead-magnet-success" role="status">
+            <strong>Listo, {String(name).trim()}. Ya puedes llevarte tus recursos.</strong>
+            {captureState === 'cloud' ? (
+              <p>Tu contacto quedó registrado en BAYONA. No necesitas crear una cuenta ni esperar para empezar.</p>
+            ) : captureState === 'sending' ? (
+              <p>Tus recursos ya están listos. Estamos registrando tu contacto.</p>
+            ) : (
+              <p>
+                Tus recursos ya están listos. El registro automático no está disponible ahora;
+                confirma por WhatsApp para que podamos responderte.
+              </p>
+            )}
+            <div className="lead-magnet-rewards">
+              <a href="/downloads/bayona-editorial/primera-semana.pdf" download>DESCARGAR · PRIMERA SEMANA</a>
+              <a href="/downloads/bayona-editorial/registro-30-dias.pdf" download>DESCARGAR · REGISTRO 30 DÍAS</a>
+              <a href="/downloads/bayona-editorial/dossier-punto-de-partida.pdf" download>DESCARGAR · PUNTO DE PARTIDA</a>
+            </div>
+            <div className="lead-magnet-next-actions">
+              <a
+                href={evaluationUrl}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackEvent('valuation_request_click', {
+                  source: LEAD_SOURCE,
+                  channel: isBookingEnabled() ? 'booking' : 'whatsapp',
+                })}
+              >
+                AGENDAR VALORACIÓN
+              </a>
+              <Link to="/programs">VER SERVICIOS</Link>
+            </div>
+            <small>
+              {isBookingEnabled()
+                ? 'La disponibilidad y la confirmación se gestionan en el calendario.'
+                : 'La cita se coordina por WhatsApp según disponibilidad.'}
+            </small>
+          </div>
         ) : (
           <>
             <p>{copy}</p>
@@ -150,11 +243,11 @@ export default function LeadMagnet({
                 </div>
               )}
               <button type="submit" className="gold-button">
-                QUIERO MI PRIMERA RUTINA
+                RECIBIR MIS RECURSOS
               </button>
             </form>
             <p className="lead-magnet-note">
-              Solo la usamos para enviarte tu rutina. Nada de spam, nada de presión.
+              Usamos estos datos para responder a tu solicitud. Si el registro automático no está disponible, podrás confirmarla por WhatsApp.
             </p>
           </>
         )}

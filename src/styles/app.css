@@ -4855,3 +4855,42 @@ body:has(.app-page) .whatsapp-button:focus-visible {
     transition: none;
   }
 }
+
+/* ==========================================================================
+   PRO FINAL 2026-10-07 · compactación editorial
+   La App conserva todos sus contratos conceptuales, pero deja de exigir una
+   página de 14–17k px para entenderlos.
+   ========================================================================== */
+.app-experience .app-section {
+  padding-block: clamp(64px, 6vw, 96px);
+}
+
+.app-experience .app-final-cta {
+  padding-block: clamp(72px, 7vw, 108px);
+}
+
+.app-experience .app-device-stage {
+  min-height: clamp(560px, 54vw, 700px);
+}
+
+.app-experience .app-pain-card,
+.app-experience .app-difference-card,
+.app-experience .app-feature-card {
+  min-height: 210px;
+}
+
+@media (max-width: 699px) {
+  .app-experience .app-section {
+    padding-block: 58px;
+  }
+
+  .app-experience .app-device-stage {
+    min-height: 520px;
+  }
+
+  .app-experience .app-pain-card,
+  .app-experience .app-difference-card,
+  .app-experience .app-feature-card {
+    min-height: 0;
+  }
+}
