@@ -14,7 +14,7 @@ export const OUTRO_DESTINATIONS = Object.freeze([
   { href: '/programs', name: 'Servicios', title: 'TU FORMA DE ENTRENAR.', description: 'Entrenamiento, acompañamiento y programas.', image: '/images/bayona-generated/home-method-1600.webp' },
   { href: '/parkour-academy', name: 'Parkour', title: 'EL MOVIMIENTO NO TIENE LÍMITES.', description: 'Técnica, progresión y control corporal.', image: '/images/bayona-generated/parkour-hero-1600.webp' },
   { href: '/community', name: 'Comunidad', title: 'EL CAMINO SE COMPARTE.', description: 'Personas, experiencias y entrenamiento compartido.', image: '/images/bayona-generated/community-hero-1600.webp' },
-  { href: '/app', name: 'BAYONA+', title: 'DESCUBRE LO QUE VIENE.', description: 'Conoce el concepto de la futura experiencia digital.', image: '/images/bayona-generated/app-hero-1600.webp' },
+  { href: '/app', name: 'BAYONA+', title: 'ENTRA EN TU ESPACIO DIGITAL.', description: 'Conoce y abre BAYONA App, con Mi App y Coach Studio.', image: '/images/bayona-generated/app-hero-1600.webp' },
   { href: '/shop', name: 'Tienda', title: 'EQUÍPATE PARA MOVERTE.', description: 'Explora productos y solicita información.', image: '/images/bayona-generated/shop-hero-1600.webp' },
   { href: '/resources', name: 'Recursos', title: 'LLÉVATE UN PUNTO DE PARTIDA.', description: 'Herramientas y guías para dar el siguiente paso.', image: '/images/bayona-generated/resources-hero-1600.webp' },
   { href: '/faq', name: 'Preguntas', title: 'RESPUESTAS PARA AVANZAR.', description: 'Resuelve tus dudas antes de decidir.', image: '/images/bayona-generated/about-hero-1600.webp' },
