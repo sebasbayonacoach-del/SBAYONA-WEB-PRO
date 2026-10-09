@@ -13,6 +13,7 @@ import { useLocation, Link } from 'react-router-dom'
 import { AppShell } from '../components/app-os/AppShell.jsx'
 import { findNavBySectionId, resolveSectionId } from '../components/app-os/navConfig.js'
 import { useAppData } from '../lib/app-os/useAppData.js'
+import { BAYONA_APP_ENTRY_URL } from '../config/bayonaAppIntegration.js'
 import TodayScreen from '../components/app-os/screens/TodayScreen.jsx'
 import TrainingScreen from '../components/app-os/screens/TrainingScreen.jsx'
 import ProgressScreen from '../components/app-os/screens/ProgressScreen.jsx'
@@ -98,10 +99,12 @@ export default function AppOS() {
           cuenta o de este dispositivo. Si todavía no existe información suficiente,
           BAYONA te lo dice y te conduce al siguiente paso en lugar de inventar progreso.
         </p>
+        <p>La aplicación independiente tiene su propio acceso; los datos de este panel no se transfieren automáticamente.</p>
         <p className="os-disclosure__links">
           <Link className="os-link" to="/resources">Recursos abiertos</Link>
           <Link className="os-link" to="/community">Comunidad</Link>
           <Link className="os-link" to="/faq">Preguntas frecuentes</Link>
+          <a className="os-link" href={BAYONA_APP_ENTRY_URL} target="_blank" rel="noopener noreferrer">Abrir BAYONA App · Mi App / Coach Studio ↗</a>
         </p>
       </aside>
     </AppShell>

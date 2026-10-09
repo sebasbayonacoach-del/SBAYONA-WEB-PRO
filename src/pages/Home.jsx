@@ -4,6 +4,7 @@ import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
+import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink, isBookingEnabled } from '../config/site.config.js'
@@ -232,6 +233,8 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      <BayonaLiveAppShowcase placement="home" />
 
       <section className="gym-home-trust" aria-labelledby="gym-trust-title">
         <div className="gym-home-shell gym-trust-layout">

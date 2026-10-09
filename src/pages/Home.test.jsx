@@ -30,7 +30,7 @@ describe('Home — Gym Funnel V2', () => {
     const { container } = renderHome()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     expect(screen.getByRole('heading', { level: 1, name: /ENTRENA CON DIRECCIÓN/i })).toBeInTheDocument()
-    expect(container.querySelectorAll('.gym-home > section')).toHaveLength(7)
+    expect(container.querySelectorAll('.gym-home > section')).toHaveLength(8)
     expect(container.querySelector('.community-immersive')).toBeNull()
     expect(container.querySelector('.calculator-section')).toBeNull()
     expect(container.querySelector('.free-value')).toBeNull()
