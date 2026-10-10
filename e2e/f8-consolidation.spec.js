@@ -20,8 +20,8 @@ const CHECKS = [
   },
   {
     route: '/parkour-academy',
-    name: 'F — la escalera de niveles conserva su sticky vertical',
-    selector: '.academy-level-grid--stage',
+    name: 'F — los tres niveles quedan visibles sin scroll forzado',
+    selector: '.academy-progression__cards',
     css: null,
   },
   {
@@ -61,9 +61,9 @@ for (const check of CHECKS) {
   })
 }
 
-// La Home V2 ya no usa storytelling sticky. Parkour y About sí conservan
-// StickyStage y deben degradar a pila estática legible en móvil.
-for (const route of ['/parkour-academy', '/about']) {
+// La Home y Parkour usan etapas visibles. About conserva un StickyStage
+// que debe degradar correctamente en móvil.
+for (const route of ['/about']) {
   test(`consolidación: ${route} degrada sticky a pila estática en móvil`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 })
     await page.goto(route, { waitUntil: 'networkidle' })
@@ -81,7 +81,7 @@ for (const route of ['/parkour-academy', '/about']) {
 // ─────────────────────────────────────────────────────────────────────────────
 const CARDINALITY = [
   { route: '/', selector: '.gym-process-grid > li', expected: 3, label: 'pasos para empezar' },
-  { route: '/parkour-academy', selector: '.academy-level--stage', expected: 3, label: 'niveles' },
+  { route: '/parkour-academy', selector: '.academy-progression__cards > li', expected: 3, label: 'niveles' },
   { route: '/about', selector: '.about-timeline-entry--stage', expected: 4, label: 'etapas de la línea de vida' },
 ]
 

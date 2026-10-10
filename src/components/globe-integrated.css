@@ -147,3 +147,12 @@ body.premium-route--about .globe-testimonials-canvas .globe-testimonials-map-met
  .globe-atlas-runway {height:auto;min-height:0;overflow:visible;}
  .globe-atlas-runway > .globe-testimonials-stage {position:relative;top:auto;height:auto;}
 }
+
+/* Documentary identities: real published avatar assets, readable narrative. */
+.globe-scroll-story__identity {display:flex;align-items:center;gap:17px;margin:0 0 17px;}
+.globe-scroll-story__identity h3 {margin:0;min-width:0;overflow-wrap:anywhere;}
+.globe-scroll-story__portrait {width:clamp(58px,5.3vw,75px);height:clamp(58px,5.3vw,75px);flex:0 0 auto;object-fit:cover;object-position:center;border:1px solid rgba(244,162,97,.6);filter:saturate(.83);}
+.globe-scroll-story__experience {display:block;margin-top:10px;color:#d8d0c5;font:600 .63rem/1.5 'DM Mono',monospace;letter-spacing:.04em;}
+body.premium-route--about .globe-testimonials-location-index button.is-active::after {box-shadow:0 0 0 5px rgba(244,162,97,.15),0 0 14px rgba(244,162,97,.55);}
+body.premium-route--about .globe-testimonials-location-index button:focus-visible {outline:2px solid #ffc08a;outline-offset:3px;}
+@media(max-width:680px){.globe-scroll-story__portrait{width:54px;height:54px;}.globe-scroll-story__identity{gap:12px;}}

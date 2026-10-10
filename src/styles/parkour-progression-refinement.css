@@ -1,0 +1,28 @@
+/* BAYONA · Parkour chapter / three editorial progression cards. No empty
+   preview frames, overlaying slides or 180vh dead scroll. All levels visible. */
+.parkour-academy .academy-levels {min-height:0;background:radial-gradient(ellipse at 12% 8%,rgba(244,162,97,.09),transparent 47%),#111413;}
+.parkour-academy .academy-levels > .academy-heading {margin-bottom:clamp(32px,5vw,65px);}
+.parkour-academy .academy-progression {position:relative;max-width:1510px;margin-inline:auto;}
+.parkour-academy .academy-progression__rail {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:0 0 14px;}
+.parkour-academy .academy-progression__rail span {display:block;padding:0 0 15px;color:#edaf7b;border-bottom:2px solid #ed9a5e;font:700 .67rem/1.45 'DM Mono',monospace;letter-spacing:.11em;}
+.parkour-academy .academy-progression__cards {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:clamp(12px,1.5vw,24px);padding:0;margin:0;list-style:none;}
+.parkour-academy .academy-progression__card {display:flex;flex-direction:column;gap:0;min-width:0;min-height:490px;padding:clamp(25px,2.5vw,39px);color:#f7f2e9;background:#242826;border:1px solid rgba(252,202,152,.35);box-shadow:0 17px 48px rgba(0,0,0,.15);}
+.parkour-academy .academy-progression__card:nth-child(2) {background:#2c302e;border-color:rgba(249,173,103,.65);}
+.parkour-academy .academy-progression__topline {display:flex;justify-content:space-between;gap:10px;align-items:center;padding-bottom:25px;border-bottom:1px solid rgba(255,255,255,.22);}
+.parkour-academy .academy-progression__index {color:#f4a261;font:700 .8rem/1.2 'DM Mono',monospace;letter-spacing:.14em;}
+.parkour-academy .academy-progression__seal {color:#d0c6b9;text-align:right;font:600 .61rem/1.4 'DM Mono',monospace;letter-spacing:.1em;}
+.parkour-academy .academy-progression__head {padding:clamp(27px,3vw,41px) 0 30px;}
+.parkour-academy .academy-progression__eyebrow {color:#e9b88d;font:700 .7rem/1.5 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.14em;}
+.parkour-academy .academy-progression__head h3 {margin:14px 0 0;color:#fff7ed;font:900 clamp(2.3rem,3.3vw,4rem)/1.03 'Montserrat',sans-serif;letter-spacing:-.05em;text-wrap:balance;}
+.parkour-academy .academy-progression__skills {margin:0 0 26px;}
+.parkour-academy .academy-progression__skills > span {color:#f4a261;font:700 .65rem/1.4 'DM Mono',monospace;letter-spacing:.15em;}
+.parkour-academy .academy-progression__skills ul {display:grid;grid-template-columns:1fr;gap:0;padding:12px 0 0;margin:0;list-style:none;}
+.parkour-academy .academy-progression__skills li {padding:8px 0 8px 17px;border-bottom:1px solid rgba(255,255,255,.14);color:#ede7de;font:400 .96rem/1.4 'Inter',sans-serif;position:relative;}
+.parkour-academy .academy-progression__skills li::before {content:'+';position:absolute;left:0;color:#f4a261;}
+.parkour-academy .academy-progression__criteria {margin:auto 0 0;padding:19px 0 0;display:grid;gap:15px;border-top:1px solid rgba(244,162,97,.45);}
+.parkour-academy .academy-progression__criteria dt {color:#f1ae75;font:700 .65rem/1.4 'DM Mono',monospace;letter-spacing:.14em;}
+.parkour-academy .academy-progression__criteria dd {margin:5px 0 0;color:#f0ebe4;font:400 .92rem/1.55 'Inter',sans-serif;}
+.parkour-academy .academy-progression__footnote {margin:25px 0 0;color:#d9cbb9;font:700 .7rem/1.5 'DM Mono',monospace;letter-spacing:.11em;text-align:right;}
+@media(max-width:1050px){.parkour-academy .academy-progression__cards {grid-template-columns:1fr;gap:14px;}.parkour-academy .academy-progression__rail{display:none;}.parkour-academy .academy-progression__card{min-height:0;}.parkour-academy .academy-progression__head{padding:24px 0;}.parkour-academy .academy-progression__head h3{font-size:clamp(2.2rem,7vw,3.4rem);}.parkour-academy .academy-progression__footnote{text-align:left;}}
+html[data-bayona-theme='day'] .parkour-academy .academy-levels {background:#e7e0d5;}
+html[data-bayona-theme='day'] .parkour-academy .academy-progression__card {background:#292b28;color:#f7f2e9;}

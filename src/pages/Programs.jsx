@@ -16,6 +16,7 @@ import '../styles/home.css'
 import '../styles/home-luxury-conversion.css'
 import '../styles/services-gym-v2.css'
 import '../styles/services-premium-2026.css'
+import '../styles/bayona-chapter-finishing-2026.css'
 
 const SERVICE_PATHS = Object.freeze([
   {

@@ -16,6 +16,8 @@ export const GLOBE_STORY = Object.freeze([
     title: item.name,
     text: item.quote,
     detail: item.role,
+    image: item.image,
+    experience: item.result,
     country: item.country,
     kind: 'testimonial',
   })),
@@ -53,8 +55,10 @@ export default function GlobeScrollDirector({ reducedMotion, onStageChange }) {
         current = next
         // All cards are laid out with visible fallback CSS. Animate only when
         // the browser supports the pinned experience; never create a gap.
-        gsap.set(cards, { autoAlpha: 0 })
-        gsap.set(cards[next], { autoAlpha: 1 })
+        gsap.killTweensOf(cards)
+        gsap.set(cards, { autoAlpha: 0, y: 0, filter: 'blur(0px)' })
+        gsap.set(cards[next], { autoAlpha: 1, y: 15, filter: 'blur(5px)' })
+        gsap.to(cards[next], { y: 0, filter: 'blur(0px)', duration: .5, ease: 'power2.out' })
         scene.dataset.storyStep = String(next)
         scene.dataset.storyId = GLOBE_STORY[next].id
         callback.current?.(next)
@@ -91,9 +95,14 @@ export default function GlobeScrollDirector({ reducedMotion, onStageChange }) {
         <article className="globe-scroll-story__chapter" key={chapter.id}
           data-story-index={index} data-story-id={chapter.id}>
           <span className="globe-scroll-story__eyebrow">{chapter.eyebrow}</span>
-          <h3>{chapter.title}</h3>
+          <div className="globe-scroll-story__identity">
+            {chapter.image && <img className="globe-scroll-story__portrait" src={chapter.image}
+              alt="" width="72" height="72" loading="lazy" decoding="async" />}
+            <h3>{chapter.title}</h3>
+          </div>
           <p>{chapter.text}</p>
           {chapter.detail && <span className="globe-scroll-story__detail">{chapter.detail}</span>}
+          {chapter.experience && <span className="globe-scroll-story__experience">EXPERIENCIA PUBLICADA · {chapter.experience}</span>}
           <span className="globe-scroll-story__index" aria-hidden="true">
             {String(index + 1).padStart(2, '0')} / {String(GLOBE_STORY.length).padStart(2, '0')}
           </span>

@@ -3,9 +3,10 @@
 import { Suspense, useMemo, useRef } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import { BackSide, DoubleSide, TextureLoader, SRGBColorSpace } from 'three'
+import { BackSide, DoubleSide, TextureLoader, SRGBColorSpace, Quaternion, Vector3 } from 'three'
 
 const RADIUS = 1.58
+const Y_AXIS = new Vector3(0, 1, 0)
 const EARTH = '/images/system/earth-dark.jpg'
 
 export function toSpherePosition(lat, lng, radius = RADIUS) {
@@ -17,9 +18,14 @@ export function toSpherePosition(lat, lng, radius = RADIUS) {
 function AtlasPoint({ marker, onSelect, active, count = 1 }) {
   const position = useMemo(() => toSpherePosition(marker.lat, marker.lng, RADIUS + .035), [marker.lat, marker.lng])
   const mesh = useRef(null)
+  const halo = useRef(null)
   useFrame(({ clock }) => {
-    if (!mesh.current) return
-    mesh.current.scale.setScalar(active ? 1.2 + Math.sin(clock.elapsedTime * 2.3) * .12 : 1)
+    const time = clock.elapsedTime
+    if (mesh.current) mesh.current.scale.setScalar(active ? 1.24 + Math.sin(time * 2.4) * .12 : 1)
+    if (halo.current) {
+      halo.current.scale.setScalar(active ? 1.15 + (time * .58 % 1) * .8 : 1)
+      halo.current.material.opacity = active ? .21 * (1 - (time * .58 % 1)) : .055
+    }
   })
   return (
     <group position={position}>
@@ -30,14 +36,18 @@ function AtlasPoint({ marker, onSelect, active, count = 1 }) {
         <meshBasicMaterial color={active ? '#ffffff' : '#f4a261'} toneMapped={false} />
       </mesh>
       <mesh>
-        <sphereGeometry args={[count > 1 ? .082 : .065, 16, 16]} />
-        <meshBasicMaterial color="#f4a261" transparent opacity={active ? .25 : .15} depthWrite={false} />
+        <sphereGeometry args={[count > 1 ? .085 : .067, 16, 16]} />
+        <meshBasicMaterial color="#f4a261" transparent opacity={active ? .34 : .16} depthWrite={false} />
+      </mesh>
+      <mesh ref={halo}>
+        <sphereGeometry args={[.112, 24, 16]} />
+        <meshBasicMaterial color="#ffc18d" transparent opacity={.15} depthWrite={false} />
       </mesh>
     </group>
   )
 }
 
-function Earth({ markers, selectedId, onSelect, storyStage = -1, reducedMotion }) {
+function Earth({ markers, selectedId, onSelect, storyStage = -1, focusMarker, reducedMotion }) {
   const texture = useLoader(TextureLoader, EARTH)
   texture.colorSpace = SRGBColorSpace
   const places = useMemo(() => {
@@ -51,12 +61,28 @@ function Earth({ markers, selectedId, onSelect, storyStage = -1, reducedMotion }
     return [...cities.values()]
   }, [markers])
   const groupRef = useRef(null)
-  useFrame((_, delta) => {
-    if (!groupRef.current || storyStage < 0 || reducedMotion) return
-    const angles = [-.75, .58, 1.2, -.3]
-    const target = angles[storyStage] ?? -.75
-    const factor = 1 - Math.exp(-1.65 * delta)
-    groupRef.current.rotation.y += (target - groupRef.current.rotation.y) * factor
+  const focusRotation = useMemo(() => {
+    if (!focusMarker || !Number.isFinite(focusMarker.lat) || !Number.isFinite(focusMarker.lng)) return null
+    const position = new Vector3(...toSpherePosition(focusMarker.lat, focusMarker.lng)).normalize()
+    return new Quaternion().setFromUnitVectors(position, new Vector3(0, 0, 1))
+  }, [focusMarker])
+  const drift = useRef(new Quaternion())
+  const target = useRef(new Quaternion())
+  useFrame(({ clock }, delta) => {
+    const globe = groupRef.current
+    if (!globe || reducedMotion) return
+    if (focusRotation) {
+      const breathing = Math.sin(clock.elapsedTime * .34) * .018
+      drift.current.setFromAxisAngle(Y_AXIS, breathing)
+      target.current.copy(drift.current).multiply(focusRotation)
+      globe.quaternion.slerp(target.current, 1 - Math.exp(-Math.min(delta, .08) * 1.45))
+      const scale = storyStage >= 0 ? 1.115 : 1.065
+      globe.scale.setScalar(globe.scale.x + (scale - globe.scale.x) * (1 - Math.exp(-delta * 1.8)))
+    } else {
+      globe.rotateY(delta * .045)
+      const scale = globe.scale.x + (1 - globe.scale.x) * (1 - Math.exp(-delta * 1.2))
+      globe.scale.setScalar(scale)
+    }
   })
   return (
     <group ref={groupRef} rotation={[0, -.75, 0]}>
@@ -102,7 +128,7 @@ function Earth({ markers, selectedId, onSelect, storyStage = -1, reducedMotion }
       </mesh>
       {places.map((place) => (
         <AtlasPoint key={`${place.city}-${place.country}`} marker={place} count={place.count}
-          active={place.testimonialId === selectedId} onSelect={onSelect} />
+          active={focusMarker ? place.city === focusMarker.city && place.country === focusMarker.country : place.testimonialId === selectedId} onSelect={onSelect} />
       ))}
     </group>
   )
@@ -113,12 +139,12 @@ function CameraMotion({ reducedMotion }) {
   useFrame(() => { if (controls.current && !reducedMotion) controls.current.update() })
   return (
     <OrbitControls ref={controls} makeDefault enablePan={false} enableZoom={false}
-      enableDamping dampingFactor={.08} autoRotate={!reducedMotion} autoRotateSpeed={.22}
+      enableDamping dampingFactor={.08} autoRotate={false} autoRotateSpeed={.22}
       minPolarAngle={Math.PI * .25} maxPolarAngle={Math.PI * .75} />
   )
 }
 
-export default function StoryGlobe3D({ markers, selectedId, onSelect, reducedMotion, compact, storyStage = -1, onReady }) {
+export default function StoryGlobe3D({ markers, selectedId, onSelect, reducedMotion, compact, storyStage = -1, focusMarker, onReady }) {
   return (
     <div className="bayona-globe-three" aria-label="Globo terrestre tridimensional con lugares de historias publicadas">
       <Canvas dpr={[1, 1.5]} camera={{ position: [0, .15, compact ? 6.45 : 4.65], fov: 44 }}
@@ -128,9 +154,9 @@ export default function StoryGlobe3D({ markers, selectedId, onSelect, reducedMot
         <directionalLight position={[-3, 4, 5]} intensity={2.2} color="#ffe5c5" />
         <pointLight position={[3, -1, 3]} intensity={1.5} color="#f4a261" />
         <Suspense fallback={null}>
-          <Earth markers={markers} selectedId={selectedId} onSelect={onSelect} storyStage={storyStage} reducedMotion={reducedMotion} />
+          <Earth markers={markers} selectedId={selectedId} onSelect={onSelect} storyStage={storyStage} focusMarker={focusMarker} reducedMotion={reducedMotion} />
         </Suspense>
-        <CameraMotion reducedMotion={reducedMotion || storyStage >= 0} />
+        <CameraMotion reducedMotion={reducedMotion} />
       </Canvas>
     </div>
   )

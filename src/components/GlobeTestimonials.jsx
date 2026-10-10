@@ -343,6 +343,25 @@ export default function GlobeTestimonials() {
     setIsOverlayOpen(true)
   }
 
+  const jumpToStory = (testimonialId) => {
+    if (reducedMotion || capabilities.mode !== 'desktop') {
+      selectAndOpen(testimonialId)
+      return
+    }
+    const runway = document.querySelector('.about-page .globe-atlas-runway')
+    if (!runway) {
+      selectAndOpen(testimonialId)
+      return
+    }
+    const total = GLOBE_STORY.length
+    const start = runway.getBoundingClientRect().top + window.scrollY - 78
+    const effectiveLength = Math.max(0, runway.getBoundingClientRect().height - window.innerHeight - 78)
+    const destination = start + effectiveLength * ((testimonialId + 1.5) / total)
+    // Scroll retains complete user control: the dot selects a chapter rather
+    // than opening a modal and trapping the visual reading experience.
+    window.scrollTo({ top: destination, behavior: 'smooth' })
+  }
+
   const selectMapMarker = (marker) => {
     selectAndOpen(marker.testimonialId, marker)
   }
@@ -1177,7 +1196,7 @@ export default function GlobeTestimonials() {
                 <StoryGlobe3D markers={WORLD_MAP_MARKERS} selectedId={activeId}
                   onSelect={selectMapMarker} reducedMotion={reducedMotion}
                   compact={capabilities.mode !== 'desktop'} storyStage={globeStoryStage}
-                  onReady={() => setThreeReady(true)} />
+                  focusMarker={focusedMarker} onReady={() => setThreeReady(true)} />
               </Suspense>
             </GlobeFallbackBoundary>
           )}
@@ -1223,10 +1242,10 @@ export default function GlobeTestimonials() {
                 key={testimonial.id}
                 type="button"
                 className={testimonial.id === activeId ? 'is-active' : ''}
-                aria-label={`Abrir historia de ${testimonial.name} en ${testimonial.city}`}
-                aria-pressed={testimonial.id === activeId && isOverlayOpen}
+                aria-label={`Ir a historia de ${testimonial.name} en ${testimonial.city}`}
+                aria-pressed={testimonial.id === activeId}
                 title={`${testimonial.city}, ${testimonial.country}`}
-                onClick={() => selectAndOpen(testimonial.id)}
+                onClick={() => jumpToStory(testimonial.id)}
               />
             ))}
           </div>

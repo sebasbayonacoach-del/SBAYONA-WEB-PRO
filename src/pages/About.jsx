@@ -14,6 +14,7 @@ import { useCapabilities } from '../engine/hooks/useCapabilities.js'
 import '../styles/about.css'
 import '../styles/about-art-direction-2026.css'
 import '../styles/about-second-chapter.css'
+import '../styles/bayona-chapter-finishing-2026.css'
 
 /**
  * Los tres fundamentos, en la única forma que tienen de decirse: lo primero va
