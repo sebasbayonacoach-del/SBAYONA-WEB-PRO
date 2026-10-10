@@ -129,11 +129,11 @@ const method = [
 ]
 
 const faqs = [
-  ['¿Necesito experiencia previa?', 'No. Empezamos por los fundamentos y confirmamos edad y experiencia antes de la primera clase.'],
-  ['¿El parkour es solo para personas jóvenes?', 'No. Adaptamos la dificultad a tu punto de partida.'],
+  ['¿Necesito experiencia previa?', 'No. Te escuchamos y empezamos por los fundamentos, teniendo en cuenta tu edad, experiencia y confianza al moverte.'],
+  ['¿El parkour es solo para personas jóvenes?', 'No. Adaptamos la práctica a tus capacidades y a tu punto de partida; cada persona tiene su propio camino.'],
   ['¿Qué necesito llevar?', 'Ropa cómoda, calzado con agarre y agua. Te enviamos el detalle al confirmar la sesión.'],
   ['¿Dónde y cuándo son las clases?', 'Te lo confirmamos antes de reservar. Ahora puedes dejar tu interés sin pagar nada.'],
-  ['¿Cómo trabajamos la seguridad?', 'Preparación específica y progresiones a tu nivel. Nadie te obliga a ejecutar nada.'],
+  ['¿Cómo trabajamos la seguridad?', 'Preparación específica, progresión a tu nivel y permiso para parar. Queremos que aprendas con confianza, no por presión.'],
 ]
 
 const interestUrl = whatsAppLink('Hola BAYONA, quiero que empecemos juntos en la Academia de Parkour.')
@@ -153,7 +153,7 @@ export default function ParkourAcademy() {
           <div className="academy-hero-copy">
             <SectionLabel>BAYONA / PARKOUR ACADEMY</SectionLabel>
             <Reveal as="h1" id="academy-title">GANDÍA.<br /><span>LA CIUDAD</span><br />SE APRENDE EN MOVIMIENTO.</Reveal>
-            <Reveal as="p" delay={0.18}>Parkour con técnica, fuerza y criterio: no buscamos riesgo; buscamos control, confianza y lectura del entorno.</Reveal>
+            <Reveal as="p" delay={0.18}>El parkour es aprender a confiar en tu cuerpo paso a paso. Entrenamos técnica, fuerza y lectura del entorno con cuidado, progresión y respeto por cada nivel.</Reveal>
             <div className="academy-actions">
               <a className="academy-action academy-action--primary" href={interestUrl} target="_blank" rel="noreferrer">
                 EMPEZAMOS JUNTOS <ArrowRight size={18} aria-hidden="true" />

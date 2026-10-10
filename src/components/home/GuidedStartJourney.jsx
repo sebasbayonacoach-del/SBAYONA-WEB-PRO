@@ -58,9 +58,9 @@ export default function GuidedStartJourney({ steps }) {
       <div className="gym-home-shell start-journey__layout">
         <div className="start-journey__intro">
           <div className="gym-section-heading">
-            <SectionLabel>ASÍ DE SIMPLE / TU PRIMER PASO</SectionLabel>
+            <SectionLabel>CONTIGO DESDE EL PRIMER PASO</SectionLabel>
             <h2 id="gym-process-title">TRES PASOS <span>PARA EMPEZAR.</span></h2>
-            <p className="start-journey__subline">Sin caos. Sin vueltas. Con un punto de partida claro.</p>
+            <p className="start-journey__subline">No hay un ritmo perfecto. Hay un comienzo que puede ser tuyo.</p>
           </div>
           <div className="start-journey__control" aria-label="Progreso del recorrido de inicio">
             <div className="start-journey__progress-meta">
@@ -83,10 +83,10 @@ export default function GuidedStartJourney({ steps }) {
             </div>
           </div>
           <div className="start-journey__finish">
-            <span className="start-journey__finish-label">{activeStep === steps.length - 1 ? 'LISTO / TU SIGUIENTE MOVIMIENTO' : 'PASO A PASO, SIN PRISA'}</span>
+            <span className="start-journey__finish-label">{activeStep === steps.length - 1 ? 'CUANDO QUIERAS / AQUÍ ESTOY' : 'A TU RITMO / PASO A PASO'}</span>
             <a className="gym-primary-button start-journey__cta" href="#empieza"
               onClick={() => trackEvent('funnel_start_click', { source: 'home_start_journey', step: activeStep + 1 })}>
-              QUIERO EMPEZAR <ArrowUpRight size={18} aria-hidden="true" />
+              EMPEZAR A MI RITMO <ArrowUpRight size={18} aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -96,7 +96,7 @@ export default function GuidedStartJourney({ steps }) {
               aria-current={activeStep === index ? 'step' : undefined}>
               <div className="start-journey__step-top">
                 <span className="start-journey__step-index">{step.number} <small>/ 03</small></span>
-                <span className="start-journey__step-kicker">{['ESCUCHAMOS', 'TE ORIENTAMOS', 'EMPEZAMOS'][index]}</span>
+                <span className="start-journey__step-kicker">{['TE ESCUCHO', 'TE COMPARTO', 'TÚ DECIDES'][index]}</span>
               </div>
               <div className="start-journey__step-body">
                 <h3>{step.title}</h3>
@@ -104,7 +104,7 @@ export default function GuidedStartJourney({ steps }) {
               </div>
               <span className="start-journey__step-watermark" aria-hidden="true">{step.number}</span>
               <span className="start-journey__step-foot" aria-hidden="true">
-                BAYONA / INICIO <span>{index === steps.length - 1 ? 'TU MOVIMIENTO EMPIEZA AQUÍ' : 'SIGUIENTE PASO ↓'}</span>
+                BAYONA / INICIO <span>{index === steps.length - 1 ? 'AQUÍ COMIENZA TU CAMINO' : 'VAMOS AL SIGUIENTE ↓'}</span>
               </span>
             </li>
           ))}

@@ -9,15 +9,15 @@ import { trackEvent } from '../lib/analytics/analytics.js'
 import './editorial-outro.css'
 
 export const OUTRO_DESTINATIONS = Object.freeze([
-  { href: '/', name: 'Inicio', title: 'TODO EMPIEZA CON UN MOVIMIENTO.', description: 'Conoce BAYONA y el método.', image: '/images/bayona-generated/home-method-1600.webp' },
-  { href: '/about', name: 'Nosotros', title: 'DETRÁS DEL MOVIMIENTO.', description: 'La filosofía y las personas que hacen BAYONA.', image: '/images/bayona-generated/about-hero-1600.webp' },
-  { href: '/programs', name: 'Servicios', title: 'TU FORMA DE ENTRENAR.', description: 'Entrenamiento, acompañamiento y programas.', image: '/images/bayona-generated/home-method-1600.webp' },
-  { href: '/parkour-academy', name: 'Parkour', title: 'EL MOVIMIENTO NO TIENE LÍMITES.', description: 'Técnica, progresión y control corporal.', image: '/images/bayona-generated/parkour-hero-1600.webp' },
-  { href: '/community', name: 'Comunidad', title: 'EL CAMINO SE COMPARTE.', description: 'Personas, experiencias y entrenamiento compartido.', image: '/images/bayona-generated/community-hero-1600.webp' },
+  { href: '/', name: 'Inicio', title: 'TODO EMPIEZA CON UN MOVIMIENTO.', description: 'Conoce una forma de entrenar que empieza escuchándote.', image: '/images/bayona-generated/home-method-1600.webp' },
+  { href: '/about', name: 'Nosotros', title: 'DETRÁS DEL MOVIMIENTO.', description: 'La historia, el propósito y las personas que cuidan de este proyecto.', image: '/images/bayona-generated/about-hero-1600.webp' },
+  { href: '/programs', name: 'Servicios', title: 'TU FORMA DE ENTRENAR.', description: 'Opciones claras para encontrar un entrenamiento que encaje contigo.', image: '/images/bayona-generated/home-method-1600.webp' },
+  { href: '/parkour-academy', name: 'Parkour', title: 'LA CONFIANZA SE CONSTRUYE PASO A PASO.', description: 'Aprende técnica, progresión y confianza a tu propio ritmo.', image: '/images/bayona-generated/parkour-hero-1600.webp' },
+  { href: '/community', name: 'Comunidad', title: 'EL CAMINO SE COMPARTE.', description: 'Un espacio para aprender, compartir y sentirte acompañado.', image: '/images/bayona-generated/community-hero-1600.webp' },
   { href: '/app', name: 'BAYONA+', title: 'ENTRA EN TU ESPACIO DIGITAL.', description: 'Conoce y abre BAYONA App, con Mi App y Coach Studio.', image: '/images/bayona-generated/app-hero-1600.webp' },
   { href: '/shop', name: 'Tienda', title: 'EQUÍPATE PARA MOVERTE.', description: 'Explora productos y solicita información.', image: '/images/bayona-generated/shop-hero-1600.webp' },
-  { href: '/resources', name: 'Recursos', title: 'LLÉVATE UN PUNTO DE PARTIDA.', description: 'Herramientas y guías para dar el siguiente paso.', image: '/images/bayona-generated/resources-hero-1600.webp' },
-  { href: '/faq', name: 'Preguntas', title: 'RESPUESTAS PARA AVANZAR.', description: 'Resuelve tus dudas antes de decidir.', image: '/images/bayona-generated/about-hero-1600.webp' },
+  { href: '/resources', name: 'Recursos', title: 'LLÉVATE UN PUNTO DE PARTIDA.', description: 'Recursos gratuitos para empezar con claridad y sin presión.', image: '/images/bayona-generated/resources-hero-1600.webp' },
+  { href: '/faq', name: 'Preguntas', title: 'RESPUESTAS PARA AVANZAR.', description: 'Preguntar también es una forma de empezar. Aquí tienes respuestas claras.', image: '/images/bayona-generated/about-hero-1600.webp' },
 ])
 
 export default function EditorialOutro() {
@@ -32,7 +32,7 @@ export default function EditorialOutro() {
     <aside className="editorial-outro" aria-label="Descubre más de BAYONA">
       <div className="editorial-outro__intro">
         <span className="editorial-outro__eyebrow">BAYONA / EXPLORAR</span>
-        <p>ESTO NO TERMINA AQUÍ.</p>
+        <p>SIGUE DESCUBRIENDO A TU RITMO.</p>
       </div>
       <Link
         to={next.href}

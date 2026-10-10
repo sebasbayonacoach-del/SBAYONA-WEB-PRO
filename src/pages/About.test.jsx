@@ -47,7 +47,7 @@ describe('/about — historia, honestidad y conversión', () => {
 
     expect(screen.getByText('CAPÍTULO 02 · NOSOTROS')).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 1, name: /DETRÁS DEL MOVIMIENTO\./i })).toBeInTheDocument()
-    expect(screen.getByText(/Antes de hablar de resultados, queremos entender a la persona/)).toBeInTheDocument()
+    expect(screen.getByText(/Detrás de BAYONA hay una forma de mirar el entrenamiento/)).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /UNA MARCA.*UNA PERSONA REAL/i })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /UN PLAN SIRVE\s*CUANDO ENCAJA CONTIGO/i })).toBeInTheDocument()
     expect(screen.getByText('VALORAR ANTES DE PRESCRIBIR')).toBeInTheDocument()

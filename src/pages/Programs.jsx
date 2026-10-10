@@ -24,7 +24,7 @@ const SERVICE_PATHS = Object.freeze([
     number: '01',
     eyebrow: 'ATENCIÓN INDIVIDUAL',
     title: 'Entrenamiento personal',
-    description: 'Entrena con orientación 1:1, técnica y una sesión diseñada alrededor de tu objetivo.',
+    description: 'Un espacio contigo: escuchamos tus objetivos y adaptamos cada sesión a tu punto de partida.',
     image: '/images/bayona-generated/home-pillar-build-1600.webp',
     href: '#servicios-clases',
     cta: 'CONOCER SESIONES',
@@ -34,7 +34,7 @@ const SERVICE_PATHS = Object.freeze([
     number: '02',
     eyebrow: 'ACOMPAÑAMIENTO CONTINUO',
     title: 'Entrenamiento online',
-    description: 'Plan, vídeos y seguimiento para entrenar con una estructura clara desde donde estés.',
+    description: 'Tu ritmo y tu espacio, con una planificación clara, vídeos y el seguimiento incluido en tu plan.',
     image: '/images/bayona-generated/home-method-1600.webp',
     href: '#membresias',
     cta: 'COMPARAR PLANES',
@@ -44,7 +44,7 @@ const SERVICE_PATHS = Object.freeze([
     number: '03',
     eyebrow: 'TÉCNICA Y MOVIMIENTO',
     title: 'Parkour y rendimiento',
-    description: 'Progresiones para desarrollar control, fuerza y confianza en el movimiento.',
+    description: 'Aprende a moverte con más control, fuerza y confianza, sin saltarte los fundamentos.',
     image: '/images/bayona-generated/parkour-hero-1600.webp',
     href: '/parkour-academy',
     cta: 'EXPLORAR PARKOUR',
@@ -54,7 +54,7 @@ const SERVICE_PATHS = Object.freeze([
     number: '04',
     eyebrow: 'MOVILIDAD Y HÁBITOS',
     title: 'Movilidad y recuperación',
-    description: 'Movilidad guiada y trabajo complementario para mantener la continuidad al entrenar.',
+    description: 'Dale espacio a la movilidad y al cuidado de tu cuerpo para seguir entrenando con bienestar.',
     image: '/images/bayona-generated/home-pillar-read-1600.webp',
     href: '#servicios-recuperación',
     cta: 'VER OPCIONES',
@@ -146,7 +146,7 @@ export default function Programs() {
         media={siteMedia.programs.hero}
       >
         <p>
-          Cuatro formas de entrenar, una dirección clara. Encuentra acompañamiento personal, entrenamiento online, parkour o movilidad. Revisa después las sesiones y los planes disponibles.
+          Cada persona llega con una historia, un objetivo y un momento distinto. Encuentra la forma de entrenamiento que encaje contigo y descubre con claridad qué incluye antes de elegir.
         </p>
         <div className="services-hero-actions">
           <a className="services-primary-cta" href="#membresias">
@@ -162,8 +162,8 @@ export default function Programs() {
         <div className="services-shell">
           <div className="services-heading services-paths-heading">
             <SectionLabel>ELIGE TU CAMINO</SectionLabel>
-            <h2 id="services-overview-title">SERVICIOS PARA <span>TU FORMA DE ENTRENAR.</span></h2>
-            <p>Empieza por lo que necesitas. Cada opción te lleva directamente a sus detalles.</p>
+            <h2 id="services-overview-title">UN CAMINO QUE <span>SE ADAPTE A TI.</span></h2>
+            <p>Explora sin prisa: te explicamos cada opción para que puedas elegir la que más sentido tenga para ti.</p>
           </div>
           <div className="services-path-grid">
             {SERVICE_PATHS.map((service) => (
@@ -268,12 +268,12 @@ export default function Programs() {
 
       <section className="services-final">
         <div className="services-shell">
-          <SectionLabel>EMPIEZA SIN COMPRAR</SectionLabel>
-          <h2>EMPIEZA GRATIS. DESPUÉS DECIDE.</h2>
-          <p>Recibe tres recursos de inicio y pide una valoración cuando quieras.</p>
+          <SectionLabel>PRIMERO TU BIENESTAR</SectionLabel>
+          <h2>CONÓCENOS. DESCUBRE. Y TÚ DECIDES.</h2>
+          <p>Tres recursos gratuitos para comenzar con calma. Si después quieres acompañamiento, hablamos de tu objetivo y valoramos juntos las opciones.</p>
           <div>
             <a className="services-primary-cta" href="/#empieza">
-              EMPIEZA GRATIS <ArrowUpRight size={17} aria-hidden="true" />
+              EMPEZAR A MI RITMO <ArrowUpRight size={17} aria-hidden="true" />
             </a>
             <Link className="services-secondary-cta" to="/faq">VER PREGUNTAS FRECUENTES</Link>
           </div>

@@ -32,7 +32,7 @@ describe('Home — contrato Gym Funnel V2', () => {
 
     expect(container.querySelector('#empieza')).not.toBeNull()
     expect(container.querySelectorAll('#empieza')).toHaveLength(1)
-    expect(screen.getAllByRole('link', { name: /EMPIEZA GRATIS/i }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('link', { name: /EMPIEZA A TU RITMO/i }).length).toBeGreaterThan(0)
     expect(homeSource).not.toMatch(/\/onboarding|JourneyRibbon|ArrivalBonusCard|UniverseScale|GuideCompanion/i)
     expect(container.textContent).not.toMatch(/bienvenido|misión|universo|desbloquea/i)
   })

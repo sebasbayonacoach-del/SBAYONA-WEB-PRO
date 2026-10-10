@@ -51,19 +51,19 @@ describe('Home — Gym Funnel V2', () => {
     renderHome()
     const section = screen.getByRole('heading', { level: 2, name: /TRES PASOS PARA EMPEZAR/i }).closest('section')
     expect(within(section).getAllByRole('listitem')).toHaveLength(3)
-    expect(within(section).getByRole('link', { name: /QUIERO EMPEZAR/i })).toHaveAttribute('href', '#empieza')
+    expect(within(section).getByRole('link', { name: /EMPEZAR A MI RITMO/i })).toHaveAttribute('href', '#empieza')
   })
 
   it('conserva los planes canónicos en un único bloque', () => {
     renderHome()
-    expect(screen.getByRole('heading', { level: 2, name: /MÁS APOYO CUANDO LO NECESITAS/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: /EL APOYO QUE NECESITAS/i })).toBeInTheDocument()
     expect(screen.getByTestId('plan-explorer')).toHaveAttribute('data-count', '4')
     expect(screen.getAllByTestId('plan-explorer')).toHaveLength(1)
   })
 
   it('presenta tres regalos y lleva a captación antes de habilitar las descargas', () => {
     renderHome()
-    const section = screen.getByRole('heading', { level: 2, name: /PRIMERO RECIBES VALOR/i }).closest('section')
+    const section = screen.getByRole('heading', { level: 2, name: /UN BUEN COMIENZO NO TIENE PRECIO/i }).closest('section')
     const giftLinks = within(section).getAllByRole('link')
     expect(giftLinks).toHaveLength(3)
     giftLinks.forEach((link) => {
@@ -76,9 +76,9 @@ describe('Home — Gym Funnel V2', () => {
     const { container } = renderHome()
     const lead = container.querySelector('#empieza')
     expect(lead).not.toBeNull()
-    expect(within(lead).getByRole('heading', { name: /DEJA TUS DATOS/i })).toBeInTheDocument()
+    expect(within(lead).getByRole('heading', { name: /EMPIEZA A TU RITMO/i })).toBeInTheDocument()
     expect(within(lead).getByLabelText('Formulario de inicio')).toBeInTheDocument()
-    expect(within(lead).getByRole('link', { name: /AGENDAR POR WHATSAPP/i }).getAttribute('href')).toContain('https://wa.me/')
+    expect(within(lead).getByRole('link', { name: /ESCRÍBEME POR WHATSAPP/i }).getAttribute('href')).toContain('https://wa.me/')
     expect(container.textContent).not.toMatch(/crear cuenta|registrarte|bienvenido/i)
   })
 })

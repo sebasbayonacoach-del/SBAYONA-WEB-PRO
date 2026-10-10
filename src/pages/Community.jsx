@@ -258,7 +258,7 @@ function CommunityLiveFeed() {
         <header className="community-section-header community-header" data-immersive="clip">
           <p className="community-overline community-eyebrow">BAYONA EN MOVIMIENTO</p>
           <h2 id="community-live-title" className="community-title">LO ÚLTIMO.<br /><span>EN MOVIMIENTO.</span></h2>
-          <p className="community-section-subtitle community-subtitle">Esto vamos creando y compartiendo. Puedes verlo sin entrar.</p>
+          <p className="community-section-subtitle community-subtitle">Compartimos lo que aprendemos, lo que practicamos y lo que nos inspira. Puedes descubrirlo a tu ritmo.</p>
         </header>
       </div>
 
@@ -391,7 +391,7 @@ export default function Community() {
               <strong>COMPARTIMOS EL PROCESO.</strong>
             </h1>
             <p className="community-hero-subtitle">
-              Un club abierto para entrenar con más contexto: preguntas, recursos, ritmo semanal y gente moviéndose en la misma dirección. Entras sin comprar nada.
+              Un lugar para compartir el camino: preguntar sin miedo, aprender de otras personas y encontrar motivación para seguir moviéndote. Puedes conocer la comunidad sin comprar nada.
             </p>
             <div className="community-hero-actions community-hero-cta">
               <a className="community-button community-button-primary" href={whatsappUrl} target="_blank" rel="noreferrer">
@@ -808,7 +808,7 @@ export default function Community() {
           <p className="community-overline community-eyebrow">SIGUIENTE PASO</p>
           <h2 id="community-closing-title" className="community-title">CONOZCAMOS EL GRUPO<br /><span>ANTES DE ELEGIR PLAN.</span></h2>
           <p className="community-closing-pressure">Entrar es gratis.</p>
-          <p className="community-section-subtitle community-subtitle">Pide las normas y el enlace por WhatsApp. Si quieres seguimiento, vemos juntos el plan.</p>
+          <p className="community-section-subtitle community-subtitle">Pide las normas y el enlace por WhatsApp. Nos encantará conocerte; si después necesitas acompañamiento individual, podemos hablar de las opciones.</p>
           <div className="community-closing-actions">
             <a className="community-button community-button-primary" href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle aria-hidden="true" size={20} />ENTRA AL GRUPO GRATIS<ArrowUpRight aria-hidden="true" size={18} /></a>
             <Link to="/programs" className="community-button community-button-secondary">VER SERVICIOS<ArrowUpRight aria-hidden="true" size={18} /></Link>
@@ -817,7 +817,7 @@ export default function Community() {
       </section>
 
       <footer className="community-footer-note" aria-label="Nota sobre la comunidad BAYONA">
-        <p className="community-shell">La comunidad BAYONA es un espacio abierto. Aquí entrenamos, preguntamos y compartimos.</p>
+        <p className="community-shell">BAYONA Comunidad es un espacio para escucharnos, aprender y entrenar con respeto, sin necesidad de tenerlo todo claro desde el principio.</p>
         <p className="community-shell community-final-signature">ENTRENAMOS CON CRITERIO. COMPARTIMOS CON RESPETO. — BAYONA</p>
       </footer>
 

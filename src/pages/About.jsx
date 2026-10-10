@@ -38,7 +38,7 @@ const stages = [
     number: '01',
     year: '2003',
     title: 'EL MOVIMIENTO',
-    copy: 'Antes de vender planes, el cuerpo fue escuela: moverse era aprender, fallar, repetir y entender límites.',
+    copy: 'Antes de enseñar a otros, aprendí a escuchar el cuerpo: probar, equivocarme, comprender mis límites y volver a intentarlo.',
   },
   {
     number: '02',
@@ -56,32 +56,32 @@ const stages = [
     number: '04',
     year: '2026',
     title: 'NACE BAYONA',
-    copy: 'BAYONA nace para unir entrenamiento, fuerza, nutrición y seguimiento en una experiencia premium, humana y honesta.',
+    copy: 'BAYONA nace de una convicción: el conocimiento vale más cuando se convierte en atención, respeto y acompañamiento real.',
   },
 ]
 
 const values = [
-  [BrainCircuit, 'CRITERIO', 'No vendemos plantillas bonitas: tomamos decisiones con contexto, objetivo y evidencia del proceso.'],
-  [ShieldCheck, 'RESPETO', 'Tu punto de partida no se juzga. Se entiende antes de exigir y se protege mientras avanzas.'],
-  [GraduationCap, 'EDUCACIÓN', 'Queremos que sepas qué haces, para qué sirve y cómo sostenerlo cuando no estamos mirando.'],
-  [Award, 'RIGOR', 'El plan se revisa con lo que pasa de verdad, no con frases decorativas ni promesas infladas.'],
+  [BrainCircuit, 'CRITERIO', 'Antes de recomendar un ejercicio, queremos entender a quién tenemos delante, qué busca y qué necesita.'],
+  [ShieldCheck, 'RESPETO', 'Aquí no tienes que demostrar nada. Respetamos tu historia, tu cuerpo y el ritmo al que puedes avanzar.'],
+  [GraduationCap, 'EDUCACIÓN', 'Te explicamos el porqué de cada decisión para que ganes confianza y autonomía, no dependencia.'],
+  [Award, 'RIGOR', 'Te acompañamos con criterio: observamos, escuchamos y ajustamos lo que haga falta sin prometer milagros.'],
 ]
 
 const methodSteps = [
   {
     number: '01',
     title: 'VALORAR',
-    copy: 'Miramos punto de partida, tiempo, objetivo, energía y capacidad real de sostener el proceso.',
+    copy: 'Empezamos por escucharte: cómo te mueves, qué necesitas, cuánto tiempo tienes y qué te ilusiona conseguir.',
   },
   {
     number: '02',
     title: 'PLANIFICAR',
-    copy: 'Convertimos esa lectura en una ruta progresiva que entra en tu vida sin volverse castigo.',
+    copy: 'Diseñamos una progresión con sentido para tu cuerpo y tus horarios. Entrenar debe sumar a tu vida, no castigarte.',
   },
   {
     number: '03',
     title: 'AJUSTAR',
-    copy: 'Revisamos lo que responde, corregimos lo que no y convertimos dudas en una siguiente acción clara.',
+    copy: 'Te escuchamos también durante el proceso: celebramos lo que funciona y adaptamos el camino cuando la vida cambia.',
   },
 ]
 
@@ -107,7 +107,7 @@ export default function About() {
         kicker="CAPÍTULO 02 · NOSOTROS"
         media={siteMedia.about.hero}
       >
-        <p className="hero-subtitle">Antes de hablar de resultados, queremos entender a la persona que viene a entrenar. Así nace BAYONA.</p>
+        <p className="hero-subtitle">Detrás de BAYONA hay una forma de mirar el entrenamiento: primero escucharte, después entender tu punto de partida y construir un camino contigo.</p>
         <div className="about-editorial-hero-actions">
           <a href="#la-persona" className="about-editorial-primary">CONOCE QUIÉN ESTÁ DETRÁS <ArrowUpRight size={18} aria-hidden="true" /></a>
           <a href="#about-purpose-title" className="about-editorial-secondary">DESCUBRE EL PORQUÉ <span aria-hidden="true">↘</span></a>
@@ -315,7 +315,7 @@ export default function About() {
           <div className="about-method-heading ds-reveal ds-reveal--mask">
             <SectionLabel>EL MÉTODO</SectionLabel>
             <h2 id="about-method-title">NO ES UNA RUTINA.<br /><span>ES UNA DECISIÓN TRAS OTRA.</span></h2>
-            <p>Qué miramos, qué decidimos con eso y cómo seguimos cuando la vida real aparece.</p>
+            <p>No se trata de exigirte más cada día. Se trata de saber cuándo avanzar, cuándo ajustar y cuándo escucharte.</p>
           </div>
 
           {/* Fuente semántica compartida para lectura accesible del método. */}
@@ -323,7 +323,7 @@ export default function About() {
           <AboutMethodStage items={methodSteps} />
 
           <blockquote>
-            EL CAMINO NO EMPIEZA CON EXIGIRTE MÁS. EMPIEZA CON ENTENDER POR DÓNDE SEGUIR.
+            EL PROGRESO EMPIEZA CUANDO DEJAS DE COMPARARTE Y APRENDES A ESCUCHARTE.
           </blockquote>
 
           <div className="about-cta-actions" id="empezar">

@@ -433,7 +433,7 @@ export default function Shop() {
             animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.56, delay: reducedMotion ? 0 : 0.14 }}
           >
-            Ropa, calzado y equipamiento para entrenar dentro y fuera del gimnasio.<br />Elige tu pieza, revisa el precio y confirma disponibilidad antes de pagar.
+            Elige lo que te acompaña a moverte, entrenar y sentirte cómodo.<br />Te mostramos los precios con claridad y confirmamos talla, disponibilidad y entrega antes del pago.
           </motion.p>
           <motion.div
             className="shop-hero-concierge"
@@ -444,7 +444,7 @@ export default function Shop() {
           >
             <div className="shop-hero-ticket">
               <span>TIENDA BAYONA</span>
-              <strong>Compra clara.</strong>
+              <strong>Elige con confianza.</strong>
               <small>Disponibilidad, talla y entrega se confirman antes de pagar.</small>
             </div>
             <dl className="shop-hero-ledger">
