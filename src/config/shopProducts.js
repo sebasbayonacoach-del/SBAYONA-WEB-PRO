@@ -1,5 +1,5 @@
 import { siteMedia } from './siteMedia.js'
-import { whatsAppLink } from './site.config.js'
+import { SITE_URL, whatsAppLink } from './site.config.js'
 
 const COP_PER_EUR_REFERENCE = 4300
 const COP_PER_USD_REFERENCE = 4000
@@ -91,6 +91,7 @@ function createProduct(product, index) {
     collectionTitle: collection.title,
     collectionIcon: collection.icon,
     type: product.category,
+    shopUrl: `${SITE_URL}/shop?product=${encodeURIComponent(product.id)}`,
     cardSize: product.cardSize ?? ['standard', 'tall', 'compact', 'standard'][index % 4],
   }
 
