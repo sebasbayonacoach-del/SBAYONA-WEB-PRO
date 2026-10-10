@@ -30,7 +30,7 @@ describe('Home — Gym Funnel V2', () => {
     const { container } = renderHome()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     expect(screen.getByRole('heading', { level: 1, name: /ENTRENA CON DIRECCIÓN/i })).toBeInTheDocument()
-    expect(container.querySelectorAll('.gym-home > section')).toHaveLength(7)
+    expect(container.querySelectorAll('.gym-home > section')).toHaveLength(8)
     expect(container.querySelector('.community-immersive')).toBeNull()
     expect(container.querySelector('.calculator-section')).toBeNull()
     expect(container.querySelector('.free-value')).toBeNull()
@@ -39,7 +39,7 @@ describe('Home — Gym Funnel V2', () => {
 
   it('presenta cuatro servicios claros sin repetir Programas', () => {
     renderHome()
-    const section = screen.getByRole('heading', { level: 2, name: /ELIGE CÓMO QUIERES ENTRENAR/i }).closest('section')
+    const section = screen.getByRole('heading', { level: 2, name: /TU OBJETIVO.*TU FORMA DE MOVERTE/i }).closest('section')
     const cards = section.querySelectorAll('.gym-service-card')
     expect(cards).toHaveLength(4)
     ;['Entrenamiento personal', 'Entrenamiento online', 'Parkour y rendimiento', 'Movilidad y recuperación']

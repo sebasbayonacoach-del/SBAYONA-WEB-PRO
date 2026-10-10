@@ -4,6 +4,7 @@ import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
+import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink, isBookingEnabled } from '../config/site.config.js'
@@ -11,35 +12,49 @@ import { trackEvent } from '../lib/analytics/analytics.js'
 import '../styles/home.css'
 import '../styles/home-luxury-conversion.css'
 import '../styles/home-gym-funnel-v2.css'
+import '../styles/home-visual-rescue.css'
+import '../styles/home-services-premium.css'
 
 const SERVICES = Object.freeze([
   {
     id: 'personal',
+    number: '01',
+    type: 'GUÍA PERSONAL',
+    promise: 'Atención directa, técnica y un plan adaptado a ti.',
     title: 'Entrenamiento personal',
-    copy: 'Sesiones 1:1 con una ruta construida alrededor de tu objetivo, tu nivel y tu semana.',
+    copy: 'Sesiones individuales para ganar fuerza, corregir movimiento y avanzar con dirección.',
     image: '/images/bayona-generated/home-pillar-build-1600.webp',
-    href: '/programs#servicios',
+    href: '/programs#servicios-clases',
   },
   {
     id: 'online',
+    number: '02',
+    type: 'A TU RITMO',
+    promise: 'Un plan con seguimiento, estés donde estés.',
     title: 'Entrenamiento online',
-    copy: 'Plan claro, vídeos, seguimiento y ajustes para entrenar estés donde estés.',
+    copy: 'Entrena desde tu espacio con vídeos, estructura semanal y ajustes según el plan.',
     image: '/images/bayona-generated/home-method-1600.webp',
-    href: '/programs',
+    href: '/programs#membresias',
   },
   {
     id: 'parkour',
+    number: '03',
+    type: 'MOVIMIENTO Y TÉCNICA',
+    promise: 'Confianza, control y libertad para moverte.',
     title: 'Parkour y rendimiento',
-    copy: 'Técnica, fuerza, control y progresiones para niños, jóvenes y adultos.',
-    image: '/images/bayona-generated/home-pillar-track-1600.webp',
+    copy: 'Progresiones de movimiento para niños, jóvenes y adultos, con técnica y seguridad.',
+    image: '/images/bayona-generated/parkour-hero-1600.webp',
     href: '/parkour-academy',
   },
   {
     id: 'recovery',
+    number: '04',
+    type: 'MOVERTE MEJOR',
+    promise: 'Movilidad que acompaña tu entrenamiento.',
     title: 'Movilidad y recuperación',
-    copy: 'Trabajo complementario para moverte mejor, recuperar y sostener tu entrenamiento.',
+    copy: 'Trabajo complementario de movilidad, conciencia corporal y recuperación guiada.',
     image: '/images/bayona-generated/home-pillar-read-1600.webp',
-    href: '/programs#servicios',
+    href: '/programs#servicios-recuperación',
   },
 ])
 
@@ -138,27 +153,51 @@ export default function Home() {
 
       <section className="gym-home-services" id="servicios" aria-labelledby="gym-services-title">
         <div className="gym-home-shell">
-          <div className="gym-section-heading">
-            <SectionLabel>NUESTROS SERVICIOS</SectionLabel>
-            <h2 id="gym-services-title">ELIGE CÓMO QUIERES ENTRENAR.</h2>
-            <p>Cuatro puertas. Sin conceptos raros, sin tener que aprenderte la web.</p>
+          <div className="gym-services-intro">
+            <div className="gym-section-heading">
+              <SectionLabel>NUESTROS SERVICIOS</SectionLabel>
+              <h2 id="gym-services-title">TU OBJETIVO. <span>TU FORMA DE MOVERTE.</span></h2>
+            </div>
+            <div className="gym-services-intro__aside">
+              <span className="gym-services-intro__index">BAYONA / 04 CAMINOS</span>
+              <p>Entrena con atención personal, desde cualquier lugar o a través del movimiento. Tú eliges el punto de partida; nosotros ponemos el método.</p>
+              <span className="gym-services-intro__rule" aria-hidden="true" />
+            </div>
           </div>
-          <div className="gym-service-grid">
+          <div className="gym-service-grid" aria-label="Cuatro formas de entrenar con BAYONA">
             {SERVICES.map((service) => (
-              <Link className="gym-service-card" to={service.href} key={service.id}>
-                <img src={service.image} alt="" width="1600" height="900" loading="lazy" decoding="async" />
+              <Link
+                className={`gym-service-card gym-service-card--${service.id}`}
+                to={service.href}
+                key={service.id}
+                onClick={() => trackEvent('service_card_click', { service: service.id, source: 'home_services' })}
+              >
+                <img src={service.image} alt="" width="1600" height="900" loading="eager" fetchpriority="low" decoding="async" />
                 <span className="gym-service-card__veil" aria-hidden="true" />
-                <div>
+                <div className="gym-service-card__top" aria-hidden="true">
+                  <span>{service.number} / 04</span>
+                  <span>{service.type}</span>
+                </div>
+                <div className="gym-service-card__body">
+                  <span className="gym-service-card__promise">{service.promise}</span>
                   <h3>{service.title}</h3>
                   <p>{service.copy}</p>
-                  <span className="gym-service-card__action">VER SERVICIO <ArrowUpRight size={17} aria-hidden="true" /></span>
+                  <span className="gym-service-card__bottom">
+                    <span>DESCUBRIR EL SERVICIO</span>
+                    <span className="gym-service-card__action" aria-hidden="true">
+                      <ArrowUpRight size={23} strokeWidth={1.65} />
+                    </span>
+                  </span>
                 </div>
               </Link>
             ))}
           </div>
-          <Link className="gym-inline-link" to="/programs">
-            VER TODOS LOS SERVICIOS <ArrowUpRight size={17} aria-hidden="true" />
-          </Link>
+          <div className="gym-services-outro">
+            <p>¿Aún no sabes cuál elegir? Conoce el alcance de cada servicio antes de decidir.</p>
+            <Link className="gym-services-outro__link" to="/programs">
+              EXPLORAR TODOS LOS SERVICIOS <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -194,6 +233,8 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      <BayonaLiveAppShowcase placement="home" />
 
       <section className="gym-home-trust" aria-labelledby="gym-trust-title">
         <div className="gym-home-shell gym-trust-layout">

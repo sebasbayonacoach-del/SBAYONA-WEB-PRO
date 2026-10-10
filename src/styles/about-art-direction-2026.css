@@ -53,3 +53,39 @@ body.premium-route--about .page-hero::after {
     line-height: .9 !important;
   }
 }
+
+/* DESIGNLY · narración editorial: título con área de lectura protegida y
+   subtítulo verdaderamente visible (PageHero lo envuelve en motion.div). */
+body.premium-route--about .page-hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  min-height: inherit;
+}
+body.premium-route--about .page-hero .page-hero-support {
+  max-width: 47rem;
+  margin-top: clamp(1.3rem, 3vw, 2.5rem);
+}
+body.premium-route--about .page-hero .page-hero-support .hero-subtitle {
+  max-width: 37ch;
+  font-size: clamp(1.075rem, 1.55vw, 1.45rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .94);
+  text-wrap: pretty;
+}
+body.premium-route--about .page-hero-title {
+  text-shadow: 0 2px 36px rgba(0,0,0,.28);
+}
+@media (max-width: 760px) {
+  body.premium-route--about .page-hero {
+    min-height: min(820px, 91svh);
+  }
+  body.premium-route--about .page-hero-content {
+    padding-bottom: clamp(3.3rem, 9vh, 5.5rem);
+  }
+  body.premium-route--about .page-hero .page-hero-support .hero-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+}

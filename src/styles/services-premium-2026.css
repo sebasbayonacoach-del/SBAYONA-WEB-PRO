@@ -1,0 +1,629 @@
+/* BAYONA Servicios · jerarquía comercial real.
+   Las cuatro rutas principales coinciden con Home; precios secundarios son los
+   datos ya publicados en offerings.js. No se afirma disponibilidad inmediata. */
+
+.services-page {
+  --services-orange: #f4a261;
+}
+
+.services-page .page-hero {
+  min-height: min(790px,90svh);
+}
+
+.services-page .page-hero h1 {
+  max-width: 13ch;
+  text-wrap: balance;
+}
+
+.services-page .page-hero-content > p {
+  max-width: 680px;
+  color: rgba(255,255,255,.83);
+}
+
+.services-page .services-overview {
+  padding-block: clamp(5rem,8vw,8rem);
+}
+
+.services-page .services-paths-heading {
+  margin-bottom: clamp(2.3rem,4vw,4.2rem);
+}
+
+.services-page .services-paths-heading h2 {
+  max-width: 15ch;
+  text-wrap: balance;
+}
+
+.services-page .services-paths-heading h2 span {
+  color: #f4a261;
+}
+
+.services-page .services-path-grid {
+  display: grid;
+  grid-template-columns: repeat(12,minmax(0,1fr));
+  gap: clamp(.75rem,1.25vw,1.3rem);
+}
+
+.services-page .services-path-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-column: span 6;
+  min-height: clamp(420px,40vw,570px);
+  padding: clamp(1.3rem,2.5vw,2.8rem);
+  background: #151210;
+  overflow: hidden;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.18);
+  text-decoration: none;
+  transition: border-color .3s, box-shadow .3s;
+}
+
+.services-page .services-path-card:nth-child(1),
+.services-page .services-path-card:nth-child(4) {
+  grid-column: span 7;
+}
+
+.services-page .services-path-card:nth-child(2),
+.services-page .services-path-card:nth-child(3) {
+  grid-column: span 5;
+}
+
+.services-page .services-path-card > img {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.93) brightness(.9);
+  transition: transform .75s cubic-bezier(.16,1,.3,1),filter .5s;
+}
+
+.services-page .services-path-card--parkour > img { object-position: 39% center; }
+.services-page .services-path-card--recovery > img { object-position: 48% center; }
+
+.services-page .services-path-card__shade {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg,rgba(5,5,5,.46),transparent 27%),
+              linear-gradient(0deg,rgba(3,3,3,.94),rgba(3,3,3,.66) 28%,rgba(3,3,3,.07) 76%);
+  pointer-events: none;
+}
+
+.services-page .services-path-card__meta,
+.services-page .services-path-card__body {
+  position: relative;
+  z-index: 2;
+}
+
+.services-page .services-path-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  color: #fff;
+  font: 750 .65rem/1.4 var(--font-label,monospace);
+  letter-spacing: .12em;
+}
+
+.services-page .services-path-card__meta > span:first-child {
+  padding: .5rem .75rem;
+  border: 1px solid rgba(255,255,255,.5);
+  background: rgba(8,8,8,.28);
+}
+
+.services-page .services-path-card__meta > span:last-child {
+  text-align: right;
+  color: #ffc08a;
+}
+
+.services-page .services-path-card__body {
+  display: grid;
+  gap: clamp(.8rem,1.5vw,1.1rem);
+}
+
+.services-page .services-path-card h3 {
+  max-width: 14ch;
+  margin: 0;
+  color: #fff !important;
+  font-size: clamp(2.3rem,3.9vw,4.5rem);
+  line-height: .96;
+  letter-spacing: -.06em;
+  text-wrap: balance;
+}
+
+.services-page .services-path-card p {
+  max-width: 48ch;
+  margin: 0;
+  color: rgba(255,255,255,.88);
+  font-size: clamp(.94rem,1.17vw,1.04rem);
+  line-height: 1.6;
+}
+
+.services-page .services-path-card__action {
+  margin-top: clamp(.8rem,1.5vw,1.25rem);
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.39);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  color: #ffc08a;
+  font: 800 .7rem/1.35 var(--font-label,monospace);
+  letter-spacing: .08em;
+}
+
+.services-page .services-path-card:hover,
+.services-page .services-path-card:focus-visible {
+  border-color: #f4a261;
+  box-shadow: 0 25px 60px rgba(0,0,0,.17);
+}
+
+.services-page .services-path-card:hover > img,
+.services-page .services-path-card:focus-visible > img {
+  transform: scale(1.035);
+  filter: saturate(1.04) brightness(.96);
+}
+
+.services-page .services-path-card:focus-visible {
+  outline: 3px solid #f4a261;
+  outline-offset: 3px;
+}
+
+.services-page .services-path-footnote {
+  margin-top: clamp(1.6rem,3vw,3rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  padding-block: 1.4rem;
+  border-block: 1px solid rgba(255,255,255,.2);
+}
+
+.services-page .services-path-footnote > span {
+  color: var(--services-muted);
+  font: 700 .66rem/1.5 var(--font-label,monospace);
+  letter-spacing: .1em;
+}
+
+.services-page .services-path-footnote a {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  min-height: 44px;
+  color: #ffc08a;
+  font: 750 .7rem/1.5 var(--font-label,monospace);
+  letter-spacing: .07em;
+}
+
+.services-page .services-catalog .services-heading h2 {
+  max-width: 16ch;
+  text-wrap: balance;
+}
+
+.services-page .services-catalog-index {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: .8rem;
+  margin-bottom: clamp(2rem,4vw,3.5rem);
+}
+
+.services-page .services-catalog-index > .services-overview-card {
+  min-height: 174px;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: .4rem;
+  padding: 1.4rem;
+  background: #151515;
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  text-decoration: none;
+}
+
+.services-page .services-catalog-index .services-overview-card > svg:first-child {
+  color: #f4a261;
+}
+
+.services-page .services-catalog-index .services-overview-card__number {
+  margin-top: .25rem;
+  color: #ffc08a;
+  font: 750 .65rem/1.5 var(--font-label,monospace);
+}
+
+.services-page .services-catalog-index .services-overview-card > strong {
+  font-size: clamp(1.04rem,1.65vw,1.55rem);
+  font-weight: 800;
+}
+
+.services-page .services-catalog-index .services-overview-card > span:not(.services-overview-card__number) {
+  color: rgba(255,255,255,.73);
+  font-size: .85rem;
+}
+
+.services-page .services-catalog-index .services-overview-card > svg:last-child {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.4rem;
+}
+
+.services-page .services-catalog-index > .services-overview-card:hover,
+.services-page .services-catalog-index > .services-overview-card:focus-visible {
+  background: #211c18;
+  border-color: #f4a261;
+  outline-offset: 3px;
+}
+
+.services-page .services-catalog-group {
+  padding: 0;
+  scroll-margin-top: 115px;
+  background: #111;
+}
+
+.services-page #membresias,
+.services-page #servicios,
+.services-page #elige-servicio {
+  scroll-margin-top: 115px;
+}
+
+.services-page .services-catalog-group::before,
+.services-page .services-catalog-group::after {
+  content: none;
+}
+
+.services-page .services-catalog-details {
+  display: block;
+}
+
+.services-page .services-catalog-summary {
+  display: grid;
+  grid-template-columns: 3.3rem minmax(0,1fr) auto 2rem;
+  align-items: center;
+  gap: 1.2rem;
+  padding: clamp(1.4rem,3vw,2.5rem);
+  list-style: none;
+  cursor: pointer;
+  color: #fff;
+  border-bottom: 1px solid transparent;
+}
+
+.services-page .services-catalog-summary::-webkit-details-marker {
+  display: none;
+}
+
+.services-page .services-catalog-details[open] > .services-catalog-summary {
+  border-bottom-color: rgba(255,255,255,.2);
+}
+
+.services-page .services-catalog-summary__number,
+.services-page .services-catalog-summary__count {
+  color: #f4a261;
+  font: 750 .68rem/1.4 var(--font-label,monospace);
+}
+
+.services-page .services-catalog-summary__name {
+  display: grid;
+  gap: .45rem;
+}
+
+.services-page .services-catalog-summary__name strong {
+  font-size: clamp(1.45rem,3vw,2.7rem);
+  line-height: 1.1;
+}
+
+.services-page .services-catalog-summary__name small {
+  max-width: 62ch;
+  font-size: .92rem;
+  color: rgba(255,255,255,.69);
+  line-height: 1.5;
+}
+
+.services-page .services-catalog-summary__toggle {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255,255,255,.38);
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform .2s;
+}
+
+.services-page .services-catalog-details[open] .services-catalog-summary__toggle {
+  transform: rotate(45deg);
+}
+
+.services-page .services-card-grid {
+  margin: 0;
+  padding: clamp(.65rem,1.5vw,1.6rem);
+  gap: clamp(.65rem,1vw,1rem);
+  background: transparent;
+}
+
+.services-page .services-card {
+  border: 1px solid rgba(255,255,255,.13);
+  background: #1a1a1a;
+  min-height: 225px;
+  padding: clamp(1.1rem,2vw,1.7rem);
+}
+
+.services-page .services-card h4 {
+  margin: 2rem 0 .8rem;
+  font-size: clamp(1.2rem,1.6vw,1.65rem);
+  line-height: 1.18;
+  text-wrap: balance;
+}
+
+.services-page .services-card > p {
+  color: rgba(255,255,255,.76);
+}
+
+.services-page .services-card__top {
+  flex-wrap: wrap;
+  color: rgba(255,255,255,.64);
+}
+
+.services-page .services-card > a {
+  margin-top: 1.4rem;
+  min-height: 36px;
+  color: #ffc08a;
+  line-height: 1.25;
+}
+
+html[data-bayona-theme='day'] .services-page .services-overview {
+  background: #f7f3eb !important;
+  color: #201b17;
+}
+
+html[data-bayona-theme='day'] .services-page .services-paths-heading h2 {
+  color: #201b17;
+}
+
+html[data-bayona-theme='day'] .services-page .services-paths-heading h2 span {
+  color: #a35629;
+}
+
+html[data-bayona-theme='day'] .services-page .services-paths-heading > p {
+  color: #64584e;
+}
+
+html[data-bayona-theme='day'] .services-page .services-path-footnote {
+  border-color: rgba(44,34,25,.2);
+}
+
+html[data-bayona-theme='day'] .services-page .services-path-footnote > span {
+  color: #64584e;
+}
+
+html[data-bayona-theme='day'] .services-page .services-path-footnote a {
+  color: #91451b;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog {
+  background: #eee6da;
+  color: #201b17;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog .services-heading h2 {
+  color: #201b17;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog .services-heading > p {
+  color: #64584e;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog-index > .services-overview-card {
+  background: #fffdf8;
+  border-color: rgba(60,43,28,.17);
+  color: #201b17;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog-index .services-overview-card > span:not(.services-overview-card__number) {
+  color: #64584e;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog-index .services-overview-card__number,
+html[data-bayona-theme='day'] .services-page .services-catalog-index .services-overview-card > svg:first-child {
+  color: #92501f;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog-group {
+  background: #fffdf8;
+  border-color: rgba(60,43,28,.17);
+  color: #201b17;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog-summary {
+  color: #201b17;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog-summary__name small {
+  color: #64584e;
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog-summary__toggle {
+  border-color: rgba(60,43,28,.3);
+}
+
+html[data-bayona-theme='day'] .services-page .services-catalog-details[open] > .services-catalog-summary {
+  border-color: rgba(60,43,28,.19);
+}
+
+html[data-bayona-theme='day'] .services-page .services-card {
+  background: #f8f2ea;
+  border-color: rgba(60,43,28,.12);
+  color: #201b17;
+}
+
+html[data-bayona-theme='day'] .services-page .services-card h4 {
+  color: #201b17;
+}
+
+html[data-bayona-theme='day'] .services-page .services-card > p,
+html[data-bayona-theme='day'] .services-page .services-card__top {
+  color: #64584e;
+}
+
+html[data-bayona-theme='day'] .services-page .services-card__top strong,
+html[data-bayona-theme='day'] .services-page .services-card > a {
+  color: #91451b;
+}
+
+@media (max-width: 950px) {
+  .services-page .services-path-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .services-page .services-path-card:nth-child(n) {
+    grid-column: span 1;
+    min-height: 455px;
+  }
+
+  .services-page .services-path-card h3 {
+    font-size: clamp(2rem,4.5vw,3rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .services-page .services-path-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-page .services-path-card:nth-child(n) {
+    min-height: 415px;
+    grid-column: 1;
+    padding: 1.35rem;
+  }
+
+  .services-page .services-path-card h3 {
+    font-size: clamp(2.1rem,8vw,3rem);
+  }
+
+  .services-page .services-catalog-index {
+    grid-template-columns: 1fr;
+  }
+
+  .services-page .services-catalog-index > .services-overview-card {
+    min-height: 145px;
+  }
+
+  .services-page .services-catalog-summary {
+    grid-template-columns: 1.7rem minmax(0,1fr) 2rem;
+    gap: .75rem;
+  }
+
+  .services-page .services-catalog-summary__count {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .services-page .services-catalog-summary__toggle {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    width: 32px;
+    height: 32px;
+  }
+
+  .services-page .services-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-page .services-card {
+    min-height: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-page .services-path-card,
+  .services-page .services-path-card > img,
+  .services-page .services-catalog-summary__toggle {
+    transition: none;
+  }
+
+  .services-page .services-path-card:hover > img {
+    transform: none;
+  }
+}
+
+/* The global unity layer hides images in arbitrary *-card classes.  Our four
+   service images are an intentional exception, just as the Home cards are. */
+body.premium-route--programs .ds-frame:not([data-experience-scope='system']) .services-path-card > img,
+body.premium-route--programs .services-path-card > img {
+  display: block !important;
+}
+
+/* Daylight surface must also win the inherited high-specificity dark text. */
+html[data-bayona-theme='day'] body.premium-route--programs .services-page .services-catalog .services-card > p,
+html[data-bayona-theme='day'] body.premium-route--programs .services-page .services-catalog .services-card__top {
+  color: #64584e !important;
+}
+html[data-bayona-theme='day'] body.premium-route--programs .services-page .services-catalog .services-scope-note {
+  color: #64584e !important;
+}
+
+html[data-bayona-theme='day'] body.premium-route--programs .services-page .services-catalog-index .services-overview-card:hover,
+html[data-bayona-theme='day'] body.premium-route--programs .services-page .services-catalog-index .services-overview-card:focus-visible {
+  background: #efe2d1;
+  color: #201b17;
+  border-color: #a35629;
+}
+
+/* DESIGNLY · octubre 2026 · los cuatro caminos dejan de parecer cuatro
+   anuncios idénticos. El protagonismo sigue siendo la fotografía, la lectura
+   y la decisión, no el borde de la tarjeta. */
+@media (min-width: 1024px) {
+  .services-page .services-path-card:nth-child(1),
+  .services-page .services-path-card:nth-child(4) {
+    min-height: clamp(510px, 47vw, 690px);
+  }
+  .services-page .services-path-card:nth-child(2),
+  .services-page .services-path-card:nth-child(3) {
+    min-height: clamp(510px, 47vw, 690px);
+  }
+  .services-page .services-path-card:nth-child(2) > img {
+    object-position: 60% center;
+  }
+}
+.services-page .services-path-card__shade {
+  background: linear-gradient(180deg, rgba(3,3,3,.42) 0%, transparent 36%),
+    linear-gradient(0deg, rgba(3,3,3,.94) 0%, rgba(3,3,3,.67) 28%, transparent 80%);
+}
+.services-page .services-path-card__body {
+  gap: clamp(.85rem, 1.4vw, 1.35rem);
+}
+.services-page .services-path-card__action {
+  min-height: 45px;
+}
+.services-page .services-path-card__action svg {
+  flex: 0 0 auto;
+  transition: transform .25s ease;
+}
+.services-page .services-path-card:is(:hover, :focus-visible) .services-path-card__action svg {
+  transform: translate(3px,-3px);
+}
+.services-page .services-catalog-summary:focus-visible {
+  outline: 2px solid #f4a261;
+  outline-offset: -3px;
+}
+@media (max-width: 720px) {
+  .services-page .services-path-card:nth-child(n) {
+    min-height: min(480px, 68svh);
+  }
+  .services-page .services-path-card h3 {
+    max-width: 12ch;
+    font-size: clamp(2.2rem, 9vw, 3.25rem);
+    line-height: 1;
+  }
+  .services-page .services-path-card__meta > span:last-child {
+    max-width: 19ch;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .services-page .services-path-card__action svg { transition: none; }
+  .services-page .services-path-card:is(:hover, :focus-visible) .services-path-card__action svg { transform: none; }
+}

@@ -1,0 +1,158 @@
+/* Un globo = un mapa. El mapa plano permanece visible si WebGL no existe. */
+body.premium-route--about .about-globe-section {isolation:isolate;background:#090a0a;}
+body.premium-route--about .about-globe-section .globe-testimonials-experience {border:0;background:#080a0b;}
+body.premium-route--about .about-globe-section .globe-impact-overview {border:1px solid rgba(244,162,97,.18);background:#111312;}
+body.premium-route--about .about-globe-section .globe-testimonials-stage {background:radial-gradient(ellipse at 48% 54%,#202021,#080909 72%);}
+body.premium-route--about .about-globe-section .globe-testimonials-canvas {height:clamp(540px,57vw,720px);overflow:hidden;background:radial-gradient(ellipse at 49% 48%,rgba(244,162,97,.08),transparent 55%),#090a0b;}
+.bayona-globe-three {position:absolute;inset:0;z-index:1;}
+.bayona-globe-three canvas {display:block;}
+body.premium-route--about .globe-testimonials-canvas.globe-is-three-ready .globe-testimonials-world {position:absolute;pointer-events:none;opacity:0;inset:0;}
+body.premium-route--about .globe-testimonials-canvas.globe-is-three-ready .globe-testimonials-world-map {transition:none;}
+.globe-atlas-caption {position:absolute;top:clamp(26px,4vw,57px);left:clamp(24px,4vw,61px);z-index:3;display:grid;max-width:280px;gap:16px;pointer-events:none;}
+.globe-atlas-caption span {font:850 clamp(1.7rem,2.9vw,3.15rem)/.96 'Montserrat',sans-serif;letter-spacing:-.055em;color:#f4f0e8;}
+.globe-atlas-caption small {max-width:29ch;font:600 .59rem/1.7 'DM Mono',monospace;letter-spacing:.12em;color:#cda47f;}
+body.premium-route--about .globe-testimonials-canvas .globe-testimonials-map-meta {top:20px;right:20px;left:auto;max-width:210px;}
+body.premium-route--about .globe-testimonials-canvas .globe-testimonials-location-index {left:50%;bottom:18px;transform:translateX(-50%);}
+body.premium-route--about .globe-testimonials-canvas .globe-testimonials-overlay {z-index:220;}
+@media(max-width:720px){
+ body.premium-route--about .about-globe-section .globe-impact-overview {display:block;}
+ body.premium-route--about .about-globe-section .globe-testimonials-canvas {height:480px;}
+ .globe-atlas-caption {top:18px;left:18px;max-width:210px;gap:8px;}
+ .globe-atlas-caption span {font-size:1.4rem;}
+ .globe-atlas-caption small {font-size:.5rem;max-width:22ch;}
+ body.premium-route--about .globe-testimonials-canvas .globe-testimonials-map-meta {display:none;}
+ body.premium-route--about .globe-testimonials-canvas .globe-testimonials-location-index {bottom:12px;}
+}
+@media(prefers-reduced-motion:reduce){.bayona-globe-three canvas{touch-action:pan-y;}}
+
+/* A quieter atlas: this is an editorial journey, not a dashboard. */
+body.premium-route--about .about-globe-section .globe-impact-overview {
+ display:grid !important;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr) !important;
+ border:0 !important;border-top:1px solid rgba(244,162,97,.25) !important;
+ border-bottom:1px solid rgba(244,162,97,.25) !important;background:#0e1010 !important;
+}
+body.premium-route--about .about-globe-section .globe-impact-stats {border-right:0 !important;}
+body.premium-route--about .about-globe-section .globe-impact-stat {min-height:93px !important;padding:16px 18px !important;}
+body.premium-route--about .about-globe-section .globe-impact-stat strong {font-size:clamp(1.65rem,2.8vw,3rem) !important;}
+body.premium-route--about .about-globe-section .globe-impact-stat span {max-width:15ch !important;color:#b1aba2 !important;}
+body.premium-route--about .about-globe-section .globe-trajectory-stop {min-height:93px !important;padding:14px 17px !important;}
+body.premium-route--about .about-globe-section .globe-trajectory-copy > span {color:#a9a6a0 !important;}
+body.premium-route--about .about-globe-section .globe-testimonials-experience {overflow:hidden !important;}
+body.premium-route--about .about-globe-section .globe-testimonials-canvas {height:clamp(600px,57vw,740px) !important;}
+@media(max-width:900px){
+ body.premium-route--about .about-globe-section .globe-impact-overview {display:block !important;}
+ body.premium-route--about .about-globe-section .globe-trajectory {display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+ body.premium-route--about .about-globe-section .globe-trajectory-stop {padding:13px 9px !important;min-height:80px !important;}
+ body.premium-route--about .about-globe-section .globe-trajectory-copy strong {font-size:1.03rem !important;}
+ body.premium-route--about .about-globe-section .globe-trajectory-copy > span {display:none !important;}
+ body.premium-route--about .about-globe-section .globe-testimonials-canvas {height:490px !important;}
+}
+@media(max-width:700px){
+ body.premium-route--about .about-globe-section .globe-impact-stat {min-height:84px !important;padding:12px 9px !important;}
+ body.premium-route--about .about-globe-section .globe-impact-stat strong {font-size:1.65rem !important;}
+ body.premium-route--about .about-globe-section .globe-impact-stat span {font-size:.46rem !important;}
+ body.premium-route--about .about-globe-section .globe-trajectory-stop {display:flex;gap:7px;align-items:center;padding:9px 8px !important;min-height:70px !important;}
+ body.premium-route--about .about-globe-section .globe-trajectory-index {font-size:.52rem;}
+ body.premium-route--about .about-globe-section .globe-trajectory-copy small {font-size:.48rem !important;}
+ body.premium-route--about .about-globe-section .globe-trajectory-copy strong {font-size:.91rem !important;}
+ body.premium-route--about .about-globe-section .globe-trajectory-arrow {display:none;}
+ body.premium-route--about .about-globe-section .globe-testimonials-canvas {height:440px !important;}
+ .globe-atlas-caption {left:18px;top:18px;}
+ .globe-atlas-caption span {max-width:16ch;font-size:1.18rem;}
+ .globe-atlas-caption small {max-width:24ch;font-size:.48rem;}
+}
+@media(max-width:700px){
+ .globe-atlas-caption {top:14px;left:18px;max-width:calc(100% - 36px);}
+ .globe-atlas-caption span {max-width:none;font-size:1.2rem;}
+ .globe-atlas-caption small {display:none;}
+}
+/* Coincident testimonials live at the same five true city coordinates. One
+   map pin per city; the 10-story selector remains available underneath. */
+.globe-testimonials-world-point[data-representative='false']{display:none!important;}
+
+/* Documentary pin: the map and the spoken narrative occupy one physical scene. */
+body.premium-route--about .globe-testimonials-stage {isolation:isolate;}
+body.premium-route--about .globe-testimonials-canvas .globe-atlas-caption {display:none;}
+.globe-scroll-story {position:absolute;z-index:5;left:clamp(26px,4.4vw,70px);top:0;bottom:0;width:min(35%,460px);pointer-events:none;}
+.globe-scroll-story__chapter {position:absolute;left:0;top:50%;transform:translateY(-50%);width:100%;padding:clamp(21px,2.8vw,40px) clamp(21px,2.5vw,34px);background:linear-gradient(110deg,rgba(7,9,10,.93),rgba(7,9,10,.73));border-left:2px solid #f4a261;box-shadow:0 32px 80px rgba(0,0,0,.18);}
+.globe-scroll-story__chapter:not(:first-child) {visibility:hidden;}
+.globe-scroll-story__eyebrow {display:block;margin-bottom:22px;color:#f4a261;font:650 .67rem/1.4 'DM Mono',monospace;letter-spacing:.16em;}
+.globe-scroll-story__chapter h3 {margin:0 0 22px;max-width:14ch;color:#faf7f0;font:900 clamp(2.3rem,3.3vw,4.3rem)/1.01 'Montserrat',sans-serif;letter-spacing:-.055em;text-wrap:balance;}
+.globe-scroll-story__chapter p {margin:0;max-width:43ch;color:#ded9d1;font:400 clamp(.95rem,1.1vw,1.08rem)/1.7 'Inter',sans-serif;}
+.globe-scroll-story__index {display:block;margin-top:26px;color:rgba(255,255,255,.53);font:700 .65rem/1.2 'DM Mono',monospace;letter-spacing:.1em;}
+.globe-scroll-story__hint {position:absolute;bottom:20px;left:0;color:#f5c29c;font:600 .64rem/1.3 'DM Mono',monospace;letter-spacing:.08em;}
+body.premium-route--about .globe-testimonials-canvas .globe-testimonials-location-index {z-index:10;}
+body.premium-route--about .globe-testimonials-map-meta {z-index:6;}
+body.premium-route--about .globe-testimonials-overlay {z-index:15;}
+@media(max-width:1023px), (prefers-reduced-motion:reduce) {
+  .globe-scroll-story {position:relative;z-index:auto;inset:auto;display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;background:#121413;border-top:1px solid rgba(244,162,97,.24);}
+  .globe-scroll-story__chapter {position:relative;visibility:visible !important;inset:auto;transform:none !important;opacity:1 !important;min-height:180px;padding:22px 24px;background:none;border-left:none;border-bottom:1px solid rgba(244,162,97,.18);box-shadow:none;}
+  .globe-scroll-story__chapter:nth-child(odd) {border-right:1px solid rgba(244,162,97,.18);}
+  .globe-scroll-story__eyebrow {margin-bottom:10px;font-size:.6rem;}
+  .globe-scroll-story__chapter h3 {font-size:clamp(1.35rem,2.25vw,2.1rem);margin-bottom:10px;max-width:22ch;}
+  .globe-scroll-story__chapter p {font-size:.9rem;line-height:1.55;}
+  .globe-scroll-story__index {margin-top:14px;}
+  .globe-scroll-story__hint {display:none;}
+}
+@media(max-width:680px){
+ .globe-scroll-story {grid-template-columns:minmax(0,1fr);}
+ .globe-scroll-story__chapter {min-height:0;padding:24px 20px;}
+ .globe-scroll-story__chapter:nth-child(odd){border-right:0;}
+ .globe-scroll-story__chapter h3 {font-size:1.85rem;max-width:20ch;}
+}
+/* Keep typography calmly editorial; generic globe styles use uppercase body. */
+body.premium-route--about .globe-scroll-story__chapter p {text-transform:none !important;letter-spacing:normal !important;font-family:'Inter',sans-serif !important;font-weight:400 !important;}
+@media(min-width:1024px) and (prefers-reduced-motion:no-preference){
+ body.premium-route--about .bayona-globe-three {left:8%;width:94%;}
+}
+
+/* ATLAS 2.0: higher legibility, no invisible gaps, one story per scroll beat. */
+body.premium-route--about .about-globe-section {background:#151918;}
+body.premium-route--about .about-globe-section .globe-testimonials-experience {overflow:visible !important;background:#151918;}
+body.premium-route--about .about-globe-section .globe-testimonials-stage {background:#161c1d;}
+body.premium-route--about .about-globe-section .globe-testimonials-canvas {
+ background:radial-gradient(ellipse at 62% 46%,rgba(233,167,111,.19),transparent 57%),#182022;
+}
+body.premium-route--about .about-globe-section .globe-impact-overview {background:#242a29 !important;}
+body.premium-route--about .about-globe-section .globe-impact-stat span,
+body.premium-route--about .about-globe-section .globe-trajectory-copy > span {color:#d8d3ca !important;}
+.globe-scroll-story {left:clamp(25px,4vw,63px);width:min(37%,500px);}
+.globe-scroll-story__chapter {background:linear-gradient(117deg,rgba(25,31,31,.97),rgba(25,31,31,.89));border-left:3px solid #ffb06d;box-shadow:0 28px 85px rgba(0,0,0,.44);}
+.globe-scroll-story__chapter h3 {font-size:clamp(2.05rem,2.7vw,3.4rem);max-width:17ch;color:#fff8f0;}
+.globe-scroll-story__chapter p {font-size:clamp(1rem,1.15vw,1.14rem) !important;line-height:1.66;color:#f0e9e0;}
+.globe-scroll-story__eyebrow {color:#ffb777;}
+.globe-scroll-story__detail {display:block;margin-top:16px;color:#f7be86;font:700 .69rem/1.4 'DM Mono',monospace;letter-spacing:.09em;text-transform:uppercase;}
+.globe-scroll-story__index {color:#e3d5c6;font-size:.71rem;}
+.globe-scroll-story__hint {color:#ffbf89;font-size:.68rem;}
+body.premium-route--about .globe-testimonials-canvas .globe-testimonials-map-meta {background:rgba(19,25,25,.92);}
+@media(max-width:1023px),(prefers-reduced-motion:reduce){
+ .globe-scroll-story {background:#222827;}
+ .globe-scroll-story__chapter {background:#242b2a;box-shadow:none;}
+ .globe-scroll-story__chapter h3 {font-size:clamp(1.4rem,2.35vw,2.1rem);}
+ .globe-scroll-story__chapter p {font-size:.96rem !important;line-height:1.57;}
+}
+@media(max-width:680px){.globe-scroll-story__chapter {padding:24px 20px;}.globe-scroll-story__chapter h3 {font-size:1.8rem;}}
+
+/* Structural fix: GSAP's transform pin was updating stories offscreen inside
+   the About overflow-clip context. Native position:sticky keeps the real globe
+   physically in view; ScrollTrigger now only directs which story is visible. */
+@media(min-width:1024px) and (prefers-reduced-motion:no-preference){
+ body.premium-route--about .about-page {overflow:visible;}
+ body.premium-route--about .globe-atlas-runway {position:relative;min-height:calc(740px + var(--atlas-scroll-length,516svh));overflow:visible;}
+ body.premium-route--about .globe-atlas-runway > .globe-testimonials-stage {
+   position:sticky !important;top:78px;z-index:4;height:740px;
+ }
+}
+@media(max-width:1023px), (prefers-reduced-motion:reduce){
+ .globe-atlas-runway {height:auto;min-height:0;overflow:visible;}
+ .globe-atlas-runway > .globe-testimonials-stage {position:relative;top:auto;height:auto;}
+}
+
+/* Documentary identities: real published avatar assets, readable narrative. */
+.globe-scroll-story__identity {display:flex;align-items:center;gap:17px;margin:0 0 17px;}
+.globe-scroll-story__identity h3 {margin:0;min-width:0;overflow-wrap:anywhere;}
+.globe-scroll-story__portrait {width:clamp(58px,5.3vw,75px);height:clamp(58px,5.3vw,75px);flex:0 0 auto;object-fit:cover;object-position:center;border:1px solid rgba(244,162,97,.6);filter:saturate(.83);}
+.globe-scroll-story__experience {display:block;margin-top:10px;color:#d8d0c5;font:600 .63rem/1.5 'DM Mono',monospace;letter-spacing:.04em;}
+body.premium-route--about .globe-testimonials-location-index button.is-active::after {box-shadow:0 0 0 5px rgba(244,162,97,.15),0 0 14px rgba(244,162,97,.55);}
+body.premium-route--about .globe-testimonials-location-index button:focus-visible {outline:2px solid #ffc08a;outline-offset:3px;}
+@media(max-width:680px){.globe-scroll-story__portrait{width:54px;height:54px;}.globe-scroll-story__identity{gap:12px;}}

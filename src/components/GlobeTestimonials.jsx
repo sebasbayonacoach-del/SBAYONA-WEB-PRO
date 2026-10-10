@@ -1,7 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
+import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
+import GlobeScrollDirector, { GLOBE_STORY } from './about/GlobeScrollDirector.jsx'
+import './globe-integrated.css'
+
+const StoryGlobe3D = lazy(() => import('../engine/scene/StoryGlobeScene.jsx'))
+
+class GlobeFallbackBoundary extends Component {
+  constructor(props) { super(props); this.state = { failed: false } }
+  static getDerivedStateFromError() { return { failed: true } }
+  componentDidCatch() { this.props.onError?.() }
+  render() { return this.state.failed ? null : this.props.children }
+}
 import { TESTIMONIALS, testimonialVariant } from '../config/testimonials.js'
 
 const EARTH_TEXTURE_URL = '/images/system/earth-dark.jpg'
@@ -203,7 +214,7 @@ function mapPosition(lat, lng) {
   }
 }
 
-function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect }) {
+function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect, inactive = false }) {
   const focusPreset = focusedMarker ? MAP_FOCUS_PRESETS[focusedMarker.country] : null
   const focusPosition = focusedMarker ? mapPosition(focusedMarker.lat, focusedMarker.lng) : { left: '50%', top: '50%' }
   const zoom = focusPreset?.zoom ?? 1
@@ -215,6 +226,8 @@ function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect }) {
       role="group"
       aria-label="Mapa mundial interactivo con experiencias publicadas"
       data-focused-region={focusedMarker?.country ?? 'Mundo'}
+      aria-hidden={inactive}
+      inert={inactive ? '' : undefined}
     >
       <div
         className={`globe-testimonials-world-map${focusedMarker ? ' is-focused' : ''}`}
@@ -230,8 +243,9 @@ function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect }) {
         <span className="globe-testimonials-world-map-grid" aria-hidden="true" />
         {WORLD_MAP_MARKERS.map((marker, index) => {
           const testimonial = GLOBE_TESTIMONIALS[marker.testimonialId]
-          const active = testimonial.id === activeTestimonial.id
-          const focused = marker.id === focusedMarker?.id
+          const representative = WORLD_MAP_MARKERS.findIndex((place) => place.city === marker.city && place.country === marker.country) === index
+          const active = marker.city === activeTestimonial.city && marker.country === activeTestimonial.country
+          const focused = marker.city === focusedMarker?.city && marker.country === focusedMarker?.country
           const inFocusedRegion = marker.country === focusedMarker?.country
 
           return (
@@ -242,7 +256,10 @@ function InteractiveWorldMap({ activeTestimonial, focusedMarker, onSelect }) {
               style={{ ...mapPosition(marker.lat, marker.lng), '--point-delay': `${index * -0.17}s` }}
               data-country={marker.country}
               data-marker-id={marker.id}
-              aria-label={`Abrir historia de ${testimonial.name} desde ${marker.country}`}
+              data-representative={representative}
+              aria-hidden={!representative}
+              tabIndex={inactive || !representative ? -1 : undefined}
+              aria-label={representative ? `Abrir historias de ${marker.city}, ${marker.country}` : undefined}
               aria-pressed={active}
               onClick={() => onSelect(marker)}
             >
@@ -259,9 +276,38 @@ export default function GlobeTestimonials() {
   const capabilities = useCapabilities()
   const reducedMotion = capabilities.reducedMotion
   const [activeId, setActiveId] = useState(0)
+  const [globeStoryStage, setGlobeStoryStage] = useState(-1)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [focusedMarker, setFocusedMarker] = useState(null)
   const touchStartX = useRef(null)
+  const [threeReady, setThreeReady] = useState(false)
+  const [hasWebGL, setHasWebGL] = useState(false)
+  useEffect(() => {
+    try {
+      if (typeof window.WebGLRenderingContext === 'undefined') {
+        setHasWebGL(false)
+        return
+      }
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('webgl2') || canvas.getContext('webgl')
+      setHasWebGL(Boolean(context))
+      context?.getExtension('WEBGL_lose_context')?.loseContext()
+    } catch { setHasWebGL(false) }
+  }, [])
+  const selectScrollChapter = (chapter) => {
+    if (isOverlayOpen) return
+    const story = GLOBE_STORY[chapter]
+    if (!story) return
+    const globeRegion = { Colombia: 0, España: 1, EEUU: 2, Argentina: 3 }
+    setGlobeStoryStage(globeRegion[story.country] ?? 0)
+    if (story.testimonialId === undefined) {
+      setFocusedMarker(null)
+      return
+    }
+    const marker = markerForTestimonial(story.testimonialId)
+    setActiveId((current) => current === story.testimonialId ? current : story.testimonialId)
+    setFocusedMarker((current) => current?.testimonialId === marker?.testimonialId ? current : marker)
+  }
   const activeTestimonial = GLOBE_TESTIMONIALS[activeId]
   const activeFocusPreset = focusedMarker ? MAP_FOCUS_PRESETS[focusedMarker.country] : null
 
@@ -295,6 +341,25 @@ export default function GlobeTestimonials() {
     setActiveId(testimonialId)
     setFocusedMarker(marker)
     setIsOverlayOpen(true)
+  }
+
+  const jumpToStory = (testimonialId) => {
+    if (reducedMotion || capabilities.mode !== 'desktop') {
+      selectAndOpen(testimonialId)
+      return
+    }
+    const runway = document.querySelector('.about-page .globe-atlas-runway')
+    if (!runway) {
+      selectAndOpen(testimonialId)
+      return
+    }
+    const total = GLOBE_STORY.length
+    const start = runway.getBoundingClientRect().top + window.scrollY - 78
+    const effectiveLength = Math.max(0, runway.getBoundingClientRect().height - window.innerHeight - 78)
+    const destination = start + effectiveLength * ((testimonialId + 1.5) / total)
+    // Scroll retains complete user control: the dot selects a chapter rather
+    // than opening a modal and trapping the visual reading experience.
+    window.scrollTo({ top: destination, behavior: 'smooth' })
   }
 
   const selectMapMarker = (marker) => {
@@ -1122,12 +1187,25 @@ export default function GlobeTestimonials() {
         </div>
       </div>
 
-      <div className={`globe-testimonials-stage${isOverlayOpen ? ' is-overlay-open' : ''}`}>
-        <div className="globe-testimonials-canvas">
+      <div className="globe-atlas-runway" style={{ '--atlas-scroll-length': `${GLOBE_STORY.length * 43}svh` }}>
+        <div className={`globe-testimonials-stage${isOverlayOpen ? ' is-overlay-open' : ''}`}>
+        <div className={`globe-testimonials-canvas${threeReady ? ' globe-is-three-ready' : ''}`}>
+          {hasWebGL && (
+            <GlobeFallbackBoundary onError={() => setThreeReady(false)}>
+              <Suspense fallback={null}>
+                <StoryGlobe3D markers={WORLD_MAP_MARKERS} selectedId={activeId}
+                  onSelect={selectMapMarker} reducedMotion={reducedMotion}
+                  compact={capabilities.mode !== 'desktop'} storyStage={globeStoryStage}
+                  focusMarker={focusedMarker} onReady={() => setThreeReady(true)} />
+              </Suspense>
+            </GlobeFallbackBoundary>
+          )}
+          <div className="globe-atlas-caption" aria-hidden="true"><span>EL MUNDO, EN UN SOLO LUGAR.</span><small>ARRASTRA EL GLOBO · TOCA UN PUNTO · DESCUBRE UNA HISTORIA</small></div>
           <InteractiveWorldMap
             activeTestimonial={activeTestimonial}
             focusedMarker={focusedMarker}
             onSelect={selectMapMarker}
+            inactive={threeReady}
           />
 
           <AnimatePresence mode="wait">
@@ -1153,7 +1231,7 @@ export default function GlobeTestimonials() {
           <div className="globe-testimonials-map-meta" aria-label="Información del mapa de historias">
             <span className="globe-testimonials-map-meta-icon" aria-hidden="true">+</span>
             <span className="globe-testimonials-map-meta-copy">
-              <strong>Explora historias reales</strong>
+              <strong>Explora historias publicadas</strong>
               <small>{GLOBE_TESTIMONIALS.length} historias · {publishedCountries.size} países · {publishedCities.size} ciudades</small>
             </span>
           </div>
@@ -1164,14 +1242,15 @@ export default function GlobeTestimonials() {
                 key={testimonial.id}
                 type="button"
                 className={testimonial.id === activeId ? 'is-active' : ''}
-                aria-label={`Abrir historia de ${testimonial.name} en ${testimonial.city}`}
-                aria-pressed={testimonial.id === activeId && isOverlayOpen}
+                aria-label={`Ir a historia de ${testimonial.name} en ${testimonial.city}`}
+                aria-pressed={testimonial.id === activeId}
                 title={`${testimonial.city}, ${testimonial.country}`}
-                onClick={() => selectAndOpen(testimonial.id)}
+                onClick={() => jumpToStory(testimonial.id)}
               />
             ))}
           </div>
         </div>
+        <GlobeScrollDirector reducedMotion={reducedMotion} onStageChange={selectScrollChapter} />
 
         <AnimatePresence>
           {isOverlayOpen && (
@@ -1225,7 +1304,7 @@ export default function GlobeTestimonials() {
                             className="globe-testimonials-media-visual"
                             width="960"
                             height="540"
-                            loading="lazy"
+                            loading="eager"
                             decoding="async"
                           />
                         )}
@@ -1283,6 +1362,7 @@ export default function GlobeTestimonials() {
             </motion.aside>
           )}
         </AnimatePresence>
+        </div>
       </div>
     </div>
   )

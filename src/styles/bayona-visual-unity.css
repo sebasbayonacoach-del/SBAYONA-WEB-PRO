@@ -25,11 +25,11 @@
   border-radius: 0;
 }
 
-/* Las tarjetas editoriales siguen siendo tipográficas. Las tres familias
+/* Las tarjetas editoriales siguen siendo tipográficas. Las cuatro familias
    gym-first son una excepción deliberada: su fotografía es parte del producto. */
 .ds-frame:not([data-experience-scope='system']) :is(
   .ds-card,
-  [class*='-card']:not(.gym-service-card):not(.gym-gift-card):not(.shop-product-card),
+  [class*='-card']:not(.gym-service-card):not(.gym-gift-card):not(.shop-product-card):not(.services-path-card),
   [class*='-tile']
 ) :is(img, picture, video, canvas, iframe) {
   display: none !important;

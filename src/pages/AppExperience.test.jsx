@@ -22,16 +22,16 @@ function renderPage() {
   return render(<MemoryRouter><AppExperience /></MemoryRouter>)
 }
 
-// BAYONA+ es un concepto en desarrollo. El contrato protege la honestidad
-// del estado (nada de disponibilidad, plazas ni acceso confirmado) y el
-// catálogo conceptual cerrado de nueve módulos.
-describe('/app — BAYONA+ conceptual y honesta', () => {
+// BAYONA App dispone de una versión web pública. Integraciones, planes y
+// prestaciones adicionales siguen separadas en el roadmap conceptual.
+describe('/app — BAYONA App publicada y roadmap honesto', () => {
   it('presenta la identidad BAYONA+ con su estado de desarrollo explícito', () => {
     renderPage()
 
-    expect(screen.getAllByText(/PRODUCTO EN DESARROLLO/i).length).toBeGreaterThan(0)
+    expect(screen.getByText(/APP WEB PUBLICADA · INTEGRACIONES EN DESARROLLO/i)).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 1, name: /ENTRENAMIENTO\.\s*SEGUIMIENTO\.\s*UN MISMO LUGAR\./i })).toBeInTheDocument()
-    expect(screen.getAllByText(/Todavía no está disponible\./i).length).toBeGreaterThan(0)
+    expect(screen.getByText(/Ya puedes abrir la aplicación web y elegir tu perfil/i)).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: /ABRIR BAYONA APP|ABRIR LA APP REAL/i }).length).toBeGreaterThanOrEqual(1)
   })
 
   it('ofrece dos salidas honestas: novedades por WhatsApp o conocer el concepto', () => {
