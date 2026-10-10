@@ -35,7 +35,7 @@ describe('configuración compartida del catálogo consultable', () => {
     const original = [...catalogItems]
 
     expect(filterCatalog(catalogItems, { category: 'Ropa' }).map((item) => item.id)).toEqual([
-      'hoodie-bayona',
+      'hoodie-origins',
       'camiseta-origins',
     ])
     expect(filterCatalog(catalogItems, { query: 'zapatillas' }).map((item) => item.id)).toEqual(['zapatillas-move'])
