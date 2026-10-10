@@ -250,3 +250,33 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+/* BAYONA 2026-10-10 — ordered full-journey header. A single calm baseline,
+   readable targets and no crowding at intermediate desktop widths. */
+@media (min-width: 1181px) {
+  .navbar .gym-primary-nav {
+    gap: clamp(.65rem, 1.12vw, 1.1rem);
+    flex-wrap: nowrap;
+    min-width: 0;
+    margin-inline: auto;
+  }
+  .navbar .gym-primary-nav a {
+    white-space: nowrap;
+    font-size: clamp(.72rem, .86vw, .79rem);
+    letter-spacing: .065em;
+    line-height: 1.4;
+    padding-block: .65rem;
+    color: rgba(247,245,241,.85);
+  }
+  .navbar .gym-primary-nav a:is(.active,[aria-current='page']) {
+    color: #fff;
+  }
+  .navbar .gym-primary-nav a:is(:hover,:focus-visible,.active)::after,
+  .navbar .gym-primary-nav a[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+  .navbar .gym-primary-nav a:focus-visible {outline:2px solid #f4a261;outline-offset:5px;}
+}
+@media (min-width: 1051px) and (max-width: 1180px) {
+  .navbar .gym-primary-nav { display: none; }
+}
