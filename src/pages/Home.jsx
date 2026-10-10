@@ -14,6 +14,7 @@ import '../styles/home-luxury-conversion.css'
 import '../styles/home-gym-funnel-v2.css'
 import '../styles/home-visual-rescue.css'
 import '../styles/home-services-premium.css'
+import '../styles/home-cinematic-hero-release.css'
 
 const SERVICES = Object.freeze([
   {
