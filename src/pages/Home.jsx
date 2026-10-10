@@ -5,6 +5,7 @@ import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
 import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
+import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink, isBookingEnabled } from '../config/site.config.js'
@@ -202,24 +203,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="gym-home-process" aria-labelledby="gym-process-title">
-        <div className="gym-home-shell">
-          <div className="gym-section-heading">
-            <SectionLabel>ASÍ DE SIMPLE</SectionLabel>
-            <h2 id="gym-process-title">TRES PASOS PARA EMPEZAR.</h2>
-          </div>
-          <ol className="gym-process-grid">
-            {START_STEPS.map((step) => (
-              <li key={step.number}>
-                <span>{step.number}</span>
-                <h3>{step.title}</h3>
-                <p>{step.copy}</p>
-              </li>
-            ))}
-          </ol>
-          <a className="gym-primary-button" href="#empieza">QUIERO EMPEZAR</a>
-        </div>
-      </section>
+      <GuidedStartJourney steps={START_STEPS} />
 
       <section className="home-memberships-section gym-home-plans" aria-labelledby="home-offer-heading">
         <div className="gym-home-shell">

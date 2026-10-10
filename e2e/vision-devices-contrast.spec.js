@@ -11,8 +11,11 @@ for (const viewport of [
 
     const hero = page.locator('.gym-home-hero')
     await expect(hero).toBeVisible()
-    const heroImage = await hero.evaluate((el) => getComputedStyle(el).backgroundImage)
-    expect(heroImage).not.toBe('none')
+    // The production hero photograph is rendered on the ::after layer to keep
+    // independent copy contrast. Checking backgroundImage on the host reports
+    // 'none' even when the actual image is correctly shown on the page.
+    const heroImage = await hero.evaluate((el) => getComputedStyle(el, '::after').backgroundImage)
+    expect(heroImage).toContain('bayona-home-cinematic-')
 
     const service = page.locator('.gym-service-card').first()
     await service.scrollIntoViewIfNeeded()
