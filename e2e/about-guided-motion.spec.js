@@ -20,38 +20,56 @@ test('El recorrido de Nosotros tiene siete capítulos accesibles y ordenados', a
   await expect(page.locator('.globe-testimonials-canvas')).toBeVisible()
 })
 
-test('Globo documental de GSAP permanece fijado y narra cuatro etapas al avanzar', async ({ page }) => {
+test('Atlas GSAP recorre las diez historias completas sin un solo fotograma vacío', async ({page}) => {
   await page.setViewportSize({width:1440,height:900})
   await page.emulateMedia({reducedMotion:'no-preference'})
   await page.goto('/about', {waitUntil:'networkidle'})
-  await expect(page.locator('.globe-scroll-story__chapter')).toHaveCount(4)
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior='auto'
+    document.body.style.scrollBehavior='auto'
+  })
   const stage = page.locator('.globe-testimonials-stage')
   await stage.scrollIntoViewIfNeeded()
-  await expect.poll(() => stage.evaluate(el => Boolean(el.closest('.pin-spacer')))).toBe(true)
+  await expect.poll(() => stage.evaluate(el => Boolean(el.closest('.globe-atlas-runway')))).toBe(true)
   const pinned = await stage.evaluate(el => {
-    const r = el.closest('.pin-spacer').getBoundingClientRect()
-    return {top:r.top + scrollY, height:r.height}
+    const r = el.closest('.globe-atlas-runway').getBoundingClientRect()
+    return { start: r.top + window.scrollY - 78, length: r.height - window.innerHeight - 78 }
   })
-  const steps = []
-  for (const fraction of [.16,.36,.64,.84]) {
-    await page.evaluate(y=>window.scrollTo(0,y), pinned.top + pinned.height * fraction)
-    await page.waitForTimeout(900)
-    steps.push(await stage.getAttribute('data-story-step'))
+  const seen=[]
+  for(let index=0;index<12;index++) {
+    const destination = pinned.start + pinned.length * ((index+.5)/12)
+    await page.evaluate(y=>window.scrollTo({top:y,behavior:'instant'}),destination)
+    await page.waitForTimeout(75)
+    const state=await stage.evaluate(el=>({
+      id:el.dataset.storyId,
+      visible:[...el.querySelectorAll('.globe-scroll-story__chapter')]
+        .filter(card=>getComputedStyle(card).visibility==='visible' && Number(getComputedStyle(card).opacity)>.95)
+        .map(card=>card.dataset.storyId),
+    }))
+    expect(state.visible).toEqual([state.id])
+    const geometry = await stage.evaluate(el => {
+      const scene=el.getBoundingClientRect()
+      const card=el.querySelector(`.globe-scroll-story__chapter[data-story-id="${el.dataset.storyId}"]`).getBoundingClientRect()
+      return {sceneTop:scene.top,sceneBottom:scene.bottom,cardTop:card.top,cardBottom:card.bottom}
+    })
+    expect(geometry.sceneTop).toBeGreaterThanOrEqual(65)
+    expect(geometry.sceneTop).toBeLessThanOrEqual(95)
+    expect(geometry.cardTop).toBeGreaterThanOrEqual(65)
+    expect(geometry.cardBottom).toBeLessThanOrEqual(900)
+    seen.push(state.id)
   }
-  expect(new Set(steps.filter(Boolean)).size).toBeGreaterThanOrEqual(2)
-  await expect(page.locator('.globe-scroll-story__chapter').last()).toBeAttached()
-  const noOverflow = await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)
-  expect(noOverflow).toBeLessThanOrEqual(3)
+  expect(seen).toEqual(['intro',...Array.from({length:10},(_,i)=>`story-${i}`),'outro'])
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(3)
 })
 
-test('Móvil y movimiento reducido conservan las cuatro escenas legibles sin fijar la pantalla', async ({page})=>{
+test('Móvil y movimiento reducido conservan las doce escenas legibles sin fijar la pantalla', async ({page})=>{
   for (const [width,motion] of [[390,'no-preference'],[1440,'reduce']]) {
     await page.setViewportSize({width,height:width===390?844:900})
     await page.emulateMedia({reducedMotion:motion})
     await page.goto('/about',{waitUntil:'networkidle'})
     const chapters=page.locator('.globe-scroll-story__chapter')
-    await expect(chapters).toHaveCount(4)
-    for (let i=0;i<4;i++) await expect(chapters.nth(i)).toBeVisible()
+    await expect(chapters).toHaveCount(12)
+    for (let i=0;i<12;i++) await expect(chapters.nth(i)).toBeVisible()
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)
     expect(overflow).toBeLessThanOrEqual(3)
     await expect(page.locator('.globe-testimonials-stage')).not.toHaveAttribute('data-story-step',/\d/)

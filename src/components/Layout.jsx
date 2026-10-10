@@ -25,6 +25,7 @@ import { TextMask } from '../engine/motion/TextMask.jsx'
 // Import DIRECTO del hook (no el barrel): magnetismo del CTA compartido.
 import { useMagnetic } from '../engine/hooks/useMagnetic.js'
 import '../styles/gym-funnel-v2.css'
+import '../styles/footer-clarity-2026.css'
 
 const MotionLink = motion.create(Link)
 

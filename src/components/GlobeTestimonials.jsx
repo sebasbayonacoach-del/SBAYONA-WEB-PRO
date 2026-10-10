@@ -2,7 +2,7 @@ import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
-import GlobeScrollDirector from './about/GlobeScrollDirector.jsx'
+import GlobeScrollDirector, { GLOBE_STORY } from './about/GlobeScrollDirector.jsx'
 import './globe-integrated.css'
 
 const StoryGlobe3D = lazy(() => import('../engine/scene/StoryGlobeScene.jsx'))
@@ -296,14 +296,16 @@ export default function GlobeTestimonials() {
   }, [])
   const selectScrollChapter = (chapter) => {
     if (isOverlayOpen) return
-    setGlobeStoryStage(chapter)
-    const stop = TRAJECTORY_STOPS[Math.min(chapter, TRAJECTORY_STOPS.length - 1)]
-    if (chapter === 3) {
+    const story = GLOBE_STORY[chapter]
+    if (!story) return
+    const globeRegion = { Colombia: 0, España: 1, EEUU: 2, Argentina: 3 }
+    setGlobeStoryStage(globeRegion[story.country] ?? 0)
+    if (story.testimonialId === undefined) {
       setFocusedMarker(null)
       return
     }
-    const marker = markerForTestimonial(stop.testimonialId)
-    setActiveId((current) => current === stop.testimonialId ? current : stop.testimonialId)
+    const marker = markerForTestimonial(story.testimonialId)
+    setActiveId((current) => current === story.testimonialId ? current : story.testimonialId)
     setFocusedMarker((current) => current?.testimonialId === marker?.testimonialId ? current : marker)
   }
   const activeTestimonial = GLOBE_TESTIMONIALS[activeId]
@@ -1166,7 +1168,8 @@ export default function GlobeTestimonials() {
         </div>
       </div>
 
-      <div className={`globe-testimonials-stage${isOverlayOpen ? ' is-overlay-open' : ''}`}>
+      <div className="globe-atlas-runway" style={{ '--atlas-scroll-length': `${GLOBE_STORY.length * 43}svh` }}>
+        <div className={`globe-testimonials-stage${isOverlayOpen ? ' is-overlay-open' : ''}`}>
         <div className={`globe-testimonials-canvas${threeReady ? ' globe-is-three-ready' : ''}`}>
           {hasWebGL && (
             <GlobeFallbackBoundary onError={() => setThreeReady(false)}>
@@ -1209,7 +1212,7 @@ export default function GlobeTestimonials() {
           <div className="globe-testimonials-map-meta" aria-label="Información del mapa de historias">
             <span className="globe-testimonials-map-meta-icon" aria-hidden="true">+</span>
             <span className="globe-testimonials-map-meta-copy">
-              <strong>Explora historias reales</strong>
+              <strong>Explora historias publicadas</strong>
               <small>{GLOBE_TESTIMONIALS.length} historias · {publishedCountries.size} países · {publishedCities.size} ciudades</small>
             </span>
           </div>
@@ -1340,6 +1343,7 @@ export default function GlobeTestimonials() {
             </motion.aside>
           )}
         </AnimatePresence>
+        </div>
       </div>
     </div>
   )

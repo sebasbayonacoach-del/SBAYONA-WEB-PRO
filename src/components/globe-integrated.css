@@ -105,3 +105,45 @@ body.premium-route--about .globe-scroll-story__chapter p {text-transform:none !i
 @media(min-width:1024px) and (prefers-reduced-motion:no-preference){
  body.premium-route--about .bayona-globe-three {left:8%;width:94%;}
 }
+
+/* ATLAS 2.0: higher legibility, no invisible gaps, one story per scroll beat. */
+body.premium-route--about .about-globe-section {background:#151918;}
+body.premium-route--about .about-globe-section .globe-testimonials-experience {overflow:visible !important;background:#151918;}
+body.premium-route--about .about-globe-section .globe-testimonials-stage {background:#161c1d;}
+body.premium-route--about .about-globe-section .globe-testimonials-canvas {
+ background:radial-gradient(ellipse at 62% 46%,rgba(233,167,111,.19),transparent 57%),#182022;
+}
+body.premium-route--about .about-globe-section .globe-impact-overview {background:#242a29 !important;}
+body.premium-route--about .about-globe-section .globe-impact-stat span,
+body.premium-route--about .about-globe-section .globe-trajectory-copy > span {color:#d8d3ca !important;}
+.globe-scroll-story {left:clamp(25px,4vw,63px);width:min(37%,500px);}
+.globe-scroll-story__chapter {background:linear-gradient(117deg,rgba(25,31,31,.97),rgba(25,31,31,.89));border-left:3px solid #ffb06d;box-shadow:0 28px 85px rgba(0,0,0,.44);}
+.globe-scroll-story__chapter h3 {font-size:clamp(2.05rem,2.7vw,3.4rem);max-width:17ch;color:#fff8f0;}
+.globe-scroll-story__chapter p {font-size:clamp(1rem,1.15vw,1.14rem) !important;line-height:1.66;color:#f0e9e0;}
+.globe-scroll-story__eyebrow {color:#ffb777;}
+.globe-scroll-story__detail {display:block;margin-top:16px;color:#f7be86;font:700 .69rem/1.4 'DM Mono',monospace;letter-spacing:.09em;text-transform:uppercase;}
+.globe-scroll-story__index {color:#e3d5c6;font-size:.71rem;}
+.globe-scroll-story__hint {color:#ffbf89;font-size:.68rem;}
+body.premium-route--about .globe-testimonials-canvas .globe-testimonials-map-meta {background:rgba(19,25,25,.92);}
+@media(max-width:1023px),(prefers-reduced-motion:reduce){
+ .globe-scroll-story {background:#222827;}
+ .globe-scroll-story__chapter {background:#242b2a;box-shadow:none;}
+ .globe-scroll-story__chapter h3 {font-size:clamp(1.4rem,2.35vw,2.1rem);}
+ .globe-scroll-story__chapter p {font-size:.96rem !important;line-height:1.57;}
+}
+@media(max-width:680px){.globe-scroll-story__chapter {padding:24px 20px;}.globe-scroll-story__chapter h3 {font-size:1.8rem;}}
+
+/* Structural fix: GSAP's transform pin was updating stories offscreen inside
+   the About overflow-clip context. Native position:sticky keeps the real globe
+   physically in view; ScrollTrigger now only directs which story is visible. */
+@media(min-width:1024px) and (prefers-reduced-motion:no-preference){
+ body.premium-route--about .about-page {overflow:visible;}
+ body.premium-route--about .globe-atlas-runway {position:relative;min-height:calc(740px + var(--atlas-scroll-length,516svh));overflow:visible;}
+ body.premium-route--about .globe-atlas-runway > .globe-testimonials-stage {
+   position:sticky !important;top:78px;z-index:4;height:740px;
+ }
+}
+@media(max-width:1023px), (prefers-reduced-motion:reduce){
+ .globe-atlas-runway {height:auto;min-height:0;overflow:visible;}
+ .globe-atlas-runway > .globe-testimonials-stage {position:relative;top:auto;height:auto;}
+}

@@ -276,3 +276,69 @@ body.premium-route--resources .resources-page .resources-hero-copy h1 { max-widt
     text-wrap: balance;
   }
 }
+
+/* ------------------------------------------------------------------------
+   2026-10-10 / Interior art direction: a shared brand, distinct page grammar.
+   Programs = service ledger; Shop = tactile category tiles; Parkour = track;
+   Community = club noticeboard; Resources = library; FAQ = reading room.
+   Never flatten images, never recolor the user's day mode, never touch Home.
+   ------------------------------------------------------------------------ */
+html[data-bayona-theme='night'] body.premium-route--programs .services-overview {
+  background:linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/25% 100%,#202524;
+  border-block:1px solid rgba(244,162,97,.22);
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-path-grid {
+  gap:clamp(12px,1.5vw,25px);
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-path-card {
+  border:1px solid rgba(255,255,255,.31);min-width:0;
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-path-card__body p {color:#f4eee4;text-shadow:0 1px 10px #000;}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-categories {
+  background:#262925;border-top:3px solid #f4a261;
+  box-shadow:0 30px 65px rgba(0,0,0,.16);
+}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;
+}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts button {
+  min-height:76px;display:flex;justify-content:space-between;align-items:center;
+  padding:16px 18px;background:#343632;border:1px solid rgba(244,162,97,.37);
+  color:#fff7ec;font-weight:700;text-align:left;line-height:1.4;
+}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts button:is(:hover,:focus-visible) {
+  background:#444037;border-color:#ffc188;
+}
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .academy-session-map {
+  background:#242a28;border-inline-start:4px solid #f4a261;
+}
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .academy-session-map :is(p,strong,h3),
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .academy-age-track :is(p,strong,h3) {color:#f4eee7;}
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .academy-age-track details {
+  background:#292d2b;border-color:rgba(255,255,255,.3);
+}
+html[data-bayona-theme='night'] body.premium-route--community .community-hero-pass {
+  border:1px solid rgba(244,162,97,.4);background:#282c2a;
+}
+html[data-bayona-theme='night'] body.premium-route--community .community-hero-pass li {
+  color:#faf1e6;border-color:rgba(255,255,255,.23);
+}
+html[data-bayona-theme='night'] body.premium-route--resources .resources-hero-library-card {
+  background:#30312c;border:1px solid rgba(248,224,196,.36);
+}
+html[data-bayona-theme='night'] body.premium-route--resources .resources-hero-library-card :is(p,strong,span) {
+  color:#f4eee5;
+}
+html[data-bayona-theme='night'] body.premium-route--faq .faq-page :is(details,.faq-item) {
+  background:#272a27;border-color:rgba(255,255,255,.28);
+}
+/* Readability over ornamental obscurity for chapter intros in night mode. */
+html[data-bayona-theme='night'] body:is(.premium-route--programs,.premium-route--shop,.premium-route--community,.premium-route--resources,.premium-route--parkour-academy)
+  :is(.services-heading > p,.shop-categories-head > p,.community-section-subtitle,.resources-hero-intro,.academy-heading > p) {
+  color:#eee4d7;line-height:1.65;
+}
+@media(max-width:700px){
+  html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts {grid-template-columns:repeat(2,minmax(0,1fr));}
+  html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts button {min-height:70px;padding:12px 10px;}
+  html[data-bayona-theme='night'] body.premium-route--programs .services-overview {background:#202524;}
+}

@@ -1,16 +1,38 @@
-import { gsap, useGSAP, ensureGsapReady } from '../../engine/motion/gsapMotionBridge.js'
 import { useRef } from 'react'
+import { gsap, ScrollTrigger, useGSAP, ensureGsapReady } from '../../engine/motion/gsapMotionBridge.js'
+import { TESTIMONIALS } from '../../config/testimonials.js'
 
-
+// One published story per deliberate scroll beat. No unsupported claims or
+// synthetic locations: all people, quotes and cities come from the catalogue.
 export const GLOBE_STORY = Object.freeze([
-  { eyebrow: 'EL ORIGEN', title: 'TODO COMENZÓ EN COLOMBIA.', text: 'Una historia de movimiento, práctica y personas. Cada experiencia abrió una pregunta nueva.' },
-  { eyebrow: 'UN NUEVO CAPÍTULO', title: 'EL CAMINO SIGUE EN ESPAÑA.', text: 'La distancia cambia el paisaje. No cambia la forma de escuchar, aprender y acompañar.' },
-  { eyebrow: 'HISTORIAS QUE CONECTAN', title: 'MÁS ALLÁ DE LAS FRONTERAS.', text: 'Las experiencias publicadas también llegan a Miami y Buenos Aires. Explora los puntos del globo.' },
-  { eyebrow: 'EL SIGUIENTE PASO', title: 'LO IMPORTANTE ES LO QUE VIENE.', text: 'El mapa sigue abierto. El siguiente movimiento empieza con tu propia historia.' },
+  Object.freeze({
+    id: 'intro', eyebrow: 'ATLAS BAYONA · EL RECORRIDO', title: 'DIEZ HISTORIAS. CUATRO PAÍSES.',
+    text: 'Desplázate para recorrer cada experiencia publicada. El globo cambiará de historia contigo; también puedes abrir cualquier punto manualmente.',
+    country: 'Colombia', kind: 'intro',
+  }),
+  ...TESTIMONIALS.map((item) => Object.freeze({
+    id: `story-${item.id}`, testimonialId: item.id,
+    eyebrow: `${item.city.toUpperCase()} · ${item.country.toUpperCase()}`,
+    title: item.name,
+    text: item.quote,
+    detail: item.role,
+    country: item.country,
+    kind: 'testimonial',
+  })),
+  Object.freeze({
+    id: 'outro', eyebrow: 'EL RECORRIDO CONTINÚA',
+    title: 'TU HISTORIA ES EL SIGUIENTE CAPÍTULO.',
+    text: 'Conoce nuestra manera de acompañar y encuentra tu punto de partida. Puedes regresar al mapa cuando quieras.',
+    country: 'Argentina', kind: 'outro',
+  }),
 ])
 
-// Pinned documentary sequence; free scrolling and manual globe exploration
-// remain available. At <=1023px/reduced-motion the four chapters are static.
+/**
+ * CSS sticky stage is temporary and reversible. No snap or scroll lock: normal wheel,
+ * touchpad, keyboard and assistive navigation always progress. At tablet/mobile
+ * sizes or reduced-motion preferences all 12 chapters appear in normal flow.
+ * The active chapter switches atomically; there are NO all-hidden gaps.
+ */
 export default function GlobeScrollDirector({ reducedMotion, onStageChange }) {
   const ref = useRef(null)
   const callback = useRef(onStageChange)
@@ -19,63 +41,65 @@ export default function GlobeScrollDirector({ reducedMotion, onStageChange }) {
   useGSAP(() => {
     if (reducedMotion || !ensureGsapReady()) return
     const scene = ref.current?.closest('.globe-testimonials-stage')
-    if (!scene) return
+    const runway = scene?.closest('.globe-atlas-runway')
+    if (!runway) return
     const mm = gsap.matchMedia()
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       const cards = [...ref.current.querySelectorAll('.globe-scroll-story__chapter')]
-      gsap.set(cards.slice(1), { autoAlpha: 0, y: 24, yPercent: -50 })
-      gsap.set(cards[0], { autoAlpha: 1, y: 0, yPercent: -50 })
-      const tl = gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: {
-          id: 'bayona-globe-documentary',
-          trigger: scene,
-          pin: true,
-          pinSpacing: true,
-          start: 'top top+=68',
-          end: '+=210%',
-          scrub: .7,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate(self) {
-            const index = Math.min(GLOBE_STORY.length - 1, Math.floor(self.progress * GLOBE_STORY.length))
-            if (scene.dataset.storyStep !== String(index)) {
-              scene.dataset.storyStep = String(index)
-              callback.current?.(index)
-            }
-          },
-          onLeave() { scene.dataset.storyStep = '3' },
+      let current = -1
+      const displayStage = (index) => {
+        const next = Math.max(0, Math.min(GLOBE_STORY.length - 1, index))
+        if (current === next) return
+        current = next
+        // All cards are laid out with visible fallback CSS. Animate only when
+        // the browser supports the pinned experience; never create a gap.
+        gsap.set(cards, { autoAlpha: 0 })
+        gsap.set(cards[next], { autoAlpha: 1 })
+        scene.dataset.storyStep = String(next)
+        scene.dataset.storyId = GLOBE_STORY[next].id
+        callback.current?.(next)
+      }
+      gsap.set(cards, { y: 0 })
+      displayStage(0)
+      const trigger = ScrollTrigger.create({
+        id: 'bayona-globe-atlas-catalogue',
+        trigger: runway,
+        start: 'top top+=78',
+        end: 'bottom bottom',
+        invalidateOnRefresh: true,
+        onUpdate: ({ progress }) => {
+          displayStage(Math.min(GLOBE_STORY.length - 1, Math.floor(progress * GLOBE_STORY.length)))
         },
+        onEnter: () => displayStage(0),
+        onEnterBack: () => displayStage(GLOBE_STORY.length - 1),
+        onLeave: () => displayStage(GLOBE_STORY.length - 1),
+        onLeaveBack: () => displayStage(0),
       })
-      cards.forEach((card, index) => {
-        if (index === 0) return
-        const pos = index * 1
-        tl.to(cards[index - 1], { autoAlpha: 0, y: -24, duration: .28 }, pos - .2)
-        tl.fromTo(card, { autoAlpha: 0, y: 24, yPercent: -50 }, { autoAlpha: 1, y: 0, yPercent: -50, duration: .36 }, pos)
-      })
-      // Equal reading time for the closing chapter.
-      tl.to({}, { duration: 1 })
       return () => {
-        tl.scrollTrigger?.kill()
-        tl.kill()
+        trigger.kill()
         gsap.set(cards, { clearProps: 'all' })
         delete scene.dataset.storyStep
+        delete scene.dataset.storyId
       }
     })
     return () => mm.revert()
   }, { dependencies: [reducedMotion], revertOnUpdate: true })
 
   return (
-    <div className="globe-scroll-story" ref={ref} aria-label="Relato de Colombia al mundo">
+    <div className="globe-scroll-story" ref={ref} aria-label="Catálogo global completo de historias BAYONA">
       {GLOBE_STORY.map((chapter, index) => (
-        <div className="globe-scroll-story__chapter" key={chapter.title} data-story-index={index}>
+        <article className="globe-scroll-story__chapter" key={chapter.id}
+          data-story-index={index} data-story-id={chapter.id}>
           <span className="globe-scroll-story__eyebrow">{chapter.eyebrow}</span>
           <h3>{chapter.title}</h3>
           <p>{chapter.text}</p>
-          <span className="globe-scroll-story__index" aria-hidden="true">{String(index + 1).padStart(2, '0')} / 04</span>
-        </div>
+          {chapter.detail && <span className="globe-scroll-story__detail">{chapter.detail}</span>}
+          <span className="globe-scroll-story__index" aria-hidden="true">
+            {String(index + 1).padStart(2, '0')} / {String(GLOBE_STORY.length).padStart(2, '0')}
+          </span>
+        </article>
       ))}
-      <span className="globe-scroll-story__hint">DESLIZA PARA DESCUBRIR EL RECORRIDO ↓</span>
+      <span className="globe-scroll-story__hint">SCROLL · RECORRE LAS DIEZ HISTORIAS ↓</span>
     </div>
   )
 }
