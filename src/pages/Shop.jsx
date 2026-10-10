@@ -1,5 +1,5 @@
-import { Suspense, lazy, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Fuse from 'fuse.js'
 import {
@@ -287,6 +287,7 @@ function ProductCard({ product, reducedMotion }) {
       glareBorderRadius="0"
     >
       <article
+        id={`product-${product.id}`}
         className={`shop-product-card ds-reveal${previewOpen ? ' is-preview-open' : ''}`}
         data-product-id={product.id}
         onPointerMove={pointerEffects ? updateCardSpotlight : undefined}
@@ -440,10 +441,15 @@ function ProductGrid({ products, reducedMotion, className = '' }) {
 }
 
 export default function Shop() {
+  const [searchParams] = useSearchParams()
+  const requestedProduct = useMemo(() => {
+    const requestedId = searchParams.get('product')
+    return requestedId ? shopProducts.find((product) => product.id === requestedId) ?? null : null
+  }, [searchParams])
   const [collectionId, setCollectionId] = useState('all')
   const [category, setCategory] = useState('Todo')
-  const [query, setQuery] = useState('')
-  const [searchOpen, setSearchOpen] = useState(false)
+  const [query, setQuery] = useState(() => requestedProduct?.name ?? '')
+  const [searchOpen, setSearchOpen] = useState(Boolean(requestedProduct))
   const searchInputRef = useRef(null)
   const addItem = useCartStore((state) => state.addItem)
   const cartCount = useCartStore(selectCartCount)
@@ -477,6 +483,17 @@ export default function Shop() {
   const groupedView = collectionId === 'all' && category === 'Todo' && query.trim() === ''
   const creditLabel = rewards.bonusClaimed ? rewards.format(ARRIVAL_BONUS_EUR) : 'Pase pendiente'
   const cartTotalLabel = `$${cartTotalCOP.toLocaleString('es-CO')} COP`
+
+  useEffect(() => {
+    if (!requestedProduct) return
+    const timer = window.setTimeout(() => {
+      const card = document.querySelector(`[data-product-id="${requestedProduct.id}"]`)
+      card?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' })
+      card?.setAttribute('tabindex', '-1')
+      card?.focus({ preventScroll: true })
+    }, 80)
+    return () => window.clearTimeout(timer)
+  }, [requestedProduct, reducedMotion])
 
   const scrollToCatalog = () => {
     document.querySelector('#shop-catalog')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' })
