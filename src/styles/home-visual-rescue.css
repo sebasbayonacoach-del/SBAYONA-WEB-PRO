@@ -1,0 +1,159 @@
+/* BAYONA · Rescate visual de Home.
+   Conserva funnel, rutas y fotografías existentes. Escenas negras = elección
+   editorial; fondos negros con títulos negros = regresión corregida. */
+
+/* La foto de Home está en el proyecto pero una regla heredada había acabado
+   resolviendo el tercer background-image del pseudo como 'none'. Recuperarla
+   como capa editorial a la derecha da un punto focal real, sin competir con
+   la lectura ni inventar estadísticas/visualizaciones. */
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero {
+  min-height: min(950px, 95svh);
+  background:
+    radial-gradient(ellipse at 83% 48%, rgba(244,162,97,.1), transparent 58%),
+    linear-gradient(120deg, #070707, #12100e 65%, #090807) !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero.scene-bg.scene-bg--after::after {
+  z-index: 0;
+  inset: 0;
+  opacity: .97 !important;
+  display: block !important;
+  background: url('/images/bayona-generated/home-hero-1600.webp') center 40% / cover no-repeat !important;
+  filter: saturate(.95) contrast(1.06) brightness(.9) !important;
+  transform: scaleX(-1) !important;
+  transform-origin: center center;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 52%, transparent 91%) !important;
+  mask-image: linear-gradient(90deg, #000 0%, #000 52%, transparent 91%) !important;
+  pointer-events: none;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 1360px;
+  padding-block: clamp(9rem, 22vh, 15rem) clamp(5rem, 10vh, 8rem);
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero h1 {
+  max-width: 9ch;
+  text-wrap: balance;
+  text-shadow: 0 3px 28px rgba(0,0,0,.14);
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero__lead {
+  max-width: 580px;
+  text-wrap: pretty;
+  color: rgba(255,255,255,.9);
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3,3,3,.64) 0%, rgba(3,3,3,.37) 36%, transparent 77%),
+    linear-gradient(0deg, rgba(3,3,3,.48) 0%, transparent 38%);
+  pointer-events: none;
+}
+
+/* Layout: mucha fotografía, pero cada capítulo debe tener un suelo claro u
+   oscuro coherente con su tipografía. Esta regla prevalece sobre home.css. */
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-services {
+  background: #f7f3eb !important;
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-process {
+  background:
+    radial-gradient(circle at 95% 18%, rgba(244,162,97,.17), transparent 34%),
+    #e9e0d4 !important;
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-gifts {
+  background: #ebe2d6 !important;
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-lead {
+  background:
+    radial-gradient(circle at 92% 9%, rgba(244,162,97,.18), transparent 45%),
+    #f5eee4 !important;
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home :is(
+  .gym-home-services, .gym-home-process, .gym-home-gifts, .gym-home-lead
+) :is(.gym-section-heading h2, .gym-home-lead__intro h2) {
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home :is(
+  .gym-home-services, .gym-home-process, .gym-home-gifts, .gym-home-lead
+) :is(.gym-section-heading > p, .gym-home-lead__intro > p, .gym-process-grid p) {
+  color: #64584e !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home :is(
+  .gym-home-services, .gym-home-process, .gym-home-gifts, .gym-home-lead
+) .eyebrow {
+  color: #97501f !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-process .gym-process-grid {
+  border-block-color: rgba(44,34,25,.18);
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-process .gym-process-grid li {
+  border-right-color: rgba(44,34,25,.18);
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-process .gym-process-grid h3 {
+  color: #201b17;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-gifts .gym-gift-card {
+  border-color: rgba(63,47,33,.12);
+  background: #fffdf8;
+  color: #201b17;
+  box-shadow: 0 20px 58px rgba(53,35,22,.09);
+  transition: transform .35s cubic-bezier(.2,.85,.25,1),box-shadow .35s ease;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-gifts .gym-gift-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 32px 78px rgba(53,35,22,.16);
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-gifts .gym-gift-card > img {
+  filter: saturate(.95) brightness(.93);
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-gifts .gym-gift-card :is(h3,p) {
+  color: #201b17;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-gifts .gym-gift-card p {
+  color: #64584e;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-gifts .gym-gift-card :is(strong,span) {
+  color: #91451b !important;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-services .gym-inline-link {
+  color: #91451b;
+}
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-lead .lead-magnet-inner {
+  box-shadow: 0 25px 84px rgba(43,31,23,.14);
+}
+
+/* Coherencia en la cabecera: el modo día deja de ser un botón gris que ocupa
+   más protagonismo que el logo. Accesibilidad táctil se mantiene en 44px. */
+html[data-bayona-theme='day'] .navbar .site-theme-toggle {
+  background: #fff9ef;
+  border: 1px solid rgba(74,51,35,.28);
+  box-shadow: 0 2px 8px rgba(53,35,22,.04);
+}
+html[data-bayona-theme='day'] .navbar .menu-button {
+  background: #221e1b;
+  color: #fff !important;
+}
+html[data-bayona-theme='day'] .navbar .menu-button svg { color: #fff; }
+
+@media (max-width: 760px) {
+  html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero { min-height: min(840px, 95svh); }
+  html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero.scene-bg.scene-bg--after::after {
+    background-position: left center !important;
+    opacity: .58 !important;
+    filter: brightness(.65) saturate(.87) !important;
+    -webkit-mask-image: linear-gradient(0deg, rgba(0,0,0,.24), #000 18%, transparent 96%) !important;
+    mask-image: linear-gradient(0deg, rgba(0,0,0,.24), #000 18%, transparent 96%) !important;
+  }
+  html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero__content { padding-block: 9rem 4rem; }
+  html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero h1 { font-size: clamp(3.6rem, 14vw, 6.3rem) !important; }
+  html[data-bayona-theme='day'] body.premium-route--home .gym-home-gifts .gym-gift-card:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-bayona-theme='day'] body.premium-route--home .gym-home-gifts .gym-gift-card { transition: none; }
+}

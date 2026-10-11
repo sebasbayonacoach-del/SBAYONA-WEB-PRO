@@ -5,6 +5,8 @@ import AuthContext from '../lib/auth/AuthContext.jsx'
 import { isCloudEnabled, supabase } from '../lib/supabase.js'
 import { getStoredPushToken, requestPushPermission } from '../lib/push/usePush.js'
 import { SectionLabel } from '../components/Layout'
+import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
+import { BAYONA_APP_ENTRY_URL } from '../config/bayonaAppIntegration.js'
 import Bridge from '../components/Bridge'
 import VideoSection from '../components/VideoSection.jsx'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
@@ -651,7 +653,7 @@ export default function AppExperience() {
           <AppShowcaseLayer />
         </Suspense>
         <div className="app-hero-content">
-          <p className="app-eyebrow">BAYONA+ <span aria-hidden="true">•</span> ACCESO PRIORITARIO</p>
+          <p className="app-eyebrow">BAYONA APP <span aria-hidden="true">•</span> DOS ESPACIOS DE ACCESO</p>
           <h1 id="app-hero-title" className="app-hero-title">
             <span className="app-hero-line">ENTRENAMIENTO.</span>
             {' '}
@@ -660,17 +662,17 @@ export default function AppExperience() {
             <span className="app-hero-line">UN MISMO LUGAR.</span>
           </h1>
           <p className="app-hero-subtitle">
-            BAYONA+ es la visión del centro de mando BAYONA: plan, registro, recursos y comunidad en un mismo lugar. Puedes apuntarte para recibir avances concretos.
+            BAYONA App ya tiene una versión web para personas que entrenan y entrenadores. Entra en Mi App o Coach Studio; más abajo puedes explorar la visión y las integraciones que siguen en desarrollo.
           </p>
           <div className="app-hero-cta">
             <a
-              href={WHATSAPP_EARLY_ACCESS_URL}
+              href={BAYONA_APP_ENTRY_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="app-primary-cta"
             >
-              RECIBIR NOVEDADES
-              <MessageCircle size={18} strokeWidth={1} aria-hidden="true" />
+              ABRIR BAYONA APP
+              <ArrowUpRight size={18} strokeWidth={1} aria-hidden="true" />
             </a>
             <a href="#vision" className="app-text-link">
               CONOCER EL CONCEPTO
@@ -684,16 +686,18 @@ export default function AppExperience() {
         </a>
       </section>
 
+      <BayonaLiveAppShowcase placement="app" />
+
       <AppDivider />
 
       <section id="vision" className="app-vision app-section app-reveal" data-section-number="01" aria-labelledby="app-vision-title">
         <AppSectionNumber>01</AppSectionNumber>
         <div className="section-shell app-section-content container">
           <header className="app-section-header app-vision-header">
-            <SectionLabel>01 / CONCEPTO DE PRODUCTO</SectionLabel>
-            <h2 id="app-vision-title" className="app-section-title">UNA EXPERIENCIA<br /> <span>EN PREPARACIÓN.</span></h2>
+            <SectionLabel>01 / VISIÓN EN DESARROLLO</SectionLabel>
+            <h2 id="app-vision-title" className="app-section-title">EL FUTURO DE LA APP.<br /> <span>EN EVOLUCIÓN.</span></h2>
             <p className="app-section-subtitle">
-              La visión es consultar el plan, registrar la sesión y acceder a recursos desde un mismo entorno. Es una vista previa de producto: todavía no describe una función disponible.
+              La aplicación web ya se puede abrir. Esta sección presenta funciones e integraciones adicionales previstas, que no deben confundirse con lo que está desplegado o habilitado para cada perfil.
             </p>
           </header>
           <VideoSection
@@ -996,31 +1000,29 @@ export default function AppExperience() {
           <SectionLabel>06 / ESTADO Y SIGUIENTE PARADA</SectionLabel>
           <p className="app-state-chip">
             <span className="app-state-chip__pulse" aria-hidden="true" />
-            PRODUCTO EN DESARROLLO · VISTA PREVIA CONCEPTUAL
+            APP WEB PUBLICADA · INTEGRACIONES EN DESARROLLO
           </p>
           <h2 id="app-final-title" className="app-closing-title">SIGUE EL<br /> <span>DESARROLLO.</span></h2>
-          <p className="app-closing-subtitle">Todavía no está disponible. Estás viendo el concepto y su orden de salida, no una app a medio instalar.</p>
+          <p className="app-closing-subtitle">Ya puedes abrir la aplicación web y elegir tu perfil. La conexión definitiva con los planes, el backend y los pagos sigue en desarrollo.</p>
           <p className="app-closing-detail">
-            Lo que sí puedes hacer hoy: pedir que te avisemos cuando haya una novedad real y seguir
-            entrenando con lo que ya funciona en BAYONA. Las imágenes de esta página son conceptos de
-            diseño, no funciones operativas.
+            La captura de la pantalla de acceso corresponde a la aplicación web publicada. Las maquetas de teléfono, tablet, reloj y las funciones futuras siguen siendo representaciones de diseño: no significan acceso a todas las prestaciones.
           </p>
 
           <ol className="app-status-roadmap" aria-label="Estado de las capas de BAYONA+">
             <li>
               <span className="app-status-dot is-live" aria-hidden="true" />
               <strong>EN MARCHA</strong>
-              <small>Cuenta, recursos, comunidad y tienda de la web.</small>
+              <small>BAYONA App publicada en web con selección Mi App / Coach Studio.</small>
             </li>
             <li>
               <span className="app-status-dot is-near" aria-hidden="true" />
               <strong>EN PREPARACIÓN</strong>
-              <small>Mockups, criterios de lectura y el modelo de niveles.</small>
+              <small>Conexión de membresías, permisos y sincronización de datos.</small>
             </li>
             <li>
               <span className="app-status-dot is-later" aria-hidden="true" />
               <strong>SIN FECHA</strong>
-              <small>Descarga, cuentas de app, sincronización y compatibilidades.</small>
+              <small>Pagos de producción, disponibilidad en tiendas y certificación de integraciones.</small>
             </li>
           </ol>
 

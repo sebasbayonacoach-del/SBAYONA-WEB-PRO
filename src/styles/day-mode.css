@@ -558,3 +558,182 @@ html[data-bayona-theme='day'] .os-shell {
   background-color: #050505;
   color: #f7f5f1;
 }
+
+/*
+ * SITEWIDE QA · 2026-10-08
+ * Fixes confirmed by actual day-mode screenshots, not a global text inversion.
+ * A dark editorial island must have legible light type; a daylight catalogue
+ * must have a real light canvas. Does not affect the night preference.
+ */
+
+/* Shop: dark canvas + inherited dark ink made category browsing unreadable. */
+html[data-bayona-theme='day'] body.premium-route--shop .shop-page .shop-categories {
+  background-color: #f7f3eb !important;
+  background-image: radial-gradient(circle at 87% 12%, rgba(244,162,97,.11), transparent 45%) !important;
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--shop .shop-page .shop-categories-head h2 {
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--shop .shop-page .shop-categories-head > p {
+  color: #64584e !important;
+}
+html[data-bayona-theme='day'] body.premium-route--shop .shop-page .shop-categories .eyebrow {
+  color: #91451b !important;
+}
+html[data-bayona-theme='day'] body.premium-route--shop .shop-page .shop-categories .shop-category-shortcuts {
+  border-color: rgba(58,42,29,.2);
+}
+
+/* BAYONA+ is a conceptual product; photograph and interface panels stay dark.
+ * The previously forced dark-on-dark heading was unreadable in day mode. */
+html[data-bayona-theme='day'] body.premium-route--app .app-page .app-section > .app-section-content {
+  color: #f7f5f1;
+  background-color: #080808 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--app .app-page .app-section .app-section-header :is(h2, .app-section-title) {
+  color: #f7f5f1 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--app .app-page .app-section .app-section-header :is(p, .app-section-subtitle) {
+  color: #d7cec5 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--app .app-page .app-section .app-section-header h2 span {
+  color: #f4a261 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--app .app-page .app-section .app-section-content .eyebrow {
+  color: #ffc08a;
+}
+
+/* Plan presentation: methodology stays coal; non-included card is paper. */
+html[data-bayona-theme='day'] body .plan-presentation .plan-presentation-method .ds-method-step__title {
+  color: #f7f5f1 !important;
+}
+html[data-bayona-theme='day'] body .plan-presentation .plan-presentation-not-included :is(h3,h4,strong) {
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body .plan-presentation .plan-presentation-not-included .plan-presentation-eyebrow {
+  color: #91451b !important;
+}
+html[data-bayona-theme='day'] body .plan-presentation .plan-presentation-not-included :is(p,li) {
+  color: #594f46 !important;
+}
+
+/* BAYONA+ · sections 03 and 05 put their header outside .app-section-header. */
+html[data-bayona-theme='day'] body.premium-route--app .app-page .app-section .app-section-content .app-section-title {
+  color: #f7f5f1 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--app .app-page .app-section .app-section-content .app-section-subtitle {
+  color: #d7cec5 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--app .app-page .app-section .app-section-content .app-section-title span {
+  color: #f4a261 !important;
+}
+/* Dark concept canvas, light navigation: deliberate contrast and consistent site chrome. */
+html[data-bayona-theme='day'] body.premium-route--app .navbar {
+  background: #f7f3eb !important;
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--app .navbar .brand,
+html[data-bayona-theme='day'] body.premium-route--app .navbar .gym-primary-nav a {
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--app .navbar .menu-button {
+  background: #201b17 !important;
+  color: #fff !important;
+}
+html[data-bayona-theme='day'] body.premium-route--app .navbar .menu-button svg {
+  color: #fff !important;
+}
+
+/* Daylight art direction: revive existing licensed/project-owned visual assets
+ * on three black hero canvases. Do not touch the approved night compositions. */
+html[data-bayona-theme='day'] body.premium-route--about .about-page .page-hero {
+  background-color: #080807 !important;
+  background-image:
+    linear-gradient(90deg, #050505 0%, rgba(5,5,5,.93) 28%, rgba(5,5,5,.45) 62%, rgba(5,5,5,.2) 100%),
+    url('/images/bayona-generated/about-hero-1600.webp') !important;
+  background-size: cover !important;
+  background-position: center 43% !important;
+}
+html[data-bayona-theme='day'] body.premium-route--about .about-page .page-hero::after {
+  opacity: .2 !important;
+}
+
+html[data-bayona-theme='day'] body.premium-route--parkour-academy .parkour-academy .academy-hero {
+  background-color: #080807 !important;
+  background-image:
+    linear-gradient(90deg, #050505 0%, rgba(5,5,5,.85) 30%, rgba(5,5,5,.44) 65%, rgba(5,5,5,.15) 100%),
+    url('/images/bayona-generated/parkour-hero-1600.webp') !important;
+  background-size: cover !important;
+  background-position: 58% center !important;
+}
+
+html[data-bayona-theme='day'] body.premium-route--community .community-page .community-hero {
+  background-color: #080807 !important;
+  background-image:
+    linear-gradient(90deg, #050505 0%, rgba(5,5,5,.82) 31%, rgba(5,5,5,.54) 65%, rgba(5,5,5,.28) 100%),
+    url('/images/bayona-generated/community-hero-1600.webp') !important;
+  background-size: cover !important;
+  background-position: center 43% !important;
+}
+html[data-bayona-theme='day'] body.premium-route--community .community-page .community-hero.scene-bg::after {
+  opacity: .3 !important;
+}
+
+@media (max-width: 700px) {
+  html[data-bayona-theme='day'] body.premium-route--about .about-page .page-hero,
+  html[data-bayona-theme='day'] body.premium-route--parkour-academy .parkour-academy .academy-hero,
+  html[data-bayona-theme='day'] body.premium-route--community .community-page .community-hero {
+    background-position: center center !important;
+    background-size: cover !important;
+  }
+  html[data-bayona-theme='day'] body.premium-route--about .about-page .page-hero {
+    background-image: linear-gradient(90deg,rgba(5,5,5,.88),rgba(5,5,5,.6)),url('/images/bayona-generated/about-hero-1600.webp') !important;
+  }
+  html[data-bayona-theme='day'] body.premium-route--parkour-academy .parkour-academy .academy-hero {
+    background-image: linear-gradient(90deg,rgba(5,5,5,.9),rgba(5,5,5,.58)),url('/images/bayona-generated/parkour-hero-1600.webp') !important;
+  }
+  html[data-bayona-theme='day'] body.premium-route--community .community-page .community-hero {
+    background-image: linear-gradient(90deg,rgba(5,5,5,.9),rgba(5,5,5,.55)),url('/images/bayona-generated/community-hero-1600.webp') !important;
+  }
+}
+
+/* About hero uses an opaque child backdrop over the parent; paint the asset
+   on that real visual plane instead of behind it. */
+html[data-bayona-theme='day'] body.premium-route--about .about-page .page-hero .page-hero-backdrop {
+  background-color: #090807 !important;
+  background-image:
+    linear-gradient(90deg, #050505 0%, rgba(5,5,5,.85) 33%, rgba(5,5,5,.37) 78%, rgba(5,5,5,.1)),
+    url('/images/bayona-generated/about-hero-1600.webp') !important;
+  background-size: cover !important;
+  background-position: center 43% !important;
+}
+html[data-bayona-theme='day'] body.premium-route--about .about-page .page-hero .page-hero-backdrop::after {
+  opacity: .24 !important;
+}
+
+/* Parkour mobile: headings should form a readable editorial composition, not
+   a single word per line with the call to action pushed offscreen. */
+@media (max-width: 700px) {
+  body.premium-route--parkour-academy .academy-hero h1 {
+    max-width: 17ch !important;
+    font-size: clamp(2.3rem, 9.5vw, 3.2rem) !important;
+    line-height: .98 !important;
+    letter-spacing: -.055em !important;
+  }
+  html[data-bayona-theme='day'] body.premium-route--about .about-page .page-hero .page-hero-backdrop {
+    background-position: center center !important;
+    background-image: linear-gradient(90deg, rgba(5,5,5,.88), rgba(5,5,5,.65)), url('/images/bayona-generated/about-hero-1600.webp') !important;
+  }
+}
+
+/* Breadcrumb lies on ivory outside the hero on Parkour's daylight route. */
+html[data-bayona-theme='day'] body.premium-route--parkour-academy .breadcrumb-item {
+  color: #594f46 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--parkour-academy .breadcrumb-item [aria-current='page'] {
+  color: #201b17 !important;
+}
+html[data-bayona-theme='day'] body.premium-route--parkour-academy .breadcrumb-item + .breadcrumb-item::before {
+  color: #91451b !important;
+}

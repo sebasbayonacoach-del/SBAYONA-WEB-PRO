@@ -45,9 +45,10 @@ describe('/about — historia, honestidad y conversión', () => {
   it('muestra el hero del método y el problema que resuelve BAYONA', () => {
     render(<MemoryRouter><About /></MemoryRouter>)
 
-    expect(screen.getByText('BAYONA • SOBRE EL MÉTODO')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 1, name: /MOVIMIENTO\. FORMACIÓN\.\s*MÉTODO\./i })).toBeInTheDocument()
-    expect(screen.getByText('Entrenamiento, fuerza y nutrición desde tu punto de partida. Vamos juntos.')).toBeInTheDocument()
+    expect(screen.getByText('CAPÍTULO 02 · NOSOTROS')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: /DETRÁS DEL MOVIMIENTO\./i })).toBeInTheDocument()
+    expect(screen.getByText(/Detrás de BAYONA hay una forma de mirar el entrenamiento/)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /UNA MARCA.*UNA PERSONA REAL/i })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /UN PLAN SIRVE\s*CUANDO ENCAJA CONTIGO/i })).toBeInTheDocument()
     expect(screen.getByText('VALORAR ANTES DE PRESCRIBIR')).toBeInTheDocument()
     expect(screen.getByText('EXPLICAR ANTES DE EXIGIR')).toBeInTheDocument()

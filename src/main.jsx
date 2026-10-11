@@ -141,6 +141,7 @@ import './styles/bayona-visual-unity.css'
  * `!important`. El laboratorio (`.lab-*`) conserva su propia hoja.
  */
 import './styles/day-mode.css'
+import './styles/designly-interior-finish.css'
 import './styles/ds-experience.css'
 /*
  * Pase atelier (FASE 4C). Detrás de la capa de experiencia porque la afina:

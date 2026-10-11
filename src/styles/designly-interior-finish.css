@@ -1,0 +1,344 @@
+/* Designly 2026-10-08: editorial finishing pass for the five interior routes.
+   Only component-scoped overrides: home and checkout keep their established art direction. */
+:where(.parkour-academy, .app-experience-page, .shop-page, .community-page, .resources-page)
+  :is(a, button, summary):focus-visible {
+  outline: 3px solid #f4a261;
+  outline-offset: 4px;
+}
+
+/* First impression: give one lead sentence a protected, readable text zone. */
+.parkour-academy .academy-hero-copy > p,
+.shop-page .shop-hero-content > p,
+.community-page .community-hero-subtitle,
+.resources-page .resources-hero-intro,
+.app-hero .app-hero-subtitle {
+  max-width: 57ch;
+  line-height: 1.58;
+  text-wrap: pretty;
+}
+
+/* Editorial cards: visible interaction without exaggerated movement. */
+.shop-page .shop-collection-card,
+.resources-page .resources-hero-library-card,
+.community-page .community-hero-pass li {
+  transition: border-color .2s ease, background-color .2s ease, transform .25s ease;
+}
+@media (hover:hover) and (prefers-reduced-motion: no-preference) {
+  .shop-page .shop-collection-card:hover,
+  .resources-page .resources-hero-library-card:hover { transform: translateY(-3px); }
+}
+
+/* Small-screen typography: no long lines at the expense of readability. */
+@media (max-width: 720px) {
+  .parkour-academy .academy-hero-copy,
+  .shop-page .shop-hero-content,
+  .community-page .community-hero-copy,
+  .resources-page .resources-hero-copy,
+  .app-hero .app-hero-content { min-width: 0; }
+
+  .parkour-academy .academy-hero-copy > p,
+  .shop-page .shop-hero-content > p,
+  .community-page .community-hero-subtitle,
+  .resources-page .resources-hero-intro,
+  .app-hero .app-hero-subtitle {
+    font-size: clamp(1rem, 3.7vw, 1.125rem);
+    line-height: 1.55;
+    max-width: 36ch;
+  }
+  .resources-page .resources-hero-library-card,
+  .shop-page .shop-collection-card { min-width: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-page .shop-collection-card,
+  .resources-page .resources-hero-library-card,
+  .community-page .community-hero-pass li { transition: none; }
+}
+
+/* Screenshot-reviewed night heroes: their cinematic image layer was visually
+   lost behind dark overlays. The existing photo assets now paint on the actual
+   hero planes, with directional darkness only underneath the copy. */
+html[data-bayona-theme='night'] body.premium-route--about .about-page .page-hero .page-hero-backdrop {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.94) 0%, rgba(4,4,4,.72) 37%, rgba(4,4,4,.18) 100%), url('/images/bayona-generated/about-hero-1600.webp');
+  background-size: cover;
+  background-position: center 44%;
+}
+html[data-bayona-theme='night'] body.premium-route--about .about-page .page-hero .page-hero-backdrop::before,
+html[data-bayona-theme='night'] body.premium-route--about .about-page .page-hero .page-hero-backdrop::after { opacity: .15; }
+html[data-bayona-theme='night'] body.premium-route--programs .services-page .page-hero {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.94), rgba(4,4,4,.68) 42%, rgba(4,4,4,.2)), url('/images/bayona-generated/home-method-1600.webp');
+  background-size: cover;
+  background-position: center 50%;
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-page .page-hero .page-hero-backdrop { opacity: .22; }
+@media (max-width: 720px) {
+  html[data-bayona-theme='night'] body.premium-route--about .about-page .page-hero .page-hero-backdrop {
+    background-position: 60% center;
+  }
+  html[data-bayona-theme='night'] body.premium-route--programs .services-page .page-hero {
+    background-position: 63% center;
+  }
+}
+
+/* Visual-review closure: photographic Parkour first impression, no orphaned
+   headline syllables in the club and resource library. */
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .parkour-academy .academy-hero {
+  background-image: linear-gradient(90deg,rgba(4,4,4,.94) 0%,rgba(4,4,4,.72) 37%,rgba(4,4,4,.25) 100%),url('/images/bayona-generated/parkour-hero-1600.webp');
+  background-position: center, 60% center;
+  background-size: cover;
+}
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .parkour-academy .academy-hero.scene-bg::before { opacity: .12; }
+body.premium-route--parkour-academy .parkour-academy .academy-hero h1 {
+  max-width: 19ch;
+  font-size: clamp(2.7rem, 5.2vw, 5.7rem);
+  line-height: 1.03;
+  overflow-wrap: normal;
+}
+body.premium-route--community .community-page .community-hero-title,
+body.premium-route--resources .resources-page .resources-hero-copy h1 {
+  hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+@media (min-width: 1024px) {
+  body.premium-route--community .community-page .community-hero-copy { max-width: 650px; }
+  body.premium-route--community .community-page .community-hero-title { font-size: clamp(3.4rem, 4.25vw, 5.7rem); line-height: 1.03; }
+  body.premium-route--resources .resources-page .resources-hero-copy h1 { font-size: clamp(3.25rem, 4.4vw, 5.8rem); line-height: 1.04; }
+}
+@media (max-width: 720px) {
+  body.premium-route--parkour-academy .parkour-academy .academy-hero h1 { max-width: 17ch; font-size: clamp(2.2rem, 8.4vw, 3.15rem); }
+  body.premium-route--community .community-page .community-hero-title,
+  body.premium-route--resources .resources-page .resources-hero-copy h1 { font-size: clamp(2rem, 8vw, 3.2rem); }
+}
+
+/* Commercial close · verified project image assets, not stock placeholders.
+   Provide an actual visual focal plane under the content and preserve strong
+   left-side contrast for legibility; pseudo scenes remain decorative only. */
+html[data-bayona-theme='night'] body.premium-route--shop .shop-page .shop-hero {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.94) 0%, rgba(4,4,4,.78) 40%, rgba(4,4,4,.2) 100%), url('/images/bayona-generated/shop-hero-1600.webp') !important;
+  background-position: center, 61% center !important;
+  background-size: cover !important;
+}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-page .shop-hero.scene-bg::after { opacity: .14; }
+html[data-bayona-theme='night'] body.premium-route--app .app-page .app-hero {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.96) 0%, rgba(4,4,4,.84) 37%, rgba(4,4,4,.3) 100%), url('/images/bayona-generated/app-hero-1600.webp') !important;
+  background-position: center, 65% center !important;
+  background-size: cover !important;
+}
+html[data-bayona-theme='night'] body.premium-route--community .community-page .community-hero {
+  background-image: linear-gradient(90deg, rgba(4,4,4,.94) 0%, rgba(4,4,4,.74) 42%, rgba(4,4,4,.25) 100%), url('/images/bayona-generated/community-hero-1600.webp') !important;
+  background-position: center, 59% center !important;
+  background-size: cover !important;
+}
+html[data-bayona-theme='night'] body.premium-route--community .community-page .community-hero.scene-bg::before { opacity: .18; }
+/* Titles must never insert automated hyphens in brand headlines. */
+body.premium-route--community .community-page .community-hero-title,
+body.premium-route--resources .resources-page .resources-hero-copy h1 {
+  hyphens: none !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+body.premium-route--community .community-page .community-hero-copy { max-width: min(100%, 45rem); }
+body.premium-route--resources .resources-page .resources-hero-copy h1 { max-width: 16ch !important; }
+@media (min-width: 1050px) {
+  body.premium-route--shop .shop-page .shop-hero-content { justify-items: start; text-align: left; }
+  body.premium-route--shop .shop-page .shop-hero-content > div { max-width: 940px; }
+  body.premium-route--shop .shop-page .shop-hero h1 { max-width: 17ch; }
+  body.premium-route--app .app-page .app-hero-content { text-align: left; max-width: 1320px; }
+  body.premium-route--app .app-page .app-hero-title { margin-left: 0; }
+  body.premium-route--app .app-page .app-hero-subtitle { margin-left: 0; }
+  body.premium-route--app .app-page .app-hero-cta { justify-content: flex-start; }
+}
+@media (max-width: 720px) {
+  html[data-bayona-theme='night'] body.premium-route--shop .shop-page .shop-hero,
+  html[data-bayona-theme='night'] body.premium-route--app .app-page .app-hero,
+  html[data-bayona-theme='night'] body.premium-route--community .community-page .community-hero {
+    background-position: center, 67% center !important;
+  }
+  body.premium-route--community .community-page .community-hero-title { max-width: 15ch; }
+  body.premium-route--resources .resources-page .resources-hero-copy h1 { max-width: 16ch !important; }
+}
+
+/* Mobile store title must clear the fixed navigation and the language utility. */
+@media (max-width: 720px) {
+  body.premium-route--shop .shop-page .shop-hero-content {
+    padding-top: clamp(140px, 18svh, 176px) !important;
+  }
+}
+/* The desktop app CTA belongs to the hero copy, not the centre of the frame. */
+@media (min-width: 1050px) {
+  body.premium-route--app .app-page .app-hero-cta { align-items: flex-start; }
+}
+
+/* The extra store cart caused the mobile navbar's grid to wrap the menu
+   onto a second row. Keep all four controls on the same physical toolbar. */
+@media (max-width: 760px) {
+  body.premium-route--shop .navbar {
+    display: flex !important;
+    align-items: center;
+    flex-wrap: nowrap !important;
+    gap: .55rem;
+  }
+  body.premium-route--shop .navbar .brand {
+    flex: 0 1 auto;
+    min-width: 0;
+    margin-right: auto;
+  }
+  body.premium-route--shop .navbar .site-theme-toggle,
+  body.premium-route--shop .navbar .nav-cart-button,
+  body.premium-route--shop .navbar .menu-button {
+    flex-shrink: 0;
+    margin-left: 0;
+  }
+}
+
+/* Editorial art direction, verified against middle-of-page desktop captures:
+   page sections should use both columns rather than leave half the frame empty.
+   No content is added or invented: the existing claim and three real club values
+   receive a coherent paired reading order. */
+@media (min-width: 1000px) {
+  body.premium-route--community .community-why .community-section-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+    column-gap: clamp(3.5rem, 7vw, 8rem);
+    align-items: start;
+  }
+  body.premium-route--community .community-why .community-figure--why {
+    grid-column: 1 / -1;
+    width: min(100%, 760px);
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+  body.premium-route--community .community-why .community-section-header {
+    grid-column: 1;
+    grid-row: 2;
+    max-width: none;
+    margin: 0;
+  }
+  body.premium-route--community .community-why .community-section-header .community-title {
+    max-width: 16ch !important;
+    font-size: clamp(2.75rem, 3.75vw, 4.5rem) !important;
+    line-height: 1.02 !important;
+    text-wrap: balance;
+  }
+  body.premium-route--community .community-why .community-section-header .community-subtitle {
+    margin-bottom: 0;
+    max-width: 46ch;
+  }
+  body.premium-route--community .community-why .community-identity-points {
+    grid-column: 2;
+    grid-row: 2;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+  body.premium-route--community .community-why .community-identity-points > li:first-child {
+    padding-top: 0;
+  }
+  body.premium-route--community .community-why :is(.community-founder-note,.community-founder-closure,.community-movement-line) {
+    grid-column: 1 / -1;
+    max-width: 960px;
+    margin-inline: auto;
+  }
+}
+/* The purpose section's cream canvas is an editorial statement, not a full
+   additional viewport of empty background underneath a short paragraph. */
+@media (min-width: 1000px) {
+  body.premium-route--about .about-problem-section {
+    padding-block: clamp(2.5rem, 4vw, 4.5rem) !important;
+  }
+  body.premium-route--about .about-problem-section .about-problem {
+    padding-block: clamp(3.25rem, 5vw, 5.5rem) !important;
+    align-items: center !important;
+  }
+  body.premium-route--about .about-problem-section .about-problem-heading h2 {
+    font-size: clamp(2.7rem, 4.35vw, 4.9rem) !important;
+    line-height: 1.03 !important;
+  }
+}
+@media (min-width: 1000px) {
+  body.premium-route--about .about-problem-section .about-problem {
+    grid-template-columns: minmax(0, 1.22fr) minmax(0, .78fr) !important;
+    column-gap: clamp(3rem, 5vw, 5rem) !important;
+  }
+}
+/* Mobile Community: the inherited 10ch headline limit and automatic hyphens
+   split Spanish words in the middle. Keep words intact and let the headline
+   use the available content column, preserving the intended line break. */
+@media (max-width: 760px) {
+  body.premium-route--community .community-why .community-section-header h2 {
+    max-width: 100% !important;
+    font-size: clamp(2.2rem, 8.1vw, 2.9rem) !important;
+    line-height: 1.06 !important;
+    hyphens: none !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    text-wrap: balance;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   2026-10-10 / Interior art direction: a shared brand, distinct page grammar.
+   Programs = service ledger; Shop = tactile category tiles; Parkour = track;
+   Community = club noticeboard; Resources = library; FAQ = reading room.
+   Never flatten images, never recolor the user's day mode, never touch Home.
+   ------------------------------------------------------------------------ */
+html[data-bayona-theme='night'] body.premium-route--programs .services-overview {
+  background:linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/25% 100%,#202524;
+  border-block:1px solid rgba(244,162,97,.22);
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-path-grid {
+  gap:clamp(12px,1.5vw,25px);
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-path-card {
+  border:1px solid rgba(255,255,255,.31);min-width:0;
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-path-card__body p {color:#f4eee4;text-shadow:0 1px 10px #000;}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-categories {
+  background:#262925;border-top:3px solid #f4a261;
+  box-shadow:0 30px 65px rgba(0,0,0,.16);
+}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;
+}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts button {
+  min-height:76px;display:flex;justify-content:space-between;align-items:center;
+  padding:16px 18px;background:#343632;border:1px solid rgba(244,162,97,.37);
+  color:#fff7ec;font-weight:700;text-align:left;line-height:1.4;
+}
+html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts button:is(:hover,:focus-visible) {
+  background:#444037;border-color:#ffc188;
+}
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .academy-session-map {
+  background:#242a28;border-inline-start:4px solid #f4a261;
+}
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .academy-session-map :is(p,strong,h3),
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .academy-age-track :is(p,strong,h3) {color:#f4eee7;}
+html[data-bayona-theme='night'] body.premium-route--parkour-academy .academy-age-track details {
+  background:#292d2b;border-color:rgba(255,255,255,.3);
+}
+html[data-bayona-theme='night'] body.premium-route--community .community-hero-pass {
+  border:1px solid rgba(244,162,97,.4);background:#282c2a;
+}
+html[data-bayona-theme='night'] body.premium-route--community .community-hero-pass li {
+  color:#faf1e6;border-color:rgba(255,255,255,.23);
+}
+html[data-bayona-theme='night'] body.premium-route--resources .resources-hero-library-card {
+  background:#30312c;border:1px solid rgba(248,224,196,.36);
+}
+html[data-bayona-theme='night'] body.premium-route--resources .resources-hero-library-card :is(p,strong,span) {
+  color:#f4eee5;
+}
+html[data-bayona-theme='night'] body.premium-route--faq .faq-page :is(details,.faq-item) {
+  background:#272a27;border-color:rgba(255,255,255,.28);
+}
+/* Readability over ornamental obscurity for chapter intros in night mode. */
+html[data-bayona-theme='night'] body:is(.premium-route--programs,.premium-route--shop,.premium-route--community,.premium-route--resources,.premium-route--parkour-academy)
+  :is(.services-heading > p,.shop-categories-head > p,.community-section-subtitle,.resources-hero-intro,.academy-heading > p) {
+  color:#eee4d7;line-height:1.65;
+}
+@media(max-width:700px){
+  html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts {grid-template-columns:repeat(2,minmax(0,1fr));}
+  html[data-bayona-theme='night'] body.premium-route--shop .shop-category-shortcuts button {min-height:70px;padding:12px 10px;}
+  html[data-bayona-theme='night'] body.premium-route--programs .services-overview {background:#202524;}
+}

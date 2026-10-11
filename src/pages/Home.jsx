@@ -4,6 +4,8 @@ import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
+import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
+import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink, isBookingEnabled } from '../config/site.config.js'
@@ -11,53 +13,69 @@ import { trackEvent } from '../lib/analytics/analytics.js'
 import '../styles/home.css'
 import '../styles/home-luxury-conversion.css'
 import '../styles/home-gym-funnel-v2.css'
+import '../styles/home-visual-rescue.css'
+import '../styles/home-services-premium.css'
+import '../styles/home-cinematic-hero-release.css'
+import '../styles/home-copy-caring.css'
 
 const SERVICES = Object.freeze([
   {
     id: 'personal',
+    number: '01',
+    type: 'GUÍA PERSONAL',
+    promise: 'Una sesión pensada para ti, no para cualquiera.',
     title: 'Entrenamiento personal',
-    copy: 'Sesiones 1:1 con una ruta construida alrededor de tu objetivo, tu nivel y tu semana.',
+    copy: 'Escuchamos tu objetivo, observamos cómo te mueves y adaptamos el trabajo a tu momento.',
     image: '/images/bayona-generated/home-pillar-build-1600.webp',
-    href: '/programs#servicios',
+    href: '/programs#servicios-clases',
   },
   {
     id: 'online',
+    number: '02',
+    type: 'A TU RITMO',
+    promise: 'Cerca de ti, aunque entrenes desde lejos.',
     title: 'Entrenamiento online',
-    copy: 'Plan claro, vídeos, seguimiento y ajustes para entrenar estés donde estés.',
+    copy: 'Tu espacio, tus horarios y un plan claro: vídeos, estructura semanal y seguimiento según el servicio que elijas.',
     image: '/images/bayona-generated/home-method-1600.webp',
-    href: '/programs',
+    href: '/programs#membresias',
   },
   {
     id: 'parkour',
+    number: '03',
+    type: 'MOVIMIENTO Y TÉCNICA',
+    promise: 'Cada movimiento se aprende. La confianza también.',
     title: 'Parkour y rendimiento',
-    copy: 'Técnica, fuerza, control y progresiones para niños, jóvenes y adultos.',
-    image: '/images/bayona-generated/home-pillar-track-1600.webp',
+    copy: 'Parkour para niños, jóvenes y adultos: aprendemos desde la base, con progresión, atención y criterio.',
+    image: '/images/bayona-generated/parkour-hero-1600.webp',
     href: '/parkour-academy',
   },
   {
     id: 'recovery',
+    number: '04',
+    type: 'MOVERTE MEJOR',
+    promise: 'Moverte con respeto también es avanzar.',
     title: 'Movilidad y recuperación',
-    copy: 'Trabajo complementario para moverte mejor, recuperar y sostener tu entrenamiento.',
+    copy: 'Un espacio para cuidar tu movilidad, escuchar tu cuerpo y acompañar tu entrenamiento.',
     image: '/images/bayona-generated/home-pillar-read-1600.webp',
-    href: '/programs#servicios',
+    href: '/programs#servicios-recuperación',
   },
 ])
 
 const START_STEPS = Object.freeze([
   {
     number: '01',
-    title: 'Cuéntanos qué buscas',
-    copy: 'Deja tu nombre y tu contacto. No necesitas crear una cuenta.',
+    title: 'Cuéntame qué necesitas',
+    copy: 'Nos conocemos por tu nombre. Me cuentas tu objetivo cuando hablemos; no necesitas crear una cuenta.',
   },
   {
     number: '02',
-    title: 'Recibe tu punto de partida',
-    copy: 'Te llevas tres recursos gratuitos y una orientación inicial para ordenar tu semana.',
+    title: 'Llévate algo útil desde hoy',
+    copy: 'Tendrás tres recursos gratuitos para observar tus hábitos y dar tus primeros pasos con claridad.',
   },
   {
     number: '03',
-    title: 'Agenda y empieza',
-    copy: 'Acordamos una valoración y, si tiene sentido para ti, eliges el servicio adecuado.',
+    title: 'Hablemos cuando quieras',
+    copy: 'Si buscas acompañamiento, podemos coordinar una valoración y encontrar juntos el servicio apropiado. Tú decides.',
   },
 ])
 
@@ -65,35 +83,35 @@ const GIFTS = Object.freeze([
   {
     tag: 'GUÍA · 7 DÍAS',
     title: 'Tu primera semana',
-    copy: 'Una estructura sencilla para empezar sin improvisar.',
+    copy: 'Una guía amable y práctica para que la primera semana tenga sentido para ti.',
     href: '/downloads/bayona-editorial/primera-semana.pdf',
     image: '/images/bayona-generated/home-pillar-read-1600.webp',
   },
   {
     tag: 'WORKBOOK · 30 DÍAS',
     title: 'Registro de 30 días',
-    copy: 'Sesiones, energía y aprendizajes en un único lugar.',
+    copy: 'Un espacio para registrar cómo te sientes, reconocer avances y aprender de cada semana.',
     href: '/downloads/bayona-editorial/registro-30-dias.pdf',
     image: '/images/bayona-generated/resources-challenge-1600.webp',
   },
   {
     tag: 'DOSSIER',
     title: 'Tu punto de partida',
-    copy: 'Objetivo, tiempo disponible y recursos ordenados antes de elegir un plan.',
+    copy: 'Aclara qué quieres conseguir, cuánto tiempo tienes y por dónde empezar sin exigirte de más.',
     href: '/downloads/bayona-editorial/dossier-punto-de-partida.pdf',
     image: '/images/bayona-generated/home-free-kit-1600.webp',
   },
 ])
 
 const TRUST_POINTS = Object.freeze([
-  'Entrenamiento adaptado a tu contexto real.',
-  'Seguimiento según el nivel de acompañamiento que eliges.',
-  'Precios y alcance visibles antes de enviar una solicitud.',
-  'Puedes empezar con recursos gratuitos antes de pagar.',
+  'Primero escuchamos tu contexto; después diseñamos cómo entrenar.',
+  'Te acompañamos con la cercanía y el seguimiento de tu plan.',
+  'Sabes qué incluye cada servicio y cuánto cuesta antes de decidir.',
+  'Puedes empezar con recursos gratuitos, sin obligación de comprar.',
 ])
 
 export default function Home() {
-  const evaluationUrl = bookingLink('Hola BAYONA, quiero agendar una valoración inicial y saber qué servicio encaja conmigo.')
+  const evaluationUrl = bookingLink('Hola, soy una persona interesada en BAYONA. Me gustaría contarte mi objetivo y ver si podemos coordinar una valoración inicial.')
 
   return (
     <div className="gym-home">
@@ -108,10 +126,10 @@ export default function Home() {
         aria-labelledby="home-hero-title"
       >
         <div className="gym-home-shell gym-home-hero__content">
-          <p className="gym-home-kicker">BAYONA · ENTRENAMIENTO PERSONAL Y ONLINE</p>
+          <p className="gym-home-kicker">BAYONA · CIENCIA, MOVIMIENTO Y CERCANÍA</p>
           <h1 id="home-hero-title">ENTRENA CON DIRECCIÓN.</h1>
           <p className="gym-home-hero__lead">
-            Fuerza, movimiento y acompañamiento para dejar de improvisar y empezar con un plan que sí cabe en tu vida.
+            Tu cuerpo tiene una historia y tu tiempo importa. Te acompaño a desarrollar fuerza, moverte con confianza y construir un camino de entrenamiento que encaje contigo.
           </p>
           <div className="gym-home-hero__actions">
             <a
@@ -119,10 +137,10 @@ export default function Home() {
               href="#empieza"
               onClick={() => trackEvent('funnel_start_click', { source: 'home_hero' })}
             >
-              EMPIEZA GRATIS <ArrowUpRight size={18} aria-hidden="true" />
+              EMPIEZA A TU RITMO <ArrowUpRight size={18} aria-hidden="true" />
             </a>
             <Link className="gym-secondary-button" to="/programs">
-              VER SERVICIOS <ArrowRight size={18} aria-hidden="true" />
+              CONOCE CÓMO TE ACOMPAÑAMOS <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
           <a
@@ -131,62 +149,69 @@ export default function Home() {
             onClick={() => trackEvent('reward_preview_click', { source: 'home_hero' })}
           >
             <Gift size={18} aria-hidden="true" />
-            <span><strong>Tu visita tiene recompensa.</strong> Llévate 3 recursos de inicio gratis.</span>
+            <span><strong>Un pequeño regalo para empezar.</strong> Tres recursos gratuitos, hechos para acompañarte desde el primer día.</span>
           </a>
         </div>
       </section>
 
       <section className="gym-home-services" id="servicios" aria-labelledby="gym-services-title">
         <div className="gym-home-shell">
-          <div className="gym-section-heading">
-            <SectionLabel>NUESTROS SERVICIOS</SectionLabel>
-            <h2 id="gym-services-title">ELIGE CÓMO QUIERES ENTRENAR.</h2>
-            <p>Cuatro puertas. Sin conceptos raros, sin tener que aprenderte la web.</p>
+          <div className="gym-services-intro">
+            <div className="gym-section-heading">
+              <SectionLabel>NUESTROS SERVICIOS</SectionLabel>
+              <h2 id="gym-services-title">TU OBJETIVO. <span>TU FORMA DE MOVERTE.</span></h2>
+            </div>
+            <div className="gym-services-intro__aside">
+              <span className="gym-services-intro__index">BAYONA / 04 CAMINOS</span>
+              <p>No hay dos personas iguales. Por eso ofrecemos distintas formas de acompañarte, desde una sesión individual hasta un plan online o una práctica de movimiento. Encuentra la que tenga sentido para ti.</p>
+              <span className="gym-services-intro__rule" aria-hidden="true" />
+            </div>
           </div>
-          <div className="gym-service-grid">
+          <div className="gym-service-grid" aria-label="Cuatro formas de entrenar con BAYONA">
             {SERVICES.map((service) => (
-              <Link className="gym-service-card" to={service.href} key={service.id}>
-                <img src={service.image} alt="" width="1600" height="900" loading="lazy" decoding="async" />
+              <Link
+                className={`gym-service-card gym-service-card--${service.id}`}
+                to={service.href}
+                key={service.id}
+                onClick={() => trackEvent('service_card_click', { service: service.id, source: 'home_services' })}
+              >
+                <img src={service.image} alt="" width="1600" height="900" loading="eager" fetchpriority="low" decoding="async" />
                 <span className="gym-service-card__veil" aria-hidden="true" />
-                <div>
+                <div className="gym-service-card__top" aria-hidden="true">
+                  <span>{service.number} / 04</span>
+                  <span>{service.type}</span>
+                </div>
+                <div className="gym-service-card__body">
+                  <span className="gym-service-card__promise">{service.promise}</span>
                   <h3>{service.title}</h3>
                   <p>{service.copy}</p>
-                  <span className="gym-service-card__action">VER SERVICIO <ArrowUpRight size={17} aria-hidden="true" /></span>
+                  <span className="gym-service-card__bottom">
+                    <span>DESCUBRIR EL SERVICIO</span>
+                    <span className="gym-service-card__action" aria-hidden="true">
+                      <ArrowUpRight size={23} strokeWidth={1.65} />
+                    </span>
+                  </span>
                 </div>
               </Link>
             ))}
           </div>
-          <Link className="gym-inline-link" to="/programs">
-            VER TODOS LOS SERVICIOS <ArrowUpRight size={17} aria-hidden="true" />
-          </Link>
+          <div className="gym-services-outro">
+            <p>¿Todavía no sabes por dónde empezar? Está bien. Explora cada opción con calma y elige cuando lo tengas claro.</p>
+            <Link className="gym-services-outro__link" to="/programs">
+              EXPLORAR TODOS LOS SERVICIOS <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="gym-home-process" aria-labelledby="gym-process-title">
-        <div className="gym-home-shell">
-          <div className="gym-section-heading">
-            <SectionLabel>ASÍ DE SIMPLE</SectionLabel>
-            <h2 id="gym-process-title">TRES PASOS PARA EMPEZAR.</h2>
-          </div>
-          <ol className="gym-process-grid">
-            {START_STEPS.map((step) => (
-              <li key={step.number}>
-                <span>{step.number}</span>
-                <h3>{step.title}</h3>
-                <p>{step.copy}</p>
-              </li>
-            ))}
-          </ol>
-          <a className="gym-primary-button" href="#empieza">QUIERO EMPEZAR</a>
-        </div>
-      </section>
+      <GuidedStartJourney steps={START_STEPS} />
 
       <section className="home-memberships-section gym-home-plans" aria-labelledby="home-offer-heading">
         <div className="gym-home-shell">
           <div className="gym-section-heading">
             <SectionLabel>MEMBRESÍAS</SectionLabel>
-            <h2 id="home-offer-heading">MÁS APOYO CUANDO LO NECESITAS.</h2>
-            <p>Compara el nivel de seguimiento y el precio. Los detalles aparecen solo cuando los pides.</p>
+            <h2 id="home-offer-heading">EL APOYO QUE NECESITAS. A TU RITMO.</h2>
+            <p>Hay momentos para entrenar por tu cuenta y otros para sentirte más acompañado. Compara lo que incluye cada plan y elige con tranquilidad.</p>
           </div>
           <PlanExplorer projections={membershipPlanEditorialProjection} cinematic />
           <Link className="gym-inline-link" to="/programs">
@@ -195,11 +220,13 @@ export default function Home() {
         </div>
       </section>
 
+      <BayonaLiveAppShowcase placement="home" />
+
       <section className="gym-home-trust" aria-labelledby="gym-trust-title">
         <div className="gym-home-shell gym-trust-layout">
           <div>
             <SectionLabel>ENTRENAR CON CLARIDAD</SectionLabel>
-            <h2 id="gym-trust-title">SABES QUÉ HACES Y POR QUÉ.</h2>
+            <h2 id="gym-trust-title">ENTRENAR CON CUIDADO TAMBIÉN ES PROGRESAR.</h2>
           </div>
           <ul>
             {TRUST_POINTS.map((point) => (
@@ -213,8 +240,8 @@ export default function Home() {
         <div className="gym-home-shell">
           <div className="gym-section-heading">
             <SectionLabel>RECURSOS DE INICIO</SectionLabel>
-            <h2 id="gym-gifts-title">PRIMERO RECIBES VALOR.</h2>
-            <p>Mira lo que vas a recibir. Para llevártelo, deja tu nombre y un contacto al final.</p>
+            <h2 id="gym-gifts-title">UN BUEN COMIENZO NO TIENE PRECIO.</h2>
+            <p>He preparado tres recursos prácticos para ayudarte a empezar. Conócelos con calma y, si te sirven, recíbelos gratis al dejar tu nombre y un contacto.</p>
           </div>
           <div className="gym-gift-grid">
             {GIFTS.map((gift) => (
@@ -240,24 +267,24 @@ export default function Home() {
       <section className="gym-home-lead" id="empieza" aria-labelledby="lead-magnet-title">
         <div className="gym-home-shell gym-home-lead__intro">
           <SectionLabel>TU SIGUIENTE PASO</SectionLabel>
-          <h2>DEJA TUS DATOS. RECIBE TODO. AGENDA CUANDO QUIERAS.</h2>
+          <h2>EMPIEZA A TU RITMO. YO TE ACOMPAÑO.</h2>
           <p>
-            Sin registro, sin contraseña y sin obligarte a comprar. Tus recursos se habilitan al enviar el formulario y después puedes pedir una valoración.
+            No necesitas tenerlo todo resuelto para dar el primer paso. Deja tu nombre y una forma de contacto: tendrás acceso a tres recursos gratuitos. Si después quieres hablar de tus objetivos, podemos coordinar una valoración. Sin prisas ni compromiso de compra.
           </p>
         </div>
         <LeadMagnet
-          heading="Empieza gratis."
-          copy="Nombre y un contacto. Al enviarlo tendrás acceso directo a tus recursos y podrás pedir tu valoración."
+          heading="Tu primer paso ya cuenta."
+          copy="Me gustaría saber cómo te llamas. Deja tu nombre y un correo o WhatsApp: al enviar el formulario podrás abrir tus tres recursos de inicio. Si quieres, después hablamos de tu entrenamiento."
         />
         <div className="gym-home-lead__fallback gym-home-shell">
-          <span>¿Prefieres hablar primero?</span>
+          <span>¿Te sentirías más cómodo hablando primero?</span>
           <a
             href={evaluationUrl}
             target="_blank"
             rel="noreferrer"
             onClick={() => trackEvent('valuation_request_click', { source: 'home_fallback', channel: isBookingEnabled() ? 'booking' : 'whatsapp' })}
           >
-            {isBookingEnabled() ? 'RESERVAR VALORACIÓN' : 'AGENDAR POR WHATSAPP'} <ArrowUpRight size={17} aria-hidden="true" />
+            {isBookingEnabled() ? 'HABLEMOS DE TU OBJETIVO' : 'ESCRÍBEME POR WHATSAPP'} <ArrowUpRight size={17} aria-hidden="true" />
           </a>
         </div>
       </section>

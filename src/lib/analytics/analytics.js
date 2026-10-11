@@ -35,6 +35,23 @@ const DEBUG = String(env.VITE_ANALYTICS_DEBUG || '') === 'true'
 const MAX_QUEUE = 50
 let queue = []
 
+// Atribución temporal de campaña (sin cookies, almacenamiento ni identificadores personales).
+// Persistencia únicamente en memoria durante la navegación SPA actual.
+const ATTRIBUTION_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content']
+let campaignAttribution = {}
+
+function readCampaignAttribution() {
+  if (typeof window === 'undefined' || !window.location?.search) return campaignAttribution
+  const query = new URLSearchParams(window.location.search)
+  const result = {}
+  for (const key of ATTRIBUTION_KEYS) {
+    const raw = query.get(key)
+    if (raw && /^[a-zA-Z0-9._-]{1,80}$/.test(raw)) result[key] = raw
+  }
+  if (Object.keys(result).length) campaignAttribution = result
+  return campaignAttribution
+}
+
 let providersLoaded = false
 let subscribed = false
 
@@ -200,7 +217,7 @@ function sanitizeParams(params) {
 export function trackEvent(name, params = {}) {
   if (typeof name !== 'string' || name.trim() === '') return
 
-  const payload = sanitizeParams(params)
+  const payload = sanitizeParams({ ...readCampaignAttribution(), ...params })
   debugLog('evento', name, payload)
 
   if (!isAnalyticsConfigured() || !isBrowser()) return
@@ -237,4 +254,5 @@ export function resetAnalyticsForTests() {
   queue = []
   providersLoaded = false
   subscribed = false
+  campaignAttribution = {}
 }

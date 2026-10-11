@@ -1,0 +1,41 @@
+/* BAYONA WEB ⇄ APP · live release surface, no iframe and no invented UI. */
+.bayona-live-app {position:relative;isolation:isolate;overflow:hidden;background:#0a0c0d;color:#f8f5ef;padding:clamp(72px,8vw,126px) clamp(19px,4.3vw,72px);}
+.bayona-live-app::before {content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 76% 42%,rgba(217,115,48,.13),transparent 51%);pointer-events:none;}
+.bayona-live-app__shell {position:relative;margin:auto;max-width:1500px;}
+.bayona-live-app__header {display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(35px,5vw,80px);align-items:center;}
+.bayona-live-app__copy {min-width:0;}
+.bayona-live-app__eyebrow {display:flex;align-items:center;gap:10px;margin:0 0 clamp(24px,3vw,45px);color:#f4a261;font:700 .66rem/1.5 'DM Mono',monospace;letter-spacing:.13em;}
+.bayona-live-app__status {display:inline-block;flex:none;width:8px;height:8px;border-radius:50%;background:#f4a261;box-shadow:0 0 0 4px rgba(244,162,97,.13);}
+.bayona-live-app h2 {max-width:13ch;margin:0 0 25px;color:#faf6ee;font:900 clamp(2.45rem,4.3vw,5.15rem)/1.005 'Montserrat',sans-serif;letter-spacing:-.057em;overflow-wrap:normal;text-wrap:balance;}
+.bayona-live-app h2 em {font-style:normal;color:#f4a261;}
+.bayona-live-app__lead {max-width:46ch;margin:0;color:#d0ccc4;font:400 clamp(1.03rem,1.3vw,1.19rem)/1.68 'Inter',sans-serif;}
+.bayona-live-app__actions {display:flex;flex-wrap:wrap;gap:12px 20px;margin-top:clamp(27px,3.5vw,49px);align-items:center;}
+.bayona-live-app__cta,.bayona-live-app__secondary {display:inline-flex;align-items:center;justify-content:center;gap:13px;min-height:50px;padding:12px 19px;text-decoration:none;font:700 .71rem/1.4 'DM Mono',monospace;letter-spacing:.09em;transition:background .3s,color .3s,border-color .3s;}
+.bayona-live-app__cta {background:#f4a261;color:#13110f;border:1px solid #f4a261;}
+.bayona-live-app__cta:hover {background:#ffc28b;border-color:#ffc28b;}
+.bayona-live-app__secondary {color:#f5f1e9;border-bottom:1px solid #f4a261;padding-inline:0;}
+.bayona-live-app__secondary:hover {color:#f4a261;}
+.bayona-live-app a:focus-visible {outline:3px solid #f4a261;outline-offset:4px;}
+.bayona-live-app__visual {min-width:0;}
+.bayona-live-app__browser {overflow:hidden;border:1px solid rgba(255,255,255,.2);box-shadow:0 40px 100px rgba(0,0,0,.34);background:#08090a;}
+.bayona-live-app__browser-top {height:35px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;color:#a6a9ab;border-bottom:1px solid rgba(255,255,255,.12);font:600 .62rem/1 'DM Mono',monospace;letter-spacing:.12em;}
+.bayona-live-app__browser-dots {display:flex;gap:5px;}.bayona-live-app__browser-dots i {width:6px;height:6px;border-radius:50%;background:#a96d46;}
+.bayona-live-app__browser img {display:block;width:100%;height:auto;aspect-ratio:1365 / 900;object-fit:cover;object-position:center;}
+.bayona-live-app__image-caption {margin:13px 0 0;color:#a9aba8;text-align:right;font:600 .57rem/1.5 'DM Mono',monospace;letter-spacing:.09em;}
+.bayona-live-app__spaces {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:clamp(45px,6vw,88px);border-top:1px solid rgba(244,162,97,.25);border-bottom:1px solid rgba(244,162,97,.25);}
+.bayona-live-app__space {min-width:0;padding:clamp(25px,3.1vw,45px);display:flex;flex-direction:column;align-items:flex-start;}
+.bayona-live-app__space + .bayona-live-app__space {border-left:1px solid rgba(244,162,97,.25);}
+.bayona-live-app__space-number {color:#f4a261;font:700 .65rem/1.4 'DM Mono',monospace;letter-spacing:.15em;}
+.bayona-live-app__space h3 {color:#fff;margin:clamp(19px,2.5vw,29px) 0 12px;font:800 clamp(1.45rem,2.5vw,2.7rem)/1.05 'Montserrat',sans-serif;letter-spacing:-.05em;}
+.bayona-live-app__space p {margin:0;max-width:50ch;color:#cfceca;font:400 1rem/1.6 'Inter',sans-serif;}
+.bayona-live-app__space small {margin-top:14px;max-width:55ch;color:#aba9a3;font-size:.85rem;line-height:1.5;}
+.bayona-live-app__space a {display:inline-flex;align-items:center;gap:12px;margin-top:auto;padding-top:23px;color:#f4a261;text-decoration:none;font:700 .68rem/1.6 'DM Mono',monospace;letter-spacing:.09em;}
+.bayona-live-app__space a:hover {color:#fff;}
+.bayona-live-app__disclaimer {margin:22px 0 0;max-width:110ch;color:#aaa9a4;font:400 .86rem/1.66 'Inter',sans-serif;}
+.bayona-live-app--home {padding-block:clamp(76px,8vw,125px);}
+.bayona-live-app--home h2 {max-width:14ch;}
+@media(max-width:980px){.bayona-live-app__header {grid-template-columns:1fr;}.bayona-live-app h2 {max-width:17ch;}.bayona-live-app__visual {max-width:800px;}.bayona-live-app__actions {margin-top:25px;}}
+@media(max-width:640px){.bayona-live-app {padding:64px 18px;}.bayona-live-app h2 {font-size:clamp(2.3rem,10vw,3.4rem);max-width:15ch;}.bayona-live-app__lead {font-size:1rem;}.bayona-live-app__cta,.bayona-live-app__secondary {font-size:.65rem;}.bayona-live-app__image-caption {font-size:.52rem;text-align:left;}.bayona-live-app__spaces {grid-template-columns:1fr;}.bayona-live-app__space {padding:27px 4px;}.bayona-live-app__space + .bayona-live-app__space {border-left:0;border-top:1px solid rgba(244,162,97,.25);}.bayona-live-app__space h3 {font-size:1.9rem;}.bayona-live-app__browser-top {height:27px;font-size:.51rem;}.bayona-live-app__disclaimer {font-size:.81rem;}}
+@media(prefers-reduced-motion:reduce){.bayona-live-app__cta,.bayona-live-app__secondary {transition:none;}}
+.bayona-live-app__browser picture {display:block;}
+@media(max-width:640px){.bayona-live-app__browser img {aspect-ratio:390/480;object-fit:contain;}}

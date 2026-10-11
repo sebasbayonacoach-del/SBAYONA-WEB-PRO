@@ -14,10 +14,10 @@
  */
 
 export const socialLinks = {
-  instagram: 'https://instagram.com/sebasbayona',
-  youtube: 'https://youtube.com/@sevisionari',
-  tiktok: 'https://tiktok.com/@sebasbayona',
-  linkedin: '',
+  instagram: 'https://instagram.com/wwwsebastianbayona',
+  youtube: 'https://youtube.com/@sevisionarix',
+  tiktok: 'https://tiktok.com/@sebasbayona.co',
+  linkedin: 'https://es.linkedin.com/in/sevisionari',
   github: '',
   facebook: '',
   threads: '',
@@ -55,7 +55,7 @@ export const overrides = {
     description: 'Diario visual de movimiento y método BAYONA.',
   },
   youtube: {
-    description: 'Documentales y clases sobre ciencia del movimiento.',
+    description: 'Parkour, entrenamiento y archivo audiovisual del movimiento.',
     channelId: 'UCfMvWtmoiScRVjga59GX8Pw',
   },
   tiktok: {

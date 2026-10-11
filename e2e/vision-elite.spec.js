@@ -20,7 +20,7 @@ test('Home V2 conserva una secuencia comercial legible en móvil y escritorio', 
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/', { waitUntil: 'networkidle' })
 
-    await expect(page.getByRole('heading', { level: 2, name: /ELIGE CÓMO QUIERES ENTRENAR/i })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 2, name: /TU OBJETIVO.*TU FORMA DE MOVERTE/i })).toBeVisible()
     await expect(page.getByRole('heading', { level: 2, name: /TRES PASOS PARA EMPEZAR/i })).toBeAttached()
     await expect(page.getByRole('heading', { level: 2, name: /PRIMERO RECIBES VALOR/i })).toBeAttached()
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2)).toBe(false)

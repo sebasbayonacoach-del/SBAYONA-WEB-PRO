@@ -1,5 +1,5 @@
-import { useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Fuse from 'fuse.js'
 import {
@@ -185,6 +185,7 @@ function ProductCard({ product, reducedMotion }) {
       glareBorderRadius="0"
     >
       <article
+        id={`product-${product.id}`}
         className="shop-product-card ds-reveal"
         data-product-id={product.id}
         onPointerMove={pointerEffects ? updateCardSpotlight : undefined}
@@ -317,10 +318,15 @@ function ProductGrid({ products, reducedMotion, className = '' }) {
 }
 
 export default function Shop() {
+  const [searchParams] = useSearchParams()
+  const requestedProduct = useMemo(() => {
+    const requestedId = searchParams.get('product')
+    return requestedId ? shopProducts.find((product) => product.id === requestedId) ?? null : null
+  }, [searchParams])
   const [collectionId, setCollectionId] = useState('all')
   const [category, setCategory] = useState('Todo')
-  const [query, setQuery] = useState('')
-  const [searchOpen, setSearchOpen] = useState(false)
+  const [query, setQuery] = useState(() => requestedProduct?.name ?? '')
+  const [searchOpen, setSearchOpen] = useState(Boolean(requestedProduct))
   const searchInputRef = useRef(null)
   const addItem = useCartStore((state) => state.addItem)
   const cartCount = useCartStore(selectCartCount)
@@ -352,6 +358,17 @@ export default function Shop() {
   const hasFilters = collectionId !== 'all' || category !== 'Todo' || query.trim() !== ''
   const groupedView = collectionId === 'all' && category === 'Todo' && query.trim() === ''
   const cartTotalLabel = `$${cartTotalCOP.toLocaleString('es-CO')} COP`
+
+  useEffect(() => {
+    if (!requestedProduct) return
+    const timer = window.setTimeout(() => {
+      const card = document.querySelector(`[data-product-id="${requestedProduct.id}"]`)
+      card?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' })
+      card?.setAttribute('tabindex', '-1')
+      card?.focus({ preventScroll: true })
+    }, 80)
+    return () => window.clearTimeout(timer)
+  }, [requestedProduct, reducedMotion])
 
   const scrollToCatalog = () => {
     document.querySelector('#shop-catalog')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' })
@@ -416,7 +433,7 @@ export default function Shop() {
             animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.56, delay: reducedMotion ? 0 : 0.14 }}
           >
-            Ropa, calzado y equipamiento para entrenar dentro y fuera del gimnasio.<br />Elige tu pieza, revisa el precio y confirma disponibilidad antes de pagar.
+            Elige lo que te acompaña a moverte, entrenar y sentirte cómodo.<br />Te mostramos los precios con claridad y confirmamos talla, disponibilidad y entrega antes del pago.
           </motion.p>
           <motion.div
             className="shop-hero-concierge"
@@ -427,7 +444,7 @@ export default function Shop() {
           >
             <div className="shop-hero-ticket">
               <span>TIENDA BAYONA</span>
-              <strong>Compra clara.</strong>
+              <strong>Elige con confianza.</strong>
               <small>Disponibilidad, talla y entrega se confirman antes de pagar.</small>
             </div>
             <dl className="shop-hero-ledger">

@@ -38,8 +38,8 @@ vi.mock('../components/shop/ShopHologramLayer.jsx', () => ({
   default: () => null,
 }))
 
-function renderShop() {
-  return render(<MemoryRouter><Shop /></MemoryRouter>)
+function renderShop(entry = '/shop') {
+  return render(<MemoryRouter initialEntries={[entry]}><Shop /></MemoryRouter>)
 }
 
 beforeEach(() => {
@@ -117,6 +117,18 @@ describe('/shop — tienda de producto Gym Funnel V2', () => {
     expect(emptyState).toHaveTextContent('NO ENCONTRAMOS ESA PIEZA.')
     fireEvent.click(within(emptyState).getByRole('button', { name: new RegExp(`VER LOS ${shopProducts.length} PRODUCTOS`, 'i') }))
     expect(screen.queryByText('NO ENCONTRAMOS ESA PIEZA.')).not.toBeInTheDocument()
+  })
+
+
+  it('acepta enlaces profundos desde BAYONA App y deja un único producto enfocado', async () => {
+    const product = shopProducts.find(({ id }) => id === 'zapatillas-move')
+    renderShop('/shop?product=zapatillas-move')
+
+    const search = screen.getByRole('searchbox', { name: 'Buscar producto' })
+    expect(search).toHaveValue(product.name)
+    const card = document.querySelector('[data-product-id="zapatillas-move"]')
+    expect(card).not.toBeNull()
+    expect(card).toHaveTextContent(product.name)
   })
 
   it('añade productos al carrito y lo abre', () => {

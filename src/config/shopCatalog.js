@@ -1,4 +1,16 @@
 import { buildWhatsAppUrl } from './offerings.js'
+import { shopProducts } from './shopProducts.js'
+
+const LEGACY_SELECTION = Object.freeze([
+  ['hoodie-origins', 'OBJ-01', 'Ropa'],
+  ['camiseta-origins', 'OBJ-02', 'Ropa'],
+  ['zapatillas-move', 'OBJ-03', 'Calzado'],
+  ['bandas-resistencia-set-5', 'OBJ-04', 'Equipamiento'],
+  ['kit-reboot', 'OBJ-05', 'Equipamiento'],
+  ['mochila-bayona', 'OBJ-06', 'Equipamiento'],
+])
+
+const canonicalById = new Map(shopProducts.map((item) => [item.id, item]))
 
 export function buildCatalogItemWhatsAppUrl(item) {
   return buildWhatsAppUrl([
@@ -7,63 +19,20 @@ export function buildCatalogItemWhatsAppUrl(item) {
   ].join('\n'))
 }
 
-function createCatalogItem(item) {
-  return Object.freeze({
-    ...item,
-    whatsappUrl: buildCatalogItemWhatsAppUrl(item),
+export const catalogItems = Object.freeze(LEGACY_SELECTION.map(([id, code, category]) => {
+  const canonical = canonicalById.get(id)
+  if (!canonical) throw new Error(`Producto canónico inexistente: ${id}`)
+  const item = Object.freeze({
+    id: canonical.id,
+    code,
+    name: canonical.name,
+    category,
+    icon: canonical.icon,
+    shopUrl: canonical.shopUrl,
+    summary: 'Producto canónico de la selección consultable BAYONA.',
   })
-}
-
-export const catalogItems = Object.freeze([
-  createCatalogItem({
-    id: 'hoodie-bayona',
-    code: 'OBJ-01',
-    name: 'Hoodie BAYONA',
-    category: 'Ropa',
-    icon: 'shirt',
-    summary: 'Referencia de indumentaria incluida en la selección consultable BAYONA.',
-  }),
-  createCatalogItem({
-    id: 'camiseta-origins',
-    code: 'OBJ-02',
-    name: 'Camiseta Origins',
-    category: 'Ropa',
-    icon: 'shirt',
-    summary: 'Referencia de indumentaria incluida en la selección consultable BAYONA.',
-  }),
-  createCatalogItem({
-    id: 'zapatillas-move',
-    code: 'OBJ-03',
-    name: 'Zapatillas MOVE',
-    category: 'Calzado',
-    icon: 'footprints',
-    summary: 'Referencia de calzado incluida en la selección consultable BAYONA.',
-  }),
-  createCatalogItem({
-    id: 'bandas-resistencia',
-    code: 'OBJ-04',
-    name: 'Bandas de resistencia',
-    category: 'Equipamiento',
-    icon: 'dumbbell',
-    summary: 'Referencia de equipamiento incluida en la selección consultable BAYONA.',
-  }),
-  createCatalogItem({
-    id: 'kit-reboot',
-    code: 'OBJ-05',
-    name: 'Kit Reboot',
-    category: 'Equipamiento',
-    icon: 'package',
-    summary: 'Referencia de equipamiento incluida en la selección consultable BAYONA.',
-  }),
-  createCatalogItem({
-    id: 'mochila-bayona',
-    code: 'OBJ-06',
-    name: 'Mochila BAYONA',
-    category: 'Equipamiento',
-    icon: 'backpack',
-    summary: 'Referencia de equipamiento incluida en la selección consultable BAYONA.',
-  }),
-])
+  return Object.freeze({ ...item, whatsappUrl: buildCatalogItemWhatsAppUrl(item) })
+}))
 
 export const catalogCategories = Object.freeze([
   'Todo',
@@ -80,7 +49,6 @@ function normalizeSearch(value) {
 
 export function filterCatalog(items, { category = 'Todo', query = '' } = {}) {
   const normalizedQuery = normalizeSearch(query)
-
   return items.filter((item) => {
     const matchesCategory = category === 'Todo' || item.category === category
     const searchableCopy = normalizeSearch(`${item.name} ${item.category} ${item.code}`)

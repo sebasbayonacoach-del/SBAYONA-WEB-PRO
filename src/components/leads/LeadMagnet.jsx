@@ -87,8 +87,8 @@ async function flushPendingLeads() {
 }
 
 export default function LeadMagnet({
-  heading = 'Empieza gratis.',
-  copy = 'Déjanos tu nombre y un contacto. Tus recursos quedan disponibles al instante y puedes pedir una valoración sin compromiso.',
+  heading = 'Tu primer paso ya cuenta.',
+  copy = 'Me gustaría saber cómo te llamas. Comparte tu nombre y un contacto para abrir tus tres recursos gratuitos. La valoración es opcional y tú eliges cuándo pedirla.',
 }) {
   const [name, setName] = useState('')
   const [contact, setContact] = useState('')
@@ -103,8 +103,8 @@ export default function LeadMagnet({
   function handleSubmit(event) {
     event.preventDefault()
     const nextErrors = []
-    if (String(name).trim().length < 2) nextErrors.push('Escribe tu nombre.')
-    if (!isValidContact(contact)) nextErrors.push('Escribe un correo válido o un WhatsApp válido.')
+    if (String(name).trim().length < 2) nextErrors.push('Cuéntame cómo te llamas.')
+    if (!isValidContact(contact)) nextErrors.push('Revisa tu correo o número de WhatsApp para poder contactarte.')
     setErrors(nextErrors)
     if (nextErrors.length > 0) return
 
@@ -168,19 +168,19 @@ export default function LeadMagnet({
           <line className="lead-magnet-linea" x1="98" y1="126" x2="170" y2="126" />
           <polygon className="lead-magnet-sello" points="224,128 233,133 233,144 224,149 215,144 215,133" />
         </svg>
-        <p className="eyebrow"><span />EMPIEZA GRATIS</p>
+        <p className="eyebrow"><span />UN COMIENZO A TU RITMO</p>
         <h2 id="lead-magnet-title">{heading}</h2>
         {done ? (
           <div className="lead-magnet-success" role="status">
-            <strong>Listo, {String(name).trim()}. Ya puedes llevarte tus recursos.</strong>
+            <strong>Gracias por confiar, {String(name).trim()}. Tus recursos ya están aquí.</strong>
             {captureState === 'cloud' ? (
-              <p>Tu contacto quedó registrado en BAYONA. No necesitas crear una cuenta ni esperar para empezar.</p>
+              <p>Tu contacto quedó registrado para atender tu solicitud. Puedes explorar las guías ahora mismo, sin crear una cuenta.</p>
             ) : captureState === 'sending' ? (
-              <p>Tus recursos ya están listos. Estamos registrando tu contacto.</p>
+              <p>Ya puedes abrir tus recursos. Estamos terminando de registrar tu solicitud.</p>
             ) : (
               <p>
-                Tus recursos ya están listos. El registro automático no está disponible ahora;
-                confirma por WhatsApp para que podamos responderte.
+                Tus recursos están disponibles. Por ahora no pudimos enviar tu contacto a BAYONA;
+                si quieres que te respondamos personalmente, escríbenos por WhatsApp.
               </p>
             )}
             <div className="lead-magnet-rewards">
@@ -198,9 +198,9 @@ export default function LeadMagnet({
                   channel: isBookingEnabled() ? 'booking' : 'whatsapp',
                 })}
               >
-                AGENDAR VALORACIÓN
+                SOLICITAR UNA VALORACIÓN
               </a>
-              <Link to="/programs">VER SERVICIOS</Link>
+              <Link to="/programs">CONOCER MIS OPCIONES</Link>
             </div>
             <small>
               {isBookingEnabled()
@@ -243,11 +243,11 @@ export default function LeadMagnet({
                 </div>
               )}
               <button type="submit" className="gold-button">
-                RECIBIR MIS RECURSOS
+                QUIERO MIS TRES RECURSOS
               </button>
             </form>
             <p className="lead-magnet-note">
-              Usamos estos datos para responder a tu solicitud. Si el registro automático no está disponible, podrás confirmarla por WhatsApp.
+              Usamos tu nombre y contacto para atender tu solicitud, no para obligarte a contratar. Si el envío automático no funciona, puedes escribirnos por WhatsApp.
             </p>
           </>
         )}

@@ -1411,8 +1411,8 @@ export default function Resources() {
 
         <section id="resources-lead" className="resources-lead-capture" aria-label="Recibir recursos gratuitos">
           <LeadMagnet
-            heading="Recibe tus recursos gratis."
-            copy="Déjanos tu nombre y un contacto. Tus tres recursos se habilitan al instante y puedes pedir una valoración cuando quieras."
+            heading="Un comienzo pensado para ti."
+            copy="A veces basta una buena guía para empezar con más tranquilidad. Comparte tu nombre y un contacto para abrir tres recursos gratuitos. Si después quieres acompañamiento, tú decides cuándo hablamos."
           />
         </section>
       </div>

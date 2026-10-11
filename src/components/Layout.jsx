@@ -25,6 +25,7 @@ import { TextMask } from '../engine/motion/TextMask.jsx'
 // Import DIRECTO del hook (no el barrel): magnetismo del CTA compartido.
 import { useMagnetic } from '../engine/hooks/useMagnetic.js'
 import '../styles/gym-funnel-v2.css'
+import '../styles/footer-clarity-2026.css'
 
 const MotionLink = motion.create(Link)
 
@@ -43,17 +44,22 @@ const MotionLink = motion.create(Link)
  * Inicio no se repite como enlace de escritorio: la marca ya es el enlace al
  * inicio. En móvil sí aparece explícito y numerado.
  */
+// Follow the same linear visitor journey as EditorialOutro and the home.
+// Home is always the brand link, while FAQ is a secondary menu destination.
 const NAV_ITEMS = Object.freeze([
+  { label: 'Nosotros', href: '/about' },
   { label: 'Servicios', href: '/programs' },
   { label: 'Parkour', href: '/parkour-academy' },
+  { label: 'Comunidad', href: '/community' },
+  { label: 'BAYONA+', href: '/app' },
   { label: 'Tienda', href: '/shop' },
   { label: 'Recursos', href: '/resources' },
-  { label: 'Nosotros', href: '/about' },
 ])
 
 const MOBILE_NAV_ITEMS = Object.freeze([
   { label: 'Inicio', href: '/' },
   ...NAV_ITEMS,
+  { label: 'Preguntas', href: '/faq' },
 ])
 
 export function Navbar() {

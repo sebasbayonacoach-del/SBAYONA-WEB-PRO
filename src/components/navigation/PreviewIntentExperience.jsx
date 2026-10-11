@@ -62,8 +62,8 @@ const PREVIEW_INTENTS = Object.freeze({
     chapters: ['RESUMEN', 'CONDICIONES', 'CONFIRMACIÓN'],
   },
   '/app': {
-    kind: 'PRODUCTO DIGITAL', title: 'CONOCE BAYONA+',
-    body: 'Descubre el concepto de la experiencia digital y qué funciones están disponibles.',
+    kind: 'PRODUCTO DIGITAL', title: 'ABRE BAYONA APP',
+    body: 'Accede a la versión web de BAYONA App y descubre lo que sigue en desarrollo.',
     chapters: ['EXPERIENCIA', 'FUNCIONES', 'ACCESO'],
   },
 })

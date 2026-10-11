@@ -1,0 +1,42 @@
+/* BAYONA 2026-10-10 — New original cinematic homepage hero.
+   Independent of theme: preserve readable copy without mirroring the athlete,
+   no stacked pseudo backgrounds, and an optimized 960px mobile image. */
+html body.premium-route--home .gym-home-hero {
+  background:#080a0a !important;
+  min-height:min(900px,94svh);
+  isolation:isolate;
+}
+html body.premium-route--home .gym-home-hero.scene-bg.scene-bg--after::after,
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero.scene-bg.scene-bg--after::after {
+  content:'';display:block !important;
+  position:absolute;inset:0;z-index:0;
+  background-image:url('/images/bayona-generated/bayona-home-cinematic-1600.webp') !important;
+  background-position:center 45% !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  opacity:1 !important;filter:saturate(.98) contrast(1.04) !important;
+  transform:none !important;
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+}
+html body.premium-route--home .gym-home-hero::before,
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero::before {
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(6,8,9,.72) 0%,rgba(6,8,9,.45) 39%,rgba(6,8,9,.06) 83%),linear-gradient(0deg,rgba(4,6,7,.65),transparent 47%) !important;
+}
+html body.premium-route--home .gym-home-hero__content {position:relative;z-index:2;}
+html body.premium-route--home .gym-home-hero h1,
+html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero h1 {color:#fff !important;text-shadow:0 4px 28px rgba(0,0,0,.3);}
+html body.premium-route--home .gym-home-hero__lead {color:#f5f0e9 !important;max-width:560px;}
+@media (max-width:680px){
+  html body.premium-route--home .gym-home-hero {min-height:min(850px,94svh);}
+  html body.premium-route--home .gym-home-hero.scene-bg.scene-bg--after::after,
+  html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero.scene-bg.scene-bg--after::after {
+    background-image:url('/images/bayona-generated/bayona-home-cinematic-960.webp') !important;
+    background-position:62% center !important;
+  }
+  html body.premium-route--home .gym-home-hero::before,
+  html[data-bayona-theme='day'] body.premium-route--home .gym-home-hero::before {
+    background:linear-gradient(90deg,rgba(3,5,6,.72),rgba(3,5,6,.24)),linear-gradient(0deg,rgba(3,5,6,.75),transparent 65%) !important;
+  }
+}

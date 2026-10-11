@@ -1,8 +1,8 @@
-import { Suspense, lazy } from 'react'
 import { ArrowUpRight, Award, BrainCircuit, GraduationCap, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import GlobeTestimonials from '../components/GlobeTestimonials.jsx'
 import AboutValuesStage from '../components/about/AboutValuesStage.jsx'
+import AboutJourneyRail from '../components/about/AboutJourneyRail.jsx'
 import AboutMethodStage from '../components/about/AboutMethodStage.jsx'
 import { MethodSequence } from '../components/method/MethodSequence.jsx'
 import { StickyStage } from '../engine/scroll/StickyStage.jsx'
@@ -13,6 +13,8 @@ import { whatsAppLink } from '../config/site.config.js'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
 import '../styles/about.css'
 import '../styles/about-art-direction-2026.css'
+import '../styles/about-second-chapter.css'
+import '../styles/bayona-chapter-finishing-2026.css'
 
 /**
  * Los tres fundamentos, en la única forma que tienen de decirse: lo primero va
@@ -36,7 +38,7 @@ const stages = [
     number: '01',
     year: '2003',
     title: 'EL MOVIMIENTO',
-    copy: 'Antes de vender planes, el cuerpo fue escuela: moverse era aprender, fallar, repetir y entender límites.',
+    copy: 'Antes de enseñar a otros, aprendí a escuchar el cuerpo: probar, equivocarme, comprender mis límites y volver a intentarlo.',
   },
   {
     number: '02',
@@ -54,39 +56,39 @@ const stages = [
     number: '04',
     year: '2026',
     title: 'NACE BAYONA',
-    copy: 'BAYONA nace para unir entrenamiento, fuerza, nutrición y seguimiento en una experiencia premium, humana y honesta.',
+    copy: 'BAYONA nace de una convicción: el conocimiento vale más cuando se convierte en atención, respeto y acompañamiento real.',
   },
 ]
 
 const values = [
-  [BrainCircuit, 'CRITERIO', 'No vendemos plantillas bonitas: tomamos decisiones con contexto, objetivo y evidencia del proceso.'],
-  [ShieldCheck, 'RESPETO', 'Tu punto de partida no se juzga. Se entiende antes de exigir y se protege mientras avanzas.'],
-  [GraduationCap, 'EDUCACIÓN', 'Queremos que sepas qué haces, para qué sirve y cómo sostenerlo cuando no estamos mirando.'],
-  [Award, 'RIGOR', 'El plan se revisa con lo que pasa de verdad, no con frases decorativas ni promesas infladas.'],
+  [BrainCircuit, 'CRITERIO', 'Antes de recomendar un ejercicio, queremos entender a quién tenemos delante, qué busca y qué necesita.'],
+  [ShieldCheck, 'RESPETO', 'Aquí no tienes que demostrar nada. Respetamos tu historia, tu cuerpo y el ritmo al que puedes avanzar.'],
+  [GraduationCap, 'EDUCACIÓN', 'Te explicamos el porqué de cada decisión para que ganes confianza y autonomía, no dependencia.'],
+  [Award, 'RIGOR', 'Te acompañamos con criterio: observamos, escuchamos y ajustamos lo que haga falta sin prometer milagros.'],
 ]
 
 const methodSteps = [
   {
     number: '01',
     title: 'VALORAR',
-    copy: 'Miramos punto de partida, tiempo, objetivo, energía y capacidad real de sostener el proceso.',
+    copy: 'Empezamos por escucharte: cómo te mueves, qué necesitas, cuánto tiempo tienes y qué te ilusiona conseguir.',
   },
   {
     number: '02',
     title: 'PLANIFICAR',
-    copy: 'Convertimos esa lectura en una ruta progresiva que entra en tu vida sin volverse castigo.',
+    copy: 'Diseñamos una progresión con sentido para tu cuerpo y tus horarios. Entrenar debe sumar a tu vida, no castigarte.',
   },
   {
     number: '03',
     title: 'AJUSTAR',
-    copy: 'Revisamos lo que responde, corregimos lo que no y convertimos dudas en una siguiente acción clara.',
+    copy: 'Te escuchamos también durante el proceso: celebramos lo que funciona y adaptamos el camino cuando la vida cambia.',
   },
 ]
 
 const sebastianWhatsAppUrl = whatsAppLink('Hola Sebastián, quiero que empecemos juntos con BAYONA.')
 
 /** Capa WebGL del globo — carga diferida para proteger el LCP (Fase 11.2). */
-const AboutGlobeLayer = lazy(() => import('../components/about/AboutGlobeLayer.jsx'))
+// El globo cartográfico interactivo se monta desde GlobeTestimonials.
 
 /**
  * Los cuatro principios ya tenían su foco escrito en about.css (`.about-value
@@ -99,12 +101,18 @@ export default function About() {
 
   return (
     <div className="about-page">
+      <AboutJourneyRail reducedMotion={reducedMotion} />
       <PageHero
-        title="MOVIMIENTO. FORMACIÓN. MÉTODO."
-        kicker="BAYONA • SOBRE EL MÉTODO"
+        title="DETRÁS DEL MOVIMIENTO."
+        kicker="CAPÍTULO 02 · NOSOTROS"
         media={siteMedia.about.hero}
       >
-        <p className="hero-subtitle">Entrenamiento, fuerza y nutrición desde tu punto de partida. Vamos juntos.</p>
+        <p className="hero-subtitle">Detrás de BAYONA hay una forma de mirar el entrenamiento: primero escucharte, después entender tu punto de partida y construir un camino contigo.</p>
+        <div className="about-editorial-hero-actions">
+          <a href="#la-persona" className="about-editorial-primary">CONOCE QUIÉN ESTÁ DETRÁS <ArrowUpRight size={18} aria-hidden="true" /></a>
+          <a href="#about-purpose-title" className="about-editorial-secondary">DESCUBRE EL PORQUÉ <span aria-hidden="true">↘</span></a>
+        </div>
+        <div className="about-editorial-hero-index" aria-hidden="true"><span>02</span><span>UNA HISTORIA / UN MÉTODO</span></div>
       </PageHero>
 
       <section className="about-problem-section" aria-labelledby="about-purpose-title">
@@ -148,8 +156,29 @@ export default function About() {
             <h2 id="about-purpose-title">UN PLAN SIRVE<br aria-hidden="true" /> <span>CUANDO ENCAJA CONTIGO.</span></h2>
           </div>
           <p className="about-problem-copy">
-            Casi nunca falta motivación: falta una estructura que puedas cumplir cuando trabajas, viajas, dudas o no tienes ganas. Ahí empieza BAYONA.
+            No necesitas encajar en un plan diseñado para otra persona. Necesitas un camino que entienda tu trabajo, tu energía, tu historia y tus objetivos. Por eso primero escuchamos; después diseñamos.
           </p>
+        </div>
+      </section>
+
+      <section className="about-founder" id="la-persona" aria-labelledby="about-founder-title">
+        <div className="about-founder__layout section-shell">
+          <div className="about-founder__visual">
+            <img src="/images/scenes/escena-parkour-gandia-cierre.webp" alt="Deportista de espaldas observando el mar al atardecer en un entorno de parkour" loading="lazy" decoding="async" />
+            <span className="about-founder__image-marker">EL MOVIMIENTO COMO PUNTO DE PARTIDA</span>
+            <span className="about-founder__image-number" aria-hidden="true">MOVIMIENTO / ORIGEN</span>
+          </div>
+          <div className="about-founder__editorial">
+            <span className="about-founder__eyebrow">LA PERSONA DETRÁS DE BAYONA</span>
+            <h2 id="about-founder-title">UNA MARCA.<br /><em>UNA PERSONA REAL.</em></h2>
+            <p className="about-founder__lead">Soy Sebastián Bayona. El movimiento fue mi primera forma de aprender, y hoy es la base del trabajo que comparto con quienes entrenan conmigo.</p>
+            <p className="about-founder__copy">El parkour me enseñó a observar antes de actuar. El entrenamiento y el estudio me llevaron a transformar esa experiencia en algo más útil: una estructura que pueda adaptarse a distintas personas, capacidades y momentos de la vida.</p>
+            <div className="about-founder__signature">
+              <span className="about-founder__signature-mark" aria-hidden="true">SB.</span>
+              <span><strong>SEBASTIÁN BAYONA</strong><small>CREADOR DE BAYONA · ENTRENAMIENTO Y MOVIMIENTO</small></span>
+            </div>
+            <Link to="/programs" className="about-founder__link">CONOCE CÓMO TRABAJAMOS <ArrowUpRight size={18} aria-hidden="true" /></Link>
+          </div>
         </div>
       </section>
 
@@ -163,16 +192,21 @@ export default function About() {
           blur: 1,
         })}
         aria-labelledby="about-story-title"
+        id="el-recorrido"
       >
         <div className="about-story-heading section-shell ds-reveal" data-immersive="clip">
           <span className="about-vertical-word about-vertical-word--light" aria-hidden="true">RECORRIDO</span>
           <div>
             <SectionLabel>EL RECORRIDO</SectionLabel>
-            <h2 id="about-story-title">DEL PARKOUR A<br /><span>UN MÉTODO QUE VENDE CLARIDAD</span></h2>
+            <h2 id="about-story-title">DEL PRIMER SALTO<br /><span>A UN MÉTODO CON DIRECCIÓN.</span></h2>
             <p className="about-problem-copy">
-              Práctica, oficio y estudio. Así convertimos movimiento, entrenamiento y nutrición en una ruta que puedes entender antes de pagar.
+              Una historia de práctica, preguntas y aprendizaje. Cada etapa explica por qué el método de hoy empieza escuchando y termina ajustándose a la vida real.
             </p>
           </div>
+          <figure className="about-story-heading__art">
+            <img src="/images/bayona-generated/about-timeline-parkour-1600.webp" alt="Atleta practicando parkour junto al mar al atardecer" loading="lazy" decoding="async" />
+            <figcaption>EL MOVIMIENTO NOS ENSEÑÓ EL CAMINO <span>01 — 04</span></figcaption>
+          </figure>
         </div>
         {/*
           FASE 8 · BLOQUE G — "LA LÍNEA DE VIDA" (sección RECORRIDO de About).
@@ -186,7 +220,7 @@ export default function About() {
           estática legible por diseño del componente.
         */}
         <StickyStage
-          length="200vh"
+          length="160vh"
           states={stages.length}
           className="about-timeline about-timeline--stage section-shell"
         >
@@ -224,15 +258,18 @@ export default function About() {
             )
           }}
         </StickyStage>
-      </section>
-
-      <section className="about-values-section" aria-labelledby="about-values-title">
-        <div className="about-values section-shell">
-          <AboutValuesStage items={values} />
-        </div>
+        <ol className="about-chronicle-mobile section-shell" aria-label="Los cuatro hitos del recorrido BAYONA">
+          {stages.map((stage) => (
+            <li key={stage.number} className="about-chronicle-mobile__item">
+              <div className="about-chronicle-mobile__index"><span>{stage.number}</span><time>{stage.year}</time></div>
+              <div className="about-chronicle-mobile__story"><h3>{stage.title}</h3><p>{stage.copy}</p></div>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <section
+        id="el-mundo"
         className="about-globe-section about-globe-testimonials-section section-shell"
         aria-labelledby="about-globe-title"
       >
@@ -244,14 +281,16 @@ export default function About() {
             Bogotá, Valencia, Madrid, Miami y Buenos Aires.
           </p>
         </div>
-        {/* Capa WebGL 3D — atmósfera detrás del mapa interactivo (Fase 11.2). */}
-        <Suspense fallback={null}>
-          <AboutGlobeLayer />
-        </Suspense>
         <GlobeTestimonials />
       </section>
 
 
+
+      <section className="about-values-section" id="nuestros-valores" aria-labelledby="about-values-title">
+        <div className="about-values section-shell">
+          <AboutValuesStage items={values} />
+        </div>
+      </section>
 
       <section
         {...sceneBackgroundProps(siteMedia.about.values[0], {
@@ -269,13 +308,14 @@ export default function About() {
           blur: 1,
         })}
         aria-labelledby="about-method-title"
+        id="el-metodo"
       >
         <div className="about-method-inner section-shell" data-immersive="clip">
           <span className="about-vertical-word about-vertical-word--light" aria-hidden="true">PROCESO</span>
           <div className="about-method-heading ds-reveal ds-reveal--mask">
             <SectionLabel>EL MÉTODO</SectionLabel>
             <h2 id="about-method-title">NO ES UNA RUTINA.<br /><span>ES UNA DECISIÓN TRAS OTRA.</span></h2>
-            <p>Qué miramos, qué decidimos con eso y cómo seguimos cuando la vida real aparece.</p>
+            <p>No se trata de exigirte más cada día. Se trata de saber cuándo avanzar, cuándo ajustar y cuándo escucharte.</p>
           </div>
 
           {/* Fuente semántica compartida para lectura accesible del método. */}
@@ -283,10 +323,10 @@ export default function About() {
           <AboutMethodStage items={methodSteps} />
 
           <blockquote>
-            ENTRENAR CON MÉTODO ES DEJAR DE NEGOCIAR TU CUERPO CON EL CAOS.
+            EL PROGRESO EMPIEZA CUANDO DEJAS DE COMPARARTE Y APRENDES A ESCUCHARTE.
           </blockquote>
 
-          <div className="about-cta-actions">
+          <div className="about-cta-actions" id="empezar">
             <Link to="/programs" className="cta-primary">
               EMPEZAR JUNTOS
               <ArrowUpRight size={18} aria-hidden="true" />

@@ -32,6 +32,8 @@ async function inspectRoute(page, route, viewport, heightLimit) {
 
     return {
       scrollHeight: document.documentElement.scrollHeight,
+      editorialOutroHeight: document.querySelector('.editorial-outro')?.getBoundingClientRect().height ?? 0,
+      liveAppHeight: document.querySelector('.bayona-live-app')?.getBoundingClientRect().height ?? 0,
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
       h1: [...document.querySelectorAll('h1')].filter(visible).map((node) => node.textContent.trim()),
@@ -45,7 +47,16 @@ async function inspectRoute(page, route, viewport, heightLimit) {
 
   expect(metrics.h1, `${route.name}: debe existir un único H1 visible`).toHaveLength(1)
   expect(metrics.scrollWidth, `${route.name}: overflow horizontal`).toBeLessThanOrEqual(metrics.clientWidth + 3)
-  expect(metrics.scrollHeight, `${route.name}: la ruta volvió a crecer demasiado`).toBeLessThan(heightLimit)
+  // El umbral original preserva su significado: vigila la altura del contenido
+  // de la ruta, mientras la nueva puerta editorial tiene su presupuesto propio.
+  const contentHeight = metrics.scrollHeight - metrics.editorialOutroHeight - metrics.liveAppHeight
+  expect(contentHeight, `${route.name}: el contenido volvió a crecer demasiado`).toBeLessThan(heightLimit)
+  if (metrics.liveAppHeight > 0) {
+    expect(metrics.liveAppHeight, `${route.name}: integración BAYONA App demasiado larga`).toBeLessThan(viewport.width <= 600 ? 1900 : 1450)
+  }
+  if (metrics.editorialOutroHeight > 0) {
+    expect(metrics.editorialOutroHeight, `${route.name}: el cierre editorial es demasiado largo`).toBeLessThan(viewport.width <= 600 ? 1080 : 1230)
+  }
   expect(metrics.brokenImages, `${route.name}: imágenes rotas`).toEqual([])
   expect(metrics.text, `${route.name}: copy heredado`).not.toMatch(FORBIDDEN_COPY)
   expect(metrics.disabledVideoButtons, `${route.name}: reproductor falso deshabilitado`).toBe(0)

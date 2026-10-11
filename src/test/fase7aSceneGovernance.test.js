@@ -194,7 +194,8 @@ describe('gobernanza de escenas 3D (Fase 7A)', () => {
   })
 
   it('no hay librerías de motion/3D prohibidas importadas en src', () => {
-    // gsap está en package.json como deuda muerta declarada: 0 imports.
+    // Solo el puente auditado del motor puede importar GSAP; no componentes ni shell.
+    const approved = new Set(['src/engine/motion/gsapMotionBridge.js'])
     const offenders = []
     const walk = (dir) => {
       for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -202,7 +203,7 @@ describe('gobernanza de escenas 3D (Fase 7A)', () => {
         if (entry.isDirectory()) walk(p)
         else if (/\.(js|jsx)$/.test(entry.name)) {
           const src = readFileSync(p, 'utf8')
-          if (/from\s+['"](gsap|animejs|@motionone|motion-one)['"]/.test(src)) offenders.push(p)
+          if (/from\s+['"](gsap|animejs|@motionone|motion-one)['"]/.test(src) && !approved.has(p)) offenders.push(p)
         }
       }
     }
@@ -462,6 +463,8 @@ describe('gobernanza de escenas 3D (Fase 7A)', () => {
       // Nuevas escenas 3D aprobadas en Fase 11 (PLAN_3D_INMERSIVO.md).
       // Todas viven en engine/scene/ y se cargan SOLO vía lazy().
       'src/engine/scene/GlobeScene.jsx',
+      // Chapter 02 — mapa 3D geográfico conectado por lazy() al módulo editorial.
+      'src/engine/scene/StoryGlobeScene.jsx',
       'src/engine/scene/HeroScene.jsx',
       'src/engine/scene/HologramCard.jsx',
       'src/engine/scene/ParkourScene.jsx',

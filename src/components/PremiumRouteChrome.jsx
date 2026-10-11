@@ -40,8 +40,8 @@ const ROUTE_CONFIG = Object.freeze({
   '/parkour-academy': Object.freeze({
     key: 'parkour-academy',
     revealSelectors: [],
-    cardSelectors: ['.academy-level', '.academy-logistics-grid > article'],
-    spotlightSelectors: ['.academy-level'],
+    cardSelectors: ['.academy-progression__card', '.academy-logistics-grid > article'],
+    spotlightSelectors: ['.academy-progression__card'],
     tiltSelectors: [],
   }),
   '/shop': Object.freeze({

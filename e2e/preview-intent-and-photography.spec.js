@@ -27,7 +27,7 @@ test('recursos y servicios apuntan a destinos reales', async ({ page }) => {
 
   await expect(page.locator('.gym-service-card')).toHaveCount(4)
   await expect(page.locator('.gym-gift-card')).toHaveCount(3)
-  await expect(page.getByRole('link', { name: /VER TODOS LOS SERVICIOS/i })).toHaveAttribute('href', '/programs')
+  await expect(page.getByRole('link', { name: /EXPLORAR TODOS LOS SERVICIOS/i })).toHaveAttribute('href', '/programs')
 
   const giftHrefs = await page.locator('.gym-gift-card').evaluateAll((nodes) => nodes.map((node) => node.getAttribute('href')))
   expect(giftHrefs).toEqual(['#empieza', '#empieza', '#empieza'])

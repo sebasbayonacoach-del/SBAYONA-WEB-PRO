@@ -1,0 +1,131 @@
+/* BAYONA · Interior editorial corrections · Oct 2026
+   All selectors are route-scoped; Home remains unchanged. */
+
+/* NOSOTROS / Método — quiet architecture before decoration. */
+body.premium-route--about .about-page .about-method-scene {
+  background-position:center 34%;min-height:0;
+}
+body.premium-route--about .about-page .about-method-scene.scene-bg.scene-bg--after::after {
+  background:linear-gradient(90deg,rgba(10,13,14,.91) 0%,rgba(11,15,17,.84) 49%,rgba(10,13,14,.66) 100%) !important;
+}
+body.premium-route--about .about-page .about-method-scene::before {
+  background:linear-gradient(to bottom,transparent,rgba(11,14,15,.7)) !important;
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+body.premium-route--about .about-page .about-method-inner {
+  display:grid !important;grid-template-columns:minmax(0,1fr) !important;
+  gap:0 !important;max-width:1420px;padding-block:clamp(45px,5vw,78px);
+}
+body.premium-route--about .about-page .about-method-inner > * {grid-column:1 !important;}
+body.premium-route--about .about-page .about-method-heading {
+  max-width:870px;width:100%;margin:0 0 clamp(26px,4vw,50px) !important;
+}
+body.premium-route--about .about-page .about-method-heading h2 {
+  font-size:clamp(2.7rem,5vw,5.3rem) !important;max-width:19ch !important;
+  margin:14px 0 19px;line-height:1.035;letter-spacing:-.052em;
+}
+body.premium-route--about .about-page .about-method-heading > p {
+  max-width:55ch;color:#f5ebe0;font-size:clamp(1.02rem,1.25vw,1.24rem);
+  line-height:1.58;
+}
+body.premium-route--about .about-page .about-decision-stage {width:100%;margin:0 0 clamp(35px,4vw,60px);}
+body.premium-route--about .about-page .about-decision-stage__steps {gap:clamp(12px,1.4vw,22px);}
+body.premium-route--about .about-page .about-decision-stage__step {
+  min-height:278px;padding:clamp(25px,2.5vw,38px);
+  background:rgba(19,23,24,.96);border:1px solid rgba(244,162,97,.3);
+  box-shadow:0 20px 55px rgba(0,0,0,.15);
+}
+body.premium-route--about .about-page .about-decision-stage__line {margin:20px 0 25px;}
+body.premium-route--about .about-page .about-decision-stage__step h3 {margin:0 0 15px;font-size:clamp(1.75rem,2vw,2.4rem);}
+body.premium-route--about .about-page .about-decision-stage__step p {color:#ebe3d9;line-height:1.55;}
+body.premium-route--about .about-page .about-decision-stage__watermark {opacity:.35;font-size:9rem;bottom:-.12em;}
+body.premium-route--about .about-page .about-method-inner > blockquote {
+  max-width:90ch !important;margin:clamp(10px,2vw,28px) 0 0 !important;
+  font-size:clamp(1.35rem,2.1vw,2.25rem) !important;line-height:1.3;
+}
+body.premium-route--about .about-page .about-method-inner > .about-cta-actions {margin-top:30px;}
+
+/* SERVICIOS / the pricing panel was light cream + pale-on-pale typography
+   even when the user was in NIGHT mode. Strong surfaces + explicit contrast. */
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships {
+  background:#1e2423 !important;color:#f7f2e8 !important;
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .services-heading h2,
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .services-heading > p {
+  color:#faf4e9 !important;-webkit-text-fill-color:#faf4e9;
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-explorer {color:#f6eee3;}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-selector {
+  background:#2b312e !important;border:1px solid rgba(244,162,97,.4) !important;
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-comparison-item {
+  background:#2b312e;border-color:rgba(255,255,255,.19);
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-comparison-item.is-active {background:#39392f;}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-tab {color:#fff5e7 !important;}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-tab-copy strong,
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-tab-price {color:#fff5e7 !important;-webkit-text-fill-color:#fff5e7 !important;}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-tab-copy small,
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-tab-index,
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-tab-price small {color:#f2b886 !important;-webkit-text-fill-color:#f2b886 !important;}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-preview {
+  background:#262c29;border:1px solid rgba(255,255,255,.2);padding:clamp(18px,2vw,33px);
+}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-preview :is(p,dt,dd,h3,strong,span) {color:#f2ede6;}
+html[data-bayona-theme='night'] body.premium-route--programs .services-memberships .plan-showroom-preview .plan-cta {color:#13100d;}
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships {
+  background:#e8dfd2 !important;color:#25211c !important;
+}
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .services-heading h2,
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .services-heading > p {
+  color:#25211c !important;-webkit-text-fill-color:#25211c !important;
+}
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .plan-showroom-selector {
+  background:#f8f4eb !important;border:1px solid rgba(53,42,32,.38) !important;
+}
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .plan-comparison-item {background:#f8f4eb;}
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .plan-showroom-tab-copy strong,
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .plan-showroom-tab-price {color:#282018 !important;-webkit-text-fill-color:#282018 !important;}
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .plan-showroom-tab-index,
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .plan-showroom-tab-copy small {color:#774320 !important;}
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .plan-showroom-preview {
+  background:#faf6ef;border:1px solid rgba(63,47,32,.28);padding:clamp(18px,2vw,33px);
+}
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .plan-showroom-preview :is(p,dt,dd,h3,strong,span) {color:#29221c;}
+@media(max-width:930px){
+  body.premium-route--about .about-page .about-method-inner {padding-block:20px;}
+  body.premium-route--about .about-page .about-method-heading {margin:0 0 30px !important;}
+  body.premium-route--about .about-page .about-decision-stage__steps {grid-template-columns:1fr;}
+  body.premium-route--about .about-page .about-decision-stage__step {min-height:0;}
+}
+
+/* BAYONA / microtypography system — Parkour's compact technical writing
+   adapted per section rather than copying an identical decoration everywhere. */
+body.premium-route--programs .services-overview .services-heading::after,
+body.premium-route--programs .services-memberships .services-heading::after,
+body.premium-route--shop .shop-categories-head::after,
+body.premium-route--community .community-hero-pass::after,
+body.premium-route--resources .resources-hero-library-card::after,
+body.premium-route--about .about-method-heading::after {
+  display:block;width:max-content;max-width:100%;margin-top:clamp(18px,2.1vw,30px);
+  padding:10px 0;border-top:1px solid currentColor;
+  color:#eda774;opacity:.92;font:700 .65rem/1.5 'DM Mono',monospace;
+  letter-spacing:.14em;text-transform:uppercase;white-space:normal;
+}
+body.premium-route--programs .services-overview .services-heading::after {content:'BAYONA / 01 · ELIGE TU DISCIPLINA';}
+body.premium-route--programs .services-memberships .services-heading::after {content:'BAYONA / 02 · PLAN · SEGUIMIENTO · AVANCE';}
+body.premium-route--shop .shop-categories-head::after {content:'CATÁLOGO / MATERIAL · EQUIPO · RECURSOS';}
+body.premium-route--community .community-hero-pass::after {content:'CLUB / PERSONAS · CONSTANCIA · MOVIMIENTO';}
+body.premium-route--resources .resources-hero-library-card::after {content:'BIBLIOTECA / APRENDER · APLICAR · REPETIR';}
+body.premium-route--about .about-method-heading::after {content:'MÉTODO / 01 VALORAR · 02 PLANIFICAR · 03 AJUSTAR';}
+/* Keep technical labels legible even on photography and daylight surfaces. */
+html[data-bayona-theme='day'] body.premium-route--programs .services-memberships .services-heading::after {color:#77411f;}
+body.premium-route--programs .services-catalog-index::before {content:'ÍNDICE DE DISCIPLINAS   /   01—03';display:block;grid-column:1/-1;margin:0 0 12px;color:#f4ae77;font:700 .68rem/1.5 'DM Mono',monospace;letter-spacing:.13em;}
+@media(max-width:650px){
+  body.premium-route--programs .services-overview .services-heading::after,
+  body.premium-route--programs .services-memberships .services-heading::after,
+  body.premium-route--shop .shop-categories-head::after,
+  body.premium-route--community .community-hero-pass::after,
+  body.premium-route--resources .resources-hero-library-card::after,
+  body.premium-route--about .about-method-heading::after {font-size:.58rem;letter-spacing:.09em;}
+}

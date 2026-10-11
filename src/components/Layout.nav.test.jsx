@@ -3,10 +3,10 @@ import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { Footer, Navbar } from './Layout.jsx'
 
-const DESKTOP_LABELS = ['Servicios', 'Parkour', 'Tienda', 'Recursos', 'Nosotros']
+const DESKTOP_LABELS = ['Nosotros', 'Servicios', 'Parkour', 'Comunidad', 'BAYONA+', 'Tienda', 'Recursos']
 
 describe('Navbar — Gym Funnel V2', () => {
-  it('usa cinco destinos públicos claros y elimina los grupos abstractos', () => {
+  it('presenta siete destinos en el orden real del recorrido', () => {
     render(<MemoryRouter><Navbar /></MemoryRouter>)
     const nav = screen.getByRole('navigation', { name: 'Navegación principal' })
     const links = within(nav).getAllByRole('link')
@@ -30,13 +30,15 @@ describe('Navbar — Gym Funnel V2', () => {
     expect(screen.getByRole('button', { name: /Abrir carrito/i })).toBeInTheDocument()
   })
 
-  it('abre un menú móvil con Inicio + cinco destinos y CTA de captación', () => {
+  it('abre un menú móvil con Inicio, siete destinos, Preguntas y CTA', () => {
     render(<MemoryRouter><Navbar /></MemoryRouter>)
     fireEvent.click(screen.getByRole('button', { name: 'Abrir menú' }))
     const mobile = screen.getByRole('navigation', { name: 'Navegación móvil' })
     const navList = mobile.querySelector('.gym-mobile-nav-list')
-    expect(within(navList).getAllByRole('link')).toHaveLength(6)
+    expect(within(navList).getAllByRole('link')).toHaveLength(9)
     expect(within(navList).getByRole('link', { name: /Inicio/i })).toHaveAttribute('href', '/')
+    expect(within(navList).getByRole('link', { name: /Preguntas/i })).toHaveAttribute('href', '/faq')
+    expect(within(navList).getAllByRole('link').map((link) => link.textContent.trim().replace(/^\d+/, ''))).toEqual(['Inicio', ...DESKTOP_LABELS, 'Preguntas'])
     expect(mobile.textContent).not.toMatch(/RECORRIDO|ECOSISTEMA|DECIDIR|MI CUENTA/i)
     expect(within(mobile).getByRole('link', { name: /EMPIEZA GRATIS/i })).toHaveAttribute('href', '/#empieza')
     expect(within(mobile).getByRole('link', { name: /HABLAR POR WHATSAPP/i }).getAttribute('href')).toContain('https://wa.me/')

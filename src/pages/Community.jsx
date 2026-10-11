@@ -40,9 +40,11 @@ const youtubeProfile = profiles.find(profile => profile.id === 'youtube')
 const instagramProfile = profiles.find(profile => profile.id === 'instagram')
 const tiktokProfile = profiles.find(profile => profile.id === 'tiktok')
 
-const youtubeUrl = youtubeProfile?.url || 'https://youtube.com/@sevisionari'
-const instagramUrl = instagramProfile?.url || 'https://instagram.com/sebasbayona'
-const tiktokUrl = tiktokProfile?.url || 'https://tiktok.com/@sebasbayona'
+const youtubeUrl = youtubeProfile?.url || socialLinks.youtube
+const instagramUrl = instagramProfile?.url || socialLinks.instagram
+const tiktokUrl = tiktokProfile?.url || socialLinks.tiktok
+const instagramHandle = '@' + (instagramProfile?.handle || 'wwwsebastianbayona')
+const tiktokHandle = '@' + (tiktokProfile?.handle || 'sebasbayona.co')
 
 /**
  * La pinta de cada casilla. Lo que antes marcaba `active` ahora lo decide la
@@ -258,7 +260,7 @@ function CommunityLiveFeed() {
         <header className="community-section-header community-header" data-immersive="clip">
           <p className="community-overline community-eyebrow">BAYONA EN MOVIMIENTO</p>
           <h2 id="community-live-title" className="community-title">LO ÚLTIMO.<br /><span>EN MOVIMIENTO.</span></h2>
-          <p className="community-section-subtitle community-subtitle">Esto vamos creando y compartiendo. Puedes verlo sin entrar.</p>
+          <p className="community-section-subtitle community-subtitle">Compartimos lo que aprendemos, lo que practicamos y lo que nos inspira. Puedes descubrirlo a tu ritmo.</p>
         </header>
       </div>
 
@@ -291,12 +293,12 @@ function CommunityLiveFeed() {
           <article className="community-live-card community-social-card">
             <div className="community-live-media community-social-thumb is-square">
               <Instagram aria-hidden="true" size={48} strokeWidth={1} />
-              <span>@sebasbayona</span>
+              <span>{instagramHandle}</span>
             </div>
             <div className="community-live-body community-social-content">
               <p className="community-live-platform community-social-platform"><Instagram aria-hidden="true" size={18} /> INSTAGRAM</p>
               <h3 className="community-social-title">MOVIMIENTO QUE PUEDES VER.</h3>
-              <p className="community-live-date">PERFIL OFICIAL · @sebasbayona</p>
+              <p className="community-live-date">PERFIL OFICIAL · {instagramHandle}</p>
               <a className="community-social-link" href={instagramUrl} target="_blank" rel="noreferrer">
                 SEGUIR EN INSTAGRAM
                 <ArrowUpRight aria-hidden="true" size={16} />
@@ -309,12 +311,12 @@ function CommunityLiveFeed() {
           <article className="community-live-card community-social-card">
             <div className="community-live-media community-social-thumb is-square">
               <Glyph name="tiktok" size={48} />
-              <span>@sebasbayona</span>
+              <span>{tiktokHandle}</span>
             </div>
             <div className="community-live-body community-social-content">
               <p className="community-live-platform community-social-platform"><Glyph name="tiktok" size={18} /> TIKTOK</p>
               <h3 className="community-social-title">PARKOUR, BIOHACKING Y VIDA REAL.</h3>
-              <p className="community-live-date">PERFIL OFICIAL · @sebasbayona</p>
+              <p className="community-live-date">PERFIL OFICIAL · {tiktokHandle}</p>
               <a className="community-social-link" href={tiktokUrl} target="_blank" rel="noreferrer">
                 VER EN TIKTOK
                 <ArrowUpRight aria-hidden="true" size={16} />
@@ -391,7 +393,7 @@ export default function Community() {
               <strong>COMPARTIMOS EL PROCESO.</strong>
             </h1>
             <p className="community-hero-subtitle">
-              Un club abierto para entrenar con más contexto: preguntas, recursos, ritmo semanal y gente moviéndose en la misma dirección. Entras sin comprar nada.
+              Un lugar para compartir el camino: preguntar sin miedo, aprender de otras personas y encontrar motivación para seguir moviéndote. Puedes conocer la comunidad sin comprar nada.
             </p>
             <div className="community-hero-actions community-hero-cta">
               <a className="community-button community-button-primary" href={whatsappUrl} target="_blank" rel="noreferrer">
@@ -808,7 +810,7 @@ export default function Community() {
           <p className="community-overline community-eyebrow">SIGUIENTE PASO</p>
           <h2 id="community-closing-title" className="community-title">CONOZCAMOS EL GRUPO<br /><span>ANTES DE ELEGIR PLAN.</span></h2>
           <p className="community-closing-pressure">Entrar es gratis.</p>
-          <p className="community-section-subtitle community-subtitle">Pide las normas y el enlace por WhatsApp. Si quieres seguimiento, vemos juntos el plan.</p>
+          <p className="community-section-subtitle community-subtitle">Pide las normas y el enlace por WhatsApp. Nos encantará conocerte; si después necesitas acompañamiento individual, podemos hablar de las opciones.</p>
           <div className="community-closing-actions">
             <a className="community-button community-button-primary" href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle aria-hidden="true" size={20} />ENTRA AL GRUPO GRATIS<ArrowUpRight aria-hidden="true" size={18} /></a>
             <Link to="/programs" className="community-button community-button-secondary">VER SERVICIOS<ArrowUpRight aria-hidden="true" size={18} /></Link>
@@ -817,7 +819,7 @@ export default function Community() {
       </section>
 
       <footer className="community-footer-note" aria-label="Nota sobre la comunidad BAYONA">
-        <p className="community-shell">La comunidad BAYONA es un espacio abierto. Aquí entrenamos, preguntamos y compartimos.</p>
+        <p className="community-shell">BAYONA Comunidad es un espacio para escucharnos, aprender y entrenar con respeto, sin necesidad de tenerlo todo claro desde el principio.</p>
         <p className="community-shell community-final-signature">ENTRENAMOS CON CRITERIO. COMPARTIMOS CON RESPETO. — BAYONA</p>
       </footer>
 

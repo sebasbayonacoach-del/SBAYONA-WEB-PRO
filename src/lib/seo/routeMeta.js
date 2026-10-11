@@ -61,9 +61,9 @@ const STATIC_ROUTES = {
     breadcrumb: [['Tienda', '/shop']],
   },
   '/app': {
-    title: 'BAYONA+ — Acceso prioritario',
+    title: 'BAYONA App — Mi App y Coach Studio',
     description:
-      'BAYONA+ reúne la visión del centro de mando: plan, registro, recursos y comunidad. Solicita novedades y acceso prioritario cuando haya avances.',
+      'Accede a la versión web de BAYONA App: espacio personal de entrenamiento y Coach Studio. Conoce qué funciones están publicadas y las integraciones que siguen en desarrollo.',
     breadcrumb: [['BAYONA+', '/app']],
   },
   '/community': {

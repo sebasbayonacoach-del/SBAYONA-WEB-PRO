@@ -1,0 +1,41 @@
+/* Chapter navigation: discreet editorial navigation, never a scroll lock. */
+.about-journey-rail {position:fixed;z-index:26;left:clamp(12px,1.4vw,26px);top:50%;transform:translateY(-46%);display:flex;align-items:center;gap:14px;color:#f9f3eb;filter:drop-shadow(0 1px 12px rgba(0,0,0,.55));}
+.about-journey-rail__meter {height:220px;width:2px;background:rgba(255,255,255,.24);overflow:hidden;}
+.about-journey-rail__fill {display:block;width:100%;height:100%;background:#f4a261;transform:scaleY(0);transform-origin:top;}
+.about-journey-rail__chapters {display:grid;gap:4px;}
+.about-journey-rail__chapters a {display:flex;align-items:center;gap:8px;width:max-content;min-height:27px;padding:3px 9px;color:#c9c4bc;text-decoration:none;font:600 .64rem/1.2 'DM Mono',monospace;letter-spacing:.04em;transition:color .35s cubic-bezier(.2,.75,.2,1),transform .35s cubic-bezier(.2,.75,.2,1);}
+.about-journey-rail__chapters a.is-current,.about-journey-rail__chapters a:hover {color:#ffd7ae;transform:translateX(4px);}
+.about-journey-rail__number {color:#f4a261;font-size:.6rem;}
+.about-journey-rail__counter {display:none;}
+.about-journey-rail__chapters a:focus-visible {outline:2px solid #f4a261;outline-offset:2px;}
+.about-page [id] {scroll-margin-top:90px;}
+@media(max-width:1400px){.about-journey-rail__name {display:none;}.about-journey-rail__chapters a:hover .about-journey-rail__name,.about-journey-rail__chapters a:focus-visible .about-journey-rail__name {display:inline;}}
+@media(max-width:760px){
+ .about-journey-rail {left:0;top:auto;bottom:0;transform:none;right:0;z-index:35;height:46px;padding:0 16px;display:flex;justify-content:space-between;gap:12px;background:rgba(10,12,12,.96);border-top:1px solid rgba(244,162,97,.24);filter:none;}
+ .about-journey-rail__meter {height:2px;width:30%;flex:0 0 30%;}
+ .about-journey-rail__fill {transform-origin:left;}
+ .about-journey-rail__chapters {display:flex;flex:1;justify-content:space-between;gap:0;}
+ .about-journey-rail__chapters a {width:23px;height:33px;min-height:33px;justify-content:center;padding:0;}
+ .about-journey-rail__name {display:none !important;}
+ .about-journey-rail__counter {display:block;white-space:nowrap;font:600 .67rem/1 'DM Mono',monospace;letter-spacing:.04em;}
+ .about-journey-rail__counter span {color:#a6a7a3;}
+}
+@media(prefers-reduced-motion:reduce){.about-journey-rail__chapters a {transition:none;}}
+/* The rail stays subordinate to the photographs and documentary captions. */
+@media(min-width:761px){
+ .about-journey-rail {gap:8px;left:10px;}
+ .about-journey-rail__name {display:none !important;}
+ .about-journey-rail__chapters a {width:28px;justify-content:center;padding:3px;}
+ .about-journey-rail__chapters a.is-current {background:rgba(244,162,97,.14);}
+}
+@media(max-width:760px){
+ .about-journey-rail {top:64px;bottom:auto;height:36px;padding-inline:16px;border-top:0;border-bottom:1px solid rgba(244,162,97,.24);}
+ .about-journey-rail__chapters a {height:32px;min-height:32px;}
+}
+@media(max-width:760px){
+ .about-journey-rail {gap:8px;}
+ .about-journey-rail__meter {width:54px;flex:0 0 54px;}
+ .about-journey-rail__chapters {min-width:0;width:auto;flex:1;gap:0;}
+ .about-journey-rail__chapters a {flex:0 1 23px;min-width:0;width:23px;}
+ .about-journey-rail__counter {flex:0 0 auto;}
+}

@@ -157,7 +157,7 @@
   .shop-category-shortcuts {
     grid-template-columns: 1fr;
   }
-
+}
 
 /* Gym Funnel V2: la tienda usa fotografía real de producto.
    Las capas editoriales antiguas ocultan media dentro de *-card por defecto;

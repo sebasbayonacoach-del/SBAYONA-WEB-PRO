@@ -1,0 +1,80 @@
+/* BAYONA · Humane conversion copy, editorial spacing and mobile readability.
+   Retains canonical CTA destinations, field names, pricing and capabilities. */
+body.premium-route--home .gym-home-lead .lead-magnet-inner {
+  box-sizing:border-box;
+  width:min(840px,calc(100% - 2rem));
+  max-width:840px;
+  padding:clamp(29px,4vw,58px) !important;
+  margin-inline:auto;
+  background:#181b1a;
+  border:1px solid rgba(244,162,97,.32);
+}
+body.premium-route--home .gym-home-lead .lead-magnet-inner h2 {
+  max-width:22ch;
+  margin:0 0 20px;
+  color:#faf2e7 !important;
+  font-size:clamp(2rem,3.7vw,3.2rem) !important;
+  line-height:1.13 !important;
+  letter-spacing:-.045em;
+  text-wrap:balance;
+}
+body.premium-route--home .gym-home-lead .lead-magnet-inner > p:not(.lead-magnet-note) {
+  max-width:55ch;
+  color:#f3e9dc !important;
+  opacity:1;
+  line-height:1.65;
+  margin-bottom:clamp(20px,3vw,32px);
+}
+body.premium-route--home .gym-home-lead .lead-magnet-inner form {
+  max-width:100%;
+  display:grid;
+}
+body.premium-route--home .gym-home-lead .lead-magnet-inner form label {
+  color:#e7c8af;
+  opacity:1;
+}
+body.premium-route--home .gym-home-lead .lead-magnet-inner input {
+  min-height:50px;
+  background:#232725;
+  color:#fff4e5;
+}
+body.premium-route--home .gym-home-lead .lead-magnet-inner input::placeholder {color:#b8b2a7;opacity:1;}
+body.premium-route--home .gym-home-lead .lead-magnet-inner .lead-magnet-note {
+  color:#e1d8ca !important;
+  opacity:1;
+  font-size:clamp(.8rem,1vw,.89rem);
+  line-height:1.65;
+  margin-top:22px;
+}
+body.premium-route--home .gym-home-lead__intro {margin-bottom:clamp(25px,3vw,48px);}
+body.premium-route--home .gym-home-lead__intro h2 {
+  max-width:15ch;
+  font-size:clamp(2.6rem,5vw,5.8rem) !important;
+  line-height:1 !important;
+  letter-spacing:-.06em !important;
+  text-wrap:balance;
+}
+body.premium-route--home .gym-home-lead__intro > p {
+  max-width:67ch;
+  font-size:clamp(1rem,1.15vw,1.18rem);
+  line-height:1.72;
+}
+@media(max-width:650px){
+  body.premium-route--home .gym-home-lead__intro h2 {
+    max-width:17ch;
+    font-size:clamp(2.3rem,10.5vw,3.5rem) !important;
+  }
+  body.premium-route--home .gym-home-lead .lead-magnet-inner {
+    width:calc(100% - 2rem);
+    padding:clamp(22px,6vw,34px) !important;
+  }
+  body.premium-route--home .gym-home-lead .lead-magnet-inner h2 {
+    font-size:clamp(1.9rem,7.6vw,2.6rem) !important;
+  }
+  body.premium-route--home .gym-home-lead .lead-magnet-inner form .gold-button {
+    min-height:54px;
+    padding-inline:12px;
+    font-size:.82rem;
+    white-space:normal;
+  }
+}

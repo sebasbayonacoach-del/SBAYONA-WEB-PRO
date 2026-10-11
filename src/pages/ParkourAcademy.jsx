@@ -5,9 +5,9 @@ import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import VideoSection from '../components/VideoSection.jsx'
 import { siteMedia } from '../config/siteMedia.js'
 import { whatsAppLink } from '../config/site.config.js'
-import { StickyStage } from '../engine/scroll/StickyStage.jsx'
 import { Reveal } from '../engine/motion/Reveal.jsx'
 import '../styles/parkour-academy.css'
+import '../styles/parkour-progression-refinement.css'
 
 /* COPY 2026-09-19 · VOZ ÚNICA
    Menos texto, primera persona del plural, cero numeración decorativa en las
@@ -129,11 +129,11 @@ const method = [
 ]
 
 const faqs = [
-  ['¿Necesito experiencia previa?', 'No. Empezamos por los fundamentos y confirmamos edad y experiencia antes de la primera clase.'],
-  ['¿El parkour es solo para personas jóvenes?', 'No. Adaptamos la dificultad a tu punto de partida.'],
+  ['¿Necesito experiencia previa?', 'No. Te escuchamos y empezamos por los fundamentos, teniendo en cuenta tu edad, experiencia y confianza al moverte.'],
+  ['¿El parkour es solo para personas jóvenes?', 'No. Adaptamos la práctica a tus capacidades y a tu punto de partida; cada persona tiene su propio camino.'],
   ['¿Qué necesito llevar?', 'Ropa cómoda, calzado con agarre y agua. Te enviamos el detalle al confirmar la sesión.'],
   ['¿Dónde y cuándo son las clases?', 'Te lo confirmamos antes de reservar. Ahora puedes dejar tu interés sin pagar nada.'],
-  ['¿Cómo trabajamos la seguridad?', 'Preparación específica y progresiones a tu nivel. Nadie te obliga a ejecutar nada.'],
+  ['¿Cómo trabajamos la seguridad?', 'Preparación específica, progresión a tu nivel y permiso para parar. Queremos que aprendas con confianza, no por presión.'],
 ]
 
 const interestUrl = whatsAppLink('Hola BAYONA, quiero que empecemos juntos en la Academia de Parkour.')
@@ -153,7 +153,7 @@ export default function ParkourAcademy() {
           <div className="academy-hero-copy">
             <SectionLabel>BAYONA / PARKOUR ACADEMY</SectionLabel>
             <Reveal as="h1" id="academy-title">GANDÍA.<br /><span>LA CIUDAD</span><br />SE APRENDE EN MOVIMIENTO.</Reveal>
-            <Reveal as="p" delay={0.18}>Parkour con técnica, fuerza y criterio: no buscamos riesgo; buscamos control, confianza y lectura del entorno.</Reveal>
+            <Reveal as="p" delay={0.18}>El parkour es aprender a confiar en tu cuerpo paso a paso. Entrenamos técnica, fuerza y lectura del entorno con cuidado, progresión y respeto por cada nivel.</Reveal>
             <div className="academy-actions">
               <a className="academy-action academy-action--primary" href={interestUrl} target="_blank" rel="noreferrer">
                 EMPEZAMOS JUNTOS <ArrowRight size={18} aria-hidden="true" />
@@ -246,51 +246,34 @@ export default function ParkourAcademy() {
           <h2 id="academy-levels-title">TRES NIVELES.<br /><span>NINGÚN ATAJO.</span></h2>
           <p>Subimos cuando lo ves en tu ejecución, no cuando lo dice el calendario ni el ego.</p>
         </header>
-        {/*
-          FASE 8 · BLOQUE F — "LA ESCALERA" (cinematic-stage 2D del blueprint de
-          parkour). La escalera sigue: el recorrido es VERTICAL y ASCENDENTE.
-          Cada peldaño gana su propia preview: qué se ve en él y con qué se sube
-          al siguiente, para que el nivel no sea solo un título con una lista.
-        */}
-        <StickyStage length="180vh" states={levels.length} className="academy-level-grid academy-level-grid--stage">
-          {({ index, isStatic }) => (
-            <div
-              className="academy-level-stage"
-              aria-live="polite"
-              style={{ '--stage-fill': `${((index + 1) / levels.length) * 100}%` }}
-            >
-              {levels
-                .filter((_, levelIndex) => (isStatic ? levelIndex === index : true))
-                .map(([number, title, subtitle, skills, seen, promotion], levelIndex) => {
-                const isActive = levelIndex === index
-                const isPast = levelIndex < index
-                return (
-                  <article
-                    key={number}
-                    className={[
-                      'academy-level',
-                      'academy-level--stage',
-                      isActive ? 'academy-level--active' : '',
-                      isPast ? 'academy-level--past' : '',
-                    ].filter(Boolean).join(' ')}
-                    aria-current={isActive ? 'step' : undefined}
-                  >
-                    <div className="academy-level-preview" aria-hidden="true">
-                      <span className="academy-level-preview-frame">{number}</span>
-                      <span className="academy-level-preview-tag">PREVIEW · {title}</span>
-                    </div>
-                    <span>{number}</span><p>{subtitle}</p><h3>{title}</h3>
-                    <ul>{skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
-                    <dl className="academy-level-criteria">
-                      <div><dt>Se ve en</dt><dd>{seen.replace('Se ve en: ', '')}</dd></div>
-                      <div><dt>Subes cuando</dt><dd>{promotion.replace('Subes cuando: ', '')}</dd></div>
-                    </dl>
-                  </article>
-                )
-              })}
-            </div>
-          )}
-        </StickyStage>
+        <div className="academy-progression" aria-label="Progresión por tres niveles de parkour">
+          <div className="academy-progression__rail" aria-hidden="true">
+            <span>01 · CONTROL</span><span>02 · CONEXIÓN</span><span>03 · AUTONOMÍA</span>
+          </div>
+          <ol className="academy-progression__cards">
+            {levels.map(([number, title, subtitle, skills, seen, promotion]) => (
+              <li key={number} className="academy-progression__card">
+                <div className="academy-progression__topline">
+                  <span className="academy-progression__index">{number} / 03</span>
+                  <span className="academy-progression__seal">BAYONA / PARKOUR</span>
+                </div>
+                <div className="academy-progression__head">
+                  <span className="academy-progression__eyebrow">{subtitle}</span>
+                  <h3>{title}</h3>
+                </div>
+                <div className="academy-progression__skills">
+                  <span>QUÉ TRABAJAMOS</span>
+                  <ul>{skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
+                </div>
+                <dl className="academy-progression__criteria">
+                  <div><dt>SE VE EN</dt><dd>{seen.replace('Se ve en: ', '')}</dd></div>
+                  <div><dt>AVANZAS CUANDO</dt><dd>{promotion.replace('Subes cuando: ', '')}</dd></div>
+                </dl>
+              </li>
+            ))}
+          </ol>
+          <p className="academy-progression__footnote">NO SUBES POR TIEMPO. SUBES CUANDO EL MOVIMIENTO DEMUESTRA CONTROL.</p>
+        </div>
       </section>
 
       {/* Tres escenas, no cuatro líneas sueltas. La seguridad y la confianza
