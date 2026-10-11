@@ -11,6 +11,8 @@
  * · Si un dato no es verificable, se omite: no se inventa.
  */
 
+import { socialLinks } from './social.config.js'
+
 /** Dominio canónico. Sobrescribible en despliegue con VITE_SITE_URL. */
 const RAW_SITE_URL =
   (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SITE_URL) || 'https://bayona-jet.vercel.app'
@@ -74,9 +76,13 @@ export const DEFAULT_OG_IMAGE = {
  * `sameAs` en schema.org. Se filtran los vacíos en `siteSameAs()`.
  */
 const SOCIAL_PROFILE_URLS = [
-  'https://instagram.com/sebasbayona',
-  'https://youtube.com/@sevisionari',
-  'https://tiktok.com/@sebasbayona',
+  socialLinks.instagram,
+  socialLinks.tiktok,
+  socialLinks.youtube,
+  socialLinks.linkedin,
+  socialLinks.facebook,
+  socialLinks.threads,
+  socialLinks.x,
 ]
 
 /** URLs de perfiles sociales no vacías, deduplicadas. */

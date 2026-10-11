@@ -40,9 +40,11 @@ const youtubeProfile = profiles.find(profile => profile.id === 'youtube')
 const instagramProfile = profiles.find(profile => profile.id === 'instagram')
 const tiktokProfile = profiles.find(profile => profile.id === 'tiktok')
 
-const youtubeUrl = youtubeProfile?.url || 'https://youtube.com/@sevisionari'
-const instagramUrl = instagramProfile?.url || 'https://instagram.com/sebasbayona'
-const tiktokUrl = tiktokProfile?.url || 'https://tiktok.com/@sebasbayona'
+const youtubeUrl = youtubeProfile?.url || socialLinks.youtube
+const instagramUrl = instagramProfile?.url || socialLinks.instagram
+const tiktokUrl = tiktokProfile?.url || socialLinks.tiktok
+const instagramHandle = '@' + (instagramProfile?.handle || 'wwwsebastianbayona')
+const tiktokHandle = '@' + (tiktokProfile?.handle || 'sebasbayona.co')
 
 /**
  * La pinta de cada casilla. Lo que antes marcaba `active` ahora lo decide la
@@ -291,12 +293,12 @@ function CommunityLiveFeed() {
           <article className="community-live-card community-social-card">
             <div className="community-live-media community-social-thumb is-square">
               <Instagram aria-hidden="true" size={48} strokeWidth={1} />
-              <span>@sebasbayona</span>
+              <span>{instagramHandle}</span>
             </div>
             <div className="community-live-body community-social-content">
               <p className="community-live-platform community-social-platform"><Instagram aria-hidden="true" size={18} /> INSTAGRAM</p>
               <h3 className="community-social-title">MOVIMIENTO QUE PUEDES VER.</h3>
-              <p className="community-live-date">PERFIL OFICIAL · @sebasbayona</p>
+              <p className="community-live-date">PERFIL OFICIAL · {instagramHandle}</p>
               <a className="community-social-link" href={instagramUrl} target="_blank" rel="noreferrer">
                 SEGUIR EN INSTAGRAM
                 <ArrowUpRight aria-hidden="true" size={16} />
@@ -309,12 +311,12 @@ function CommunityLiveFeed() {
           <article className="community-live-card community-social-card">
             <div className="community-live-media community-social-thumb is-square">
               <Glyph name="tiktok" size={48} />
-              <span>@sebasbayona</span>
+              <span>{tiktokHandle}</span>
             </div>
             <div className="community-live-body community-social-content">
               <p className="community-live-platform community-social-platform"><Glyph name="tiktok" size={18} /> TIKTOK</p>
               <h3 className="community-social-title">PARKOUR, BIOHACKING Y VIDA REAL.</h3>
-              <p className="community-live-date">PERFIL OFICIAL · @sebasbayona</p>
+              <p className="community-live-date">PERFIL OFICIAL · {tiktokHandle}</p>
               <a className="community-social-link" href={tiktokUrl} target="_blank" rel="noreferrer">
                 VER EN TIKTOK
                 <ArrowUpRight aria-hidden="true" size={16} />
