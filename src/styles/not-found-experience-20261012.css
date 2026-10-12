@@ -1,0 +1,281 @@
+/*
+ * BAYONA / ROUTE LOST
+ * Design research: 404s.design — typography-led, creative, interactive errors.
+ * Original art: concentric motion compass, no WebGL, no external asset.
+ * Contrasting brand graphite / sunrise, independent of website theme.
+ */
+.ds-frame .bayona-lost-world.not-found-page {
+  --lost-cream:#f6f1e8;
+  --lost-ink:#0d0f0e;
+  --lost-orange:#f4a261;
+  display:block;
+  min-height:100svh;
+  overflow:hidden;
+  background:#101311;
+  color:var(--lost-cream);
+  isolation:isolate;
+}
+
+.ds-frame .bayona-lost-world__main {
+  width:min(100% - clamp(2rem,8vw,9rem),1370px);
+  margin-inline:auto;
+  padding-block:clamp(8rem,12vw,11rem) clamp(2.5rem,6vw,5rem);
+}
+.ds-frame .bayona-lost-world__topline {
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+  border-block:1px solid rgba(246,241,232,.22);
+  padding-block:1rem;
+  color:#d6cec0;
+  font:700 .68rem/1.5 var(--font-label,monospace);
+  letter-spacing:.12em;
+}
+.ds-frame .bayona-lost-world__topline span:first-child {display:inline-flex;gap:.5rem;align-items:center;color:var(--lost-orange);}
+.ds-frame .bayona-lost-world__stage {
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  align-items:center;
+  gap:clamp(1rem,3vw,3rem);
+  min-height:570px;
+  padding-block:clamp(2.5rem,5vw,4.5rem);
+}
+.ds-frame .bayona-lost-world__copy {position:relative;z-index:2;}
+.ds-frame .bayona-lost-world__eyebrow {
+  color:var(--lost-orange);
+  font:700 .7rem/1.5 var(--font-label,monospace);
+  letter-spacing:.18em;
+}
+.ds-frame .bayona-lost-world__number {
+  position:relative;
+  display:inline-block;
+  margin:clamp(1rem,2vw,1.8rem) 0 .25rem;
+  font-family:var(--bayona-font-display,Montserrat,Arial,sans-serif);
+  font-weight:950;
+  font-size:clamp(8rem,20vw,21rem);
+  line-height:.72;
+  letter-spacing:-.095em;
+  color:transparent;
+  -webkit-text-stroke:2px var(--lost-cream);
+  text-stroke:2px var(--lost-cream);
+}
+.ds-frame .bayona-lost-world__asterisk {
+  position:absolute;
+  right:-.35em;
+  top:-.25em;
+  font-size:.22em;
+  color:var(--lost-orange);
+  -webkit-text-stroke:0;
+  animation:bayona-lost-slow-orbit 22s linear infinite;
+}
+.ds-frame .bayona-lost-world h1 {
+  margin:clamp(1.7rem,3vw,3rem) 0 0;
+  max-width:15ch;
+  color:var(--lost-cream);
+  font-size:clamp(2.25rem,4.8vw,5rem);
+  line-height:.98;
+  letter-spacing:-.06em;
+  font-weight:900;
+  text-wrap:balance;
+}
+.ds-frame .bayona-lost-world h1 em {
+  font-style:normal;
+  color:var(--lost-orange);
+}
+.ds-frame .bayona-lost-world__description {
+  max-width:50ch;
+  margin:1.5rem 0 0;
+  color:rgba(246,241,232,.78);
+  font-size:clamp(.98rem,1.2vw,1.13rem);
+  line-height:1.7;
+}
+.ds-frame .bayona-lost-world__actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:.85rem 1.5rem;
+  align-items:center;
+  margin-top:clamp(1.6rem,3vw,2.7rem);
+}
+.ds-frame .bayona-lost-world__home {
+  display:inline-flex;align-items:center;justify-content:space-between;gap:1.5rem;
+  min-height:54px;padding:.85rem 1.1rem;
+  background:var(--lost-orange);
+  border:1px solid var(--lost-orange);
+  color:#17120d;
+  text-decoration:none;
+  font:900 .73rem/1.3 var(--font-label,monospace);
+  letter-spacing:.09em;
+  transition:background .2s ease,transform .2s ease;
+}
+.ds-frame .bayona-lost-world__home:is(:hover,:focus-visible) {background:#ffd0a5;transform:translateY(-3px);}
+.ds-frame .bayona-lost-world__support {
+  display:inline-flex;gap:.5rem;align-items:center;
+  min-height:48px;
+  color:var(--lost-cream);
+  text-decoration:none;
+  font:700 .7rem/1.4 var(--font-label,monospace);
+  letter-spacing:.08em;
+}
+.ds-frame .bayona-lost-world__support:hover {color:var(--lost-orange);}
+.ds-frame .bayona-lost-world__pathname {
+  display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;
+  margin-top:clamp(1.8rem,4vw,3rem);
+  color:rgba(246,241,232,.54);
+  font:700 .61rem/1.4 var(--font-label,monospace);
+  letter-spacing:.13em;
+}
+.ds-frame .bayona-lost-world__pathname code {
+  color:var(--lost-orange);
+  letter-spacing:0;
+  overflow-wrap:anywhere;
+}
+
+/* The graphic is deliberately CSS-only: three waypoints and one axis. */
+.ds-frame .bayona-lost-world__art {
+  position:relative;
+  display:grid;place-items:center;
+  min-height:clamp(310px,36vw,580px);
+  aspect-ratio:1;
+  background:radial-gradient(circle,rgba(244,162,97,.08),transparent 65%);
+}
+.ds-frame .bayona-lost-world__orbit {
+  position:relative;
+  width:min(85%,490px);
+  aspect-ratio:1;
+  display:grid;place-items:center;
+  border:1px solid rgba(244,162,97,.6);
+  border-radius:50%;
+  box-shadow:0 0 0 clamp(19px,3.1vw,45px) rgba(244,162,97,.035),
+             0 0 0 clamp(42px,6.5vw,92px) rgba(244,162,97,.025);
+}
+.ds-frame .bayona-lost-world__orbit::before {
+  content:'';
+  position:absolute;inset:13%;
+  border-radius:50%;
+  border:1px dashed rgba(246,241,232,.34);
+  animation:bayona-lost-slow-orbit 46s linear infinite;
+}
+.ds-frame .bayona-lost-world__orbit::after {
+  content:'';
+  position:absolute;inset:31%;
+  border-radius:50%;
+  border:1px solid rgba(244,162,97,.4);
+}
+.ds-frame .bayona-lost-world__center {
+  position:relative;z-index:2;
+  font:900 clamp(5rem,12vw,11rem)/1 var(--bayona-font-display,Montserrat,Arial,sans-serif);
+  color:var(--lost-cream);
+  letter-spacing:-.09em;
+}
+.ds-frame .bayona-lost-world__center span {font-size:.35em;color:var(--lost-orange);vertical-align:top;}
+.ds-frame .bayona-lost-world__orbit-text {
+  position:absolute;left:-4%;top:14%;
+  color:var(--lost-orange);
+  font:700 .64rem/1.2 var(--font-label,monospace);
+  letter-spacing:.1em;
+  transform:rotate(-28deg);
+}
+.ds-frame .bayona-lost-world__node {
+  position:absolute;z-index:3;
+  width:12px;height:12px;border:3px solid var(--lost-ink);border-radius:50%;
+  background:var(--lost-orange);
+  box-shadow:0 0 0 1px var(--lost-orange);
+}
+.ds-frame .bayona-lost-world__node--1{top:5%;left:22%;}
+.ds-frame .bayona-lost-world__node--2{top:45%;right:-6px;}
+.ds-frame .bayona-lost-world__node--3{bottom:8%;left:17%;}
+.ds-frame .bayona-lost-world__axis {
+  position:absolute;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(246,241,232,.17),transparent);
+}
+.ds-frame .bayona-lost-world__axis--h {height:1px;width:100%;}
+.ds-frame .bayona-lost-world__axis--v {height:100%;width:1px;transform:rotate(90deg);}
+.ds-frame .bayona-lost-world__art-footer {
+  position:absolute;right:0;bottom:0;
+  color:rgba(246,241,232,.46);
+  font:700 .63rem/1.4 var(--font-label,monospace);
+  letter-spacing:.11em;
+}
+@keyframes bayona-lost-slow-orbit {to{transform:rotate(360deg);}}
+
+/* Recovery is a mini visual directory, not four giant identical cards. */
+.ds-frame .bayona-lost-world__routes {
+  margin-top:clamp(1rem,3vw,3rem);
+  border-top:1px solid rgba(246,241,232,.24);
+}
+.ds-frame .bayona-lost-world__routes-label {
+  display:flex;align-items:center;gap:.5rem;
+  padding-block:1.1rem 1.7rem;
+  color:var(--lost-orange);
+  font:700 .67rem/1.4 var(--font-label,monospace);
+  letter-spacing:.15em;
+}
+.ds-frame .bayona-lost-world__routes-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1px;
+  background:rgba(246,241,232,.16);
+  border:1px solid rgba(246,241,232,.16);
+}
+.ds-frame .bayona-lost-world__route {
+  display:grid;grid-template-rows:auto 1fr auto;
+  gap:1rem;min-width:0;min-height:215px;
+  padding:clamp(1.15rem,2vw,2rem);
+  position:relative;
+  background:#191c19;
+  text-decoration:none;color:var(--lost-cream);
+  transition:background .2s ease,color .2s ease;
+}
+.ds-frame .bayona-lost-world__route-index {
+  color:var(--lost-orange);
+  font:700 .7rem/1 var(--font-label,monospace);
+}
+.ds-frame .bayona-lost-world__route strong {
+  font-size:clamp(1.4rem,2.1vw,2.4rem);
+  line-height:1.1;letter-spacing:-.05em;
+}
+.ds-frame .bayona-lost-world__route small {
+  max-width:25ch;
+  font-size:.87rem;
+  line-height:1.55;
+  color:rgba(246,241,232,.7);
+}
+.ds-frame .bayona-lost-world__route svg {position:absolute;right:1.2rem;top:1.2rem;color:var(--lost-orange);}
+.ds-frame .bayona-lost-world__route:is(:hover,:focus-visible) {background:#33251c;}
+.ds-frame .bayona-lost-world__endnote {
+  padding-top:1.5rem;margin:0;
+  font:700 .61rem/1.5 var(--font-label,monospace);
+  letter-spacing:.13em;
+  color:rgba(246,241,232,.45);
+}
+.ds-frame .bayona-lost-world a:focus-visible {
+  outline:2px solid var(--lost-orange);
+  outline-offset:3px;
+}
+@media(max-width:1000px){
+  .ds-frame .bayona-lost-world__stage {grid-template-columns:1fr;min-height:0;}
+  .ds-frame .bayona-lost-world__art {min-height:250px;max-height:400px;justify-self:center;width:min(100%,400px);}
+  .ds-frame .bayona-lost-world__number {font-size:clamp(8rem,24vw,17rem);}
+  .ds-frame .bayona-lost-world__routes-grid {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:600px){
+  .ds-frame .bayona-lost-world__main {width:calc(100% - 2rem);padding-top:7.5rem;}
+  .ds-frame .bayona-lost-world__topline {font-size:.57rem;}
+  .ds-frame .bayona-lost-world__topline span:nth-child(2){display:none;}
+  .ds-frame .bayona-lost-world__stage {padding-top:2rem;gap:1rem;}
+  .ds-frame .bayona-lost-world__number {font-size:clamp(7rem,33vw,11rem);}
+  .ds-frame .bayona-lost-world h1 {font-size:clamp(2rem,9vw,3.4rem);}
+  .ds-frame .bayona-lost-world__art {min-height:270px;width:min(100%,320px);}
+  .ds-frame .bayona-lost-world__routes-grid {grid-template-columns:1fr;}
+  .ds-frame .bayona-lost-world__route {min-height:120px;grid-template-columns:2rem 1fr;gap:.45rem .8rem;}
+  .ds-frame .bayona-lost-world__route-index {grid-row:1 / span 2;}
+  .ds-frame .bayona-lost-world__route small {grid-column:2;}
+  .ds-frame .bayona-lost-world__route strong {font-size:1.5rem;}
+  .ds-frame .bayona-lost-world__route svg {right:1rem;top:1rem;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .ds-frame .bayona-lost-world__asterisk,
+  .ds-frame .bayona-lost-world__orbit::before {animation:none;}
+  .ds-frame .bayona-lost-world__route,
+  .ds-frame .bayona-lost-world__home {transition:none;transform:none;}
+}

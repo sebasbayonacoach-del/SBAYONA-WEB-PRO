@@ -18,6 +18,8 @@ import '../styles/home-visual-rescue.css'
 import '../styles/home-services-premium.css'
 import '../styles/home-cinematic-hero-release.css'
 import '../styles/home-copy-caring.css'
+/* Refero editorial home composition + 21st.dev feature cards. */
+import '../styles/home-immersive-pass-20261012.css'
 
 const SERVICES = Object.freeze([
   {
@@ -144,6 +146,11 @@ export default function Home() {
               CONOCE CÓMO TE ACOMPAÑAMOS <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
+          <div className="bayona-hero-coordinates" aria-hidden="true">
+            <span>CUERPO / CIENCIA / PROPÓSITO</span>
+            <span className="bayona-hero-coordinates__dash" />
+            <span>001 — BAYONA</span>
+          </div>
           <a
             className="gym-home-reward"
             href="#regalos"
@@ -154,6 +161,19 @@ export default function Home() {
           </a>
         </div>
       </section>
+
+      <div className="bayona-manifesto-band" role="region" aria-label="Nuestra manera de entrenar">
+        <div className="bayona-manifesto-band__inner">
+          <div className="bayona-manifesto-band__identity">
+            <span>EL MÉTODO BAYONA</span>
+            <strong>NO ES SOLO ENTRENAR.</strong>
+          </div>
+          <p>Es aprender a habitar tu cuerpo con más fuerza, confianza y libertad.</p>
+          <a href="#servicios" aria-label="Descubre nuestros cuatro caminos">
+            EXPLORAR TU CAMINO <ArrowUpRight size={18} aria-hidden="true" />
+          </a>
+        </div>
+      </div>
 
       <section className="gym-home-services" id="servicios" aria-labelledby="gym-services-title">
         <div className="gym-home-shell">
@@ -183,6 +203,7 @@ export default function Home() {
                   <span>{service.number} / 04</span>
                   <span>{service.type}</span>
                 </div>
+                <span className="bayona-service-card-giant" aria-hidden="true">{service.number}</span>
                 <div className="gym-service-card__body">
                   <span className="gym-service-card__promise">{service.promise}</span>
                   <h3>{service.title}</h3>

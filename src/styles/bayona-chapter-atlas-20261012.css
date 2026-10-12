@@ -1,0 +1,172 @@
+/*
+ * BAYONA / CHAPTER COVERS — Refero × 21st.dev 2026-10-12
+ *
+ * Six visually differentiated public routes, shared editorial logic.
+ * An art-directed poster edge, numbered chapter marker, rhythm and contrast.
+ * No new component dependencies, scripts, fonts or mock social proof.
+ */
+.ds-frame[data-experience-scope='brand'] {
+  --chapter-orange:#f4a261;
+  --chapter-trim:rgba(244,162,97,.64);
+  --chapter-label-font:var(--font-label,monospace);
+}
+
+/* Chapter introductions across each existing route's native composition. */
+.ds-frame[data-experience-scope='brand'] :is(
+  .about-page .page-hero-content,
+  .shop-page .shop-hero-content,
+  .community-page .community-hero-copy,
+  .resources-page .resources-hero-copy,
+  .app-page .app-hero-content,
+  .parkour-academy .academy-hero-copy
+) {
+  position:relative;
+  border-inline-start:2px solid var(--chapter-trim);
+  padding-inline-start:clamp(1.3rem,2.4vw,2.75rem);
+  isolation:isolate;
+}
+.ds-frame[data-experience-scope='brand'] :is(
+  .about-page .page-hero-content,
+  .shop-page .shop-hero-content,
+  .community-page .community-hero-copy,
+  .resources-page .resources-hero-copy,
+  .app-page .app-hero-content,
+  .parkour-academy .academy-hero-copy
+)::before {
+  display:block;
+  margin-bottom:clamp(.9rem,2vw,1.7rem);
+  color:#f4a261;
+  font:800 .7rem/1.5 var(--chapter-label-font);
+  letter-spacing:.18em;
+  pointer-events:none;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .page-hero-content::before {
+  content:'BAYONA JOURNAL / 01 — ORIGEN';
+}
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-hero-content::before {
+  content:'BAYONA / 03 — EQUIPAMIENTO';
+}
+.ds-frame[data-experience-scope='brand'] .community-page .community-hero-copy::before {
+  content:'BAYONA / 05 — PERTENENCIA';
+}
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-copy::before {
+  content:'BAYONA / 06 — BIBLIOTECA';
+}
+.ds-frame[data-experience-scope='brand'] .app-page .app-hero-content::before {
+  content:'BAYONA+ / 04 — FUTURO';
+}
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-hero-copy::before {
+  content:'BAYONA PARKOUR / 02 — LIBERTAD';
+}
+
+/* Distinctive typesetting on every cover without changing source text. */
+.ds-frame[data-experience-scope='brand'] :is(
+ .about-page .page-hero-title,
+ .shop-page .shop-hero h1,
+ .community-page .community-hero-title,
+ .resources-page .resources-hero h1,
+ .app-page .app-hero-title,
+ .parkour-academy .academy-hero h1
+) {
+  letter-spacing:-.055em;
+  text-wrap:balance;
+}
+.ds-frame[data-experience-scope='brand'] .about-page .page-hero {
+  border-bottom:1px solid rgba(244,162,97,.32);
+}
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-hero {
+  border-bottom:3px solid #f4a261;
+}
+.ds-frame[data-experience-scope='brand'] .community-page .community-hero {
+  border-bottom:1px solid rgba(244,162,97,.5);
+}
+.ds-frame[data-experience-scope='brand'] .app-page .app-hero {
+  border-bottom:2px solid rgba(244,162,97,.75);
+}
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-hero {
+  border-bottom:2px solid rgba(244,162,97,.55);
+}
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero {
+  border-bottom:2px solid rgba(244,162,97,.63);
+}
+
+/* React functionality untouched: reinforce real shops and knowledge cards. */
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-categories {
+  border-block-end:1px solid rgba(244,162,97,.28);
+}
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts button {
+  border-bottom:3px solid rgba(244,162,97,.4);
+}
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts button:is(:hover,[aria-pressed='true'],:focus-visible) {
+  border-bottom-color:#f4a261;
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-why {
+  border-bottom:1px solid rgba(244,162,97,.24);
+}
+.ds-frame[data-experience-scope='brand'] .community-page .community-live {
+  position:relative;
+  isolation:isolate;
+}
+.ds-frame[data-experience-scope='brand'] .community-page .community-live-card {
+  border-bottom:3px solid rgba(244,162,97,.46);
+}
+.ds-frame[data-experience-scope='brand'] .community-page .community-live-card:is(:hover,:focus-within) {
+  border-bottom-color:#f4a261;
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-library-card {
+  border-inline-start:3px solid rgba(244,162,97,.42);
+}
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-library-card:is(:hover,:focus-visible) {
+  border-inline-start-color:#f4a261;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-problem-section {
+  border-block:1px solid rgba(244,162,97,.24);
+}
+.ds-frame[data-experience-scope='brand'] .about-page .about-chronicle-mobile__item {
+  border-inline-start:2px solid rgba(244,162,97,.42);
+}
+.ds-frame[data-experience-scope='brand'] .about-page .about-chronicle-mobile__item:is(:hover,:focus-within) {
+  border-inline-start-color:#f4a261;
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-features {
+  border-top:1px solid rgba(244,162,97,.28);
+}
+.ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > * {
+  border-top:2px solid rgba(244,162,97,.5);
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__card {
+  border-top:3px solid rgba(244,162,97,.7);
+}
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__card:focus-within {
+  border-top-color:#f4a261;
+}
+
+@media(max-width:700px){
+  .ds-frame[data-experience-scope='brand'] :is(
+    .about-page .page-hero-content,
+    .shop-page .shop-hero-content,
+    .community-page .community-hero-copy,
+    .resources-page .resources-hero-copy,
+    .app-page .app-hero-content,
+    .parkour-academy .academy-hero-copy
+  ) {padding-inline-start:1rem;}
+  .ds-frame[data-experience-scope='brand'] :is(
+    .about-page .page-hero-content,
+    .shop-page .shop-hero-content,
+    .community-page .community-hero-copy,
+    .resources-page .resources-hero-copy,
+    .app-page .app-hero-content,
+    .parkour-academy .academy-hero-copy
+  )::before {font-size:.56rem;letter-spacing:.1em;}
+}
+@media(prefers-reduced-motion:reduce){
+ .ds-frame[data-experience-scope='brand'] :is(
+ .shop-category-shortcuts button,.community-live-card,.resources-hero-library-card
+ ) {transition:none;transform:none;}
+}

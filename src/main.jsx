@@ -150,6 +150,8 @@ import './styles/21st-community-interactions.css'
 import './styles/21st-sitewide-patterns.css'
 /* Visible differentiated design for cross-route editorial areas. */
 import './styles/bayona-visual-impact-20261012.css'
+/* Route-specific chapter art direction: Refero × 21st.dev. */
+import './styles/bayona-chapter-atlas-20261012.css'
 import './styles/ds-experience.css'
 /*
  * Pase atelier (FASE 4C). Detrás de la capa de experiencia porque la afina:
