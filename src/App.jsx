@@ -9,14 +9,13 @@ import { PageTransition, CustomCursor } from './engine'
 import { MotionDebug } from './engine/debug/MotionDebug.jsx'
 import PremiumRouteChrome from './components/PremiumRouteChrome'
 import EditorialOutro from './components/EditorialOutro.jsx'
-import { useAuth } from './lib/auth/AuthContext.jsx'
-import RequireAuth from './components/auth/RequireAuth.jsx'
 import { useRecedeWhileScrolling } from './lib/ui/useRecedeWhileScrolling.js'
 import RouteSeo from './components/seo/RouteSeo.jsx'
 import RouteEffects from './components/RouteEffects.jsx'
 import ConsentBanner from './components/consent/ConsentBanner.jsx'
 import Breadcrumb from './components/navigation/Breadcrumb.jsx'
 import TranslateOffer from './components/TranslateOffer.jsx'
+import { BAYONA_APP_ENTRY_URL } from './config/bayonaAppIntegration.js'
 import Home from './pages/Home'
 
 /**
@@ -33,57 +32,41 @@ const ParkourAcademy = lazy(() => import('./pages/ParkourAcademy'))
 const PlanPresentation = lazy(() => import('./pages/PlanPresentation'))
 const Shop = lazy(() => import('./pages/Shop'))
 /*
- * Dos cosas distintas, dos puertas distintas (2026-09-20, por pedido de
- * Sebastián):
- *  - `/app` vuelve a ser la página oficial larga de BAYONA+ (`AppExperience`),
- *    la que explica todo. Es pública: el propio componente se mira la sesión y
- *    sin ella muestra el recorrido completo, con ella el panel del miembro.
- *    `RequireAuth` aquí sobra y cerraba la página a quien quería leerla.
- *  - `/panel` es el mando nuevo de cinco pantallas (BAYONA OS, 2026-09-18). No
- *    se toca su contenido: solo se le da su propia dirección, que es lo que
- *    antes vivía dentro de `/app`.
+ * BAYONA App · integración 2026-10-12:
+ *  - /app es la presentación pública del producto.
+ *  - /mi-app/index.html?source=pwa es la aplicación real integrada.
+ *  - /entrar y /panel se conservan únicamente como rutas de compatibilidad.
+ * La sesión web antigua nunca sustituye la presentación pública de /app.
  */
 const AppExperience = lazy(() => import('./pages/AppExperience'))
-const AppOS = lazy(() => import('./pages/AppOS'))
-
-/*
- * `/app` tiene dos caras y una sola dirección, resuelta por sesión y no por
- * ruta nueva: probar `/app/os` inflaba cuatro censos de gobernanza (sitemap
- * indexable, inventario de rutas públicas, blueprints del documento y destinos
- * internos), que son justo la alarma de «has abierto una puerta sin registrar».
- * El carril de BAYONA OS ya había documentado la misma razón para usar `?s=`.
- *  - sin sesión: la página oficial larga, pública y legible (AppExperience)
- *  - con sesión: el mando de cinco pantallas (AppOS), con su cargador
- */
 function AppEntry() {
-  const { user, loading } = useAuth()
-  if (loading) {
-    return (
-      <section className="app-entry-loading" role="status" aria-live="polite" aria-label="Preparando acceso BAYONA">
-        <div className="app-entry-loading__panel">
-          <p className="app-entry-loading__eyebrow">BAYONA OS · ACCESO</p>
-          <h1>Preparando tu espacio.</h1>
-          <p>
-            Verificando tu sesión, créditos y tablero personal antes de abrir el
-            sistema. Nada de ruido: solo tu mando listo para entrenar y construir.
-          </p>
-          <div className="app-entry-loading__rail" aria-hidden="true">
-            <span>Identidad</span>
-            <span>Plan</span>
-            <span>Panel</span>
-          </div>
-        </div>
-      </section>
-    )
-  }
-  return user ? <AppOS /> : <AppExperience />
+  // /app is now the public product story. The real product lives at /mi-app/.
+  // publicOnly prevents an old browser-only WEB session from reopening the
+  // legacy members area and creating a second account experience.
+  return <AppExperience publicOnly />
+}
+
+function IntegratedAppRedirect() {
+  useEffect(() => {
+    window.location.replace(BAYONA_APP_ENTRY_URL)
+  }, [])
+
+  return (
+    <section className="app-entry-loading" role="status" aria-live="polite" aria-label="Abriendo BAYONA App">
+      <div className="app-entry-loading__panel">
+        <p className="app-entry-loading__eyebrow">BAYONA APP · UNA SOLA CUENTA</p>
+        <h1>Abriendo Mi App.</h1>
+        <p>Entrenamiento, progreso y Coach Studio viven ahora en el producto integrado.</p>
+        <a className="app-primary-cta" href={BAYONA_APP_ENTRY_URL}>CONTINUAR A MI APP</a>
+      </div>
+    </section>
+  )
 }
 const Community = lazy(() => import('./pages/Community'))
 const Resources = lazy(() => import('./pages/Resources'))
 const FAQ = lazy(() => import('./pages/FAQ'))
 const Checkout = lazy(() => import('./pages/Checkout'))
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'))
-const Entrar = lazy(() => import('./pages/Entrar'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 /*
  * Modo selección (?edit=1): chunk aparte que SOLO se descarga con el query
@@ -251,36 +234,17 @@ function Site() {
               <Route path="/plan/elite" element={<PlanPresentation planId="elite" />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/app" element={<AppEntry />} />
-              {/*
-                El mando de cinco pantallas con la dirección que su propio
-                comentario le prometía desde el 18-sep (`/panel` es el mando
-                nuevo… solo se le da su propia dirección`). No estaba
-                declarada: el único sitio vivo era `/app`; la configuración espacial histórica
-                incluso contemplaba una ruta que todavía no existía. `RequireAuth` es el
-                mismo guardia del resto de destinos privados: sin sesión devuelve
-                a `/entrar?next=/panel`. `/app` no cambia de comportamiento.
-              */}
-              <Route
-                path="/panel"
-                element={
-                  <RequireAuth>
-                    <AppOS />
-                  </RequireAuth>
-                }
-              />
+              {/* Compatibilidad histórica: el panel antiguo converge en Mi App. */}
+              <Route path="/panel" element={<IntegratedAppRedirect />} />
               <Route path="/community" element={<Community />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/faq" element={<FAQ />} />
-              {/* La caja no pide cuenta: exigir contraseña antes de enseñar el
-                  precio corta el embudo en el peor sitio. `/app` sigue protegido. */}
+              {/* Checkout permanece público: el precio se muestra antes de pedir cuenta. */}
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/onboarding" element={<Navigate to="/#empieza" replace />} />
-              {/*
-                /entrar conserva el acceso privado. /onboarding queda solo como
-                compatibilidad histórica y redirige al inicio gratuito.
-              */}
-              <Route path="/entrar" element={<Entrar />} />
+              {/* Compatibilidad histórica: el acceso antiguo converge en Mi App. */}
+              <Route path="/entrar" element={<IntegratedAppRedirect />} />
               <Route path="/design-system" element={<DesignSystem />} />
               {/*
                 404 real. Antes esta ruta devolvía <Home />, lo que generaba un

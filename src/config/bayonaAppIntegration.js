@@ -3,8 +3,8 @@
  * Never embed it in an iframe; link to the real, separately hosted application.
  * ?source=pwa is supported by landing-boot.js and opens the actual role picker.
  */
-export const BAYONA_APP_PUBLIC_URL = 'https://bayona-app-one.vercel.app/'
-export const BAYONA_APP_ENTRY_URL = 'https://bayona-app-one.vercel.app/?source=pwa'
+export const BAYONA_APP_PUBLIC_URL = '/mi-app/index.html'
+export const BAYONA_APP_ENTRY_URL = '/mi-app/index.html?source=pwa'
 export const BAYONA_APP_ROLE_IMAGE = '/images/bayona-live-app/role-selection-20261009.png'
 export const BAYONA_APP_MOBILE_IMAGE = '/images/bayona-live-app/role-picker-mobile-crop-20261009.png'
 

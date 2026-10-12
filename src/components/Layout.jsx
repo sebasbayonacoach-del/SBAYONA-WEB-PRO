@@ -4,6 +4,7 @@ import { ArrowUpRight, Menu, Moon, ShoppingCart, Sun, X } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { socialLinks } from '../config/social.config'
 import { whatsAppLink } from '../config/site.config.js'
+import { BAYONA_APP_ENTRY_URL } from '../config/bayonaAppIntegration.js'
 import { resolveProfiles } from '../lib/social/platforms'
 import { selectCartCount, useCartStore } from '../store/cartStore.js'
 import { prefetchRoute } from '../lib/perf/routePrefetch.js'
@@ -195,6 +196,9 @@ export function Navbar() {
           </NavLink>
         ))}
       </nav>
+      <a className="nav-app-entry" href={BAYONA_APP_ENTRY_URL} aria-label="Abrir Mi App BAYONA">
+        MI APP <ArrowUpRight size={14} strokeWidth={1.4} aria-hidden="true" />
+      </a>
       <button
         className="site-theme-toggle"
         type="button"
@@ -267,6 +271,9 @@ export function Navbar() {
               ))}
             </div>
             <div className="gym-mobile-nav-conversion">
+              <a className="gym-mobile-nav-app" href={BAYONA_APP_ENTRY_URL} onClick={close}>
+                ABRIR MI APP <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
+              </a>
               <p>Tu primera decisión no cuesta nada.</p>
               <span>Déjanos tus datos, recibe tus recursos de inicio y pide tu valoración.</span>
               <a href="/#empieza" onClick={close}>
@@ -322,6 +329,7 @@ export function Footer() {
         <nav className="footer-column" aria-label="Ayuda">
           <p>AYUDA</p>
           <Link to="/faq">Preguntas frecuentes</Link>
+          <a href={BAYONA_APP_ENTRY_URL}>Mi App</a>
           <a href={whatsAppLink('Hola BAYONA, quiero información sobre sus servicios de entrenamiento.')} target="_blank" rel="noreferrer">
             WhatsApp
           </a>

@@ -99,12 +99,12 @@ export default function AppOS() {
           cuenta o de este dispositivo. Si todavía no existe información suficiente,
           BAYONA te lo dice y te conduce al siguiente paso en lugar de inventar progreso.
         </p>
-        <p>La aplicación independiente tiene su propio acceso; los datos de este panel no se transfieren automáticamente.</p>
+        <p>La aplicación completa está integrada en BAYONA. Este panel ligero se conserva como compatibilidad mientras migramos el acceso al producto completo.</p>
         <p className="os-disclosure__links">
           <Link className="os-link" to="/resources">Recursos abiertos</Link>
           <Link className="os-link" to="/community">Comunidad</Link>
           <Link className="os-link" to="/faq">Preguntas frecuentes</Link>
-          <a className="os-link" href={BAYONA_APP_ENTRY_URL} target="_blank" rel="noopener noreferrer">Abrir BAYONA App · Mi App / Coach Studio ↗</a>
+          <a className="os-link" href={BAYONA_APP_ENTRY_URL}>Abrir BAYONA App · Mi App / Coach Studio ↗</a>
         </p>
       </aside>
     </AppShell>

@@ -1,0 +1,775 @@
+// BAYONA ONE · shell + Coach Studio v11
+// Una app, dos contextos. Reutiliza el dominio oficial; no crea un backend paralelo.
+import { S, on, todayKey } from "../state.js";
+import { t, esc } from "../i18n.js";
+import { WORKOUTS, MACRO } from "../data.js";
+import {
+  CLIENTES_DEMO, fichaLocal, alertasDe, resumenCartera, coreCoach,
+  planificacion, validaAsignacion,
+} from "../coachos.js";
+import {
+  openSection, BUILDERS, showModal, hideModal, toast, $, elT,
+} from "./shared.js";
+import { currentSession, accountRole, probeBackend } from "../sync/supabase.js";
+import { linkedClients } from "../sync/coaching.js";
+
+const COACH_SECTIONS = new Set([
+  "coachos","centro","socios","cuotas","agenda","acceso","portal","informes"
+]);
+const NEUTRAL_SECTIONS = new Set(["library"]);
+
+const icon = (path) =>
+  '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" ' +
+  'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="' +
+  path + '"/></svg>';
+
+function n(tag, cls, text) {
+  const x = document.createElement(tag);
+  if (cls) x.className = cls;
+  if (text !== undefined) x.textContent = String(text);
+  return x;
+}
+
+function btn(label, cls, action) {
+  const b = n("button", cls || "btn", label);
+  b.type = "button";
+  if (action) b.addEventListener("click", action);
+  return b;
+}
+
+function makeButton(label, mode, svgPath) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "one-context-btn";
+  b.dataset.oneContext = mode;
+  b.setAttribute("aria-label", t("one.context.switch", { mode:label }));
+  b.innerHTML = icon(svgPath) + "<span>" + label + "</span>";
+  return b;
+}
+
+function ensureContextSwitch() {
+  // v14: los ecosistemas ya no se mezclan. No existe un conmutador de rol
+  // dentro de la sesión; el tipo de cuenta determina la experiencia completa.
+  document.getElementById("one-context-switch")?.remove();
+  return;
+  const topbar = document.getElementById("topbar");
+  if (!topbar || document.getElementById("one-context-switch")) return;
+  const group = document.createElement("div");
+  group.id = "one-context-switch";
+  group.className = "one-context-switch";
+  group.setAttribute("role", "group");
+  group.setAttribute("aria-label", t("one.context.label"));
+
+  const athlete = makeButton("AFILIADO","athlete","M5 19V5m14 14V5M5 12h14");
+  const coach = makeButton("COACH","coach","M4 20V8l8-4 8 4v12M9 20v-7h6v7");
+  athlete.addEventListener("click", () => openSection("hoy"));
+  coach.addEventListener("click", () => openSection("coachos"));
+  group.append(athlete, coach);
+
+  const command = document.getElementById("cmd-chip");
+  if (command) command.insertAdjacentElement("afterend", group);
+  else topbar.append(group);
+}
+
+function ensureEditionMark() {
+  const brand = document.querySelector("#topbar .brand");
+  if (!brand || brand.querySelector(".one-edition")) return;
+  const mark = n("span", "one-edition", "ONE");
+  mark.title = "BAYONA ONE · sistema integrado";
+  brand.append(mark);
+}
+
+function ensureCoachRailButton() {
+  if (document.body.dataset.entryRole !== "coach") return;
+  const nav = document.getElementById("panel-nav");
+  if (!nav || nav.querySelector(".one-role-coach-nav")) return;
+
+  const specs = [
+    ["coachos", "Studio", "M5 20h14M7 20V9l5-3 5 3v11M9 13h6"],
+    ["library", "Rutinas", "M4 5h16v14H4z M8 9h8 M8 13h8"],
+    ["agenda", "Agenda", "M5 4h14v16H5z M8 2v4 M16 2v4 M5 9h14"],
+    ["account", "Cuenta", "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M4 21a8 8 0 0 1 16 0"],
+  ];
+  specs.forEach(([section, label, path]) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "rail-btn one-role-coach-nav";
+    b.dataset.go = section;
+    b.innerHTML = icon(path) + "<span>" + label + "</span>";
+    b.addEventListener("click", () => openSection(section));
+    nav.append(b);
+  });
+}
+
+function sync(section) {
+  section = section || document.getElementById("drawer")?.dataset.section || "hoy";
+  const entryRole = document.body.dataset.entryRole || "";
+  const coachMode = entryRole === "coach";
+
+  // El usuario final nunca cae accidentalmente en herramientas de entrenador.
+  if (entryRole && !coachMode && COACH_SECTIONS.has(section)) {
+    queueMicrotask(() => openSection("hoy"));
+    return;
+  }
+  const drawerBody = document.getElementById("drawer-body");
+  if (section !== "coachos") drawerBody?.classList.remove("one-coach-body");
+  document.body.classList.toggle("one-coach-mode", coachMode);
+  document.body.classList.toggle("one-athlete-mode", !coachMode);
+  document.body.dataset.oneContext = coachMode ? "coach" : "athlete";
+
+  document.querySelectorAll("[data-one-context]").forEach((node) => {
+    const active = node.dataset.oneContext === (coachMode ? "coach" : "athlete");
+    node.classList.toggle("active", active);
+    node.setAttribute("aria-pressed", String(active));
+  });
+
+  const edition = document.querySelector(".one-edition");
+  if (edition) edition.textContent = coachMode ? "COACH ONE" : "ONE";
+
+  const foot = document.getElementById("foot-hint");
+  if (foot && coachMode) foot.textContent = t("one.foot.coach");
+  else if (foot) foot.textContent = t("one.foot.athlete");
+}
+
+function installObserver() {
+  const drawer = document.getElementById("drawer");
+  if (!drawer) return;
+  const obs = new MutationObserver(() => sync(drawer.dataset.section));
+  obs.observe(drawer, { attributes:true, attributeFilter:["data-section"] });
+  sync(drawer.dataset.section);
+}
+
+function installKeyboard() {
+  // No hay atajos para saltar de usuario a coach: son productos separados.
+}
+
+function decorateProfile() {
+  const name = S.data?.profile?.name || "Tú";
+  document.body.dataset.onePerson = String(name).slice(0,18);
+}
+
+function coachClients() {
+  return [fichaLocal(S), ...CLIENTES_DEMO];
+}
+
+function metric(label, value, note, tone = "") {
+  const card = n("article", "one-metric" + (tone ? " " + tone : ""));
+  card.append(n("span", "one-metric-label", label));
+  card.append(n("strong", "one-metric-value", value));
+  card.append(n("small", "one-metric-note", note));
+  return card;
+}
+
+function tag(text, kind) {
+  return n("span", "one-tag " + (kind || ""), text);
+}
+
+function commandAction(label, section, kind) {
+  return btn(label, "one-action " + (kind || ""), () => openSection(section));
+}
+
+function progress(value, tone) {
+  const wrap = n("div", "one-progress " + (tone || ""));
+  const fill = n("i");
+  fill.style.width = Math.max(0, Math.min(100, Number(value) || 0)) + "%";
+  wrap.append(fill);
+  return wrap;
+}
+
+function coachDateLabel() {
+  try {
+    return new Intl.DateTimeFormat("es-ES", {
+      weekday: "short", day: "2-digit", month: "short",
+    }).format(new Date()).replace(".", "").toUpperCase();
+  } catch {
+    return todayKey();
+  }
+}
+
+function renderCoachOps(body, clients) {
+  const kpi = resumenCartera(clients);
+  const bar = n("section", "one-coach-ops");
+
+  const context = n("div", "one-coach-ops-context");
+  context.append(n("span", "one-kicker", t("one.coach.ops.kicker")));
+  context.append(n("strong", "", coachDateLabel()));
+
+  const copy = n("div", "one-coach-ops-copy");
+  copy.append(n("strong", "", t("one.coach.ops.title")));
+  copy.append(n("span", "", t("one.coach.ops.summary", {
+    sessions: kpi.sesionesHoy,
+    alerts: kpi.alertas,
+    clients: kpi.activos,
+  })));
+
+  const actions = n("div", "one-coach-ops-actions");
+  actions.append(
+    commandAction(t("one.coach.ops.create"), "library", "primary"),
+    btn(t("one.coach.ops.clients"), "one-action", () => {
+      body.querySelector(".one-roster")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }),
+    commandAction(t("one.coach.ops.calendar"), "agenda")
+  );
+
+  bar.append(context, copy, actions);
+  body.append(bar);
+}
+
+function renderCoachHero(body, clients) {
+  const kpi = resumenCartera(clients);
+  const hero = n("section", "one-coach-hero");
+
+  const copy = n("div", "one-coach-hero-copy");
+  copy.append(n("span", "one-kicker", t("one.coach.hero.kicker")));
+  copy.append(n("h3", "", t("one.coach.hero.title")));
+  copy.append(n("p", "", t("one.coach.hero.copy")));
+  const actions = n("div", "one-actions");
+  actions.append(
+    btn(t("one.coach.hero.plan"), "one-action primary", () => renderCoachClient(body, clients[0])),
+    commandAction(t("one.coach.hero.library"), "library"),
+    commandAction(t("one.coach.hero.calendar"), "agenda")
+  );
+  copy.append(actions);
+
+  const pulse = n("div", "one-coach-pulse");
+  pulse.append(n("span", "one-kicker", "PULSO DE CARTERA"));
+  pulse.append(n("strong", "", kpi.adherenciaMedia + "%"));
+  pulse.append(n("small", "", "adherencia media"));
+  pulse.append(progress(kpi.adherenciaMedia, kpi.adherenciaMedia < 60 ? "danger" : "ok"));
+  hero.append(copy, pulse);
+  body.append(hero);
+
+  const metrics = n("div", "one-metrics");
+  metrics.append(
+    metric("CLIENTES", kpi.activos, "1 local + cartera demo"),
+    metric("SESIONES HOY", kpi.sesionesHoy, "programadas", "copper"),
+    metric("ALERTAS", kpi.alertas, kpi.alertas ? "requieren revisión" : "sin incidencias", kpi.alertas ? "danger" : "ok"),
+    metric("ADHERENCIA", kpi.adherenciaMedia + "%", "media de cartera", kpi.adherenciaMedia < 60 ? "warn" : "ok")
+  );
+  body.append(metrics);
+}
+
+function renderCloudCoachState(body) {
+  const box = n("section", "one-cloud-board");
+  const head = n("div", "one-section-head");
+  const title = n("div");
+  title.append(n("span", "one-kicker", "COACHING CLOUD / REAL"));
+  title.append(n("h4", "", "Clientes vinculados"));
+  const stateTag = tag("COMPROBANDO", "copper");
+  head.append(title, stateTag);
+  box.append(head);
+
+  const status = n("p", "one-panel-copy", "Comprobando el servicio BAYONA…");
+  box.append(status);
+
+  const manage = btn("GESTIONAR CUENTA Y VÍNCULOS →", "one-action", () => openSection("account"));
+  box.append(manage);
+  body.append(box);
+
+  const session = currentSession();
+  if (!session) {
+    stateTag.textContent = "LOCAL";
+    stateTag.className = "one-tag";
+    status.textContent = t("one.cloud.local");
+    return;
+  }
+
+  if (accountRole() !== "coach") {
+    stateTag.textContent = "CUENTA CLIENTE";
+    stateTag.className = "one-tag warn";
+    status.textContent = t("one.cloud.clientRole");
+    return;
+  }
+
+  probeBackend().then(async (health) => {
+    if (!box.isConnected) return;
+    if (!health?.ok) {
+      stateTag.textContent = "NUBE OFFLINE";
+      stateTag.className = "one-tag warn";
+      status.textContent = t("one.cloud.offline");
+      return;
+    }
+
+    try {
+      const clients = await linkedClients();
+      if (!box.isConnected) return;
+      stateTag.textContent = clients.length ? String(clients.length) + " ACTIVOS" : "SIN VÍNCULOS";
+      stateTag.className = "one-tag " + (clients.length ? "ok" : "copper");
+      status.replaceChildren();
+
+      if (!clients.length) {
+        status.textContent = t("one.cloud.noClients");
+        return;
+      }
+
+      const list = n("div", "one-cloud-client-list");
+      clients.forEach((client) => {
+        const row = n("div", "one-cloud-client-row");
+        const copy = n("div");
+        copy.append(n("strong", "", client.name || "Cliente BAYONA"));
+        copy.append(n("small", "", "VÍNCULO ACTIVO · DATOS PROTEGIDOS POR RLS"));
+        row.append(copy, tag("REAL", "ok"));
+        list.append(row);
+      });
+      status.append(list);
+    } catch (e) {
+      stateTag.textContent = "PENDIENTE";
+      stateTag.className = "one-tag warn";
+      status.textContent = t("one.cloud.modulePending");
+    }
+  }).catch(() => {
+    if (!box.isConnected) return;
+    stateTag.textContent = "NUBE OFFLINE";
+    stateTag.className = "one-tag warn";
+    status.textContent = t("one.cloud.checkFailed");
+  });
+}
+
+function renderTemplateLibrary(body) {
+  const all = S.customRoutinesList();
+  const routines = all.slice(0, 8);
+  const box = n("section", "one-template-board");
+
+  const head = n("div", "one-section-head");
+  const title = n("div");
+  title.append(n("span", "one-kicker", "ROUTINE STUDIO / PROPLAYER"));
+  title.append(n("h4", "", "Plantillas reutilizables"));
+  head.append(title, tag(String(all.length) + " GUARDADAS", "copper"));
+  box.append(head);
+
+  box.append(n(
+    "p",
+    "one-panel-copy",
+    routines.length
+      ? "Reutiliza tu trabajo: asigna una rutina hoy, duplícala para adaptarla o crea una nueva desde PROPLAYER."
+      : "Aún no tienes plantillas. Construye la primera con la biblioteca PROPLAYER de 3.141 fichas."
+  ));
+
+  const topActions = n("div", "one-template-top-actions");
+  topActions.append(commandAction(routines.length ? "CREAR OTRA EN PROPLAYER" : "CREAR PRIMERA RUTINA", "library", "primary"));
+  box.append(topActions);
+
+  if (!routines.length) {
+    box.append(n("div", "one-empty", "Sin plantillas guardadas todavía."));
+    body.append(box);
+    return;
+  }
+
+  const list = n("div", "one-template-list");
+  routines.forEach((routine) => {
+    const row = n("article", "one-template-row");
+    const main = n("div", "one-template-main");
+    main.append(n("strong", "", routine.name));
+    main.append(n(
+      "small",
+      "",
+      String(routine.exercises?.length || 0) + " ejercicios · " + String(routine.min || "—") + " min"
+    ));
+
+    const actions = n("div", "one-template-actions");
+    const assign = btn("ASIGNAR HOY", "one-action primary", () => {
+      const saved = S.addAsignacion({
+        clienteId: "local",
+        workoutId: routine.id,
+        customRoutineId: routine.id,
+        dia: todayKey(),
+        nota: "Rutina asignada desde Mis plantillas.",
+        origen: "coach-template",
+        autor: "Coach Studio",
+      });
+      if (saved) toast("RUTINA ASIGNADA", routine.name + " · ya aparece en HOY.");
+    });
+
+    const duplicate = btn("DUPLICAR", "one-action", () => {
+      const copy = S.saveCustomRoutine({
+        name: (routine.name + " · COPIA").slice(0, 80),
+        min: routine.min,
+        desc: routine.desc,
+        exercises: routine.exercises,
+      });
+      if (copy) {
+        toast("PLANTILLA DUPLICADA", copy.name);
+        renderCoachStudio(body);
+      }
+    });
+
+    const remove = btn("ELIMINAR", "one-action danger", () => {
+      const modal =
+        '<div class="one-modal-kicker">COACH STUDIO · PLANTILLAS</div>' +
+        '<div class="cine-title">Eliminar ' + esc(routine.name) + '</div>' +
+        '<div class="cine-sub">Se elimina la plantilla guardada de este dispositivo. El historial de sesiones completadas no se borra.</div>' +
+        '<div style="height:12px"></div>' +
+        '<button class="btn btn-danger btn-block" id="one-template-delete">ELIMINAR PLANTILLA</button>' +
+        '<div style="height:8px"></div>' +
+        '<button class="btn btn-block" id="one-template-cancel">CANCELAR</button>';
+      showModal(modal, () => {
+        $("#one-template-cancel").onclick = hideModal;
+        $("#one-template-delete").onclick = () => {
+          hideModal();
+          if (S.deleteCustomRoutine(routine.id)) {
+            toast("PLANTILLA ELIMINADA", routine.name);
+            renderCoachStudio(body);
+          }
+        };
+      });
+    });
+
+    actions.append(assign, duplicate, remove);
+    row.append(main, actions);
+    list.append(row);
+  });
+
+  box.append(list);
+  if (all.length > routines.length) {
+    box.append(n("small", "one-disclaimer", "Mostrando las 8 plantillas más recientes. BAYONA conserva hasta 100 en este dispositivo."));
+  }
+  body.append(box);
+}
+
+function renderCorePriorities(body, clients) {
+  const shell = n("section", "one-core-board");
+  const head = n("div", "one-section-head");
+  const text = n("div");
+  text.append(n("span", "one-kicker", "CORE COACH / EXPLICABLE"));
+  text.append(n("h4", "", "Prioridades de hoy"));
+  head.append(text, tag("REGLAS LOCALES","copper"));
+  shell.append(head);
+
+  const list = n("div", "one-priority-list");
+  coreCoach(clients, S).forEach((message, index) => {
+    const row = n("div", "one-priority");
+    row.append(n("span", "one-priority-index", String(index + 1).padStart(2,"0")));
+    row.append(n("p", "", message));
+    list.append(row);
+  });
+  shell.append(list);
+  shell.append(n("small", "one-disclaimer", "Sin IA fingida ni diagnóstico. Las reglas ordenan información deportiva; tú tomas la decisión."));
+  body.append(shell);
+}
+
+function readinessTone(value) {
+  if (value == null) return "";
+  if (value < 40) return "danger";
+  if (value < 70) return "warn";
+  return "ok";
+}
+
+function clientRow(c, body) {
+  const alerts = alertasDe(c);
+  const row = n("article", "one-client-row");
+  const identity = n("div", "one-client-id");
+  identity.append(n("span", "one-client-time", c.hora));
+  const who = n("div");
+  who.append(n("strong", "", c.nombre));
+  who.append(n("small", "", c.objetivo + " · N" + c.nivel));
+  identity.append(who);
+
+  const session = n("div", "one-client-session");
+  session.append(n("strong", "", c.sesionHoy));
+  session.append(n("small", "", c.min + " min · " + c.rango));
+
+  const ready = n("div", "one-client-score");
+  ready.append(n("span", "", "PREPARACIÓN"));
+  ready.append(n("strong", "", c.preparacion == null ? "—" : c.preparacion + "%"));
+  ready.append(progress(c.preparacion || 0, readinessTone(c.preparacion)));
+
+  const adherence = n("div", "one-client-score");
+  adherence.append(n("span", "", "ADHERENCIA"));
+  adherence.append(n("strong", "", c.adherencia + "%"));
+  adherence.append(progress(c.adherencia, c.adherencia < 60 ? "danger" : "ok"));
+
+  const state = n("div", "one-client-state");
+  state.append(tag(c.demo ? "DEMO" : "LOCAL", c.demo ? "" : "copper"));
+  if (alerts.length) state.append(tag(alerts.length + " ALERTA" + (alerts.length > 1 ? "S" : ""), "danger"));
+  else state.append(tag("ESTABLE","ok"));
+
+  const open = btn("ABRIR →", "one-row-open", () => renderCoachClient(body, c));
+  row.append(identity, session, ready, adherence, state, open);
+  return row;
+}
+
+function renderRoster(body, clients) {
+  const section = n("section", "one-roster");
+  const head = n("div", "one-section-head");
+  const title = n("div");
+  title.append(n("span", "one-kicker", "CARTERA / HOY"));
+  title.append(n("h4", "", "Clientes y contexto"));
+  head.append(title, tag("DEMO IDENTIFICADA"));
+  section.append(head);
+
+  const labels = n("div", "one-roster-labels");
+  ["CLIENTE","SESIÓN","PREPARACIÓN","ADHERENCIA","ESTADO",""].forEach((x) => labels.append(n("span","",x)));
+  section.append(labels);
+  clients.forEach((c) => section.append(clientRow(c, body)));
+  body.append(section);
+}
+
+function phaseRail(plan) {
+  const rail = n("div", "one-phase-rail");
+  plan.fases.forEach((phase) => {
+    const cell = n("div", "one-phase " + phase.estado);
+    cell.append(n("span", "", phase.estado === "actual" ? "AHORA" : "S" + phase.from + "–" + phase.to));
+    cell.append(n("strong", "", phase.name));
+    cell.append(n("small", "", "VOL " + Math.round(phase.vol * 100) + "% · INT " + Math.round(phase.int * 100) + "%"));
+    rail.append(cell);
+  });
+  return rail;
+}
+
+function renderMacroPreview(body) {
+  const p = planificacion(S);
+  const box = n("section", "one-macro-preview");
+  const head = n("div", "one-section-head");
+  const title = n("div");
+  title.append(n("span", "one-kicker", "PERIODIZACIÓN / 24 SEMANAS"));
+  title.append(n("h4", "", "Macrociclo · semana " + p.semana + "/" + p.totalSemanas));
+  head.append(title, tag(p.fase.name,"copper"));
+  box.append(head);
+  box.append(phaseRail(p));
+
+  const now = n("div", "one-macro-now");
+  now.append(
+    metric("SESIÓN", p.hoy.sesion, "hoy"),
+    metric("VOLUMEN", p.hoy.volumenPct + "%", "objetivo"),
+    metric("INTENSIDAD", p.hoy.intensidadPct + "%", "objetivo")
+  );
+  box.append(now);
+  body.append(box);
+}
+
+function renderCoachStudio(body) {
+  body.textContent = "";
+  body.classList.add("one-coach-body");
+  const clients = coachClients();
+
+  // Operación primero: lo que el coach necesita decidir y ejecutar hoy
+  // queda por encima de configuración, nube y material reutilizable.
+  renderCoachOps(body, clients);
+  renderCoachHero(body, clients);
+  renderCorePriorities(body, clients);
+  renderRoster(body, clients);
+  renderTemplateLibrary(body);
+  renderCloudCoachState(body);
+  renderMacroPreview(body);
+  body.append(n("p", "one-footnote", "La ficha LOCAL deriva de este dispositivo. Paola, Diego y Carlos son demostración y nunca deben confundirse con clientes reales."));
+}
+
+function profileHeader(c) {
+  const head = n("section", "one-profile-head");
+  const avatar = n("div", "one-profile-monogram", (c.nombre || "B").trim().slice(0,2).toUpperCase());
+  const copy = n("div", "one-profile-copy");
+  copy.append(n("span", "one-kicker", c.demo ? "PERFIL DEMO" : "PERFIL LOCAL"));
+  copy.append(n("h3", "", c.nombre));
+  copy.append(n("p", "", c.objetivo + " · " + c.rango));
+  const tags = n("div", "one-profile-tags");
+  tags.append(tag("NIVEL " + c.nivel), tag(c.antiguedadMeses + " MESES"));
+  if (c.preparacion != null) tags.append(tag("READY " + c.preparacion + "%", readinessTone(c.preparacion)));
+  copy.append(tags);
+  head.append(avatar, copy);
+  return head;
+}
+
+function dataTile(label, value, note) {
+  const x = n("div", "one-data-tile");
+  x.append(n("span", "", label), n("strong", "", value), n("small", "", note || ""));
+  return x;
+}
+
+function renderAlerts(c) {
+  const box = n("section", "one-profile-panel");
+  const head = n("div", "one-section-head");
+  const titleBox = n("div");
+  titleBox.append(n("span", "one-kicker", "ALERTAS"));
+  titleBox.append(n("h4", "", "Lo que revisar antes de entrenar"));
+  head.append(titleBox);
+  box.append(head);
+  const alerts = alertasDe(c);
+  if (!alerts.length) box.append(n("div", "one-empty", "Sin alertas deportivas declaradas."));
+  alerts.forEach((a) => {
+    const row = n("div", "one-alert-row " + (a.nivel === "alta" ? "danger" : "warn"));
+    row.append(n("span", "", a.nivel === "alta" ? "▲" : "◇"), n("p", "", a.texto));
+    box.append(row);
+  });
+  return box;
+}
+
+function renderPlanCard(c, body) {
+  const box = n("section", "one-profile-panel");
+  const head = n("div", "one-section-head");
+  const titleBox = n("div");
+  titleBox.append(n("span", "one-kicker", "SESIÓN"));
+  titleBox.append(n("h4", "", c.sesionHoy));
+  head.append(titleBox, tag(c.min + " MIN"));
+  box.append(head);
+  box.append(n("p", "one-panel-copy", "Preparación, contexto y planificación viven en la misma versión que ejecuta el atleta."));
+  if (!c.demo) {
+    box.append(btn("PLANIFICAR SESIÓN →","one-action primary",() => planSessionModal(c, body)));
+    const pending = S.asignacionesDe("local").filter((a) => a.estado === "pendiente");
+    pending.forEach((a) => {
+      const row = n("div", "one-assignment");
+      row.append(n("span", "", a.dia), n("strong", "", S.customRoutine(a.customRoutineId)?.name || WORKOUTS[a.workoutId]?.name || a.workoutId));
+      if (a.nota) row.append(n("small", "", a.nota));
+      box.append(row);
+    });
+  } else {
+    box.append(n("div", "one-empty", "Perfil de demostración: las acciones que cambiarían un plan están deshabilitadas."));
+  }
+  return box;
+}
+
+function weeklyEditor(body, c) {
+  if (c.demo) return;
+  const box = n("section", "one-week-editor");
+  const head = n("div", "one-section-head");
+  const titleBox = n("div");
+  titleBox.append(n("span", "one-kicker", "MICROCICLO / SEMANA"));
+  titleBox.append(n("h4", "", "Plan semanal escribible"));
+  head.append(titleBox, tag("UNA SOLA VERDAD","copper"));
+  box.append(head);
+
+  const grid = n("div", "one-week-grid");
+  const custom = S.data.plan.custom || {};
+  MACRO.dayNames.forEach((dayName, dow) => {
+    const card = n("label", "one-day-editor");
+    card.append(n("span", "", dayName.toUpperCase()));
+    const select = document.createElement("select");
+    select.setAttribute("aria-label", t("one.week.planLabel", { day:dayName }));
+    const standard = MACRO.dayPlan[dow];
+    const current = custom[dow] ?? "";
+    const options = [
+      ["", "ESTÁNDAR · " + (WORKOUTS[standard]?.name || "DESCANSO")],
+      ["-", "DESCANSO"],
+      ...Object.entries(WORKOUTS).map(([id,w]) => [id,w.name]),
+    ];
+    options.forEach(([value,label]) => {
+      const o = new Option(label,value);
+      o.selected = current === value;
+      select.add(o);
+    });
+    select.addEventListener("change", () => {
+      S.setPlanDia(dow, select.value === "-" ? null : select.value);
+      toast("PLAN ACTUALIZADO", dayName + ": la app del atleta ya usa este plan.");
+    });
+    card.append(select);
+    grid.append(card);
+  });
+  box.append(grid);
+  box.append(btn("RESTABLECER PLAN ESTÁNDAR","one-action",() => {
+    S.restaurarPlanEstandar();
+    toast("PLAN RESTABLECIDO","Vuelve el macrociclo estándar.");
+    renderCoachClient(body, fichaLocal(S));
+  }));
+  body.append(box);
+}
+
+function renderCoachClient(body, c) {
+  body.textContent = "";
+  body.classList.add("one-coach-body");
+  body.append(btn("← CARTERA","one-back",() => renderCoachStudio(body)));
+  body.append(profileHeader(c));
+
+  const data = n("div", "one-profile-kpis");
+  data.append(
+    dataTile("PREPARACIÓN", c.preparacion == null ? "—" : c.preparacion + "%", "hoy"),
+    dataTile("ADHERENCIA", c.adherencia + "%", c.adherenciaDias ? c.adherenciaDias + " días" : "periodo demo"),
+    dataTile("SUEÑO", c.dormir == null ? "—" : c.dormir + " h", "último registro"),
+    dataTile("PESO", c.peso == null ? "—" : c.peso + " kg", "solo si registrado")
+  );
+  body.append(data);
+
+  const split = n("div", "one-profile-grid");
+  split.append(renderPlanCard(c,body), renderAlerts(c));
+  body.append(split);
+
+  const p = planificacion(S);
+  const macro = n("section", "one-macro-preview");
+  const mh = n("div", "one-section-head");
+  const mt = n("div");
+  mt.append(n("span", "one-kicker", "MACROCICLO"));
+  mt.append(n("h4", "", "Semana " + p.semana + "/" + p.totalSemanas));
+  mh.append(mt, tag(p.fase.name,"copper"));
+  macro.append(mh, phaseRail(p));
+  body.append(macro);
+
+  const change = n("section", "one-profile-panel");
+  const ch = n("div", "one-section-head");
+  const ct = n("div");
+  ct.append(n("span", "one-kicker", "ÚLTIMO CAMBIO"));
+  ct.append(n("h4", "", c.ultimoCambio));
+  ch.append(ct);
+  change.append(ch);
+  change.append(n("p", "one-panel-copy", "Información deportiva organizada. No sustituye diagnóstico ni evaluación sanitaria."));
+  body.append(change);
+
+  weeklyEditor(body,c);
+}
+
+function planSessionModal(c, body) {
+  const dates = [0,1,2].map((i) => {
+    const d = new Date();
+    d.setDate(d.getDate() + i);
+    return [todayKey(d), i === 0 ? "HOY" : i === 1 ? "MAÑANA" : "PASADO MAÑANA"];
+  });
+  let workoutOptions = "";
+  Object.entries(WORKOUTS).forEach(([id,w]) => {
+    workoutOptions += '<option value="' + esc(id) + '">' + esc(w.name) + " · " + esc(w.min) + " min</option>";
+  });
+  let dayOptions = "";
+  dates.forEach(([key,label]) => {
+    dayOptions += '<option value="' + key + '">' + label + " · " + key + "</option>";
+  });
+  const html =
+    '<div class="one-modal-kicker">COACH STUDIO · ASIGNAR</div>' +
+    '<div class="cine-title">Sesión para ' + esc(c.nombre) + '</div>' +
+    '<div class="cine-sub">La misma sesión aparecerá en HOY. El entrenador conserva la decisión final.</div>' +
+    '<div class="checkin-grid">' +
+    '<label class="checkin-row"><span>ENTRENAMIENTO</span><select id="one-as-w">' + workoutOptions + '</select></label>' +
+    '<label class="checkin-row"><span>DÍA</span><select id="one-as-d">' + dayOptions + '</select></label>' +
+    '<label class="checkin-row"><span>NOTA</span><input id="one-as-n" maxlength="200" placeholder="Contexto técnico opcional"></label>' +
+    '</div><button class="btn btn-primary btn-block" id="one-as-save">ASIGNAR SESIÓN</button>' +
+    '<button class="btn btn-block" id="one-as-cancel">CANCELAR</button>';
+
+  showModal(html, () => {
+    $("#one-as-cancel").onclick = hideModal;
+    $("#one-as-save").onclick = () => {
+      const assignment = {
+        clienteId:"local",
+        workoutId:$("#one-as-w").value,
+        dia:$("#one-as-d").value,
+        nota:$("#one-as-n").value.trim(),
+        origen:"coachos",
+        autor:"Coach Studio",
+      };
+      const valid = validaAsignacion(assignment);
+      hideModal();
+      if (!valid.ok) return toast("NO ASIGNADA",valid.error,"danger");
+      S.addAsignacion(assignment);
+      toast("SESIÓN ASIGNADA",(WORKOUTS[assignment.workoutId]?.name || assignment.workoutId) + " → " + assignment.dia + ".");
+      renderCoachClient(body,c);
+    };
+  });
+}
+
+function installCoachStudio() {
+  BUILDERS.coachos = renderCoachStudio;
+  on("today", () => {
+    if (document.getElementById("drawer")?.dataset.section === "coachos" &&
+        document.getElementById("drawer")?.classList.contains("open")) {
+      renderCoachStudio(document.getElementById("drawer-body"));
+    }
+  });
+}
+
+export function installOneShell() {
+  document.body.dataset.one = "v14";
+  ensureEditionMark();
+  ensureContextSwitch();
+  installCoachStudio();
+  installObserver();
+  installKeyboard();
+  decorateProfile();
+  window.addEventListener("bayona:entered", () => {
+    ensureCoachRailButton();
+    sync(document.getElementById("drawer")?.dataset.section || "hoy");
+  });
+}

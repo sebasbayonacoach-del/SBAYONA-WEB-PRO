@@ -14,11 +14,11 @@ describe('Puente BAYONA WEB → la aplicación REAL', () => {
     expect(container.querySelector('iframe')).toBeNull()
     expect(BAYONA_APP_ENTRY_URL).toBe(`${BAYONA_APP_PUBLIC_URL}?source=pwa`)
     expect(within(section).getByRole('heading', { level: 2, name: /YA NO ES SOLO UNA IDEA/i })).toBeInTheDocument()
-    expect(section.querySelectorAll('a[href^="https://"]')).toHaveLength(3)
-    for (const link of section.querySelectorAll('a[href^="https://"]')) {
+    const appLinks = section.querySelectorAll(`a[href="${BAYONA_APP_ENTRY_URL}"]`)
+    expect(appLinks).toHaveLength(3)
+    for (const link of appLinks) {
       expect(link).toHaveAttribute('href', BAYONA_APP_ENTRY_URL)
-      expect(link).toHaveAttribute('target','_blank')
-      expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'))
+      expect(link).not.toHaveAttribute('target', '_blank')
     }
   })
 
@@ -27,14 +27,14 @@ describe('Puente BAYONA WEB → la aplicación REAL', () => {
     expect(screen.getByRole('heading', {name:'Tu espacio personal'})).toBeInTheDocument()
     expect(screen.getByRole('heading', {name:'Tu espacio de entrenador'})).toBeInTheDocument()
     expect(screen.getByText(/no hace falta ser atleta/i)).toBeInTheDocument()
-    expect(screen.getByText(/La integración con las membresías/i)).toBeInTheDocument()
+    expect(screen.getByText(/BAYONA App ya se abre dentro de este mismo sitio/i)).toBeInTheDocument()
   })
 
   it('en Home enlaza tanto al producto actual como a la página de BAYONA+', () => {
     const {container} = renderShowcase('home')
     expect(container.querySelector('#bayona-app-real-home')).not.toBeNull()
     expect(screen.getByRole('link', {name:/DESCUBRIR BAYONA APP/i})).toHaveAttribute('href','/app')
-    expect(screen.getByRole('link', {name:/ABRIR LA APP REAL/i})).toHaveAttribute('href',BAYONA_APP_ENTRY_URL)
+    expect(screen.getByRole('link', {name:/ABRIR MI APP/i})).toHaveAttribute('href',BAYONA_APP_ENTRY_URL)
     expect(screen.getByAltText(/Captura real de BAYONA App/i)).toHaveAttribute('src',expect.stringContaining('bayona-live-app'))
   })
 })

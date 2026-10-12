@@ -622,11 +622,11 @@ function MembersArea({ user, tier, signOut }) {
 /** Capa WebGL del teléfono — carga diferida para proteger el LCP (Fase 11.5). */
 const AppShowcaseLayer = lazy(() => import('../components/app/AppShowcaseLayer.jsx'))
 
-export default function AppExperience() {
+export default function AppExperience({ publicOnly = false }) {
   useAppReveal()
   const auth = useAuthOptional()
 
-  if (auth.loading) {
+  if (!publicOnly && auth.loading) {
     return (
       <div className="section-shell" role="status" aria-live="polite" style={{ padding: '4rem 0' }}>
         <p>Cargando tu área…</p>
@@ -634,7 +634,7 @@ export default function AppExperience() {
     )
   }
 
-  if (auth.user) {
+  if (!publicOnly && auth.user) {
     return <MembersArea user={auth.user} tier={auth.tier} signOut={auth.signOut} />
   }
 
@@ -662,16 +662,14 @@ export default function AppExperience() {
             <span className="app-hero-line">UN MISMO LUGAR.</span>
           </h1>
           <p className="app-hero-subtitle">
-            BAYONA App ya tiene una versión web para personas que entrenan y entrenadores. Entra en Mi App o Coach Studio; más abajo puedes explorar la visión y las integraciones que siguen en desarrollo.
+            BAYONA App ya vive dentro de este mismo ecosistema. Entra en Mi App para entrenar y seguir tu proceso; Coach Studio queda reservado a la cuenta autorizada de entrenador.
           </p>
           <div className="app-hero-cta">
             <a
               href={BAYONA_APP_ENTRY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
               className="app-primary-cta"
             >
-              ABRIR BAYONA APP
+              ABRIR MI APP
               <ArrowUpRight size={18} strokeWidth={1} aria-hidden="true" />
             </a>
             <a href="#vision" className="app-text-link">
@@ -1012,12 +1010,12 @@ export default function AppExperience() {
             <li>
               <span className="app-status-dot is-live" aria-hidden="true" />
               <strong>EN MARCHA</strong>
-              <small>BAYONA App publicada en web con selección Mi App / Coach Studio.</small>
+              <small>BAYONA App integrada en el mismo sitio con acceso Mi App / Coach Studio.</small>
             </li>
             <li>
               <span className="app-status-dot is-near" aria-hidden="true" />
               <strong>EN PREPARACIÓN</strong>
-              <small>Conexión de membresías, permisos y sincronización de datos.</small>
+              <small>Activación de OAuth Google en producción y validación final de permisos cloud.</small>
             </li>
             <li>
               <span className="app-status-dot is-later" aria-hidden="true" />

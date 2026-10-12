@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#050505" />
+<meta name="application-name" content="BAYONA" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="BAYONA" />
+<meta name="description" content="BAYONA — Entrenamiento premium para clientes y coaches: sesiones, progreso, biblioteca PROPLAYER y sincronización segura en la nube." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="BAYONA — Más fuerte. Más tú." />
+<meta property="og:description" content="Entrenamiento, progreso y Coach Studio en una sola experiencia. Funciona offline y sincroniza tu cuenta de forma segura cuando inicias sesión." />
+<meta property="og:image" content="https://bayona-jet.vercel.app/mi-app/icon-512.png" />
+<meta property="og:url" content="https://bayona-jet.vercel.app/mi-app/" />
+<meta property="og:locale" content="es_ES" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="BAYONA — Más fuerte. Más tú." />
+<meta name="twitter:description" content="Entrenamiento, progreso, biblioteca PROPLAYER y Coach Studio en una sola experiencia." />
+<meta name="twitter:image" content="https://bayona-jet.vercel.app/mi-app/icon-512.png" />
+<title>BAYONA — Entrena a tu ritmo</title>
+<link rel="canonical" href="https://bayona-jet.vercel.app/mi-app/" />
+<link rel="stylesheet" href="fonts/fonts.css" />
+<link rel="stylesheet" href="css/style.css?v=8" />
+<link rel="stylesheet" href="css/aurum.css?v=3" />
+<link rel="stylesheet" href="css/luxe.css?v=1" />
+<link rel="stylesheet" href="css/motion.css?v=3" />
+<link rel="stylesheet" href="css/personal.css?v=1" />
+<link rel="stylesheet" href="css/fitness.css?v=10" />
+<link rel="stylesheet" href="css/coach.css?v=1" />
+<link rel="stylesheet" href="css/dashboard.css?v=1" />
+<!-- PRO · el lenguaje visual real. Se carga EL ÚLTIMO y manda sobre
+     las capas anteriores: neutro, denso, sin botones gigantes. -->
+<link rel="stylesheet" href="css/pro.css?v=3" />
+<!-- MARCA · última capa: la app adopta la tipografía y la paleta de la web
+     (Montserrat / Inter / DM Mono + #050505 / #F4A261). Se carga después de
+     pro.css para ganar la cascada. Para volver atrás, borrar esta línea. -->
+<link rel="stylesheet" href="css/bayona-brand.css?v=1" />
+<link rel="stylesheet" href="css/auth.css?v=1" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<script>
+  /* firma visual v3 «CINE»: se aplica antes del primer pintado (sin parpadeos).
+     CINE = blanco + naranja · NOCHE = negro + naranja (modo nocturno). */
+  try {
+    var ap = JSON.parse(localStorage.getItem('bayona.appearance.v1') || '{}');
+    var d = document.documentElement;
+    var legacy = { marfil: 'cine', noche: 'noche' };
+    var prefTheme = localStorage.getItem('bayona.theme.v1') || 'dark';
+    var resolvedTheme = prefTheme === 'system'
+      ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+      : (prefTheme === 'light' ? 'light' : 'dark');
+    d.dataset.theme = 'naranja';
+    d.dataset.bayonaTheme = prefTheme;
+    d.dataset.surfaceTheme = resolvedTheme;
+    d.dataset.mode = resolvedTheme === 'light' ? 'cine' : 'noche';
+    d.dataset.font = 'claude';
+    d.dataset.density = ap.density || 'comoda';
+    d.dataset.radius = ap.radius || 'suave';
+    d.dataset.glass = ap.glass === undefined ? 'on' : ap.glass;
+    d.dataset.glow = ap.glow || 'bajo';
+    d.dataset.scale = ap.scale || '100';
+    d.dataset.motion = ap.motion || 'pleno';
+    d.style.colorScheme = resolvedTheme;
+  } catch (e) {}
+</script>
+<script>
+  // BAYONA Web integration: keep expensive server functions on the app backend
+  // while the UI/PWA lives under the same origin as the public website.
+  window.BAYONA_INTEGRATED = true;
+  window.BAYONA_API_BASE = "https://bayona-app-one.vercel.app";
+  window.BAYONA_AUTH_ENTRY_URL = "/mi-app/index.html?source=pwa";
+  window.BAYONA_MARKETING_URL = "/";
+</script>
+<script type="importmap">
+  { "imports": { "three": "./vendor/three.module.js" } }
+</script>
+</head>
+<body class="fitness-app">
+  <!-- ============ WORLD LAYER (3D) ============ -->
+  <div id="scene-wrap">
+    <canvas id="scene"></canvas>
+    <div id="scene-vignette"></div>
+    <div id="film-grain" aria-hidden="true"></div>
+    <div id="transition-veil"></div>
+  </div>
+  <div id="frame-top" aria-hidden="true"></div>
+  <div id="frame-bot" aria-hidden="true"></div>
+  <div id="aurora" aria-hidden="true"></div>
+
+  <!-- ============ LUXE · LANDING PÚBLICA (v10) ============
+       Nivel motionsites.ai: nav glass + hero + bento + planes + FAQ.
+       Solo existe ANTES de ENTRAR; al entrar, display:none (luxe.css).
+       El JS (js/ui/landing.js) la pinta desde el catálogo i18n. -->
+  <section id="luxe-landing" aria-label="Presentación de BAYONA"></section>
+
+  <!-- ============ INGRESO · dos experiencias, un solo sistema ============ -->
+  <div id="entry" role="dialog" aria-label="Elegir espacio de trabajo en BAYONA">
+    <div class="e-app-shell">
+      <div class="e-appbar">
+        <div class="e-corner">
+          <span class="brand-mark">◈</span>
+          <span class="brand-name">BAYONA</span>
+        </div>
+        <div class="e-app-status"><i></i><span>TRAINING OS</span><b>READY</b></div>
+      </div>
+
+      <div class="e-entry-layout">
+        <section class="e-entry-intro" aria-labelledby="entry-title">
+          <div class="e-kicker">BAYONA · TU APP DE SALUD Y ENTRENAMIENTO</div>
+          <h1 class="e-title" id="entry-title">Tu salud.<br /><em>Tu progreso.</em></h1>
+          <div class="e-sub">Entrena, come, registra y mejora. Desde cualquier lugar.</div>
+          <div class="e-system-pills" aria-label="Funciones principales">
+            <span>ENTRENO</span><span>NUTRICIÓN</span><span>RECUPERACIÓN</span><span>PROGRESO</span>
+          </div>
+          <div class="e-entry-proof">
+            <span><b>01</b> SIMPLE</span>
+            <span><b>02</b> PERSONAL</span>
+            <span><b>03</b> DIARIO</span>
+          </div>
+        </section>
+
+        <section class="e-role-panel" aria-label="Selecciona cómo entrar">
+          <div class="e-role-panel-head">
+            <div><small>ACCESO</small><strong>¿Cómo vas a usar BAYONA?</strong></div>
+            <span>ELIGE UN PERFIL</span>
+          </div>
+
+          <button class="e-quick-resume" id="entry-resume" type="button" hidden>
+            <span><small>ACCESO RÁPIDO</small><strong id="entry-resume-label">CONTINUAR</strong></span>
+            <kbd>↵</kbd>
+          </button>
+
+          <div class="e-role-grid" role="group" aria-label="Tipo de acceso">
+            <button class="e-role-card affiliate" id="entry-go" data-entry-role="affiliate">
+              <span class="e-role-topline"><small>01 · MI APP</small><span><kbd>1</kbd><em>PERSONAL</em></span></span>
+              <span class="e-role-body">
+                <span class="e-role-media" aria-hidden="true">
+                  <video data-src="media/squat.mp4" data-poster="media/squat.jpg" muted loop playsinline preload="none"></video>
+                  <i></i>
+                </span>
+                <span class="e-role-copy">
+                  <strong>Entrar a BAYONA</strong>
+                  <span>Ahora · entrenar · comer · recuperar</span>
+                  <span class="e-role-tags"><i>SALUD</i><i>ENTRENO</i><i>PROGRESO</i></span>
+                </span>
+                <b aria-hidden="true">→</b>
+              </span>
+            </button>
+
+            <button class="e-role-card coach" id="entry-coach" data-entry-role="coach">
+              <span class="e-role-topline"><small>02 · COACH</small><span><kbd>2</kbd><em>STUDIO PRO</em></span></span>
+              <span class="e-role-body">
+                <span class="e-role-dashboard" aria-hidden="true">
+                  <i></i><i></i><i></i><i></i><i></i>
+                </span>
+                <span class="e-role-copy">
+                  <strong>Abrir Coach Studio</strong>
+                  <span>Clientes · planificación · agenda · informes</span>
+                  <span class="e-role-tags"><i>CRM</i><i>PROGRAMACIÓN</i><i>CONTROL</i></span>
+                </span>
+                <b aria-hidden="true">→</b>
+              </span>
+            </button>
+          </div>
+
+          <div class="e-role-note"><span>◉</span> Tu último acceso queda preparado para entrar más rápido.</div>
+        </section>
+      </div>
+
+      <div class="e-entry-foot">
+        <span>BAYONA ONE</span>
+        <span>ENTRENAMIENTO · COACHING · GESTIÓN</span>
+        <span id="entry-platform">ESPAÑOL · WEB</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HUD LAYER · mínimo ============ -->
+  <div id="hud">
+    <header id="topbar">
+      <div class="brand">
+        <span class="brand-mark">◈</span>
+        <span class="brand-name">BAYONA</span>
+      </div>
+      <!-- Paleta de comandos. El contenido (el atajo, ⌘K o Ctrl+K) lo
+           pone la propia capa según la plataforma: aquí no se escribe
+           texto de pantalla, solo el hueco donde va. -->
+      <button id="cmd-chip" class="chip cmd-chip" aria-keyshortcuts="Meta+K Control+K"></button>
+      <div class="top-right">
+        <button id="mode-chip" class="chip" title="Cine / Noche">◐ <b id="mode-name">CINE</b></button>
+        <button id="level-chip" class="chip chip-level" title="Progreso">
+          <span class="lvl">NIVEL <b id="lvl-num">1</b></span>
+          <span class="rank" id="rank-name">INICIADO</span>
+          <span class="xpbar"><i id="xp-fill"></i></span>
+          <span class="xptxt mono" id="xp-txt">0 / 250 XP</span>
+        </button>
+        <div class="wallet mono">
+          <span class="cur bp" title="PUNTOS BAYONA">◆ <b id="cur-points">0</b></span>
+          <span class="cur cr" title="CRÉDITOS">✦ <b id="cur-credits">0</b></span>
+        </div>
+      </div>
+    </header>
+
+    <div id="move-hint">CLIC · MOVER PERSONAJE &nbsp;·&nbsp; WASD &nbsp;·&nbsp; ARRASTRAR · CÁMARA</div>
+    <div id="stick" aria-label="Joystick de movimiento"><i></i></div>
+  </div>
+
+  <!-- ============ PANEL LATERAL · TODO vive aquí ============ -->
+  <main id="drawer" aria-label="Contenido de la app">
+    <div class="drawer-head">
+      <h2 id="drawer-title" tabindex="-1">INICIO</h2>
+      <div class="drawer-sub mono" id="drawer-sub">MUNDO BAYONA</div>
+      <button id="drawer-close" aria-label="Colapsar panel">✕</button>
+    </div>
+    <nav id="panel-nav" aria-label="Navegación principal"></nav>
+    <div id="drawer-body"></div>
+    <div id="panel-foot">
+      <span class="dotline"><i class="live"></i> BAYONA · EN VIVO</span>
+      <span id="foot-hint">MUEVE A TU PERSONAJE LIBREMENTE</span>
+    </div>
+  </main>
+
+  <!-- ============ MODAL / CINEMATIC LAYER ============ -->
+  <div id="modal-layer" class="hidden">
+    <div id="modal-box"></div>
+  </div>
+
+  <!-- ============ TOASTS ============ -->
+  <div id="toasts" role="status" aria-live="polite"></div>
+
+  <!-- LUXE · bootstrap ligero. La landing pública no descarga el mundo 3D.
+       js/app-loader.js trae runtime cloud + producto completo solo al entrar. -->
+  <script type="module" src="js/ui/landing-boot.js"></script>
+</body>
+</html>

@@ -70,3 +70,35 @@ presentación. El contrato de cascada fue actualizado para hacerlo explícito y 
 - El rediseño se construye en un worktree separado porque otra IA estaba editando
   `copia-para-mimo` simultáneamente.
 - Antes de integrar, se compara el hash remoto para evitar sobrescribir cambios ajenos.
+
+## Integración BAYONA App · 12/10/2026
+
+La aplicación real se integra como runtime estático bajo `/mi-app/index.html`.
+No se usa iframe y no se crea un segundo producto React.
+
+- Fuente integrada: `SBAYONA-APP-PRO`, rama `life-game-v108-20261012`.
+- Runtime fijado: commit `e790f4a5556e406da341c6fe928cd5b056583f72`.
+- `/app`: presentación pública.
+- `/mi-app/index.html?source=pwa`: producto real.
+- `/entrar` y `/panel`: compatibilidad; convergen en Mi App.
+- Nav escritorio, menú móvil y footer incluyen acceso a Mi App.
+- Service worker limitado a `/mi-app/`.
+- Manifest, OAuth y shortcuts usan entrada física `index.html`.
+- Las funciones server-side de IA/imágenes permanecen en el backend publicado de la app.
+- El paquete integrado excluye archivos de entorno, keystores, Git local y builds Android.
+
+### Cloud verificado
+
+- Supabase real responde y permite registro por email.
+- Proveedor Google habilitado.
+- El authorize real de Google responde 302 hacia `accounts.google.com` usando el callback integrado.
+- `is_bayona_coach` todavía no existe en producción: la migración `0009_single_owner_google_auth.sql` no está desplegada.
+- El Supabase conectado a ChatGPT expone otro proyecto inactivo, no el backend de BAYONA; por seguridad no se aplicó SQL allí.
+- Hasta desplegar 0009 y autorizar el UUID propietario, Coach Studio queda sin propietario válido en cloud.
+
+### Auditoría de integración
+
+- Front Door: 1440×900 y 390×844, sin overflow ni errores de página.
+- Inputs de auth: 48 px; recuperación: 44 px; Google: 48 px.
+- Header revisado en 1440, 1280, 1180, 1120 y 1024 px sin colisiones.
+- App fuente: 52 suites completas en verde.

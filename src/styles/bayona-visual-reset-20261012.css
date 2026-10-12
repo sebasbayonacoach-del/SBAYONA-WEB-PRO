@@ -2480,3 +2480,117 @@ html body .footer.gym-footer .footer-column a {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ==========================================================================
+   19 · BAYONA APP — integrated product entry
+   ========================================================================== */
+html body .nav-app-entry {
+  min-height: 42px;
+  padding: 0 .85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .42rem;
+  border: 1px solid rgba(240,154,88,.52);
+  color: var(--bv-cream);
+  text-decoration: none;
+  font: 800 .67rem/1 "DM Mono", ui-monospace, monospace;
+  letter-spacing: .08em;
+  white-space: nowrap;
+  transition: background-color var(--bv-ease), color var(--bv-ease), transform var(--bv-ease);
+}
+html body .nav-app-entry:is(:hover,:focus-visible) {
+  background: var(--bv-orange);
+  color: #17120e;
+  transform: translateY(-1px);
+}
+html body .gym-mobile-nav-app {
+  min-height: 50px;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem !important;
+  margin-bottom: 1rem;
+  background: var(--bv-orange) !important;
+  color: #17120e !important;
+  border: 1px solid var(--bv-orange) !important;
+  font: 850 .76rem/1 "DM Mono", ui-monospace, monospace !important;
+  letter-spacing: .08em !important;
+}
+@media (max-width: 1120px) {
+  html body .nav-app-entry { display: none; }
+}
+
+html body .app-entry-loading {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 2rem var(--bv-gutter);
+  background: #111310;
+  color: var(--bv-cream);
+}
+html body .app-entry-loading__panel {
+  width: min(680px,100%);
+  padding: clamp(1.5rem,4vw,3rem);
+  border-top: 2px solid var(--bv-orange);
+  border-bottom: 1px solid var(--bv-line-dark);
+}
+html body .app-entry-loading__eyebrow {
+  color: var(--bv-orange);
+  font: 750 .7rem/1.4 "DM Mono",ui-monospace,monospace;
+  letter-spacing: .14em;
+}
+html body .app-entry-loading h1 {
+  margin: 1rem 0;
+  font-size: clamp(3rem,7vw,6rem);
+  line-height: .94;
+  letter-spacing: -.06em;
+}
+html body .app-entry-loading p:not(.app-entry-loading__eyebrow) {
+  max-width: 48ch;
+  color: var(--bv-muted-dark);
+  line-height: 1.65;
+}
+html body .app-entry-loading .app-primary-cta {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+}
+
+/* ==========================================================================
+   20 · HEADER BREAKPOINT REPAIR — audited at 1440 / 1280 / 1180 / 1120 / 1024
+   ========================================================================== */
+@media (min-width: 1200px) {
+  html body .navbar .menu-button {
+    display: none !important;
+  }
+}
+@media (max-width: 1199px) {
+  html body .navbar {
+    display: flex !important;
+    align-items: center !important;
+    gap: .65rem !important;
+  }
+  html body .navbar .brand {
+    width: auto !important;
+    min-width: max-content !important;
+    flex: 0 0 auto !important;
+    margin-right: auto !important;
+  }
+  html body .navbar .desktop-nav,
+  html body .navbar .nav-app-entry,
+  html body .navbar .nav-cta {
+    display: none !important;
+  }
+  html body .navbar .site-theme-toggle {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+  }
+  html body .navbar .menu-button {
+    display: grid !important;
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 48px !important;
+    margin: 0 !important;
+  }
+}

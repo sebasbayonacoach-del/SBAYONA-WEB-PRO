@@ -1,4 +1,4 @@
-import { ArrowUpRight, ExternalLink, MonitorSmartphone } from 'lucide-react'
+import { ArrowUpRight, MonitorSmartphone } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { BAYONA_APP_ENTRY_URL, BAYONA_APP_ROLE_IMAGE, BAYONA_APP_MOBILE_IMAGE, BAYONA_APP_SPACES } from '../../config/bayonaAppIntegration.js'
 import { trackEvent } from '../../lib/analytics/analytics.js'
@@ -13,15 +13,15 @@ export default function BayonaLiveAppShowcase({ placement = 'app' }) {
       <div className="bayona-live-app__shell">
         <div className="bayona-live-app__header">
           <div className="bayona-live-app__copy">
-            <p className="bayona-live-app__eyebrow"><span className="bayona-live-app__status" aria-hidden="true" /> BAYONA APP / VERSIÓN WEB PUBLICADA</p>
+            <p className="bayona-live-app__eyebrow"><span className="bayona-live-app__status" aria-hidden="true" /> BAYONA APP / INTEGRADA EN BAYONA</p>
             <h2 id={isHome ? 'bayona-live-home-title' : 'bayona-live-app-title'}>
               {isHome ? <>EL MOVIMIENTO <em>CONTINÚA EN TU APP.</em></> : <>YA NO ES SOLO UNA IDEA. <em>PUEDES ENTRAR.</em></>}
             </h2>
-            <p className="bayona-live-app__lead">Una aplicación creada para personas que entrenan y para quienes las acompañan. Dos espacios, una sola puerta de entrada.</p>
+            <p className="bayona-live-app__lead">La aplicación real vive ahora dentro de BAYONA. Mi App para entrenar y Coach Studio para la cuenta autorizada de entrenador.</p>
             <div className="bayona-live-app__actions">
-              <a className="bayona-live-app__cta" href={BAYONA_APP_ENTRY_URL} target="_blank" rel="noopener noreferrer"
+              <a className="bayona-live-app__cta" href={BAYONA_APP_ENTRY_URL}
                 onClick={() => track('role_picker')}>
-                ABRIR LA APP REAL <ExternalLink size={17} aria-hidden="true" />
+                ABRIR MI APP <ArrowUpRight size={17} aria-hidden="true" />
               </a>
               {isHome ? (
                 <Link className="bayona-live-app__secondary" to="/app" onClick={() => track('web_app_page')}>
@@ -45,7 +45,7 @@ export default function BayonaLiveAppShowcase({ placement = 'app' }) {
                   alt="Captura real de BAYONA App: pantalla para elegir Mi App o Coach Studio" />
               </picture>
             </div>
-            <p className="bayona-live-app__image-caption">CAPTURA DE LA VERSIÓN WEB PUBLICADA · NO ES UNA MAQUETA</p>
+            <p className="bayona-live-app__image-caption">CAPTURA DE BAYONA APP · PRODUCTO REAL INTEGRADO</p>
           </div>
         </div>
         <div className="bayona-live-app__spaces" aria-label="Dos espacios de acceso a BAYONA App">
@@ -55,7 +55,7 @@ export default function BayonaLiveAppShowcase({ placement = 'app' }) {
               <h3>{space.title}</h3>
               <p>{space.description}</p>
               {!isHome && <small>{space.note}</small>}
-              <a href={BAYONA_APP_ENTRY_URL} target="_blank" rel="noopener noreferrer"
+              <a href={BAYONA_APP_ENTRY_URL}
                 onClick={() => track(space.id)} aria-label={`Abrir BAYONA App y elegir ${space.label}`}>
                 ELEGIR AL ENTRAR <ArrowUpRight size={17} aria-hidden="true" />
               </a>
@@ -63,7 +63,7 @@ export default function BayonaLiveAppShowcase({ placement = 'app' }) {
           ))}
         </div>
         {!isHome && <p className="bayona-live-app__disclaimer">
-          La aplicación web y la selección de perfiles ya pueden abrirse. La integración con las membresías de esta web, la sincronización definitiva, los pagos y los permisos de producción siguen sujetos a validación. El acceso no implica disponer de todas las funciones.
+          BAYONA App ya se abre dentro de este mismo sitio. El registro público crea usuarios normales; Coach Studio depende de autorización del propietario. Google requiere completar la configuración OAuth de producción antes de considerarlo disponible.
         </p>}
       </div>
     </section>
