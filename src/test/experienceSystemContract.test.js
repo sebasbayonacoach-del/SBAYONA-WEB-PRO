@@ -125,7 +125,7 @@ describe('Capa de experiencia — reglas de fabricación', () => {
     // La capa de experiencia, el pase atelier y la portada atelier son las tres
     // últimas hojas: matizan al final, sin que nadie tenga que ganarles con
     // `!important`.
-    expect(imports.slice(-3)).toEqual(['ds-experience.css', 'ds-atelier.css', 'home-atelier.css'])
+    expect(imports.slice(-4)).toEqual(['ds-experience.css', 'ds-atelier.css', 'home-atelier.css', 'bayona-visual-reset-20261012.css'])
     expect(imports.indexOf('ds-tokens.css')).toBeLessThan(imports.length - 3)
   })
 

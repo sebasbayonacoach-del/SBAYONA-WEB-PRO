@@ -1,0 +1,2482 @@
+/*
+ * BAYONA VISUAL RESET — 2026-10-12
+ * --------------------------------------------------------------------------
+ * Single final visual owner for the public website.
+ *
+ * Direction: editorial performance / warm minimalism.
+ * - Photography is primary; UI chrome is secondary.
+ * - Warm paper alternates with graphite to create real rhythm.
+ * - Orange is an action signal, not wallpaper.
+ * - No novelty gradients, floating dashboards or decorative microcopy overload.
+ * - Desktop sections are compact; mobile never relies on horizontal scroll.
+ *
+ * This sheet intentionally loads LAST. It replaces the previous cascade-war
+ * approach with one explicit visual authority. Existing route CSS remains for
+ * component mechanics and content, while this layer owns presentation.
+ */
+
+:root {
+  --bv-bg: #101210;
+  --bv-bg-2: #171917;
+  --bv-paper: #f1ece3;
+  --bv-paper-2: #e5ded3;
+  --bv-card: #faf6ef;
+  --bv-ink: #171614;
+  --bv-cream: #f7f2e9;
+  --bv-muted-dark: rgba(247,242,233,.68);
+  --bv-muted-light: #665d54;
+  --bv-orange: #f09a58;
+  --bv-orange-dark: #a8541f;
+  --bv-line-dark: rgba(247,242,233,.16);
+  --bv-line-light: rgba(23,22,20,.18);
+  --bv-max: 1240px;
+  --bv-gutter: clamp(1.25rem,4vw,4rem);
+  --bv-section: clamp(5rem,7vw,7rem);
+  --bv-section-mobile: clamp(3.8rem,12vw,5.2rem);
+  --bv-radius: 2px;
+  --bv-ease: 220ms cubic-bezier(.2,.7,.2,1);
+}
+
+/* ==========================================================================
+   00 · GLOBAL OWNER
+   ========================================================================== */
+
+html body {
+  background: var(--bv-bg);
+}
+
+html body .ds-frame[data-experience-scope='brand'] {
+  background: var(--bv-bg);
+  color: var(--bv-cream);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(h1,h2,h3,h4) {
+  font-family: Montserrat, Inter, sans-serif;
+  font-weight: 850;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(p,li,small) {
+  text-wrap: pretty;
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .section-shell,.container,.gym-home-shell,.services-shell,.community-shell,
+  .resources-shell,.academy-hero-inner,.app-section-content,.shop-catalog,
+  .shop-categories
+) {
+  width: min(calc(100% - (var(--bv-gutter) * 2)), var(--bv-max));
+  max-width: var(--bv-max);
+  margin-inline: auto;
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(a,button,input,textarea,select,summary):focus-visible {
+  outline: 2px solid var(--bv-orange);
+  outline-offset: 3px;
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .gold-button,.gym-primary-button,.services-primary-cta,.academy-action--primary,
+  .community-button-primary,.app-primary-cta,.resources-action--primary,.shop-add-to-cart,
+  .cta-primary,.not-found-home
+) {
+  border-radius: var(--bv-radius);
+  min-height: 48px;
+  box-shadow: none;
+  font-weight: 800;
+  letter-spacing: .04em;
+  transition: transform var(--bv-ease), background-color var(--bv-ease), border-color var(--bv-ease);
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .gold-button,.gym-primary-button,.services-primary-cta,.academy-action--primary,
+  .community-button-primary,.app-primary-cta,.resources-action--primary,.shop-add-to-cart,
+  .cta-primary,.not-found-home
+):is(:hover,:focus-visible) {
+  transform: translateY(-2px);
+}
+
+/* Micro-labels are tiny only when truly secondary. */
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .eyebrow,.gym-home-kicker,.community-overline,.community-eyebrow,.resources-eyebrow,
+  .app-eyebrow,.academy-heading > span,.shop-hero-kicker,.services-heading > span
+) {
+  font-size: .72rem;
+  line-height: 1.4;
+  letter-spacing: .13em;
+  font-weight: 750;
+}
+
+/* Remove decorative noise that repeatedly competes with content. */
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .about-vertical-word,.shop-scroll-indicator,.community-scroll-indicator,
+  .app-scroll-indicator,.academy-hero-words,.resources-marquee,
+  .gym-services-intro__index,.gym-services-intro__rule
+) {
+  display: none !important;
+}
+
+/* ==========================================================================
+   01 · NAVIGATION — readable, restrained, not another hero
+   ========================================================================== */
+
+html body .navbar {
+  height: 74px;
+  min-height: 74px;
+  padding-inline: clamp(1rem,3vw,3rem);
+  background: rgba(13,15,13,.92);
+  border-bottom: 1px solid rgba(255,255,255,.11);
+  backdrop-filter: blur(14px);
+  box-shadow: none;
+}
+
+html body .navbar .brand {
+  gap: .6rem;
+  color: var(--bv-cream);
+  font-size: .86rem;
+  letter-spacing: .13em;
+}
+
+html body .navbar .brand > span {
+  color: var(--bv-orange);
+  font-size: 1.1rem;
+}
+
+html body .desktop-nav.gym-primary-nav {
+  gap: clamp(.8rem,1.7vw,1.55rem);
+}
+
+html body .desktop-nav.gym-primary-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: rgba(247,242,233,.72);
+  font: 650 .71rem/1.2 "DM Mono", ui-monospace, monospace;
+  letter-spacing: .075em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--bv-ease);
+}
+
+html body .desktop-nav.gym-primary-nav a:is(:hover,.active,[aria-current='page']) {
+  color: var(--bv-cream);
+}
+
+html body .desktop-nav.gym-primary-nav a.active::after,
+html body .desktop-nav.gym-primary-nav a[aria-current='page']::after {
+  content: '';
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  inset: auto 0 7px;
+  background: var(--bv-orange);
+}
+
+html body .site-theme-toggle,
+html body .nav-cart-button,
+html body .menu-button {
+  min-height: 44px;
+  border: 1px solid rgba(255,255,255,.15);
+  background: transparent;
+  color: var(--bv-cream);
+  box-shadow: none;
+}
+
+html body .nav-cta.gym-nav-cta {
+  min-height: 44px;
+  padding-inline: 1rem;
+  background: var(--bv-orange);
+  border: 1px solid var(--bv-orange);
+  color: #17120e;
+  border-radius: 0;
+  font: 800 .7rem/1 "DM Mono", monospace;
+  letter-spacing: .06em;
+}
+
+html body .mobile-nav {
+  background: #111310;
+}
+
+/* ==========================================================================
+   02 · HERO SYSTEM — one language, different images
+   ========================================================================== */
+
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .gym-home-hero,.page-hero,.academy-hero,.community-hero,.app-hero,.shop-hero,.resources-hero
+) {
+  min-height: clamp(620px,78svh,760px) !important;
+  height: auto !important;
+  padding-block: 0 !important;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .gym-home-hero__content,.page-hero-content,.academy-hero-inner,.community-hero-club-grid,
+  .app-hero-content,.shop-hero-content,.resources-hero-layout
+) {
+  width: min(calc(100% - (var(--bv-gutter) * 2)), var(--bv-max)) !important;
+  max-width: var(--bv-max) !important;
+  min-height: clamp(620px,78svh,760px) !important;
+  margin-inline: auto !important;
+  padding: clamp(7.2rem,11vw,9rem) 0 clamp(3.5rem,5vw,5rem) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .gym-home-hero h1,.page-hero-title,.academy-hero h1,.community-hero-title,
+  .app-hero-title,.shop-hero h1,.resources-hero h1
+) {
+  max-width: 11ch;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(4rem,7.8vw,7.6rem) !important;
+  line-height: .92 !important;
+  letter-spacing: -.065em !important;
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .gym-home-hero__lead,.hero-subtitle,.academy-hero-copy > p,.community-hero-subtitle,
+  .app-hero-subtitle,.shop-hero-content > p,.resources-hero-intro
+) {
+  max-width: 52ch;
+  margin-top: 1.4rem;
+  color: rgba(255,255,255,.78);
+  font-size: clamp(1rem,1.25vw,1.15rem);
+  line-height: 1.65;
+}
+
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .gym-home-hero__actions,.about-editorial-hero-actions,.academy-actions,.community-hero-actions,
+  .app-hero-cta,.shop-hero-actions,.resources-hero-actions
+) {
+  margin-top: clamp(1.6rem,3vw,2.4rem);
+  gap: .8rem;
+}
+
+/* ==========================================================================
+   03 · HOME — 8 sections, roughly 7k not 13k
+   ========================================================================== */
+
+html body .gym-home > section:not(.gym-home-hero) {
+  min-height: 0 !important;
+  padding-block: var(--bv-section) !important;
+}
+
+html body .gym-home-services {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .gym-services-intro {
+  display: grid !important;
+  grid-template-columns: minmax(0,1.25fr) minmax(260px,.75fr) !important;
+  gap: clamp(2rem,5vw,5rem) !important;
+  align-items: end !important;
+  margin-bottom: clamp(2.5rem,4vw,4rem) !important;
+}
+
+html body .gym-home-services .gym-section-heading h2,
+html body .gym-home-gifts .gym-section-heading h2,
+html body .gym-home-lead__intro h2,
+html body .gym-home-trust h2,
+html body .gym-home-plans .gym-section-heading h2 {
+  max-width: 14ch;
+  font-size: clamp(2.8rem,5vw,5.4rem) !important;
+  line-height: .98 !important;
+}
+
+html body .gym-home-services .gym-section-heading h2,
+html body .gym-home-services .gym-services-intro__aside,
+html body .gym-home-services .gym-services-outro {
+  color: var(--bv-ink) !important;
+}
+
+html body .gym-services-intro__aside p,
+html body .gym-services-outro p {
+  color: var(--bv-muted-light) !important;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+html body .gym-service-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .gym-service-card {
+  min-height: 420px !important;
+  height: 420px !important;
+  max-height: 420px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .gym-service-card img {
+  filter: saturate(.84) contrast(1.03);
+}
+
+html body .gym-service-card__veil {
+  background: linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.76)) !important;
+}
+
+html body .gym-service-card__body {
+  padding: 1.6rem !important;
+}
+
+html body .gym-service-card h3 {
+  font-size: clamp(2rem,3vw,3.4rem) !important;
+  line-height: 1 !important;
+}
+
+html body .gym-service-card p {
+  max-width: 40ch;
+  font-size: .95rem !important;
+  line-height: 1.55;
+}
+
+html body .gym-home-process.start-journey {
+  background: #171917 !important;
+  color: var(--bv-cream) !important;
+}
+
+html body .start-journey {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+html body .start-journey__stage,
+html body .start-journey__steps,
+html body .start-journey__track {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+html body .start-journey__steps {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1px !important;
+  background: var(--bv-line-dark);
+}
+
+html body .start-journey__step {
+  min-height: 260px !important;
+  padding: 1.7rem !important;
+  background: #171917 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .home-memberships-section.gym-home-plans {
+  min-height: 0 !important;
+  background: #111310 !important;
+  color: var(--bv-cream) !important;
+}
+
+html body .plan-explorer.plan-showroom {
+  min-height: 0 !important;
+  height: auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(240px,300px) minmax(0,1fr) !important;
+  gap: 1rem !important;
+  align-items: start !important;
+}
+
+html body .plan-comparison-list {
+  width: 100% !important;
+  min-width: 0 !important;
+  gap: .5rem !important;
+}
+
+html body .plan-comparison-item,
+html body .plan-showroom-preview,
+html body .plan-showroom-stage {
+  min-height: 0 !important;
+  height: auto !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+html body .plan-showroom-preview {
+  display: grid !important;
+  grid-template-columns: minmax(0,1.2fr) minmax(250px,.8fr) !important;
+  background: #1b1d1a !important;
+  border: 1px solid var(--bv-line-dark) !important;
+}
+
+html body .plan-showroom-primary,
+html body .plan-showroom-signature {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: clamp(1.5rem,2.5vw,2.4rem) !important;
+}
+
+html body .bayona-live-app {
+  min-height: 0 !important;
+  padding-block: var(--bv-section) !important;
+}
+
+html body .gym-home-trust {
+  background: var(--bv-paper-2) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .gym-trust-layout {
+  grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr) !important;
+  gap: clamp(2rem,6vw,6rem) !important;
+}
+
+html body .gym-trust-layout li {
+  color: var(--bv-ink) !important;
+  border-bottom-color: var(--bv-line-light) !important;
+}
+
+html body .gym-home-gifts {
+  background: #151715 !important;
+}
+
+html body .gym-gift-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .gym-gift-card {
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  border: 1px solid var(--bv-line-dark) !important;
+  box-shadow: none !important;
+}
+
+html body .gym-gift-card img {
+  aspect-ratio: 16/10;
+  height: auto !important;
+  object-fit: cover;
+}
+
+html body .gym-home-lead {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .gym-home-lead .lead-magnet {
+  min-height: 0 !important;
+}
+
+html body .lead-magnet-inner {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   04 · ABOUT — replace theatrical dead space with editorial chapters
+   ========================================================================== */
+
+html body .about-page :is(
+  .about-problem-section,.about-founder,.about-story,.about-timeline,
+  .about-globe-section,.about-values-section,.about-method
+) {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+html body .about-problem-section,
+html body .about-founder,
+html body .about-values-section {
+  padding-block: var(--bv-section) !important;
+}
+
+html body .about-problem-section {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .about-problem {
+  display: grid !important;
+  grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr) !important;
+  gap: clamp(2rem,7vw,7rem) !important;
+  align-items: start !important;
+}
+
+html body .about-problem-heading {
+  font-size: clamp(2.8rem,5vw,5.5rem) !important;
+  line-height: .98 !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .about-problem-copy {
+  color: var(--bv-muted-light) !important;
+  font-size: 1.05rem !important;
+  line-height: 1.75 !important;
+}
+
+html body .about-founder {
+  background: #141614 !important;
+}
+
+html body .about-founder__layout {
+  grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr) !important;
+  gap: clamp(2rem,6vw,6rem) !important;
+}
+
+html body .about-founder__visual {
+  min-height: 0 !important;
+  height: clamp(460px,45vw,620px) !important;
+}
+
+html body .about-founder__editorial h2 {
+  max-width: 12ch !important;
+  font-size: clamp(3rem,5.3vw,5.8rem) !important;
+}
+
+html body .about-story-scene {
+  min-height: 0 !important;
+  padding: var(--bv-section) 0 !important;
+  background-position: center !important;
+}
+
+html body .about-story-heading {
+  padding-block: 0 !important;
+}
+
+html body .about-timeline--stage,
+html body .about-timeline-stage,
+html body .sticky-stage,
+html body .sticky-stage-frame {
+  min-height: 0 !important;
+  height: auto !important;
+  position: relative !important;
+  inset: auto !important;
+}
+
+html body .about-chronicle-mobile {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+  padding-block: var(--bv-section) !important;
+}
+
+html body .about-chronicle-mobile__item {
+  min-height: 0 !important;
+  padding: 1.4rem !important;
+  border: 1px solid var(--bv-line-dark) !important;
+}
+
+html body .about-globe-section {
+  padding-block: var(--bv-section) !important;
+  min-height: 0 !important;
+}
+
+html body .about-globe-section :is(.globe-figure,.globe-fallback) {
+  height: min(500px,55vw) !important;
+  min-height: 380px !important;
+}
+
+html body .about-values-stage__grid {
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 1px !important;
+  padding-bottom: 0 !important;
+  background: var(--bv-line-light);
+}
+
+html body .about-values-stage__card {
+  min-height: 220px !important;
+  padding: 1.7rem !important;
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .about-method-scene {
+  min-height: 0 !important;
+  padding-block: var(--bv-section) !important;
+}
+
+html body .about-method-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .about-method-grid li {
+  min-height: 220px !important;
+  padding: 1.5rem !important;
+}
+
+/* ==========================================================================
+   05 · SERVICES — decision page, not a 10k-pixel brochure
+   ========================================================================== */
+
+html body .services-page :is(.services-overview,.services-memberships,.services-catalog,.services-final) {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+html body .services-page :is(.services-overview,.services-memberships,.services-catalog) {
+  padding-block: var(--bv-section) !important;
+}
+
+html body .services-overview {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .services-heading {
+  margin-bottom: clamp(2rem,4vw,3.5rem) !important;
+}
+
+html body .services-heading h2 {
+  max-width: 15ch !important;
+  font-size: clamp(2.8rem,5vw,5.2rem) !important;
+  line-height: .98 !important;
+}
+
+html body .services-path-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .services-path-card {
+  min-height: 390px !important;
+  height: 390px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .services-path-card__body {
+  padding: 1.5rem !important;
+}
+
+html body .services-memberships {
+  background: #131513 !important;
+  color: var(--bv-cream) !important;
+}
+
+html body .services-memberships .plan-explorer {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+html body .services-catalog {
+  background: var(--bv-paper-2) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .services-catalog-index {
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .services-overview-card {
+  min-height: 150px !important;
+  padding: 1.4rem !important;
+  border-radius: 0 !important;
+  border: 1px solid var(--bv-line-light) !important;
+  box-shadow: none !important;
+}
+
+html body .services-catalog-group {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .services-card-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .services-card {
+  min-height: 0 !important;
+  padding: 1.4rem !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .services-final {
+  min-height: 420px !important;
+  padding-block: var(--bv-section) !important;
+}
+
+/* ==========================================================================
+   06 · PARKOUR — progression first, spectacle second
+   ========================================================================== */
+
+html body .parkour-academy :is(
+  .academy-paths,.academy-levels,.academy-method,.academy-logistics,.academy-faq,.academy-closing
+) {
+  min-height: 0 !important;
+  height: auto !important;
+  padding-block: var(--bv-section) !important;
+}
+
+html body .academy-paths,
+html body .academy-logistics {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .academy-heading h2 {
+  max-width: 13ch !important;
+  font-size: clamp(2.8rem,5vw,5.3rem) !important;
+  line-height: .98 !important;
+}
+
+html body .academy-session-map {
+  min-height: 0 !important;
+}
+
+html body .academy-age-track {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .academy-age {
+  min-width: 0 !important;
+  min-height: 260px !important;
+  border: 1px solid var(--bv-line-light) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .academy-progression__cards {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .academy-progression__card {
+  min-height: 0 !important;
+  padding: 1.5rem !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .academy-method-scenes {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .academy-scene {
+  min-height: 0 !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 1.5rem !important;
+  border-top: 1px solid var(--bv-line-dark);
+}
+
+html body .academy-scene-copy {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+html body .academy-logistics-strip {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .academy-faq-list {
+  max-width: 900px;
+}
+
+/* ==========================================================================
+   07 · COMMUNITY — open club, not an enterprise dashboard
+   ========================================================================== */
+
+html body .community-page .community-section {
+  min-height: 0 !important;
+  height: auto !important;
+  padding-block: var(--bv-section) !important;
+}
+
+html body .community-why,
+html body .community-access,
+html body .community-live {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .community-week,
+html body .community-group,
+html body .community-closing {
+  background: #121412 !important;
+  color: var(--bv-cream) !important;
+}
+
+html body .community-title {
+  max-width: 14ch;
+  font-size: clamp(2.8rem,5vw,5.2rem) !important;
+  line-height: .98 !important;
+}
+
+html body .community-figure {
+  display: none !important;
+}
+
+html body .community-why-list {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .community-why-item,
+html body .community-tier-card,
+html body .community-live-card {
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .community-tier-ladder {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .community-calendar-week {
+  min-height: 0 !important;
+}
+
+html body .community-calendar-panels {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .community-rail {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+  overflow: visible !important;
+}
+
+html body .community-rail-item {
+  min-width: 0 !important;
+}
+
+/* ==========================================================================
+   08 · BAYONA+ — product page, not a 14k concept deck
+   ========================================================================== */
+
+html body .app-page .app-section,
+html body .app-page .app-concept,
+html body .app-page .app-founding,
+html body .app-page .app-program-connection,
+html body .app-page .app-final-cta,
+html body .app-page .bayona-live-app {
+  min-height: 0 !important;
+  height: auto !important;
+  padding-block: var(--bv-section) !important;
+}
+
+html body .app-vision,
+html body .app-concept,
+html body .app-program-connection {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .app-features,
+html body .app-founding,
+html body .app-final-cta {
+  background: #131513 !important;
+  color: var(--bv-cream) !important;
+}
+
+html body .app-section-title {
+  max-width: 15ch;
+  font-size: clamp(2.8rem,5vw,5.2rem) !important;
+  line-height: .98 !important;
+}
+
+html body .app-vision-list {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .app-features-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .app-anatomy-trigger {
+  min-height: 230px !important;
+  padding: 1.6rem !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .app-device-stage {
+  min-height: 620px !important;
+  height: 620px !important;
+  max-height: 620px !important;
+  overflow: hidden !important;
+}
+
+html body .app-founding-card {
+  min-height: 0 !important;
+  padding: clamp(1.5rem,3vw,3rem) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   09 · SHOP — commerce, not a museum of cards
+   ========================================================================== */
+
+html body .shop-categories,
+html body .shop-feature,
+html body .shop-catalog,
+html body .shop-process,
+html body .shop-commercial-note,
+html body .shop-training-bridge {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+html body .shop-categories,
+html body .shop-catalog,
+html body .shop-process,
+html body .shop-training-bridge {
+  padding-block: var(--bv-section) !important;
+}
+
+html body .shop-categories,
+html body .shop-process {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .shop-feature,
+html body .shop-catalog {
+  background: #131513 !important;
+  color: var(--bv-cream) !important;
+}
+
+html body .shop-hero-marquee {
+  display: none !important;
+}
+
+html body .shop-category-shortcuts {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .shop-category-shortcuts button {
+  min-height: 100px !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .shop-products-masonry,
+html body .shop-flat-results {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1.2rem !important;
+}
+
+html body .shop-product-entry {
+  width: auto !important;
+  min-width: 0 !important;
+  break-inside: auto !important;
+}
+
+html body .shop-product-card {
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .shop-product-visual {
+  height: 260px !important;
+  min-height: 260px !important;
+}
+
+html body .shop-product-visual img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+html body .shop-product-actions {
+  margin-top: 1rem !important;
+}
+
+/* ==========================================================================
+   10 · RESOURCES — library, not a 14k interactive report
+   ========================================================================== */
+
+html body .resources-page :is(
+  .resources-game,.resources-manual,.resources-rule-panel,.resources-prize,
+  .protocolo-checkin,.resources-magazine,.resources-magazine-shelf,
+  .resources-downloads,.resources-question,.resources-lead-capture
+) {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+html body .resources-game,
+html body .resources-magazine,
+html body .resources-question {
+  padding-block: var(--bv-section) !important;
+}
+
+html body .resources-game,
+html body .resources-question {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .resources-magazine {
+  background: #121412 !important;
+  color: var(--bv-cream) !important;
+}
+
+html body .resources-content {
+  min-height: 0 !important;
+}
+
+html body .resources-game-opening {
+  grid-template-columns: minmax(0,1fr) minmax(300px,.8fr) !important;
+  gap: clamp(2rem,5vw,5rem) !important;
+}
+
+html body .resources-game-card {
+  min-height: 420px !important;
+  padding: 1.7rem !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .resources-game-progress {
+  margin-top: 3rem !important;
+}
+
+html body .resources-game-progress ol {
+  grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+  gap: 1px !important;
+}
+
+html body .resources-game-progress li {
+  min-height: 120px !important;
+  padding: 1rem !important;
+}
+
+html body .resources-game-rules,
+html body .resources-manual,
+html body .resources-evidence {
+  margin-top: 3rem !important;
+}
+
+html body .resources-magazine-feature {
+  min-height: 440px !important;
+  border-radius: 0 !important;
+}
+
+html body .resources-magazine-sections {
+  min-height: 0 !important;
+}
+
+html body .resources-publication-grid {
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .resources-publication-card {
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .resources-question-layout {
+  grid-template-columns: minmax(0,.75fr) minmax(0,1.25fr) !important;
+  gap: clamp(2rem,5vw,5rem) !important;
+}
+
+/* ==========================================================================
+   11 · FAQ — direct answers, not another landing page
+   ========================================================================== */
+
+html body .faq-page > section,
+html body .faq-page .faq-section,
+html body .faq-page .faq-exits,
+html body .faq-page .faq-contact {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+html body .faq-page .faq-section,
+html body .faq-page .faq-exits,
+html body .faq-page .faq-contact {
+  padding-block: var(--bv-section) !important;
+}
+
+html body .faq-page .faq-section {
+  background: var(--bv-paper) !important;
+  color: var(--bv-ink) !important;
+}
+
+html body .faq-category {
+  padding-block: 1.5rem !important;
+}
+
+html body .faq-category-title {
+  margin-bottom: 1rem !important;
+}
+
+html body .faq-accordion {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--bv-line-light) !important;
+}
+
+html body .faq-accordion > button {
+  min-height: 64px !important;
+  padding-block: 1rem !important;
+}
+
+html body .faq-answer-inner {
+  max-width: 70ch !important;
+  padding: 0 0 1.5rem !important;
+  color: var(--bv-muted-light) !important;
+}
+
+html body .faq-exits-grid,
+html body .faq-contact-grid {
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 1rem !important;
+}
+
+html body .faq-contact-card {
+  min-height: 220px !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   12 · 404
+   ========================================================================== */
+
+html body .not-found-page {
+  min-height: calc(100svh - 74px) !important;
+  background: #111310 !important;
+}
+
+html body .not-found-shell {
+  padding-block: clamp(8rem,12vw,11rem) var(--bv-section) !important;
+}
+
+html body .not-found-page h1 {
+  max-width: 9ch;
+  font-size: clamp(5rem,12vw,12rem) !important;
+  line-height: .8 !important;
+  letter-spacing: -.075em !important;
+}
+
+html body .not-found-grid {
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: 1px !important;
+  background: var(--bv-line-dark);
+}
+
+html body .not-found-card {
+  min-height: 180px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   13 · FOOTER — compact and useful
+   ========================================================================== */
+
+html body .footer.gym-footer {
+  min-height: 0 !important;
+  padding: clamp(3.2rem,5vw,5rem) var(--bv-gutter) 1.5rem !important;
+  display: grid !important;
+  grid-template-columns: minmax(0,1.2fr) minmax(0,1.8fr) !important;
+  grid-template-areas:
+    "signature nav"
+    "social nav"
+    "legal legal" !important;
+  gap: 2rem 4rem !important;
+  background: #111310 !important;
+  border-top: 1px solid var(--bv-line-dark) !important;
+}
+
+html body .footer.gym-footer .footer-top {
+  grid-area: signature !important;
+  display: block !important;
+  padding: 0 !important;
+}
+
+html body .footer.gym-footer .footer-mark {
+  font-size: clamp(2.6rem,5vw,5rem) !important;
+  line-height: 1 !important;
+  letter-spacing: -.05em !important;
+}
+
+html body .footer.gym-footer .footer-top > p {
+  max-width: 34ch;
+  margin-top: 1rem;
+  font-size: .95rem !important;
+  line-height: 1.6 !important;
+}
+
+html body .footer.gym-footer .footer-columns {
+  grid-area: nav !important;
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 2rem !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+html body .footer.gym-footer .footer-column {
+  gap: .45rem !important;
+}
+
+html body .footer.gym-footer .footer-column > p {
+  margin: 0 0 .7rem !important;
+  font-size: .65rem !important;
+}
+
+html body .footer.gym-footer .footer-column a {
+  min-height: 32px !important;
+  font-size: .82rem !important;
+  line-height: 1.3 !important;
+}
+
+html body .footer.gym-footer .footer-social {
+  grid-area: social !important;
+  align-self: start !important;
+}
+
+html body .footer.gym-footer .footer-social a {
+  width: 38px !important;
+  height: 38px !important;
+}
+
+html body .footer.gym-footer .footer-bottom {
+  grid-area: legal !important;
+  padding-top: 1rem !important;
+  margin-top: .5rem !important;
+}
+
+/* ==========================================================================
+   14 · DAY MODE — same art direction, warmer light surfaces
+   ========================================================================== */
+
+html[data-bayona-theme='day'] body {
+  background: var(--bv-paper);
+}
+
+html[data-bayona-theme='day'] body .navbar {
+  background: rgba(245,240,232,.94);
+  border-bottom-color: rgba(23,22,20,.12);
+}
+
+html[data-bayona-theme='day'] body .navbar :is(.brand,.desktop-nav a,.site-theme-toggle,.menu-button,.nav-cart-button) {
+  color: var(--bv-ink) !important;
+}
+
+html[data-bayona-theme='day'] body .footer.gym-footer {
+  background: #ded6ca !important;
+  color: var(--bv-ink) !important;
+  border-top-color: var(--bv-line-light) !important;
+}
+
+html[data-bayona-theme='day'] body .footer.gym-footer :is(.footer-mark,.footer-top > p,.footer-column a,.footer-bottom small) {
+  color: var(--bv-ink) !important;
+}
+
+/* ==========================================================================
+   15 · MOBILE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  html body .navbar {
+    height: 66px;
+    min-height: 66px;
+  }
+
+  html body .desktop-nav,
+  html body .nav-cta {
+    display: none !important;
+  }
+
+  html body .menu-button {
+    display: inline-grid !important;
+  }
+
+  html body .ds-frame[data-experience-scope='brand'] :is(
+    .gym-home-hero,.page-hero,.academy-hero,.community-hero,.app-hero,.shop-hero,.resources-hero
+  ) {
+    min-height: 620px !important;
+  }
+
+  html body .ds-frame[data-experience-scope='brand'] :is(
+    .gym-home-hero__content,.page-hero-content,.academy-hero-inner,.community-hero-club-grid,
+    .app-hero-content,.shop-hero-content,.resources-hero-layout
+  ) {
+    min-height: 620px !important;
+    padding: 7.5rem 0 3.5rem !important;
+  }
+
+  html body .ds-frame[data-experience-scope='brand'] :is(
+    .gym-home-hero h1,.page-hero-title,.academy-hero h1,.community-hero-title,
+    .app-hero-title,.shop-hero h1,.resources-hero h1
+  ) {
+    font-size: clamp(3.2rem,12vw,5rem) !important;
+    max-width: 10ch !important;
+  }
+
+  html body .gym-home > section:not(.gym-home-hero),
+  html body .about-page :is(.about-problem-section,.about-founder,.about-story,.about-globe-section,.about-values-section,.about-method),
+  html body .services-page :is(.services-overview,.services-memberships,.services-catalog,.services-final),
+  html body .parkour-academy :is(.academy-paths,.academy-levels,.academy-method,.academy-logistics,.academy-faq,.academy-closing),
+  html body .community-page .community-section,
+  html body .app-page :is(.app-section,.app-concept,.app-founding,.app-program-connection,.app-final-cta,.bayona-live-app),
+  html body .shop-page :is(.shop-categories,.shop-feature,.shop-catalog,.shop-process,.shop-training-bridge),
+  html body .resources-page :is(.resources-game,.resources-magazine,.resources-question),
+  html body .faq-page :is(.faq-section,.faq-exits,.faq-contact) {
+    padding-block: var(--bv-section-mobile) !important;
+  }
+
+  html body .gym-services-intro,
+  html body .about-problem,
+  html body .about-founder__layout,
+  html body .plan-explorer.plan-showroom,
+  html body .resources-game-opening,
+  html body .resources-question-layout,
+  html body .gym-trust-layout {
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 1.5rem !important;
+  }
+
+  html body .gym-service-grid,
+  html body .services-path-grid,
+  html body .community-why-list,
+  html body .community-tier-ladder,
+  html body .community-calendar-panels,
+  html body .community-rail,
+  html body .app-vision-list,
+  html body .app-features-grid,
+  html body .shop-category-shortcuts,
+  html body .shop-products-masonry,
+  html body .shop-flat-results,
+  html body .resources-publication-grid,
+  html body .faq-exits-grid,
+  html body .faq-contact-grid,
+  html body .academy-age-track,
+  html body .academy-progression__cards,
+  html body .academy-method-scenes,
+  html body .academy-logistics-strip,
+  html body .about-chronicle-mobile,
+  html body .about-values-stage__grid,
+  html body .about-method-grid,
+  html body .services-catalog-index,
+  html body .services-card-grid {
+    grid-template-columns: minmax(0,1fr) !important;
+  }
+
+  html body .gym-service-card,
+  html body .services-path-card {
+    min-height: 330px !important;
+    height: 330px !important;
+    max-height: 330px !important;
+  }
+
+  html body .start-journey__steps {
+    grid-template-columns: minmax(0,1fr) !important;
+  }
+
+  html body .start-journey__step {
+    min-height: 0 !important;
+  }
+
+  html body .plan-showroom-preview {
+    grid-template-columns: minmax(0,1fr) !important;
+  }
+
+  html body .about-founder__visual {
+    height: 360px !important;
+  }
+
+  html body .about-globe-section :is(.globe-figure,.globe-fallback) {
+    height: 360px !important;
+    min-height: 320px !important;
+  }
+
+  html body .app-device-stage {
+    min-height: 430px !important;
+    height: 430px !important;
+    max-height: 430px !important;
+  }
+
+  html body .resources-game-progress {
+    overflow-x: visible !important;
+  }
+
+  html body .resources-game-progress ol {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+
+  html body .shop-product-visual {
+    height: 220px !important;
+    min-height: 220px !important;
+  }
+
+  html body .not-found-grid {
+    grid-template-columns: minmax(0,1fr) !important;
+  }
+
+  html body .footer.gym-footer {
+    grid-template-columns: minmax(0,1fr) !important;
+    grid-template-areas:
+      "signature"
+      "nav"
+      "social"
+      "legal" !important;
+    gap: 2rem !important;
+    padding-inline: 1rem !important;
+  }
+
+  html body .footer.gym-footer .footer-columns {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  :root { --bv-gutter: 1rem; }
+
+  html body .footer.gym-footer .footer-columns {
+    grid-template-columns: minmax(0,1fr) !important;
+  }
+
+  html body .resources-game-progress ol {
+    grid-template-columns: minmax(0,1fr) !important;
+  }
+
+  html body .gym-home-services .gym-section-heading h2,
+  html body .gym-home-gifts .gym-section-heading h2,
+  html body .gym-home-lead__intro h2,
+  html body .gym-home-trust h2,
+  html body .gym-home-plans .gym-section-heading h2,
+  html body .services-heading h2,
+  html body .academy-heading h2,
+  html body .community-title,
+  html body .app-section-title,
+  html body .about-problem-heading {
+    font-size: clamp(2.3rem,10vw,3.6rem) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .ds-frame[data-experience-scope='brand'] *,
+  html body .footer *,
+  html body .navbar * {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   16 · STRUCTURAL COMPRESSION — measured after visual audit
+   ========================================================================== */
+
+:root {
+  --bv-section: clamp(4rem,5vw,5rem);
+  --bv-section-mobile: clamp(3rem,9vw,4.2rem);
+}
+
+/* HOME — remove implicit grid tracks and make cards genuinely 2 × 2. */
+html body .gym-home .gym-service-grid {
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  grid-auto-columns: minmax(0,1fr) !important;
+  grid-auto-rows: 360px !important;
+  align-items: stretch !important;
+}
+html body .gym-home .gym-service-grid > .gym-service-card:nth-child(n) {
+  grid-column: auto !important;
+  grid-row: auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: 360px !important;
+  min-height: 360px !important;
+  max-height: 360px !important;
+}
+html body .gym-home .gym-service-card__body {
+  padding: 1.35rem !important;
+}
+html body .gym-home .gym-service-card h3 {
+  font-size: clamp(1.85rem,2.8vw,3rem) !important;
+}
+html body .gym-home .gym-service-card p {
+  max-width: 36ch !important;
+  font-size: .9rem !important;
+}
+html body .gym-home .gym-services-outro {
+  margin-top: 1.5rem !important;
+}
+
+/* Plan showroom: one coherent geometry on home and services. */
+html body .gym-home-plans .plan-showroom-signature,
+html body .services-memberships .plan-showroom-signature {
+  min-height: 0 !important;
+  height: auto !important;
+}
+html body .gym-home-plans .plan-showroom-stage,
+html body .gym-home-plans .plan-showroom-preview {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+}
+html body .gym-home-plans .plan-showroom-preview {
+  grid-template-columns: minmax(0,1.15fr) minmax(280px,.85fr) !important;
+}
+html body .gym-home-plans .plan-showroom-primary,
+html body .gym-home-plans .plan-showroom-signature {
+  min-height: 0 !important;
+  padding: 1.5rem !important;
+}
+html body .gym-home-plans .plan-showroom-signature {
+  justify-content: flex-start !important;
+}
+html body .gym-home-plans .plan-comparison-list {
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: .5rem !important;
+}
+html body .gym-home-plans .plan-comparison-item {
+  width: auto !important;
+  min-width: 0 !important;
+}
+html body .gym-home-plans .plan-showroom-tab {
+  min-height: 92px !important;
+  padding: .9rem !important;
+}
+
+html body .services-memberships .plan-explorer.plan-showroom {
+  display: grid !important;
+  grid-template-columns: 280px minmax(0,1fr) !important;
+  grid-template-rows: auto 1fr !important;
+  gap: .75rem 1.25rem !important;
+  align-items: start !important;
+  height: auto !important;
+}
+html body .services-memberships .plan-atelier-navigation {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+html body .services-memberships .plan-comparison-list {
+  position: static !important;
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  grid-template-columns: 1fr !important;
+  gap: .45rem !important;
+}
+html body .services-memberships .plan-comparison-item {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+html body .services-memberships .plan-showroom-tab {
+  width: 100% !important;
+  min-height: 84px !important;
+  padding: .8rem !important;
+}
+html body .services-memberships .plan-showroom-stage {
+  grid-column: 2 !important;
+  grid-row: 1 / span 2 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+}
+html body .services-memberships .plan-showroom-preview {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  grid-template-columns: minmax(0,1.15fr) minmax(260px,.85fr) !important;
+}
+html body .services-memberships .plan-showroom-primary,
+html body .services-memberships .plan-showroom-signature {
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 1.4rem !important;
+}
+html body .services-memberships .plan-showroom-signature {
+  justify-content: flex-start !important;
+}
+
+/* HOME lead becomes one concise conversion block on desktop. */
+html body .gym-home .gym-home-lead {
+  display: grid !important;
+  grid-template-columns: minmax(0,.7fr) minmax(0,1.3fr) !important;
+  align-items: start !important;
+  gap: clamp(2rem,5vw,5rem) !important;
+  padding-inline: max(var(--bv-gutter), calc((100vw - var(--bv-max))/2)) !important;
+}
+html body .gym-home .gym-home-lead > .gym-home-shell,
+html body .gym-home .gym-home-lead > .lead-magnet {
+  width: 100% !important;
+  margin: 0 !important;
+}
+html body .gym-home .lead-magnet-inner {
+  padding: clamp(1.4rem,2vw,2rem) !important;
+}
+html body .gym-home .gym-gift-card {
+  height: 430px !important;
+  grid-template-rows: 220px minmax(0,1fr) !important;
+}
+html body .gym-home .gym-gift-card img {
+  height: 220px !important;
+}
+
+/* SERVICES — same implicit-track fix as home. */
+html body .services-page .services-path-grid {
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  grid-auto-columns: minmax(0,1fr) !important;
+  grid-auto-rows: 350px !important;
+}
+html body .services-page .services-path-grid > .services-path-card:nth-child(n) {
+  grid-column: auto !important;
+  grid-row: auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: 350px !important;
+  min-height: 350px !important;
+  max-height: 350px !important;
+}
+html body .services-page .services-path-card {
+  padding: 1.5rem !important;
+}
+html body .services-page .services-catalog-groups {
+  gap: .75rem !important;
+}
+html body .services-page .services-catalog-summary {
+  min-height: 78px !important;
+  padding-block: .8rem !important;
+}
+html body .services-page .services-card-grid {
+  gap: .75rem !important;
+  padding-block: .75rem !important;
+}
+html body .services-page .services-card {
+  padding: 1.1rem !important;
+}
+
+/* PARKOUR — scene cards become editorial chapters, not 1000px posters. */
+html body .parkour-academy .academy-paths,
+html body .parkour-academy .academy-levels,
+html body .parkour-academy .academy-method,
+html body .parkour-academy .academy-logistics,
+html body .parkour-academy .academy-faq {
+  padding-inline: var(--bv-gutter) !important;
+}
+html body .parkour-academy .academy-session-map {
+  min-height: 0 !important;
+  padding: 1.4rem !important;
+}
+html body .parkour-academy .academy-age-track {
+  margin-top: 1.5rem !important;
+}
+html body .parkour-academy .academy-age {
+  min-height: 210px !important;
+  height: 210px !important;
+  padding: 1.2rem !important;
+}
+html body .parkour-academy .academy-progression__card {
+  min-height: 380px !important;
+  height: auto !important;
+}
+html body .parkour-academy .academy-method-scenes {
+  align-items: stretch !important;
+}
+html body .parkour-academy .academy-scene {
+  min-height: 400px !important;
+  height: 400px !important;
+  max-height: 400px !important;
+  padding: 1.25rem !important;
+  gap: 1rem !important;
+  overflow: hidden !important;
+  justify-content: flex-start !important;
+}
+html body .parkour-academy .academy-scene-copy {
+  overflow: hidden !important;
+}
+html body .parkour-academy .academy-scene-copy p {
+  font-size: .94rem !important;
+  line-height: 1.55 !important;
+}
+html body .parkour-academy .academy-method .video-section--contained {
+  margin-top: 3rem !important;
+  min-height: 0 !important;
+}
+html body .parkour-academy .academy-method .video-section__stage,
+html body .parkour-academy .academy-method .video-section__frame,
+html body .parkour-academy .academy-method .video-section__poster {
+  height: 460px !important;
+  min-height: 460px !important;
+}
+
+/* COMMUNITY — hero and calendar stop behaving like full-page installations. */
+html body .community-page .community-hero {
+  height: 760px !important;
+  min-height: 760px !important;
+  max-height: 760px !important;
+}
+html body .community-page .community-hero-club-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0,1.1fr) minmax(320px,.9fr) !important;
+  align-items: center !important;
+  min-height: 760px !important;
+  height: 760px !important;
+  max-height: 760px !important;
+  padding-block: 8rem 3rem !important;
+}
+html body .community-page .community-hero-side,
+html body .community-page .community-pass {
+  min-height: 0 !important;
+  height: auto !important;
+}
+html body .community-page .community-section-header {
+  min-height: 0 !important;
+  height: auto !important;
+  margin-bottom: 2rem !important;
+}
+html body .community-page .community-pulse {
+  min-height: 0 !important;
+  height: auto !important;
+}
+html body .community-page .community-calendar-panels {
+  height: auto !important;
+  align-items: stretch !important;
+}
+html body .community-page .community-calendar-panel {
+  min-height: 360px !important;
+  height: auto !important;
+  padding: 1.25rem !important;
+}
+html body .community-page .community-tier-ladder {
+  align-items: stretch !important;
+}
+html body .community-page .community-tier-card {
+  min-height: 400px !important;
+  height: auto !important;
+  padding: 1.35rem !important;
+}
+html body .community-page .community-group .video-section--contained,
+html body .community-page .community-group .video-section__stage,
+html body .community-page .community-group .video-section__frame,
+html body .community-page .community-group .video-section__poster {
+  height: 460px !important;
+  min-height: 460px !important;
+}
+html body .community-page .community-chat-preview {
+  min-height: 0 !important;
+  height: 320px !important;
+  max-height: 320px !important;
+}
+
+/* SHOP — four-column catalog, no legacy card spans. */
+html body .shop-page .shop-product-collection {
+  padding-block: 3rem !important;
+}
+html body .shop-page .shop-products-masonry,
+html body .shop-page .shop-flat-results {
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  grid-auto-columns: minmax(0,1fr) !important;
+  gap: .9rem !important;
+  align-items: stretch !important;
+}
+html body .shop-page .shop-product-entry,
+html body .shop-page .shop-product-entry[class*='is-'] {
+  width: auto !important;
+  min-width: 0 !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  list-style: none !important;
+}
+html body .shop-page .shop-product-card {
+  width: 100% !important;
+  height: 410px !important;
+  min-height: 410px !important;
+  max-height: 410px !important;
+  padding: 1rem !important;
+  overflow: hidden !important;
+}
+html body .shop-page .shop-product-visual {
+  height: 135px !important;
+  min-height: 135px !important;
+}
+html body .shop-page .shop-product-card :is(h3,h4) {
+  font-size: 1.05rem !important;
+  line-height: 1.2 !important;
+}
+html body .shop-page .shop-product-card p {
+  font-size: .82rem !important;
+  line-height: 1.45 !important;
+}
+
+/* RESOURCES — one concise challenge + one concise reading library. */
+html body .resources-page .resources-hero {
+  height: 760px !important;
+  min-height: 760px !important;
+  max-height: 760px !important;
+}
+html body .resources-page .resources-hero-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0,.9fr) minmax(360px,1.1fr) !important;
+  align-items: center !important;
+  height: 760px !important;
+  min-height: 760px !important;
+  max-height: 760px !important;
+  padding-block: 8rem 3rem !important;
+}
+html body .resources-page .resources-hero-library {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: .65rem !important;
+}
+html body .resources-page .resources-hero-library-card {
+  min-height: 140px !important;
+  height: 140px !important;
+  display: grid !important;
+  grid-template-columns: 145px 1fr !important;
+}
+html body .resources-page .resources-hero-library-visual {
+  height: 140px !important;
+  min-height: 140px !important;
+}
+html body .resources-page .resources-game {
+  padding-block: 4rem !important;
+}
+html body .resources-page .resources-game-rules {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: .75rem !important;
+  margin-top: 2rem !important;
+}
+html body .resources-page .resources-rule-panel {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 1.5rem !important;
+}
+html body .resources-page .resources-prize {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 1.5rem !important;
+  margin-top: .75rem !important;
+}
+html body .resources-page .resources-manual,
+html body .resources-page .resources-evidence {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 1.5rem 0 !important;
+  margin-top: 1.5rem !important;
+}
+html body .resources-page .resources-magazine {
+  padding-block: 4rem !important;
+}
+html body .resources-page .resources-magazine-sections {
+  gap: 2.5rem !important;
+}
+html body .resources-page .resources-magazine-shelf {
+  min-height: 0 !important;
+  height: auto !important;
+  padding-block: 1.25rem !important;
+}
+html body .resources-page .resources-publication-grid {
+  align-items: stretch !important;
+}
+html body .resources-page .resources-publication-card {
+  min-height: 380px !important;
+  height: 380px !important;
+  max-height: 380px !important;
+  overflow: hidden !important;
+}
+html body .resources-page .resources-publication-cover,
+html body .resources-page .resources-publication-copy,
+html body .resources-page .resources-publication-open {
+  min-height: 0 !important;
+  height: 100% !important;
+}
+html body .resources-page .resources-question {
+  padding-block: 4rem !important;
+}
+
+/* FAQ — compact ending and no oversized founder close. */
+html body .faq-page .faq-contact {
+  padding-block: 4rem !important;
+}
+html body .faq-page .faq-contact-card {
+  min-height: 180px !important;
+  height: auto !important;
+  padding: 1.25rem !important;
+}
+html body .faq-page .faq-founder-close {
+  min-height: 0 !important;
+  margin-top: 2rem !important;
+  padding-block: 1.5rem !important;
+}
+
+/* Mobile structural corrections */
+@media (max-width: 900px) {
+  html body .gym-home .gym-service-grid,
+  html body .services-page .services-path-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 320px !important;
+  }
+  html body .gym-home .gym-service-grid > .gym-service-card:nth-child(n),
+  html body .services-page .services-path-grid > .services-path-card:nth-child(n) {
+    height: 320px !important;
+    min-height: 320px !important;
+    max-height: 320px !important;
+  }
+  html body .gym-home .gym-home-lead {
+    grid-template-columns: 1fr !important;
+    padding-inline: var(--bv-gutter) !important;
+  }
+  html body .gym-home-plans .plan-comparison-list {
+    grid-template-columns: 1fr !important;
+  }
+  html body .gym-home-plans .plan-showroom-preview,
+  html body .services-memberships .plan-showroom-preview {
+    grid-template-columns: 1fr !important;
+  }
+  html body .services-memberships .plan-explorer.plan-showroom {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  html body .services-memberships :is(.plan-atelier-navigation,.plan-comparison-list,.plan-showroom-stage) {
+    width: 100% !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+  html body .parkour-academy .academy-scene {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+  html body .community-page .community-hero,
+  html body .resources-page .resources-hero {
+    height: auto !important;
+    min-height: 640px !important;
+    max-height: none !important;
+  }
+  html body .community-page .community-hero-club-grid,
+  html body .resources-page .resources-hero-layout {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    min-height: 640px !important;
+    max-height: none !important;
+    padding-block: 7rem 3rem !important;
+  }
+  html body .community-page .community-calendar-panel,
+  html body .community-page .community-tier-card {
+    min-height: 0 !important;
+  }
+  html body .shop-page .shop-products-masonry,
+  html body .shop-page .shop-flat-results {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+  html body .shop-page .shop-product-card {
+    height: 380px !important;
+    min-height: 380px !important;
+    max-height: 380px !important;
+  }
+  html body .resources-page .resources-hero-library-card {
+    grid-template-columns: 110px 1fr !important;
+    height: 120px !important;
+    min-height: 120px !important;
+  }
+  html body .resources-page .resources-hero-library-visual {
+    height: 120px !important;
+    min-height: 120px !important;
+  }
+  html body .resources-page .resources-game-rules {
+    grid-template-columns: 1fr !important;
+  }
+  html body .resources-page .resources-publication-card {
+    height: auto !important;
+    min-height: 260px !important;
+    max-height: none !important;
+  }
+}
+@media (max-width: 560px) {
+  html body .shop-page .shop-products-masonry,
+  html body .shop-page .shop-flat-results {
+    grid-template-columns: 1fr !important;
+  }
+  html body .shop-page .shop-product-card {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+}
+
+/* ==========================================================================
+   17 · STATIC EDITORIALIZATION — remove scroll theatre, keep the information
+   ========================================================================== */
+
+/* ABOUT: the globe runway was 7–8k px on mobile. Convert testimonials to cards. */
+html body .about-page .about-globe-section {
+  padding-block: var(--bv-section) !important;
+}
+html body .about-page :is(
+  .globe-testimonials-experience,.globe-atlas-runway,.globe-testimonials-stage
+) {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+}
+html body .about-page :is(.globe-testimonials-canvas,.globe-testimonials-world) {
+  display: none !important;
+}
+html body .about-page .globe-scroll-story {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: .8rem !important;
+  position: static !important;
+  transform: none !important;
+}
+html body .about-page .globe-scroll-story__chapter {
+  width: auto !important;
+  height: auto !important;
+  min-height: 220px !important;
+  max-height: none !important;
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  opacity: 1 !important;
+  padding: 1.25rem !important;
+  border: 1px solid var(--bv-line-dark) !important;
+  background: #171917 !important;
+  color: var(--bv-cream) !important;
+  overflow: visible !important;
+}
+html body .about-page .globe-scroll-story__chapter p {
+  width: auto !important;
+  max-width: none !important;
+  font-size: .9rem !important;
+  line-height: 1.55 !important;
+}
+
+/* APP: one clean product story instead of a device museum. */
+html body .app-page .app-features-grid {
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: .8rem !important;
+}
+html body .app-page :is(.app-feature-card,.app-anatomy-trigger) {
+  min-height: 220px !important;
+  height: 220px !important;
+  max-height: 220px !important;
+  padding: 1.15rem !important;
+  overflow: hidden !important;
+}
+html body .app-page .app-feature-content {
+  overflow: hidden !important;
+}
+html body .app-page .app-feature-content p {
+  font-size: .88rem !important;
+  line-height: 1.5 !important;
+}
+html body .app-page .app-concept {
+  padding-block: var(--bv-section) !important;
+}
+html body .app-page .app-device-stage {
+  height: 560px !important;
+  min-height: 560px !important;
+  max-height: 560px !important;
+}
+html body .app-page .app-device-flat {
+  height: 560px !important;
+  min-height: 0 !important;
+}
+html body .app-page .app-device-watch {
+  display: none !important;
+}
+html body .app-page .app-phone-dashboard {
+  min-height: 0 !important;
+}
+html body .app-page .app-founding-benefits {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: .8rem !important;
+}
+html body .app-page .app-founding-benefit {
+  min-height: 180px !important;
+  padding: 1.2rem !important;
+}
+html body .app-page .app-final-cta {
+  padding-block: var(--bv-section) !important;
+}
+html body .app-page .bayona-live-app__header {
+  min-height: 0 !important;
+}
+html body .app-page .bayona-live-app__spaces {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: .8rem !important;
+}
+html body .app-page .bayona-live-app__space {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* HOME: mobile and desktop plans need one readable summary, not a poster. */
+html body .gym-home .plan-showroom-signature,
+html body .services-page .plan-showroom-signature {
+  min-height: 0 !important;
+}
+html body .gym-home .plan-showroom-signature :is(.plan-signature-visual,.plan-showroom-visual) {
+  min-height: 220px !important;
+  height: 220px !important;
+}
+html body .gym-home .gym-home-process.start-journey {
+  padding-block: 4rem !important;
+}
+html body .gym-home .start-journey__step {
+  min-height: 200px !important;
+  padding: 1.25rem !important;
+}
+html body .gym-home .bayona-live-app--home {
+  padding-block: 4rem !important;
+}
+html body .gym-home .bayona-live-app--home .bayona-live-app__header {
+  min-height: 0 !important;
+}
+
+/* COMMUNITY: compact social/media cards. */
+html body .community-page .community-live-card {
+  min-height: 320px !important;
+  height: 320px !important;
+  max-height: 320px !important;
+  overflow: hidden !important;
+}
+html body .community-page .community-live-media {
+  height: 155px !important;
+  min-height: 155px !important;
+}
+html body .community-page .community-live-body {
+  padding: 1rem !important;
+}
+html body .community-page .community-why-item {
+  padding: 1.15rem !important;
+}
+html body .community-page .community-closing {
+  padding-block: 4rem !important;
+}
+
+/* RESOURCES: publication cards read like articles, not vertical posters. */
+html body .resources-page .resources-publication-card {
+  display: grid !important;
+  grid-template-columns: minmax(140px,.75fr) minmax(0,1.25fr) !important;
+  align-items: stretch !important;
+}
+html body .resources-page .resources-publication-cover {
+  width: auto !important;
+  min-width: 0 !important;
+}
+html body .resources-page .resources-publication-copy {
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 1.1rem !important;
+  overflow: hidden !important;
+}
+html body .resources-page .resources-publication-open {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+html body .resources-page .resources-publication-copy p {
+  font-size: .88rem !important;
+  line-height: 1.5 !important;
+}
+
+/* FAQ ending is a compact support strip. */
+html body .faq-page .faq-exits {
+  padding-block: 3.5rem !important;
+}
+html body .faq-page .faq-exits-grid {
+  gap: .75rem !important;
+}
+html body .faq-page .faq-exits-grid > * {
+  min-height: 150px !important;
+  padding: 1.1rem !important;
+}
+
+/* Mobile: static grids and density tuned for a 390px screen. */
+@media (max-width: 900px) {
+  html body .about-page .globe-scroll-story {
+    grid-template-columns: 1fr !important;
+  }
+  html body .about-page .globe-scroll-story__chapter {
+    min-height: 0 !important;
+    padding: 1rem !important;
+  }
+  html body .about-page .about-story-scene,
+  html body .about-page .about-method-scene {
+    min-height: 0 !important;
+    padding-block: 3.5rem !important;
+  }
+
+  html body .gym-home .gym-service-grid > .gym-service-card:nth-child(n),
+  html body .services-page .services-path-grid > .services-path-card:nth-child(n) {
+    height: 270px !important;
+    min-height: 270px !important;
+    max-height: 270px !important;
+  }
+  html body .gym-home .gym-service-grid,
+  html body .services-page .services-path-grid {
+    grid-auto-rows: 270px !important;
+  }
+  html body .gym-home .start-journey__step {
+    min-height: 150px !important;
+  }
+  html body .gym-home-plans .plan-comparison-list,
+  html body .services-memberships .plan-comparison-list {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+  html body .gym-home-plans .plan-showroom-tab,
+  html body .services-memberships .plan-showroom-tab {
+    min-height: 78px !important;
+  }
+  html body .gym-home-plans .plan-showroom-signature,
+  html body .services-memberships .plan-showroom-signature {
+    display: none !important;
+  }
+  html body .gym-home-plans .plan-showroom-primary,
+  html body .services-memberships .plan-showroom-primary {
+    width: 100% !important;
+    padding: 1.15rem !important;
+  }
+
+  html body .community-page .community-live-card {
+    height: 280px !important;
+    min-height: 280px !important;
+    max-height: 280px !important;
+  }
+  html body .community-page .community-live-media {
+    height: 125px !important;
+    min-height: 125px !important;
+  }
+
+  html body .app-page .app-features-grid {
+    grid-template-columns: 1fr !important;
+  }
+  html body .app-page :is(.app-feature-card,.app-anatomy-trigger) {
+    min-height: 170px !important;
+    height: 170px !important;
+    max-height: 170px !important;
+  }
+  html body .app-page .app-device-stage {
+    height: 520px !important;
+    min-height: 520px !important;
+    max-height: 520px !important;
+  }
+  html body .app-page .app-device-flat {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  html body .app-page :is(.app-device-tablet,.app-device-watch,.app-device-desktop,.app-pass,.app-phone-dashboard) {
+    display: none !important;
+  }
+  html body .app-page .app-founding-benefits {
+    grid-template-columns: 1fr !important;
+  }
+  html body .app-page .app-founding-benefit {
+    min-height: 0 !important;
+  }
+  html body .app-page .bayona-live-app__spaces {
+    grid-template-columns: 1fr !important;
+  }
+  html body .app-page .bayona-live-app__space {
+    padding: 1rem !important;
+  }
+
+  html body .shop-page .shop-products-masonry,
+  html body .shop-page .shop-flat-results {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+  html body .shop-page .shop-product-card {
+    height: 310px !important;
+    min-height: 310px !important;
+    max-height: 310px !important;
+    padding: .8rem !important;
+  }
+  html body .shop-page .shop-product-visual {
+    height: 95px !important;
+    min-height: 95px !important;
+  }
+  html body .shop-page .shop-product-card :is(h3,h4) {
+    font-size: .9rem !important;
+  }
+  html body .shop-page .shop-product-card p {
+    display: none !important;
+  }
+  html body .shop-page .shop-product-actions {
+    margin-top: .5rem !important;
+  }
+
+  html body .resources-page .resources-publication-card {
+    grid-template-columns: 110px 1fr !important;
+    min-height: 230px !important;
+  }
+  html body .resources-page .resources-publication-copy {
+    padding: .8rem !important;
+  }
+  html body .resources-page .resources-question {
+    padding-block: 3.5rem !important;
+  }
+
+  html body .faq-page .faq-category {
+    display: block !important;
+    padding-block: 1rem !important;
+  }
+  html body .faq-page .faq-category-title {
+    margin-bottom: .5rem !important;
+  }
+  html body .faq-page .faq-contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+  html body .faq-page .faq-contact-card {
+    min-height: 140px !important;
+  }
+  html body .faq-page .faq-founder-close {
+    margin-top: 1.25rem !important;
+  }
+}
+
+/* ==========================================================================
+   18 · FINAL CONTRAST + MOBILE PLAN DENSITY
+   ========================================================================== */
+
+/* Services inherited a warm photographic pseudo-layer from an old Home class. */
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships::before,
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-preview {
+  background: #1b1d1a !important;
+  background-image: none !important;
+  color: var(--bv-cream) !important;
+  border: 1px solid var(--bv-line-dark) !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary {
+  color: var(--bv-cream) !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary :is(
+  h3,h4,p,dt,dd,strong,span,small
+) {
+  color: inherit;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-signature {
+  background: #242721 !important;
+}
+
+/* Footer should close the page, not become another page. */
+html body .footer.gym-footer {
+  padding-top: 2.8rem !important;
+}
+html body .footer.gym-footer .footer-mark {
+  font-size: clamp(2.3rem,4vw,4rem) !important;
+}
+html body .footer.gym-footer .footer-columns {
+  gap: 1.25rem !important;
+}
+html body .footer.gym-footer .footer-column a {
+  min-height: 28px !important;
+  font-size: .78rem !important;
+}
+
+/* The mobile plan view is a decision card, not a miniature desktop showroom. */
+@media (max-width: 900px) {
+  html body.premium-route--home .ds-frame[data-experience-scope='brand']
+  .gym-home-plans .plan-showroom-signature {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+  html body.premium-route--home .ds-frame[data-experience-scope='brand']
+  .gym-home-plans .plan-showroom-preview {
+    display: block !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  html body.premium-route--home .ds-frame[data-experience-scope='brand']
+  .gym-home-plans .plan-showroom-primary {
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 1rem !important;
+  }
+  html body .gym-home-plans .plan-showroom-narrative,
+  html body .services-memberships .plan-showroom-narrative {
+    display: grid !important;
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+    gap: .65rem !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  html body .gym-home-plans .plan-showroom-narrative > *,
+  html body .services-memberships .plan-showroom-narrative > * {
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: .75rem !important;
+  }
+  html body .gym-home-plans .plan-card-actions,
+  html body .services-memberships .plan-card-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+    gap: .5rem !important;
+    margin-top: .8rem !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  html body .gym-home-plans .plan-card-actions > *,
+  html body .services-memberships .plan-card-actions > * {
+    width: 100% !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+  }
+  html body .gym-home-plans .plan-summary-price,
+  html body .services-memberships .plan-summary-price {
+    margin-block: .8rem !important;
+  }
+}
+
+@media (max-width: 520px) {
+  html body .gym-home-plans .plan-showroom-narrative,
+  html body .services-memberships .plan-showroom-narrative {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -160,6 +160,8 @@ import './styles/ds-atelier.css'
  * selector encerrado en el marco de marca + un ancestro propio de la portada.
  */
 import './styles/home-atelier.css'
+/* 2026-10-12 · Single final visual owner for the public BAYONA website. */
+import './styles/bayona-visual-reset-20261012.css'
 
 /**
  * Arranca la medición. No carga ningún proveedor hasta que haya consentimiento
