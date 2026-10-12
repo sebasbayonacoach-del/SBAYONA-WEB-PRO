@@ -1,0 +1,241 @@
+/*
+ * BAYONA / REFERO STYLES — editorial precision (2026-10-12)
+ *
+ * Adaptación original de patrones de Refero Styles (no clona una web):
+ * retícula y ritmo editorial, proporciones fluidas, superficies contenidas,
+ * una señal cromática, estados accesibles y movimiento opt-in.
+ *
+ * Alcance: páginas de marca. Sin afectar /design-system ni la BAYONA APP.
+ * Sin nuevos colores, fuentes de pago, JS, WebGL ni declaraciones forzadas.
+ * Fuentes: https://styles.refero.design/ ; Brex, Linear, Raycast.
+ */
+
+:root {
+  --refero-page-max: 1280px;
+  --refero-reading-max: 64ch;
+  --refero-section-space: clamp(4.5rem, 8vw, 9rem);
+  --refero-gutter: clamp(1.25rem, 4.4vw, 4rem);
+  --refero-card-gap: clamp(0.9rem, 2vw, 1.75rem);
+  --refero-card-pad: clamp(1.35rem, 2.6vw, 2.5rem);
+  --refero-radius-card: var(--ds-radius-float, 16px);
+  --refero-radius-control: var(--ds-radius-control, 10px);
+  --refero-ink: var(--ds-color-ink);
+  --refero-muted: var(--ds-color-muted);
+  --refero-accent: var(--ds-color-accent);
+  --refero-panel: var(--bayona-surface-2);
+  --refero-rule: var(--bayona-hairline-color);
+  --refero-motion: var(--bayona-dur-standard, 240ms) var(--bayona-ease-standard, ease);
+}
+
+/* Typography — the words lead; scenery never decides the hierarchy. */
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-section-heading h2,
+  .services-heading h2,
+  .community-title,
+  .about-problem-heading,
+  .gym-home-lead__intro h2
+) {
+  text-wrap: balance;
+  max-inline-size: 19ch;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-home-hero__lead,
+  .gym-home-lead__intro > p,
+  .community-section-subtitle,
+  .services-heading > p,
+  .about-problem-copy
+) {
+  max-inline-size: var(--refero-reading-max);
+  text-wrap: pretty;
+  line-height: 1.65;
+}
+
+/* Keep the editorial grid aligned across distinct page modules. */
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-home-shell,
+  .services-shell,
+  .community-shell
+) {
+  width: min(calc(100% - (var(--refero-gutter) * 2)), var(--refero-page-max));
+  margin-inline: auto;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-home-services,
+  .gym-home-plans,
+  .gym-home-trust,
+  .gym-home-gifts,
+  .gym-home-lead
+) {
+  padding-block: var(--refero-section-space);
+  scroll-margin-top: 6rem;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-service-grid,
+  .gym-gift-grid,
+  .services-path-grid
+) {
+  gap: var(--refero-card-gap);
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-section-heading,
+  .services-heading,
+  .community-section-header
+) {
+  margin-block-end: clamp(1.75rem, 3.5vw, 3.5rem);
+}
+
+/* Flat, luminous card edges: no gratuitous gradient or deep shadow. */
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-gift-card,
+  .shop-product-card,
+  .community-live-card,
+  .about-values-stage__card
+) {
+  border: 1px solid var(--refero-rule);
+  border-radius: var(--refero-radius-card);
+  box-shadow: none;
+  transition:
+    border-color var(--refero-motion),
+    background-color var(--refero-motion),
+    transform var(--refero-motion);
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-gift-card,
+  .shop-product-card,
+  .community-live-card,
+  .about-values-stage__card
+):is(:hover, :focus-within) {
+  border-color: var(--refero-accent);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-service-card {
+  border-radius: var(--refero-radius-card);
+  isolation: isolate;
+  outline: 1px solid var(--refero-rule);
+  outline-offset: -1px;
+  transition: outline-color var(--refero-motion), transform var(--refero-motion);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-service-card:is(:hover, :focus-within) {
+  outline-color: var(--refero-accent);
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-gift-card,
+  .community-live-body,
+  .about-values-stage__card
+) {
+  padding: var(--refero-card-pad);
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-gift-card p,
+  .community-live-date,
+  .services-path-card__meta
+) {
+  line-height: 1.55;
+}
+
+/* The accent exists for an action, not another decorative panel. */
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-primary-button,
+  .gym-nav-cta,
+  .services-primary-cta,
+  .about-editorial-primary,
+  .resources-action--primary,
+  .gold-button
+) {
+  border-radius: var(--refero-radius-control);
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-secondary-button,
+  .services-secondary-cta,
+  .about-editorial-secondary
+) {
+  border-radius: var(--refero-radius-control);
+  min-height: 44px;
+}
+
+/* Inputs, navigation and controls remain readable and keyboard-operable. */
+.ds-frame[data-experience-scope='brand'] :is(
+  .lead-magnet input,
+  .lead-magnet select,
+  .lead-magnet textarea,
+  .lead-magnet button,
+  .site-theme-toggle,
+  .nav-cart-button
+) {
+  min-height: 44px;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .lead-magnet input,
+  .lead-magnet select,
+  .lead-magnet textarea
+) {
+  border-radius: var(--refero-radius-control);
+  border: 1px solid var(--refero-rule);
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  a, button, input, select, textarea, [tabindex]
+):focus-visible {
+  outline: 2px solid var(--refero-accent);
+  outline-offset: 3px;
+}
+
+.ds-frame[data-experience-scope='brand'] .navbar {
+  border-bottom: 1px solid var(--refero-rule);
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .gym-home-kicker, .community-eyebrow, .community-overline,
+  .gym-services-intro__index
+) {
+  letter-spacing: 0.13em;
+}
+
+/* Mobile: breathing space without horizontal overflow or minuscule targets. */
+@media (max-width: 767px) {
+  :root {
+    --refero-section-space: clamp(3.75rem, 11vw, 5.75rem);
+    --refero-gutter: clamp(1rem, 5vw, 1.5rem);
+    --refero-card-pad: clamp(1.1rem, 5vw, 1.55rem);
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(
+    .gym-section-heading h2,
+    .services-heading h2,
+    .community-title,
+    .gym-home-lead__intro h2
+  ) {
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(
+    .gym-service-grid, .gym-gift-grid, .services-path-grid
+  ) {
+    gap: 1rem;
+  }
+}
+
+/* Motion preferences are honoured without hiding information. */
+@media (prefers-reduced-motion: reduce) {
+  .ds-frame[data-experience-scope='brand'] :is(
+    .gym-gift-card, .shop-product-card, .community-live-card,
+    .about-values-stage__card, .gym-service-card
+  ) {
+    transition: none;
+  }
+}

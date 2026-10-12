@@ -142,6 +142,8 @@ import './styles/bayona-visual-unity.css'
  */
 import './styles/day-mode.css'
 import './styles/designly-interior-finish.css'
+/* Refero Styles: ritmo editorial, retícula, cards y foco sin sustituir BAYONA. */
+import './styles/refero-editorial-system.css'
 import './styles/ds-experience.css'
 /*
  * Pase atelier (FASE 4C). Detrás de la capa de experiencia porque la afina:
