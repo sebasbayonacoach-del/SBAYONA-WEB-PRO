@@ -144,6 +144,8 @@ import './styles/day-mode.css'
 import './styles/designly-interior-finish.css'
 /* Refero Styles: ritmo editorial, retícula, cards y foco sin sustituir BAYONA. */
 import './styles/refero-editorial-system.css'
+/* 21st.dev: spotlight cards y CTA shimmer en la portada, sin librerías nuevas. */
+import './styles/21st-community-interactions.css'
 import './styles/ds-experience.css'
 /*
  * Pase atelier (FASE 4C). Detrás de la capa de experiencia porque la afina:

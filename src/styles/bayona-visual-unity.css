@@ -50,7 +50,8 @@
   .ds-card,
   [class*='-card'],
   [class*='-tile']
-)::after {
+):not(.bayona-spotlight-card)::after {
+  /* A bounded original 21st.dev-inspired spotlight is allowed in Home only. */
   background-image: none !important;
 }
 .ds-frame:not([data-experience-scope='system']) :is(

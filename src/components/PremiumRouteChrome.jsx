@@ -19,7 +19,9 @@ const ROUTE_CONFIG = Object.freeze({
     marquee: false,
     revealSelectors: [],
     cardSelectors: ['.gym-service-card', '.gym-process-step', '.gym-gift-card'],
-    spotlightSelectors: ['.gym-service-card', '.gym-gift-card'],
+    // Home uses one delegated pointer listener per grid (21st.dev adaptation).
+    // Avoid registering an additional pointer listener on each of seven cards.
+    spotlightSelectors: [],
     tiltSelectors: [],
   }),
   '/about': Object.freeze({

@@ -1,0 +1,135 @@
+/*
+ * BAYONA × 21st.dev / INTERACTION ATELIER
+ * Original implementation of community UI patterns:
+ *   - Spotlight Cards: one delegated pointer listener, CSS gradient on demand
+ *   - Shimmer CTA: one-shot CSS sheen on hover/focus
+ *
+ * No external component dependency, cursor-tracking React state,
+ * continuous animation or animated blur. All effects are progressive.
+ * Scope: BAYONA brand home only; the 21st.dev site itself is not bundled.
+ */
+
+.ds-frame[data-experience-scope='brand'] .gym-home .bayona-spotlight-card {
+  --bayona-spot-x: 50%;
+  --bayona-spot-y: 50%;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Pointer light lives in a single gradient, not in React rerenders. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .ds-frame[data-experience-scope='brand'] .gym-home .bayona-spotlight-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle 310px at var(--bayona-spot-x) var(--bayona-spot-y),
+      color-mix(in srgb, var(--bayona-warm) 16%, transparent),
+      transparent 73%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease-out;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home
+  .bayona-spotlight-card:is(:hover, :focus-visible)::after {
+    opacity: 1;
+  }
+}
+
+/* Photo stays visible. The overlay never covers the service card's copy. */
+.ds-frame[data-experience-scope='brand'] .gym-home
+.gym-service-card.bayona-spotlight-card::after {
+  z-index: 1;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home
+.gym-service-card.bayona-spotlight-card > .gym-service-card__body,
+.ds-frame[data-experience-scope='brand'] .gym-home
+.gym-service-card.bayona-spotlight-card > .gym-service-card__top {
+  z-index: 2;
+}
+
+/* Gifts have image + caption as grid items: overlay must be out of layout. */
+.ds-frame[data-experience-scope='brand'] .gym-home
+.gym-gift-card.bayona-spotlight-card > img {
+  position: relative;
+  z-index: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home
+.gym-gift-card.bayona-spotlight-card > div {
+  position: relative;
+  z-index: 2;
+}
+
+/* Native contrast in light theme: preserve the card, avoid grey shine. */
+html[data-bayona-theme='day'] .ds-frame[data-experience-scope='brand']
+.gym-home .bayona-spotlight-card::after {
+  opacity: 0;
+}
+
+/*
+ * A one-shot sheen rather than an infinite attention-stealing animation.
+ * ::after is reserved only on the homepage's main action, never on inputs.
+ */
+.ds-frame[data-experience-scope='brand'] .gym-home
+.gym-home-hero__actions > .gym-primary-button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home
+.gym-home-hero__actions > .gym-primary-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    108deg,
+    transparent 27%,
+    color-mix(in srgb, var(--bayona-bone) 40%, transparent) 49%,
+    transparent 72%
+  );
+  pointer-events: none;
+  transform: translateX(-140%);
+}
+
+@keyframes bayona-21st-cta-sheen {
+  from { transform: translateX(-140%); }
+  to { transform: translateX(140%); }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ds-frame[data-experience-scope='brand'] .gym-home
+  .gym-home-hero__actions > .gym-primary-button:hover::after {
+    animation: bayona-21st-cta-sheen 780ms cubic-bezier(.22, 1, .36, 1) both;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ds-frame[data-experience-scope='brand'] .gym-home
+  .gym-home-hero__actions > .gym-primary-button:focus-visible::after {
+    animation: bayona-21st-cta-sheen 780ms cubic-bezier(.22, 1, .36, 1) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-frame[data-experience-scope='brand'] .gym-home .bayona-spotlight-card::after,
+  .ds-frame[data-experience-scope='brand'] .gym-home
+  .gym-home-hero__actions > .gym-primary-button::after {
+    display: none;
+    animation: none;
+  }
+}
+
+/* Touch gets existing visual contrast + a clear focus treatment. */
+@media (hover: none) {
+  .ds-frame[data-experience-scope='brand'] .gym-home .bayona-spotlight-card::after {
+    display: none;
+  }
+}

@@ -6,6 +6,7 @@ import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
 import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
+import { handleSpotlightPointerMove } from '../components/home/spotlightPointer.js'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink, isBookingEnabled } from '../config/site.config.js'
@@ -167,10 +168,11 @@ export default function Home() {
               <span className="gym-services-intro__rule" aria-hidden="true" />
             </div>
           </div>
-          <div className="gym-service-grid" aria-label="Cuatro formas de entrenar con BAYONA">
+          <div className="gym-service-grid bayona-spotlight-grid" aria-label="Cuatro formas de entrenar con BAYONA" onPointerMove={handleSpotlightPointerMove}>
             {SERVICES.map((service) => (
               <Link
-                className={`gym-service-card gym-service-card--${service.id}`}
+                className={`gym-service-card gym-service-card--${service.id} bayona-spotlight-card`}
+                data-bayona-spotlight=""
                 to={service.href}
                 key={service.id}
                 onClick={() => trackEvent('service_card_click', { service: service.id, source: 'home_services' })}
@@ -243,10 +245,11 @@ export default function Home() {
             <h2 id="gym-gifts-title">UN BUEN COMIENZO NO TIENE PRECIO.</h2>
             <p>He preparado tres recursos prácticos para ayudarte a empezar. Conócelos con calma y, si te sirven, recíbelos gratis al dejar tu nombre y un contacto.</p>
           </div>
-          <div className="gym-gift-grid">
+          <div className="gym-gift-grid bayona-spotlight-grid" onPointerMove={handleSpotlightPointerMove}>
             {GIFTS.map((gift) => (
               <a
-                className="gym-gift-card"
+                className="gym-gift-card bayona-spotlight-card"
+                data-bayona-spotlight=""
                 href="#empieza"
                 key={gift.href}
                 onClick={() => trackEvent('gift_claim_click', { gift: gift.title })}
