@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, ChevronDown, MessageCircle, Video } from 'lucide-react'
+import { ArrowUpRight, ChevronDown, MessageCircle, Search, Video, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
@@ -99,7 +99,14 @@ function PricingBlock() {
 
 export default function FAQ() {
   const [openQuestion, setOpenQuestion] = useState(0)
+  const [questionSearch, setQuestionSearch] = useState('')
   const reducedMotion = useReducedMotion()
+  const searchQuery = questionSearch.trim().toLocaleLowerCase('es')
+  const matchesQuestion = (item) =>
+    !searchQuery || `${item.q} ${item.a}`.toLocaleLowerCase('es').includes(searchQuery)
+  const matchingQuestionCount = questionCategories.reduce(
+    (sum, group) => sum + group.questions.filter(matchesQuestion).length, 0,
+  )
 
   return (
     <div className="faq-page">
@@ -145,12 +152,43 @@ export default function FAQ() {
         <SectionLabel>01 / RESPUESTAS CLARAS</SectionLabel>
         <h2 id="faq-questions-title">LO QUE NECESITAS SABER<br />{' '}<span>ANTES DE PAGAR.</span></h2>
 
+        <div className="faq-search" role="search" aria-label="Buscar en preguntas frecuentes">
+          <label htmlFor="faq-search-input">ENCUENTRA TU RESPUESTA</label>
+          <div className="faq-search__field">
+            <Search size={19} aria-hidden="true" />
+            <input
+              id="faq-search-input"
+              type="search"
+              autoComplete="off"
+              placeholder="Buscar servicios, precios, pagos..."
+              value={questionSearch}
+              onChange={(event) => setQuestionSearch(event.target.value)}
+              aria-describedby="faq-search-count"
+            />
+            {questionSearch && (
+              <button type="button" aria-label="Limpiar búsqueda" onClick={() => setQuestionSearch('')}>
+                <X size={18} aria-hidden="true" />
+              </button>
+            )}
+          </div>
+          <p id="faq-search-count" className="faq-search__count" role="status">
+            {matchingQuestionCount === 1 ? '1 respuesta encontrada' : `${matchingQuestionCount} respuestas disponibles`}
+          </p>
+        </div>
+
+        {matchingQuestionCount === 0 && (
+          <p className="faq-search__empty">
+            No encontramos una coincidencia. Prueba con otra palabra o consulta directamente con BAYONA.
+          </p>
+        )}
+
         <div className="faq-categories">
           {questionCategories.map((category, categoryIndex) => {
             const startIndex = questionCategories
               .slice(0, categoryIndex)
               .reduce((total, entry) => total + entry.questions.length, 0)
             const categoryNumber = String(categoryIndex + 1).padStart(2, '0')
+            if (!category.questions.some(matchesQuestion)) return null
 
             return (
               <section
@@ -164,6 +202,7 @@ export default function FAQ() {
                 </h3>
                 <div className="faq-list">
                   {category.questions.map((item, questionIndex) => {
+                    if (!matchesQuestion(item)) return null
                     const globalIndex = startIndex + questionIndex
                     const isOpen = openQuestion === globalIndex
                     const questionId = `faq-question-${globalIndex}`

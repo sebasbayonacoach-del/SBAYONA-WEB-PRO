@@ -1,0 +1,307 @@
+/*
+ * BAYONA × 21st.dev — sitewide component atlas, 2026-10-12
+ *
+ * Native BAYONA adaptations of UI patterns: nav active cue, bento feature cards,
+ * comparison tabs, disclosures, catalog filters, story timeline, community
+ * social tiles, knowledge library, FAQ search/accordion and training progression.
+ *
+ * The pages own their business logic. No copied code, new dependency, new
+ * network request, fake data, infinite animation, or overlay on payment forms.
+ * Last 3 global sheets remain: ds-experience / ds-atelier / home-atelier.
+ */
+
+.ds-frame[data-experience-scope='brand'] {
+  --c21-accent: var(--bayona-warm, var(--orange));
+  --c21-muted-edge: color-mix(in srgb, currentColor 13%, transparent);
+  --c21-strong-edge: color-mix(in srgb, var(--c21-accent) 70%, transparent);
+  --c21-micro: 240ms cubic-bezier(.2,.7,.2,1);
+  --c21-gutter: clamp(1rem, 2.5vw, 2rem);
+}
+
+/* 01 / NAVIGATION: subtle active indicator, never obscure the CTA. */
+.ds-frame[data-experience-scope='brand'] .gym-primary-nav a {
+  text-underline-offset: .44em;
+  text-decoration-thickness: 1px;
+  transition: color var(--c21-micro), text-decoration-color var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .gym-primary-nav a:is(:hover, :focus-visible, .active, [aria-current='page']) {
+  text-decoration-line: underline;
+  text-decoration-color: var(--c21-accent);
+}
+.ds-frame[data-experience-scope='brand'] :is(.nav-cta,.gym-nav-cta,.menu-button):focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: 3px;
+}
+
+/* 02 / HOME: guided stepper, progress points and client trust cues. */
+.ds-frame[data-experience-scope='brand'] .start-journey__progress-points button {
+  min-width: 44px;
+  min-height: 44px;
+  transition: border-color var(--c21-micro), color var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .start-journey__progress-points button:is(.is-active, :focus-visible) {
+  outline: 1px solid var(--c21-accent);
+  outline-offset: 2px;
+}
+.ds-frame[data-experience-scope='brand'] .gym-trust-layout li {
+  border-bottom: 1px solid var(--c21-muted-edge);
+  padding-block: clamp(.85rem, 1.6vw, 1.2rem);
+}
+.ds-frame[data-experience-scope='brand'] .gym-home-lead :is(input,textarea,select):focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: 3px;
+}
+
+/* 03 / PROGRAMS: bento services + disclosure menu. */
+.ds-frame[data-experience-scope='brand'] .services-path-card {
+  outline: 1px solid var(--c21-muted-edge);
+  outline-offset: -1px;
+  transition: outline-color var(--c21-micro), transform var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .services-path-card:is(:hover,:focus-visible) {
+  outline-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .services-overview-card {
+  transition: border-color var(--c21-micro), transform var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .services-overview-card:is(:hover,:focus-visible) {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .services-catalog-details > summary {
+  cursor: pointer;
+  scroll-margin-top: 6rem;
+  transition: color var(--c21-micro), border-color var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .services-catalog-details > summary:focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: -3px;
+}
+.ds-frame[data-experience-scope='brand'] .services-catalog-details[open] > summary {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .services-card:is(:hover,:focus-within) {
+  border-color: var(--c21-strong-edge);
+}
+
+/* 04 / PRICING: 21st-style selected tab and sober comparison. */
+.ds-frame[data-experience-scope='brand'] .plan-comparison-item {
+  transition: border-color var(--c21-micro), background-color var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .plan-comparison-item:is(.is-active,:focus-within) {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .plan-showroom-tab:focus-visible,
+.ds-frame[data-experience-scope='brand'] .plan-disclosure-button:focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: 3px;
+}
+.ds-frame[data-experience-scope='brand'] .plan-attribute-comparison :is(th,td) {
+  border-block-end: 1px solid var(--c21-muted-edge);
+}
+
+/* 05 / ABOUT: chapter timeline and principles without fabricated testimonials. */
+.ds-frame[data-experience-scope='brand'] .about-chronicle-mobile__item {
+  border-inline-start: 1px solid var(--c21-muted-edge);
+  padding-inline-start: clamp(1rem,2.6vw,2rem);
+  transition: border-color var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .about-chronicle-mobile__item:is(:hover,:focus-within) {
+  border-inline-start-color: var(--c21-accent);
+}
+.ds-frame[data-experience-scope='brand'] .about-values-stage__card {
+  transition: border-color var(--c21-micro), transform var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .about-values-stage__card:hover {
+  border-color: var(--c21-strong-edge);
+}
+
+/* 06 / SHOP: selection chips, editorial product cards, strong accessible focus. */
+.ds-frame[data-experience-scope='brand'] :is(.shop-collection-card, .shop-category-shortcuts button) {
+  transition: border-color var(--c21-micro), color var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] :is(.shop-collection-card, .shop-category-shortcuts button):is([aria-pressed='true'],.is-active,.active,:hover,:focus-visible) {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .shop-filter-bar :is(button,input,select):focus-visible,
+.ds-frame[data-experience-scope='brand'] .shop-add-to-cart:focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: 3px;
+}
+.ds-frame[data-experience-scope='brand'] .shop-product-card {
+  transition: border-color var(--c21-micro), transform var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .shop-product-card:is(:hover,:focus-within) {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .shop-product-visual img {
+  transition: transform 480ms cubic-bezier(.2,.7,.2,1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ds-frame[data-experience-scope='brand'] .shop-product-card:hover .shop-product-visual img {
+    transform: scale(1.035);
+  }
+}
+
+/* 07 / APP: feature bento with an understated action state. */
+.ds-frame[data-experience-scope='brand'] .app-features-grid > * {
+  border-color: var(--c21-muted-edge);
+  transition: border-color var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .app-features-grid > *:is(:hover,:focus-within) {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .app-anatomy-trigger:focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: 3px;
+}
+
+/* 08 / COMMUNITY: membership pass and editorial social link tiles. */
+.ds-frame[data-experience-scope='brand'] .community-pass {
+  border: 1px solid var(--c21-muted-edge);
+}
+.ds-frame[data-experience-scope='brand'] .community-live-card {
+  transition: border-color var(--c21-micro), transform var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .community-live-card:is(:hover,:focus-within) {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .community-social-link:focus-visible,
+.ds-frame[data-experience-scope='brand'] .community-button:focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: 3px;
+}
+
+/* 09 / RESOURCES: a readable knowledge library, not generic image placeholders. */
+.ds-frame[data-experience-scope='brand'] .resources-hero-library-card {
+  transition: border-color var(--c21-micro), transform var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .resources-hero-library-card:is(:hover,:focus-visible,:focus-within) {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .resources-game-card {
+  border-color: var(--c21-muted-edge);
+}
+.ds-frame[data-experience-scope='brand'] :is(.resources-action,.resources-reader-close):focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: 3px;
+}
+
+/* 10 / FAQ: real searchable accordion with results announced to assistive tech. */
+.ds-frame[data-experience-scope='brand'] .faq-search {
+  width: min(100%, 760px);
+  margin-block: clamp(2rem,4vw,3.5rem);
+}
+.ds-frame[data-experience-scope='brand'] .faq-search > label {
+  display: block;
+  margin-block-end: .7rem;
+  color: var(--c21-accent);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+.ds-frame[data-experience-scope='brand'] .faq-search__field {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  min-height: 58px;
+  padding-inline: clamp(.9rem,2vw,1.3rem);
+  border: 1px solid var(--c21-muted-edge);
+  border-radius: var(--ds-radius-control,10px);
+  background-color: color-mix(in srgb, currentColor 4%, transparent);
+  transition: border-color var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .faq-search__field:focus-within {
+  border-color: var(--c21-accent);
+  outline: 2px solid var(--c21-strong-edge);
+  outline-offset: 2px;
+}
+.ds-frame[data-experience-scope='brand'] .faq-search__field > svg { flex: none; }
+.ds-frame[data-experience-scope='brand'] .faq-search__field > input {
+  min-width: 0;
+  flex: 1;
+  color: inherit;
+  font: inherit;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  min-height: 54px;
+  caret-color: var(--c21-accent);
+}
+.ds-frame[data-experience-scope='brand'] .faq-search__field > input::placeholder {
+  color: color-mix(in srgb, currentColor 65%, transparent);
+}
+.ds-frame[data-experience-scope='brand'] .faq-search__field > button {
+  display: grid;
+  place-items: center;
+  flex: none;
+  inline-size: 44px;
+  block-size: 44px;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.ds-frame[data-experience-scope='brand'] .faq-search__field > button:focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: 2px;
+}
+.ds-frame[data-experience-scope='brand'] :is(.faq-search__count,.faq-search__empty) {
+  font-size: .875rem;
+  line-height: 1.6;
+  margin-block: .75rem;
+}
+.ds-frame[data-experience-scope='brand'] .faq-accordion {
+  transition: border-color var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .faq-accordion:is(.open,:focus-within) {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .faq-accordion > button:focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: -3px;
+}
+.ds-frame[data-experience-scope='brand'] .faq-exits-grid > li:is(:hover,:focus-within) {
+  border-color: var(--c21-strong-edge);
+}
+
+/* 11 / PARKOUR: skill progression and age path with touch-safe focus. */
+.ds-frame[data-experience-scope='brand'] .academy-progression__card {
+  transition: border-color var(--c21-micro), transform var(--c21-micro);
+}
+.ds-frame[data-experience-scope='brand'] .academy-progression__card:is(:hover,:focus-within) {
+  border-color: var(--c21-strong-edge);
+}
+.ds-frame[data-experience-scope='brand'] .academy-age :is(button,a,summary):focus-visible,
+.ds-frame[data-experience-scope='brand'] .academy-action:focus-visible {
+  outline: 2px solid var(--c21-accent);
+  outline-offset: 3px;
+}
+
+/* 12 / Cross-route CTA: clear tap targets, less decorative noise. */
+.ds-frame[data-experience-scope='brand'] :is(
+  .services-primary-cta,.services-secondary-cta,
+  .app-primary-cta,.community-button,.resources-action,
+  .academy-action,.shop-add-to-cart,.plan-cta
+) {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+@media (max-width: 767px) {
+  .ds-frame[data-experience-scope='brand'] .faq-search {
+    margin-inline: auto;
+  }
+  .ds-frame[data-experience-scope='brand'] .faq-search__field {
+    min-height: 54px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-frame[data-experience-scope='brand'] :is(
+    .services-path-card,.services-overview-card,.services-card,
+    .plan-comparison-item,.about-chronicle-mobile__item,.about-values-stage__card,
+    .shop-collection-card,.shop-category-shortcuts button,.shop-product-card,.shop-product-visual img,
+    .app-features-grid > *,.community-live-card,.resources-hero-library-card,
+    .faq-accordion,.academy-progression__card
+  ) {
+    transition: none;
+  }
+}
