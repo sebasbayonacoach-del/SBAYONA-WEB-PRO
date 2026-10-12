@@ -1,0 +1,2477 @@
+/*
+ * BAYONA — FINAL VISUAL OWNER V4
+ * Full visual audit rebuild · 2026-10-12
+ *
+ * One visual direction:
+ *   graphite / warm paper / sunrise orange
+ *   big readable typography
+ *   compact, intentional sections
+ *   generous whitespace without giant empty scrolls
+ *   image-led cards where imagery exists
+ *   no gradients-for-decoration, no competing micro-label systems
+ *
+ * This file intentionally sits LAST in src/main.jsx.
+ */
+
+:root {
+  --v4-ink: #11120f;
+  --v4-ink-2: #1c1e1a;
+  --v4-ink-3: #282a24;
+  --v4-paper: #f2ede5;
+  --v4-paper-2: #e7e0d6;
+  --v4-paper-3: #dad1c5;
+  --v4-orange: #f4a261;
+  --v4-orange-deep: #b65f28;
+  --v4-white: #fbf7f0;
+  --v4-muted-dark: rgba(251,247,240,.72);
+  --v4-muted-light: #625b52;
+  --v4-line-dark: rgba(251,247,240,.14);
+  --v4-line-light: rgba(17,18,15,.15);
+  --v4-page: min(1240px, calc(100vw - 64px));
+  --v4-reading: 62ch;
+  --v4-section: clamp(72px, 8vw, 118px);
+  --v4-gap: clamp(18px, 2vw, 30px);
+  --v4-radius: 4px;
+}
+
+/* =========================================================
+   00. GLOBAL SHELL / NAVIGATION
+   ========================================================= */
+
+html {
+  background: var(--v4-ink);
+}
+
+body {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.navbar {
+  min-height: 72px;
+  padding-inline: clamp(18px, 3vw, 44px);
+  background: rgba(14, 15, 13, .94);
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  box-shadow: none;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.navbar .brand,
+.navbar .desktop-nav a,
+.navbar .site-theme-toggle,
+.navbar .nav-cart-button,
+.navbar .menu-button,
+.navbar .nav-cta {
+  color: var(--v4-white);
+}
+
+.navbar .brand {
+  gap: .7rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.navbar .desktop-nav {
+  gap: clamp(18px, 2vw, 30px);
+}
+
+.navbar .desktop-nav a {
+  position: relative;
+  padding-block: 24px;
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .065em;
+  text-transform: uppercase;
+  opacity: .82;
+  text-decoration: none;
+}
+
+.navbar .desktop-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 17px;
+  height: 2px;
+  background: var(--v4-orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .2s ease;
+}
+
+.navbar .desktop-nav a:is(:hover, :focus-visible, [aria-current='page'], .active) {
+  opacity: 1;
+  color: var(--v4-white);
+}
+
+.navbar .desktop-nav a:is(:hover, :focus-visible, [aria-current='page'], .active)::after {
+  transform: scaleX(1);
+}
+
+.navbar .site-theme-toggle,
+.navbar .nav-cart-button,
+.navbar .menu-button {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.035);
+}
+
+.navbar .nav-cta {
+  min-height: 44px;
+  padding: .7rem 1rem;
+  border: 1px solid var(--v4-orange);
+  background: var(--v4-orange);
+  color: #17120e;
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  border-radius: 2px;
+}
+
+.navbar .nav-cta:hover {
+  background: #ffc087;
+  color: #17120e;
+}
+
+.mobile-nav {
+  background: #11130f;
+  color: var(--v4-white);
+}
+
+.gym-mobile-nav-list a {
+  min-height: 54px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  color: var(--v4-white);
+  font-size: 1.25rem;
+  letter-spacing: -.02em;
+}
+
+.translate-offer {
+  top: 82px;
+  right: 18px;
+  max-width: 330px;
+  padding: .65rem .75rem;
+  border: 1px solid rgba(244,162,97,.3);
+  background: rgba(17,18,15,.94);
+  color: var(--v4-white);
+  box-shadow: 0 14px 42px rgba(0,0,0,.18);
+  backdrop-filter: blur(10px);
+}
+
+.translate-offer-copy {
+  font-size: .72rem;
+  line-height: 1.35;
+}
+
+.translate-offer-action {
+  color: var(--v4-orange);
+  font-size: .72rem;
+}
+
+.translate-offer-close {
+  color: rgba(255,255,255,.65);
+}
+
+/* Universal typography reset inside public brand pages. */
+.ds-frame[data-experience-scope='brand'] :is(
+  p, li, dd, small
+) {
+  text-wrap: pretty;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  h1,h2,h3,h4
+) {
+  text-wrap: balance;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .section-shell,
+  .gym-home-shell,
+  .services-shell,
+  .community-shell,
+  .resources-shell
+) {
+  width: var(--v4-page);
+  max-width: 1240px;
+  margin-inline: auto;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  a, button, input, select, textarea, summary
+):focus-visible {
+  outline: 2px solid var(--v4-orange);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   01. HOME — REDUCED NOISE, STRONG FIRST FOLD
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] .gym-home {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero {
+  min-height: min(820px, 100svh);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  background: #11130f;
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(7,8,7,.88) 0%, rgba(7,8,7,.64) 42%, rgba(7,8,7,.12) 76%),
+    linear-gradient(0deg, rgba(7,8,7,.34), transparent 48%);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero__content {
+  width: var(--v4-page);
+  max-width: 1240px;
+  padding-block: 132px 74px;
+  position: relative;
+  z-index: 2;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-kicker {
+  display: inline-flex;
+  margin: 0 0 1.25rem;
+  padding-bottom: .7rem;
+  border-bottom: 1px solid rgba(244,162,97,.5);
+  color: var(--v4-orange);
+  font-size: .72rem;
+  line-height: 1.3;
+  letter-spacing: .14em;
+  font-weight: 800;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero h1 {
+  max-width: 9.8ch;
+  margin: 0;
+  color: var(--v4-white);
+  font-size: clamp(4.6rem, 8vw, 8.7rem);
+  line-height: .9;
+  letter-spacing: -.078em;
+  font-weight: 900;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero__lead {
+  max-width: 48ch;
+  margin: 1.5rem 0 0;
+  color: rgba(251,247,240,.82);
+  font-size: clamp(1.05rem, 1.4vw, 1.22rem);
+  line-height: 1.65;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .85rem;
+  margin-top: 2rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero__actions a {
+  min-height: 52px;
+  padding: .85rem 1.25rem;
+  border-radius: 2px;
+  font-size: .72rem;
+  letter-spacing: .07em;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-primary-button {
+  background: var(--v4-orange);
+  border-color: var(--v4-orange);
+  color: #17120e;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-secondary-button {
+  background: rgba(0,0,0,.16);
+  border-color: rgba(255,255,255,.42);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home :is(
+  .bayona-hero-coordinates,
+  .gym-home-reward
+) {
+  display: none;
+}
+
+/* The current experimental manifesto stays in DOM but becomes one clean strip. */
+.ds-frame[data-experience-scope='brand'] .gym-home .bayona-manifesto-band {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+  border: 0;
+  border-bottom: 1px solid var(--v4-line-light);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .bayona-manifesto-band__inner {
+  width: var(--v4-page);
+  max-width: 1240px;
+  min-height: 210px;
+  margin-inline: auto;
+  padding-block: 54px;
+  display: grid;
+  grid-template-columns: minmax(0,1.25fr) minmax(260px,.75fr);
+  align-items: end;
+  gap: 2rem 5rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .bayona-manifesto-band__identity span {
+  color: var(--v4-orange-deep);
+  font-size: .68rem;
+  letter-spacing: .14em;
+  font-weight: 800;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .bayona-manifesto-band__identity strong {
+  display: block;
+  max-width: 14ch;
+  margin-top: .7rem;
+  color: var(--v4-ink);
+  font-size: clamp(2.6rem, 5vw, 5.2rem);
+  line-height: .94;
+  letter-spacing: -.06em;
+  font-weight: 900;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .bayona-manifesto-band__inner p {
+  margin: 0;
+  color: var(--v4-muted-light);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .bayona-manifesto-band__inner a {
+  color: var(--v4-ink);
+  border-bottom: 2px solid var(--v4-orange-deep);
+  font-size: .72rem;
+  font-weight: 900;
+}
+
+/* Services become a legible 2x2 image grid. */
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-services {
+  padding: var(--v4-section) 0;
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-services-intro {
+  display: grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(280px,.65fr);
+  align-items: end;
+  gap: 2rem 4rem;
+  margin-bottom: 3rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-section-heading h2,
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-services-intro h2 {
+  max-width: 16ch;
+  margin: .7rem 0 0;
+  color: var(--v4-ink);
+  font-size: clamp(2.8rem, 5.2vw, 5.6rem);
+  line-height: .95;
+  letter-spacing: -.06em;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-section-heading h2 span,
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-services-intro h2 span {
+  color: var(--v4-orange-deep);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-services-intro__aside {
+  color: var(--v4-muted-light);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card {
+  min-height: 420px;
+  max-height: 480px;
+  border: 0;
+  border-radius: var(--v4-radius);
+  overflow: hidden;
+  background: var(--v4-ink);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.01);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8,9,8,.08) 0%, rgba(8,9,8,.18) 34%, rgba(8,9,8,.9) 100%);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .bayona-service-card-giant {
+  display: none;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card__top {
+  padding: 1.15rem 1.25rem;
+  color: rgba(255,255,255,.78);
+  font-size: .67rem;
+  letter-spacing: .1em;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card__body {
+  left: 1.25rem;
+  right: 1.25rem;
+  bottom: 1.35rem;
+  padding: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card h3 {
+  max-width: 18ch;
+  color: var(--v4-white);
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card p {
+  max-width: 48ch;
+  color: rgba(255,255,255,.78);
+  font-size: .95rem;
+  line-height: 1.55;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card__promise {
+  color: #ffd1a7;
+  font-size: .76rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-services-outro {
+  margin-top: 1.6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--v4-line-light);
+  color: var(--v4-muted-light);
+}
+
+/* Start journey: three cards, not a 1500px scroll ceremony. */
+.ds-frame[data-experience-scope='brand'] .gym-home .start-journey {
+  min-height: 0;
+  padding: var(--v4-section) 0;
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .start-journey__stage,
+.ds-frame[data-experience-scope='brand'] .gym-home .start-journey__steps {
+  min-height: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .start-journey__steps {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .start-journey__step {
+  min-height: 250px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.025);
+  box-shadow: none;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .start-journey__step.is-active {
+  border-color: var(--v4-orange);
+  box-shadow: inset 3px 0 0 var(--v4-orange);
+}
+
+/* Membership section compressed, still interactive. */
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-plans {
+  min-height: 0;
+  padding: var(--v4-section) 0;
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-plans .gym-section-heading {
+  margin-bottom: 2.2rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-plans .plan-explorer {
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-plans .plan-showroom-preview {
+  min-height: 520px;
+}
+
+/* App teaser, trust, gifts and form use one clean alternation. */
+.ds-frame[data-experience-scope='brand'] .gym-home .bayona-live-app--home {
+  min-height: 0;
+  padding-block: var(--v4-section);
+  background: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-trust {
+  padding: 72px 0;
+  background: var(--v4-paper-2);
+  color: var(--v4-ink);
+  border: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-trust-layout {
+  display: grid;
+  grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr);
+  gap: 3rem 5rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-trust-layout h2 {
+  color: var(--v4-ink);
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  line-height: .98;
+  letter-spacing: -.05em;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-trust-layout li {
+  color: #4d473f;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-gifts {
+  padding: var(--v4-section) 0;
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-card {
+  min-height: 360px;
+  border: 1px solid var(--v4-line-light);
+  border-radius: var(--v4-radius);
+  background: #fffaf3;
+  color: var(--v4-ink);
+  overflow: hidden;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-card img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-card > div {
+  padding: 1.25rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-card h3 {
+  color: var(--v4-ink);
+  font-size: 1.45rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-card p {
+  color: var(--v4-muted-light);
+}
+
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-lead {
+  padding: var(--v4-section) 0;
+  background: var(--v4-ink);
+  color: var(--v4-white);
+}
+
+/* =========================================================
+   02. SHARED HERO SYSTEM
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .about-page .page-hero,
+  .shop-page .shop-hero,
+  .community-page .community-hero,
+  .resources-page .resources-hero,
+  .app-page .app-hero,
+  .parkour-academy .academy-hero
+) {
+  min-height: 680px;
+  max-height: 800px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  border: 0;
+  background-color: var(--v4-ink);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .about-page .page-hero-content,
+  .shop-page .shop-hero-content,
+  .community-page .community-hero-copy,
+  .resources-page .resources-hero-copy,
+  .app-page .app-hero-content,
+  .parkour-academy .academy-hero-copy
+) {
+  max-width: 680px;
+  padding-left: 0;
+  border-left: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .about-page .page-hero-content,
+  .shop-page .shop-hero-content,
+  .community-page .community-hero-copy,
+  .resources-page .resources-hero-copy,
+  .app-page .app-hero-content,
+  .parkour-academy .academy-hero-copy
+)::before {
+  display: none;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .about-page .page-hero-title,
+  .shop-page .shop-hero h1,
+  .community-page .community-hero-title,
+  .resources-page .resources-hero h1,
+  .app-page .app-hero-title,
+  .parkour-academy .academy-hero h1
+) {
+  max-width: 11ch;
+  margin: .8rem 0 0;
+  color: var(--v4-white);
+  font-size: clamp(3.7rem, 6.5vw, 7.2rem);
+  line-height: .92;
+  letter-spacing: -.07em;
+  font-weight: 900;
+}
+
+.ds-frame[data-experience-scope='brand'] :is(
+  .hero-subtitle,
+  .shop-hero-content p,
+  .community-hero-subtitle,
+  .resources-hero-intro,
+  .app-hero-subtitle,
+  .academy-hero-copy > p
+) {
+  max-width: 52ch;
+  color: rgba(251,247,240,.78);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+/* =========================================================
+   03. SERVICES / PROGRAMS
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] .services-page {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero {
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  padding: 110px 0 72px;
+  background:
+    linear-gradient(90deg, rgba(12,13,11,.96) 0%, rgba(12,13,11,.9) 42%, rgba(12,13,11,.30) 74%),
+    url('/images/bayona-generated/home-pillar-build-1600.webp') center 42% / cover no-repeat;
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-backdrop {
+  display: none;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-content {
+  width: var(--v4-page);
+  max-width: 1240px;
+  margin-inline: auto;
+  padding: 0;
+  text-align: left;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero h1 {
+  max-width: 8ch;
+  color: var(--v4-white);
+  font-size: clamp(4rem, 7vw, 7.5rem);
+  line-height: .9;
+  letter-spacing: -.07em;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-support {
+  max-width: 52ch;
+  margin-top: 1.5rem;
+  color: rgba(251,247,240,.82);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-hero-promise {
+  color: var(--v4-orange);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-hero-signal {
+  display: none;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-wayfinder {
+  min-height: 66px;
+  display: grid;
+  grid-template-columns: minmax(0,1.1fr) repeat(3,minmax(0,1fr));
+  background: var(--v4-paper-2);
+  border-block: 1px solid var(--v4-line-light);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-wayfinder a,
+.ds-frame[data-experience-scope='brand'] .services-page .services-wayfinder__brand {
+  min-height: 66px;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--v4-line-light);
+  color: var(--v4-ink);
+  text-decoration: none;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .075em;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page :is(
+  .services-overview,
+  .services-catalog
+) {
+  padding: var(--v4-section) 0;
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-heading {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(260px,.55fr);
+  gap: 2rem 4rem;
+  align-items: end;
+  margin-bottom: 2.6rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-heading h2 {
+  max-width: 15ch;
+  color: var(--v4-ink);
+  font-size: clamp(2.8rem, 5vw, 5.3rem);
+  line-height: .96;
+  letter-spacing: -.055em;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-heading p {
+  color: var(--v4-muted-light);
+  line-height: 1.65;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card {
+  min-height: 400px;
+  max-height: 440px;
+  border: 0;
+  border-radius: var(--v4-radius);
+  overflow: hidden;
+  background: var(--v4-ink);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card:nth-child(n) {
+  grid-column: auto;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card h3 {
+  color: var(--v4-white);
+  font-size: clamp(2rem,3vw,3rem);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card p {
+  color: rgba(255,255,255,.8);
+}
+
+/* Pricing: readable desk, no beige overlay, compact. */
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships {
+  min-height: 0;
+  padding: var(--v4-section) 0;
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships::before,
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships::after {
+  display: none;
+  content: none;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .services-heading h2 {
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .services-heading p {
+  color: var(--v4-muted-dark);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer {
+  display: grid;
+  grid-template-columns: 290px minmax(0,1fr);
+  gap: 1.25rem;
+  align-items: start;
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(
+  .plan-comparison-list,
+  .plan-atelier-navigation
+) {
+  width: 100%;
+  min-width: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-stage {
+  width: 100%;
+  min-width: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-preview {
+  min-height: 540px;
+  width: 100%;
+  background: #252721;
+  border: 1px solid rgba(244,162,97,.35);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item {
+  background: #252721;
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item.is-active {
+  border-color: var(--v4-orange);
+  background: #332b24;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(
+  .plan-showroom-tab,
+  .plan-showroom-tab strong,
+  .plan-showroom-tab small,
+  .plan-summary-jtbd,
+  .plan-summary-value,
+  .plan-canonical-name,
+  .plan-price
+) {
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-index {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-overview-card {
+  min-height: 150px;
+  padding: 1.35rem;
+  border: 1px solid var(--v4-line-light);
+  border-radius: var(--v4-radius);
+  background: #fffaf4;
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-group {
+  margin-top: .8rem;
+  border: 1px solid var(--v4-line-light);
+  background: #fffaf4;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: .75rem;
+  padding: .75rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .services-card {
+  min-height: 200px;
+  padding: 1.25rem;
+  background: var(--v4-paper);
+  border: 1px solid var(--v4-line-light);
+  color: var(--v4-ink);
+}
+
+/* =========================================================
+   04. ABOUT
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] .about-page {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .page-hero {
+  background-color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page :is(
+  .about-problem-section,
+  .about-founder,
+  .about-values-section
+) {
+  padding-block: var(--v4-section);
+  min-height: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-problem-section {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-problem {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(300px,.7fr);
+  gap: 3rem 5rem;
+  align-items: start;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-problem-heading {
+  color: var(--v4-ink);
+  font-size: clamp(2.7rem,4.5vw,4.8rem);
+  line-height: .98;
+  letter-spacing: -.05em;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-problem-copy {
+  color: var(--v4-muted-light);
+  font-size: 1.03rem;
+  line-height: 1.7;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-founder {
+  background: var(--v4-paper-2);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-founder__layout {
+  display: grid;
+  grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr);
+  gap: 2rem 5rem;
+  align-items: center;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-founder__copy {
+  max-width: 56ch;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-story {
+  min-height: 620px;
+  padding-block: 90px;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-timeline {
+  min-height: 0;
+  padding-block: var(--v4-section);
+  background: var(--v4-paper);
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-chronicle-mobile {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-chronicle-mobile__item {
+  min-height: 250px;
+  padding: 1.35rem;
+  border: 1px solid var(--v4-line-light);
+  border-left: 3px solid var(--v4-orange);
+  background: #fffaf4;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-globe-section {
+  min-height: 0;
+  padding-block: 90px;
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-globe-webgl {
+  max-height: 560px;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-values-section {
+  background: var(--v4-paper);
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-values-stage__grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-values-stage__card {
+  min-height: 220px;
+  padding: 1.5rem;
+  border: 1px solid var(--v4-line-light);
+  background: #fffaf4;
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .about-page .about-method {
+  min-height: 700px;
+  padding-block: 90px;
+}
+
+/* =========================================================
+   05. SHOP
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] .shop-page {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-hero-marquee,
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-scroll-indicator {
+  display: none;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-categories {
+  min-height: 0;
+  padding-block: 72px;
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-categories-head {
+  margin-bottom: 2rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: .8rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts button {
+  min-height: 90px;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--v4-line-light);
+  border-radius: var(--v4-radius);
+  background: #fffaf4;
+  color: var(--v4-ink);
+  text-align: left;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts button:is(
+  :hover,:focus-visible,[aria-pressed='true'],.active,.is-active
+) {
+  border-color: var(--v4-orange-deep);
+  background: #f7e8d9;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-feature {
+  min-height: 560px;
+  padding-block: 80px;
+  background: var(--v4-ink);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-catalog {
+  min-height: 0;
+  padding-block: var(--v4-section);
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-filter-bar {
+  position: sticky;
+  top: 72px;
+  z-index: 4;
+  padding: .8rem;
+  border: 1px solid var(--v4-line-light);
+  background: rgba(242,237,229,.96);
+  backdrop-filter: blur(10px);
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-flat-results,
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-collection-groups {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-product-collection {
+  min-height: 0;
+  padding-block: 56px;
+  background: var(--v4-paper);
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-product-collection-heading {
+  margin-bottom: 1.4rem;
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-product-card {
+  min-height: 0;
+  border: 1px solid var(--v4-line-light);
+  border-radius: var(--v4-radius);
+  background: #fffaf4;
+  color: var(--v4-ink);
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-product-visual {
+  aspect-ratio: 16/10;
+  min-height: 0;
+  background: #d9d2c8;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-product-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-product-card :is(h3,p,strong,small,span) {
+  color: inherit;
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-product-card p {
+  color: var(--v4-muted-light);
+}
+
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-process {
+  min-height: 0;
+  padding-block: 72px;
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+
+/* =========================================================
+   06. COMMUNITY
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] .community-page {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-hero {
+  min-height: 720px;
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-section {
+  min-height: 0;
+  padding-block: var(--v4-section);
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-why {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-week {
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-access {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-live {
+  background: var(--v4-paper-2);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-group {
+  min-height: 720px;
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-closing {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-identity-points {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: .8rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-calendar-panels,
+.ds-frame[data-experience-scope='brand'] .community-page .community-tier-ladder {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-tier-ladder > *,
+.ds-frame[data-experience-scope='brand'] .community-page .community-calendar-panel {
+  min-height: 220px;
+  border: 1px solid currentColor;
+  border-color: rgba(244,162,97,.24);
+  box-shadow: none;
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-rail {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .community-page .community-live-card {
+  min-height: 360px;
+  border: 1px solid var(--v4-line-light);
+  border-radius: var(--v4-radius);
+  background: #fffaf4;
+  color: var(--v4-ink);
+  overflow: hidden;
+}
+
+/* =========================================================
+   07. RESOURCES
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] .resources-page {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero {
+  min-height: 700px;
+  background: var(--v4-ink);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-library {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: .8rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-library-card {
+  min-height: 250px;
+  border: 1px solid rgba(244,162,97,.28);
+  border-radius: var(--v4-radius);
+  background: #1c1f1b;
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-game {
+  min-height: 0;
+  padding-block: var(--v4-section);
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-game-opening,
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-publication-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-game-card,
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-publication-card {
+  min-height: 300px;
+  border: 1px solid var(--v4-line-light);
+  background: #fffaf4;
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page :is(
+  .resources-manual,
+  .resources-rule-panel,
+  .resources-prize,
+  .protocolo-checkin
+) {
+  min-height: 0;
+  padding-block: 72px;
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-magazine {
+  min-height: 0;
+  padding-block: var(--v4-section);
+  background: var(--v4-paper-2);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-magazine-sections {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-magazine-shelf {
+  min-height: 0;
+  padding-block: 56px;
+  background: var(--v4-paper);
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-question {
+  min-height: 0;
+  padding-block: var(--v4-section);
+  background: var(--v4-ink);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-lead-capture {
+  min-height: 0;
+  padding-block: 80px;
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+/* =========================================================
+   08. APP
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] .app-page {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-hero {
+  min-height: 700px;
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .bayona-live-app--app {
+  min-height: 0;
+  padding-block: 90px;
+  background: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-section {
+  min-height: 0;
+  padding-block: var(--v4-section);
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-vision,
+.ds-frame[data-experience-scope='brand'] .app-page .app-concept,
+.ds-frame[data-experience-scope='brand'] .app-page .app-program-connection {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-features,
+.ds-frame[data-experience-scope='brand'] .app-page .app-founding,
+.ds-frame[data-experience-scope='brand'] .app-page .app-final-cta {
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-vision-list,
+.ds-frame[data-experience-scope='brand'] .app-page .app-features-grid,
+.ds-frame[data-experience-scope='brand'] .app-page .app-founding-benefits {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > *,
+.ds-frame[data-experience-scope='brand'] .app-page .app-founding-benefit {
+  min-height: 220px;
+  padding: 1.35rem;
+  border: 1px solid rgba(244,162,97,.25);
+  background: rgba(255,255,255,.025);
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-concept {
+  min-height: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-device-stage {
+  max-width: 1080px;
+  margin-inline: auto;
+}
+
+.ds-frame[data-experience-scope='brand'] .app-page .app-phone-dashboard {
+  min-height: 0;
+  padding-block: 64px;
+  background: var(--v4-paper-2);
+}
+
+/* =========================================================
+   09. PARKOUR
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-hero {
+  min-height: 760px;
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-section {
+  min-height: 0;
+  padding-block: var(--v4-section);
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-paths,
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-logistics {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-levels,
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-method,
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-faq {
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-age-track,
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__cards,
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-method-scenes {
+  min-height: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__cards {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__card {
+  min-height: 300px;
+  padding: 1.35rem;
+  border: 1px solid rgba(244,162,97,.28);
+  border-top: 3px solid var(--v4-orange);
+  background: rgba(255,255,255,.025);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-method {
+  padding-block: 90px;
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-method-scenes {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-scene-copy {
+  min-height: 260px;
+  padding: 1.3rem;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-closing {
+  min-height: 0;
+  padding-block: 84px;
+  background: var(--v4-paper-2);
+  color: var(--v4-ink);
+}
+
+/* =========================================================
+   10. FAQ
+   ========================================================= */
+
+.ds-frame[data-experience-scope='brand'] .faq-page {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-section {
+  min-height: 0;
+  padding: 130px 0 var(--v4-section);
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-section > :is(h1,h2) {
+  max-width: 10ch;
+  color: var(--v4-ink);
+  font-size: clamp(3.8rem,6vw,6.5rem);
+  line-height: .92;
+  letter-spacing: -.065em;
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-search {
+  max-width: 760px;
+  margin: 2.4rem 0 3rem;
+  padding: 1rem;
+  border: 1px solid var(--v4-line-light);
+  border-radius: var(--v4-radius);
+  background: #fffaf4;
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-search__field {
+  min-height: 56px;
+  border: 1px solid var(--v4-line-light);
+  background: var(--v4-paper);
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-categories {
+  max-width: 960px;
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-category {
+  margin: 0;
+  padding-block: 1.6rem;
+  border-top: 1px solid var(--v4-line-light);
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-category-title {
+  color: var(--v4-orange-deep);
+  font-size: .76rem;
+  letter-spacing: .12em;
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion {
+  border-bottom: 1px solid var(--v4-line-light);
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion > button {
+  min-height: 72px;
+  color: var(--v4-ink);
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-question-text {
+  color: var(--v4-ink);
+  font-size: 1.08rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-answer-inner {
+  max-width: var(--v4-reading);
+  padding-bottom: 1.4rem;
+  color: var(--v4-muted-light);
+  line-height: 1.7;
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-exits,
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-contact {
+  min-height: 0;
+  padding-block: 72px;
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-exits {
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-exits-grid,
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-contact {
+  background: var(--v4-paper-2);
+  color: var(--v4-ink);
+}
+
+/* =========================================================
+   11. 404 — KEEP PERSONALITY, CLEANER PROPORTIONS
+   ========================================================= */
+
+.ds-frame .bayona-lost-world.not-found-page {
+  min-height: 100svh;
+  padding-top: 72px;
+  background: var(--v4-ink);
+  color: var(--v4-white);
+}
+
+.ds-frame .bayona-lost-world__main {
+  width: var(--v4-page);
+  max-width: 1240px;
+  padding-block: 62px 52px;
+}
+
+.ds-frame .bayona-lost-world__stage {
+  min-height: 520px;
+  grid-template-columns: minmax(0,1fr) minmax(320px,.7fr);
+  gap: 3rem;
+}
+
+.ds-frame .bayona-lost-world__number {
+  font-size: clamp(7rem,14vw,13rem);
+}
+
+.ds-frame .bayona-lost-world h1 {
+  max-width: 14ch;
+  font-size: clamp(2.7rem,4.4vw,4.8rem);
+}
+
+.ds-frame .bayona-lost-world__art {
+  min-height: 360px;
+  max-width: 460px;
+}
+
+.ds-frame .bayona-lost-world__routes-grid {
+  grid-template-columns: repeat(4,minmax(0,1fr));
+}
+
+.ds-frame .bayona-lost-world__route {
+  min-height: 170px;
+}
+
+/* =========================================================
+   12. RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1040px) {
+  :root { --v4-page: min(100% - 40px, 1240px); }
+
+  .navbar .desktop-nav,
+  .navbar .nav-cta {
+    display: none;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .gym-services-intro,
+  .ds-frame[data-experience-scope='brand'] .services-page .services-heading,
+  .ds-frame[data-experience-scope='brand'] .about-page .about-problem,
+  .ds-frame[data-experience-scope='brand'] .about-page .about-founder__layout,
+  .ds-frame[data-experience-scope='brand'] .gym-home .gym-trust-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer {
+    grid-template-columns: 240px minmax(0,1fr);
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(
+    .shop-page .shop-flat-results,
+    .shop-page .shop-collection-groups,
+    .resources-page .resources-hero-library,
+    .resources-page .resources-publication-grid,
+    .resources-page .resources-game-opening,
+    .resources-page .resources-magazine-sections,
+    .community-page .community-rail,
+    .community-page .community-calendar-panels,
+    .community-page .community-tier-ladder,
+    .app-page .app-vision-list,
+    .app-page .app-features-grid,
+    .app-page .app-founding-benefits,
+    .parkour-academy .academy-progression__cards,
+    .parkour-academy .academy-method-scenes
+  ) {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --v4-page: calc(100% - 28px);
+    --v4-section: 64px;
+  }
+
+  .navbar {
+    min-height: 60px;
+    padding-inline: 14px;
+  }
+
+  .navbar .site-theme-toggle {
+    min-width: 42px;
+    min-height: 42px;
+  }
+
+  .translate-offer {
+    top: 64px;
+    right: 8px;
+    max-width: 180px;
+    padding: .45rem .55rem;
+  }
+
+  .translate-offer-copy > span:first-child {
+    display: none;
+  }
+
+  .translate-offer-copy,
+  .translate-offer-action {
+    font-size: .64rem;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero {
+    min-height: 720px;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero__content {
+    padding-block: 104px 52px;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero h1 {
+    max-width: 10ch;
+    font-size: clamp(3.35rem, 14vw, 5.2rem);
+    line-height: .92;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero__lead {
+    font-size: .98rem;
+    line-height: 1.55;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .gym-home-hero__actions a {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .bayona-manifesto-band__inner {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-block: 42px;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .bayona-manifesto-band__inner :is(p,a) {
+    grid-column: 1;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .bayona-manifesto-band__identity strong {
+    font-size: clamp(2.35rem, 12vw, 3.8rem);
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(
+    .gym-home .gym-service-grid,
+    .gym-home .start-journey__steps,
+    .gym-home .gym-gift-grid,
+    .services-page .services-path-grid,
+    .services-page .services-catalog-index,
+    .services-page .services-card-grid,
+    .about-page .about-chronicle-mobile,
+    .about-page .about-values-stage__grid,
+    .shop-page .shop-flat-results,
+    .shop-page .shop-collection-groups,
+    .community-page .community-identity-points,
+    .community-page .community-rail,
+    .community-page .community-calendar-panels,
+    .community-page .community-tier-ladder,
+    .resources-page .resources-hero-library,
+    .resources-page .resources-publication-grid,
+    .resources-page .resources-game-opening,
+    .resources-page .resources-magazine-sections,
+    .app-page .app-vision-list,
+    .app-page .app-features-grid,
+    .app-page .app-founding-benefits,
+    .parkour-academy .academy-progression__cards,
+    .parkour-academy .academy-method-scenes,
+    .faq-page .faq-exits-grid,
+    .faq-page .faq-contact-grid
+  ) {
+    grid-template-columns: 1fr;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card,
+  .ds-frame[data-experience-scope='brand'] .services-page .services-path-card {
+    min-height: 360px;
+    max-height: none;
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(
+    .about-page .page-hero,
+    .shop-page .shop-hero,
+    .community-page .community-hero,
+    .resources-page .resources-hero,
+    .app-page .app-hero,
+    .parkour-academy .academy-hero
+  ) {
+    min-height: 650px;
+    max-height: none;
+  }
+
+  .ds-frame[data-experience-scope='brand'] :is(
+    .about-page .page-hero-title,
+    .shop-page .shop-hero h1,
+    .community-page .community-hero-title,
+    .resources-page .resources-hero h1,
+    .app-page .app-hero-title,
+    .parkour-academy .academy-hero h1
+  ) {
+    max-width: 10ch;
+    font-size: clamp(3rem, 13vw, 4.7rem);
+  }
+
+  .ds-frame[data-experience-scope='brand'] .services-page .page-hero {
+    min-height: 640px;
+    padding: 96px 0 56px;
+    background-position: 58% center;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .services-page .page-hero h1 {
+    font-size: clamp(3.35rem, 14vw, 5rem);
+  }
+
+  .ds-frame[data-experience-scope='brand'] .services-page .services-wayfinder {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .services-page .services-wayfinder__brand {
+    display: none;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .services-page .services-wayfinder a {
+    flex: 0 0 190px;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(
+    .plan-atelier-navigation,
+    .plan-comparison-list,
+    .plan-showroom-stage,
+    .plan-showroom-preview
+  ) {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .ds-frame[data-experience-scope='brand'] .shop-page .shop-filter-bar {
+    top: 60px;
+  }
+
+  .ds-frame .bayona-lost-world__stage {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .ds-frame .bayona-lost-world__art {
+    min-height: 260px;
+    max-width: 320px;
+    justify-self: center;
+  }
+
+  .ds-frame .bayona-lost-world__routes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar .desktop-nav a::after,
+  .ds-frame[data-experience-scope='brand'] * {
+    scroll-behavior: auto;
+  }
+}
+
+/* =========================================================
+   13. AUDIT FIXES — structural conflicts found in rendered DOM
+   ========================================================= */
+
+/* HOME: legacy cards span full rows; V4 owns the grid now. */
+html .ds-frame[data-experience-scope='brand'] .gym-home .gym-service-grid {
+  grid-template-columns: repeat(2, minmax(0,1fr));
+}
+html .ds-frame[data-experience-scope='brand'] .gym-home .gym-service-card:nth-child(n) {
+  grid-column: auto;
+  grid-row: auto;
+  width: auto;
+  max-width: none;
+}
+
+/* PROGRAMS: direct children had auto-placement in the wrong columns. */
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer {
+  display: grid;
+  grid-template-columns: 290px minmax(0,1fr);
+  grid-template-rows: auto auto;
+  gap: 1rem 1.25rem;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-atelier-navigation {
+  grid-column: 1;
+  grid-row: 1;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-list {
+  grid-column: 1;
+  grid-row: 2;
+  position: static;
+  width: 100%;
+  min-width: 0;
+  align-self: start;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-stage {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 100%;
+  min-width: 0;
+  align-self: start;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-preview {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 650px;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary,
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-signature {
+  width: 100%;
+  min-width: 0;
+}
+
+/* SHOP: collection groups are vertical chapters; products inside each chapter are the grid. */
+html .ds-frame[data-experience-scope='brand'] .shop-page .shop-collection-groups {
+  display: block;
+  width: 100%;
+}
+html .ds-frame[data-experience-scope='brand'] .shop-page .shop-product-collection {
+  width: 100%;
+  margin: 0;
+  padding-block: 48px;
+}
+html .ds-frame[data-experience-scope='brand'] .shop-page .shop-product-collection + .shop-product-collection {
+  border-top: 1px solid var(--v4-line-light);
+}
+html .ds-frame[data-experience-scope='brand'] .shop-page .shop-product-collection .shop-flat-results {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+  width: 100%;
+}
+html .ds-frame[data-experience-scope='brand'] .shop-page .shop-product-card {
+  width: 100%;
+  max-width: none;
+  transform: none;
+}
+html .ds-frame[data-experience-scope='brand'] .shop-page .shop-product-tilt {
+  height: 100%;
+}
+
+/* REVEALS: old cinematic masks were washing out content mid-scroll in audit shots. */
+html .ds-frame[data-experience-scope='brand'] :is(
+  .ds-reveal,
+  .premium-reveal,
+  .community-reveal,
+  .resources-reveal,
+  .app-reveal
+) {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+/* RESOURCES: keep the rich content, remove oversized cinematic spacing. */
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game .resources-shell {
+  min-height: 0;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page :is(
+  .resources-game-progress,
+  .resources-manual,
+  .resources-evidence,
+  .resources-game-rules,
+  .resources-prize,
+  .resources-game-cta
+) {
+  margin-block: 0;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-manual {
+  min-height: 0;
+  padding-block: 52px;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-evidence {
+  min-height: 0;
+  padding-block: 48px;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game-rules {
+  min-height: 0;
+  padding-block: 52px;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-prize {
+  min-height: 0;
+  padding-block: 56px;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game-cta {
+  min-height: 0;
+  padding-block: 36px;
+}
+
+/* APP: remove old viewport-sized feature cells. */
+html .ds-frame[data-experience-scope='brand'] .app-page .app-features .app-section-content {
+  min-height: 0;
+  height: auto;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid {
+  grid-auto-rows: auto;
+  align-items: stretch;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > * {
+  min-height: 240px;
+  height: auto;
+  max-height: none;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-feature-content {
+  min-height: 0;
+  height: auto;
+}
+
+/* About / Parkour: cancel scroll-story min heights while retaining the content. */
+html .ds-frame[data-experience-scope='brand'] .about-page :is(
+  .about-timeline-stage,
+  .about-journey-rail,
+  .globe-scroll-story
+) {
+  min-height: 0;
+}
+html .ds-frame[data-experience-scope='brand'] .parkour-academy :is(
+  .academy-method,
+  .academy-method-scenes,
+  .academy-progression,
+  .academy-age-track
+) {
+  min-height: 0;
+}
+
+/* Better mobile density after structural fixes. */
+@media (max-width: 720px) {
+  html .ds-frame[data-experience-scope='brand'] .gym-home .gym-service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(
+    .plan-atelier-navigation,
+    .plan-comparison-list,
+    .plan-showroom-stage
+  ) {
+    width: 100%;
+  }
+
+  html .ds-frame[data-experience-scope='brand'] .shop-page .shop-product-collection .shop-flat-results {
+    grid-template-columns: 1fr;
+  }
+
+  html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > * {
+    min-height: 0;
+  }
+}
+
+
+/* =========================================================
+   14. FINAL QUALITY PASS — pricing, resources, app, FAQ
+   ========================================================= */
+
+/* Pricing is intentionally the dark decision desk in both themes. */
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships {
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(
+  .services-heading h2,
+  .plan-canonical-name,
+  .plan-summary-heading,
+  .plan-summary-jtbd,
+  .plan-summary-jtbd p,
+  .plan-summary-value,
+  .plan-summary-scope,
+  .plan-price,
+  .plan-showroom-tab,
+  .plan-showroom-tab strong,
+  .plan-showroom-tab small,
+  .plan-showroom-tab span
+) {
+  color: var(--v4-white);
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(
+  .services-heading p,
+  .plan-showroom-narrative p,
+  .plan-summary-price small,
+  .plan-eur,
+  .plan-usd
+) {
+  color: rgba(251,247,240,.68);
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item {
+  background: #242722;
+  border-color: rgba(255,255,255,.13);
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item.is-active {
+  background: #332a23;
+  border-color: var(--v4-orange);
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-preview {
+  background: #20231f;
+  background-image: none;
+  color: var(--v4-white);
+  border-color: rgba(244,162,97,.38);
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary {
+  background: #20231f;
+  color: var(--v4-white);
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-signature {
+  background: #2a2d27;
+  color: var(--v4-white);
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(
+  .plan-showroom-signature span,
+  .plan-showroom-signature strong,
+  .plan-showroom-signature small,
+  .plan-showroom-signature dt,
+  .plan-showroom-signature dd,
+  .plan-showroom-signature p,
+  .plan-showroom-signature li
+) {
+  color: rgba(251,247,240,.82);
+}
+
+/* Resources: the 30-day experience is a light editorial chapter with dark inserts. */
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game {
+  background: var(--v4-paper);
+  color: var(--v4-ink);
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game::after {
+  display: none;
+  content: none;
+  background: none;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game :is(
+  .resources-section-header h2,
+  .resources-section-header h3,
+  .resources-game-opening h3,
+  .resources-evidence h3,
+  .resources-game-rules h3,
+  .resources-game-rules h4
+) {
+  color: var(--v4-ink);
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game :is(
+  .resources-section-header p,
+  .resources-game-opening p,
+  .resources-evidence p,
+  .resources-game-rules p,
+  .resources-game-rules li
+) {
+  color: var(--v4-muted-light);
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game-opening > * {
+  padding: 1.35rem;
+  border: 1px solid var(--v4-line-light);
+  background: #fffaf4;
+  color: var(--v4-ink);
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game-progress {
+  border-block: 1px solid var(--v4-line-light);
+  background: var(--v4-paper-2);
+  color: var(--v4-ink);
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-manual {
+  background: var(--v4-ink);
+  background-image: none;
+  color: var(--v4-white);
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-manual :is(h2,h3,h4,p,strong,small,li) {
+  color: inherit;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-evidence {
+  padding-inline: 1.4rem;
+  border: 1px solid var(--v4-line-light);
+  background: #fffaf4;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game-rules {
+  gap: 1rem;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game-rules > * {
+  padding: 1.4rem;
+  border: 1px solid var(--v4-line-light);
+  background: #fffaf4;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-prize {
+  background: var(--v4-ink-2);
+  color: var(--v4-white);
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-prize::after {
+  display: none;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-prize :is(h2,h3,h4,strong,p,li,small) {
+  color: inherit;
+}
+
+/* BAYONA+: nine modules become a genuine 3x3 product grid. */
+html .ds-frame[data-experience-scope='brand'] .app-page .app-features .app-section-content {
+  width: var(--v4-page);
+  max-width: 1240px;
+  margin-inline: auto;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  grid-auto-rows: auto;
+  gap: 1rem;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > .app-feature {
+  width: auto;
+  min-width: 0;
+  min-height: 300px;
+  height: auto;
+  padding: 1.6rem;
+  border: 1px solid rgba(244,162,97,.22);
+  background: #20231f;
+  color: var(--v4-white);
+  box-shadow: none;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-feature::after {
+  opacity: .22;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-feature-number {
+  color: var(--v4-orange);
+  font-size: .72rem;
+  letter-spacing: .12em;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-feature-content {
+  min-height: 0;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-feature-content h3 {
+  max-width: 16ch;
+  color: var(--v4-white);
+  font-size: clamp(1.55rem,2vw,2.15rem);
+  line-height: 1.04;
+  letter-spacing: -.035em;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-feature-content p {
+  color: rgba(251,247,240,.68);
+  font-size: .96rem;
+  line-height: 1.6;
+}
+
+/* FAQ: one clean card per question instead of grey bars. */
+html .ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion {
+  margin-bottom: .55rem;
+  border: 1px solid var(--v4-line-light);
+  background: #fffaf4;
+}
+html .ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion.open {
+  border-color: rgba(182,95,40,.48);
+  background: #f9ede0;
+}
+html .ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion > button {
+  padding-inline: 1rem;
+  background: transparent;
+}
+html .ds-frame[data-experience-scope='brand'] .faq-page .faq-question-number {
+  color: var(--v4-orange-deep);
+}
+html .ds-frame[data-experience-scope='brand'] .faq-page .faq-answer-inner {
+  padding-inline: 1rem;
+}
+
+/* Desktop navigation stays warm/light because it reads better over every route. */
+html .navbar {
+  background: rgba(247,243,235,.96);
+  border-bottom: 1px solid rgba(17,18,15,.14);
+  color: var(--v4-ink);
+}
+html .navbar :is(.brand,.desktop-nav a,.site-theme-toggle,.nav-cart-button,.menu-button) {
+  color: var(--v4-ink);
+}
+html .navbar .site-theme-toggle,
+html .navbar .nav-cart-button,
+html .navbar .menu-button {
+  border-color: rgba(17,18,15,.16);
+  background: rgba(255,255,255,.2);
+}
+
+@media (max-width: 720px) {
+  html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid {
+    grid-template-columns: 1fr;
+  }
+  html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > .app-feature {
+    min-height: 0;
+  }
+}
+
+
+/* =========================================================
+   15. FINAL OWNER LOCKS
+   Only structural properties that legacy styles still override.
+   ========================================================= */
+
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships {
+  background: var(--v4-ink-2) !important;
+  color: var(--v4-white) !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item {
+  background: #242722 !important;
+  border-color: rgba(255,255,255,.14) !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item.is-active {
+  background: #332a23 !important;
+  border-color: var(--v4-orange) !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-preview {
+  background: #20231f !important;
+  background-image: none !important;
+  color: var(--v4-white) !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(
+  .plan-showroom-primary,.plan-showroom-signature
+) {
+  background-image: none !important;
+  color: var(--v4-white) !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary {
+  background-color: #20231f !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-signature {
+  background-color: #2a2d27 !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer {
+  display: grid !important;
+  grid-template-columns: 290px minmax(0,1fr) !important;
+  grid-template-rows: auto auto !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-atelier-navigation {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-list {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  position: static !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-stage {
+  grid-column: 2 !important;
+  grid-row: 1 / span 2 !important;
+  width: 100% !important;
+}
+
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game {
+  background: var(--v4-paper) !important;
+  color: var(--v4-ink) !important;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game-opening > *,
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-evidence,
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-game-rules > * {
+  background: #fffaf4 !important;
+  color: var(--v4-ink) !important;
+}
+html .ds-frame[data-experience-scope='brand'] .resources-page .resources-manual {
+  background: var(--v4-ink) !important;
+  background-image: none !important;
+  color: var(--v4-white) !important;
+}
+
+html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  grid-auto-rows: auto !important;
+  gap: 1rem !important;
+}
+html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > .app-feature {
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 300px !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: 1.6rem !important;
+  background: #20231f !important;
+  color: var(--v4-white) !important;
+  border: 1px solid rgba(244,162,97,.22) !important;
+}
+
+html .ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion {
+  background: #fffaf4 !important;
+  border: 1px solid var(--v4-line-light) !important;
+}
+html .ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion.open {
+  background: #f9ede0 !important;
+  border-color: rgba(182,95,40,.48) !important;
+}
+html .ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion > button,
+html .ds-frame[data-experience-scope='brand'] .faq-page .faq-question-text {
+  color: var(--v4-ink) !important;
+}
+
+@media (max-width:720px) {
+  html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid {
+    grid-template-columns: 1fr !important;
+  }
+  html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > .app-feature {
+    min-height: 0 !important;
+  }
+}
+
+
+/* Final membership contrast: legacy editorial selectors colored body copy dark. */
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-list :is(
+  strong,small,span,p
+) {
+  color: rgba(251,247,240,.88) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item.is-active :is(
+  strong,.plan-showroom-tab-price
+) {
+  color: var(--v4-white) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary :is(
+  h1,h2,h3,h4,p,span,strong,small,li,dt,dd
+) {
+  color: rgba(251,247,240,.88) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary :is(
+  .plan-canonical-name,.plan-price,.plan-summary-heading
+) {
+  color: var(--v4-white) !important;
+}
+html[data-bayona-theme] .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary :is(
+  .plan-descriptor,.plan-showroom-meta
+) {
+  color: var(--v4-orange) !important;
+}
+
+/* App grid width: legacy app.css capped the grid itself at 720px. */
+html .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid {
+  width: 100% !important;
+  max-width: none !important;
+  margin-inline: 0 !important;
+}

@@ -41,6 +41,7 @@ import '../styles/shop-catalog-editorial.css'
 import '../styles/shop-art-direction-2026.css'
 import '../styles/shop-unified-catalog.css'
 import '../styles/shop-gym-funnel-v2.css'
+import '../styles/bayona-final-visual-v4.css'
 
 const HERO_LINES = ['EQUIPAMOS', 'TU MOVIMIENTO.']
 const PRODUCT_COUNT = shopProducts.length

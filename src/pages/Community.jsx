@@ -29,6 +29,7 @@ import { resolveProfiles } from '../lib/social/platforms'
 import { buildWeekPulse, pulsePanelId } from '../lib/schedule/clubPulse.js'
 import '../styles/community.css'
 import '../styles/community-cinematic-override.css'
+import '../styles/bayona-final-visual-v4.css'
 
 const whatsappUrl = whatsAppLink('Hola BAYONA, quiero entrar a la comunidad. ¿Empezamos juntos?')
 

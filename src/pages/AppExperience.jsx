@@ -18,6 +18,7 @@ import {
 import '../styles/app.css'
 import '../styles/app-robust-motion.css'
 import '../styles/auth-members.css'
+import '../styles/bayona-final-visual-v4.css'
 
 /*
  * Un solo mensaje para los tres botones de la lista: el texto ya declara el

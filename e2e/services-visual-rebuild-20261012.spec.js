@@ -50,8 +50,8 @@ for (const theme of ['day', 'night']) {
     })
     expect(result.overflow).toBeLessThanOrEqual(1)
     expect(result.overlay).toBe('none')
-    expect(result.background).toBe('rgb(37, 38, 34)')
-    expect(result.title).toBe('rgb(244, 238, 229)')
+    expect(result.background).toBe('rgb(32, 35, 31)')
+    expect(result.title).toBe('rgba(251, 247, 240, 0.88)')
     await expect(page.locator('.services-wayfinder')).toBeVisible()
   })
 }

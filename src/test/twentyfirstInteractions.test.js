@@ -53,15 +53,14 @@ describe('21st.dev interaction adaptation / BAYONA', () => {
     expect(card.style.getPropertyValue('--bayona-spot-x')).toBe('')
   })
 
-  it('keeps experience system import priority and no extra runtime library', () => {
+  it('retires the old global 21st layer and hands visual ownership to V4 per route', () => {
     const main = read('main.jsx')
     const imports = [...main.matchAll(/import '\.\/styles\/([^']+\.css)'/g)].map(match => match[1])
-    expect(imports).toContain('21st-community-interactions.css')
+    expect(imports).not.toContain('21st-community-interactions.css')
     expect(imports.slice(-3)).toEqual(['ds-experience.css', 'ds-atelier.css', 'home-atelier.css'])
-    const css = read('styles/21st-community-interactions.css')
-    expect(css).toContain('prefers-reduced-motion: reduce')
-    expect(css).toContain('pointer-events: none')
-    expect(read('styles/bayona-visual-unity.css')).toContain('):not(.bayona-spotlight-card)::after')
-    expect(css).not.toMatch(/!important|backdrop-filter|@font-face/)
+    expect(read('pages/Home.jsx')).toContain("import '../styles/bayona-final-visual-v4.css'")
+    const finalCss = read('styles/bayona-final-visual-v4.css')
+    expect(finalCss).toContain('FINAL VISUAL OWNER V4')
+    expect(finalCss).toContain('prefers-reduced-motion: reduce')
   })
 })

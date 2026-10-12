@@ -10,6 +10,7 @@ import { siteMedia } from '../config/siteMedia.js'
 import { Reveal } from '../engine/motion/Reveal.jsx'
 // faq.css era global en main.jsx. Ahora viaja con la ruta /faq.
 import '../styles/faq.css'
+import '../styles/bayona-final-visual-v4.css'
 
 const pricingPlans = membershipPlans.map((plan) => ({
   id: plan.id,

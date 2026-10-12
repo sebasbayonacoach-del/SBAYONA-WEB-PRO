@@ -11,6 +11,7 @@ import { trackEvent } from '../lib/analytics/analytics.js'
 import { whatsAppLink } from '../config/site.config.js'
 import '../styles/not-found.css'
 import '../styles/not-found-experience-20261012.css'
+import '../styles/bayona-final-visual-v4.css'
 
 const DESTINATIONS = [
   ['Servicios', '/programs', 'Explora entrenamiento personal, online y movimiento.'],

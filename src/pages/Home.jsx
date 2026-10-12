@@ -18,8 +18,7 @@ import '../styles/home-visual-rescue.css'
 import '../styles/home-services-premium.css'
 import '../styles/home-cinematic-hero-release.css'
 import '../styles/home-copy-caring.css'
-/* Refero editorial home composition + 21st.dev feature cards. */
-import '../styles/home-immersive-pass-20261012.css'
+import '../styles/bayona-final-visual-v4.css'
 
 const SERVICES = Object.freeze([
   {

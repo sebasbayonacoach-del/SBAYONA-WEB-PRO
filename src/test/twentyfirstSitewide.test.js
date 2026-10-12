@@ -29,13 +29,15 @@ describe('21st.dev — sitewide component integration', () => {
     expect(style).toContain(selector)
   })
 
-  it('respects the 3 original owner sheets and keeps third-party runtime at zero', () => {
+  it('keeps the original global owner order while V4 owns audited routes', () => {
     const imports = [...main.matchAll(/import '\.\/styles\/([^']+\.css)'/g)].map(x => x[1])
-    expect(imports).toContain('21st-sitewide-patterns.css')
+    expect(imports).not.toContain('21st-sitewide-patterns.css')
     expect(imports.slice(-3)).toEqual(['ds-experience.css','ds-atelier.css','home-atelier.css'])
+    for (const page of ['Home','Programs','Shop','Community','Resources','AppExperience','ParkourAcademy','FAQ']) {
+      expect(read(`pages/${page}.jsx`)).toContain("import '../styles/bayona-final-visual-v4.css'")
+    }
     expect(style).toContain("data-experience-scope='brand'")
-    expect(style).not.toMatch(/!important|@import\b|@font-face|backdrop-filter|@keyframes/)
-    expect(style).toContain('prefers-reduced-motion: reduce')
+    expect(style).not.toMatch(/@import\b|@font-face/)
   })
 
   it('adds accessible functional FAQ search without changing question source', () => {

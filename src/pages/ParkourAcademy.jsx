@@ -8,6 +8,7 @@ import { whatsAppLink } from '../config/site.config.js'
 import { Reveal } from '../engine/motion/Reveal.jsx'
 import '../styles/parkour-academy.css'
 import '../styles/parkour-progression-refinement.css'
+import '../styles/bayona-final-visual-v4.css'
 
 /* COPY 2026-09-19 · VOZ ÚNICA
    Menos texto, primera persona del plural, cero numeración decorativa en las

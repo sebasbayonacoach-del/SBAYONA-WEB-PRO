@@ -33,6 +33,7 @@ import ProtocoloCheckIn from '../components/checkin/ProtocoloCheckIn.jsx'
 import VideoSection from '../components/VideoSection.jsx'
 import { siteMedia } from '../config/siteMedia.js'
 import '../styles/resources.css'
+import '../styles/bayona-final-visual-v4.css'
 
 const BRAND_TAGLINE = 'BAYONA · ENTRENA CON DIRECCIÓN · MUÉVETE CON PROPÓSITO'
 const RESOURCES_EASE = [0.16, 1, 0.3, 1]

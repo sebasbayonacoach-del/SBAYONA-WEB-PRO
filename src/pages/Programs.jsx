@@ -17,8 +17,7 @@ import '../styles/home-luxury-conversion.css'
 import '../styles/services-gym-v2.css'
 import '../styles/services-premium-2026.css'
 import '../styles/bayona-chapter-finishing-2026.css'
-/* Route-specific visual rebuild loads with /programs, after the legacy layers. */
-import '../styles/services-visual-rebuild-20261012.css'
+import '../styles/bayona-final-visual-v4.css'
 
 const SERVICE_PATHS = Object.freeze([
   {
