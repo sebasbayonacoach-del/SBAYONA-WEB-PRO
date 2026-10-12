@@ -1,0 +1,664 @@
+/*
+ * BAYONA / SERVICIOS 2.0 — editorial commerce rebuild
+ * Refero: strong grid, typography, measured negative space.
+ * 21st.dev: bento services, anchored mini-navigation, pricing rail,
+ * intentional catalogue and disclosure affordances.
+ *
+ * This is a real layout redesign, not a global hover pass.
+ * Content, pricing and behavior remain owned by React components.
+ */
+
+.ds-frame[data-experience-scope='brand'] .services-page {
+  --sv-ink: #171717;
+  --sv-paper: #f0ede7;
+  --sv-warm-paper: #e7e0d6;
+  --sv-ember: #f4a261;
+  --sv-line: rgba(28,24,20,.18);
+  --sv-space: clamp(4.5rem, 7vw, 7rem);
+  background: var(--sv-paper);
+  color: var(--sv-ink);
+}
+
+/* 01 / Cinematic split cover: space for the message and an unbroken scene. */
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: clamp(610px, 76svh, 790px);
+  padding: clamp(7rem, 11vw, 11rem) max(4.2vw, calc((100vw - 1320px)/2)) clamp(3.5rem, 6vw, 6rem);
+  overflow: hidden;
+  background: #0d0e0d;
+  color: #f6f2eb;
+  border: 0;
+}
+
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-backdrop {
+  inset: 0 0 0 38%;
+  width: 62%;
+  height: 100%;
+  background: #131512;
+  opacity: .91;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-backdrop::before,
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-backdrop::after {
+  background-position: 58% center;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(90deg,#0b0c0b 0%,#0b0c0b 36%,rgba(11,12,11,.93) 47%,rgba(11,12,11,.15) 78%),
+    linear-gradient(0deg,rgba(11,12,11,.58),transparent 40%);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-content {
+  width: min(100%, 1320px);
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-content > div:first-child {
+  margin-bottom: clamp(1rem, 2vw, 1.8rem);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero .eyebrow {
+  color: #f4a261;
+  letter-spacing: .18em;
+  font-size: .7rem;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-title,
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero h1 {
+  max-width: 9.4ch;
+  font-size: clamp(3.7rem, 7.3vw, 7.5rem);
+  line-height: .94;
+  letter-spacing: -.065em;
+  color: #f7f3ed;
+  text-align: left;
+  text-wrap: balance;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-support {
+  width: min(100%, 540px);
+  margin-top: clamp(1.4rem,2.5vw,2rem);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .page-hero-support > p {
+  max-width: 55ch;
+  margin: 0;
+  color: rgba(247,243,237,.80);
+  font-size: clamp(1rem,1.35vw,1.17rem);
+  line-height: 1.65;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-hero-actions {
+  margin-top: 2rem;
+  gap: .85rem;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-hero-actions a {
+  min-height: 52px;
+  padding-inline: 1.45rem;
+  border-radius: 4px;
+  letter-spacing: .08em;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-primary-cta {
+  background: #f4a261;
+  color: #10100f;
+  border-color: #f4a261;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-secondary-cta {
+  color: #f8f5f0;
+  border-color: rgba(255,255,255,.5);
+  background: rgba(0,0,0,.15);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-hero-signal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(.9rem,2vw,1.6rem);
+  margin-top: clamp(2rem,5vw,3.5rem);
+  font: 700 .65rem/1.2 var(--font-label,monospace);
+  letter-spacing: .12em;
+  color: rgba(249,244,237,.77);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-hero-signal span {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-hero-signal strong {
+  color: #f4a261;
+}
+
+/* 02 / 21st-style anchored chapter navigation, visually distinct. */
+.ds-frame[data-experience-scope='brand'] .services-wayfinder {
+  display: grid;
+  grid-template-columns: minmax(0,1.25fr) repeat(3,minmax(0,1fr));
+  align-items: stretch;
+  min-height: 78px;
+  background: #e9e3da;
+  border-block: 1px solid var(--sv-line);
+  color: var(--sv-ink);
+}
+.ds-frame[data-experience-scope='brand'] .services-wayfinder__brand,
+.ds-frame[data-experience-scope='brand'] .services-wayfinder a {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  min-width: 0;
+  padding: .75rem clamp(1rem, 2vw, 2rem);
+  border-inline-end: 1px solid var(--sv-line);
+  font: 750 clamp(.65rem,.8vw,.75rem)/1.3 var(--font-label,monospace);
+  letter-spacing: .06em;
+  color: #27211d;
+  text-decoration: none;
+}
+.ds-frame[data-experience-scope='brand'] .services-wayfinder__brand {
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+.ds-frame[data-experience-scope='brand'] .services-wayfinder a span {
+  color: #9b5b2c;
+}
+.ds-frame[data-experience-scope='brand'] .services-wayfinder a svg {
+  margin-left: auto;
+  flex: none;
+}
+.ds-frame[data-experience-scope='brand'] .services-wayfinder a:is(:hover,:focus-visible) {
+  background: #f4a261;
+  color: #17120f;
+}
+.ds-frame[data-experience-scope='brand'] .services-wayfinder a:focus-visible {
+  outline: 2px solid #a9501f;
+  outline-offset: -3px;
+}
+
+/* 03 / Paper chapter + true asymmetric bento, not giant equal-height panels. */
+.ds-frame[data-experience-scope='brand'] .services-page .services-overview {
+  padding: var(--sv-space) 0 clamp(4.5rem,7vw,7.5rem);
+  background: var(--sv-paper);
+  color: var(--sv-ink);
+  border-color: var(--sv-line);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-shell {
+  width: min(calc(100% - clamp(2rem,8vw,8rem)), 1280px);
+  max-width: 1280px;
+  margin-inline: auto;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-heading {
+  display: grid;
+  grid-template-columns: minmax(0,1.6fr) minmax(260px,.7fr);
+  align-items: end;
+  column-gap: clamp(2rem,6vw,6rem);
+  row-gap: 1.1rem;
+  margin: 0 0 clamp(2rem,4vw,3.8rem);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-heading > .eyebrow,
+.ds-frame[data-experience-scope='brand'] .services-page .services-heading > :first-child:not(h2) {
+  grid-column: 1/-1;
+  margin: 0;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-heading h2 {
+  max-width: 17ch;
+  margin: 0;
+  font-size: clamp(2.9rem,5.2vw,5.7rem);
+  line-height: .98;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-overview .services-heading h2,
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog .services-heading h2 {
+  color: #201d1a;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-heading h2 span {
+  color: #b25f24;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-heading > p {
+  max-width: 45ch;
+  margin: 0 0 .45rem;
+  color: #514940;
+  font-size: clamp(1rem,1.2vw,1.1rem);
+  line-height: 1.7;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-grid {
+  display: grid;
+  grid-template-columns: repeat(12,minmax(0,1fr));
+  gap: clamp(.7rem,1.2vw,1.2rem);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card {
+  min-height: clamp(340px,31vw,440px);
+  max-height: 460px;
+  padding: clamp(1.4rem,2.3vw,2.25rem);
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 7px;
+  box-shadow: none;
+  background: #171715;
+  overflow: hidden;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card:nth-child(1),
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card:nth-child(4) { grid-column: span 7; }
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card:nth-child(2),
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card:nth-child(3) { grid-column: span 5; }
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card::after {
+  content:'';
+  position:absolute;
+  z-index:1;
+  inset:0;
+  pointer-events:none;
+  background: linear-gradient(180deg,rgba(0,0,0,.15),transparent 35%,rgba(0,0,0,.36) 60%,rgba(0,0,0,.88));
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card__meta,
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card__body {
+  position: relative;
+  z-index: 3;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card h3 {
+  max-width: 21ch;
+  font-size: clamp(1.75rem,2.95vw,3rem);
+  line-height: 1.08;
+  letter-spacing: -.048em;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card p {
+  max-width: 43ch;
+  font-size: clamp(.9rem,1vw,1rem);
+  line-height: 1.5;
+  color: rgba(255,255,255,.91);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card__body {gap:.65rem;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card__action {
+  margin-top: .65rem;
+  padding-top: .75rem;
+  color:#ffba80;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-footnote {
+  margin-top:clamp(1.3rem,2vw,2.2rem);
+  color:#372e25;
+  border-top:1px solid var(--sv-line);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-footnote a {color:#a55217;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-path-card:focus-visible {outline:3px solid #f4a261;outline-offset:3px;}
+
+/* 04 / Pricing becomes a real two-column decision desk. */
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships {
+  padding: var(--sv-space) 0;
+  background: #191a18;
+  color: #f7f2e9;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .services-heading {
+  grid-template-columns: minmax(0,1.5fr) minmax(240px,.7fr);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .services-heading h2 {color:#f9f2e8;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .services-heading h2 span {color:#f4a261;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .services-heading > p {color:rgba(247,242,233,.7);}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer.plan-showroom {
+  width:100%;
+  min-width:0;
+  display:grid;
+  grid-template-columns: minmax(260px,320px) minmax(0,1fr);
+  grid-template-rows:auto minmax(0,1fr);
+  align-items:start;
+  gap: 1rem clamp(1rem,2vw,2rem);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-atelier-navigation {
+  grid-column:1;
+  grid-row:1;
+  width:100%;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-list {
+  grid-column:1;
+  grid-row:2;
+  width:100%;
+  min-width:0;
+  align-content:start;
+  padding:0;
+  gap:.5rem;
+  background:transparent;
+  border:0;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-stage {
+  grid-column:2;
+  grid-row:1 / span 2;
+  width:100%;
+  min-width:0;
+  height:auto;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-preview {
+  width:100%;
+  min-width:0;
+  height:auto;
+  min-height:0;
+  display:grid;
+  grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);
+  align-items:stretch;
+  gap:0;
+  padding:0;
+  border:1px solid rgba(244,162,97,.38);
+  border-radius:8px;
+  background:#252622;
+  overflow:hidden;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(.plan-showroom-primary,.plan-showroom-signature) {
+  width:100%;
+  min-width:0;
+  height:auto;
+  padding:clamp(1.4rem,2.4vw,2.4rem);
+  box-sizing:border-box;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-signature {
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  background:#33352e;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary h3 {
+  font-size:clamp(2.2rem,3.2vw,3.7rem);
+  line-height:1;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item {
+  border:1px solid rgba(255,255,255,.15);
+  background:#252621;
+  border-radius:5px;
+  overflow:hidden;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item.is-active {
+  border-color:#f4a261;
+  background:#383128;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-tab {
+  min-height:96px;
+  width:100%;
+  padding:clamp(1rem,1.5vw,1.3rem);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-tab :is(strong,small) {
+  overflow-wrap:anywhere;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-details-panel {
+  max-width:100%;
+}
+
+/* 05 / Catalogue is an editorial directory with legible cards. */
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog {
+  padding:var(--sv-space) 0;
+  background:#e5dfd6;
+  color:#1d1916;
+  border-top:1px solid var(--sv-line);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-index {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:clamp(2rem,4vw,3.5rem);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-overview-card {
+  min-height:175px;
+  padding:clamp(1.2rem,2vw,2rem);
+  border:1px solid rgba(26,22,19,.17);
+  background:#f3eee6;
+  color:#201d19;
+  border-radius:5px;
+  transition:transform 200ms ease,border-color 200ms ease;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-overview-card:hover {border-color:#b86d32;transform:translateY(-3px);}
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-group {
+  background:#f2ece3;
+  border:1px solid rgba(25,20,17,.18);
+  border-radius:5px;
+  overflow:hidden;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-summary {
+  min-height:100px;
+  color:#1e1a16;
+  padding:clamp(1rem,2vw,1.8rem);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-summary__name :is(strong,small) {
+  color:#26211c;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-summary__name small {color:#61574d;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-summary__count,
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-summary__number {color:#a75321;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-catalog-details[open] > summary {
+  background:#ede6dd;
+  border-color:rgba(29,24,20,.18);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-card-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  padding:12px;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-card {
+  min-width:0;
+  min-height:225px;
+  padding:clamp(1rem,1.75vw,1.6rem);
+  background:#fffaf2;
+  border:1px solid rgba(33,27,22,.14);
+  border-radius:3px;
+  color:#26211d;
+  transition:border-color 200ms ease;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-card:hover {border-color:#b96c2e;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-card :is(h4,p) {color:#27211a;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-card p {color:#5d5249;line-height:1.5;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-card__top strong,
+.ds-frame[data-experience-scope='brand'] .services-page .services-card a {color:#8f4318;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-scope-note {color:#5b524b;}
+
+/* 06 / Closing banner: clear call to care without fake urgency. */
+.ds-frame[data-experience-scope='brand'] .services-page .services-final {
+  padding:clamp(5rem,9vw,9rem) 0;
+  border:0;
+  background:radial-gradient(circle at 87% 15%,rgba(244,162,97,.19),transparent 32%),#131310;
+  color:#fff5e8;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-final .services-shell {
+  display:grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(1.2rem,3vw,3rem);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-final .eyebrow {grid-column:1/-1;}
+.ds-frame[data-experience-scope='brand'] .services-page .services-final h2 {
+  max-width:14ch;
+  font-size:clamp(2.8rem,5vw,5rem);
+  color:#fff5e8;
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-final .services-shell > p {
+  align-self:end;
+  color:rgba(255,245,232,.78);
+}
+.ds-frame[data-experience-scope='brand'] .services-page .services-final .services-shell > div:last-child {
+  grid-column:1/-1;
+  margin-top:1rem;
+}
+
+/* 07 / Responsive contracts. */
+@media (max-width:1020px) {
+  .ds-frame[data-experience-scope='brand'] .services-wayfinder {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .ds-frame[data-experience-scope='brand'] .services-wayfinder__brand {display:none;}
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer.plan-showroom {
+    grid-template-columns:minmax(215px,260px) minmax(0,1fr);
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-preview {
+    grid-template-columns: minmax(0,1fr);
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-signature {min-width:0;}
+  .ds-frame[data-experience-scope='brand'] .services-page .services-card-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width:767px) {
+  .ds-frame[data-experience-scope='brand'] .services-page .page-hero {
+    min-height:670px;
+    padding:clamp(7rem,15vh,8.5rem) 6vw 3rem;
+    align-items:end;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .page-hero-backdrop {
+    inset:0;
+    width:100%;
+    opacity:.6;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .page-hero::after {
+    background:linear-gradient(0deg,#0b0c0b 0%,rgba(11,12,11,.94) 29%,rgba(11,12,11,.35) 78%);
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .page-hero-title,
+  .ds-frame[data-experience-scope='brand'] .services-page .page-hero h1 {
+    font-size:clamp(3.3rem,13vw,5.2rem);
+    max-width:9ch;
+    line-height:.93;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .page-hero-support {width:100%;}
+  .ds-frame[data-experience-scope='brand'] .services-page .page-hero-support > p {font-size:.94rem;}
+  .ds-frame[data-experience-scope='brand'] .services-page .services-hero-actions a {
+    min-height:46px;flex:1 1 auto;font-size:.65rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-wayfinder {
+    display:flex;overflow-x:auto;scroll-snap-type:x proximity;min-height:62px;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-wayfinder a {
+    flex:0 0 auto;min-width:200px;white-space:nowrap;scroll-snap-align:start;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-shell {width:calc(100% - 2rem);}
+  .ds-frame[data-experience-scope='brand'] .services-page :is(.services-overview,.services-memberships,.services-catalog) {
+    padding-block:clamp(3.5rem,12vw,5rem);
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-heading,
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .services-heading {
+    display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-heading h2 {
+    font-size:clamp(2.6rem,10vw,4rem);
+    max-width:17ch;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-path-grid {
+    grid-template-columns:1fr;
+    gap:.85rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-path-card:nth-child(n) {
+    grid-column:1;
+    min-height:clamp(325px,80vw,410px);
+    max-height:none;
+    padding:1.35rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-path-card h3 {
+    font-size:clamp(1.9rem,8vw,2.7rem);
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-explorer.plan-showroom {
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    gap:1rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-atelier-navigation,
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-list,
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-stage {
+    width:100%;min-width:0;max-width:100%;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-list {
+    display:grid;grid-template-columns:1fr;gap:.5rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-preview {
+    grid-template-columns:1fr;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary,
+  .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-signature {
+    width:100%;padding:1.2rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-catalog-index {
+    grid-template-columns:1fr;gap:.65rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-overview-card {min-height:105px;}
+  .ds-frame[data-experience-scope='brand'] .services-page .services-catalog-summary {
+    grid-template-columns:2rem minmax(0,1fr) auto;
+    gap:.7rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .services-page .services-catalog-summary__count {display:none;}
+  .ds-frame[data-experience-scope='brand'] .services-page .services-card-grid {grid-template-columns:1fr;}
+  .ds-frame[data-experience-scope='brand'] .services-page .services-card {min-height:0;}
+  .ds-frame[data-experience-scope='brand'] .services-page .services-final .services-shell {grid-template-columns:1fr;}
+  .ds-frame[data-experience-scope='brand'] .services-page .services-final .eyebrow,
+  .ds-frame[data-experience-scope='brand'] .services-page .services-final .services-shell > div:last-child {grid-column:1;}
+}
+@media (prefers-reduced-motion:reduce) {
+  .ds-frame[data-experience-scope='brand'] .services-page :is(.services-path-card,.services-overview-card,.services-card) {transition:none;transform:none;}
+}
+
+/* 08 / Contrast repair: legacy day mode paints a light gradient over the
+ * midnight pricing desk. Override both owners here, explicitly, so every
+ * plan remains readable (including inactive tabs and secondary details). */
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships {
+  background:#191a18 !important;
+  color:#f7f2e9 !important;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .services-heading > p {
+  color:rgba(247,242,233,.77) !important;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-preview {
+  background:#252622 !important;
+  background-image:none !important;
+  color:#f7f2e9 !important;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary {
+  background:#252622 !important;
+  color:#f7f2e9 !important;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary :is(
+  .plan-canonical-name,.plan-summary-heading,.plan-descriptor,
+  .plan-summary-jtbd,.plan-summary-jtbd p,.plan-summary-scope,
+  .plan-summary-value,.plan-price,.plan-showroom-meta,.plan-price-separator
+) {color:#f7f2e9 !important;}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-primary :is(
+ .plan-summary-price small,.plan-eur,.plan-usd,.plan-showroom-narrative > p
+) {color:#d0c6b7 !important;}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-signature {
+  background:#30332d !important;
+  color:#f7f2e9 !important;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-signature :is(
+  span,strong,small,dt,dd,h4,li,p
+) {color:#e8dfd1 !important;}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item {
+  background:#292a26 !important;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item.is-active {
+  background:#40382f !important;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-tab,
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-showroom-tab :is(
+  strong,small,span
+) {color:#f8f0e4 !important;}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-catalog-index .services-overview-card > span {
+  color:#66594d !important;
+}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-catalog-index .services-overview-card__number {
+  color:#a6501f !important;
+}
+
+
+/* Root cause: an old HOME-only bone/photographic pseudo-layer was leaking onto
+ * Services because the pricing section reused .home-memberships-section.
+ * It was painting a beige translucent sheet OVER the entire dark plan UI. */
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships::before,
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships::after {
+  content:none !important;
+  display:none !important;
+  background:none !important;
+}
+
+/* Plan tabs had black text on graphite from legacy day-mode overrides. */
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item .plan-showroom-tab :is(
+  .plan-showroom-tab-copy,.plan-showroom-tab-copy strong,
+  .plan-showroom-tab-copy small,.plan-showroom-tab-index,
+  .plan-showroom-tab-price,.plan-showroom-tab-price small
+) {color:#f4eee5 !important;}
+html .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .plan-comparison-item.is-active .plan-showroom-tab :is(
+  .plan-showroom-tab-copy,.plan-showroom-tab-copy strong,
+  .plan-showroom-tab-copy small,.plan-showroom-tab-price
+) {color:#fff7eb !important;}
+
+/* Intro's emotional line is distinct from the public SEO name of this page. */
+.ds-frame[data-experience-scope='brand'] .services-page .services-hero-promise {
+  margin:0 0 .85rem;
+  color:#f4a261;
+  font:800 clamp(1.15rem,2vw,1.75rem)/1.25 var(--bayona-font-display,Montserrat,sans-serif);
+  letter-spacing:-.027em;
+  text-transform:uppercase;
+}

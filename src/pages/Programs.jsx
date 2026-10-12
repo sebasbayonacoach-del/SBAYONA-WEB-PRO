@@ -17,6 +17,8 @@ import '../styles/home-luxury-conversion.css'
 import '../styles/services-gym-v2.css'
 import '../styles/services-premium-2026.css'
 import '../styles/bayona-chapter-finishing-2026.css'
+/* Route-specific visual rebuild loads with /programs, after the legacy layers. */
+import '../styles/services-visual-rebuild-20261012.css'
 
 const SERVICE_PATHS = Object.freeze([
   {
@@ -142,11 +144,12 @@ export default function Programs() {
     <div className="services-page">
       <PageHero
         title="NUESTROS SERVICIOS."
-        kicker="BAYONA · ENTRENAMIENTO Y ACOMPAÑAMIENTO"
+        kicker="BAYONA / MOVIMIENTO CON PROPÓSITO"
         media={siteMedia.programs.hero}
       >
+        <p className="services-hero-promise">TU CUERPO. TU CAMINO.</p>
         <p>
-          Cada persona llega con una historia, un objetivo y un momento distinto. Encuentra la forma de entrenamiento que encaje contigo y descubre con claridad qué incluye antes de elegir.
+          Entrenar no debería sentirse como encajar en un molde. Escucho dónde estás, qué necesitas y construimos una forma de moverte que tenga sentido para ti.
         </p>
         <div className="services-hero-actions">
           <a className="services-primary-cta" href="#membresias">
@@ -156,16 +159,28 @@ export default function Programs() {
             EXPLORAR SESIONES
           </a>
         </div>
+        <div className="services-hero-signal" aria-label="Nuestro enfoque">
+          <span><strong>01</strong> ESCUCHAR</span>
+          <span><strong>02</strong> ENTENDER</span>
+          <span><strong>03</strong> AVANZAR</span>
+        </div>
       </PageHero>
+
+      <nav className="services-wayfinder" aria-label="Explorar servicios BAYONA">
+        <span className="services-wayfinder__brand">B / ENCUENTRA TU CAMINO</span>
+        <a href="#elige-servicio"><span>01</span> FORMAS DE ENTRENAR <ArrowUpRight size={15} aria-hidden="true" /></a>
+        <a href="#membresias"><span>02</span> MEMBRESÍAS <ArrowUpRight size={15} aria-hidden="true" /></a>
+        <a href="#servicios"><span>03</span> SESIONES <ArrowUpRight size={15} aria-hidden="true" /></a>
+      </nav>
 
       <section className="services-overview" id="elige-servicio" aria-labelledby="services-overview-title">
         <div className="services-shell">
           <div className="services-heading services-paths-heading">
             <SectionLabel>ELIGE TU CAMINO</SectionLabel>
-            <h2 id="services-overview-title">UN CAMINO QUE <span>SE ADAPTE A TI.</span></h2>
-            <p>Explora sin prisa: te explicamos cada opción para que puedas elegir la que más sentido tenga para ti.</p>
+            <h2 id="services-overview-title">ELIGE CÓMO <span>QUIERES MOVERTE.</span></h2>
+            <p>Cuatro maneras de empezar. Ninguna es igual a otra. Descubre cuál encaja contigo, tus objetivos y el tiempo que tienes hoy.</p>
           </div>
-          <div className="services-path-grid">
+          <div className="services-path-grid" aria-label="Cuatro caminos para entrenar">
             {SERVICE_PATHS.map((service) => (
               <a className={`services-path-card services-path-card--${service.id}`} href={service.href} key={service.id}>
                 <img src={service.image} alt="" width="1600" height="900" loading="eager" decoding="async" />
@@ -195,7 +210,7 @@ export default function Programs() {
         <div className="services-shell">
           <div className="services-heading">
             <SectionLabel>ACOMPAÑAMIENTO CONTINUO</SectionLabel>
-            <h2 id="services-memberships-title">ELIGE CUÁNTO ACOMPAÑAMIENTO NECESITAS.</h2>
+            <h2 id="services-memberships-title">UN PLAN QUE <span>CRECE CONTIGO.</span></h2>
             <p>Compara frecuencia de seguimiento, sesiones incluidas y precio.</p>
           </div>
           <PlanExplorer projections={membershipPlanEditorialProjection} comparisonRows={PROGRAM_COMPARISON_ROWS} cinematic />
@@ -206,7 +221,7 @@ export default function Programs() {
         <div className="services-shell">
           <div className="services-heading">
             <SectionLabel>SESIONES Y SERVICIOS ADICIONALES</SectionLabel>
-            <h2 id="services-catalog-title">ENCUENTRA LA SESIÓN QUE NECESITAS.</h2>
+            <h2 id="services-catalog-title">CADA SESIÓN, <span>CON PROPÓSITO.</span></h2>
             <p>Explora las sesiones disponibles por disciplina. Los importes son referencias en COP; confirma modalidad y ubicación antes de contratar.</p>
           </div>
 

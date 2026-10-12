@@ -1,0 +1,235 @@
+/*
+ * BAYONA × Refero / 21st.dev — visually consequential cross-route refinement.
+ * No new content, libraries, images, prices or workflows. Patterns are adapted,
+ * never vendor components copied. Page-specific selection limits collisions.
+ */
+
+/* Home: progress and editorial free resources become a clear paired system. */
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-home-gifts {
+  position:relative;
+  background:linear-gradient(140deg,#1e211e,#0e110f 66%);
+}
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-grid {
+  gap:clamp(.8rem,1.5vw,1.5rem);
+}
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-card {
+  border:1px solid rgba(244,162,97,.21);
+  border-radius:6px;
+  overflow:hidden;
+  transition:border-color .25s ease,transform .25s ease;
+}
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-card:is(:hover,:focus-visible) {
+  border-color:#f4a261;
+}
+.ds-frame[data-experience-scope='brand'] .gym-home .gym-gift-card strong {
+  color:#f4a261;
+  letter-spacing:.09em;
+}
+.ds-frame[data-experience-scope='brand'] .gym-home .start-journey__step.is-active {
+  border-color:rgba(244,162,97,.67);
+  box-shadow:inset 3px 0 0 #f4a261;
+}
+
+/* Nosotros: readable 4-part manifesto with warmth and consistent proportions. */
+.ds-frame[data-experience-scope='brand'] .about-page .about-values-stage__grid {
+  gap:clamp(.7rem,1.4vw,1.35rem);
+}
+.ds-frame[data-experience-scope='brand'] .about-page .about-values-stage__card {
+  position:relative;
+  padding:clamp(1.6rem,2.5vw,2.6rem);
+  border:1px solid rgba(244,162,97,.20);
+  border-radius:5px;
+  background:linear-gradient(145deg,rgba(244,162,97,.085),rgba(12,12,11,.06) 63%);
+  transition:transform .3s ease,border-color .3s ease;
+}
+.ds-frame[data-experience-scope='brand'] .about-page .about-values-stage__card:nth-child(even) {
+  background:linear-gradient(150deg,rgba(244,162,97,.04),transparent 66%);
+}
+.ds-frame[data-experience-scope='brand'] .about-page .about-values-stage__card:is(:hover,:focus-within) {
+  border-color:rgba(244,162,97,.65);
+}
+.ds-frame[data-experience-scope='brand'] .about-page .about-values-stage__meta {
+  color:var(--bayona-warm,#f4a261);
+}
+.ds-frame[data-experience-scope='brand'] .about-page .about-chronicle-mobile__item {
+  border-inline-start:2px solid rgba(244,162,97,.28);
+}
+
+/* Shop: category buttons act as meaningful selection panels, not tiny pills. */
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.65rem,1.2vw,1rem);
+  width:100%;
+}
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts button {
+  position:relative;
+  min-width:0;
+  min-height:104px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  gap:.5rem;
+  padding:clamp(1rem,1.6vw,1.4rem);
+  border:1px solid rgba(244,162,97,.24);
+  border-radius:5px;
+  background:linear-gradient(145deg,#262923,#171a17);
+  color:#f7f2e9;
+  font-weight:700;
+  text-align:left;
+  transition:background .25s ease,border-color .25s ease,transform .25s ease;
+}
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts button:is(:hover,:focus-visible,[aria-pressed='true'],.is-active) {
+  border-color:#f4a261;
+  background:linear-gradient(145deg,#423329,#1e211b);
+}
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts button:focus-visible {
+  outline:2px solid #f4a261;
+  outline-offset:3px;
+}
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-product-card {
+  border-radius:6px;
+  border:1px solid rgba(244,162,97,.16);
+  background:color-mix(in srgb,var(--bayona-surface-2,#151616) 96%,#f4a261);
+}
+.ds-frame[data-experience-scope='brand'] .shop-page .shop-product-card:is(:hover,:focus-within) {
+  border-color:rgba(244,162,97,.67);
+}
+
+/* App promotional page: feature bento is a genuine grid of distinct modules. */
+.ds-frame[data-experience-scope='brand'] .app-page .app-features-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.8rem,1.4vw,1.35rem);
+}
+.ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > * {
+  min-width:0;
+  border:1px solid rgba(244,162,97,.24);
+  border-radius:6px;
+  padding:clamp(1.25rem,2.15vw,2rem);
+  background:linear-gradient(155deg,rgba(244,162,97,.09),rgba(244,162,97,.015) 58%);
+}
+.ds-frame[data-experience-scope='brand'] .app-page .app-features-grid > *:is(:hover,:focus-within) {
+  border-color:rgba(244,162,97,.7);
+}
+.ds-frame[data-experience-scope='brand'] .app-page .app-feature-number {
+  font-size:clamp(1.5rem,2.7vw,2.8rem);
+  color:#f4a261;
+}
+
+/* Community: editorial social gallery and physical membership pass. */
+.ds-frame[data-experience-scope='brand'] .community-page .community-pass {
+  position:relative;
+  border:1px solid rgba(244,162,97,.45);
+  border-radius:7px;
+  box-shadow:0 24px 65px rgba(0,0,0,.18);
+}
+.ds-frame[data-experience-scope='brand'] .community-page .community-rail {
+  gap:clamp(.8rem,1.6vw,1.6rem);
+}
+.ds-frame[data-experience-scope='brand'] .community-page .community-live-card {
+  border:1px solid rgba(244,162,97,.22);
+  border-radius:6px;
+  overflow:hidden;
+  transition:border-color .25s ease,transform .25s ease;
+}
+.ds-frame[data-experience-scope='brand'] .community-page .community-live-card:is(:hover,:focus-within) {
+  border-color:rgba(244,162,97,.72);
+}
+.ds-frame[data-experience-scope='brand'] .community-page .community-live-body {
+  padding:clamp(1rem,1.75vw,1.6rem);
+}
+
+/* Resources: resource cards clearly read as a library to open. */
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-library {
+  gap:clamp(.75rem,1.3vw,1.2rem);
+}
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-library-card {
+  position:relative;
+  border:1px solid rgba(244,162,97,.26);
+  border-radius:6px;
+  overflow:hidden;
+  background:linear-gradient(150deg,#242721,#111310);
+  transition:border-color .25s ease,transform .25s ease;
+}
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-library-card:is(:hover,:focus-within,:focus-visible) {
+  border-color:#f4a261;
+}
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-library-copy {
+  padding:clamp(1rem,2vw,1.7rem);
+}
+.ds-frame[data-experience-scope='brand'] .resources-page .resources-hero-library-arrow {
+  color:#f4a261;
+}
+
+/* FAQ: a calmer directory, search and clear selected questions. */
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-search {
+  padding:clamp(1.25rem,2.4vw,2.2rem);
+  background:linear-gradient(135deg,rgba(244,162,97,.09),rgba(244,162,97,.02));
+  border:1px solid rgba(244,162,97,.25);
+  border-radius:8px;
+}
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion {
+  border-bottom:1px solid color-mix(in srgb,currentColor 19%,transparent);
+}
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion:is(.open,:focus-within) {
+  border-bottom-color:#f4a261;
+}
+.ds-frame[data-experience-scope='brand'] .faq-page .faq-accordion.open .faq-question-number {
+  color:#f4a261;
+}
+
+/* Parkour: progression cards become a training pathway. */
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__cards {
+  gap:clamp(.75rem,1.5vw,1.5rem);
+}
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__card {
+  min-width:0;
+  padding:clamp(1.25rem,2.2vw,2.2rem);
+  border:1px solid rgba(244,162,97,.22);
+  border-top:3px solid #f4a261;
+  border-radius:5px;
+  background:linear-gradient(150deg,rgba(244,162,97,.075),rgba(0,0,0,.02) 60%);
+  transition:border-color .25s ease,transform .25s ease;
+}
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__card:nth-child(even) {
+  border-top-color:#d78346;
+}
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__card:is(:hover,:focus-within) {
+  border-color:rgba(244,162,97,.7);
+}
+.ds-frame[data-experience-scope='brand'] .parkour-academy .academy-progression__index {color:#f4a261;}
+
+/* Respect mobile layout, avoid forcing three columns on tiny screens. */
+@media (max-width:1000px) {
+  .ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width:650px) {
+  .ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .ds-frame[data-experience-scope='brand'] .shop-page .shop-category-shortcuts button {
+    min-height:96px;
+    padding:1rem;
+  }
+  .ds-frame[data-experience-scope='brand'] .app-page .app-features-grid {
+    grid-template-columns:minmax(0,1fr);
+  }
+  .ds-frame[data-experience-scope='brand'] .faq-page .faq-search {
+    margin-inline:0;
+    padding:1rem;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .ds-frame[data-experience-scope='brand'] :is(
+   .gym-gift-card,.about-values-stage__card,.shop-category-shortcuts button,
+   .shop-product-card,.app-features-grid > *,.community-live-card,
+   .resources-hero-library-card,.academy-progression__card
+  ) {transition:none;transform:none;}
+}

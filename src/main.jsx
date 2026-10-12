@@ -148,6 +148,8 @@ import './styles/refero-editorial-system.css'
 import './styles/21st-community-interactions.css'
 /* 21st.dev: patrones especializados para las secciones públicas de BAYONA. */
 import './styles/21st-sitewide-patterns.css'
+/* Visible differentiated design for cross-route editorial areas. */
+import './styles/bayona-visual-impact-20261012.css'
 import './styles/ds-experience.css'
 /*
  * Pase atelier (FASE 4C). Detrás de la capa de experiencia porque la afina:
