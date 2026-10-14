@@ -4,178 +4,178 @@
  */
 
 @media (min-width: 900px) {
-  html body .gym-home-plans {
+  html body.premium-route--home .gym-home-plans {
     padding-block: 4.5rem !important;
   }
-  html body .gym-home-plans .gym-section-heading {
+  html body.premium-route--home .gym-home-plans .gym-section-heading {
     margin-bottom: 2rem !important;
   }
-  html body .gym-home-plans .plan-explorer.plan-showroom {
+  html body.premium-route--home .gym-home-plans .plan-explorer.plan-showroom {
     display: grid !important;
     grid-template-columns: 250px minmax(0,1fr) !important;
     grid-template-rows: auto 1fr !important;
     gap: .75rem 1.25rem !important;
     align-items: start !important;
   }
-  html body .gym-home-plans .plan-atelier-navigation {
+  html body.premium-route--home .gym-home-plans .plan-atelier-navigation {
     grid-column: 1 !important;
     grid-row: 1 !important;
     width: 100% !important;
   }
-  html body .gym-home-plans .plan-comparison-list {
+  html body.premium-route--home .gym-home-plans .plan-comparison-list {
     grid-column: 1 !important;
     grid-row: 2 !important;
     grid-template-columns: 1fr !important;
     gap: .45rem !important;
   }
-  html body .gym-home-plans .plan-showroom-tab {
+  html body.premium-route--home .gym-home-plans .plan-showroom-tab {
     min-height: 78px !important;
     padding: .75rem !important;
   }
-  html body .gym-home-plans .plan-showroom-stage {
+  html body.premium-route--home .gym-home-plans .plan-showroom-stage {
     grid-column: 2 !important;
     grid-row: 1 / span 2 !important;
     min-height: 0 !important;
     height: auto !important;
   }
-  html body .gym-home-plans .plan-showroom-preview {
+  html body.premium-route--home .gym-home-plans .plan-showroom-preview {
     display: block !important;
     min-height: 0 !important;
     height: auto !important;
     padding: 0 !important;
   }
-  html body .gym-home-plans .plan-showroom-primary {
+  html body.premium-route--home .gym-home-plans .plan-showroom-primary {
     min-height: 0 !important;
     height: auto !important;
     padding: 1.5rem !important;
   }
-  html body .gym-home-plans .plan-showroom-signature {
+  html body.premium-route--home .gym-home-plans .plan-showroom-signature {
     display: none !important;
   }
-  html body .gym-home-plans .plan-showroom-narrative {
+  html body.premium-route--home .gym-home-plans .plan-showroom-narrative {
     display: grid !important;
     grid-template-columns: repeat(3,minmax(0,1fr)) !important;
     gap: .65rem !important;
   }
-  html body .gym-home-plans .plan-showroom-narrative > * {
+  html body.premium-route--home .gym-home-plans .plan-showroom-narrative > * {
     margin: 0 !important;
     padding: .85rem !important;
   }
-  html body .gym-home-plans .plan-card-actions {
+  html body.premium-route--home .gym-home-plans .plan-card-actions {
     margin-top: 1rem !important;
   }
-  html body .gym-home-plans .gym-inline-link {
+  html body.premium-route--home .gym-home-plans .gym-inline-link {
     margin-top: 1.5rem !important;
   }
 
-  html body .community-page .community-group {
+  html body.premium-route--community .community-page .community-group {
     padding-block: 4.5rem !important;
   }
-  html body .community-page .community-group .community-section-content {
+  html body.premium-route--community .community-page .community-group .community-section-content {
     display: grid !important;
     grid-template-columns: minmax(0,1.15fr) minmax(300px,.85fr) !important;
     gap: 1rem 1.5rem !important;
     align-items: start !important;
   }
-  html body .community-page .community-group .community-section-header {
+  html body.premium-route--community .community-page .community-group .community-section-header {
     grid-column: 1 / -1 !important;
     margin-bottom: 1rem !important;
   }
-  html body .community-page .community-group .video-section--contained {
+  html body.premium-route--community .community-page .community-group .video-section--contained {
     grid-column: 1 !important;
     margin: 0 !important;
     min-height: 360px !important;
     height: 360px !important;
   }
-  html body .community-page .community-group :is(.video-section__stage,.video-section__frame,.video-section__poster) {
+  html body.premium-route--community .community-page .community-group :is(.video-section__stage,.video-section__frame,.video-section__poster) {
     min-height: 360px !important;
     height: 360px !important;
   }
-  html body .community-page .community-group-traits {
+  html body.premium-route--community .community-page .community-group-traits {
     grid-column: 2 !important;
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: .75rem !important;
     margin: 0 !important;
   }
-  html body .community-page .community-group-traits article {
+  html body.premium-route--community .community-page .community-group-traits article {
     min-height: 0 !important;
     padding: 1.1rem !important;
   }
-  html body .community-page .community-chat-details {
+  html body.premium-route--community .community-page .community-chat-details {
     grid-column: 1 !important;
     margin-top: .5rem !important;
   }
-  html body .community-page .community-mid-join {
+  html body.premium-route--community .community-page .community-mid-join {
     grid-column: 2 !important;
     margin-top: .5rem !important;
     min-height: 0 !important;
     padding: 1.25rem !important;
   }
 
-  html body .app-page .app-vision {
+  html body.premium-route--app .app-page .app-vision {
     padding-block: 4.5rem !important;
   }
-  html body .app-page .app-vision .app-section-content {
+  html body.premium-route--app .app-page .app-vision .app-section-content {
     display: grid !important;
     grid-template-columns: minmax(0,1.1fr) minmax(320px,.9fr) !important;
     gap: 1rem 1.5rem !important;
     align-items: start !important;
   }
-  html body .app-page .app-vision .app-section-header {
+  html body.premium-route--app .app-page .app-vision .app-section-header {
     grid-column: 1 / -1 !important;
     margin-bottom: 1.25rem !important;
   }
-  html body .app-page .app-vision .video-section--contained {
+  html body.premium-route--app .app-page .app-vision .video-section--contained {
     grid-column: 1 !important;
     min-height: 360px !important;
     height: 360px !important;
     margin: 0 !important;
   }
-  html body .app-page .app-vision :is(.video-section__stage,.video-section__frame,.video-section__poster) {
+  html body.premium-route--app .app-page .app-vision :is(.video-section__stage,.video-section__frame,.video-section__poster) {
     min-height: 360px !important;
     height: 360px !important;
   }
-  html body .app-page .app-vision-list {
+  html body.premium-route--app .app-page .app-vision-list {
     grid-column: 2 !important;
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: .75rem !important;
     margin: 0 !important;
   }
-  html body .app-page .app-vision-item {
+  html body.premium-route--app .app-page .app-vision-item {
     min-height: 0 !important;
     height: auto !important;
     padding: 1.15rem !important;
   }
 
-  html body .app-page .app-concept {
+  html body.premium-route--app .app-page .app-concept {
     padding-block: 4.5rem !important;
   }
-  html body .app-page .app-concept .app-section-header {
+  html body.premium-route--app .app-page .app-concept .app-section-header {
     margin-bottom: 1.5rem !important;
   }
-  html body .app-page .app-device-stage {
+  html body.premium-route--app .app-page .app-device-stage {
     min-height: 460px !important;
     height: 460px !important;
     max-height: 460px !important;
   }
-  html body .app-page .app-device-flat {
+  html body.premium-route--app .app-page .app-device-flat {
     min-height: 320px !important;
     height: 320px !important;
     max-height: 320px !important;
     margin-top: 1rem !important;
     overflow: hidden !important;
   }
-  html body .app-page .app-device-caption,
-  html body .app-page .app-mockup-caption {
+  html body.premium-route--app .app-page .app-device-caption,
+  html body.premium-route--app .app-page .app-mockup-caption {
     margin-block: .75rem 0 !important;
   }
 }
 
 @media (max-width: 899px) {
-  html body .community-page .community-group .community-section-content,
-  html body .app-page .app-vision .app-section-content {
+  html body.premium-route--community .community-page .community-group .community-section-content,
+  html body.premium-route--app .app-page .app-vision .app-section-content {
     display: block !important;
   }
 }
