@@ -628,7 +628,7 @@ export default function Shop() {
                     </button>
                   </header>
                   <ProductGrid
-                    products={mode === 'desktop' ? products : products.slice(0, 3)}
+                    products={mode === 'desktop' ? products.slice(0, 8) : products.slice(0, 2)}
                     reducedMotion={reducedMotion}
                   />
                 </section>
