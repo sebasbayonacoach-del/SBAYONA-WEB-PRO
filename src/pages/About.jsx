@@ -5,7 +5,6 @@ import AboutValuesStage from '../components/about/AboutValuesStage.jsx'
 import AboutJourneyRail from '../components/about/AboutJourneyRail.jsx'
 import AboutMethodStage from '../components/about/AboutMethodStage.jsx'
 import { MethodSequence } from '../components/method/MethodSequence.jsx'
-import { StickyStage } from '../engine/scroll/StickyStage.jsx'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import { PageHero, SectionLabel } from '../components/Layout'
 import { siteMedia } from '../config/siteMedia.js'
@@ -219,45 +218,7 @@ export default function About() {
           Motor: StickyStage del engine (2D puro). Reduced-motion/móvil: pila
           estática legible por diseño del componente.
         */}
-        <StickyStage
-          length="160vh"
-          states={stages.length}
-          className="about-timeline about-timeline--stage section-shell"
-        >
-          {({ index, isStatic }) => {
-            const visibleStages = isStatic
-              ? [{ stage: stages[index], stageIndex: index }]
-              : stages.map((stage, stageIndex) => ({ stage, stageIndex }))
-
-            return (
-              <div className="about-timeline-stage" aria-live="polite">
-                {visibleStages.map(({ stage, stageIndex }) => {
-                  const isActive = isStatic || stageIndex === index
-                  return (
-                    <article
-                      key={stage.number}
-                      className={[
-                        'about-timeline-entry',
-                        'about-timeline-entry--stage',
-                        isActive ? 'about-timeline-entry--active' : '',
-                      ].filter(Boolean).join(' ')}
-                      data-year={stage.year}
-                      aria-current={isActive ? 'step' : undefined}
-                    >
-                      <div className="about-timeline-meta">
-                        <time>{stage.year}</time>
-                      </div>
-                      <div className="about-timeline-copy">
-                        <h3>{stage.title}</h3>
-                        <p>{stage.copy}</p>
-                      </div>
-                    </article>
-                  )
-                })}
-              </div>
-            )
-          }}
-        </StickyStage>
+        {/* Los cuatro hitos se muestran juntos: una historia se compara mejor cuando no obliga al usuario a pagar una pantalla por cada fecha. */}
         <ol className="about-chronicle-mobile section-shell" aria-label="Los cuatro hitos del recorrido BAYONA">
           {stages.map((stage) => (
             <li key={stage.number} className="about-chronicle-mobile__item">
