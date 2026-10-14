@@ -2,7 +2,6 @@ import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useCapabilities } from '../engine/hooks/useCapabilities.js'
-import GlobeScrollDirector, { GLOBE_STORY } from './about/GlobeScrollDirector.jsx'
 import './globe-integrated.css'
 
 const StoryGlobe3D = lazy(() => import('../engine/scene/StoryGlobeScene.jsx'))
@@ -276,7 +275,6 @@ export default function GlobeTestimonials() {
   const capabilities = useCapabilities()
   const reducedMotion = capabilities.reducedMotion
   const [activeId, setActiveId] = useState(0)
-  const [globeStoryStage, setGlobeStoryStage] = useState(-1)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [focusedMarker, setFocusedMarker] = useState(null)
   const touchStartX = useRef(null)
@@ -294,20 +292,6 @@ export default function GlobeTestimonials() {
       context?.getExtension('WEBGL_lose_context')?.loseContext()
     } catch { setHasWebGL(false) }
   }, [])
-  const selectScrollChapter = (chapter) => {
-    if (isOverlayOpen) return
-    const story = GLOBE_STORY[chapter]
-    if (!story) return
-    const globeRegion = { Colombia: 0, España: 1, EEUU: 2, Argentina: 3 }
-    setGlobeStoryStage(globeRegion[story.country] ?? 0)
-    if (story.testimonialId === undefined) {
-      setFocusedMarker(null)
-      return
-    }
-    const marker = markerForTestimonial(story.testimonialId)
-    setActiveId((current) => current === story.testimonialId ? current : story.testimonialId)
-    setFocusedMarker((current) => current?.testimonialId === marker?.testimonialId ? current : marker)
-  }
   const activeTestimonial = GLOBE_TESTIMONIALS[activeId]
   const activeFocusPreset = focusedMarker ? MAP_FOCUS_PRESETS[focusedMarker.country] : null
 
@@ -344,22 +328,7 @@ export default function GlobeTestimonials() {
   }
 
   const jumpToStory = (testimonialId) => {
-    if (reducedMotion || capabilities.mode !== 'desktop') {
-      selectAndOpen(testimonialId)
-      return
-    }
-    const runway = document.querySelector('.about-page .globe-atlas-runway')
-    if (!runway) {
-      selectAndOpen(testimonialId)
-      return
-    }
-    const total = GLOBE_STORY.length
-    const start = runway.getBoundingClientRect().top + window.scrollY - 78
-    const effectiveLength = Math.max(0, runway.getBoundingClientRect().height - window.innerHeight - 78)
-    const destination = start + effectiveLength * ((testimonialId + 1.5) / total)
-    // Scroll retains complete user control: the dot selects a chapter rather
-    // than opening a modal and trapping the visual reading experience.
-    window.scrollTo({ top: destination, behavior: 'smooth' })
+    selectAndOpen(testimonialId)
   }
 
   const selectMapMarker = (marker) => {
@@ -1187,7 +1156,7 @@ export default function GlobeTestimonials() {
         </div>
       </div>
 
-      <div className="globe-atlas-runway" style={{ '--atlas-scroll-length': `${GLOBE_STORY.length * 43}svh` }}>
+      <div className="globe-atlas-runway">
         <div className={`globe-testimonials-stage${isOverlayOpen ? ' is-overlay-open' : ''}`}>
         <div className={`globe-testimonials-canvas${threeReady ? ' globe-is-three-ready' : ''}`}>
           {hasWebGL && (
@@ -1195,7 +1164,7 @@ export default function GlobeTestimonials() {
               <Suspense fallback={null}>
                 <StoryGlobe3D markers={WORLD_MAP_MARKERS} selectedId={activeId}
                   onSelect={selectMapMarker} reducedMotion={reducedMotion}
-                  compact={capabilities.mode !== 'desktop'} storyStage={globeStoryStage}
+                  compact={capabilities.mode !== 'desktop'} storyStage={0}
                   focusMarker={focusedMarker} onReady={() => setThreeReady(true)} />
               </Suspense>
             </GlobeFallbackBoundary>
@@ -1250,7 +1219,6 @@ export default function GlobeTestimonials() {
             ))}
           </div>
         </div>
-        <GlobeScrollDirector reducedMotion={reducedMotion} onStageChange={selectScrollChapter} />
 
         <AnimatePresence>
           {isOverlayOpen && (
