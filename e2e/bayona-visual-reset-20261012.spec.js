@@ -70,12 +70,13 @@ test('About móvil: testimonios dejan de usar runway kilométrico', async ({ pag
   await expect(page.locator('.about-globe-section')).toBeVisible()
   const state = await page.evaluate(() => ({
     runway: Math.round(document.querySelector('.globe-atlas-runway')?.getBoundingClientRect().height || 0),
-    story: Math.round(document.querySelector('.globe-scroll-story')?.getBoundingClientRect().height || 0),
-    chapterWidth: Math.round(document.querySelector('.globe-scroll-story__chapter')?.getBoundingClientRect().width || 0),
+    stage: Math.round(document.querySelector('.globe-testimonials-stage')?.getBoundingClientRect().height || 0),
+    markers: document.querySelectorAll('.globe-testimonials-location-index button').length,
   }))
   expect(state.runway).toBeLessThan(5000)
-  expect(state.story).toBeLessThan(5000)
-  expect(state.chapterWidth).toBeGreaterThan(250)
+  expect(state.stage).toBeGreaterThan(200)
+  expect(state.stage).toBeLessThan(1200)
+  expect(state.markers).toBeGreaterThan(0)
 })
 
 test('Home móvil: comparador elimina la columna ornamental', async ({ page }) => {
