@@ -18,7 +18,6 @@ import TranslateOffer from './components/TranslateOffer.jsx'
 import { BAYONA_APP_ENTRY_URL } from './config/bayonaAppIntegration.js'
 import Home from './pages/Home'
 import JourneyGuide from './components/journey/JourneyGuide.jsx'
-import { JourneyProvider } from './components/journey/JourneyContext.jsx'
 
 /**
  * Home se importa de forma estática porque es la ruta de entrada y determina
@@ -269,12 +268,12 @@ function Site() {
             NextChapter, para no aparecer en el embudo ni en el 404.
           */}
           {showEditorialChrome ? <PremiumRouteChrome /> : null}
+          {showEditorialChrome ? <JourneyGuide /> : null}
           {showEditorialChrome ? <EditorialOutro /> : null}
         </main>
       </PageTransition>
       {showEditorialChrome ? <WhatsAppButton /> : null}
       {showSiteFooter ? <Footer /> : null}
-      {showEditorialChrome ? <JourneyGuide /> : null}
       {isEditMode() ? (
         <Suspense fallback={null}>
           <EditMode />
@@ -288,5 +287,5 @@ function Site() {
 }
 
 export default function App() {
-  return <JourneyProvider><Site /></JourneyProvider>
+  return <Site />
 }

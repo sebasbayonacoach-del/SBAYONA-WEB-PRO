@@ -7,7 +7,6 @@ import '../styles/adapted-movement.css'
 
 export default function AdaptedMovement() {
   const [query,setQuery]=useState('')
-  const [expanded,setExpanded]=useState(null)
   const matches=useMemo(()=>{
     const term=query.trim().toLocaleLowerCase('es')
     return term?MOVEMENT_CONTEXTS.filter(group=>
@@ -56,14 +55,10 @@ export default function AdaptedMovement() {
           {matches.length?(
             <div className="bayona-adapted__grid">
               {matches.map(group=>{
-                const open=expanded===group.id||Boolean(query)
                 return <article className="bayona-adapted__group" key={group.id}>
                   <div className="bayona-adapted__group-head"><span>{group.icon} / 12</span><h3>{group.name}</h3></div>
                   <p>{group.summary}</p>
-                  <button type="button" aria-expanded={open} onClick={()=>setExpanded(open?null:group.id)}>
-                    {open?'OCULTAR EJEMPLOS':'VER EJEMPLOS'} <span aria-hidden="true">{open?'−':'+'}</span>
-                  </button>
-                  {open?<ul>{group.examples.map(example=><li key={example}>{example}</li>)}</ul>:null}
+                  <ul>{group.examples.map(example=><li key={example}>{example}</li>)}</ul>
                 </article>
               })}
             </div>

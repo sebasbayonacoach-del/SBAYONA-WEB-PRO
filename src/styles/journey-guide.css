@@ -62,3 +62,145 @@ html body.premium-route--home .bayona-services-prime .gym-service-card.is-for-yo
 @media(prefers-reduced-motion:reduce){.bayona-services-conversation__choices button{transition:none}}
 /* Keep five voluntary choices in a coherent small matrix. */
 .bayona-services-conversation__choices button:last-child:nth-child(odd){grid-column:1/-1}
+
+/* 2026-10-18 — ALL AT A GLANCE. There is no interactive intake,
+   floating widget or gated recommendation in the editorial journey. */
+html body.premium-route--home .bayona-services-conversation.bayona-services-conversation--open{
+  grid-template-columns:minmax(255px,.62fr) minmax(0,1.38fr) !important;
+  gap:clamp(1.2rem,3.3vw,3.6rem) !important;
+  padding:clamp(1.5rem,3.2vw,3rem) !important;
+  align-items:start !important;
+  background:#e7dfd3 !important;
+}
+html body.premium-route--home .bayona-services-conversation__prompt {
+  position:static !important;
+  align-self:start !important;
+}
+html body.premium-route--home .bayona-services-conversation__prompt h3{
+  font-size:clamp(1.5rem,2.2vw,2.4rem) !important;
+  line-height:1.12 !important;
+}
+.bayona-services-conversation__overview{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:0 !important;
+  border-top:1px solid #b6a593;
+}
+.bayona-services-conversation__match{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(175px,.65fr);
+  gap:clamp(.7rem,2vw,2rem);
+  align-items:center;
+  border-bottom:1px solid #b6a593;
+  padding:.8rem .25rem;
+  min-height:92px;
+}
+.bayona-services-conversation__match-goal{
+  display:block;
+  color:#24221e;
+  font:850 clamp(1.05rem,1.3vw,1.3rem)/1.23 Montserrat,Inter,Arial,sans-serif;
+  letter-spacing:-.035em;
+}
+.bayona-services-conversation__match p {
+  margin:.32rem 0 0;
+  color:#61554a;
+  font:.86rem/1.5 Inter,Arial,sans-serif;
+}
+.bayona-services-conversation__match-service{
+  position:relative;
+  display:grid;
+  gap:.25rem;
+  min-height:62px;
+  border-left:2px solid #a85f31;
+  padding:.3rem 2rem .3rem .85rem;
+}
+.bayona-services-conversation__match-service small{
+  color:#915326;
+  font:750 .57rem/1.3 "DM Mono",ui-monospace,monospace;
+  letter-spacing:.09em;
+}
+.bayona-services-conversation__match-service strong{
+  color:#292622;
+  font:750 .87rem/1.35 Inter,Arial,sans-serif;
+}
+.bayona-services-conversation__match-service svg{
+  position:absolute;
+  right:.25rem;
+  top:50%;
+  transform:translateY(-50%);
+  color:#985126;
+}
+
+/* A quiet piece of editorial content, not an overlay, CTA or pop-up. */
+.bayona-journey-inline{
+  position:relative;
+  padding:clamp(2.2rem,4vw,4rem) 0;
+  background:#e4dace;
+  color:#28231e;
+  border-top:2px solid #ac6738;
+}
+.bayona-journey-inline__inner{
+  width:min(calc(100% - 2 * clamp(1rem,6vw,5rem)),1250px);
+  margin:auto;
+  display:grid;
+  grid-template-columns:56px minmax(0,1fr) minmax(210px,.5fr);
+  align-items:center;
+  gap:clamp(1rem,2.7vw,3rem);
+}
+.bayona-journey-inline__icon{
+  width:52px;height:52px;
+  display:grid;place-items:center;
+  border:1px solid #b56b3b;
+  color:#975626;
+}
+.bayona-journey-inline__eyebrow{
+  color:#a25324;
+  font:750 .67rem/1.4 "DM Mono",ui-monospace,monospace;
+  letter-spacing:.12em;
+}
+.bayona-journey-inline h2{
+  font:850 clamp(1.5rem,2.6vw,2.5rem)/1.1 Montserrat,Inter,sans-serif;
+  letter-spacing:-.05em;
+  color:#28211c;
+  margin:.4rem 0;
+}
+.bayona-journey-inline p{
+  color:#50463d;
+  font:.94rem/1.6 Inter,Arial,sans-serif;
+  margin:.15rem 0 0;
+}
+.bayona-journey-inline__clarity{
+  display:flex;
+  align-items:flex-start;
+  gap:.6rem;
+  padding:1rem;
+  background:#f4ece1;
+  border-left:2px solid #a96332;
+  font-size:.82rem !important;
+}
+.bayona-journey-inline__clarity svg{
+  flex:none;color:#965425;
+}
+
+@media(max-width:1050px){
+  html body.premium-route--home .bayona-services-conversation.bayona-services-conversation--open{
+    grid-template-columns:1fr !important;
+  }
+}
+@media(max-width:780px){
+  .bayona-services-conversation__match{
+    grid-template-columns:1fr;
+    gap:.4rem;
+    padding:.9rem 0;
+  }
+  .bayona-services-conversation__match-service{
+    padding:.35rem .8rem;
+    min-height:0;
+    border-left:0;
+    border-top:1px solid #cbb9a6;
+  }
+  .bayona-services-conversation__match-service svg{display:none}
+  .bayona-journey-inline__inner{grid-template-columns:48px 1fr}
+  .bayona-journey-inline__clarity{grid-column:1/-1}
+}
+.bayona-services-conversation__match-service{padding-right:.3rem}

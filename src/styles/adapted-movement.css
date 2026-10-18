@@ -86,3 +86,91 @@
 .bayona-discovery__handoff p{margin:0 0 .75rem;font-size:.82rem;line-height:1.5;color:#4e4238}
 .bayona-discovery__handoff button{min-height:44px;display:inline-flex;align-items:center;gap:.75rem;border:0;background:#24302b;color:#fffaf1;padding:.8rem 1rem;font:750 .67rem "DM Mono",ui-monospace,monospace;letter-spacing:.035em;cursor:pointer}
 .bayona-discovery__handoff button:is(:hover,:focus-visible){background:#985221}
+
+/* Open orientation: all three chapters readable at once, no question flow. */
+.bayona-discovery--open .bayona-discovery__frame{
+  grid-template-columns:minmax(270px,.62fr) minmax(0,1.38fr);
+  gap:clamp(1.6rem,4vw,5rem);
+}
+.bayona-discovery--open .bayona-discovery__intro h2{
+  font-size:clamp(2.8rem,4vw,4.5rem);
+  max-width:15ch;
+}
+.bayona-discovery__openness{
+  display:flex;
+  gap:.75rem;
+  align-items:flex-start;
+  color:#e9d3bd !important;
+  border-left:2px solid #f4a261;
+  padding-left:.8rem;
+  font-size:.93rem !important;
+}
+.bayona-discovery__openness svg{flex:none;color:#f4a261}
+.bayona-discovery__allsteps{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:.75rem;
+}
+.bayona-discovery__allstep{
+  background:#f3eee7;
+  color:#2a2622;
+  border:1px solid #cbbeb0;
+  border-left:3px solid #d98b4a;
+  padding:clamp(1.15rem,2vw,1.7rem);
+}
+.bayona-discovery__allstep h3{
+  color:#29231f;
+  font:850 clamp(1.13rem,1.4vw,1.42rem)/1.16 Montserrat,Inter,sans-serif;
+  letter-spacing:-.035em;
+  margin:.5rem 0;
+}
+.bayona-discovery__allstep p{
+  color:#584d43;
+  font:.91rem/1.55 Inter,Arial,sans-serif;
+  margin:.5rem 0;
+}
+.bayona-discovery__allstep ul{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.4rem .6rem;
+  margin:1rem 0 0;
+  padding:0;
+  list-style:none;
+}
+.bayona-discovery__allstep li{
+  border:1px solid #d2c1ae;
+  color:#6a482e;
+  padding:.4rem .62rem;
+  font:.73rem/1.35 Inter,Arial,sans-serif;
+}
+.bayona-discovery__health{
+  display:grid;
+  grid-template-columns:32px 1fr;
+  gap:.85rem;
+  align-items:start;
+  background:#222b27;
+  color:#fff6ec;
+  border-top:2px solid #f3a263;
+  padding:1.35rem;
+}
+.bayona-discovery__health svg{color:#f4a261}
+.bayona-discovery__health p{margin:0;font:.87rem/1.6 Inter,Arial,sans-serif;color:#f4e6d9}
+.bayona-discovery__health strong{color:#fffaf3}
+.bayona-discovery__health a{
+  grid-column:2;
+  color:#f4ae76;
+  font:750 .65rem/1.4 "DM Mono",ui-monospace,monospace;
+  letter-spacing:.055em;
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  width:fit-content;
+  min-height:36px;
+}
+.bayona-adapted__group ul{
+  border-top:1px solid #d8cbbb;
+  padding-top:.85rem;
+}
+@media(max-width:920px){
+  .bayona-discovery--open .bayona-discovery__frame{grid-template-columns:1fr}
+}

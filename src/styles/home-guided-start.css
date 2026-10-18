@@ -219,3 +219,22 @@ html[data-bayona-theme='day'] body.premium-route--home .start-journey__step-foot
 html[data-bayona-theme='day'] body.premium-route--home .gym-home-process.start-journey .start-journey__list.gym-process-grid > li .start-journey__step-body p {
   color:#f0e8dd !important;-webkit-text-fill-color:#f0e8dd !important;
 }
+
+/* The steps are static and fully expanded for visitors who don't want to click. */
+body.premium-route--home .start-journey--open .start-journey__intro {
+  position:static !important;
+  top:auto !important;
+}
+body.premium-route--home .start-journey--open .start-journey__list.gym-process-grid{
+  padding-bottom:0 !important;
+  gap:.65rem !important;
+}
+body.premium-route--home .start-journey--open .start-journey__list.gym-process-grid > li{
+  opacity:1 !important;
+  transform:none !important;
+  min-height:225px !important;
+  box-shadow:none !important;
+  transition:none !important;
+  background:linear-gradient(135deg,#262a28,#1e2423) !important;
+  border-color:rgba(248,188,131,.38) !important;
+}

@@ -1,33 +1,33 @@
-import { ArrowRight, Check, RotateCcw } from 'lucide-react'
-import { JOURNEY_GOALS, journeyGoalById, useJourney } from './JourneyContext.jsx'
+import { GOAL_OVERVIEW } from '../../data/goalOverview.js'
 import '../../styles/journey-guide.css'
 
+/**
+ * No conditional recommendations and no required clicks:
+ * every visitor sees every route to a relevant service.
+ */
 export default function ServicePersonalizer() {
-  const { goal, setGoal, setOpen } = useJourney()
-  const selected = journeyGoalById(goal)
   return (
-    <div className="bayona-services-conversation" aria-labelledby="bayona-conversation-title">
+    <section className="bayona-services-conversation bayona-services-conversation--open" aria-labelledby="bayona-conversation-title">
       <div className="bayona-services-conversation__prompt">
-        <span className="bayona-services-conversation__number">BAYONA / UNA PREGUNTA PARA TI</span>
-        <h3 id="bayona-conversation-title">Antes de elegir, <em>¿qué te gustaría conseguir?</em></h3>
-        <p>No tienes que saber qué servicio necesitas. Dime qué quieres lograr y te muestro por dónde podrías empezar.</p>
+        <span className="bayona-services-conversation__number">BAYONA / PENSADO PARA PERSONAS REALES</span>
+        <h3 id="bayona-conversation-title">SEGÚN TU OBJETIVO, <em>ESTE PUEDE SER TU CAMINO.</em></h3>
+        <p>Cinco situaciones habituales y una forma de acompañamiento para cada una. Todo a la vista, sin cuestionarios ni pasos escondidos.</p>
+        <p className="bayona-services-conversation__privacy">Orientación general, no una valoración individual ni un diagnóstico.</p>
       </div>
-      <div className="bayona-services-conversation__actions">
-        <div className="bayona-services-conversation__choices" aria-label="Seleccionar tu objetivo">
-          {JOURNEY_GOALS.map(item=>(
-            <button key={item.id} type="button" aria-pressed={goal===item.id} className={goal===item.id?'is-selected':''} onClick={()=>setGoal(item.id)}>
-              {goal===item.id?<Check size={16} aria-hidden="true"/>:null}{item.label}
-            </button>
-          ))}
-        </div>
-        {selected ? (
-          <p className="bayona-services-conversation__reply" role="status">
-            <strong>Te escucho: {selected.label.toLowerCase()}.</strong> He colocado primero una opción relacionada. Todas las demás siguen disponibles; tú decides.
-            <button type="button" onClick={()=>setOpen(true)}>VER MI GUÍA <ArrowRight size={15} aria-hidden="true"/></button>
-            <button type="button" onClick={()=>setGoal(null)} aria-label="Borrar objetivo elegido"><RotateCcw size={14} aria-hidden="true"/> BORRAR</button>
-          </p>
-        ) : <p className="bayona-services-conversation__privacy">No guardamos tu respuesta fuera de esta visita. No sustituye una valoración profesional.</p>}
+      <div className="bayona-services-conversation__overview" aria-label="Todas las opciones y posibles caminos">
+        {GOAL_OVERVIEW.map(item=>(
+          <div className="bayona-services-conversation__match" key={item.id}>
+            <div>
+              <span className="bayona-services-conversation__match-goal">{item.label}</span>
+              <p>{item.explanation}</p>
+            </div>
+            <span className="bayona-services-conversation__match-service">
+              <small>PUEDES EXPLORAR</small>
+              <strong>{item.service}</strong>
+            </span>
+          </div>
+        ))}
       </div>
-    </div>
+    </section>
   )
 }

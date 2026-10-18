@@ -1,67 +1,57 @@
 import { test, expect } from '@playwright/test'
 
-for (const [viewport,width,height] of [['desktop',1440,900],['mobile',390,844]]) {
-  test('guía disponible desde inicio, voluntaria y privada / ' + viewport,async({page})=>{
+for (const [mode,width,height] of [['desktop',1440,900],['mobile',390,844]]) {
+  test('Inicio muestra todos los objetivos sin preguntas ocultas / '+mode,async({page})=>{
     await page.setViewportSize({width,height})
     await page.goto('/')
-    const floating=page.locator('.bayona-care')
-    await expect(floating.getByRole('button',{name:/TE ACOMPAÑO/i})).toBeVisible()
-    await expect(floating.locator('.bayona-care__panel')).toHaveCount(0)
-    await floating.locator('.bayona-care__trigger').click()
-    await expect(floating.getByRole('heading',{name:/QUÉ TE GUSTARÍA CONSEGUIR/i})).toBeVisible()
-    await floating.getByRole('button',{name:'Aprender parkour'}).click()
-    await expect(floating.getByText('EN TU CAMINO: PARKOUR')).toBeVisible()
-    await expect(floating.getByRole('link',{name:/CONOCER PARKOUR ACADEMY/i})).toHaveAttribute('href','/parkour-academy')
-    await floating.getByRole('link',{name:/CONOCER PARKOUR ACADEMY/i}).click()
-    await expect(page).toHaveURL(/\/parkour-academy$/)
-    await expect(floating.getByRole('button',{name:/TU RUTA:/i})).toBeVisible()
-    await floating.locator('.bayona-care__trigger').click()
-    await expect(floating.getByText('Aprender parkour',{exact:true})).toBeVisible()
-    await floating.getByRole('button',{name:/BORRAR ELECCIÓN/}).click()
-    await expect(floating.locator('.bayona-care__panel')).toHaveCount(0)
-    await expect(floating.locator('.bayona-care__trigger')).toContainText('¿TE ACOMPAÑO?')
-    const metrics=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth-innerWidth}))
-    expect(metrics.overflow).toBeLessThanOrEqual(1)
+    const a=page.locator('#servicios .bayona-services-conversation')
+    await expect(a).toBeVisible()
+    await expect(a.locator('.bayona-services-conversation__match')).toHaveCount(5)
+    for(const title of ['Ganar fuerza','Moverme mejor','Volver a entrenar','Tener más energía','Aprender parkour']){
+      await expect(a.getByText(title,{exact:true})).toBeVisible()
+    }
+    await expect(a).toContainText('Entrenamiento personal')
+    await expect(a).toContainText('Movilidad y entrenamiento adaptado')
+    await expect(a).toContainText('Entrenamiento online')
+    await expect(a).toContainText('Parkour y rendimiento')
+    await expect(a.locator('button')).toHaveCount(0)
+    await expect(page.locator('.bayona-care')).toHaveCount(0)
+    await expect(page.locator('#servicios .gym-service-card')).toHaveCount(4)
+    await expect(page.locator('#servicios .gym-service-card.is-for-you')).toHaveCount(0)
+    const stats=await page.evaluate(()=>({
+      overflow:document.documentElement.scrollWidth-innerWidth,
+      cardTypes:[...document.querySelectorAll('#servicios .gym-service-card')].map(e=>e.className)
+    }))
+    expect(stats.overflow).toBeLessThanOrEqual(1)
   })
-  test('personalizador orienta servicios y acompaña en otras páginas / '+viewport,async({page})=>{
+
+  test('Los 3 aspectos están expuestos sin hacer clic / '+mode,async({page})=>{
     await page.setViewportSize({width,height})
     await page.goto('/')
-    const area=page.locator('#servicios')
-    await expect(area.locator('.bayona-services-conversation')).toBeAttached()
-    await area.locator('.bayona-services-conversation__choices').getByRole('button',{name:'Moverme mejor'}).click()
-    await expect(area.locator('.gym-service-card').first()).toHaveClass(/gym-service-card--recovery/)
-    await expect(area.locator('.gym-service-card').first()).toHaveClass(/is-for-you/)
-    await expect(area.locator('.gym-service-card')).toHaveCount(4)
-    await expect(page.locator('.bayona-care__trigger')).toContainText('TU RUTA:')
-    // Client-side navigation preserves only the explicitly selected goal.
-    await page.locator('footer a[href="/resources"]').click()
-    await expect(page).toHaveURL(/\/resources$/)
-    await page.locator('.bayona-care__trigger').click()
-    await expect(page.locator('.bayona-care__summary')).toContainText('Moverme mejor')
-    await expect(page.locator('.bayona-care__body')).toContainText('orientación sanitaria')
-    await page.reload()
-    await expect(page.locator('.bayona-care__trigger')).toContainText('¿TE ACOMPAÑO?')
-    await expect(page.locator('.bayona-care__panel')).toHaveCount(0)
+    const orient=page.locator('#tu-ruta')
+    await expect(orient).toBeVisible()
+    await expect(orient.locator('.bayona-discovery__allstep')).toHaveCount(3)
+    await expect(orient.getByRole('heading',{name:'QUÉ QUIERES MEJORAR'})).toBeVisible()
+    await expect(orient.getByRole('heading',{name:'DESDE DÓNDE EMPIEZAS'})).toBeVisible()
+    await expect(orient.getByRole('heading',{name:'CÓMO TE ACOMPAÑAMOS'})).toBeVisible()
+    await expect(orient).toContainText('valorarlas los profesionales sanitarios')
+    await expect(orient.locator('button')).toHaveCount(0)
+    await expect(orient.locator('input')).toHaveCount(0)
+    await expect(orient).toContainText('No tienes que completar un cuestionario')
+    const stats=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth-innerWidth}))
+    expect(stats.overflow).toBeLessThanOrEqual(1)
   })
-  test('formulario anterior transfiere solo el objetivo por acción expresa / '+viewport,async({page})=>{
+
+  test('Rutas muestran orientación sin panel flotante / '+mode,async({page})=>{
     await page.setViewportSize({width,height})
-    const sent=[]
-    page.on('request',request=>{if(['xhr','fetch','beacon'].includes(request.resourceType()))sent.push(request.url()+' '+(request.postData()||''))})
-    await page.goto('/')
-    const quiz=page.locator('#tu-ruta')
-    await expect(quiz.getByText('01 / TU OBJETIVO')).toBeVisible()
-    await quiz.getByRole('button',{name:/Tener más energía/i}).click()
-    await quiz.getByRole('button',{name:/condición de salud diagnosticada/i}).click()
-    await quiz.getByRole('button',{name:/Online y flexible/i}).click()
-    await expect(quiz.getByText(/primera orientación/i)).toBeVisible()
-    // Not automatically shared.
-    await expect(page.locator('.bayona-care__trigger')).toContainText('¿TE ACOMPAÑO?')
-    await quiz.getByRole('button',{name:/USAR MI OBJETIVO DURANTE ESTA VISITA/i}).click()
-    await expect(page.locator('.bayona-care__summary')).toContainText('Tener más energía')
-    await expect(page.locator('.bayona-care__panel')).not.toContainText('diagnosticada')
-    await expect(page.locator('.bayona-care__panel')).not.toContainText('Online y flexible')
-    expect(sent.join(' ')).not.toMatch(/condici[oó]n%20de%20salud|diagnosticada|diagnostico/i)
-    await quiz.getByRole('button',{name:/BORRAR MIS RESPUESTAS/}).click()
-    await expect(page.locator('.bayona-care__trigger')).toContainText('¿TE ACOMPAÑO?')
+    for(const [path,title] of [['/programs','SERVICIOS A LA VISTA'],['/resources','RECURSOS SIN PRESIÓN'],['/movimiento-adaptado','MOVIMIENTO CON CRITERIO']]){
+      await page.goto(path)
+      const note=page.locator('.bayona-journey-inline')
+      await expect(note).toBeAttached()
+      await expect(note.getByRole('heading',{name:title})).toBeVisible()
+      await expect(note).toContainText('No recogemos datos de salud')
+      await expect(note.locator('button')).toHaveCount(0)
+      await expect(page.locator('.bayona-care')).toHaveCount(0)
+    }
   })
 }

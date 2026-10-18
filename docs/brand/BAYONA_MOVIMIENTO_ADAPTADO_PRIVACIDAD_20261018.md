@@ -29,3 +29,13 @@ No afirmar que BAYONA atiende todas las patologías; ninguna lista es exhaustiva
 - `JourneyGuide` ofrece orientación relacionada con la página en pantalla, mediante reglas editoriales predefinidas, sin atribuir diagnósticos ni capacidades clínicas.
 - El cuestionario `AdaptiveDiscovery` solo comparte su objetivo general con la guía **si el visitante pulsa voluntariamente el botón de transferencia**. El contexto de salud, la modalidad y demás respuestas nunca se comparten con la guía.
 - No transmitir el estado del guía o del cuestionario a analytics, CRM, localStorage, cookies, query strings, enlaces de WhatsApp ni otras herramientas sin rediseño legal y de seguridad.
+
+
+## 2026-10-18 · Diseño abierto / sin clic para orientarse (sustituye el flujo contextual previo)
+
+- Los cinco objetivos y sus posibles servicios están **todos a la vista** en Inicio. No hay estado personalizado, ordenamiento de tarjetas ni inferencia de un objetivo por la navegación.
+- La antigua guía flotante se sustituyó por notas editoriales siempre desplegadas dentro de las páginas pertinentes.
+- El cuestionario progresivo se sustituyó por tres capítulos informativos simultáneos. No hay campos, botón de siguiente, diagnóstico, memoria de respuesta ni transmisión de datos.
+- Las 12 familias de situaciones de salud presentan sus ejemplos de forma abierta. El buscador sigue siendo opcional, nunca imprescindible para leer.
+- Los enlaces normales de navegación y contacto siguen existiendo, pero la orientación básica se puede comprender solo desplazándose.
+- Se mantiene el límite profesional: la mención de una patología no equivale a prometer tratamiento ni indicar que esa persona es apta para ejercitarse.
