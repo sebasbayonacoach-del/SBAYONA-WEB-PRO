@@ -230,3 +230,151 @@ html body .navbar .desktop-nav a:focus-visible {
   outline: 2px solid var(--bv-orange);
   outline-offset: 3px;
 }
+
+/* 2026-10-18 / audited contrast defects from actual viewport screenshots.
+   Dark-on-paper is mandatory whenever a scene uses a light ground. */
+html body .community-page .community-live {
+  color: #1d201d !important;
+}
+html body .community-page .community-live :is(
+  .community-title,.community-title span,.community-social-title
+) {
+  color: #20221f !important;
+  -webkit-text-fill-color: #20221f !important;
+}
+html body .community-page .community-live :is(
+  .community-section-subtitle,.community-subtitle,.community-live-date
+) {
+  color: #514b44 !important;
+  -webkit-text-fill-color: #514b44 !important;
+}
+html body .community-page .community-live :is(
+  .community-social-platform,.community-live-platform
+) {
+  color: #985020 !important;
+}
+html body .community-page .community-live .community-social-link {
+  color: #20221f !important;
+  border-color: rgba(32,34,31,.3) !important;
+}
+html body .community-page .community-live .community-social-link:is(:hover,:focus-visible) {
+  color: #914313 !important;
+}
+html body .community-page .community-live .community-marketing-line {
+  color: #965020 !important;
+}
+
+/* FAQ category headings were white on pale paper; answers/buttons were grey
+   text on grey panels. Distinct foreground and surface colors restore hierarchy. */
+html body .faq-page .faq-section {
+  color: #20221f !important;
+}
+html body .faq-page .faq-category-title,
+html body .faq-page .faq-category-title :is(span,strong) {
+  color: #20221f !important;
+  -webkit-text-fill-color: #20221f !important;
+}
+html body .faq-page .faq-category-title > span:first-child {
+  color: #9b4d19 !important;
+  -webkit-text-fill-color: #9b4d19 !important;
+}
+html body .faq-page .faq-category .faq-accordion {
+  background: #faf8f3 !important;
+  border: 1px solid #d8d0c5 !important;
+  border-bottom: none !important;
+}
+html body .faq-page .faq-category .faq-accordion:last-child {
+  border-bottom: 1px solid #d8d0c5 !important;
+}
+html body .faq-page .faq-category .faq-accordion > button {
+  background: transparent !important;
+  color: #272722 !important;
+  opacity: 1 !important;
+}
+html body .faq-page .faq-category .faq-accordion > button:is(:hover,:focus-visible),
+html body .faq-page .faq-category .faq-accordion.open > button {
+  background: #f2e6d8 !important;
+}
+html body .faq-page .faq-category .faq-question-text {
+  color: #292923 !important;
+  -webkit-text-fill-color: #292923 !important;
+}
+html body .faq-page .faq-category .faq-question-number {
+  color: #985020 !important;
+}
+html body .faq-page .faq-category .faq-question-icon {
+  color: #65452f !important;
+  stroke: currentColor !important;
+}
+html body .faq-page .faq-category .faq-answer {
+  background: #fffdf9 !important;
+  color: #393731 !important;
+}
+html body .faq-page .faq-category .faq-answer :is(p,li) {
+  color: #393731 !important;
+}
+@media (max-width: 899px) {
+  html body .community-page .community-live .community-social-title {
+    font-size: clamp(1.12rem,4.8vw,1.35rem) !important;
+    line-height: 1.22 !important;
+  }
+  html body .community-page .community-live .community-live-date {
+    font-size: .74rem !important;
+    line-height: 1.45 !important;
+  }
+  html body .faq-page .faq-category-title {
+    font-size: clamp(1.18rem,5.1vw,1.45rem) !important;
+  }
+  html body .faq-page .faq-category .faq-question-text {
+    font-size: .94rem !important;
+    line-height: 1.4 !important;
+  }
+}
+
+/* Keep all three social CTAs visible — the old 320px fixed card clipped them. */
+html body .community-page .community-live .community-live-card {
+  height: auto !important;
+  min-height: 375px !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+html body .community-page .community-live .community-live-body {
+  min-height: 190px !important;
+  justify-content: flex-start !important;
+}
+html body .community-page .community-live .community-social-link {
+  margin-top: auto !important;
+  min-height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding-block: .8rem !important;
+}
+
+/* Remove the unrelated photograph bleeding through the FAQ answer grid. */
+html body .faq-page .faq-section::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+/* Mobile rhythm: cards should end after their CTA, not leave dead air.
+   FAQ categories formerly stacked a 60px legacy margin on top of the grid gap. */
+@media (max-width: 899px) {
+  html body .community-page .community-live .community-live-card {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  html body .community-page .community-live .community-live-body {
+    min-height: 0 !important;
+  }
+  html body .community-page .community-live .community-social-link {
+    margin-top: .65rem !important;
+  }
+  html body .faq-page .faq-categories {
+    row-gap: .85rem !important;
+  }
+  html body .faq-page .faq-category {
+    margin: 0 !important;
+    padding-block: .75rem !important;
+  }
+}
