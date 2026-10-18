@@ -1,0 +1,304 @@
+/* BAYONA PRIME / UNA SOLA DIRECCIÓN VISUAL EN TODAS LAS PÁGINAS
+   Alternancia obsidiana/marfil, fotografía, trazos editoriales, profundidad y
+   lectura cinematográfica; sin reemplazar el contenido ni los controles. */
+body.bayona-cinema-active{
+  --bayona-cinema-black:#090f0f;
+  --bayona-cinema-forest:#1a2924;
+  --bayona-cinema-amber:#efae7b;
+  --bayona-cinema-paper:#eee8df;
+  --bayona-cinema-border:rgba(239,174,123,.3);
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"]{
+  background:#090f0f;
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"] :is(h1,h2){
+  text-wrap:balance;
+  font-kerning:normal;
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"] :is(
+ .page-hero,.about-hero,.academy-hero,.community-hero,.resources-hero,
+ .shop-hero,.gym-home-hero,.app-hero,.faq-hero
+){
+  isolation:isolate;
+  background-attachment:scroll;
+  box-shadow:inset 0 -90px 130px rgba(6,12,12,.24);
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"] .bayona-cinema-chapter{
+  scroll-margin-top:90px;
+  box-shadow:inset 0 1px 0 rgba(241,169,107,.12);
+  transition:box-shadow .65s ease,background-color .5s ease;
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"] .bayona-cinema-chapter--active{
+  box-shadow:inset 0 2px 0 rgba(241,169,107,.46);
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"] .bayona-cinema-chapter--light{
+  border-block:1px solid rgba(85,63,42,.075);
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"] .bayona-cinema-chapter--dark{
+  border-block:1px solid rgba(255,223,181,.07);
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"] :is(
+ .gym-section-heading,.services-overview__heading,.section-heading,.academy-section__heading,
+ .resources-section__intro,.community-section__heading,.faq-section__intro
+) :is(h2,h3){
+  letter-spacing:-.065em;
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"] :is(
+ .premium-card,.services-overview-card,.academy-progression__card,.gym-service-card,
+ .app-feature-card,.about-value,.shop-product-card,.gym-gift-card
+){
+  border-radius:clamp(11px,1vw,18px);
+  box-shadow:0 18px 48px rgba(3,8,8,.13),inset 0 1px 0 rgba(255,255,255,.095);
+  transition:box-shadow .35s ease,transform .35s ease,border-color .35s ease;
+}
+@media(hover:hover) and (pointer:fine){
+ body.bayona-cinema-active #main-content[data-experience-mode="editorial"] :is(
+  .premium-card,.services-overview-card,.academy-progression__card,.gym-service-card,
+  .app-feature-card,.about-value,.shop-product-card
+ ):hover{
+  box-shadow:0 28px 70px rgba(0,4,5,.22),inset 0 1px 0 rgba(255,255,255,.15);
+ }
+}
+/* Hide redundant fixed navigator, replaced with the chapter narrator below. */
+body.bayona-cinema-active .bayona-cinema-track{
+  --track-accent:#ffc396;
+  position:fixed;
+  z-index:86;
+  left:clamp(14px,2vw,29px);
+  bottom:clamp(16px,2vw,28px);
+  width:min(318px,calc(100vw - 110px));
+  padding:1.05rem 1.18rem .8rem;
+  background:linear-gradient(125deg,rgba(31,46,40,.91),rgba(8,15,14,.93));
+  border:1px solid rgba(255,224,188,.24);
+  border-radius:16px;
+  -webkit-backdrop-filter:blur(20px) saturate(1.3);
+  backdrop-filter:blur(20px) saturate(1.3);
+  box-shadow:0 20px 65px rgba(0,0,0,.23),inset 0 1px 0 rgba(255,255,255,.14);
+  color:#fff5e8;
+}
+body.bayona-cinema-active .bayona-cinema-track .bayona-compass__bar{
+  letter-spacing:.12em;
+  font-size:.56rem;
+  color:var(--track-accent);
+}
+body.bayona-cinema-active .bayona-cinema-track .bayona-compass__bar strong{
+  color:#f6dfc9;
+}
+body.bayona-cinema-active .bayona-cinema-track .bayona-compass__middle{
+  margin:.9rem 0 .5rem;
+}
+body.bayona-cinema-active .bayona-cinema-track .bayona-compass__middle strong{
+  font-size:clamp(.96rem,1.2vw,1.2rem);
+  line-height:1.12;
+  letter-spacing:-.04em;
+}
+body.bayona-cinema-active .bayona-cinema-track .bayona-compass__middle span{
+  font-size:.59rem;letter-spacing:.07em;color:#dbbc9f;
+}
+body.bayona-cinema-active .bayona-cinema-track__line{
+  font-size:.74rem;line-height:1.48;color:#d2c9bb;
+  padding:0;margin:0 0 .8rem;
+}
+body.bayona-cinema-active .bayona-cinema-track .bayona-compass__progress{
+  height:2px;background:rgba(255,255,255,.16);
+}
+body.bayona-cinema-active .bayona-cinema-track .bayona-compass__progress span{
+  background:linear-gradient(90deg,#ef9e68,#ffd4a4);
+}
+html.bayona-coach-visit-active .bayona-cinema-track{display:none!important}
+/* Pages with legacy paper backgrounds feel like the lighter pages of one
+   editorial publication, not separate templates. Existing text colors remain. */
+body.bayona-cinema-active #main-content .bayona-cinema-chapter--light :is(
+ .services-overview-card,.academy-progression__card,.about-value,.gym-gift-card
+){
+  border-color:rgba(108,67,39,.2);
+}
+body.bayona-cinema-active #main-content .bayona-cinema-chapter--dark :is(
+ .academy-progression__card,.services-overview-card,.app-feature-card
+){
+  border-color:rgba(255,217,176,.19);
+}
+/* A coherent bottom transition into the next page and journey. */
+body.bayona-cinema-active #main-content .editorial-outro{
+  border-top:1px solid rgba(237,171,109,.26);
+}
+body.bayona-cinema-active #main-content .editorial-outro__feature{
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 22px 65px rgba(0,0,0,.24);
+}
+body.bayona-cinema-active #main-content .editorial-outro__feature img{
+  filter:contrast(1.08) saturate(.83);
+}
+body.bayona-cinema-active #main-content .editorial-outro__feature strong{
+  letter-spacing:-.055em;
+}
+/* Mobile must retain a clear unobstructed view of the page. */
+@media(max-width:680px){
+ body.bayona-cinema-active .bayona-cinema-track{
+  left:10px;
+  bottom:79px;
+  padding:.69rem .83rem .58rem;
+  width:min(249px,calc(100vw - 102px));
+  border-radius:12px;
+  -webkit-backdrop-filter:blur(15px);
+  backdrop-filter:blur(15px);
+ }
+ body.bayona-cinema-active .bayona-cinema-track .bayona-compass__middle{
+  margin:.55rem 0 .45rem;
+ }
+ body.bayona-cinema-active .bayona-cinema-track .bayona-compass__middle strong{
+  font-size:.81rem;
+ }
+ body.bayona-cinema-active .bayona-cinema-track__line{display:none}
+ body.bayona-cinema-active .bayona-cinema-track .bayona-compass__bar{
+  font-size:.45rem;letter-spacing:.045em;
+ }
+ body.bayona-cinema-active #main-content[data-experience-mode="editorial"] .bayona-cinema-chapter{
+  scroll-margin-top:67px;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ body.bayona-cinema-active #main-content .bayona-cinema-chapter,
+ body.bayona-cinema-active #main-content .premium-card{transition:none!important}
+ body.bayona-cinema-active .bayona-cinema-track{-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+
+/* Chapter imagery: subdued enough to retain original words, photos and products. */
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"]
+ section.bayona-cinema-chapter--dark:not(.scene-bg):not(.bayona-cinema-chapter--first):not(.bayona-adapted__catalog){
+  background-image:
+   linear-gradient(105deg,rgba(6,12,12,.96) 0%,rgba(8,17,16,.94) 52%,rgba(8,17,16,.84) 100%),
+   var(--bayona-cinema-photo);
+  background-position:center,center 35%;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+body.bayona-cinema-active #main-content[data-experience-mode="editorial"]
+ section.bayona-cinema-chapter--light:not(.scene-bg):not(.resources-game){
+  background-image:linear-gradient(145deg,rgba(243,189,143,.11),transparent 50%,rgba(68,52,42,.07));
+}
+/* Editorial catalogue: actual imagery, not empty dark rectangles. */
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  border:1px solid rgba(255,210,162,.30);
+  min-height:clamp(108px,12vw,175px);
+  padding:clamp(1rem,2vw,1.5rem);
+  border-radius:10px;
+  color:#fff8ef!important;
+  background-image:
+   linear-gradient(90deg,rgba(4,13,14,.92),rgba(4,13,14,.65) 65%,rgba(4,13,14,.25)),
+   var(--bayona-tile-photo);
+  background-size:cover;
+  background-position:center;
+  box-shadow:0 12px 35px rgba(2,9,9,.18);
+  text-shadow:0 1px 9px rgba(0,0,0,.6);
+  transition:background-position .4s,border-color .35s,transform .3s;
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(1){
+  --bayona-tile-photo:url('/images/bayona-generated/shop-origins-1600.webp');
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(2){
+  --bayona-tile-photo:url('/images/burst/woman-athlete-tying-shoes.jpg');
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(3){
+  --bayona-tile-photo:url('/images/burst/gym-weights.jpg');
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(4){
+  --bayona-tile-photo:url('/images/bayona-generated/shop-strength-1600.webp');
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(5){
+  --bayona-tile-photo:url('/images/bayona-generated/shop-recovery-1600.webp');
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:is(:hover,:focus-visible){
+  border-color:#ffbc8b;
+  transform:translateY(-2px);
+  background-position:52% center;
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button > :is(span,svg){
+ position:relative;z-index:1;
+}
+@media(max-width:700px){
+ body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button{
+  min-height:120px!important;padding:.9rem 1rem!important;
+  font-size:.9rem;
+ }
+ body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+}
+/* One legacy contrast error in Services: its light paper caption was white. */
+body[data-bayona-cinema-route="/programs"] .services-overview .services-overview-footer > :is(span,p,strong){
+  color:#453b32;
+}
+
+/* These late-loaded Shop theme rules use background shorthands. Preserve photos. */
+html body[data-bayona-cinema-route="/shop"] .shop-categories .shop-category-shortcuts button{
+ background-image:
+  linear-gradient(90deg,rgba(4,13,14,.92),rgba(4,13,14,.65) 65%,rgba(4,13,14,.25)),
+  var(--bayona-tile-photo)!important;
+ background-position:center!important;background-size:cover!important;
+ background-color:#171e1d!important;
+}
+
+/* Ordered as the live category list: entrenamiento, lifestyle, calzado,
+   equipamiento, máquinas and suplementos. Images are atmospheric only. */
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(2){
+ --bayona-tile-photo:url('/images/bayona-generated/shop-movement-1600.webp');
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(3){
+ --bayona-tile-photo:url('/images/burst/woman-athlete-tying-shoes.jpg');
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(4){
+ --bayona-tile-photo:url('/images/burst/gym-weights.jpg');
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(5){
+ --bayona-tile-photo:url('/images/bayona-generated/shop-strength-1600.webp');
+}
+body[data-bayona-cinema-route="/shop"] .shop-category-shortcuts button:nth-child(6){
+ --bayona-tile-photo:url('/images/bayona-generated/shop-recovery-1600.webp');
+}
+
+/* Readability is part of the premium system, including the legacy day theme. */
+html body[data-bayona-cinema-route="/shop"] .shop-categories .shop-categories-head > p{
+ color:#51473c!important;
+}
+html body[data-bayona-cinema-route="/shop"] .shop-categories .shop-categories-head .eyebrow{
+ color:#8c5835!important;
+}
+html body[data-bayona-cinema-route="/programs"] .services-overview :is(
+ .services-overview-footer > span,.services-overview-footer > p,
+ .services-overview-cta > span,.services-overview-cta > p){
+ color:#51473c!important;
+}
+
+/* Open plan showroom: keep its entire commercial story readable on dark paper. */
+html body[data-bayona-cinema-route="/programs"] .services-memberships .bayona-plan-open__card{
+ background:#1b2422;border:1px solid rgba(245,194,149,.31);
+ border-radius:13px;box-shadow:0 18px 46px rgba(0,0,0,.22);
+}
+html body[data-bayona-cinema-route="/programs"] .services-memberships
+ .bayona-plan-open__heading h3{
+ color:#fff2e5!important;-webkit-text-fill-color:#fff2e5!important;
+}
+html body[data-bayona-cinema-route="/programs"] .services-memberships
+ .bayona-plan-open__price strong{
+ color:#fff5ec!important;-webkit-text-fill-color:#fff5ec!important;
+}
+html body[data-bayona-cinema-route="/programs"] .services-memberships
+ .bayona-plan-open__scope{
+ display:block!important;max-width:85ch;margin:1.75rem 0 0;
+ color:#d4c8ba!important;line-height:1.65;
+}
+html body[data-bayona-cinema-route="/programs"] .services-memberships
+ .bayona-plan-open__scope svg{
+ display:inline-block;vertical-align:middle;margin:0 .5rem .15rem 0;
+}
+html body[data-bayona-cinema-route="/programs"] .services-memberships
+ .bayona-plan-open__scope a{
+ display:inline;color:#ffd0aa!important;text-decoration:underline;
+ text-underline-offset:3px;
+}
+html body[data-bayona-cinema-route="/programs"] .services-memberships
+ .bayona-plan-open__contact{color:#21170f!important}

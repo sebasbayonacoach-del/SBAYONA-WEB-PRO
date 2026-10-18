@@ -18,7 +18,7 @@ import TranslateOffer from './components/TranslateOffer.jsx'
 import { BAYONA_APP_ENTRY_URL } from './config/bayonaAppIntegration.js'
 import Home from './pages/Home'
 import JourneyGuide from './components/journey/JourneyGuide.jsx'
-import JourneyCompass from './components/experience/JourneyCompass.jsx'
+import CinematicGlobalChapters from './components/experience/CinematicGlobalChapters.jsx'
 import CoachGuidedVisit from './components/experience/CoachGuidedVisit.jsx'
 import { JourneyExperienceProvider } from './components/experience/JourneyExperienceContext.jsx'
 import './styles/bayona-glass-experience.css'
@@ -208,7 +208,7 @@ function Site() {
       <MotionDebug />
       <CustomCursor />
       <Navbar />
-      {showEditorialChrome ? <JourneyCompass /> : null}
+      {showEditorialChrome ? <CinematicGlobalChapters /> : null}
       <PageTransition>
         {/*
           FASE 4 (4.2): el marco de la experiencia vive en el shell, no en cada

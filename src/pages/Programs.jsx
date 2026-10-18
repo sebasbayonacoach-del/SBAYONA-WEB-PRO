@@ -2,13 +2,12 @@ import { useEffect } from 'react'
 import { ArrowRight, ArrowUpRight, Dumbbell, HeartPulse, Trophy } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { PageHero, SectionLabel } from '../components/Layout'
-import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
+import HomeVisiblePlans from '../components/home/HomeVisiblePlans.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import {
   COMMERCIAL_SCOPE_NOTICE,
   buildWhatsAppUrl,
-  membershipComparisonRows,
   editorialServices,
   serviceCategoryDefinitions,
 } from '../config/offerings.js'
@@ -101,15 +100,6 @@ const SERVICE_NAMES = Object.freeze({
   'alimentacion-avanzada': 'Orientación alimentaria avanzada',
 })
 
-const PROGRAM_COMPARISON_ROWS = membershipComparisonRows.map((row) => ({
-  ...row,
-  feature: row.feature === 'Biohacking'
-    ? 'Hábitos y seguimiento del rendimiento'
-    : row.feature === 'Evaluación biomecánica'
-      ? 'Análisis del movimiento'
-      : row.feature,
-}))
-
 const SERVICE_GROUPS = serviceCategoryDefinitions.map((category) => ({
   ...category,
   ...CATEGORY_DETAILS[category.id],
@@ -201,7 +191,7 @@ export default function Programs() {
             <h2 id="services-memberships-title">ELIGE CUÁNTO ACOMPAÑAMIENTO NECESITAS.</h2>
             <p>Compara frecuencia de seguimiento, sesiones incluidas y precio.</p>
           </div>
-          <PlanExplorer projections={membershipPlanEditorialProjection} comparisonRows={PROGRAM_COMPARISON_ROWS} cinematic />
+          <HomeVisiblePlans projections={membershipPlanEditorialProjection} />
         </div>
       </section>
 
@@ -235,7 +225,7 @@ export default function Programs() {
                 className="services-catalog-group"
                 key={group.id}
               >
-                <details className="services-catalog-details" open={groupIndex === 0}>
+                <details className="services-catalog-details" open>
                   <summary className="services-catalog-summary">
                     <span className="services-catalog-summary__number">0{groupIndex + 1}</span>
                     <span className="services-catalog-summary__name">

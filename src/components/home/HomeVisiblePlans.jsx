@@ -5,8 +5,10 @@ import { useJourneyExperience } from '../experience/JourneyExperienceContext.jsx
 
 /** Resumen comercial de lectura inmediata; los datos proceden de offerings.js. */
 export default function HomeVisiblePlans({ projections }) {
-  const { preferences } = useJourneyExperience()
-  const suggestion = preferences.apoyo === 'Una base sencilla' ? 'raiz' : preferences.apoyo === 'Seguimiento más frecuente' ? 'fuerza' : null
+  const { preferences, coachAnswers } = useJourneyExperience()
+  const source = coachAnswers.apoyo || preferences.apoyo
+  const guidedPlans = {base:'raiz',semanal:'fuerza',integral:'rendimiento',privado:'elite'}
+  const suggestion = guidedPlans[source] || (source === 'Una base sencilla' ? 'raiz' : source === 'Seguimiento más frecuente' ? 'fuerza' : null)
   return (
     <div className="bayona-plan-open bayona-plan-open--focused" aria-label="Comparación de los cuatro planes BAYONA">
       <div className="bayona-plan-open__intro">

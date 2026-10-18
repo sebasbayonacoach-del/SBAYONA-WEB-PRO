@@ -32,6 +32,7 @@ for(const [device,width,height] of [['desktop',1440,900],['mobile',390,844]]){
   await expect(dialog.getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible({timeout:5000})
   for(const [label,path] of choices)await choose(page,label,path)
   await expect(page.getByTestId('coach-result')).toContainText('FUERZA')
+  await expect(page.locator('.services-memberships .bayona-plan-open__card--suggested')).toContainText('FUERZA')
   await expect(page.getByTestId('coach-result')).toContainText('Ana')
   await expect(page.getByTestId('coach-result')).toContainText('Entrenamiento personal u online')
   const link=page.getByTestId('coach-result').getByRole('link',{name:/HABLAR CON SEBASTIÁN/i})
