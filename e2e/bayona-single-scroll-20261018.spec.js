@@ -13,7 +13,8 @@ for (const [mode, width, height] of [['desktop', 1440, 900], ['mobile', 390, 844
 
     const guidance = page.locator('#tu-ruta')
     await expect(guidance.locator('article.bayona-discovery__focus-card')).toHaveCount(3)
-    await expect(guidance.locator('input, button')).toHaveCount(0)
+    await expect(guidance.locator('input')).toHaveCount(0)
+    await expect(guidance.locator('.bayona-moment__answers button')).toHaveCount(2)
 
     const services = page.locator('#servicios')
     await expect(services.locator('article.gym-service-card')).toHaveCount(4)
@@ -34,7 +35,8 @@ for (const [mode, width, height] of [['desktop', 1440, 900], ['mobile', 390, 844
     await expect(conditions.locator('.bayona-home-contexts__group li')).toHaveCount(36)
     await expect(conditions.getByText('Parkinson', { exact: true })).toBeVisible()
     await expect(conditions.getByText('Diabetes tipo 2', { exact: true })).toBeVisible()
-    await expect(conditions.locator('input, button')).toHaveCount(0)
+    await expect(conditions.locator('input')).toHaveCount(0)
+    await expect(conditions.locator('.bayona-moment__answers button')).toHaveCount(2)
 
     const gifts = page.locator('#regalos .gym-gift-card')
     await expect(gifts).toHaveCount(3)

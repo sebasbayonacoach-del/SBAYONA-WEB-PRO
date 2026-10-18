@@ -1,9 +1,12 @@
 import { ArrowUpRight, Check, ShieldCheck } from 'lucide-react'
 import { COMMERCIAL_SCOPE_NOTICE } from '../../config/offerings.js'
 import '../../styles/home-everything-visible.css'
+import { useJourneyExperience } from '../experience/JourneyExperienceContext.jsx'
 
 /** Resumen comercial de lectura inmediata; los datos proceden de offerings.js. */
 export default function HomeVisiblePlans({ projections }) {
+  const { preferences } = useJourneyExperience()
+  const suggestion = preferences.apoyo === 'Una base sencilla' ? 'raiz' : preferences.apoyo === 'Seguimiento más frecuente' ? 'fuerza' : null
   return (
     <div className="bayona-plan-open bayona-plan-open--focused" aria-label="Comparación de los cuatro planes BAYONA">
       <div className="bayona-plan-open__intro">
@@ -13,14 +16,14 @@ export default function HomeVisiblePlans({ projections }) {
       <div className="bayona-plan-open__grid">
         {projections.map(({ plan, overlay }, index) => (
           <article
-            className={'bayona-plan-open__card' + (plan.featured ? ' bayona-plan-open__card--featured' : '')}
+            className={'bayona-plan-open__card' + (plan.featured ? ' bayona-plan-open__card--featured' : '') + (suggestion === plan.id.toLowerCase() ? ' bayona-plan-open__card--suggested' : '')}
             key={plan.id}
             aria-labelledby={'open-plan-' + plan.id}
           >
             <header className="bayona-plan-open__heading">
               <div className="bayona-plan-open__meta">
                 <span>{String(index + 1).padStart(2, '0')} / 04</span>
-                <span>{plan.featured ? 'MÁS ACOMPAÑAMIENTO' : plan.journey}</span>
+                <span>{suggestion === plan.id.toLowerCase() ? 'PODRÍA INTERESARTE' : plan.featured ? 'MÁS ACOMPAÑAMIENTO' : plan.journey}</span>
               </div>
               <h3 id={'open-plan-' + plan.id}>{plan.name}</h3>
               <p className="bayona-plan-open__descriptor">{overlay.descriptor}</p>

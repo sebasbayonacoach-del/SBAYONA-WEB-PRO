@@ -109,7 +109,8 @@ const GIFTS = Object.freeze([
 ])
 
 export default function Home() {
-  const { goal } = useJourneyExperience()
+  const { goal, preferences } = useJourneyExperience()
+  const relevantServiceId = goal?.serviceId || (preferences.servicio === 'Entrenamiento online' || preferences.formato === 'A mi propio ritmo' ? 'online' : preferences.servicio === 'Entrenamiento individual' || preferences.formato === 'Con acompañamiento cercano' ? 'personal' : null)
   const evaluationUrl = bookingLink(goal ? `Hola BAYONA. Me interesa conocer opciones para mi objetivo general: ${goal.label}. ¿Podemos hablar de una valoración inicial?` : 'Hola, soy una persona interesada en BAYONA. Me gustaría contarte mi objetivo y ver si podemos coordinar una valoración inicial.')
 
   return (
@@ -200,7 +201,7 @@ export default function Home() {
           <div className="gym-service-grid" aria-label="Cuatro formas de entrenar con BAYONA">
             {SERVICES.map((service) => (
               <article
-                className={`gym-service-card bayona-services-prime__card gym-service-card--${service.id} bayona-service-static${goal?.serviceId === service.id ? " bayona-service-static--relevant" : ""}`}
+                className={`gym-service-card bayona-services-prime__card gym-service-card--${service.id} bayona-service-static${relevantServiceId === service.id ? " bayona-service-static--relevant" : ""}`}
                 key={service.id}
               >
                 <img src={service.image} alt="" width="1600" height="900" loading="lazy" decoding="async" />
@@ -210,7 +211,7 @@ export default function Home() {
                   <span>{service.type}</span>
                 </div>
                 <div className="gym-service-card__body">
-                  <span className="gym-service-card__promise">{goal?.serviceId === service.id ? "PUEDE ENCAJAR CONTIGO" : service.promise}</span>
+                  <span className="gym-service-card__promise">{relevantServiceId === service.id ? "PUEDE ENCAJAR CONTIGO" : service.promise}</span>
                   <h3>{service.title}</h3>
                   <p>{service.copy}</p>
                   <span className="bayona-service-static__detail">{service.details}</span>

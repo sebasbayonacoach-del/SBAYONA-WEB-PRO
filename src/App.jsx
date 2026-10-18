@@ -19,6 +19,7 @@ import { BAYONA_APP_ENTRY_URL } from './config/bayonaAppIntegration.js'
 import Home from './pages/Home'
 import JourneyGuide from './components/journey/JourneyGuide.jsx'
 import JourneyCompass from './components/experience/JourneyCompass.jsx'
+import JourneySectionMoments from './components/experience/JourneySectionMoments.jsx'
 import { JourneyExperienceProvider } from './components/experience/JourneyExperienceContext.jsx'
 import './styles/bayona-glass-experience.css'
 
@@ -271,6 +272,7 @@ function Site() {
             invita a seguir. Solo en las rutas del itinerario, igual que
             NextChapter, para no aparecer en el embudo ni en el 404.
           */}
+          {showEditorialChrome ? <JourneySectionMoments /> : null}
           {showEditorialChrome ? <PremiumRouteChrome /> : null}
           {showEditorialChrome ? <JourneyGuide /> : null}
           {showEditorialChrome ? <EditorialOutro /> : null}

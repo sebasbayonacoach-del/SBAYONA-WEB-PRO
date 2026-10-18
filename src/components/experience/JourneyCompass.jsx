@@ -17,7 +17,7 @@ const ROUTE_NAMES = {
 /** El capítulo refleja la sección leída, nunca el progreso de un perfil privado. */
 export default function JourneyCompass() {
   const { pathname } = useLocation()
-  const { goal } = useJourneyExperience()
+  const { goal, preferences } = useJourneyExperience()
   const [chapter, setChapter] = useState(0)
   const [shown, setShown] = useState(false)
   const [pageProgress, setPageProgress] = useState(0)
@@ -60,7 +60,7 @@ export default function JourneyCompass() {
       </div>
       <div className="bayona-compass__middle">
         <div>
-          <span>{goal ? 'TU ENFOQUE · ' + goal.short : 'DESCUBRE A TU RITMO'}</span>
+          <span>{goal ? 'TU ENFOQUE · ' + goal.short : Object.keys(preferences).length ? 'TU RUTA · ' + Object.keys(preferences).length + ' ELECCIONES' : 'DESCUBRE A TU RITMO'}</span>
           <strong>{title}</strong>
         </div>
         {pathname === '/' ? <ArrowDownRight size={22} aria-hidden="true"/> : <ArrowUpRight size={22} aria-hidden="true"/>}

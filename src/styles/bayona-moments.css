@@ -1,0 +1,62 @@
+/* BAYONA / microinteracciones editoriales; pueden ignorarse sin perder contenido. */
+.bayona-moment-slot{
+ position:relative;z-index:6;
+ grid-column:1 / -1;justify-self:center;align-self:stretch;flex:0 0 auto;
+ width:min(1180px,calc(100% - clamp(24px,5vw,72px)));
+ margin:clamp(2rem,4vw,3.7rem) auto clamp(2.1rem,4vw,3.7rem);
+ clear:both;overflow:visible;
+}
+.bayona-moment{
+ --moment-ink:#fff5e9;--moment-muted:#cfc5b8;--moment-accent:#ffb984;
+ position:relative;overflow:hidden;isolation:isolate;
+ border:1px solid rgba(255,255,255,.25);border-radius:18px;
+ background:linear-gradient(120deg,rgba(43,53,49,.97),rgba(20,26,25,.98) 58%,rgba(55,42,35,.97));
+ box-shadow:0 20px 70px rgba(15,18,15,.2),inset 0 1px 0 rgba(255,255,255,.16);
+ color:var(--moment-ink);padding:clamp(1.15rem,2.2vw,2rem);
+ max-width:100%;text-align:left
+}
+.bayona-moment:before{content:'';position:absolute;inset:-100% 42% auto -20%;height:180%;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(251,175,104,.12),transparent)}
+.bayona-moment__header{display:flex;align-items:center;gap:.55rem;color:var(--moment-accent);font:750 .61rem/1.4 "DM Mono",ui-monospace,monospace;letter-spacing:.13em}
+.bayona-moment__symbol{width:28px;height:28px;border:1px solid rgba(255,193,141,.5);border-radius:50%;display:grid;place-items:center;flex:none}
+.bayona-moment__header small{font:750 .59rem "DM Mono",monospace;letter-spacing:normal;margin-left:auto;color:var(--moment-muted)}
+.bayona-moment__content{display:grid;grid-template-columns:minmax(240px,.85fr) minmax(270px,1.2fr);align-items:center;gap:1rem clamp(1.25rem,3vw,3rem);margin-top:clamp(.95rem,2vw,1.8rem)}
+.bayona-moment__content h3{font:850 clamp(1.2rem,2vw,2.05rem)/1.15 Montserrat,Inter,Arial,sans-serif!important;color:#fff9f1!important;letter-spacing:-.045em;margin:0 0 .55rem;text-transform:uppercase}
+.bayona-moment__content p{font:.88rem/1.5 Inter,Arial,sans-serif!important;color:#d3c5b6!important;margin:0}
+.bayona-moment__answers{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.bayona-moment__answers button{
+ display:flex;align-items:center;justify-content:center;gap:.55rem;flex:1 1 165px;
+ min-height:53px;padding:.7rem 1.05rem;color:#ffecd9!important;
+ font:750 .83rem/1.32 Inter,Arial,sans-serif;cursor:pointer;
+ border:1px solid rgba(250,191,142,.45);border-radius:9px;
+ background:rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.1);
+ transition:background .2s,border-color .2s,color .2s,transform .2s
+}
+.bayona-moment__answers button:hover{background:rgba(255,182,116,.19);border-color:#ffc28b}
+.bayona-moment__answers button[aria-pressed='true']{background:#ffbd88;color:#261f1a!important;border-color:#ffbd88}
+.bayona-moment__answers button:focus-visible,.bayona-moment__end button:focus-visible,.bayona-moment__end a:focus-visible{outline:3px solid #f8b470;outline-offset:3px}
+.bayona-moment__end{border-top:1px solid rgba(255,255,255,.17);padding-top:1rem;margin-top:clamp(1rem,2vw,1.7rem);display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;color:var(--moment-muted);font:700 .65rem/1.5 "DM Mono",ui-monospace,monospace;letter-spacing:.035em}
+.bayona-moment__end>div{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
+.bayona-moment__end button{border:0;background:none;color:#f4c8a6;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;font:inherit;padding:.3rem 0}
+.bayona-moment__end a{display:inline-flex;align-items:center;gap:.45rem;color:#241b13!important;background:#ffbc84;padding:.7rem .9rem;border-radius:7px;text-decoration:none;font:800 .64rem/1.4 "DM Mono",monospace;letter-spacing:.04em}
+.bayona-moment__continue{display:inline-flex;align-items:center;gap:.45rem;color:#ffbf8d}
+.bayona-moment__count{color:#b7a697;letter-spacing:0}
+@media(min-width:850px){
+ .bayona-moment-slot{margin-top:clamp(2rem,4vw,4rem)}
+ .bayona-moment__content{min-height:70px}
+}
+@media(max-width:740px){
+ .bayona-moment-slot{width:calc(100% - 28px);margin:1.2rem auto 1.5rem}
+ .bayona-moment{border-radius:15px;padding:1.1rem}
+ .bayona-moment__content{grid-template-columns:1fr;margin-top:1.1rem}
+ .bayona-moment__content h3{font-size:1.3rem!important}
+ .bayona-moment__answers button{min-height:47px;flex-basis:100%;font-size:.82rem}
+ .bayona-moment__end{align-items:flex-start}
+ .bayona-moment__count{display:none}
+}
+@media(prefers-reduced-motion:reduce){.bayona-moment__answers button{transition:none}}
+
+/* Las elecciones anteriores dan continuidad al diálogo sin pedir más información. */
+.bayona-moment__memory{margin:1.15rem 0 -.25rem;color:#e3ba98;font:750 .66rem/1.55 "DM Mono",ui-monospace,monospace;letter-spacing:.045em}
+.bayona-moment__memory strong{color:#fff6ea;font-weight:750}
+html body.premium-route--home .bayona-plan-open__card.bayona-plan-open__card--suggested{outline:3px solid #a85d30;outline-offset:2px}
+html body.premium-route--home .bayona-plan-open__card--suggested .bayona-plan-open__meta span:last-child{color:#ffcb94}

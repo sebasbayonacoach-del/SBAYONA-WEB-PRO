@@ -7,7 +7,8 @@ for (const [mode,width,height] of [['desktop',1440,900],['mobile',390,844]]) {
     const guidance=page.locator('#tu-ruta')
     await expect(guidance.getByRole('heading',{name:/PRIMERO TE ESCUCHO/i})).toBeVisible()
     await expect(guidance.locator('.bayona-discovery__focus-card')).toHaveCount(3)
-    await expect(guidance.locator('button,input')).toHaveCount(0)
+    await expect(guidance.locator('.bayona-moment__answers button')).toHaveCount(2)
+    await expect(guidance.locator('input')).toHaveCount(0)
 
     const service=page.locator('#servicios')
     await expect(service.locator('article.gym-service-card')).toHaveCount(4)
