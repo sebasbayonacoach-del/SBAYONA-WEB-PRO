@@ -1,16 +1,26 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { getJourneyGoal } from '../../data/journeyGoals.js'
 
 const Context = createContext(null)
 
-/** Selecciones voluntarias, no sensibles y solo en memoria durante esta visita. */
+/** Preferencias temporales. No existen cookies, almacenamiento persistente ni subida automática. */
 export function JourneyExperienceProvider({ children }) {
   const [goalId, setGoalId] = useState(null)
   const [preferences, setPreferences] = useState({})
+  const [coachOpen, setCoachOpen] = useState(false)
+  const [coachStep, setCoachStep] = useState(0)
+  const [coachAnswers, setCoachAnswers] = useState({})
+  const [coachName, setCoachName] = useState('')
+  const closeCoach = useCallback(() => setCoachOpen(false), [])
+
   const value = useMemo(() => ({
     goalId,
     goal: getJourneyGoal(goalId),
     preferences,
+    coachOpen,
+    coachStep,
+    coachAnswers,
+    coachName,
     chooseGoal: id => setGoalId(current => current === id ? null : getJourneyGoal(id)?.id || null),
     clearGoal: () => setGoalId(null),
     choosePreference: (key, answer) => setPreferences(current => {
@@ -21,7 +31,17 @@ export function JourneyExperienceProvider({ children }) {
     }),
     clearPreferences: () => setPreferences({}),
     clearAll: () => { setGoalId(null); setPreferences({}) },
-  }), [goalId, preferences])
+    startCoach: () => { setCoachStep(0); setCoachOpen(true) },
+    closeCoach,
+    moveCoach: step => setCoachStep(step),
+    answerCoach: (key, answer) => {
+      setCoachAnswers(current => ({ ...current, [key]: answer }))
+      if (key === 'objetivo') setGoalId(answer)
+    },
+    nameCoach: value => setCoachName(value.slice(0, 70)),
+    clearCoach: () => { setCoachAnswers({}); setCoachStep(0); setCoachName(''); setGoalId(null) },
+  }), [goalId, preferences, coachOpen, coachStep, coachAnswers, coachName, closeCoach])
+
   return <Context.Provider value={value}>{children}</Context.Provider>
 }
 

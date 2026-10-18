@@ -1,18 +1,18 @@
-import { ArrowDownRight, Check, ShieldCheck, Sparkles } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, Check, ShieldCheck, Sparkles } from 'lucide-react'
 import { JOURNEY_GOALS } from '../../data/journeyGoals.js'
 import { useJourneyExperience } from './JourneyExperienceContext.jsx'
 /** El scroll no requiere responder; una elección voluntaria destaca servicios sin ocultar alternativas. */
 export default function HeroGlassIntake() {
-  const { goal, goalId, chooseGoal, clearGoal } = useJourneyExperience()
+  const { goal, goalId, chooseGoal, clearGoal, startCoach } = useJourneyExperience()
   return (
     <aside className="bayona-glass-entry" aria-label="Tu punto de partida en BAYONA">
       <div className="bayona-glass-entry__top">
         <span className="bayona-glass-entry__orb"><Sparkles size={17} aria-hidden="true"/></span>
-        <span>BAYONA / HECHO PARA TI</span>
-        <span className="bayona-glass-entry__live">EN DIRECTO</span>
+        <span>SEBASTIÁN TE RECIBE</span>
+        <span className="bayona-glass-entry__live">GUÍA INTERACTIVA</span>
       </div>
       <h2>¿QUÉ TE MUEVE <em>HOY?</em></h2>
-      <p>Si quieres, elige un objetivo. El recorrido destacará la información que puede interesarte.</p>
+      <p>Bienvenido a BAYONA. He preparado una visita para conocerte y orientarte antes de proponerte un plan. Puedes elegir un objetivo o explorar libremente.</p>
       <div className="bayona-glass-entry__goals" aria-label="Objetivos generales opcionales">
         {JOURNEY_GOALS.map(option => (
           <button type="button" key={option.id} aria-pressed={goalId === option.id}
@@ -29,6 +29,9 @@ export default function HeroGlassIntake() {
         <p>{goal ? goal.description : 'Todos los servicios y precios están a la vista.'}</p>
         {goal ? <button type="button" onClick={clearGoal} className="bayona-glass-entry__clear">Volver a recorrido libre</button> : null}
       </div>
+      <button className="bayona-glass-entry__guided" type="button" onClick={startCoach}>
+        CONOCE A TU ENTRENADOR · VISITA GUIADA <ArrowRight size={18} aria-hidden="true"/>
+      </button>
       <div className="bayona-glass-entry__foot">
         <ShieldCheck size={15} aria-hidden="true"/>
         <span>No pedimos diagnósticos. Nada se envía por elegir.</span>

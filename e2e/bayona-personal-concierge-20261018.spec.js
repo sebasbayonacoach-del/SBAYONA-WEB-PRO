@@ -33,7 +33,7 @@ for (const [mode,width,height] of [['desktop',1440,900],['mobile',390,844]]) {
       await expect(note).toBeAttached()
       await expect(note.getByRole('heading',{name:title})).toBeVisible()
       await expect(note).toContainText('No recogemos datos de salud')
-      await expect(note.locator('button')).toHaveCount(0)
+      await expect(note.getByRole('button',{name:/INICIAR VISITA CON SEBASTIÁN/i})).toBeVisible()
     }
   })
 }

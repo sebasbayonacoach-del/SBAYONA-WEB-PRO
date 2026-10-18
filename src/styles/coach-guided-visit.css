@@ -1,0 +1,57 @@
+/* BAYONA / entrenador de recepción — modo opcional, sin captura encubierta */
+html.bayona-coach-visit-active,html.bayona-coach-visit-active body{overflow:hidden!important}
+.bayona-coach__overlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:flex-end;padding:clamp(12px,3vw,45px);font-family:Inter,Arial,sans-serif}
+.bayona-coach__shade{position:absolute;inset:0;background:rgba(3,9,9,.7);-webkit-backdrop-filter:blur(9px) saturate(.75);backdrop-filter:blur(9px) saturate(.75)}
+.bayona-coach{--amber:#ffc18e;position:relative;z-index:1;width:min(495px,100%);max-height:min(860px,calc(100dvh - 26px));overflow:auto;overscroll-behavior:contain;color:#fff7ed;background:linear-gradient(153deg,rgba(53,66,60,.96),rgba(14,20,19,.985) 50%,rgba(30,24,21,.99));border:1px solid rgba(255,199,144,.52);border-radius:22px;box-shadow:0 30px 150px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.25)}
+.bayona-coach__top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:.75rem;background:rgba(17,23,21,.97);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);padding:1.15rem clamp(1.15rem,2.4vw,2rem);border-bottom:1px solid rgba(255,255,255,.15)}
+.bayona-coach__monogram{width:38px;height:38px;border-radius:11px;background:#f7ad71;color:#221913;display:grid;place-items:center;font:900 1.3rem/1 Montserrat,Inter,sans-serif}
+.bayona-coach__top>div{display:flex;flex-direction:column;gap:.28rem;min-width:0}
+.bayona-coach__top strong{font:800 .8rem/1.1 "DM Mono",monospace;letter-spacing:.1em}
+.bayona-coach__top small{font:700 .58rem/1.2 "DM Mono",monospace;letter-spacing:.07em;color:#fac69e}
+.bayona-coach__exit{margin-left:auto;display:grid;place-items:center;flex:0 0 37px;width:37px;height:37px;border-radius:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.21);color:#fff;cursor:pointer}
+.bayona-coach__progress{height:3px;background:rgba(255,255,255,.13)}
+.bayona-coach__progress span{height:100%;display:block;background:linear-gradient(90deg,#f49653,#ffd7aa);transition:width .28s ease}
+.bayona-coach__content{padding:clamp(1.4rem,3vw,2.3rem)}
+.bayona-coach__eyebrow{display:flex;align-items:center;gap:.5rem;color:#ffc08b;font:800 .61rem/1.3 "DM Mono",monospace;letter-spacing:.11em}
+.bayona-coach__eyebrow span:last-child{margin-left:auto;color:#e7d1c0}
+.bayona-coach__title{font:900 clamp(2rem,3vw,3.35rem)/1.05 Montserrat,Inter,sans-serif!important;letter-spacing:-.065em;color:#fff7e9!important;margin:1.2rem 0 .8rem;max-width:17ch;outline:none}
+.bayona-coach__description{font-size:.94rem;line-height:1.68;color:#e0d5c9;margin:0 0 1.4rem}
+.bayona-coach__choices{display:grid;gap:.65rem}
+.bayona-coach__choices button{display:flex;align-items:center;gap:1rem;text-align:left;padding:.9rem 1.05rem;min-height:59px;width:100%;border:1px solid rgba(255,255,255,.25);border-radius:12px;color:#fff4e6;background:rgba(255,255,255,.055);font:700 .9rem/1.4 Inter,sans-serif;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.bayona-coach__choices button:hover{background:rgba(255,177,112,.12);border-color:#ffc18e;transform:translateX(-2px)}
+.bayona-coach__choices button.is-chosen{background:rgba(250,172,106,.21);border-color:#ffc18e;color:#fff}
+.bayona-coach__choice-indicator{flex:none;width:22px;height:22px;border-radius:50%;border:1px solid #e9ae7e;display:grid;place-items:center;color:#ffc18e}
+.bayona-coach__choices button.is-chosen .bayona-coach__choice-indicator{background:#f9ba83;color:#251c18}
+.bayona-coach__privacy{display:flex;align-items:center;gap:.5rem;margin:1.4rem 0 0;color:#b9ac9e;font-size:.73rem;line-height:1.5}
+.bayona-coach__privacy svg{color:#f2b789;flex:none}
+.bayona-coach__bottom{position:sticky;bottom:0;display:flex;gap:.65rem;background:#19201e;padding:1rem clamp(1.4rem,3vw,2.3rem);border-top:1px solid rgba(255,255,255,.16)}
+.bayona-coach__bottom button{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;border-radius:9px;cursor:pointer;padding:.72rem 1rem;font:850 .68rem/1.3 "DM Mono",monospace;letter-spacing:.07em}
+.bayona-coach__back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.3);color:#f6e7d7;flex:0 0 auto}
+.bayona-coach__next,.bayona-coach__finish{background:#f5ab71;color:#231a13;border:1px solid #f5ab71;flex:1}
+.bayona-coach__next:disabled{cursor:not-allowed;opacity:.38}
+.bayona-coach :is(button,a,input):focus-visible{outline:3px solid #ffcb9a;outline-offset:3px}
+.bayona-coach__footer{padding:0 1.4rem 1rem;color:#b8a99a;font-size:.68rem;line-height:1.5;margin:0;text-align:center}
+.bayona-coach__result{display:grid;gap:1.1rem}
+.bayona-coach__result-lead{border:1px solid #eeb17e;background:linear-gradient(125deg,rgba(236,159,99,.18),rgba(255,255,255,.02));padding:1.3rem;border-radius:13px}
+.bayona-coach__result-index,.bayona-coach__reasons>span,.bayona-coach__recap>span,.bayona-coach__contact label{font:800 .63rem/1.4 "DM Mono",monospace;letter-spacing:.07em;color:#f4ba8c}
+.bayona-coach__result-lead h3{font:900 2.5rem/1.1 Montserrat,Inter,sans-serif;letter-spacing:-.05em;margin:.7rem 0;color:white}
+.bayona-coach__result-lead>strong{display:block;font-size:1.8rem;color:#ffca98}
+.bayona-coach__result-lead>strong small{font-size:.72rem}
+.bayona-coach__result-lead p{color:#eee0d1;font-size:.9rem;line-height:1.62}
+.bayona-coach__reasons,.bayona-coach__recap,.bayona-coach__contact{display:grid;gap:.7rem}
+.bayona-coach__reasons p{display:flex;align-items:start;gap:.55rem;font-size:.81rem;line-height:1.5;color:#e8d9c9;margin:0}
+.bayona-coach__reasons svg{color:#ffbc89;flex:none}
+.bayona-coach__recap{padding-block:1rem;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2)}
+.bayona-coach__recap p{display:flex;gap:1rem;justify-content:space-between;align-items:baseline;margin:0;line-height:1.5}
+.bayona-coach__recap small{font-size:.68rem;color:#c5ad96}
+.bayona-coach__recap strong{font-size:.78rem;color:#fff2e4;text-align:right}
+.bayona-coach__contact label{display:block}
+.bayona-coach__contact label small{font:400 .72rem Inter,sans-serif;color:#cbb9a6;letter-spacing:0}
+.bayona-coach__contact input{width:100%;padding:.85rem 1rem;border:1px solid #b4977a;border-radius:10px;background:rgba(255,255,255,.08);color:white;font:600 .9rem Inter,sans-serif}
+.bayona-coach__contact p{font-size:.77rem;line-height:1.58;color:#dfcdbb;margin:0}
+.bayona-coach__send{display:flex;align-items:center;justify-content:space-between;gap:.6rem;background:#f6ad75;color:#231912!important;padding:1rem;border-radius:10px;font:850 .72rem/1.3 "DM Mono",monospace;letter-spacing:.035em;text-decoration:none}
+.bayona-coach__restart{display:flex;align-items:center;gap:.4rem;justify-self:start;border:0;background:none;color:#ffca9c;cursor:pointer;font:.75rem Inter,sans-serif}
+.bayona-glass-entry__guided{width:100%;display:flex;justify-content:space-between;align-items:center;gap:.65rem;min-height:52px;margin:1rem 0 0;padding:.7rem 1rem;border-radius:11px;border:1px solid #f6b278;background:linear-gradient(95deg,#f9b982,#f4a76d);color:#261a13;font:850 .7rem "DM Mono",monospace;letter-spacing:.04em;cursor:pointer}
+.bayona-journey-inline__guided{display:inline-flex;align-items:center;gap:.5rem;background:#a45d32;color:#fff8ef;padding:.6rem .8rem;margin-top:.6rem;border-radius:7px;font:750 .7rem "DM Mono",monospace;border:0;cursor:pointer}
+@media(max-width:700px){.bayona-coach__overlay{padding:0;align-items:stretch}.bayona-coach{width:100%;max-height:100dvh;height:100dvh;border-radius:0;border:0}.bayona-coach__content{padding:1.25rem 1.15rem}.bayona-coach__title{font-size:clamp(2rem,9vw,3rem)!important}.bayona-coach__bottom{padding:.9rem 1.1rem}.bayona-coach__footer{padding-bottom:1.4rem}}
+@media(prefers-reduced-motion:reduce){.bayona-coach__choices button,.bayona-coach__progress span{transition:none}}
