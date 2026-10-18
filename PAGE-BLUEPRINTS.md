@@ -1512,3 +1512,22 @@ Comparación explícita WORLD-BIBLE vs SPATIAL-LANGUAGE vs PAGE-BLUEPRINTS vs SC
 
 
 
+
+
+---
+
+## APÉNDICE DE IMPLEMENTACIÓN 2026-10-18 · /movimiento-adaptado
+
+Este apéndice amplía el inventario histórico, sin reescribir las decisiones originales de Fase 6. La nueva ruta pública canónica `/movimiento-adaptado` pertenece a la oferta editorial de BAYONA y cuenta con `RouteSeo`, navegación desde Inicio/Servicios/footer y diseño propio.
+
+- **Propósito:** informar sobre los distintos contextos de salud en los que el ejercicio podría adaptarse, sin afirmar competencia sanitaria ni prestación clínica.
+- **Entrada:** presentación de capacidad y autonomía, no de diagnósticos; apertura mediante búsqueda o categorías.
+- **Cuerpo:** doce familias de contexto con ejemplos informativos; fichas desplegables controladas por el visitante, sin seguimiento de consultas.
+- **Reglas de seguridad:** ninguna condición implica elegibilidad automática; valoración y derivación profesional según situación.
+- **CTA:** orientación inicial opcional en Inicio y contacto genérico, sin transmitir información de salud.
+- **Layout / motion:** hero editorial, matriz de categorías, cierre de criterios y derivación; sin scroll secuestrado ni efectos que oculten información.
+- **Accesibilidad:** controles nativos, búsqueda etiquetada, botones de expansión y foco visible.
+- **Datos personales:** no se recogen ni conservan respuestas de salud; el perfil de tres pasos de la home es transitorio y requiere selección voluntaria.
+- **Canónica:** `/movimiento-adaptado`, indexable; integrada en `src/lib/seo/routeMeta.js`.
+
+Inventario vigente: 18 rutas públicas canónicas, una ruta interna de diseño, 14 rutas indexables y un fallback de 404.

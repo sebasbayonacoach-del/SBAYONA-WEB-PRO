@@ -48,6 +48,12 @@ const STATIC_ROUTES = {
       'Servicios BAYONA: entrenamiento personal, online, membresías, recuperación, movilidad, parkour y rendimiento con precios y alcance visibles.',
     breadcrumb: [['Servicios', '/programs']],
   },
+  '/movimiento-adaptado': {
+    title: 'Movimiento adaptado — actividad física con criterio',
+    description:
+      'Conoce cómo adaptar la actividad física a distintos contextos de salud y movilidad, con límites profesionales claros, orientación voluntaria y sin diagnósticos.',
+    breadcrumb: [['Movimiento adaptado', '/movimiento-adaptado']],
+  },
   '/parkour-academy': {
     title: 'Academia de Parkour',
     description:

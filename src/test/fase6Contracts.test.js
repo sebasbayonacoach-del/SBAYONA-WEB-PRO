@@ -42,7 +42,7 @@ describe('FASE 6 · D-01 — Cobertura exacta de rutas (categorías §0.2)', () 
 
   it('toda ruta canónica de ROUTE_META tiene blueprint en el documento', () => {
     const canonical = Object.keys(ROUTE_META).filter((path) => path !== '/design-system')
-    expect(canonical).toHaveLength(17)
+    expect(canonical).toHaveLength(18)
     for (const path of canonical) {
       expect(blueprints, `falta blueprint de ${path}`).toContain(path)
     }

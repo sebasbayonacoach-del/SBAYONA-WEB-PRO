@@ -28,6 +28,7 @@ import Home from './pages/Home'
  */
 const About = lazy(() => import('./pages/About'))
 const Programs = lazy(() => import('./pages/Programs'))
+const AdaptedMovement = lazy(() => import('./pages/AdaptedMovement.jsx'))
 const ParkourAcademy = lazy(() => import('./pages/ParkourAcademy'))
 const PlanPresentation = lazy(() => import('./pages/PlanPresentation'))
 const Shop = lazy(() => import('./pages/Shop'))
@@ -227,6 +228,7 @@ function Site() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/programs" element={<Programs />} />
+              <Route path="/movimiento-adaptado" element={<AdaptedMovement />} />
               <Route path="/parkour-academy" element={<ParkourAcademy />} />
               <Route path="/plan/raiz" element={<PlanPresentation planId="raiz" />} />
               <Route path="/plan/fuerza" element={<PlanPresentation planId="fuerza" />} />

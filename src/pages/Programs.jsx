@@ -187,6 +187,9 @@ export default function Programs() {
           <div className="services-path-footnote">
             <span>¿PREFIERES UNA SESIÓN PUNTUAL?</span>
             <a href="#servicios">REVISA EL CATÁLOGO Y LOS PRECIOS <ArrowRight size={17} aria-hidden="true" /></a>
+            <Link className="services-path-footnote__adapted" to="/movimiento-adaptado">
+              ¿ENTRENAS CON ALGUNA LIMITACIÓN O CONDICIÓN DE SALUD? <ArrowUpRight size={17} aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </section>

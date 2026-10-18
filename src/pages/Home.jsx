@@ -6,6 +6,7 @@ import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
 import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
+import AdaptiveDiscovery from '../components/home/AdaptiveDiscovery.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink, isBookingEnabled } from '../config/site.config.js'
@@ -104,7 +105,7 @@ const GIFTS = Object.freeze([
 ])
 
 const TRUST_POINTS = Object.freeze([
-  'Primero escuchamos tu contexto; después diseñamos cómo entrenar.',
+  'Primero escuchamos tu contexto, capacidades y límites; después diseñamos cómo entrenar.',
   'Te acompañamos con la cercanía y el seguimiento de tu plan.',
   'Sabes qué incluye cada servicio y cuánto cuesta antes de decidir.',
   'Puedes empezar con recursos gratuitos, sin obligación de comprar.',
@@ -224,9 +225,14 @@ export default function Home() {
             <Link className="gym-services-outro__link" to="/programs">
               EXPLORAR TODOS LOS SERVICIOS <ArrowUpRight size={18} aria-hidden="true" />
             </Link>
+            <Link className="gym-services-outro__link" to="/movimiento-adaptado">
+              ENTRENAMIENTO Y CONDICIONES DE SALUD <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </section>
+
+      <AdaptiveDiscovery />
 
       <GuidedStartJourney steps={START_STEPS} />
 

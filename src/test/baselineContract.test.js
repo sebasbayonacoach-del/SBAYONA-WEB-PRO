@@ -13,6 +13,7 @@ const PUBLIC_ROUTES = Object.freeze([
   '/',
   '/about',
   '/programs',
+  '/movimiento-adaptado',
   '/parkour-academy',
   '/plan/raiz',
   '/plan/fuerza',

@@ -328,6 +328,7 @@ export function Footer() {
         </nav>
         <nav className="footer-column" aria-label="Ayuda">
           <p>AYUDA</p>
+          <Link to="/movimiento-adaptado">Movimiento adaptado</Link>
           <Link to="/faq">Preguntas frecuentes</Link>
           <a href={BAYONA_APP_ENTRY_URL}>Mi App</a>
           <a href={whatsAppLink('Hola BAYONA, quiero información sobre sus servicios de entrenamiento.')} target="_blank" rel="noreferrer">
