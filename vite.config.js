@@ -41,7 +41,14 @@ export default defineConfig({
          * cambian con sus releases, react cambia poco.
          */
         manualChunks(id) {
+          // Vite's async preload helper must live in the entry graph, NOT in
+          // WebGL. Otherwise every SPA route imports vendor-three just to lazy
+          // load a page (a 245 KB gzip penalty unrelated to an actual scene).
+          if (id.includes('vite/preload-helper')) return 'vendor-react'
           if (id.includes('node_modules')) {
+            // R3F also depends on Zustand, used by the public cart. Keep
+            // shared store utilities with React, not with the 3D-only chunk.
+            if (/[\\/]zustand[\\/]/.test(id)) return 'vendor-react'
             if (/[\\/](three|@react-three)[\\/]/.test(id)) return 'vendor-three'
             // ÍTEM 3a: postprocessing y @react-three/postprocessing van a
             // vendor-three por REGLA explícita (antes caían ahí por accidente

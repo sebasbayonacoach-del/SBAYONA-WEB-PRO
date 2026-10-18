@@ -116,3 +116,44 @@
     justify-content: center;
   }
 }
+
+/* Single-action, privacy-first WhatsApp handoff. No popup nor forms with 3 mandatory fields. */
+.checkout-page .checkout-direct-link{
+ display:flex;align-items:center;justify-content:space-between;gap:1rem;
+ width:100%;min-height:68px;
+ padding:1rem 1.3rem;
+ text-align:left;text-decoration:none!important;
+ border:1px solid #efad7c;
+ border-radius:8px;
+ color:#1e1612!important;
+ background:linear-gradient(100deg,#efaa73,#f7c18f);
+ font-weight:850;
+ line-height:1.35;
+ transition:background .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.checkout-page .checkout-direct-link:is(:hover,:focus-visible){
+ color:#15100c!important;
+ background:#ffd2aa;
+ transform:translateY(-2px);
+ box-shadow:0 13px 40px rgba(234,151,85,.17);
+}
+.checkout-page .checkout-direct-link svg{flex-shrink:0}
+.checkout-page .checkout-contact-grid--minimal{
+ grid-template-columns:minmax(0,1fr);
+ max-width:100%;
+}
+.checkout-page .checkout-direct-note{
+ display:flex;align-items:flex-start;gap:.7rem;
+ color:#d9cbbd!important;
+ line-height:1.58;
+ max-width:65ch;margin:1rem 0 0;
+}
+.checkout-page .checkout-direct-note svg{flex:none;color:#f4b789;margin-top:.1rem}
+@media(max-width:620px){
+ .checkout-page .checkout-direct-link{min-height:68px;padding:1rem;font-size:.76rem;letter-spacing:.035em}
+ .checkout-page .checkout-direct-note{font-size:.8rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .checkout-page .checkout-direct-link{transition:none}
+ .checkout-page .checkout-direct-link:hover{transform:none}
+}

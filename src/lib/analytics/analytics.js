@@ -140,8 +140,9 @@ function loadProviders() {
 const META_STANDARD_EVENTS = {
   lead_submitted: 'Lead',
   whatsapp_click: 'Contact',
-  plan_selected: 'AddToCart',
-  checkout_started: 'InitiateCheckout',
+  // Selecting a membership for a WhatsApp quote is NOT adding to cart or
+  // starting a payment, so leave plan_selected and request_builder_opened
+  // as custom events instead of exaggerating Meta conversion signals.
   add_to_cart: 'AddToCart',
   view_plan: 'ViewContent',
 }

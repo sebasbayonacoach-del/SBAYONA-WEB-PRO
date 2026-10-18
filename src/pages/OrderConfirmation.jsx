@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { buildWhatsAppUrl } from '../config/offerings.js'
 
 const whatsappUrl = buildWhatsAppUrl([
-  'Hola BAYONA, envié una solicitud desde la web.',
+  'Hola BAYONA, preparé una solicitud desde la web.',
   'Quiero revisar la información disponible sobre los siguientes pasos.',
   'Entiendo que el tiempo de respuesta puede variar y que este mensaje no completa ninguna compra ni cobro.',
 ].join('\n'))
@@ -48,7 +48,7 @@ export default function OrderConfirmation() {
             <h2 id="confirmation-next-title">SIGUIENTES PASOS</h2>
           </div>
 
-          <ol className="confirmation-steps" aria-label="Siguientes pasos después de enviar la solicitud">
+          <ol className="confirmation-steps" aria-label="Siguientes pasos después de preparar la solicitud">
             <li>
               <span aria-hidden="true">01</span>
               <div>
@@ -73,7 +73,7 @@ export default function OrderConfirmation() {
               <div>
                 <h3>CONOCE LA COMUNIDAD</h3>
                 <p>
-                  Conoce el espacio comunitario y la información vigente mientras se revisa tu solicitud.
+                  Conoce el espacio comunitario y la información vigente mientras decides cómo continuar.
                 </p>
                 <Link className="confirmation-step-link" to="/community">
                   Conocer la comunidad <ArrowRight aria-hidden="true" size={17} />

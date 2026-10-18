@@ -1,23 +1,18 @@
-import { expect, test } from '@playwright/test'
+import {expect,test} from '@playwright/test'
 
-test('el checkout informa que no hay cobro y entrega un enlace de WhatsApp sin enviar mensajes', async ({ page }) => {
-  await page.addInitScript(() => {
-    window.__simulatedWhatsAppOpens = []
-    window.open = (url) => {
-      window.__simulatedWhatsAppOpens.push(url)
-      return { closed: false, focus() {} }
-    }
-  })
-  await page.goto('/checkout', { waitUntil: 'networkidle' })
-  await expect(page.getByText('No hay cobro aquí.')).toBeVisible()
-  await page.locator('#checkout-name').fill('Cliente Prueba')
-  await page.locator('#checkout-email').fill('cliente.prueba@example.test')
-  await page.locator('#checkout-whatsapp').fill('+34 600 000 000')
-  await page.getByRole('button', { name: 'Solicitar detalles por WhatsApp' }).click()
-  await expect(page.locator('.checkout-handoff')).toContainText('Solicitud abierta en WhatsApp')
-  const urls = await page.evaluate(() => window.__simulatedWhatsAppOpens)
-  expect(urls).toHaveLength(1)
-  expect(urls[0]).toMatch(/^https:\/\/wa\.me\/\d+\?text=/)
-  const message = new URL(urls[0]).searchParams.get('text')
-  expect(message).toContain('Cliente Prueba')
+test('checkout prepara un enlace seguro de WhatsApp sin cobrar ni enviar mensajes automáticamente',async({page})=>{
+ await page.goto('/checkout',{waitUntil:'domcontentloaded'})
+ await expect(page.getByText(/Sin pago, inscripción ni reserva automática/i)).toBeVisible()
+ await page.locator('#checkout-name').fill('Cliente Prueba')
+ await expect(page.locator('#checkout-email')).toHaveCount(0)
+ await expect(page.locator('#checkout-whatsapp')).toHaveCount(0)
+ const contact=page.getByRole('link',{name:'Abrir solicitud en WhatsApp'})
+ await expect(contact).toHaveAttribute('target','_blank')
+ await expect(contact).toHaveAttribute('rel','noopener noreferrer')
+ const url=new URL(await contact.getAttribute('href'))
+ expect(url.host).toBe('wa.me')
+ expect(url.searchParams.get('text')).toContain('Cliente Prueba')
+ expect(url.searchParams.get('text')).toContain('Plan base: RAÍZ')
+ expect(url.searchParams.get('text')).toContain('no constituye pago, pedido, inscripción')
+ expect(await page.evaluate(()=>localStorage.getItem('bayona:pending-lead:v1'))).toBeNull()
 })

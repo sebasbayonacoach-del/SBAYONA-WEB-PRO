@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "NODE_OPTIONS=--max-old-space-size=4096 vite build",
+    "audit:bundle:3d": "node scripts/audit-initial-chunks.mjs",
     "preview": "vite preview",
     "test": "vitest --run",
     "test:visual": "playwright test",

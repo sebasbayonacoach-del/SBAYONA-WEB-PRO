@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { AlertTriangle, ArrowRight, Check, Copy, MessageCircle } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { ArrowRight, Check, ShieldCheck } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { SectionLabel } from '../components/Layout'
 import {
@@ -9,15 +9,12 @@ import {
   membershipPlans,
   sessionServices,
 } from '../config/offerings.js'
-import { trackEvent, trackLead } from '../lib/analytics/analytics.js'
-import { clearPendingLead, openWhatsApp, rememberPendingLead } from '../lib/conversion/whatsappBridge.js'
+import { trackEvent, trackWhatsAppClick } from '../lib/analytics/analytics.js'
 import '../styles/checkout-handoff.css'
 
-const INITIAL_CONTACT = {
-  nombre: '',
-  email: '',
-  whatsapp: '',
-}
+// WhatsApp supplies the visitor's return channel. No need to demand email or
+// phone number and duplicate sensitive data already held by their WhatsApp.
+const INITIAL_CONTACT = { nombre: '' }
 
 /**
  * Fase 4: el configurador acepta ?plan=<id> para llegar con el plan base ya
@@ -35,16 +32,10 @@ export default function Checkout() {
   const [searchParams] = useSearchParams()
   const [contact, setContact] = useState(INITIAL_CONTACT)
   const [planId, setPlanId] = useState(() => resolveInitialPlanId(searchParams))
+  const checkoutEntered=useRef(false)
+  const initialPlan=useRef(resolveInitialPlanId(searchParams))
   const [serviceQuantities, setServiceQuantities] = useState({})
   const [extraIds, setExtraIds] = useState([])
-  /**
-   * Resultado del último intento de entrega a WhatsApp.
-   * null = todavía no se ha enviado. `opened: false` = la pestaña se bloqueó
-   * y hay que ofrecer el enlace manual para no perder el lead.
-   */
-  const [handoff, setHandoff] = useState(null)
-  const [copied, setCopied] = useState(false)
-
   const selection = useMemo(
     () => ({ planId, serviceQuantities, extraIds }),
     [planId, serviceQuantities, extraIds],
@@ -66,48 +57,31 @@ export default function Checkout() {
       : current.filter((id) => id !== extraId))
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const whatsappUrl = useMemo(() => buildExperienceWhatsAppUrl({ ...selection, contact }), [selection, contact])
 
-    const whatsappUrl = buildExperienceWhatsAppUrl({ ...selection, contact })
+  useEffect(() => {
+    if(checkoutEntered.current)return
+    checkoutEntered.current=true
+    trackEvent('request_builder_opened',{source:'checkout',plan:initialPlan.current})
+    // A route load is an intent signal, not a completed order.
+  }, [])
 
-    const result = openWhatsApp(whatsappUrl, {
+  const handleWhatsAppClick = () => {
+    trackWhatsAppClick({ source: 'checkout', plan: calculation.plan.name, value: calculation.totalCop })
+    trackEvent('checkout_handoff_started', {
       source: 'checkout',
-      plan: calculation.plan.name,
+      plan: calculation.plan.id,
       value: calculation.totalCop,
+      currency: 'COP',
     })
-
-    trackLead({ source: 'checkout', plan: calculation.plan.name, value: calculation.totalCop })
-
-    if (result.opened) {
-      // Entregado: si había un respaldo de un intento anterior, ya no hace falta.
-      clearPendingLead()
-    } else {
-      // La pestaña se bloqueó. Guardamos la solicitud para que se pueda reintentar.
-      rememberPendingLead({ url: whatsappUrl, source: 'checkout' })
-      trackEvent('whatsapp_blocked', { source: 'checkout', plan: calculation.plan.name })
-    }
-
-    setCopied(false)
-    setHandoff(result)
-  }
-
-  const handleCopyLink = async () => {
-    if (!handoff?.url) return
-    try {
-      await navigator.clipboard.writeText(handoff.url)
-      setCopied(true)
-      trackEvent('whatsapp_link_copied', { source: 'checkout' })
-    } catch {
-      // Sin permiso de portapapeles: el enlace sigue visible y pulsable.
-      setCopied(false)
-    }
+    // Native link navigation is more reliable than window.open for in-app browsers.
+    // Opening the link must never be counted as a lead, sale or payment.
   }
 
   return (
     <>
       <section className="checkout-hero section-shell">
-        <SectionLabel>SERVICIOS BAYONA</SectionLabel>
+        <SectionLabel>SERVICIOS BAYONA · TU MISIÓN</SectionLabel>
         <h1>PREPARA TU SOLICITUD.</h1>
         <p className="checkout-subtitle">
           Elige una membresía, añade solo lo que necesitas y revisa el total antes de enviarnos tu solicitud.
@@ -116,7 +90,7 @@ export default function Checkout() {
 
       <section className="checkout-page section-shell" aria-labelledby="checkout-form-title">
         <div className="checkout-layout">
-          <form onSubmit={handleSubmit} className="checkout-form" aria-describedby="checkout-data-note">
+          <div className="checkout-form" aria-describedby="checkout-data-note">
             {/*
               Fase 4: el orden sigue la decisión real del visitante — primero
               qué camino quiere (plan), después qué añade (clases y extras) y
@@ -222,132 +196,46 @@ export default function Checkout() {
             </fieldset>
 
             <fieldset className="checkout-fieldset">
-              <legend>4. Tus datos</legend>
+              <legend>4. Tu mensaje</legend>
               <p id="checkout-data-note" className="checkout-help">
-                Se usan únicamente para dejar tu mensaje claro antes de abrir WhatsApp. No hay cobro aquí.
+                Tu nombre es opcional. WhatsApp abrirá una conversación con el plan y total estimado. Nada se envía hasta que tú confirmes el mensaje.
               </p>
 
-              <div className="checkout-contact-grid">
+              <div className="checkout-contact-grid checkout-contact-grid--minimal">
                 <label htmlFor="checkout-name">
-                  Nombre
+                  Nombre (opcional)
                   <input
                     id="checkout-name"
                     type="text"
                     name="nombre"
                     value={contact.nombre}
                     onChange={handleContactChange}
-                    required
-                    autoComplete="name"
-                    placeholder="Tu nombre"
-                  />
-                </label>
-
-                <label htmlFor="checkout-email">
-                  Email
-                  <input
-                    id="checkout-email"
-                    type="email"
-                    name="email"
-                    value={contact.email}
-                    onChange={handleContactChange}
-                    required
-                    autoComplete="email"
-                    placeholder="tu@email.com"
-                  />
-                </label>
-
-                <label htmlFor="checkout-whatsapp">
-                  WhatsApp
-                  <input
-                    id="checkout-whatsapp"
-                    type="tel"
-                    name="whatsapp"
-                    value={contact.whatsapp}
-                    onChange={handleContactChange}
-                    required
-                    autoComplete="tel"
-                    placeholder="+34 600 000 000"
+                    maxLength={70}
+                    autoComplete="given-name"
+                    placeholder="¿Cómo te llamas?"
                   />
                 </label>
               </div>
             </fieldset>
 
-            <button
-              type="submit"
-              className="complete-button"
-              aria-label="Solicitar detalles por WhatsApp"
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="complete-button checkout-direct-link"
+              aria-label="Abrir solicitud en WhatsApp"
+              onClick={handleWhatsAppClick}
             >
-              PREPARAR MI SOLICITUD
-              <ArrowRight size={16} aria-hidden="true" />
-            </button>
+              ABRIR MI SOLICITUD EN WHATSAPP
+              <ArrowRight size={18} aria-hidden="true" />
+            </a>
 
-            <p className="microcopy">
-              Esta acción prepara una solicitud. No cobra, no confirma un pago, pedido, inscripción,
-              disponibilidad ni acceso.
+            <p className="microcopy checkout-direct-note">
+              <ShieldCheck size={17} aria-hidden="true"/>
+              WhatsApp abrirá el mensaje para que lo revises y decidas si lo envías.
+              Sin pago, inscripción ni reserva automática.
             </p>
-
-            {/*
-              Estado de entrega. Antes, si el navegador bloqueaba la pestaña de
-              WhatsApp no ocurría nada visible y la solicitud se perdía.
-            */}
-            <div className="checkout-handoff" role="status" aria-live="polite">
-              {handoff?.opened && (
-                <div className="checkout-handoff-panel is-ok">
-                  <Check size={18} aria-hidden="true" />
-                  <div>
-                    <strong>Solicitud abierta en WhatsApp</strong>
-                    <p>
-                      Revisa la pestaña de WhatsApp y envía el mensaje para que llegue. Si no la
-                      ves, usa este enlace:{' '}
-                      <a href={handoff.url} target="_blank" rel="noopener noreferrer">
-                        abrir la conversación
-                      </a>
-                      .
-                    </p>
-                    {/*
-                      Fase 4: /order-confirmation era una ruta huérfana (sin
-                      ninguna entrada). Ahora se ofrece como siguiente paso
-                      natural tras abrir la solicitud: qué ocurre ahora.
-                    */}
-                    <p>
-                      <Link to="/order-confirmation">Ver qué ocurre después de tu solicitud</Link>
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {handoff && !handoff.opened && (
-                <div className="checkout-handoff-panel is-blocked">
-                  <AlertTriangle size={18} aria-hidden="true" />
-                  <div>
-                    <strong>Tu navegador bloqueó la ventana de WhatsApp</strong>
-                    <p>
-                      Tu solicitud no se ha perdido: la hemos guardado en este dispositivo. Ábrela
-                      manualmente con el botón de abajo o copia el enlace y pégalo en tu navegador.
-                    </p>
-                    <div className="checkout-handoff-actions">
-                      <a
-                        className="checkout-handoff-open"
-                        href={handoff.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => {
-                          clearPendingLead()
-                          trackEvent('whatsapp_manual_open', { source: 'checkout' })
-                        }}
-                      >
-                        <MessageCircle size={15} aria-hidden="true" /> ABRIR WHATSAPP MANUALMENTE
-                      </a>
-                      <button type="button" className="checkout-handoff-copy" onClick={handleCopyLink}>
-                        <Copy size={15} aria-hidden="true" />
-                        {copied ? 'ENLACE COPIADO' : 'COPIAR ENLACE'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </form>
+          </div>
 
           <aside className="order-summary" aria-labelledby="checkout-summary-title">
             <p id="checkout-summary-title">RESUMEN DE TU SOLICITUD</p>

@@ -55,6 +55,8 @@ export default function CoachGuidedVisit(){
   const dialogRef=useRef(null)
   const pending=useRef(false)
   const advanceTimer=useRef(null)
+  const startTracked=useRef(false)
+  const finishTracked=useRef(false)
   const [voiceEnabled,setVoiceEnabled]=useState(false)
   const [voiceAvailable,setVoiceAvailable]=useState(false)
   const [speaking,setSpeaking]=useState(false)
@@ -62,6 +64,22 @@ export default function CoachGuidedVisit(){
   const stage=COACH_VISIT_STEPS[coachStep]
   const isLast=coachStep===COACH_VISIT_STEPS.length-1
   const spokenName=coachName.trim()||'campeón'
+
+  useEffect(()=>{
+    if (!coachOpen) return
+    if (!startTracked.current) {
+      startTracked.current=true
+      trackEvent('guided_visit_started',{source:'automatic_welcome'})
+    }
+    if (isLast && !finishTracked.current) {
+      finishTracked.current=true
+      trackEvent('guided_visit_completed',{
+        source:'automated_coach',
+        plan:suggestCoachPlan(coachAnswers).plan.id,
+      })
+    }
+    // Never record the visitor name or free-form input as analytics.
+  },[coachOpen,isLast,coachAnswers])
 
   const changeStage=next=>{
     if(next<0||next>=COACH_VISIT_STEPS.length)return
@@ -82,7 +100,7 @@ export default function CoachGuidedVisit(){
     answerCoach('nombre',coachName.trim()||'omitido')
     advanceTimer.current=window.setTimeout(()=>changeStage(coachStep+1),350)
   }
-  const restart=()=>{pending.current=false;clearCoach();setVoiceEnabled(false);if(pathname!=='/')navigate('/')}
+  const restart=()=>{pending.current=false;startTracked.current=false;finishTracked.current=false;clearCoach();setVoiceEnabled(false);if(pathname!=='/')navigate('/')}
   useEffect(()=>{
     if(!coachOpen) return undefined
     let frame=0
