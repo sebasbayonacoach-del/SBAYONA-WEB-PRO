@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Check, Download, Gift } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Download, Gift } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
@@ -125,32 +125,53 @@ export default function Home() {
         })}
         aria-labelledby="home-hero-title"
       >
-        <div className="gym-home-shell gym-home-hero__content">
-          <p className="gym-home-kicker">BAYONA · CIENCIA, MOVIMIENTO Y CERCANÍA</p>
-          <h1 id="home-hero-title">ENTRENA CON DIRECCIÓN.</h1>
-          <p className="gym-home-hero__lead">
-            Tu cuerpo tiene una historia y tu tiempo importa. Te acompaño a desarrollar fuerza, moverte con confianza y construir un camino de entrenamiento que encaje contigo.
-          </p>
-          <div className="gym-home-hero__actions">
-            <a
-              className="gym-primary-button"
-              href="#empieza"
-              onClick={() => trackEvent('funnel_start_click', { source: 'home_hero' })}
-            >
-              EMPIEZA A TU RITMO <ArrowUpRight size={18} aria-hidden="true" />
-            </a>
-            <Link className="gym-secondary-button" to="/programs">
-              CONOCE CÓMO TE ACOMPAÑAMOS <ArrowRight size={18} aria-hidden="true" />
-            </Link>
+        <div className="gym-home-shell gym-home-hero__content bayona-hero-prime">
+          <div className="bayona-hero-prime__masthead" aria-label="Presentación de BAYONA">
+            <span className="bayona-hero-prime__serial"><span aria-hidden="true" className="bayona-hero-prime__mark" /> B / 001</span>
+            <span className="bayona-hero-prime__mastline" aria-hidden="true" />
+            <span className="bayona-hero-prime__eyebrow">EL MOVIMIENTO EMPIEZA CONTIGO</span>
+            <span className="bayona-hero-prime__chapter">PERSONAL · ONLINE · PARKOUR</span>
           </div>
-          <a
-            className="gym-home-reward"
-            href="#regalos"
-            onClick={() => trackEvent('reward_preview_click', { source: 'home_hero' })}
-          >
-            <Gift size={18} aria-hidden="true" />
-            <span><strong>Un pequeño regalo para empezar.</strong> Tres recursos gratuitos, hechos para acompañarte desde el primer día.</span>
-          </a>
+
+          <div className="bayona-hero-prime__story">
+            <p className="gym-home-kicker">ENTRENAMIENTO CON PROPÓSITO <span aria-hidden="true">/</span> MÉTODO BAYONA</p>
+            <h1 id="home-hero-title" aria-label="Entrena con dirección">
+              <span className="bayona-hero-prime__line">ENTRENA</span>
+              <span className="bayona-hero-prime__line bayona-hero-prime__line--direction">CON <em>DIRECCIÓN.</em></span>
+            </h1>
+            <p className="gym-home-hero__lead">
+              No hay dos cuerpos iguales. Construimos fuerza, confianza y movimiento a partir de tu historia, a tu ritmo.
+            </p>
+            <div className="gym-home-hero__actions">
+              <a
+                className="gym-primary-button"
+                href="#empieza"
+                onClick={() => trackEvent('funnel_start_click', { source: 'home_hero' })}
+              >
+                EMPIEZA A TU RITMO <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
+              </a>
+              <Link className="gym-secondary-button" to="/programs">
+                EXPLORA LOS SERVICIOS <ArrowRight size={19} strokeWidth={1.7} aria-hidden="true" />
+              </Link>
+            </div>
+            <a
+              className="gym-home-reward"
+              href="#regalos"
+              onClick={() => trackEvent('reward_preview_click', { source: 'home_hero' })}
+            >
+              <span className="bayona-hero-prime__gift-symbol"><Gift size={20} strokeWidth={1.5} aria-hidden="true" /></span>
+              <span><strong>Un comienzo sin coste.</strong> Tres recursos para descubrir tu punto de partida.</span>
+              <ArrowUpRight className="bayona-hero-prime__gift-arrow" size={17} aria-hidden="true" />
+            </a>
+          </div>
+
+          <div className="bayona-hero-prime__footer">
+            <span className="bayona-hero-prime__edition">BAYONA / CUERPO · MENTE · MOVIMIENTO</span>
+            <span className="bayona-hero-prime__footline" aria-hidden="true" />
+            <a href="#servicios" className="bayona-hero-prime__discover" onClick={() => trackEvent('hero_discover_services', { source: 'home_hero' })}>
+              DESCUBRE TU CAMINO <ArrowDownRight size={20} strokeWidth={1.5} aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </section>
 
