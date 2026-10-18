@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowUpRight, Check, RotateCcw, ShieldCheck, Volume2, VolumeX, X } from 'lucide-react'
 import { whatsAppLink } from '../../config/site.config.js'
+import { trackEvent, trackWhatsAppClick } from '../../lib/analytics/analytics.js'
 import { COACH_VISIT_STEPS, coachAnswerLabel, suggestCoachPlan } from '../../data/coachVisit.js'
 import { getJourneyGoal } from '../../data/journeyGoals.js'
 import { useJourneyExperience } from './JourneyExperienceContext.jsx'
@@ -11,18 +12,17 @@ import '../../styles/coach-guided-visit.css'
 function CoachResult({answers,name,restart}){
   const {plan,reasons,requiresConversation,goalService}=suggestCoachPlan(answers)
   const goal=getJourneyGoal(answers.objetivo)
-  const summary=COACH_VISIT_STEPS.slice(0,-1).filter(stage=>stage.id!=='nombre'&&stage.id!=='criterio').map(stage=>({
-    title:stage.label,value:coachAnswerLabel(stage.id,answers[stage.id]),
-  }))
   const message=[
-    'Hola, Sebastián. Quiero consultar una propuesta de BAYONA.',
-    name.trim()?'Me llamo '+name.trim()+'.':'Prefiero no compartir mi nombre por ahora.',
+    'Hola, Sebastián. Acabo de completar la visita de BAYONA.',
+    name.trim()?'Me llamo '+name.trim()+'.':'',
     'Mi objetivo: '+(goal?.label||'por definir')+'.',
-    ...summary.filter(item=>item.title!=='TU OBJETIVO').map(item=>item.title+': '+item.value+'.'),
-    'Plan preliminar: '+plan.name+' ('+plan.priceDisplay+' '+plan.currency+').',
-    requiresConversation?'Prefiero hablar antes de entrenar.':'',
-    'Me gustaría confirmar prestaciones, disponibilidad y condiciones.',
-  ].filter(Boolean).join('\n')
+    'Principal dificultad: '+coachAnswerLabel('bloqueo',answers.bloqueo)+'.',
+    'Disponibilidad: '+coachAnswerLabel('tiempo',answers.tiempo)+'.',
+    'Prefiero: '+coachAnswerLabel('formato',answers.formato)+'.',
+    'Plan orientativo: '+plan.name+' · '+plan.priceDisplay+' COP/mes.',
+    requiresConversation?'Me gustaría consultar antes de elegir.':'',
+    '¿Podemos confirmar condiciones y disponibilidad?',
+  ].filter(Boolean).join('\\n')
   return <div className="bayona-coach__result" data-testid="coach-result">
     <div className="bayona-coach__result-lead">
       <span className="bayona-coach__result-index">PROPUESTA PARA {name.trim()||'TI'}</span>
@@ -39,7 +39,8 @@ function CoachResult({answers,name,restart}){
     <p className="bayona-coach__result-disclaimer">Propuesta orientativa. Consulta prestaciones, precio y disponibilidad antes de contratar.</p>
     <div className="bayona-coach__contact">
       <p><ShieldCheck size={16} aria-hidden="true"/> Las respuestas solo están en esta visita. Al abrir WhatsApp podrás revisar el mensaje antes de enviarlo. Nada se ha enviado ni registrado automáticamente.</p>
-      <a href={whatsAppLink(message)} target="_blank" rel="noopener noreferrer" className="bayona-coach__send">
+      <a href={whatsAppLink(message)} target="_blank" rel="noopener noreferrer" className="bayona-coach__send"
+        onClick={()=>{trackWhatsAppClick({source:'coach_result',plan:plan.name,value:plan.priceCop});trackEvent('coach_finished_contact',{plan:plan.id})}}>
         HABLAR CON SEBASTIÁN <ArrowUpRight size={19} aria-hidden="true"/>
       </a>
       <button className="bayona-coach__restart" type="button" onClick={restart}><RotateCcw size={15} aria-hidden="true"/> Empezar de nuevo</button>

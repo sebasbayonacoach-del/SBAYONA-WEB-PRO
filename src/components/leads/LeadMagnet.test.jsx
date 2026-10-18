@@ -1,50 +1,35 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
-import { beforeEach, describe, expect, it } from 'vitest'
-import LeadMagnet, { LEADS_KEY } from './LeadMagnet.jsx'
+import {render,screen,within} from '@testing-library/react'
+import {MemoryRouter} from 'react-router-dom'
+import {beforeEach,describe,expect,it} from 'vitest'
+import LeadMagnet,{LEADS_KEY,FREE_RESOURCES} from './LeadMagnet.jsx'
 
-function renderMagnet() {
-  return render(<MemoryRouter><LeadMagnet /></MemoryRouter>)
-}
+function renderMagnet(){return render(<MemoryRouter><LeadMagnet/></MemoryRouter>)}
 
-describe('LeadMagnet — captura, recursos y valoración', () => {
-  beforeEach(() => {
-    window.localStorage.clear()
+describe('LeadMagnet — captación real y privacidad',()=>{
+ beforeEach(()=>window.localStorage.clear())
+ it('no pide contacto ni finge el registro cuando no hay backend',()=>{
+  renderMagnet()
+  expect(screen.getByRole('heading',{level:2,name:/tu siguiente paso/i})).toBeInTheDocument()
+  expect(screen.queryByLabelText(/tu correo o whatsapp/i)).not.toBeInTheDocument()
+  expect(screen.queryByRole('button',{name:/quiero que me contacten/i})).not.toBeInTheDocument()
+  expect(screen.getByRole('link',{name:/hablar por whatsapp/i})).toHaveAttribute('href',expect.stringContaining('https://wa.me/'))
+  expect(window.localStorage.getItem(LEADS_KEY)).toBeNull()
+ })
+ it('entrega tres recursos públicos sin formularios ni datos personales',()=>{
+  renderMagnet()
+  const section=screen.getByRole('group',{name:/tres recursos gratuitos/i})
+  const downloads=within(section).getAllByRole('link')
+  expect(downloads).toHaveLength(3)
+  downloads.forEach((link,index)=>{
+   expect(link).toHaveAttribute('download')
+   expect(link).toHaveAttribute('href',FREE_RESOURCES[index].url)
   })
-
-  it('pide solo nombre y contacto', () => {
-    renderMagnet()
-    expect(screen.getByRole('heading', { level: 2, name: /tu primer paso ya cuenta/i })).toBeInTheDocument()
-    expect(screen.getByLabelText(/nombre/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/correo o whatsapp/i)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /quiero mis tres recursos/i })).toBeInTheDocument()
-  })
-
-  it('explica qué falta sin guardar datos inválidos', () => {
-    renderMagnet()
-    fireEvent.click(screen.getByRole('button', { name: /quiero mis tres recursos/i }))
-    const alert = screen.getByRole('alert')
-    expect(alert).toHaveTextContent(/cuéntame cómo te llamas/i)
-    expect(alert).toHaveTextContent(/revisa tu correo o número de whatsapp/i)
-    expect(window.localStorage.getItem(LEADS_KEY)).toBeNull()
-  })
-
-  it('guarda el lead y entrega tres descargas más la solicitud de valoración', () => {
-    renderMagnet()
-    fireEvent.change(screen.getByLabelText(/nombre/i), { target: { value: 'Ana' } })
-    fireEvent.change(screen.getByLabelText(/correo o whatsapp/i), { target: { value: 'ana@example.com' } })
-    fireEvent.click(screen.getByRole('button', { name: /quiero mis tres recursos/i }))
-
-    const status = screen.getByRole('status')
-    expect(status).toHaveTextContent(/Gracias por confiar, Ana/i)
-    const downloads = within(status).getAllByRole('link', { name: /DESCARGAR/i })
-    expect(downloads).toHaveLength(3)
-    downloads.forEach((link) => expect(link).toHaveAttribute('download'))
-    expect(within(status).getByRole('link', { name: /SOLICITAR UNA VALORACIÓN/i }).getAttribute('href')).toContain('https://wa.me/')
-    expect(within(status).getByRole('link', { name: /CONOCER MIS OPCIONES/i })).toHaveAttribute('href', '/programs')
-
-    const queue = JSON.parse(window.localStorage.getItem(LEADS_KEY))
-    expect(queue).toHaveLength(1)
-    expect(queue[0]).toMatchObject({ name: 'Ana', contact: 'ana@example.com', source: 'lead-magnet' })
-  })
+  expect(screen.getByRole('link',{name:/ver servicios y precios/i})).toHaveAttribute('href','/programs')
+  expect(window.localStorage.getItem(LEADS_KEY)).toBeNull()
+ })
+ it('nunca presenta una solicitud como enviada sin confirmación real',()=>{
+  renderMagnet()
+  expect(screen.queryByText(/solicitud recibida/i)).not.toBeInTheDocument()
+  expect(screen.queryByText(/te responderemos por el contacto/i)).not.toBeInTheDocument()
+ })
 })

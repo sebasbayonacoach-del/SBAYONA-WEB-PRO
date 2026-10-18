@@ -1,257 +1,136 @@
 /**
- * LeadMagnet — embudo freemium (Fase 2 SaaS).
- *
- * Nombre + email o WhatsApp + "Quiero mi rutina gratis". Guarda en la cola
- * local `bayona_leads` y, si hay nube, inserta en la tabla `leads` con
- * `source='lead-magnet'`. Éxito en pantalla sin recargar.
+ * BAYONA · contacto y recursos sin captación ficticia.
+ * Los materiales son públicos. Solo se pide contacto si existe backend real.
+ * Sin backend: contacto voluntario por WhatsApp, sin guardar PII en localStorage.
  */
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { bookingLink, isBookingEnabled } from '../../config/site.config.js'
+import { ArrowUpRight, CheckCircle2, ShieldCheck } from 'lucide-react'
+import { bookingLink, isBookingEnabled, whatsAppLink } from '../../config/site.config.js'
 import { isCloudEnabled, supabase } from '../../lib/supabase.js'
-import { trackEvent, trackLead } from '../../lib/analytics/analytics.js'
+import { trackEvent, trackLead, trackWhatsAppClick } from '../../lib/analytics/analytics.js'
 import '../../styles/auth-members.css'
+import '../../styles/bayona-revenue-ready.css'
 
-export const LEADS_KEY = 'bayona_leads'
 export const LEAD_SOURCE = 'lead-magnet'
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-function isValidContact(value) {
-  const clean = String(value ?? '').trim()
-  if (EMAIL_RE.test(clean)) return true
-  const digits = clean.replace(/\D/g, '')
-  return digits.length >= 7 && digits.length <= 15
+/* Deprecated legacy key; intentionally never written to. */
+export const LEADS_KEY = 'bayona_leads'
+export const FREE_RESOURCES = Object.freeze([
+  {title:'TU PRIMERA SEMANA',label:'Guía gratuita · 7 días',url:'/downloads/bayona-editorial/primera-semana.pdf'},
+  {title:'REGISTRO 30 DÍAS',label:'Workbook gratuito',url:'/downloads/bayona-editorial/registro-30-dias.pdf'},
+  {title:'TU PUNTO DE PARTIDA',label:'Dossier gratuito',url:'/downloads/bayona-editorial/dossier-punto-de-partida.pdf'},
+])
+const EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+function validContact(value){
+ const raw=String(value||'').trim()
+ const digits=raw.replace(/\D/g,'')
+ return EMAIL.test(raw)||(digits.length>=7&&digits.length<=15)
 }
-
-function readQueue() {
-  try {
-    const raw = window?.localStorage?.getItem(LEADS_KEY)
-    if (!raw) return []
-    const parsed = JSON.parse(raw)
-    return Array.isArray(parsed) ? parsed : []
-  } catch {
-    return []
-  }
-}
-
-function leadKey(lead) {
-  return lead?.id || `${lead?.created_at ?? ''}:${lead?.contact ?? ''}`
-}
-
-function writeQueue(queue) {
-  try {
-    window?.localStorage?.setItem(LEADS_KEY, JSON.stringify(queue))
-    return true
-  } catch {
-    return false
-  }
-}
-
-function appendToQueue(lead) {
-  const queue = readQueue()
-  if (!queue.some((item) => leadKey(item) === leadKey(lead))) queue.push(lead)
-  return writeQueue(queue)
-}
-
-function removeFromQueue(lead) {
-  const key = leadKey(lead)
-  return writeQueue(readQueue().filter((item) => leadKey(item) !== key))
-}
-
-async function insertCloudLead(lead) {
-  if (!isCloudEnabled() || !supabase) return false
-  try {
-    const { error } = await supabase.from('leads').insert({
-      id: lead.id,
-      name: lead.name,
-      contact: lead.contact,
-      source: LEAD_SOURCE,
-      created_at: lead.created_at,
-    })
-    // 23505 = el mismo UUID ya fue guardado en un intento anterior. Para la
-    // cola de reintento cuenta como éxito: no creamos un segundo lead.
-    return !error || error.code === '23505'
-  } catch {
-    return false
-  }
-}
-
-async function flushPendingLeads() {
-  if (!isCloudEnabled() || !supabase) return
-  const queue = readQueue()
-  for (const lead of queue) {
-    const saved = await insertCloudLead(lead)
-    if (saved) removeFromQueue(lead)
-  }
+function whatsappIntro(name,contact){
+ const who=String(name||'').trim().slice(0,70)
+ const channel=String(contact||'').trim().slice(0,120)
+ const lines=['Hola, Sebastián. Vi BAYONA y quiero consultar una valoración inicial.',
+  who?'Mi nombre es '+who+'.':'',
+  channel?'Mi contacto preferido es '+channel+'.':'',
+  '¿Qué modalidades y horarios tienes disponibles?']
+ return whatsAppLink(lines.filter(Boolean).join('\n'))
 }
 
 export default function LeadMagnet({
-  heading = 'Tu primer paso ya cuenta.',
-  copy = 'Me gustaría saber cómo te llamas. Comparte tu nombre y un contacto para abrir tus tres recursos gratuitos. La valoración es opcional y tú eliges cuándo pedirla.',
-}) {
-  const [name, setName] = useState('')
-  const [contact, setContact] = useState('')
-  const [errors, setErrors] = useState([])
-  const [done, setDone] = useState(false)
-  const [captureState, setCaptureState] = useState('idle')
+ heading='Tu siguiente paso.',
+ copy='Recibe los materiales gratuitos y consulta si quieres entrenar conmigo.',
+}){
+ const cloud=isCloudEnabled()
+ const [name,setName]=useState('')
+ const [contact,setContact]=useState('')
+ const [agreed,setAgreed]=useState(false)
+ const [status,setStatus]=useState('idle')
+ const [error,setError]=useState('')
+ const fallbackUrl=cloud?whatsappIntro(name,contact)
+   :bookingLink('Hola, Sebastián. He visto BAYONA y quiero consultar una valoración inicial. ¿Cómo puedo empezar?')
 
-  useEffect(() => {
-    flushPendingLeads()
-  }, [])
-
-  function handleSubmit(event) {
-    event.preventDefault()
-    const nextErrors = []
-    if (String(name).trim().length < 2) nextErrors.push('Cuéntame cómo te llamas.')
-    if (!isValidContact(contact)) nextErrors.push('Revisa tu correo o número de WhatsApp para poder contactarte.')
-    setErrors(nextErrors)
-    if (nextErrors.length > 0) return
-
-    const lead = {
-      id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
-        ? crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
-      name: String(name).trim(),
-      contact: String(contact).trim(),
-      source: LEAD_SOURCE,
-      created_at: new Date().toISOString(),
-    }
-    appendToQueue(lead)
-    setDone(true)
-    trackLead({ source: LEAD_SOURCE })
-
-    if (isCloudEnabled()) {
-      setCaptureState('sending')
-      insertCloudLead(lead).then((saved) => {
-        if (saved) removeFromQueue(lead)
-        setCaptureState(saved ? 'cloud' : 'local')
-        trackEvent('lead_capture_status', {
-          source: LEAD_SOURCE,
-          status: saved ? 'cloud' : 'local_fallback',
-        })
-      })
-    } else {
-      setCaptureState('local')
-      trackEvent('lead_capture_status', {
-        source: LEAD_SOURCE,
-        status: 'local_fallback',
-      })
-    }
+ async function submit(event){
+  event.preventDefault()
+  if(!cloud||!supabase)return
+  if(name.trim().length<2||!validContact(contact)){
+   setError('Indica tu nombre y un correo o WhatsApp válido.')
+   return
   }
+  if(!agreed){
+   setError('Confirma que quieres que te contactemos para responder tu solicitud.')
+   return
+  }
+  setError('')
+  setStatus('sending')
+  const lead={
+   id:globalThis.crypto?.randomUUID?.() || undefined,
+   name:name.trim().slice(0,70),
+   contact:contact.trim().slice(0,120),
+   source:LEAD_SOURCE,
+   created_at:new Date().toISOString(),
+  }
+  try{
+   const {error:dbError}=await supabase.from('leads').insert(lead)
+   if(dbError)throw dbError
+   setStatus('sent')
+   trackLead({source:LEAD_SOURCE})
+  }catch{
+   // Never report success, and never retain visitors' contact data in localStorage.
+   setStatus('failed')
+   setError('No pudimos recibir tu solicitud. Puedes abrir WhatsApp y enviarla tú mismo.')
+   trackEvent('lead_capture_failed',{source:LEAD_SOURCE})
+  }
+ }
 
-  const evaluationUrl = bookingLink(
-    `Hola BAYONA, soy ${String(name).trim() || 'un nuevo contacto'}. Ya abrí mis recursos y quiero agendar una valoración inicial. Mi contacto es: ${String(contact).trim() || 'por confirmar'}.`,
-  )
-
-  return (
-    <section className="lead-magnet" aria-labelledby="lead-magnet-title">
-      <div className="section-shell lead-magnet-inner">
-        {/*
-          Lo que se entrega aquí es un objeto: una hoja de rutina. Se enseña la
-          hoja antes de pedir el nombre, en vez de explicar en un párrafo lo que
-          cabía en un dibujo. Las líneas van decreciendo a propósito: es una
-          sesión escrita, no un formulario vacío.
-        */}
-        <svg
-          className="lead-magnet-figure ds-reveal ds-reveal--scale"
-          viewBox="0 0 300 190"
-          role="img"
-          aria-label="Una hoja de rutina con el sello de BAYONA, apoyada sobre otra igual."
-        >
-          <rect className="lead-magnet-hoja is-atras" x="66" y="26" width="164" height="128" rx="3" transform="rotate(-6 148 90)" />
-          <rect className="lead-magnet-hoja" x="80" y="32" width="164" height="128" rx="3" />
-          <line className="lead-magnet-linea is-titulo" x1="98" y1="56" x2="164" y2="56" />
-          <line className="lead-magnet-linea" x1="98" y1="78" x2="218" y2="78" />
-          <line className="lead-magnet-linea" x1="98" y1="94" x2="196" y2="94" />
-          <line className="lead-magnet-linea" x1="98" y1="110" x2="208" y2="110" />
-          <line className="lead-magnet-linea" x1="98" y1="126" x2="170" y2="126" />
-          <polygon className="lead-magnet-sello" points="224,128 233,133 233,144 224,149 215,144 215,133" />
-        </svg>
-        <p className="eyebrow"><span />UN COMIENZO A TU RITMO</p>
-        <h2 id="lead-magnet-title">{heading}</h2>
-        {done ? (
-          <div className="lead-magnet-success" role="status">
-            <strong>Gracias por confiar, {String(name).trim()}. Tus recursos ya están aquí.</strong>
-            {captureState === 'cloud' ? (
-              <p>Tu contacto quedó registrado para atender tu solicitud. Puedes explorar las guías ahora mismo, sin crear una cuenta.</p>
-            ) : captureState === 'sending' ? (
-              <p>Ya puedes abrir tus recursos. Estamos terminando de registrar tu solicitud.</p>
-            ) : (
-              <p>
-                Tus recursos están disponibles. Por ahora no pudimos enviar tu contacto a BAYONA;
-                si quieres que te respondamos personalmente, escríbenos por WhatsApp.
-              </p>
-            )}
-            <div className="lead-magnet-rewards">
-              <a href="/downloads/bayona-editorial/primera-semana.pdf" download>DESCARGAR · PRIMERA SEMANA</a>
-              <a href="/downloads/bayona-editorial/registro-30-dias.pdf" download>DESCARGAR · REGISTRO 30 DÍAS</a>
-              <a href="/downloads/bayona-editorial/dossier-punto-de-partida.pdf" download>DESCARGAR · PUNTO DE PARTIDA</a>
-            </div>
-            <div className="lead-magnet-next-actions">
-              <a
-                href={evaluationUrl}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => trackEvent('valuation_request_click', {
-                  source: LEAD_SOURCE,
-                  channel: isBookingEnabled() ? 'booking' : 'whatsapp',
-                })}
-              >
-                SOLICITAR UNA VALORACIÓN
-              </a>
-              <Link to="/programs">CONOCER MIS OPCIONES</Link>
-            </div>
-            <small>
-              {isBookingEnabled()
-                ? 'La disponibilidad y la confirmación se gestionan en el calendario.'
-                : 'La cita se coordina por WhatsApp según disponibilidad.'}
-            </small>
-          </div>
-        ) : (
-          <>
-            <p>{copy}</p>
-            <form onSubmit={handleSubmit} noValidate>
-              <label htmlFor="lead-magnet-name">NOMBRE</label>
-              <input
-                id="lead-magnet-name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                placeholder="Tu nombre"
-              />
-              <label htmlFor="lead-magnet-contact">CORREO O WHATSAPP</label>
-              <input
-                id="lead-magnet-contact"
-                name="contact"
-                type="text"
-                autoComplete="email"
-                required
-                value={contact}
-                onChange={(event) => setContact(event.target.value)}
-                placeholder="tu@correo.com o +34 600 000 000"
-              />
-              {errors.length > 0 && (
-                <div className="lead-magnet-errors" role="alert">
-                  <strong>Revisa tus datos</strong>
-                  <ul>
-                    {errors.map((message) => <li key={message}>{message}</li>)}
-                  </ul>
-                </div>
-              )}
-              <button type="submit" className="gold-button">
-                QUIERO MIS TRES RECURSOS
-              </button>
-            </form>
-            <p className="lead-magnet-note">
-              Usamos tu nombre y contacto para atender tu solicitud, no para obligarte a contratar. Si el envío automático no funciona, puedes escribirnos por WhatsApp.
-            </p>
-          </>
-        )}
-      </div>
-    </section>
-  )
+ return <section className="lead-magnet bayona-direct-contact" aria-labelledby="lead-magnet-title">
+  <div className="section-shell lead-magnet-inner">
+   <div className="bayona-direct-contact__heading">
+    <p className="eyebrow"><span/> SEBASTIÁN · BAYONA</p>
+    <h2 id="lead-magnet-title">{heading}</h2>
+    <p>{copy}</p>
+   </div>
+   <div className="bayona-direct-contact__layout">
+    <div className="bayona-direct-contact__resources" role="group" aria-label="Tres recursos gratuitos sin registro">
+     {FREE_RESOURCES.map((resource,index)=><a
+      className="bayona-direct-contact__download"
+      key={resource.url}
+      href={resource.url}
+      download
+      onClick={()=>trackEvent('free_resource_download',{source:LEAD_SOURCE,resource:index+1})}>
+      <span className="bayona-direct-contact__index">{String(index+1).padStart(2,'0')}</span>
+      <span><strong>{resource.title}</strong><small>{resource.label}</small></span>
+      <ArrowUpRight size={20} aria-hidden="true"/>
+     </a>)}
+    </div>
+    <div className="bayona-direct-contact__next">
+     <span className="bayona-direct-contact__eyebrow">TU SIGUIENTE MOVIMIENTO</span>
+     <h3>¿ENTRENAMOS?</h3>
+     {cloud&&status!=='sent'&&<form onSubmit={submit} noValidate>
+      <label htmlFor="lead-magnet-name">TU NOMBRE</label>
+      <input id="lead-magnet-name" type="text" name="name" autoComplete="name" maxLength={70}
+       value={name} onChange={e=>setName(e.target.value)} placeholder="¿Cómo te llamas?"/>
+      <label htmlFor="lead-magnet-contact">TU CORREO O WHATSAPP</label>
+      <input id="lead-magnet-contact" name="contact" type="text" autoComplete="email" maxLength={120}
+       value={contact} onChange={e=>setContact(e.target.value)} placeholder="Tu contacto"/>
+      <label className="bayona-direct-contact__consent">
+       <input type="checkbox" checked={agreed} onChange={e=>setAgreed(e.target.checked)}/>
+       <span>Quiero que BAYONA utilice estos datos para responder a mi solicitud.</span>
+      </label>
+      {error&&<p role="alert" className="bayona-direct-contact__error">{error}</p>}
+      <button type="submit" className="gold-button" disabled={status==='sending'}>
+       {status==='sending'?'ENVIANDO…':'QUIERO QUE ME CONTACTEN'} <ArrowUpRight size={18} aria-hidden="true"/>
+      </button>
+     </form>}
+     {status==='sent'?<p className="bayona-direct-contact__status" role="status"><CheckCircle2 size={20}/> Solicitud recibida. Te responderemos por el contacto indicado.</p>
+      :<p className="bayona-direct-contact__note">Consulta sin compromiso. Confirmamos disponibilidad y condiciones antes de contratar.</p>}
+     <a className="bayona-direct-contact__whatsapp" href={fallbackUrl} target="_blank" rel="noopener noreferrer"
+      onClick={()=>trackWhatsAppClick({source:LEAD_SOURCE})}>
+      {isBookingEnabled()&&!cloud?'CONSULTAR DISPONIBILIDAD':'HABLAR POR WHATSAPP'} <ArrowUpRight size={20}/>
+     </a>
+     <p className="bayona-direct-contact__privacy"><ShieldCheck size={15}/> Solo se comparte lo que tú decidas enviar.</p>
+     <Link className="bayona-direct-contact__plans-link" to="/programs">Ver servicios y precios <ArrowUpRight size={16}/></Link>
+    </div>
+   </div>
+  </div>
+ </section>
 }

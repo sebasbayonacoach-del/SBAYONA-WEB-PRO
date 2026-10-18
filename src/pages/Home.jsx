@@ -278,7 +278,7 @@ export default function Home() {
         </div>
         <LeadMagnet
           heading="Te escucho."
-          copy="Déjame tu nombre y un contacto si quieres que te escriba. No hace falta para descargar los recursos."
+          copy="Descarga tus tres recursos sin registro. Si quieres acompañamiento, hablamos por WhatsApp."
         />
         <div className="gym-home-lead__fallback gym-home-shell">
           <span>También puedes hablar directamente conmigo.</span>

@@ -1,5 +1,6 @@
 import { ArrowUpRight, Check, ShieldCheck } from 'lucide-react'
 import { COMMERCIAL_SCOPE_NOTICE } from '../../config/offerings.js'
+import { trackWhatsAppClick } from '../../lib/analytics/analytics.js'
 import '../../styles/home-everything-visible.css'
 import { useJourneyExperience } from '../experience/JourneyExperienceContext.jsx'
 
@@ -48,7 +49,8 @@ export default function HomeVisiblePlans({ projections }) {
               </p>
               {plan.scarcity && <p className="bayona-plan-open__availability">{plan.scarcity}</p>}
             </div>
-            <a className="bayona-plan-open__contact" href={plan.cta} target="_blank" rel="noopener noreferrer">
+            <a className="bayona-plan-open__contact" href={plan.cta} target="_blank" rel="noopener noreferrer"
+              onClick={()=>trackWhatsAppClick({source:'visible_plans',plan:plan.name,value:plan.priceCop})}>
               ME INTERESA {plan.name} <ArrowUpRight size={19} aria-hidden="true"/>
             </a>
           </article>

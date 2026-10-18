@@ -43,6 +43,7 @@ export default function CinematicGlobalChapters() {
   const { goal, preferences, coachOpen } = useJourneyExperience()
   const [scene, setScene] = useState({ index: 0, total: 1, label: '' })
   const [visible, setVisible] = useState(false)
+  const [contactOnScreen, setContactOnScreen] = useState(false)
 
   useEffect(() => {
     if (!profile) return undefined
@@ -87,6 +88,10 @@ export default function CinematicGlobalChapters() {
         ? previous : {index,total:Math.max(1,chapters.length),label})
       chapters.forEach((section, n)=>section.classList.toggle('bayona-cinema-chapter--active',n===index))
       setVisible(window.scrollY>170||pathname!=='/')
+      const conversion=document.querySelector('.bayona-direct-contact')
+      const rect=conversion?.getBoundingClientRect()
+      // A fixed chapter overlay must never block the contact or payment handoff.
+      setContactOnScreen(Boolean(rect && rect.top < window.innerHeight*.88 && rect.bottom > window.innerHeight*.12))
     }
     const onScroll=()=>{if(!frame)frame=requestAnimationFrame(sync)}
     const onMutation=()=>{if(!refreshFrame)refreshFrame=requestAnimationFrame(refresh)}
@@ -114,7 +119,7 @@ export default function CinematicGlobalChapters() {
   if (!profile) return null
   const progress=Math.round((scene.index+1)*100/scene.total)
   return (
-    <aside className={'bayona-cinema-track bayona-compass'+(visible&&!coachOpen?' is-visible':'')} aria-label="Tu recorrido BAYONA" aria-live="off">
+    <aside className={'bayona-cinema-track bayona-compass'+(visible&&!coachOpen&&!contactOnScreen?' is-visible':'')} aria-label="Tu recorrido BAYONA" aria-live="off">
       <div className="bayona-compass__bar">
         <Activity size={15} aria-hidden="true"/>
         <span>SEBASTIÁN TE ACOMPAÑA</span>
