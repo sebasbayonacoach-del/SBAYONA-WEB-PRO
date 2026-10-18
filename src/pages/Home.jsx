@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Download, Gift } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Download, Gift } from 'lucide-react'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
@@ -7,7 +7,6 @@ import HomeMovementContexts from '../components/home/HomeMovementContexts.jsx'
 import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
 import AdaptiveDiscovery from '../components/home/AdaptiveDiscovery.jsx'
-import ServicePersonalizer from '../components/journey/ServicePersonalizer.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink, isBookingEnabled } from '../config/site.config.js'
@@ -20,47 +19,48 @@ import '../styles/home-services-premium.css'
 import '../styles/home-cinematic-hero-release.css'
 import '../styles/home-copy-caring.css'
 import '../styles/home-everything-visible.css'
+import '../styles/home-conversion-focus.css'
 
 const SERVICES = Object.freeze([
   {
     id: 'personal',
     number: '01',
     type: 'GUÍA PERSONAL',
-    promise: 'UNA SESIÓN HECHA PARA TI',
+    promise: 'UN ENTRENADOR CONTIGO',
     title: 'Entrenamiento personal',
-    copy: 'Escuchamos tu objetivo, observamos cómo te mueves y adaptamos el trabajo a tu momento.',
+    copy: 'Sesiones 1:1 pensadas para tu cuerpo y tus objetivos.',
     image: '/images/bayona-generated/home-pillar-build-1600.webp',
-    details: 'Sesiones individuales, técnica y progresión con seguimiento. Empezamos por tus necesidades y capacidades.',
+    details: 'TÉCNICA · FUERZA · SEGUIMIENTO',
   },
   {
     id: 'online',
     number: '02',
     type: 'A TU RITMO',
-    promise: 'ENTRENA ESTÉS DONDE ESTÉS',
+    promise: 'TU PLAN, TU HORARIO',
     title: 'Entrenamiento online',
-    copy: 'Tu espacio, tus horarios y un plan claro: vídeos, estructura semanal y seguimiento según el servicio que elijas.',
+    copy: 'Entrena donde estés, con una ruta clara y seguimiento.',
     image: '/images/bayona-generated/home-method-1600.webp',
-    details: 'Planificación para tu semana, ejercicios explicados y revisión según el servicio contratado.',
+    details: 'PLAN · VÍDEOS · AJUSTES',
   },
   {
     id: 'parkour',
     number: '03',
     type: 'MOVIMIENTO Y TÉCNICA',
-    promise: 'CONFIANZA EN MOVIMIENTO',
+    promise: 'MOVERTE ES APRENDER',
     title: 'Parkour y rendimiento',
-    copy: 'Parkour para niños, jóvenes y adultos: aprendemos desde la base, con progresión, atención y criterio.',
+    copy: 'Aprende parkour desde la base, paso a paso.',
     image: '/images/bayona-generated/parkour-hero-1600.webp',
-    details: 'Bases de desplazamientos, aterrizajes, fuerza y control. Adaptación por edad y experiencia.',
+    details: 'TÉCNICA · CONTROL · CONFIANZA',
   },
   {
     id: 'recovery',
     number: '04',
     type: 'MOVERTE MEJOR',
-    promise: 'MOVERTE MEJOR TAMBIÉN ES AVANZAR',
+    promise: 'EL MOVIMIENTO SE ADAPTA',
     title: 'Movilidad y recuperación',
-    copy: 'Un espacio para cuidar tu movilidad, escuchar tu cuerpo y acompañar tu entrenamiento.',
+    copy: 'Recupera confianza al moverte, respetando tus límites.',
     image: '/images/bayona-generated/home-pillar-read-1600.webp',
-    details: 'Trabajo complementario de movilidad, fuerza básica y hábitos; no implica fisioterapia ni tratamiento clínico.',
+    details: 'MOVILIDAD · FUERZA · PROGRESIÓN',
   },
 ])
 
@@ -68,17 +68,17 @@ const START_STEPS = Object.freeze([
   {
     number: '01',
     title: 'Cuéntame qué necesitas',
-    copy: 'Nos conocemos por tu nombre. Me cuentas tu objetivo cuando hablemos; no necesitas crear una cuenta.',
+    copy: 'Me cuentas tu objetivo y qué necesitas.',
   },
   {
     number: '02',
-    title: 'Llévate algo útil desde hoy',
-    copy: 'Tendrás tres recursos gratuitos para observar tus hábitos y dar tus primeros pasos con claridad.',
+    title: 'Trazamos una ruta',
+    copy: 'Te explico las opciones que encajan contigo.',
   },
   {
     number: '03',
-    title: 'Hablemos cuando quieras',
-    copy: 'Si buscas acompañamiento, podemos coordinar una valoración y encontrar juntos el servicio apropiado. Tú decides.',
+    title: 'Empezamos contigo',
+    copy: 'Elegimos cómo empezar y avanzamos a tu ritmo.',
   },
 ])
 
@@ -86,31 +86,24 @@ const GIFTS = Object.freeze([
   {
     tag: 'GUÍA · 7 DÍAS',
     title: 'Tu primera semana',
-    copy: 'Una guía amable y práctica para que la primera semana tenga sentido para ti.',
+    copy: 'Siete días para empezar con claridad.',
     href: '/downloads/bayona-editorial/primera-semana.pdf',
     image: '/images/bayona-generated/home-pillar-read-1600.webp',
   },
   {
     tag: 'WORKBOOK · 30 DÍAS',
     title: 'Registro de 30 días',
-    copy: 'Un espacio para registrar cómo te sientes, reconocer avances y aprender de cada semana.',
+    copy: 'Registra y observa tus avances.',
     href: '/downloads/bayona-editorial/registro-30-dias.pdf',
     image: '/images/bayona-generated/resources-challenge-1600.webp',
   },
   {
     tag: 'DOSSIER',
     title: 'Tu punto de partida',
-    copy: 'Aclara qué quieres conseguir, cuánto tiempo tienes y por dónde empezar sin exigirte de más.',
+    copy: 'Define tu objetivo y tu próximo paso.',
     href: '/downloads/bayona-editorial/dossier-punto-de-partida.pdf',
     image: '/images/bayona-generated/home-free-kit-1600.webp',
   },
-])
-
-const TRUST_POINTS = Object.freeze([
-  'Primero escuchamos tu contexto, capacidades y límites; después diseñamos cómo entrenar.',
-  'Te acompañamos con la cercanía y el seguimiento de tu plan.',
-  'Sabes qué incluye cada servicio y cuánto cuesta antes de decidir.',
-  'Puedes empezar con recursos gratuitos, sin obligación de comprar.',
 ])
 
 export default function Home() {
@@ -143,18 +136,20 @@ export default function Home() {
               <span className="bayona-hero-prime__line bayona-hero-prime__line--direction">CON <em>DIRECCIÓN.</em></span>
             </h1>
             <p className="gym-home-hero__lead">
-              No hay dos cuerpos iguales. Construimos fuerza, confianza y movimiento a partir de tu historia, a tu ritmo.
+              Entrenamiento pensado para tu cuerpo, tus objetivos y tu vida. Contigo desde el primer paso.
             </p>
             <div className="gym-home-hero__actions">
               <a
                 className="gym-primary-button"
-                href="#empieza"
+                href={evaluationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => trackEvent('funnel_start_click', { source: 'home_hero' })}
               >
-                EMPIEZA A TU RITMO <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
+                HABLAR CON SEBASTIÁN <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
               </a>
               <a className="gym-secondary-button" href="#servicios">
-                LOS SERVICIOS ESTÁN AQUÍ <ArrowRight size={19} strokeWidth={1.7} aria-hidden="true" />
+                VER CÓMO TE AYUDO <ArrowRight size={19} strokeWidth={1.7} aria-hidden="true" />
               </a>
             </div>
             <a
@@ -163,7 +158,7 @@ export default function Home() {
               onClick={() => trackEvent('reward_preview_click', { source: 'home_hero' })}
             >
               <span className="bayona-hero-prime__gift-symbol"><Gift size={20} strokeWidth={1.5} aria-hidden="true" /></span>
-              <span><strong>Un comienzo sin coste.</strong> Tres recursos para descubrir tu punto de partida.</span>
+              <span><strong>Empieza gratis.</strong> Tres recursos para ti.</span>
               <ArrowUpRight className="bayona-hero-prime__gift-arrow" size={17} aria-hidden="true" />
             </a>
           </div>
@@ -178,6 +173,8 @@ export default function Home() {
         </div>
       </section>
 
+      <AdaptiveDiscovery />
+
       <section className="gym-home-services bayona-services-prime" id="servicios" aria-labelledby="gym-services-title">
         <div className="gym-home-shell">
           <div className="gym-services-intro">
@@ -190,11 +187,10 @@ export default function Home() {
             </div>
             <div className="gym-services-intro__aside">
               <span className="gym-services-intro__index">CUATRO FORMAS. UN MISMO COMPROMISO.</span>
-              <p>Entrenamiento personal, online, parkour o movilidad. Cuatro caminos para avanzar desde donde estás, con atención y dirección.</p>
+              <p>Encuentra la forma de entrenar que encaja contigo.</p>
               <span className="gym-services-intro__rule" aria-hidden="true" />
             </div>
           </div>
-          <ServicePersonalizer />
           <div className="gym-service-grid" aria-label="Cuatro formas de entrenar con BAYONA">
             {SERVICES.map((service) => (
               <article
@@ -212,57 +208,42 @@ export default function Home() {
                   <h3>{service.title}</h3>
                   <p>{service.copy}</p>
                   <span className="bayona-service-static__detail">{service.details}</span>
-                  <span className="gym-service-card__bottom"><span>DETALLES A LA VISTA · SIN ABRIR</span></span>
                 </div>
               </article>
             ))}
           </div>
           <div className="gym-services-outro">
-            <p>¿Todavía no sabes por dónde empezar? No tienes que elegir ahora: debajo encontrarás el proceso de orientación, las condiciones de salud y los planes completos, sin abandonar esta página.</p>
-            <span className="gym-services-outro__link bayona-service-static__note">SIGUE BAJANDO · TODO ESTÁ AQUÍ <ArrowDownRight size={18} aria-hidden="true" /></span>
+            <p>¿No sabes cuál es para ti? Empezamos hablando. Sin compromiso.</p>
+            <a className="gym-services-outro__link" href={evaluationUrl} target="_blank" rel="noopener noreferrer">
+              CUÉNTAME TU OBJETIVO <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
           </div>
         </div>
       </section>
-
-      <AdaptiveDiscovery />
-
-      <HomeMovementContexts />
-
-      <GuidedStartJourney steps={START_STEPS} />
 
       <section className="home-memberships-section gym-home-plans" aria-labelledby="home-offer-heading">
         <div className="gym-home-shell">
           <div className="gym-section-heading">
             <SectionLabel>MEMBRESÍAS</SectionLabel>
-            <h2 id="home-offer-heading">EL APOYO QUE NECESITAS. A TU RITMO.</h2>
-            <p>Hay momentos para entrenar por tu cuenta y otros para sentirte más acompañado. Compara lo que incluye cada plan y elige con tranquilidad.</p>
+            <h2 id="home-offer-heading">ELIGE CÓMO <span>TE ACOMPAÑO.</span></h2>
+            <p>Todo empieza con un objetivo. Elige cuánto seguimiento necesitas.</p>
           </div>
           <HomeVisiblePlans projections={membershipPlanEditorialProjection} />
         </div>
       </section>
 
-      <BayonaLiveAppShowcase placement="home" />
+      <HomeMovementContexts />
 
-      <section className="gym-home-trust" aria-labelledby="gym-trust-title">
-        <div className="gym-home-shell gym-trust-layout">
-          <div>
-            <SectionLabel>ENTRENAR CON CLARIDAD</SectionLabel>
-            <h2 id="gym-trust-title">ENTRENAR CON CUIDADO TAMBIÉN ES PROGRESAR.</h2>
-          </div>
-          <ul>
-            {TRUST_POINTS.map((point) => (
-              <li key={point}><Check size={18} aria-hidden="true" />{point}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <GuidedStartJourney steps={START_STEPS} />
+
+      <BayonaLiveAppShowcase placement="home" />
 
       <section className="gym-home-gifts" id="regalos" aria-labelledby="gym-gifts-title">
         <div className="gym-home-shell">
           <div className="gym-section-heading">
             <SectionLabel>RECURSOS DE INICIO</SectionLabel>
-            <h2 id="gym-gifts-title">UN BUEN COMIENZO NO TIENE PRECIO.</h2>
-            <p>He preparado tres recursos prácticos para ayudarte a empezar. Sus contenidos y propósito están aquí y puedes descargarlos gratis, sin crear una cuenta ni dejar tus datos.</p>
+            <h2 id="gym-gifts-title">EMPIEZA HOY. <span>GRATIS.</span></h2>
+            <p>Tres recursos para dar tu primer paso. Sin registro.</p>
           </div>
           <div className="gym-gift-grid">
             {GIFTS.map((gift) => (
@@ -289,17 +270,15 @@ export default function Home() {
       <section className="gym-home-lead" id="empieza" aria-labelledby="lead-magnet-title">
         <div className="gym-home-shell gym-home-lead__intro">
           <SectionLabel>TU SIGUIENTE PASO</SectionLabel>
-          <h2>EMPIEZA A TU RITMO. YO TE ACOMPAÑO.</h2>
-          <p>
-            Los recursos gratuitos ya están disponibles arriba, sin registro. Si quieres que te contacte para hablar de tus objetivos o coordinar una valoración inicial, aquí puedes dejar voluntariamente tu nombre y una forma de contacto. Sin prisas ni compromiso de compra.
-          </p>
+          <h2>¿EMPEZAMOS A <span>HABLAR?</span></h2>
+          <p>Cuéntame tu objetivo. Vemos si puedo ayudarte, sin compromiso.</p>
         </div>
         <LeadMagnet
-          heading="Tu primer paso ya cuenta."
-          copy="Si quieres hablar de tu entrenamiento, deja tu nombre y un correo o WhatsApp. Es totalmente opcional: los recursos gratuitos ya pueden descargarse sin registrarse."
+          heading="Te escucho."
+          copy="Déjame tu nombre y un contacto si quieres que te escriba. No hace falta para descargar los recursos."
         />
         <div className="gym-home-lead__fallback gym-home-shell">
-          <span>¿Te sentirías más cómodo hablando primero?</span>
+          <span>También puedes hablar directamente conmigo.</span>
           <a
             href={evaluationUrl}
             target="_blank"

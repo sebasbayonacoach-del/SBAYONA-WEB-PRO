@@ -26,7 +26,7 @@ describe('Home — recorrido continuo BAYONA', () => {
     const { container } = renderHome()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     expect(screen.getByRole('heading', { level: 1, name: /ENTRENA CON DIRECCIÓN/i })).toBeInTheDocument()
-    expect(container.querySelectorAll('.gym-home > section')).toHaveLength(10)
+    expect(container.querySelectorAll('.gym-home > section')).toHaveLength(9)
     expect(container.querySelector('.community-immersive')).toBeNull()
     expect(container.querySelector('.calculator-section')).toBeNull()
   })
@@ -38,34 +38,34 @@ describe('Home — recorrido continuo BAYONA', () => {
     expect(section.querySelectorAll('a.gym-service-card')).toHaveLength(0)
     ;['Entrenamiento personal', 'Entrenamiento online', 'Parkour y rendimiento', 'Movilidad y recuperación']
       .forEach(name => expect(within(section).getByRole('heading', { level: 3, name })).toBeInTheDocument())
-    expect(within(section).getAllByText(/DETALLES A LA VISTA/i)).toHaveLength(4)
+    expect(section.querySelectorAll('.bayona-service-static__detail')).toHaveLength(4)
   })
 
   it('presenta la guía y el recorrido de inicio sin pasos ocultos', () => {
     const { container } = renderHome()
-    expect(container.querySelectorAll('#tu-ruta .bayona-discovery__allstep')).toHaveLength(3)
+    expect(container.querySelectorAll('#tu-ruta .bayona-discovery__focus-card')).toHaveLength(3)
     const section = screen.getByRole('heading', { level: 2, name: /TRES PASOS PARA EMPEZAR/i }).closest('section')
     expect(within(section).getAllByRole('listitem')).toHaveLength(3)
   })
 
-  it('presenta los cuatro planes al mismo tiempo, con inclusiones y exclusiones', () => {
+  it('presenta los cuatro planes al mismo tiempo, con los beneficios principales', () => {
     const { container } = renderHome()
-    expect(screen.getByRole('heading', { level: 2, name: /EL APOYO QUE NECESITAS/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: /ELIGE CÓMO.*TE ACOMPAÑO/i })).toBeInTheDocument()
     expect(container.querySelectorAll('.bayona-plan-open__card')).toHaveLength(4)
-    expect(container.querySelectorAll('.bayona-plan-open__details h4')).toHaveLength(8)
+    expect(container.querySelectorAll('.bayona-plan-open__details h4')).toHaveLength(4)
     expect(container.querySelectorAll('.bayona-plan-open button')).toHaveLength(0)
   })
 
-  it('muestra 12 familias y 104 ejemplos de movimiento adaptado sin desplegables', () => {
+  it('muestra 12 familias con ejemplos representativos sin desplegables', () => {
     const { container } = renderHome()
     expect(container.querySelectorAll('#movimiento-adaptado .bayona-home-contexts__group')).toHaveLength(12)
-    expect(container.querySelectorAll('#movimiento-adaptado .bayona-home-contexts__group li')).toHaveLength(104)
+    expect(container.querySelectorAll('#movimiento-adaptado .bayona-home-contexts__group li')).toHaveLength(36)
     expect(container.querySelector('#movimiento-adaptado button')).toBeNull()
   })
 
   it('ofrece tres PDF gratuitos con descarga directa', () => {
     renderHome()
-    const section = screen.getByRole('heading', { level: 2, name: /UN BUEN COMIENZO NO TIENE PRECIO/i }).closest('section')
+    const section = screen.getByRole('heading', { level: 2, name: /EMPIEZA HOY.*GRATIS/i }).closest('section')
     const gifts = within(section).getAllByRole('link')
     expect(gifts).toHaveLength(3)
     gifts.forEach(link => {
@@ -78,7 +78,7 @@ describe('Home — recorrido continuo BAYONA', () => {
     const { container } = renderHome()
     const lead = container.querySelector('#empieza')
     expect(lead).not.toBeNull()
-    expect(within(lead).getByRole('heading', { name: /EMPIEZA A TU RITMO/i })).toBeInTheDocument()
+    expect(within(lead).getByRole('heading', { name: /EMPEZAMOS A HABLAR/i })).toBeInTheDocument()
     expect(within(lead).getByLabelText('Contacto voluntario')).toBeInTheDocument()
     expect(within(lead).getByRole('link', { name: /ESCRÍBEME POR WHATSAPP/i }).getAttribute('href')).toContain('https://wa.me/')
   })

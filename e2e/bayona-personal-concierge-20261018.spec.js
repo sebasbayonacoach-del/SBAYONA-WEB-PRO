@@ -1,48 +1,30 @@
 import { test, expect } from '@playwright/test'
 
 for (const [mode,width,height] of [['desktop',1440,900],['mobile',390,844]]) {
-  test('Inicio muestra todos los objetivos sin preguntas ocultas / '+mode,async({page})=>{
+  test('Un recorrido más breve, con objetivos y servicios visibles / '+mode, async ({page}) => {
     await page.setViewportSize({width,height})
     await page.goto('/')
-    const a=page.locator('#servicios .bayona-services-conversation')
-    await expect(a).toBeVisible()
-    await expect(a.locator('.bayona-services-conversation__match')).toHaveCount(5)
-    for(const title of ['Ganar fuerza','Moverme mejor','Volver a entrenar','Tener más energía','Aprender parkour']){
-      await expect(a.getByText(title,{exact:true})).toBeVisible()
-    }
-    await expect(a).toContainText('Entrenamiento personal')
-    await expect(a).toContainText('Movilidad y entrenamiento adaptado')
-    await expect(a).toContainText('Entrenamiento online')
-    await expect(a).toContainText('Parkour y rendimiento')
-    await expect(a.locator('button')).toHaveCount(0)
-    await expect(page.locator('.bayona-care')).toHaveCount(0)
-    await expect(page.locator('#servicios .gym-service-card')).toHaveCount(4)
-    await expect(page.locator('#servicios .gym-service-card.is-for-you')).toHaveCount(0)
-    const stats=await page.evaluate(()=>({
-      overflow:document.documentElement.scrollWidth-innerWidth,
-      cardTypes:[...document.querySelectorAll('#servicios .gym-service-card')].map(e=>e.className)
-    }))
-    expect(stats.overflow).toBeLessThanOrEqual(1)
-  })
+    const guidance=page.locator('#tu-ruta')
+    await expect(guidance.getByRole('heading',{name:/PRIMERO TE ESCUCHO/i})).toBeVisible()
+    await expect(guidance.locator('.bayona-discovery__focus-card')).toHaveCount(3)
+    await expect(guidance.locator('button,input')).toHaveCount(0)
 
-  test('Los 3 aspectos están expuestos sin hacer clic / '+mode,async({page})=>{
-    await page.setViewportSize({width,height})
-    await page.goto('/')
-    const orient=page.locator('#tu-ruta')
-    await expect(orient).toBeVisible()
-    await expect(orient.locator('.bayona-discovery__allstep')).toHaveCount(3)
-    await expect(orient.getByRole('heading',{name:'QUÉ QUIERES MEJORAR'})).toBeVisible()
-    await expect(orient.getByRole('heading',{name:'DESDE DÓNDE EMPIEZAS'})).toBeVisible()
-    await expect(orient.getByRole('heading',{name:'CÓMO TE ACOMPAÑAMOS'})).toBeVisible()
-    await expect(orient).toContainText('valorarlas los profesionales sanitarios')
-    await expect(orient.locator('button')).toHaveCount(0)
-    await expect(orient.locator('input')).toHaveCount(0)
-    await expect(orient).toContainText('No tienes que completar un cuestionario')
+    const service=page.locator('#servicios')
+    await expect(service.locator('article.gym-service-card')).toHaveCount(4)
+    for (const name of ['Entrenamiento personal','Entrenamiento online','Parkour y rendimiento','Movilidad y recuperación']){
+      await expect(service.getByRole('heading',{name,exact:true})).toBeVisible()
+    }
+    await expect(service.locator('a.gym-service-card')).toHaveCount(0)
+
+    const plans=page.locator('.bayona-plan-open')
+    await expect(plans.locator('article.bayona-plan-open__card')).toHaveCount(4)
+    await expect(plans.locator('button')).toHaveCount(0)
+
     const stats=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth-innerWidth}))
     expect(stats.overflow).toBeLessThanOrEqual(1)
   })
 
-  test('Rutas muestran orientación sin panel flotante / '+mode,async({page})=>{
+  test('Rutas mantienen guía no intrusiva / '+mode,async({page})=>{
     await page.setViewportSize({width,height})
     for(const [path,title] of [['/programs','SERVICIOS A LA VISTA'],['/resources','RECURSOS SIN PRESIÓN'],['/movimiento-adaptado','MOVIMIENTO CON CRITERIO']]){
       await page.goto(path)
@@ -51,7 +33,6 @@ for (const [mode,width,height] of [['desktop',1440,900],['mobile',390,844]]) {
       await expect(note.getByRole('heading',{name:title})).toBeVisible()
       await expect(note).toContainText('No recogemos datos de salud')
       await expect(note.locator('button')).toHaveCount(0)
-      await expect(page.locator('.bayona-care')).toHaveCount(0)
     }
   })
 }
