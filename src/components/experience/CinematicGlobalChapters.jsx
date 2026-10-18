@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Activity, ArrowDownRight } from 'lucide-react'
+import { Activity, ArrowDownRight, Crosshair } from 'lucide-react'
 import { getCinemaRoute } from '../../data/cinemaJourney.js'
+import { missionFor, formatMissionStep } from '../../data/cinemaMissions.js'
 import { JOURNEY_CHAPTERS } from '../../data/journeyGoals.js'
 import { useJourneyExperience } from './JourneyExperienceContext.jsx'
 import '../../styles/bayona-cinema-global.css'
+import '../../styles/bayona-game-missions.css'
 
 function eligibleSections(main) {
   const all = [...main.querySelectorAll('section')].filter(section => {
@@ -40,10 +42,16 @@ function isLightSurface(section) {
 export default function CinematicGlobalChapters() {
   const { pathname } = useLocation()
   const profile = getCinemaRoute(pathname)
+  const mission = missionFor(pathname)
   const { goal, preferences, coachOpen } = useJourneyExperience()
   const [scene, setScene] = useState({ index: 0, total: 1, label: '' })
   const [visible, setVisible] = useState(false)
   const [contactOnScreen, setContactOnScreen] = useState(false)
+  const [missionCue, setMissionCue] = useState(null)
+  const lastChapterRef = useRef(null)
+  const cueTimerRef = useRef(null)
+  const coachOpenRef = useRef(coachOpen)
+  coachOpenRef.current = coachOpen
 
   useEffect(() => {
     if (!profile) return undefined
@@ -52,6 +60,8 @@ export default function CinematicGlobalChapters() {
     document.body.classList.add('bayona-cinema-active')
     document.body.dataset.bayonaCinemaRoute = pathname
     document.body.style.setProperty('--bayona-cinema-photo',`url("${profile.image}")`)
+    lastChapterRef.current = null
+    setMissionCue(null)
     let chapters = []
     let frame = 0
     let refreshFrame = 0
@@ -84,6 +94,15 @@ export default function CinematicGlobalChapters() {
       const heading=(active?.querySelector('h1,h2')?.textContent||profile.name).trim().replace(/\s+/g,' ').slice(0,80)
       const homeChapter = pathname === '/' ? JOURNEY_CHAPTERS.find(c=>c.id===active?.id) : null
       const label=homeChapter?.label || (index===0?profile.name:heading)
+      if (active && lastChapterRef.current !== index) {
+        // Show a single brief scene notification on genuine progress, never at load.
+        if (lastChapterRef.current !== null && !coachOpenRef.current && window.scrollY > 350) {
+          window.clearTimeout(cueTimerRef.current)
+          setMissionCue({number:formatMissionStep(index,chapters.length),label})
+          cueTimerRef.current=window.setTimeout(()=>setMissionCue(null),2100)
+        }
+        lastChapterRef.current = index
+      }
       setScene(previous=>(previous.index===index && previous.total===chapters.length && previous.label===label)
         ? previous : {index,total:Math.max(1,chapters.length),label})
       chapters.forEach((section, n)=>section.classList.toggle('bayona-cinema-chapter--active',n===index))
@@ -106,6 +125,7 @@ export default function CinematicGlobalChapters() {
       window.removeEventListener('resize',onScroll)
       cancelAnimationFrame(frame)
       cancelAnimationFrame(refreshFrame)
+      window.clearTimeout(cueTimerRef.current)
       chapters.forEach(section=>{
         section.classList.remove('bayona-cinema-chapter','bayona-cinema-chapter--light','bayona-cinema-chapter--dark','bayona-cinema-chapter--first','bayona-cinema-chapter--active')
         section.removeAttribute('data-bayona-chapter-number')
@@ -118,22 +138,35 @@ export default function CinematicGlobalChapters() {
 
   if (!profile) return null
   const progress=Math.round((scene.index+1)*100/scene.total)
+  const showTrack=visible&&!coachOpen&&!contactOnScreen
   return (
-    <aside className={'bayona-cinema-track bayona-compass'+(visible&&!coachOpen&&!contactOnScreen?' is-visible':'')} aria-label="Tu recorrido BAYONA" aria-live="off">
-      <div className="bayona-compass__bar">
-        <Activity size={15} aria-hidden="true"/>
-        <span>SEBASTIÁN TE ACOMPAÑA</span>
-        <strong>{String(scene.index+1).padStart(2,'0')} / {String(scene.total).padStart(2,'0')}</strong>
-      </div>
-      <div className="bayona-compass__middle">
-        <div>
-          <span>{goal?'TU OBJETIVO · '+goal.short : Object.keys(preferences).length?'TU RUTA EN CONSTRUCCIÓN': profile.label}</span>
-          <strong>{scene.label||profile.name}</strong>
+    <>
+      <aside className={'bayona-cinema-track bayona-compass bayona-mission-hud'+(showTrack?' is-visible':'')}
+        aria-label="Tu recorrido BAYONA" aria-live="off" data-testid="bayona-mission-hud">
+        <div className="bayona-compass__bar">
+          <Crosshair size={16} aria-hidden="true"/>
+          <span>MISIÓN EN CURSO</span>
+          <strong>{formatMissionStep(scene.index,scene.total)} / {String(scene.total).padStart(2,'0')}</strong>
         </div>
-        <ArrowDownRight size={19} aria-hidden="true"/>
-      </div>
-      <p className="bayona-cinema-track__line">{profile.line}</p>
-      <div className="bayona-compass__progress" aria-hidden="true"><span style={{width:progress+'%'}}/></div>
-    </aside>
+        <div className="bayona-compass__middle">
+          <div>
+            <span>{goal?'TU OBJETIVO · '+goal.short : Object.keys(preferences).length?'RUTA PERSONALIZADA':mission?.name||profile.label}</span>
+            <strong>{scene.label||profile.name}</strong>
+          </div>
+          <ArrowDownRight size={19} aria-hidden="true"/>
+        </div>
+        <p className="bayona-cinema-track__line">{mission?.objective||profile.line}</p>
+        <div className="bayona-compass__progress" aria-hidden="true"><span style={{width:progress+'%'}}/></div>
+        <div className="bayona-mission-hud__footer" aria-hidden="true">
+          <span>RECORRIDO / {progress}%</span><span>B / PRIME</span>
+        </div>
+      </aside>
+      {missionCue&&!coachOpen&&!contactOnScreen&&
+        <div className="bayona-mission-toast" aria-hidden="true" data-testid="bayona-mission-toast" key={pathname+missionCue.number}>
+          <span><Activity size={13}/> NUEVO CAPÍTULO · {missionCue.number}</span>
+          <strong>{missionCue.label}</strong>
+          <small>EL RECORRIDO CONTINÚA</small>
+        </div>}
+    </>
   )
 }

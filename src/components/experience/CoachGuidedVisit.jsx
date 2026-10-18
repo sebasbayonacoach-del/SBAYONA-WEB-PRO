@@ -24,6 +24,7 @@ function CoachResult({answers,name,restart}){
     '¿Podemos confirmar condiciones y disponibilidad?',
   ].filter(Boolean).join('\\n')
   return <div className="bayona-coach__result" data-testid="coach-result">
+    <span className="bayona-coach__mission-complete"><Check size={16} aria-hidden="true"/> MISIÓN COMPLETADA · TU PROPUESTA</span>
     <div className="bayona-coach__result-lead">
       <span className="bayona-coach__result-index">PROPUESTA PARA {name.trim()||'TI'}</span>
       <h3>{plan.name}</h3>
