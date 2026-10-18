@@ -1,10 +1,10 @@
+import { useEffect } from 'react'
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Download, Gift } from 'lucide-react'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import HomeVisiblePlans from '../components/home/HomeVisiblePlans.jsx'
 import HomeMovementContexts from '../components/home/HomeMovementContexts.jsx'
-import HeroGlassIntake from '../components/experience/HeroGlassIntake.jsx'
 import { useJourneyExperience } from '../components/experience/JourneyExperienceContext.jsx'
 import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
@@ -109,7 +109,11 @@ const GIFTS = Object.freeze([
 ])
 
 export default function Home() {
-  const { goal, preferences, startCoach } = useJourneyExperience()
+  const { goal, preferences, autoStartCoach } = useJourneyExperience()
+  useEffect(() => {
+    const timer = window.setTimeout(autoStartCoach, 450)
+    return () => window.clearTimeout(timer)
+  }, [autoStartCoach])
   const relevantServiceId = goal?.serviceId || (preferences.servicio === 'Entrenamiento online' || preferences.formato === 'A mi propio ritmo' ? 'online' : preferences.servicio === 'Entrenamiento individual' || preferences.formato === 'Con acompañamiento cercano' ? 'personal' : null)
   const evaluationUrl = bookingLink(goal ? `Hola BAYONA. Me interesa conocer opciones para mi objetivo general: ${goal.label}. ¿Podemos hablar de una valoración inicial?` : 'Hola, soy una persona interesada en BAYONA. Me gustaría contarte mi objetivo y ver si podemos coordinar una valoración inicial.')
 
@@ -144,13 +148,9 @@ export default function Home() {
               Entrenamiento pensado para tu cuerpo, tus objetivos y tu vida. Contigo desde el primer paso.
             </p>
             <div className="gym-home-hero__actions">
-              <button
-                className="gym-primary-button"
-                type="button"
-                onClick={() => { trackEvent('funnel_start_click', { source: 'home_guided_visit' }); startCoach() }}
-              >
-                SEBASTIÁN TE DA LA BIENVENIDA <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
-              </button>
+              <span className="gym-primary-button bayona-automatic-intro" role="status">
+                SEBASTIÁN TE RECIBE AUTOMÁTICAMENTE <ArrowRight size={18} aria-hidden="true" />
+              </span>
               <a className="gym-secondary-button" href="#servicios">
                 VER CÓMO TE AYUDO <ArrowRight size={19} strokeWidth={1.7} aria-hidden="true" />
               </a>
@@ -165,8 +165,6 @@ export default function Home() {
               <ArrowUpRight className="bayona-hero-prime__gift-arrow" size={17} aria-hidden="true" />
             </a>
           </div>
-
-          <HeroGlassIntake />
 
           <div className="bayona-hero-prime__footer">
             <span className="bayona-hero-prime__edition">BAYONA / CUERPO · MENTE · MOVIMIENTO</span>

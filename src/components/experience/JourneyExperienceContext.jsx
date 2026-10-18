@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react'
 import { getJourneyGoal } from '../../data/journeyGoals.js'
 
 const Context = createContext(null)
@@ -11,6 +11,13 @@ export function JourneyExperienceProvider({ children }) {
   const [coachStep, setCoachStep] = useState(0)
   const [coachAnswers, setCoachAnswers] = useState({})
   const [coachName, setCoachName] = useState('')
+  const autoStarted = useRef(false)
+  const autoStartCoach = useCallback(() => {
+    if (autoStarted.current) return
+    autoStarted.current = true
+    setCoachStep(0)
+    setCoachOpen(true)
+  }, [])
   const closeCoach = useCallback(() => setCoachOpen(false), [])
 
   const value = useMemo(() => ({
@@ -31,7 +38,8 @@ export function JourneyExperienceProvider({ children }) {
     }),
     clearPreferences: () => setPreferences({}),
     clearAll: () => { setGoalId(null); setPreferences({}) },
-    startCoach: () => { setCoachStep(0); setCoachOpen(true) },
+    startCoach: () => { autoStarted.current = true; setCoachStep(0); setCoachOpen(true) },
+    autoStartCoach,
     closeCoach,
     moveCoach: step => setCoachStep(step),
     answerCoach: (key, answer) => {
@@ -40,7 +48,7 @@ export function JourneyExperienceProvider({ children }) {
     },
     nameCoach: value => setCoachName(value.slice(0, 70)),
     clearCoach: () => { setCoachAnswers({}); setCoachStep(0); setCoachName(''); setGoalId(null) },
-  }), [goalId, preferences, coachOpen, coachStep, coachAnswers, coachName, closeCoach])
+  }), [goalId, preferences, coachOpen, coachStep, coachAnswers, coachName, closeCoach, autoStartCoach])
 
   return <Context.Provider value={value}>{children}</Context.Provider>
 }

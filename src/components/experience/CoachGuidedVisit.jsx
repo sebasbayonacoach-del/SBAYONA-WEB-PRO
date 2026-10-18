@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowDown, ArrowRight, ArrowUpRight, Check, RotateCcw, ShieldCheck, Volume2, VolumeX, X } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Check, RotateCcw, ShieldCheck, Volume2, VolumeX, X } from 'lucide-react'
 import { whatsAppLink } from '../../config/site.config.js'
 import { COACH_VISIT_STEPS, coachAnswerLabel, suggestCoachPlan } from '../../data/coachVisit.js'
 import { getJourneyGoal } from '../../data/journeyGoals.js'
@@ -35,7 +36,7 @@ function CoachResult({answers,name,restart}){
       {reasons.slice(0,2).map(reason=><p key={reason}><Check size={17} aria-hidden="true"/>{reason}</p>)}
       {requiresConversation&&<p><ShieldCheck size={17} aria-hidden="true"/>Hablemos antes de elegir el servicio.</p>}
     </div>
-    <p className="bayona-coach__result-disclaimer">La recomendación es orientativa. El plan no garantiza la inclusión del servicio indicado. Precio, alcance y disponibilidad deben confirmarse antes de contratar.</p>
+    <p className="bayona-coach__result-disclaimer">Propuesta orientativa. Consulta prestaciones, precio y disponibilidad antes de contratar.</p>
     <div className="bayona-coach__contact">
       <p><ShieldCheck size={16} aria-hidden="true"/> Las respuestas solo están en esta visita. Al abrir WhatsApp podrás revisar el mensaje antes de enviarlo. Nada se ha enviado ni registrado automáticamente.</p>
       <a href={whatsAppLink(message)} target="_blank" rel="noopener noreferrer" className="bayona-coach__send">
@@ -50,40 +51,84 @@ export default function CoachGuidedVisit(){
   const {pathname}=useLocation()
   const navigate=useNavigate()
   const dialogRef=useRef(null)
-  const gestureStart=useRef(null)
-  const lastGesture=useRef(0)
+  const pending=useRef(false)
+  const advanceTimer=useRef(null)
   const [voiceEnabled,setVoiceEnabled]=useState(false)
   const [voiceAvailable,setVoiceAvailable]=useState(false)
   const [speaking,setSpeaking]=useState(false)
   const {coachOpen,coachStep,coachAnswers,coachName,closeCoach,moveCoach,answerCoach,nameCoach,clearCoach}=useJourneyExperience()
   const stage=COACH_VISIT_STEPS[coachStep]
   const isLast=coachStep===COACH_VISIT_STEPS.length-1
-  const selected=stage?.id==='nombre' ? !!coachAnswers.nombre : !!coachAnswers[stage?.id]
-  const ready=stage?.id==='nombre' ? !!coachName.trim()||selected : selected
   const spokenName=coachName.trim()||'campeón'
 
   const changeStage=next=>{
-    if(next<0||next>=COACH_VISIT_STEPS.length) return
+    if(next<0||next>=COACH_VISIT_STEPS.length)return
+    pending.current=false
     const item=COACH_VISIT_STEPS[next]
-    lastGesture.current=Date.now()
     moveCoach(next)
-    if(pathname!==item.path) navigate(item.path)
+    if(pathname!==item.path)navigate(item.path)
   }
-  const advance=()=>{if(ready&&!isLast){if(stage.id==='nombre') handleNameContinue();changeStage(coachStep+1)}}
-  const restart=()=>{clearCoach();setVoiceEnabled(false);if(pathname!=='/') navigate('/')}
-  const handleNameContinue=()=>{
-    const name=coachName.trim()
-    answerCoach('nombre',name||'omitido')
+  const chooseAnswer=value=>{
+    if(pending.current || isLast)return
+    pending.current=true
+    answerCoach(stage.id,value)
+    advanceTimer.current=window.setTimeout(()=>changeStage(coachStep+1),380)
   }
+  const continueName=()=> {
+    if(pending.current)return
+    pending.current=true
+    answerCoach('nombre',coachName.trim()||'omitido')
+    advanceTimer.current=window.setTimeout(()=>changeStage(coachStep+1),350)
+  }
+  const restart=()=>{pending.current=false;clearCoach();setVoiceEnabled(false);if(pathname!=='/')navigate('/')}
+  useEffect(()=>{
+    if(!coachOpen) return undefined
+    let frame=0
+    let last=null
+    const freeze=()=>{
+      const current=window.lenis
+      if(current!==last && typeof current?.stop==='function'){
+        current.stop()
+        last=current
+      }
+      frame=window.requestAnimationFrame(freeze)
+    }
+    freeze()
+    return ()=>{
+      window.cancelAnimationFrame(frame)
+      if(advanceTimer.current)window.clearTimeout(advanceTimer.current)
+      advanceTimer.current=null
+      pending.current=false
+      if(typeof window.lenis?.start==='function')window.lenis.start()
+    }
+  },[coachOpen])
+
+  useEffect(()=>{
+    if(!coachOpen || stage?.id!=='nombre'||!coachName.trim()||coachAnswers.nombre==='omitido'||pending.current)return undefined
+    // The name remains editable; after a brief pause in typing the visit progresses automatically.
+    const t=window.setTimeout(()=>continueName(),1850)
+    return ()=>window.clearTimeout(t)
+  },[coachName,coachOpen,stage?.id,coachAnswers.nombre])
   useEffect(()=>{
     if(!coachOpen) return undefined
     document.documentElement.classList.add('bayona-coach-visit-active')
     const before=document.activeElement
     const onBrowserBack=()=>closeCoach()
+    const onWheel=event=>{
+      // Never let unanswered users scroll underlying pages or the question panel.
+      // Result stage remains independently scrollable for prices and disclosures.
+      if(!isLast)event.preventDefault()
+      else if(!dialogRef.current?.contains(event.target))event.preventDefault()
+    }
+    const onTouchMove=event=>{
+      if(!isLast)event.preventDefault()
+      else if(!dialogRef.current?.contains(event.target))event.preventDefault()
+    }
     const onKeyDown=event=>{
       if(event.key==='Escape'){closeCoach();return}
-      if(event.key==='ArrowDown'&&ready&&!isLast&&!event.repeat&&!['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)){
-        event.preventDefault();advance();return
+      if(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End'].includes(event.key) &&
+        !['INPUT','TEXTAREA'].includes(document.activeElement?.tagName) && !isLast){
+        event.preventDefault()
       }
       if(event.key!=='Tab')return
       const nodes=[...(dialogRef.current?.querySelectorAll('button:not([disabled]),a[href],input:not([disabled])')||[])].filter(node=>node.getBoundingClientRect().width>0)
@@ -93,15 +138,19 @@ export default function CoachGuidedVisit(){
       else if(!event.shiftKey&&(document.activeElement===last||!dialogRef.current?.contains(document.activeElement))){event.preventDefault();first.focus()}
     }
     window.addEventListener('popstate',onBrowserBack)
-    window.addEventListener('keydown',onKeyDown)
+    window.addEventListener('keydown',onKeyDown,true)
+    window.addEventListener('wheel',onWheel,{capture:true,passive:false})
+    window.addEventListener('touchmove',onTouchMove,{capture:true,passive:false})
     return ()=>{
       document.documentElement.classList.remove('bayona-coach-visit-active')
       window.removeEventListener('popstate',onBrowserBack)
-      window.removeEventListener('keydown',onKeyDown)
+      window.removeEventListener('keydown',onKeyDown,true)
+      window.removeEventListener('wheel',onWheel,true)
+      window.removeEventListener('touchmove',onTouchMove,true)
       window.speechSynthesis?.cancel()
       if(before?.isConnected)before.focus({preventScroll:true})
     }
-  },[coachOpen,closeCoach,ready,coachStep,isLast])
+  },[coachOpen,closeCoach,isLast])
 
   useEffect(()=>{
     setVoiceAvailable(typeof window!=='undefined'&&'speechSynthesis' in window&&'SpeechSynthesisUtterance' in window)
@@ -124,50 +173,28 @@ export default function CoachGuidedVisit(){
   useEffect(()=>{
     if(!coachOpen||!stage)return undefined
     dialogRef.current?.querySelector('.bayona-coach__title')?.focus({preventScroll:true})
-    if(pathname!==stage.path)return undefined
-    const scroll=()=>{
-      const target=document.getElementById(stage.anchor)
-      if(target)target.scrollIntoView({block:'start',behavior:'instant'})
-    }
-    const t=setTimeout(scroll,500),retry=setTimeout(scroll,1000)
-    return ()=>{clearTimeout(t);clearTimeout(retry)}
-  },[coachOpen,coachStep,pathname,stage])
+    return undefined
+  },[coachOpen,coachStep,stage])
 
   if(!coachOpen||!stage)return null
 
-  const wheel=event=>{
-    if(event.ctrlKey)return
-    // En el modo guiado el deslizamiento solo desbloquea el siguiente capítulo después de contestar.
-    if(event.deltaY>24&&ready&&!isLast&&Date.now()-lastGesture.current>850){
-      event.preventDefault();advance()
-    }else if(event.deltaY>0&&!ready){event.preventDefault()}
-  }
-  const touchStart=event=>{gestureStart.current={y:event.touches[0]?.clientY,time:Date.now()}}
-  const touchEnd=event=>{
-    const initial=gestureStart.current
-    if(!initial||!ready||isLast)return
-    const distance=initial.y-event.changedTouches[0]?.clientY
-    if(distance>75&&Date.now()-initial.time<1200&&Date.now()-lastGesture.current>850)advance()
-  }
   const voiceToggle=()=>{
     if(voiceEnabled){window.speechSynthesis?.cancel();setSpeaking(false)}
     setVoiceEnabled(!voiceEnabled)
   }
 
-  return <div className="bayona-coach__overlay bayona-coach__overlay--conversation"
-    data-testid="guided-coach-overlay" onWheel={wheel} onTouchStart={touchStart} onTouchEnd={touchEnd}>
+  return createPortal(<div className="bayona-coach__overlay bayona-coach__overlay--conversation"
+    data-testid="guided-coach-overlay">
     <div className="bayona-coach__shade" aria-hidden="true"/>
     <aside className="bayona-coach__world" aria-hidden="true">
-      <span>BIENVENIDO A</span><strong>BAYONA.</strong>
-      <p>NO ES UNA WEB MÁS.<br/>ES TU PUNTO DE PARTIDA.</p>
-      <div className="bayona-coach__world-progress">{coachStep+1} / {COACH_VISIT_STEPS.length} · {stage.label}</div>
+      <span>UN NUEVO COMIENZO</span><strong>BAYONA.</strong>
+      <div className="bayona-coach__world-progress">{String(coachStep+1).padStart(2,'0')} — {String(COACH_VISIT_STEPS.length).padStart(2,'0')}</div>
     </aside>
     <section role="dialog" aria-modal="true" aria-labelledby="bayona-coach-heading" aria-describedby="bayona-coach-intro"
       className="bayona-coach bayona-coach--chat" ref={dialogRef}>
       <div className="bayona-coach__top">
-        <div className={'bayona-coach__portrait'+(speaking?' is-speaking':'')}>
-          <img src="/images/testimonials/sebastian-atleta-960.jpg" alt="Entrenamiento BAYONA" loading="eager"/>
-          <span className="bayona-coach__portrait-mark">B</span>
+        <div className={'bayona-coach__portrait'+(speaking?' is-speaking':'')} aria-hidden="true">
+          <span className="bayona-coach__portrait-brand">SB</span>
         </div>
         <div><strong>SEBASTIÁN · BAYONA</strong><small>ASISTENTE DIGITAL · GUÍA AUTOMATIZADA</small></div>
         {voiceAvailable&&<button type="button" onClick={voiceToggle} className="bayona-coach__voice"
@@ -196,15 +223,15 @@ export default function CoachGuidedVisit(){
             ? <div className="bayona-coach__name-step">
                 <label htmlFor="bayona-coach-firstname">TU NOMBRE <span>solo para esta visita</span></label>
                 <input id="bayona-coach-firstname" value={coachName} onChange={event=>nameCoach(event.target.value)}
-                  maxLength={70} autoComplete="given-name" placeholder="Escribe cómo te llamas" onKeyDown={event=>{if(event.key==='Enter'){handleNameContinue();event.preventDefault()}}}/>
-                <button type="button" onClick={()=>{nameCoach('');answerCoach('nombre','omitido')}} aria-pressed={coachAnswers.nombre==='omitido'}
-                  className="bayona-coach__anonymous">Prefiero seguir sin decirlo</button>
+                  maxLength={70} autoComplete="given-name" placeholder="Tu nombre" onKeyDown={event=>{if(event.key==='Enter'){continueName();event.preventDefault()}}}/>
+                <button type="button" onClick={()=>{nameCoach('');chooseAnswer('omitido')}} aria-pressed={coachAnswers.nombre==='omitido'}
+                  className="bayona-coach__anonymous">Continuar sin nombre →</button>
               </div>
             : <div className="bayona-coach__choices" role="group" aria-label={stage.title}>
                 {stage.options.map(option=><button type="button" key={option.value}
                   className={coachAnswers[stage.id]===option.value?'is-chosen':''}
                   aria-pressed={coachAnswers[stage.id]===option.value}
-                  onClick={()=>answerCoach(stage.id,option.value)}>
+                  onClick={()=>chooseAnswer(option.value)}>
                   <span className="bayona-coach__choice-indicator">{coachAnswers[stage.id]===option.value?<Check size={16}/>:null}</span>
                   {option.label}
                 </button>)}
@@ -212,23 +239,15 @@ export default function CoachGuidedVisit(){
         }
       </div>
       <div className="bayona-coach__bottom">
-        <button type="button" className="bayona-coach__back" onClick={()=>coachStep?changeStage(coachStep-1):closeCoach()}>
-          <ArrowLeft size={17}/> {coachStep?'VOLVER':'SALIR'}
-        </button>
-        {!isLast&&<button type="button" className="bayona-coach__next"
-          disabled={!ready}
-          onClick={advance}>
-          SIGUIENTE <ArrowRight size={18}/>
+        {coachStep>0&&<button type="button" className="bayona-coach__back" onClick={()=>changeStage(coachStep-1)}>
+          <ArrowLeft size={17}/> VOLVER
         </button>}
-        {isLast&&<button type="button" className="bayona-coach__finish" onClick={closeCoach}>TERMINAR</button>}
+        {!isLast&&<span className="bayona-coach__autonext" role="status">
+          {stage.type==='name'?'ESCRIBE TU NOMBRE · CONTINÚA SOLO':'ELIGE UNA OPCIÓN · CONTINÚA SOLO'}
+        </span>}
+        {isLast&&<button type="button" className="bayona-coach__finish" onClick={closeCoach}>EXPLORAR LA WEB</button>}
       </div>
-      <div className="bayona-coach__unlock" role="status">
-        {!isLast?(stage.type==='name'?(coachName.trim()||selected?'LISTO · DESLIZA PARA AVANZAR':'TU NOMBRE ES OPCIONAL')
-          :selected?'RESPUESTA GUARDADA SOLO AQUÍ · DESLIZA PARA AVANZAR':'ELIGE UNA RESPUESTA PARA DESBLOQUEAR EL DESLIZAMIENTO')
-          :'TÚ DECIDES SI COMPARTES EL RESUMEN'}
-        {!isLast&&<ArrowDown size={15} aria-hidden="true"/>}
-      </div>
-      <p className="bayona-coach__footer">Sin envío automático. Puedes salir cuando quieras. La voz, si se activa, es sintética.</p>
+      <p className="bayona-coach__footer">Guía automatizada · respuestas solo en esta visita</p>
     </section>
-  </div>
+  </div>,document.body)
 }

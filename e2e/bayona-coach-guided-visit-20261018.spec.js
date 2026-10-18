@@ -12,33 +12,25 @@ const choices = [
  ['Revisión cada semana','/movimiento-adaptado'],
  ['Entiendo, sigamos','/programs'],
 ]
-
-async function begin(page){
+async function intro(page){
  await page.goto('/')
- await page.getByRole('button',{name:/SEBASTIÁN TE DA LA BIENVENIDA/}).click()
- return page.getByRole('dialog')
+ const dialog=page.getByRole('dialog')
+ await expect(dialog.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
+ return dialog
 }
-async function chooseAndContinue(page,label,route){
+async function choose(page,label,path){
  const dialog=page.getByRole('dialog')
  await dialog.getByRole('button',{name:label,exact:true}).click()
- await expect(dialog.getByRole('button',{name:/SIGUIENTE/})).toBeEnabled()
- await dialog.getByRole('button',{name:/SIGUIENTE/}).click()
- await expect(page).toHaveURL(new RegExp(route.replaceAll('/','\\/')+'$'))
+ await expect(page).toHaveURL(new RegExp(path.replaceAll('/','\\/')+'$'))
 }
 for(const [device,width,height] of [['desktop',1440,900],['mobile',390,844]]){
- test('Recepción personal con nombre primero y plan al final / '+device,async({page})=>{
+ test('Inicio automático y plan tras una respuesta por pantalla / '+device,async({page})=>{
   await page.setViewportSize({width,height})
-  const dialog=await begin(page)
-  await expect(dialog.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
-  await expect(dialog.getByRole('button',{name:/SIGUIENTE/})).toBeDisabled()
-  await dialog.getByLabel(/TU NOMBRE/i).fill('Ana')
-  await expect(dialog.getByRole('button',{name:/SIGUIENTE/})).toBeEnabled()
-  await dialog.getByRole('button',{name:/SIGUIENTE/}).click()
-  await expect(dialog.getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible()
-  for(const [index,[label,route]] of choices.entries()){
-   await chooseAndContinue(page,label,route)
-   await expect(page.locator('.bayona-coach__eyebrow')).toContainText(String(index+3).padStart(2,'0')+' / '+String(COACH_VISIT_STEPS.length).padStart(2,'0'))
-  }
+  const dialog=await intro(page)
+  await expect(dialog.getByRole('button',{name:'SIGUIENTE'})).toHaveCount(0)
+  await dialog.getByLabel(/TU NOMBRE/).fill('Ana')
+  await expect(dialog.getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible({timeout:5000})
+  for(const [label,path] of choices)await choose(page,label,path)
   await expect(page.getByTestId('coach-result')).toContainText('FUERZA')
   await expect(page.getByTestId('coach-result')).toContainText('Ana')
   await expect(page.getByTestId('coach-result')).toContainText('Entrenamiento personal u online')
@@ -46,57 +38,73 @@ for(const [device,width,height] of [['desktop',1440,900],['mobile',390,844]]){
   await expect(link).toHaveAttribute('href',/wa.me/)
   await expect(link).toHaveAttribute('href',/Ana/)
   await expect(link).toHaveAttribute('href',/FUERZA/)
-  await page.getByRole('dialog').getByRole('button',{name:'TERMINAR'}).click()
-  await expect(page.getByRole('dialog')).toHaveCount(0)
+  await dialog.getByRole('button',{name:'EXPLORAR LA WEB'}).click()
+  await expect(dialog).toHaveCount(0)
   expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1)
  })
 }
 
-test('El scroll está cerrado sin respuesta y se desbloquea al elegir',async({page})=>{
- await begin(page)
- const current=()=>page.locator('.bayona-coach__eyebrow')
- await page.mouse.wheel(0,650)
- await expect(current()).toContainText('01 / 11')
- await expect(page.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
- await page.getByLabel(/TU NOMBRE/).fill('Luis')
- await page.mouse.wheel(0,650)
- await expect(page.getByRole('dialog').getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible()
- await page.mouse.wheel(0,650)
- await expect(page.getByRole('dialog').getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible()
- await page.getByRole('dialog').getByRole('button',{name:'Ganar fuerza'}).click()
+test('Ni rueda, ni teclas ni el motor Lenis avanzan sin responder',async({page})=>{
+ const dialog=await intro(page)
  await page.waitForTimeout(1000)
- await page.mouse.wheel(0,650)
- await expect(page.getByRole('heading',{name:'¿Qué te está frenando?'})).toBeVisible()
- await expect(page).toHaveURL(/\/community$/)
+ const before=await page.evaluate(()=>scrollY)
+ await page.mouse.move(200,300)
+ for(let i=0;i<5;i++)await page.mouse.wheel(0,700)
+ await page.keyboard.press('PageDown')
+ await page.keyboard.press('ArrowDown')
+ await page.waitForTimeout(450)
+ expect(await page.evaluate(()=>scrollY)).toBe(before)
+ await expect(dialog.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
+ await expect(dialog.getByRole('button',{name:'SIGUIENTE'})).toHaveCount(0)
+ await dialog.getByLabel(/TU NOMBRE/).fill('Luis')
+ await expect(dialog.getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible({timeout:5000})
+ await page.mouse.wheel(0,600)
+ await page.waitForTimeout(250)
+ await expect(dialog.getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible()
+ expect(await page.evaluate(()=>scrollY)).toBe(before)
+ await choose(page,'Ganar fuerza','/community')
+ await expect(dialog.getByRole('heading',{name:'¿Qué te está frenando?'})).toBeVisible()
+ expect(await page.evaluate(()=>scrollY)).toBe(before)
 })
 
-test('El nombre se puede omitir, borrar y no persiste tras recargar',async({page})=>{
- await begin(page)
- await page.getByRole('dialog').getByRole('button',{name:'Prefiero seguir sin decirlo'}).click()
- await page.getByRole('dialog').getByRole('button',{name:/SIGUIENTE/}).click()
- await expect(page.getByRole('dialog').getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible()
- await page.getByRole('dialog').getByRole('button',{name:'VOLVER'}).click()
- await expect(page.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
+test('En móvil el gesto táctil no puede saltar la pregunta',async({page})=>{
+ await page.setViewportSize({width:390,height:844})
+ await page.goto('/')
+ const dialog=page.getByRole('dialog')
+ await expect(dialog.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
+ await page.evaluate(()=>{
+  const a=document.querySelector('.bayona-coach__content')
+  const touch=(type,y)=>a.dispatchEvent(new TouchEvent(type,{bubbles:true,cancelable:true,touches:[new Touch({identifier:1,target:a,clientX:130,clientY:y})]}))
+  touch('touchstart',700);touch('touchmove',160)
+ })
+ await page.waitForTimeout(450)
+ expect(await page.evaluate(()=>scrollY)).toBe(0)
+ await expect(dialog.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
+})
+
+test('Nombre opcional, salida real y visita limpia al recargar',async({page})=>{
+ const dialog=await intro(page)
+ await dialog.getByRole('button',{name:/Continuar sin nombre/i}).click()
+ await expect(dialog.getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible()
+ await dialog.getByRole('button',{name:'VOLVER'}).click()
+ await expect(dialog.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
  await page.keyboard.press('Escape')
- await expect(page.getByRole('dialog')).toHaveCount(0)
+ await expect(dialog).toHaveCount(0)
+ await page.mouse.wheel(0,450)
+ await page.waitForTimeout(300)
+ expect(await page.evaluate(()=>scrollY)).toBeGreaterThan(0)
  await page.reload()
- await expect(page.getByRole('dialog')).toHaveCount(0)
- await page.getByRole('button',{name:/SEBASTIÁN TE DA LA BIENVENIDA/}).click()
+ await expect(page.getByRole('dialog').getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
  await expect(page.getByLabel(/TU NOMBRE/)).toHaveValue('')
 })
 
-test('El botón Atrás del navegador permite salir; la voz es voluntaria',async({page})=>{
- await begin(page)
- const voice=page.getByRole('button',{name:/Activar voz sintética/i})
- if(await voice.count()){
-  await expect(voice).toHaveAttribute('aria-pressed','false')
-  // No activar sonido durante la prueba; el botón existe y su estado es explícito.
- }
- await page.getByLabel(/TU NOMBRE/).fill('Jorge')
- await page.getByRole('dialog').getByRole('button',{name:/SIGUIENTE/}).click()
- await page.getByRole('dialog').getByRole('button',{name:'Ganar fuerza'}).click()
- await page.getByRole('dialog').getByRole('button',{name:/SIGUIENTE/}).click()
- await expect(page).toHaveURL(/\/community$/)
+test('Voz sintética desactivada de forma predeterminada; salir mediante Atrás',async({page})=>{
+ const dialog=await intro(page)
+ const voice=dialog.getByRole('button',{name:/Activar voz sintética/i})
+ if(await voice.count())await expect(voice).toHaveAttribute('aria-pressed','false')
+ await dialog.getByLabel(/TU NOMBRE/).fill('Jorge')
+ await expect(dialog.getByRole('heading',{name:'¿Qué quieres conseguir?'})).toBeVisible({timeout:5000})
+ await choose(page,'Ganar fuerza','/community')
  await page.goBack()
- await expect(page.getByRole('dialog')).toHaveCount(0)
+ await expect(dialog).toHaveCount(0)
 })
