@@ -21,10 +21,10 @@ describe('Visita guiada BAYONA', () => {
     expect(conversation.requiresConversation).toBe(true)
     expect(direct.requiresConversation).toBe(false)
   })
-  it('declara siete etapas repartidas en rutas reales con controles reversibles', () => {
-    expect(COACH_VISIT_STEPS).toHaveLength(8)
+  it('declara once etapas repartidas en rutas reales con controles reversibles', () => {
+    expect(COACH_VISIT_STEPS).toHaveLength(11)
     expect(new Set(COACH_VISIT_STEPS.map(s=>s.path)).size).toBeGreaterThanOrEqual(6)
-    expect(COACH_VISIT_STEPS.slice(0,-1).every(s=>s.options.length>=2)).toBe(true)
+    expect(COACH_VISIT_STEPS.slice(1,-1).every(s=>s.options.length>=2)).toBe(true)
     expect(coachAnswerLabel('apoyo','semanal')).toMatch(/cada semana/)
     expect(COACH_VISIT_STEPS.map(s=>s.id)).not.toContain('diagnostico')
   })

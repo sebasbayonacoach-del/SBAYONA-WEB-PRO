@@ -18,7 +18,7 @@ for (const [screen,width,height] of [['desktop',1440,900],['mobile',390,844]]) {
     await expect(page.locator('.bayona-service-static--relevant')).toHaveCount(1)
     await expect(page.locator('.bayona-service-static--relevant')).toContainText('Entrenamiento personal')
     await expect(page.locator('.gym-service-card')).toHaveCount(4)
-    await expect(page.locator('.gym-home-hero .gym-primary-button')).toHaveAttribute('href', /objetivo%20general/)
+    await expect(page.locator('.gym-home-hero .gym-primary-button')).toHaveText(/SEBASTIÁN TE DA LA BIENVENIDA/)
 
     await intake.getByRole('button', { name: 'Aprender parkour' }).click()
     await expect(page.locator('.bayona-service-static--relevant')).toContainText('Parkour y rendimiento')

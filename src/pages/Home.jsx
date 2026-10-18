@@ -109,7 +109,7 @@ const GIFTS = Object.freeze([
 ])
 
 export default function Home() {
-  const { goal, preferences } = useJourneyExperience()
+  const { goal, preferences, startCoach } = useJourneyExperience()
   const relevantServiceId = goal?.serviceId || (preferences.servicio === 'Entrenamiento online' || preferences.formato === 'A mi propio ritmo' ? 'online' : preferences.servicio === 'Entrenamiento individual' || preferences.formato === 'Con acompañamiento cercano' ? 'personal' : null)
   const evaluationUrl = bookingLink(goal ? `Hola BAYONA. Me interesa conocer opciones para mi objetivo general: ${goal.label}. ¿Podemos hablar de una valoración inicial?` : 'Hola, soy una persona interesada en BAYONA. Me gustaría contarte mi objetivo y ver si podemos coordinar una valoración inicial.')
 
@@ -144,15 +144,13 @@ export default function Home() {
               Entrenamiento pensado para tu cuerpo, tus objetivos y tu vida. Contigo desde el primer paso.
             </p>
             <div className="gym-home-hero__actions">
-              <a
+              <button
                 className="gym-primary-button"
-                href={evaluationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent('funnel_start_click', { source: 'home_hero' })}
+                type="button"
+                onClick={() => { trackEvent('funnel_start_click', { source: 'home_guided_visit' }); startCoach() }}
               >
-                HABLAR CON SEBASTIÁN <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
-              </a>
+                SEBASTIÁN TE DA LA BIENVENIDA <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
+              </button>
               <a className="gym-secondary-button" href="#servicios">
                 VER CÓMO TE AYUDO <ArrowRight size={19} strokeWidth={1.7} aria-hidden="true" />
               </a>

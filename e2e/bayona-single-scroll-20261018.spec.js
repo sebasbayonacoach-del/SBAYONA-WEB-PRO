@@ -6,9 +6,9 @@ for (const [mode, width, height] of [['desktop', 1440, 900], ['mobile', 390, 844
     await page.goto('/')
 
     const hero = page.locator('.gym-home-hero')
-    const cta = hero.getByRole('link', { name: /HABLAR CON SEBASTIÁN/i })
+    const cta = hero.getByRole('button', { name: /SEBASTIÁN TE DA LA BIENVENIDA/i })
     await expect(cta).toBeVisible()
-    await expect(cta).toHaveAttribute('href', /^(https:\/\/|http:\/\/)/)
+    await expect(cta).toBeEnabled()
     await expect(hero.getByRole('link', { name: /VER CÓMO TE AYUDO/i })).toHaveAttribute('href', '#servicios')
 
     const guidance = page.locator('#tu-ruta')

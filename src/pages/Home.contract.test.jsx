@@ -22,7 +22,7 @@ describe('Home — contrato de una sola lectura', () => {
   it('mantiene el contacto voluntario sin onboarding obligatorio', () => {
     const { container } = renderHome()
     expect(container.querySelectorAll('#empieza')).toHaveLength(1)
-    expect(screen.getAllByRole('link', { name: /HABLAR CON SEBASTIÁN/i }).length).toBeGreaterThan(0)
+    expect(screen.getByRole('button', { name: /SEBASTIÁN TE DA LA BIENVENIDA/i })).toBeInTheDocument()
     expect(homeSource).not.toMatch(/\/onboarding|JourneyRibbon|ArrivalBonusCard|UniverseScale|GuideCompanion/i)
   })
 
