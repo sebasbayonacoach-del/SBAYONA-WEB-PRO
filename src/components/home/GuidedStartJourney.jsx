@@ -6,7 +6,7 @@ import '../../styles/home-guided-start.css'
 /** Three steps, entirely visible. No scrolling state, hidden stages or selectors. */
 export default function GuidedStartJourney({ steps }) {
   return (
-    <section className="gym-home-process start-journey start-journey--open" aria-labelledby="gym-process-title">
+    <section id="como-empezar" className="gym-home-process start-journey start-journey--open" aria-labelledby="gym-process-title">
       <div className="gym-home-shell start-journey__layout">
         <div className="start-journey__intro">
           <div className="gym-section-heading">

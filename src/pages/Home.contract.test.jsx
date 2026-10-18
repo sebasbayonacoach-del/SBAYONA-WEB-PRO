@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import { membershipPlans } from '../config/offerings.js'
 import Home from './Home.jsx'
+import { JourneyExperienceProvider } from '../components/experience/JourneyExperienceContext.jsx'
 import homeSource from './Home.jsx?raw'
 
 vi.mock('../components/Layout', () => ({
@@ -14,7 +15,7 @@ vi.mock('../components/leads/LeadMagnet.jsx', () => ({
 }))
 
 function renderHome() {
-  return render(<MemoryRouter><Home /></MemoryRouter>)
+  return render(<MemoryRouter><JourneyExperienceProvider><Home /></JourneyExperienceProvider></MemoryRouter>)
 }
 
 describe('Home — contrato de una sola lectura', () => {

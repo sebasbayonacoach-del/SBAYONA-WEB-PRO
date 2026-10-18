@@ -4,6 +4,8 @@ import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
 import HomeVisiblePlans from '../components/home/HomeVisiblePlans.jsx'
 import HomeMovementContexts from '../components/home/HomeMovementContexts.jsx'
+import HeroGlassIntake from '../components/experience/HeroGlassIntake.jsx'
+import { useJourneyExperience } from '../components/experience/JourneyExperienceContext.jsx'
 import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
 import AdaptiveDiscovery from '../components/home/AdaptiveDiscovery.jsx'
@@ -107,7 +109,8 @@ const GIFTS = Object.freeze([
 ])
 
 export default function Home() {
-  const evaluationUrl = bookingLink('Hola, soy una persona interesada en BAYONA. Me gustaría contarte mi objetivo y ver si podemos coordinar una valoración inicial.')
+  const { goal } = useJourneyExperience()
+  const evaluationUrl = bookingLink(goal ? `Hola BAYONA. Me interesa conocer opciones para mi objetivo general: ${goal.label}. ¿Podemos hablar de una valoración inicial?` : 'Hola, soy una persona interesada en BAYONA. Me gustaría contarte mi objetivo y ver si podemos coordinar una valoración inicial.')
 
   return (
     <div className="gym-home">
@@ -120,6 +123,7 @@ export default function Home() {
           overlay: 'linear-gradient(90deg, rgba(5,5,5,.94) 0%, rgba(5,5,5,.72) 48%, rgba(5,5,5,.30) 100%), linear-gradient(180deg, rgba(5,5,5,.16), rgba(5,5,5,.72))',
         })}
         aria-labelledby="home-hero-title"
+        id="inicio"
       >
         <div className="gym-home-shell gym-home-hero__content bayona-hero-prime">
           <div className="bayona-hero-prime__masthead" aria-label="Presentación de BAYONA">
@@ -163,6 +167,8 @@ export default function Home() {
             </a>
           </div>
 
+          <HeroGlassIntake />
+
           <div className="bayona-hero-prime__footer">
             <span className="bayona-hero-prime__edition">BAYONA / CUERPO · MENTE · MOVIMIENTO</span>
             <span className="bayona-hero-prime__footline" aria-hidden="true" />
@@ -194,7 +200,7 @@ export default function Home() {
           <div className="gym-service-grid" aria-label="Cuatro formas de entrenar con BAYONA">
             {SERVICES.map((service) => (
               <article
-                className={`gym-service-card bayona-services-prime__card gym-service-card--${service.id} bayona-service-static`}
+                className={`gym-service-card bayona-services-prime__card gym-service-card--${service.id} bayona-service-static${goal?.serviceId === service.id ? " bayona-service-static--relevant" : ""}`}
                 key={service.id}
               >
                 <img src={service.image} alt="" width="1600" height="900" loading="lazy" decoding="async" />
@@ -204,7 +210,7 @@ export default function Home() {
                   <span>{service.type}</span>
                 </div>
                 <div className="gym-service-card__body">
-                  <span className="gym-service-card__promise">{service.promise}</span>
+                  <span className="gym-service-card__promise">{goal?.serviceId === service.id ? "PUEDE ENCAJAR CONTIGO" : service.promise}</span>
                   <h3>{service.title}</h3>
                   <p>{service.copy}</p>
                   <span className="bayona-service-static__detail">{service.details}</span>
@@ -221,12 +227,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-memberships-section gym-home-plans" aria-labelledby="home-offer-heading">
+      <section className="home-memberships-section gym-home-plans" id="planes" aria-labelledby="home-offer-heading">
         <div className="gym-home-shell">
           <div className="gym-section-heading">
             <SectionLabel>MEMBRESÍAS</SectionLabel>
             <h2 id="home-offer-heading">ELIGE CÓMO <span>TE ACOMPAÑO.</span></h2>
-            <p>Todo empieza con un objetivo. Elige cuánto seguimiento necesitas.</p>
+            <p>{goal ? `Has elegido ${goal.label.toLowerCase()}. Compara los niveles de acompañamiento; ninguna elección se hace por ti.` : "Todo empieza con un objetivo. Elige cuánto seguimiento necesitas."}</p>
           </div>
           <HomeVisiblePlans projections={membershipPlanEditorialProjection} />
         </div>

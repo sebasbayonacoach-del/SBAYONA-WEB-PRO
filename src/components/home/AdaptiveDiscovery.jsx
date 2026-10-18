@@ -1,5 +1,6 @@
 import { Activity, ShieldCheck } from 'lucide-react'
 import '../../styles/adapted-movement.css'
+import { useJourneyExperience } from '../experience/JourneyExperienceContext.jsx'
 
 const PROMPTS = [
   { id: '01', label: 'TU OBJETIVO', title: '¿Qué quieres conseguir?', summary: 'Fuerza, movimiento, energía o parkour.' },
@@ -9,13 +10,14 @@ const PROMPTS = [
 
 /** Orientación legible sin datos personales, formularios o clics. */
 export default function AdaptiveDiscovery() {
+  const { goal } = useJourneyExperience()
   return (
     <section id="tu-ruta" className="bayona-discovery bayona-discovery--open bayona-discovery--focused" aria-labelledby="bayona-discovery-title">
       <div className="gym-home-shell bayona-discovery__focus-shell">
         <div className="bayona-discovery__intro">
           <span className="bayona-discovery__index">ANTES QUE UN PLAN, ESTÁS TÚ</span>
           <h2 id="bayona-discovery-title">PRIMERO <em>TE ESCUCHO.</em></h2>
-          <p>Tres cosas que importan antes de empezar.</p>
+          <p>{goal ? `Para ${goal.label.toLowerCase()}, empezamos escuchando tu situación y tus prioridades.` : 'Tres cosas que importan antes de empezar.'}</p>
         </div>
         <div className="bayona-discovery__focus-grid">
           {PROMPTS.map(prompt => (

@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import Home from './Home.jsx'
+import { JourneyExperienceProvider } from '../components/experience/JourneyExperienceContext.jsx'
 
 vi.mock('../components/Layout', () => ({
   SectionLabel: ({ children }) => <p className="eyebrow">{children}</p>,
@@ -18,7 +19,7 @@ vi.mock('../components/leads/LeadMagnet.jsx', () => ({
 }))
 
 function renderHome() {
-  return render(<MemoryRouter><Home /></MemoryRouter>)
+  return render(<MemoryRouter><JourneyExperienceProvider><Home /></JourneyExperienceProvider></MemoryRouter>)
 }
 
 describe('Home — recorrido continuo BAYONA', () => {

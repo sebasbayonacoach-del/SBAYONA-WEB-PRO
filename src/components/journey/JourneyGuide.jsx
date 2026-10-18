@@ -1,6 +1,7 @@
 import { HeartHandshake, ShieldCheck } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 import '../../styles/journey-guide.css'
+import { useJourneyExperience } from '../experience/JourneyExperienceContext.jsx'
 
 const GUIDANCE = {
   '/about': ['CONÓCENOS', 'Puedes descubrir quién te acompañaría y cómo entiende BAYONA el entrenamiento antes de elegir un servicio.'],
@@ -21,6 +22,7 @@ const GENERIC = ['TÚ MARCAS EL RITMO', 'Aquí puedes informarte y comparar tus 
  */
 export default function JourneyGuide() {
   const { pathname } = useLocation()
+  const { goal } = useJourneyExperience()
   if (pathname === '/') return null
   if (!Object.hasOwn(GUIDANCE, pathname)) return null
   const [title, description] = GUIDANCE[pathname] || GENERIC
@@ -32,6 +34,7 @@ export default function JourneyGuide() {
           <span className="bayona-journey-inline__eyebrow">BAYONA / CONTIGO EN CADA PASO</span>
           <h2>{title}</h2>
           <p>{description}</p>
+          {goal ? <p className="bayona-journey-inline__chosen"><strong>Tu objetivo: {goal.label}.</strong> Puedes seguir comparando todas las opciones; no preseleccionamos servicios por ti.</p> : null}
         </div>
         <p className="bayona-journey-inline__clarity"><ShieldCheck size={20} aria-hidden="true"/> No recogemos datos de salud mientras exploras la web.</p>
       </div>
