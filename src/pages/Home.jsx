@@ -23,7 +23,7 @@ const SERVICES = Object.freeze([
     id: 'personal',
     number: '01',
     type: 'GUÍA PERSONAL',
-    promise: 'Una sesión pensada para ti, no para cualquiera.',
+    promise: 'UNA SESIÓN HECHA PARA TI',
     title: 'Entrenamiento personal',
     copy: 'Escuchamos tu objetivo, observamos cómo te mueves y adaptamos el trabajo a tu momento.',
     image: '/images/bayona-generated/home-pillar-build-1600.webp',
@@ -33,7 +33,7 @@ const SERVICES = Object.freeze([
     id: 'online',
     number: '02',
     type: 'A TU RITMO',
-    promise: 'Cerca de ti, aunque entrenes desde lejos.',
+    promise: 'ENTRENA ESTÉS DONDE ESTÉS',
     title: 'Entrenamiento online',
     copy: 'Tu espacio, tus horarios y un plan claro: vídeos, estructura semanal y seguimiento según el servicio que elijas.',
     image: '/images/bayona-generated/home-method-1600.webp',
@@ -43,7 +43,7 @@ const SERVICES = Object.freeze([
     id: 'parkour',
     number: '03',
     type: 'MOVIMIENTO Y TÉCNICA',
-    promise: 'Cada movimiento se aprende. La confianza también.',
+    promise: 'CONFIANZA EN MOVIMIENTO',
     title: 'Parkour y rendimiento',
     copy: 'Parkour para niños, jóvenes y adultos: aprendemos desde la base, con progresión, atención y criterio.',
     image: '/images/bayona-generated/parkour-hero-1600.webp',
@@ -53,7 +53,7 @@ const SERVICES = Object.freeze([
     id: 'recovery',
     number: '04',
     type: 'MOVERTE MEJOR',
-    promise: 'Moverte con respeto también es avanzar.',
+    promise: 'MOVERTE MEJOR TAMBIÉN ES AVANZAR',
     title: 'Movilidad y recuperación',
     copy: 'Un espacio para cuidar tu movilidad, escuchar tu cuerpo y acompañar tu entrenamiento.',
     image: '/images/bayona-generated/home-pillar-read-1600.webp',
@@ -175,23 +175,26 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="gym-home-services" id="servicios" aria-labelledby="gym-services-title">
+      <section className="gym-home-services bayona-services-prime" id="servicios" aria-labelledby="gym-services-title">
         <div className="gym-home-shell">
           <div className="gym-services-intro">
             <div className="gym-section-heading">
-              <SectionLabel>NUESTROS SERVICIOS</SectionLabel>
-              <h2 id="gym-services-title">TU OBJETIVO. <span>TU FORMA DE MOVERTE.</span></h2>
+              <p className="bayona-services-prime__eyebrow"><span aria-hidden="true">02 / BAYONA</span> ELIGE TU CAMINO</p>
+              <h2 id="gym-services-title">
+                <span className="bayona-services-prime__ink">TU OBJETIVO.</span>
+                <span className="bayona-services-prime__accent">TU FORMA <span>DE MOVERTE.</span></span>
+              </h2>
             </div>
             <div className="gym-services-intro__aside">
-              <span className="gym-services-intro__index">BAYONA / 04 CAMINOS</span>
-              <p>No hay dos personas iguales. Por eso ofrecemos distintas formas de acompañarte, desde una sesión individual hasta un plan online o una práctica de movimiento. Encuentra la que tenga sentido para ti.</p>
+              <span className="gym-services-intro__index">CUATRO FORMAS. UN MISMO COMPROMISO.</span>
+              <p>Entrenamiento personal, online, parkour o movilidad. Cuatro caminos para avanzar desde donde estás, con atención y dirección.</p>
               <span className="gym-services-intro__rule" aria-hidden="true" />
             </div>
           </div>
           <div className="gym-service-grid" aria-label="Cuatro formas de entrenar con BAYONA">
             {SERVICES.map((service) => (
               <Link
-                className={`gym-service-card gym-service-card--${service.id}`}
+                className={`gym-service-card bayona-services-prime__card gym-service-card--${service.id}`}
                 to={service.href}
                 key={service.id}
                 onClick={() => trackEvent('service_card_click', { service: service.id, source: 'home_services' })}
@@ -199,7 +202,7 @@ export default function Home() {
                 <img src={service.image} alt="" width="1600" height="900" loading="eager" fetchpriority="low" decoding="async" />
                 <span className="gym-service-card__veil" aria-hidden="true" />
                 <div className="gym-service-card__top" aria-hidden="true">
-                  <span>{service.number} / 04</span>
+                  <span><strong>{service.number}</strong><small> / 04</small></span>
                   <span>{service.type}</span>
                 </div>
                 <div className="gym-service-card__body">

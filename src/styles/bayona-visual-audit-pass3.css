@@ -796,3 +796,416 @@ html[data-bayona-theme] body.premium-route--home .gym-home-hero .bayona-hero-pri
     font-size: 2.72rem !important;
   }
 }
+
+/* ==========================================================================
+   24 · HOME SERVICES / BAYONA PRIME
+   Only #servicios. Full-card navigable, editorial image balance, zero
+   overlap between section index, badge, promise, description and CTA.
+   ========================================================================== */
+html body.premium-route--home .gym-home-services.bayona-services-prime {
+  background: #f2eee7 !important;
+  color: #1d1c19 !important;
+  padding-block: clamp(5.2rem,7.4vw,7.9rem) clamp(4.4rem,6vw,6.8rem) !important;
+  overflow: hidden !important;
+}
+html body.premium-route--home .gym-home-services.bayona-services-prime::before {
+  left: max(var(--bv-gutter),calc((100% - var(--bv-max)) / 2)) !important;
+  width: 108px !important;
+  height: 2px !important;
+  background: #db813e !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-services-intro {
+  display: grid !important;
+  grid-template-columns: minmax(0,1.35fr) minmax(280px,.65fr) !important;
+  align-items: end !important;
+  column-gap: clamp(2.5rem,5vw,5.5rem) !important;
+  row-gap: 2rem !important;
+  margin-bottom: clamp(2rem,4vw,3.4rem) !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-section-heading {
+  display: block !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+html body.premium-route--home .bayona-services-prime__eyebrow {
+  display: flex !important;
+  align-items: center;
+  gap: 1.05rem;
+  margin: 0 0 clamp(1.25rem,2.1vw,2rem) !important;
+  color: #84421a !important;
+  font: 750 .72rem/1.35 "DM Mono",ui-monospace,monospace !important;
+  letter-spacing: .14em !important;
+}
+html body.premium-route--home .bayona-services-prime__eyebrow > span {
+  color: #1d1c19 !important;
+  padding-right: 1.05rem;
+  border-right: 1px solid #b7aa99;
+}
+html body.premium-route--home .gym-home-services.bayona-services-prime .gym-section-heading h2 {
+  max-width: none !important;
+  margin: 0 !important;
+  color: #1d1c19 !important;
+  font-family: Montserrat,Inter,Arial,sans-serif !important;
+  font-weight: 900 !important;
+  font-size: clamp(3.65rem,5.7vw,6.35rem) !important;
+  line-height: .98 !important;
+  letter-spacing: -.074em !important;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+html body.premium-route--home .gym-home-services.bayona-services-prime .gym-section-heading h2 > span {
+  display: block !important;
+}
+html body.premium-route--home .gym-home-services.bayona-services-prime .gym-section-heading h2 .bayona-services-prime__ink {
+  color: #171816 !important;
+  -webkit-text-fill-color: #171816 !important;
+}
+html body.premium-route--home .gym-home-services.bayona-services-prime .gym-section-heading h2 .bayona-services-prime__accent {
+  color: #da8546 !important;
+  -webkit-text-fill-color: #da8546 !important;
+}
+html body.premium-route--home .gym-home-services.bayona-services-prime .gym-section-heading h2 .bayona-services-prime__accent span {
+  display: block !important;
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-services-intro__aside {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem !important;
+  padding: 0 0 .35rem !important;
+  max-width: 380px;
+}
+html body.premium-route--home .bayona-services-prime .gym-services-intro__index {
+  color: #8e4f25 !important;
+  font: 750 .68rem/1.5 "DM Mono",ui-monospace,monospace !important;
+  letter-spacing: .105em !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-services-intro__aside p {
+  margin: 0 !important;
+  color: #4e4942 !important;
+  max-width: 39ch !important;
+  font-size: clamp(.98rem,1.1vw,1.08rem) !important;
+  line-height: 1.65 !important;
+  font-weight: 400 !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-services-intro__rule {
+  display: block !important;
+  margin-top: .5rem;
+  height: 1px;
+  width: min(100%,270px);
+  background: linear-gradient(90deg,#b46228 0 25%,#cfc3b3 25%) !important;
+}
+
+/* The asymmetry is intentional, but all four cards share the same anatomy. */
+html body.premium-route--home .bayona-services-prime .gym-service-grid {
+  display: grid !important;
+  grid-template-columns: repeat(12,minmax(0,1fr)) !important;
+  grid-auto-flow: row !important;
+  grid-auto-rows: 460px !important;
+  column-gap: clamp(.7rem,1.2vw,1rem) !important;
+  row-gap: clamp(.7rem,1.2vw,1rem) !important;
+  background: transparent !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-grid > .bayona-services-prime__card {
+  position: relative !important;
+  display: block !important;
+  min-height: 460px !important;
+  height: 460px !important;
+  max-height: 460px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  grid-row: auto !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  background: #141617 !important;
+  isolation: isolate !important;
+  text-decoration: none !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-grid > .bayona-services-prime__card:nth-child(1),
+html body.premium-route--home .bayona-services-prime .gym-service-grid > .bayona-services-prime__card:nth-child(4) {
+  grid-column: span 7 !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-grid > .bayona-services-prime__card:nth-child(2),
+html body.premium-route--home .bayona-services-prime .gym-service-grid > .bayona-services-prime__card:nth-child(3) {
+  grid-column: span 5 !important;
+}
+html body.premium-route--home .bayona-services-prime .bayona-services-prime__card > img {
+  position: absolute !important;
+  z-index: 0 !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 44% !important;
+  filter: saturate(.88) brightness(.9) contrast(1.05) !important;
+  transform: scale(1) !important;
+  transition: transform .6s cubic-bezier(.18,.72,.24,1), filter .45s ease !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card--personal > img { object-position: 42% 45% !important; }
+html body.premium-route--home .bayona-services-prime .gym-service-card--online > img { object-position: 55% 50% !important; }
+html body.premium-route--home .bayona-services-prime .gym-service-card--parkour > img { object-position: 45% 44% !important; }
+html body.premium-route--home .bayona-services-prime .gym-service-card--recovery > img { object-position: 50% 44% !important; }
+html body.premium-route--home .bayona-services-prime .bayona-services-prime__card > .gym-service-card__veil {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  display: block !important;
+  background: none !important;
+  background-image:
+    linear-gradient(180deg,rgba(5,6,7,.65) 0%,rgba(5,6,7,.06) 34%,transparent 52%),
+    linear-gradient(0deg,rgba(5,6,7,.97) 0%,rgba(5,6,7,.88) 22%,rgba(5,6,7,.32) 52%,transparent 84%) !important;
+  pointer-events: none !important;
+}
+html body.premium-route--home .bayona-services-prime .bayona-services-prime__card > .gym-service-card__top {
+  position: absolute !important;
+  z-index: 3 !important;
+  inset: clamp(1.15rem,1.8vw,1.65rem) clamp(1.15rem,1.85vw,1.7rem) auto !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 36px !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 1rem !important;
+  padding: 0 !important;
+  transform: none !important;
+  color: #fff !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card__top > span:first-child {
+  display: inline-flex !important;
+  gap: .12rem !important;
+  align-items: baseline;
+  background: rgba(8,10,10,.3) !important;
+  color: #fff5eb !important;
+  border: 1px solid rgba(255,255,255,.5) !important;
+  padding: .42rem .65rem !important;
+  min-height: 35px !important;
+  flex: 0 0 auto;
+  font: 750 .65rem/1 "DM Mono",ui-monospace,monospace !important;
+  letter-spacing: .08em !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card__top > span:first-child strong {
+  color: #f4a261 !important;
+  font-weight: 850 !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card__top > span:first-child small {
+  color: #f5e9de !important;
+  font: inherit !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card__top > span:last-child {
+  color: #fff3e8 !important;
+  font: 700 .64rem/1.4 "DM Mono",ui-monospace,monospace !important;
+  letter-spacing: .12em !important;
+  text-align: right !important;
+  max-width: 58% !important;
+  text-shadow: 0 2px 10px #000 !important;
+}
+html body.premium-route--home .bayona-services-prime .bayona-services-prime__card > .gym-service-card__body {
+  position: absolute !important;
+  z-index: 3 !important;
+  top: auto !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  inset: auto 0 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  gap: .55rem !important;
+  padding: clamp(1.2rem,2.1vw,2rem) !important;
+  transform: none !important;
+  margin: 0 !important;
+  background: transparent !important;
+  text-align: left !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card__promise {
+  position: static !important;
+  order: 0;
+  max-width: 34ch !important;
+  margin: 0 0 .3rem !important;
+  color: #ffc494 !important;
+  font: 750 .7rem/1.45 "DM Mono",ui-monospace,monospace !important;
+  letter-spacing: .085em !important;
+  text-transform: uppercase !important;
+  text-wrap: pretty;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card h3,
+html body.premium-route--home .bayona-services-prime .gym-service-card:nth-child(n) h3 {
+  order: 1;
+  max-width: 17ch !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #fffaf5 !important;
+  font: 800 clamp(2.1rem,2.9vw,3.2rem)/1.02 Montserrat,Inter,sans-serif !important;
+  letter-spacing: -.056em !important;
+  text-wrap: balance;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card__body > p {
+  order: 2;
+  max-width: 43ch !important;
+  margin: .2rem 0 0 !important;
+  color: #eee9e3 !important;
+  font: 400 .92rem/1.55 Inter,Arial,sans-serif !important;
+  text-wrap: pretty;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card__bottom {
+  order: 3;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 1.2rem !important;
+  min-height: 48px !important;
+  margin: clamp(.4rem,.8vw,.7rem) 0 0 !important;
+  padding: .65rem 0 0 !important;
+  border-top: 1px solid rgba(255,255,255,.36) !important;
+  color: #fff !important;
+  font: 750 .64rem/1.4 "DM Mono",ui-monospace,monospace !important;
+  letter-spacing: .07em !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-service-card__bottom .gym-service-card__action {
+  display: inline-grid !important;
+  place-items: center !important;
+  flex: 0 0 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+  border: 1px solid #f4a261 !important;
+  background: rgba(244,162,97,.09) !important;
+  color: #f6ac74 !important;
+}
+html body.premium-route--home .bayona-services-prime .bayona-services-prime__card:is(:hover,:focus-visible) > img {
+  filter: saturate(1.03) brightness(.98) contrast(1.06) !important;
+  transform: scale(1.045) !important;
+}
+html body.premium-route--home .bayona-services-prime .bayona-services-prime__card:is(:hover,:focus-visible) .gym-service-card__action {
+  background: #f4a261 !important;
+  color: #151614 !important;
+}
+html body.premium-route--home .bayona-services-prime .bayona-services-prime__card:focus-visible {
+  outline: 3px solid #a55b25 !important;
+  outline-offset: 4px !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-services-outro {
+  margin-top: clamp(1.5rem,3vw,2.5rem) !important;
+  border-top: 1px solid #cfc4b7 !important;
+  padding-top: 1.5rem !important;
+  color: #49453f !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-services-outro p {
+  color: #514a43 !important;
+}
+html body.premium-route--home .bayona-services-prime .gym-services-outro__link {
+  color: #914d23 !important;
+  border-color: #a85a26 !important;
+}
+@media (max-width: 1100px) {
+  html body.premium-route--home .bayona-services-prime .gym-service-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+    grid-auto-rows: 460px !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-grid > .bayona-services-prime__card:nth-child(n) {
+    grid-column: auto !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-card h3,
+  html body.premium-route--home .bayona-services-prime .gym-service-card:nth-child(n) h3 {
+    font-size: clamp(2rem,3.7vw,2.5rem) !important;
+  }
+}
+@media (max-width: 780px) {
+  html body.premium-route--home .bayona-services-prime .gym-services-intro {
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 1.5rem !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-services-intro__aside {
+    max-width: 560px !important;
+    gap: .7rem !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-grid {
+    grid-template-columns: minmax(0,1fr) !important;
+    grid-auto-rows: 445px !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-grid > .bayona-services-prime__card:nth-child(n) {
+    grid-column: 1 !important;
+    height: 445px !important;
+    min-height: 445px !important;
+    max-height: 445px !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-services-intro {
+    margin-bottom: 2rem !important;
+  }
+  html body.premium-route--home .gym-home-services.bayona-services-prime .gym-section-heading h2 {
+    font-size: clamp(2.7rem,8.5vw,5.15rem) !important;
+    line-height: 1 !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-card h3,
+  html body.premium-route--home .bayona-services-prime .gym-service-card:nth-child(n) h3 {
+    font-size: clamp(2.05rem,5vw,2.6rem) !important;
+  }
+}
+@media (max-width: 420px) {
+  html body.premium-route--home .gym-home-services.bayona-services-prime {
+    padding-block: 4rem !important;
+  }
+  html body.premium-route--home .gym-home-services.bayona-services-prime .gym-section-heading h2 {
+    font-size: clamp(2.4rem,10.25vw,2.9rem) !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-services-intro__aside p {
+    font-size: .93rem !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-grid {
+    grid-auto-rows: 448px !important;
+    gap: .75rem !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-grid > .bayona-services-prime__card:nth-child(n) {
+    min-height: 448px !important;
+    height: 448px !important;
+    max-height: 448px !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-card > .gym-service-card__body {
+    padding: 1.3rem !important;
+    gap: .5rem !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-card__top {
+    inset: 1.15rem 1.1rem auto !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-card h3,
+  html body.premium-route--home .bayona-services-prime .gym-service-card:nth-child(n) h3 {
+    font-size: clamp(1.96rem,8.2vw,2.35rem) !important;
+  }
+  html body.premium-route--home .bayona-services-prime .gym-service-card__body > p {
+    font-size: .88rem !important;
+    line-height: 1.5 !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body.premium-route--home .bayona-services-prime .bayona-services-prime__card > img,
+  html body.premium-route--home .bayona-services-prime .bayona-services-prime__card .gym-service-card__action {
+    transition: none !important;
+  }
+  html body.premium-route--home .bayona-services-prime .bayona-services-prime__card:is(:hover,:focus-visible) > img {
+    transform: none !important;
+  }
+}
+
+/* The older compression layer keeps desktop card height at 360px while its
+   grid row remains 460px, creating a 100px void and pushing copy into metadata.
+   A scoped direct-card rule fixes the conflicting height owner. */
+@media (min-width: 781px) {
+  html body.premium-route--home .gym-home .gym-home-services.bayona-services-prime .gym-service-grid > a.gym-service-card.bayona-services-prime__card:nth-child(n) {
+    min-height: 460px !important;
+    height: 460px !important;
+    max-height: 460px !important;
+    align-self: stretch !important;
+  }
+}
