@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-import { ArrowUpRight, ShieldCheck, Activity } from 'lucide-react'
+import { ArrowDownRight, ShieldCheck, Activity } from 'lucide-react'
 import '../../styles/adapted-movement.css'
 
 const SECTIONS = [
@@ -46,7 +45,7 @@ export default function AdaptiveDiscovery() {
           <div className="bayona-discovery__health">
             <ShieldCheck size={25} aria-hidden="true" />
             <p><strong>¿Hay dolor, lesión o alguna condición de salud?</strong> Puedes explorar el enfoque de actividad física adaptada, pero la aptitud para entrenar y las contraindicaciones deben valorarlas los profesionales sanitarios que correspondan. Nunca hace falta compartir información médica aquí para navegar.</p>
-            <Link to="/movimiento-adaptado">MOVIMIENTO ADAPTADO <ArrowUpRight size={18} aria-hidden="true"/></Link>
+            <span className="bayona-discovery__continue">DEBAJO: MOVIMIENTO ADAPTADO Y CONDICIONES <ArrowDownRight size={18} aria-hidden="true"/></span>
           </div>
         </div>
       </div>

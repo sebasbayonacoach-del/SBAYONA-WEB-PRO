@@ -1,9 +1,9 @@
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Download, Gift } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
 import LeadMagnet from '../components/leads/LeadMagnet.jsx'
-import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
+import HomeVisiblePlans from '../components/home/HomeVisiblePlans.jsx'
+import HomeMovementContexts from '../components/home/HomeMovementContexts.jsx'
 import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
 import AdaptiveDiscovery from '../components/home/AdaptiveDiscovery.jsx'
@@ -19,6 +19,7 @@ import '../styles/home-visual-rescue.css'
 import '../styles/home-services-premium.css'
 import '../styles/home-cinematic-hero-release.css'
 import '../styles/home-copy-caring.css'
+import '../styles/home-everything-visible.css'
 
 const SERVICES = Object.freeze([
   {
@@ -29,7 +30,7 @@ const SERVICES = Object.freeze([
     title: 'Entrenamiento personal',
     copy: 'Escuchamos tu objetivo, observamos cómo te mueves y adaptamos el trabajo a tu momento.',
     image: '/images/bayona-generated/home-pillar-build-1600.webp',
-    href: '/programs#servicios-clases',
+    details: 'Sesiones individuales, técnica y progresión con seguimiento. Empezamos por tus necesidades y capacidades.',
   },
   {
     id: 'online',
@@ -39,7 +40,7 @@ const SERVICES = Object.freeze([
     title: 'Entrenamiento online',
     copy: 'Tu espacio, tus horarios y un plan claro: vídeos, estructura semanal y seguimiento según el servicio que elijas.',
     image: '/images/bayona-generated/home-method-1600.webp',
-    href: '/programs#membresias',
+    details: 'Planificación para tu semana, ejercicios explicados y revisión según el servicio contratado.',
   },
   {
     id: 'parkour',
@@ -49,7 +50,7 @@ const SERVICES = Object.freeze([
     title: 'Parkour y rendimiento',
     copy: 'Parkour para niños, jóvenes y adultos: aprendemos desde la base, con progresión, atención y criterio.',
     image: '/images/bayona-generated/parkour-hero-1600.webp',
-    href: '/parkour-academy',
+    details: 'Bases de desplazamientos, aterrizajes, fuerza y control. Adaptación por edad y experiencia.',
   },
   {
     id: 'recovery',
@@ -59,7 +60,7 @@ const SERVICES = Object.freeze([
     title: 'Movilidad y recuperación',
     copy: 'Un espacio para cuidar tu movilidad, escuchar tu cuerpo y acompañar tu entrenamiento.',
     image: '/images/bayona-generated/home-pillar-read-1600.webp',
-    href: '/programs#servicios-recuperación',
+    details: 'Trabajo complementario de movilidad, fuerza básica y hábitos; no implica fisioterapia ni tratamiento clínico.',
   },
 ])
 
@@ -152,9 +153,9 @@ export default function Home() {
               >
                 EMPIEZA A TU RITMO <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
               </a>
-              <Link className="gym-secondary-button" to="/programs">
-                EXPLORA LOS SERVICIOS <ArrowRight size={19} strokeWidth={1.7} aria-hidden="true" />
-              </Link>
+              <a className="gym-secondary-button" href="#servicios">
+                LOS SERVICIOS ESTÁN AQUÍ <ArrowRight size={19} strokeWidth={1.7} aria-hidden="true" />
+              </a>
             </div>
             <a
               className="gym-home-reward"
@@ -196,13 +197,11 @@ export default function Home() {
           <ServicePersonalizer />
           <div className="gym-service-grid" aria-label="Cuatro formas de entrenar con BAYONA">
             {SERVICES.map((service) => (
-              <Link
-                className={`gym-service-card bayona-services-prime__card gym-service-card--${service.id}`}
-                to={service.href}
+              <article
+                className={`gym-service-card bayona-services-prime__card gym-service-card--${service.id} bayona-service-static`}
                 key={service.id}
-                onClick={() => trackEvent('service_card_click', { service: service.id, source: 'home_services' })}
               >
-                <img src={service.image} alt="" width="1600" height="900" loading="eager" fetchpriority="low" decoding="async" />
+                <img src={service.image} alt="" width="1600" height="900" loading="lazy" decoding="async" />
                 <span className="gym-service-card__veil" aria-hidden="true" />
                 <div className="gym-service-card__top" aria-hidden="true">
                   <span><strong>{service.number}</strong><small> / 04</small></span>
@@ -212,29 +211,22 @@ export default function Home() {
                   <span className="gym-service-card__promise">{service.promise}</span>
                   <h3>{service.title}</h3>
                   <p>{service.copy}</p>
-                  <span className="gym-service-card__bottom">
-                    <span>DESCUBRIR EL SERVICIO</span>
-                    <span className="gym-service-card__action" aria-hidden="true">
-                      <ArrowUpRight size={23} strokeWidth={1.65} />
-                    </span>
-                  </span>
+                  <span className="bayona-service-static__detail">{service.details}</span>
+                  <span className="gym-service-card__bottom"><span>DETALLES A LA VISTA · SIN ABRIR</span></span>
                 </div>
-              </Link>
+              </article>
             ))}
           </div>
           <div className="gym-services-outro">
-            <p>¿Todavía no sabes por dónde empezar? Está bien. Explora cada opción con calma y elige cuando lo tengas claro.</p>
-            <Link className="gym-services-outro__link" to="/programs">
-              EXPLORAR TODOS LOS SERVICIOS <ArrowUpRight size={18} aria-hidden="true" />
-            </Link>
-            <Link className="gym-services-outro__link" to="/movimiento-adaptado">
-              ENTRENAMIENTO Y CONDICIONES DE SALUD <ArrowUpRight size={18} aria-hidden="true" />
-            </Link>
+            <p>¿Todavía no sabes por dónde empezar? No tienes que elegir ahora: debajo encontrarás el proceso de orientación, las condiciones de salud y los planes completos, sin abandonar esta página.</p>
+            <span className="gym-services-outro__link bayona-service-static__note">SIGUE BAJANDO · TODO ESTÁ AQUÍ <ArrowDownRight size={18} aria-hidden="true" /></span>
           </div>
         </div>
       </section>
 
       <AdaptiveDiscovery />
+
+      <HomeMovementContexts />
 
       <GuidedStartJourney steps={START_STEPS} />
 
@@ -245,10 +237,7 @@ export default function Home() {
             <h2 id="home-offer-heading">EL APOYO QUE NECESITAS. A TU RITMO.</h2>
             <p>Hay momentos para entrenar por tu cuenta y otros para sentirte más acompañado. Compara lo que incluye cada plan y elige con tranquilidad.</p>
           </div>
-          <PlanExplorer projections={membershipPlanEditorialProjection} cinematic />
-          <Link className="gym-inline-link" to="/programs">
-            COMPARAR SERVICIOS Y SESIONES <ArrowUpRight size={17} aria-hidden="true" />
-          </Link>
+          <HomeVisiblePlans projections={membershipPlanEditorialProjection} />
         </div>
       </section>
 
@@ -273,13 +262,14 @@ export default function Home() {
           <div className="gym-section-heading">
             <SectionLabel>RECURSOS DE INICIO</SectionLabel>
             <h2 id="gym-gifts-title">UN BUEN COMIENZO NO TIENE PRECIO.</h2>
-            <p>He preparado tres recursos prácticos para ayudarte a empezar. Conócelos con calma y, si te sirven, recíbelos gratis al dejar tu nombre y un contacto.</p>
+            <p>He preparado tres recursos prácticos para ayudarte a empezar. Sus contenidos y propósito están aquí y puedes descargarlos gratis, sin crear una cuenta ni dejar tus datos.</p>
           </div>
           <div className="gym-gift-grid">
             {GIFTS.map((gift) => (
               <a
                 className="gym-gift-card"
-                href="#empieza"
+                href={gift.href}
+                download
                 key={gift.href}
                 onClick={() => trackEvent('gift_claim_click', { gift: gift.title })}
               >
@@ -288,7 +278,7 @@ export default function Home() {
                   <span>{gift.tag}</span>
                   <h3>{gift.title}</h3>
                   <p>{gift.copy}</p>
-                  <strong>RECIBIR GRATIS <Download size={17} aria-hidden="true" /></strong>
+                  <strong>DESCARGAR GRATIS <Download size={17} aria-hidden="true" /></strong>
                 </div>
               </a>
             ))}
@@ -301,12 +291,12 @@ export default function Home() {
           <SectionLabel>TU SIGUIENTE PASO</SectionLabel>
           <h2>EMPIEZA A TU RITMO. YO TE ACOMPAÑO.</h2>
           <p>
-            No necesitas tenerlo todo resuelto para dar el primer paso. Deja tu nombre y una forma de contacto: tendrás acceso a tres recursos gratuitos. Si después quieres hablar de tus objetivos, podemos coordinar una valoración. Sin prisas ni compromiso de compra.
+            Los recursos gratuitos ya están disponibles arriba, sin registro. Si quieres que te contacte para hablar de tus objetivos o coordinar una valoración inicial, aquí puedes dejar voluntariamente tu nombre y una forma de contacto. Sin prisas ni compromiso de compra.
           </p>
         </div>
         <LeadMagnet
           heading="Tu primer paso ya cuenta."
-          copy="Me gustaría saber cómo te llamas. Deja tu nombre y un correo o WhatsApp: al enviar el formulario podrás abrir tus tres recursos de inicio. Si quieres, después hablamos de tu entrenamiento."
+          copy="Si quieres hablar de tu entrenamiento, deja tu nombre y un correo o WhatsApp. Es totalmente opcional: los recursos gratuitos ya pueden descargarse sin registrarse."
         />
         <div className="gym-home-lead__fallback gym-home-shell">
           <span>¿Te sentirías más cómodo hablando primero?</span>

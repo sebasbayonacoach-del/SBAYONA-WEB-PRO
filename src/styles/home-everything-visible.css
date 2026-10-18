@@ -1,0 +1,91 @@
+/* BAYONA / HOME · una lectura continua y transparente.
+   Datos y alcance siempre visibles: solo contacto y descarga requieren interacción. */
+body.premium-route--home .gym-service-card.bayona-service-static { cursor:default; }
+body.premium-route--home .gym-service-card.bayona-service-static:hover > img { transform:none;filter:saturate(.9) contrast(1.02) brightness(.9); }
+body.premium-route--home .bayona-service-static .gym-service-card__bottom { color:#ffd5b1; }
+body.premium-route--home .gym-service-card.bayona-service-static:hover { border-color:rgba(255,255,255,.16);box-shadow:0 12px 40px rgba(0,0,0,.16); }
+.bayona-service-static .gym-service-card__bottom svg {display:none}
+.bayona-service-static .gym-service-card__bottom span:first-child {font-weight:650}
+.bayona-home-contexts {background:#e9e4dc;color:#22201d;padding:clamp(4.5rem,8vw,9rem) 0;isolation:isolate}
+.bayona-home-contexts__intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.65fr);gap:clamp(2rem,6vw,6rem);align-items:end;margin-bottom:3rem}
+.bayona-home-contexts__eyebrow,.bayona-home-contexts__index,.bayona-home-contexts__side strong{font:750 .68rem/1.6 "DM Mono",ui-monospace,monospace;letter-spacing:.14em;color:#a45629}
+.bayona-home-contexts h2{font:900 clamp(2.7rem,6vw,6.4rem)/.98 Montserrat,Inter,sans-serif;letter-spacing:-.072em;color:#1b201d;margin:1.2rem 0 0;max-width:15ch;text-wrap:balance}
+.bayona-home-contexts h2 em{color:#a65b2b;font-style:normal}
+.bayona-home-contexts__side svg{color:#a65b2b}
+.bayona-home-contexts__side p{font-size:clamp(1rem,1.25vw,1.15rem);line-height:1.68;color:#4c4943;max-width:44ch}
+.bayona-home-contexts__side strong{display:block;margin-top:1rem}
+.bayona-home-contexts__principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#c6bbae;border:1px solid #c6bbae;margin-bottom:1rem}
+.bayona-home-contexts__principles p{display:grid;grid-template-columns:auto 1fr;align-content:start;column-gap:.65rem;row-gap:.5rem;margin:0;padding:1.35rem;background:#f7f2eb;line-height:1.5}
+.bayona-home-contexts__principles svg{color:#a65b2b;grid-row:span 2}
+.bayona-home-contexts__principles strong{font:.75rem/1.3 "DM Mono",ui-monospace,monospace;letter-spacing:.06em}
+.bayona-home-contexts__principles span{color:#59544e;font-size:.9rem}
+.bayona-home-contexts__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;align-items:stretch}
+.bayona-home-contexts__group{display:flex;flex-direction:column;min-width:0;background:#f9f5ee;border:1px solid #d5c8b8;padding:clamp(1.3rem,2.2vw,2rem)}
+.bayona-home-contexts__group h3{font:850 clamp(1.2rem,1.8vw,1.68rem)/1.18 Montserrat,Inter,sans-serif;letter-spacing:-.045em;color:#24221e;margin:.9rem 0 .65rem;overflow-wrap:anywhere}
+.bayona-home-contexts__group p{color:#5b5149;font-size:.92rem;line-height:1.6;margin:0 0 1.2rem}
+.bayona-home-contexts__group ul{padding:1.1rem 0 0 1.05rem;border-top:1px solid #d8cdc0;margin:auto 0 0;color:#3e3934;font-size:.91rem;line-height:1.75}
+.bayona-home-contexts__group li::marker{color:#a65b2b}
+.bayona-home-contexts__scope{display:flex;gap:1rem;align-items:flex-start;background:#202924;color:#f7eee4;padding:clamp(1.35rem,3vw,2.3rem);margin-top:1rem;line-height:1.72}
+.bayona-home-contexts__scope svg{flex:none;color:#f4a261}
+.bayona-home-contexts__scope strong{color:#f4a261;font:750 .79rem/1.5 "DM Mono",ui-monospace,monospace;letter-spacing:.08em}
+.bayona-home-contexts__scope p{margin:.65rem 0 0;color:#e5dcd2}
+.bayona-plan-open{color:#f4eee7}
+.bayona-plan-open__intro{display:flex;justify-content:space-between;gap:2rem;align-items:end;margin:0 0 1.6rem}
+.bayona-plan-open__intro span{font:750 .73rem "DM Mono",ui-monospace,monospace;color:#f3a467;letter-spacing:.13em}
+.bayona-plan-open__intro p{max-width:48ch;line-height:1.6;color:#c8c3bb}
+.bayona-plan-open__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.bayona-plan-open__card{min-width:0;display:flex;flex-direction:column;background:#202523;border:1px solid rgba(255,255,255,.2);box-shadow:0 14px 38px rgba(0,0,0,.16);color:#f8f0e8}
+.bayona-plan-open__card--featured{border-color:#e5a16d}
+.bayona-plan-open__heading{padding:clamp(1.25rem,3vw,2rem);border-bottom:1px solid rgba(255,255,255,.2)}
+.bayona-plan-open__meta{display:flex;justify-content:space-between;align-items:center;gap:1rem;font:750 .65rem/1.4 "DM Mono",ui-monospace,monospace;letter-spacing:.06em;color:#efae77}
+.bayona-plan-open__heading h3{font:900 clamp(2rem,3.6vw,3.7rem)/1.05 Montserrat,Inter,sans-serif;color:#fff4e8;letter-spacing:-.06em;margin:1.3rem 0 .25rem;overflow-wrap:anywhere}
+.bayona-plan-open__descriptor{font-size:1.1rem;color:#f0ae79;margin:.4rem 0}
+.bayona-plan-open__for{color:#d8ccc0;line-height:1.62;font-size:.94rem;max-width:50ch}
+.bayona-plan-open__price{display:flex;flex-wrap:wrap;gap:.45rem .7rem;align-items:baseline;margin-top:1.3rem}
+.bayona-plan-open__price strong{font:850 clamp(2rem,3vw,3rem)/1 Montserrat,Inter,sans-serif;letter-spacing:-.05em}
+.bayona-plan-open__price span{font:.73rem "DM Mono",monospace;color:#f0ad76}
+.bayona-plan-open__price small{flex-basis:100%;color:#b6b1a9}
+.bayona-plan-open__details{padding:clamp(1.25rem,3vw,2rem);flex:1}
+.bayona-plan-open__details h4{font:800 .68rem/1.5 "DM Mono",monospace;letter-spacing:.13em;color:#f2a869;margin:0 0 1rem}
+.bayona-plan-open__details h4:not(:first-child){margin-top:1.8rem}
+.bayona-plan-open__lead{color:#e1d3c5;font-weight:700}
+.bayona-plan-open__details ul{list-style:none;padding:0;margin:0;display:grid;gap:.65rem}
+.bayona-plan-open__details li{font-size:.92rem;line-height:1.52;color:#e2d9d0}
+.bayona-plan-open__included li{display:flex;gap:.65rem;align-items:flex-start}
+.bayona-plan-open__included svg{flex:0 0 16px;color:#f2ad72;margin-top:3px}
+.bayona-plan-open__excluded li{padding-left:1rem;position:relative;color:#bcb5ad}
+.bayona-plan-open__excluded li::before{content:'—';position:absolute;left:0;color:#f0a771}
+.bayona-plan-open__availability{color:#f1ae77;font:.78rem "DM Mono",monospace;margin:1.5rem 0 0}
+.bayona-plan-open__contact{display:flex;align-items:center;justify-content:space-between;gap:.5rem;min-height:58px;margin:0 clamp(1.25rem,3vw,2rem) clamp(1.25rem,3vw,2rem);padding:1rem 1.2rem;background:#e9a26c;color:#1c1b19;text-decoration:none;font:800 .75rem "DM Mono",monospace;letter-spacing:.07em}
+.bayona-plan-open__contact:is(:hover,:focus-visible){background:#ffd0a8;outline-offset:3px}
+.bayona-plan-open__scope{display:flex;gap:.75rem;align-items:flex-start;margin:2rem 0 0;color:#c9c2ba;line-height:1.64;font-size:.86rem}
+.bayona-plan-open__scope svg{flex:none;color:#f4ad72;margin-top:.2rem}
+@media(max-width:960px){.bayona-home-contexts__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:740px){.bayona-home-contexts__intro{grid-template-columns:1fr}.bayona-home-contexts__principles{grid-template-columns:1fr}.bayona-home-contexts__grid,.bayona-plan-open__grid{grid-template-columns:1fr}.bayona-plan-open__intro{display:block}.bayona-home-contexts h2{font-size:clamp(2.7rem,11.5vw,4.4rem)}.bayona-home-contexts__scope{font-size:.9rem}.bayona-plan-open__heading h3{font-size:clamp(2.2rem,11vw,3.25rem)}}
+@media(prefers-reduced-motion:reduce){.bayona-plan-open__contact{scroll-behavior:auto}}
+
+/* Information replaces a click target; it reads as part of each service card. */
+body.premium-route--home .bayona-service-static__detail{display:block;max-width:49ch;font-size:.84rem;line-height:1.58;color:#f8d6b9;padding-left:.8rem;border-left:2px solid #efa46a;margin:.2rem 0 .15rem}
+body.premium-route--home .bayona-service-static__note{cursor:default;text-decoration:none;border-bottom:none}
+@media(max-width:650px){body.premium-route--home .bayona-service-static__detail{font-size:.79rem;line-height:1.42}}
+
+/* El bloque de planes vive sobre papel claro; las tarjetas sí son oscuras. */
+body.premium-route--home .home-memberships-section .bayona-plan-open__intro span{color:#995024}
+body.premium-route--home .home-memberships-section .bayona-plan-open__intro p{color:#4d4a43}
+body.premium-route--home .home-memberships-section .bayona-plan-open__scope{color:#514b43}
+body.premium-route--home .home-memberships-section .bayona-plan-open__card :is(h3,strong){color:#f8f0e8 !important}
+body.premium-route--home .home-memberships-section .bayona-plan-open__card h4{color:#f2a869 !important}
+body.premium-route--home .home-memberships-section .bayona-plan-open__card .bayona-plan-open__contact{color:#1c1b19 !important}
+.bayona-discovery__health .bayona-discovery__continue{grid-column:2;display:inline-flex;align-items:center;gap:.5rem;color:#f4ae76;font:750 .65rem/1.4 "DM Mono",ui-monospace,monospace;letter-spacing:.055em;min-height:36px}
+
+/* Capítulo claro para separar la comparación de la narrativa oscura. */
+body.premium-route--home .gym-home .home-memberships-section,
+.gym-home .home-memberships-section{background:#f5f1e8 !important;color:#201f1b}
+body.premium-route--home .gym-home .home-memberships-section .gym-section-heading h2,
+.gym-home .home-memberships-section .gym-section-heading h2{color:#161b18 !important}
+body.premium-route--home .gym-home .home-memberships-section .gym-section-heading p,
+.gym-home .home-memberships-section .gym-section-heading p{color:#514940 !important}
+
+/* Anular el relleno de texto decorativo del título del showroom antiguo. */
+body.premium-route--home .gym-home .home-memberships-section #home-offer-heading{-webkit-text-fill-color:#161b18 !important;color:#161b18 !important}
+body.premium-route--home .gym-home .home-memberships-section .gym-section-heading > p{-webkit-text-fill-color:#514940 !important;color:#514940 !important}
