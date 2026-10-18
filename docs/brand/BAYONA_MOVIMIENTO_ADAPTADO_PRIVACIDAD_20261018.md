@@ -22,3 +22,10 @@
 
 ## Restricción de producto
 No afirmar que BAYONA atiende todas las patologías; ninguna lista es exhaustiva. Cada caso es particular y puede requerir derivación. Los apartados no acreditan una especialidad clínica.
+
+## Acompañamiento contextual de navegación (fase del 18/10)
+- `JourneyProvider` conserva **solo** el objetivo general y/o servicio que la persona elige de forma expresa mientras la aplicación React está abierta. El estado se pierde al recargar, no existe cuenta asociada ni un identificador de visitante.
+- `ServicePersonalizer` permite elegir objetivo, prioriza una tarjeta y permite borrar la elección en cualquier momento. No usa tiempo de scroll, visitas ni clics pasivos para elaborar un perfil.
+- `JourneyGuide` ofrece orientación relacionada con la página en pantalla, mediante reglas editoriales predefinidas, sin atribuir diagnósticos ni capacidades clínicas.
+- El cuestionario `AdaptiveDiscovery` solo comparte su objetivo general con la guía **si el visitante pulsa voluntariamente el botón de transferencia**. El contexto de salud, la modalidad y demás respuestas nunca se comparten con la guía.
+- No transmitir el estado del guía o del cuestionario a analytics, CRM, localStorage, cookies, query strings, enlaces de WhatsApp ni otras herramientas sin rediseño legal y de seguridad.

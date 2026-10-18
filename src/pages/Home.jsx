@@ -7,6 +7,8 @@ import PlanExplorer from '../components/conversion/PlanExplorer.jsx'
 import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
 import AdaptiveDiscovery from '../components/home/AdaptiveDiscovery.jsx'
+import ServicePersonalizer from '../components/journey/ServicePersonalizer.jsx'
+import { journeyGoalById, useJourney } from '../components/journey/JourneyContext.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink, isBookingEnabled } from '../config/site.config.js'
@@ -112,6 +114,9 @@ const TRUST_POINTS = Object.freeze([
 ])
 
 export default function Home() {
+  const { goal, setService } = useJourney()
+  const preferred = journeyGoalById(goal)?.preferred
+  const orderedServices = preferred ? [...SERVICES].sort((a,b)=>Number(b.id===preferred)-Number(a.id===preferred)) : SERVICES
   const evaluationUrl = bookingLink('Hola, soy una persona interesada en BAYONA. Me gustaría contarte mi objetivo y ver si podemos coordinar una valoración inicial.')
 
   return (
@@ -192,19 +197,20 @@ export default function Home() {
               <span className="gym-services-intro__rule" aria-hidden="true" />
             </div>
           </div>
+          <ServicePersonalizer />
           <div className="gym-service-grid" aria-label="Cuatro formas de entrenar con BAYONA">
-            {SERVICES.map((service) => (
+            {orderedServices.map((service) => (
               <Link
-                className={`gym-service-card bayona-services-prime__card gym-service-card--${service.id}`}
+                className={`gym-service-card bayona-services-prime__card gym-service-card--${service.id}${preferred===service.id?' is-for-you':''}`}
                 to={service.href}
                 key={service.id}
-                onClick={() => trackEvent('service_card_click', { service: service.id, source: 'home_services' })}
+                onClick={() => { setService(service.id); trackEvent('service_card_click', { source: 'home_services' }) }}
               >
                 <img src={service.image} alt="" width="1600" height="900" loading="eager" fetchpriority="low" decoding="async" />
                 <span className="gym-service-card__veil" aria-hidden="true" />
                 <div className="gym-service-card__top" aria-hidden="true">
                   <span><strong>{service.number}</strong><small> / 04</small></span>
-                  <span>{service.type}</span>
+                  <span>{preferred === service.id ? 'DESTACADO PARA TU OBJETIVO' : service.type}</span>
                 </div>
                 <div className="gym-service-card__body">
                   <span className="gym-service-card__promise">{service.promise}</span>

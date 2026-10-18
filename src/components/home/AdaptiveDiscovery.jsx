@@ -6,6 +6,7 @@ import {
   DISCOVERY_GOALS, DISCOVERY_CONTEXTS, DISCOVERY_FORMATS, contextNeedsReview,
 } from '../../data/adaptedMovement.js'
 import '../../styles/adapted-movement.css'
+import { useJourney } from '../journey/JourneyContext.jsx'
 
 const STEPS = [
   { title:'¿Qué te gustaría conseguir?', kicker:'01 / TU OBJETIVO', choices:DISCOVERY_GOALS },
@@ -16,6 +17,7 @@ const STEPS = [
 /** All answers stay in transient React memory. No analytics, cookies, URL
  * params, network requests or pre-filled contact payloads involving health. */
 export default function AdaptiveDiscovery() {
+  const { setGoal: setJourneyGoal, setOpen: setJourneyOpen, reset: resetJourney } = useJourney()
   const [answers,setAnswers] = useState([null,null,null])
   const [stage,setStage] = useState(0)
   const completed = answers.every(Boolean)
@@ -26,7 +28,13 @@ export default function AdaptiveDiscovery() {
     if(stage<STEPS.length-1)setStage(stage+1)
     else setStage(3)
   }
-  const reset=()=>{setAnswers([null,null,null]);setStage(0)}
+  const reset=()=>{setAnswers([null,null,null]);setStage(0);resetJourney()}
+  const continueWithGoal = () => {
+    // Explicit action: ONLY the general objective moves into the visit guide.
+    // Medical context and preferred format remain private to this component.
+    setJourneyGoal(answers[0])
+    setJourneyOpen(true)
+  }
   const safeContact=bookingLink('Hola, me interesa conocer las opciones de entrenamiento adaptado de BAYONA. Quisiera conversar primero sobre el proceso de valoración, sin compartir datos médicos por este mensaje.')
   return (
     <section id="tu-ruta" className="bayona-discovery" aria-labelledby="bayona-discovery-title">
@@ -72,10 +80,14 @@ export default function AdaptiveDiscovery() {
                 <Link to={safety?'/movimiento-adaptado':'/programs'}>VER OPCIONES PARA MÍ <ArrowRight size={18} aria-hidden="true"/></Link>
                 <a href={safeContact} target="_blank" rel="noopener noreferrer">HABLAR ANTES DE EMPEZAR <ArrowRight size={18} aria-hidden="true"/></a>
               </div>
+              <div className="bayona-discovery__handoff">
+                <p>¿Quieres que BAYONA te acompañe también al explorar las demás páginas? Solo usaremos tu objetivo general, nunca la respuesta sobre tu salud.</p>
+                <button type="button" onClick={continueWithGoal}>USAR MI OBJETIVO DURANTE ESTA VISITA <ArrowRight size={16} aria-hidden="true"/></button>
+              </div>
               <button type="button" className="bayona-discovery__reset" onClick={reset}><RotateCcw size={15} aria-hidden="true"/> BORRAR MIS RESPUESTAS</button>
             </div>
           )}
-          <p className="bayona-discovery__privacy"><ShieldCheck size={18} aria-hidden="true"/> Tus elecciones solo se muestran en esta pantalla: no se guardan, no se envían y no se usan para diagnosticar. Al contactar, no se incluyen automáticamente tus respuestas.</p>
+          <p className="bayona-discovery__privacy"><ShieldCheck size={18} aria-hidden="true"/> Tus respuestas no se guardan ni se envían. Solo tu objetivo general puede compartirse con la guía de esta visita si lo autorizas pulsando el botón correspondiente. Los datos de salud nunca se comparten.</p>
         </div>
       </div>
     </section>

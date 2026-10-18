@@ -30,7 +30,7 @@ for(const [name,width,height] of [['desktop',1440,900],['mobile',390,844]]){
   await page.goto('/')
   const journey=page.locator('#tu-ruta')
   await expect(journey.getByRole('heading',{level:2})).toBeVisible()
-  await expect(journey.getByText(/no se guardan, no se envían/i)).toBeVisible()
+  await expect(journey.getByText(/no se guardan ni se envían/i)).toBeVisible()
   const requests=[]
   page.on('request',r=>{if(['xhr','fetch','beacon'].includes(r.resourceType())&&r.method()==='POST')requests.push(r.url())})
   await journey.getByRole('button',{name:/Ganar fuerza/i}).click()
