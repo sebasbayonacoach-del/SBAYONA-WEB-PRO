@@ -54,3 +54,11 @@ Comprobación en navegador: las diez rutas se recorren en `scripts/smoke-21-effe
 ## Estado
 
 Todo lo anterior pertenece a la rama de trabajo `audit/bayona-sitewide-20261018`, no constituye publicación de producción. No se han modificado datos, suscripciones ni autenticación.
+
+## Auditoría visual y corrección · 19/10/2026
+
+La primera implementación resultó demasiado invasiva: los lienzos se colocaban a z-index 5, por encima de las tarjetas y la tipografía, ocupaban secciones completas y deformaban los patrones al estirar lienzos muy grandes. Las capturas mostraron especialmente ondas sobre los planes de Comunidad, puntos sobre las tarjetas de Parkour y rayas verticales sobre la imagen de Nosotros.
+
+La corrección utiliza z-index -1 dentro de la sección aislada, posición de acento en lugar de capa a pantalla completa, tamaño máximo de 700 × 540 px (móvil hasta 440 × 340), transparencia por familia de efecto y máscara radial que desvanece los patrones antes de las zonas de lectura. El motor calcula ahora la resolución desde el rectángulo visual real del canvas y deja de distorsionarse con la altura de capítulos largos. El HUD de misión de escritorio ocupa una superficie más pequeña. Se respeta el movimiento reducido y el clic siempre atraviesa el lienzo.
+
+Evidencia: capturas antes/después de Aurora Flow, Riso Dither, Halftone, Fluted Glass, Holo Foil y Mesh Gradient, además de pruebas Playwright de capas, límites y accesibilidad en `e2e/bayona-effects-visual-audit-20261019.spec.js`. Los 21 nombres y ubicaciones originales se mantienen.

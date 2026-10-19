@@ -1,41 +1,73 @@
-/* 21 procedural canvases distributed by editorial chapter.
-   Drawn only while intersecting; canvases never intercept mouse or touch. */
-#main-content .bayona-fx-host{position:relative;isolation:isolate;overflow:hidden}
+/**
+ * BAYONA FX / Visual audit v2.
+ * A lighting accent belongs BEHIND editorial content, never across copy.
+ * Bounded canvas size avoids full-section stretched dots and stripes.
+ */
+#main-content .bayona-fx-host{
+ position:relative;
+ isolation:isolate;
+ overflow:hidden;
+}
 #main-content .bayona-fx-host>.bayona-fx-canvas{
  position:absolute!important;
- inset:0!important;
- z-index:5!important;
+ top:0!important;
+ right:0!important;
+ bottom:auto!important;
+ left:auto!important;
+ z-index:-1!important;
  display:block!important;
- width:100%!important;
- height:100%!important;
+ width:min(66%,700px)!important;
+ height:min(90%,540px)!important;
  min-width:0!important;
  min-height:0!important;
+ max-height:540px!important;
  pointer-events:none!important;
  user-select:none!important;
  mix-blend-mode:screen;
- opacity:.62;
- filter:saturate(.88);
- contain:strict;
+ opacity:.22!important;
+ filter:saturate(.7) blur(.3px);
+ mask-image:radial-gradient(ellipse 80% 75% at 72% 40%,#000 0%,rgba(0,0,0,.65) 40%,transparent 100%);
+ -webkit-mask-image:radial-gradient(ellipse 80% 75% at 72% 40%,#000 0%,rgba(0,0,0,.65) 40%,transparent 100%);
+ contain:paint;
 }
-/* Editorial papers use darker pigment rather than shining ink. */
 #main-content .bayona-fx-host:is(.bayona-cinema-chapter--light,.services-final,.shop-process)>.bayona-fx-canvas{
  mix-blend-mode:multiply;
- opacity:.26;
+ opacity:.12!important;
 }
 #main-content .bayona-fx-host[data-bayona-fx='mesh-gradient']>.bayona-fx-canvas,
-#main-content .bayona-fx-host[data-bayona-fx='aurora-flow']>.bayona-fx-canvas,
-#main-content .bayona-fx-host[data-bayona-fx='glow-orbs']>.bayona-fx-canvas{opacity:.76}
+#main-content .bayona-fx-host[data-bayona-fx='glow-orbs']>.bayona-fx-canvas{
+ opacity:.32!important;
+}
+#main-content .bayona-fx-host[data-bayona-fx='liquid-glass']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='caustics']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='bokeh-dust-drift']>.bayona-fx-canvas{opacity:.20!important;}
+#main-content .bayona-fx-host[data-bayona-fx='fluted-glass']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='holo-foil']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='silk-waves']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='aurora-flow']>.bayona-fx-canvas{opacity:.13!important;}
+#main-content .bayona-fx-host[data-bayona-fx='riso-dither']>.bayona-fx-canvas,
 #main-content .bayona-fx-host[data-bayona-fx='halftone']>.bayona-fx-canvas,
-#main-content .bayona-fx-host[data-bayona-fx='riso-dither']>.bayona-fx-canvas{opacity:.43}
-#main-content .bayona-fx-host[data-bayona-fx='liquid-glass']>.bayona-fx-canvas{opacity:.38}
-#main-content .bayona-fx-host[data-bayona-fx='light-rays']>.bayona-fx-canvas{opacity:.52}
+#main-content .bayona-fx-host[data-bayona-fx='ascii-plasma']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='pixel-grid']>.bayona-fx-canvas{opacity:.11!important;}
+#main-content .bayona-fx-host[data-bayona-fx='light-rays']>.bayona-fx-canvas{opacity:.16!important;}
+#main-content .bayona-fx-host[data-bayona-fx='starfield']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='noise-shimmer']>.bayona-fx-canvas{opacity:.18!important;}
+#main-content .bayona-fx-host[data-bayona-fx='liquid-metal']>.bayona-fx-canvas{opacity:.14!important;}
 @media(max-width:680px){
- #main-content .bayona-fx-host>.bayona-fx-canvas{opacity:.38;filter:saturate(.72)}
- #main-content .bayona-fx-host:is(.bayona-cinema-chapter--light,.services-final,.shop-process)>.bayona-fx-canvas{opacity:.19}
+ #main-content .bayona-fx-host>.bayona-fx-canvas{
+  width:min(83%,440px)!important;
+  height:min(52%,340px)!important;
+  max-height:340px!important;
+  opacity:.11!important;
+  mask-image:radial-gradient(ellipse 85% 75% at 87% 33%,rgba(0,0,0,.75),transparent 92%);
+  -webkit-mask-image:radial-gradient(ellipse 85% 75% at 87% 33%,rgba(0,0,0,.75),transparent 92%);
+ }
+ #main-content .bayona-fx-host[data-bayona-fx='riso-dither']>.bayona-fx-canvas,
+ #main-content .bayona-fx-host[data-bayona-fx='halftone']>.bayona-fx-canvas{opacity:.07!important;}
 }
 @media(prefers-reduced-motion:reduce){
- #main-content .bayona-fx-host>.bayona-fx-canvas{opacity:.20!important}
+ #main-content .bayona-fx-host>.bayona-fx-canvas{opacity:.09!important;}
 }
 @media print{
- #main-content .bayona-fx-canvas{display:none!important}
+ #main-content .bayona-fx-canvas{display:none!important;}
 }

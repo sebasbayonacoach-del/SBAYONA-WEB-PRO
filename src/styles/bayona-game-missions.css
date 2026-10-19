@@ -199,3 +199,41 @@ body[data-bayona-cinema-route='/programs']
   height:2px;margin-top:6px;
  }
 }
+
+/* Visual audit: mission HUD should support the scene, not cover the artwork. */
+@media (min-width:681px){
+ body.bayona-cinema-active .bayona-mission-hud{
+  width:235px!important;
+  min-height:0!important;
+  padding:.65rem .75rem .55rem!important;
+  border-radius:8px!important;
+  border-top-width:1px!important;
+  box-shadow:0 14px 45px rgba(0,0,0,.25)!important;
+ }
+ body.bayona-cinema-active .bayona-mission-hud .bayona-compass__bar{
+  font-size:.48rem!important;
+  letter-spacing:.06em!important;
+ }
+ body.bayona-cinema-active .bayona-mission-hud .bayona-compass__bar svg{
+  width:13px;height:13px;
+ }
+ body.bayona-cinema-active .bayona-mission-hud .bayona-compass__middle{
+  margin:.45rem 0 .5rem!important;
+ }
+ body.bayona-cinema-active .bayona-mission-hud .bayona-compass__middle strong{
+  display:block;
+  font-size:.80rem!important;
+  line-height:1.15!important;
+  max-height:2.3em;
+  overflow:hidden;
+ }
+ body.bayona-cinema-active .bayona-mission-hud .bayona-compass__middle span,
+ body.bayona-cinema-active .bayona-mission-hud .bayona-compass__middle svg,
+ body.bayona-cinema-active .bayona-mission-hud .bayona-cinema-track__line,
+ body.bayona-cinema-active .bayona-mission-hud .bayona-mission-hud__footer{
+  display:none!important;
+ }
+ body.bayona-cinema-active .bayona-mission-hud .bayona-compass__progress{
+  height:2px!important;
+ }
+}

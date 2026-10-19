@@ -33,10 +33,11 @@ export default function AmbientEffects(){
   },{rootMargin:'120px 0px',threshold:0})
   function render(obj,t){
    if(!obj.canvas.isConnected)return
-   const target=obj.host
-   const bounds=target.getBoundingClientRect()
-   const width=Math.min(900,Math.max(1,Math.round(bounds.width*BUFFER_SCALE)))
-   const height=Math.min(580,Math.max(1,Math.round(Math.min(bounds.height,1200)*BUFFER_SCALE)))
+   // Size the raster to its bounded decorative accent, NOT to a 3,000px
+   // section (which stretched stripes and dots across the cards).
+   const bounds=obj.canvas.getBoundingClientRect()
+   const width=Math.min(700,Math.max(1,Math.round(bounds.width*BUFFER_SCALE)))
+   const height=Math.min(540,Math.max(1,Math.round(bounds.height*BUFFER_SCALE)))
    if(obj.canvas.width!==width)obj.canvas.width=width
    if(obj.canvas.height!==height)obj.canvas.height=height
    drawProceduralEffect(obj.canvas,obj.effect,t)
