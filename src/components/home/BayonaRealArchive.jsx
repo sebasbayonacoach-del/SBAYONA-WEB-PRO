@@ -1,73 +1,92 @@
-import {useEffect,useRef} from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '../../styles/bayona-real-archive.css'
 
-const CLIPS=[
- {src:'/videos/bayona-authentic/broll-rio.mp4',title:'UN CAMINO',description:'España · Archivo original',poster:'/images/bayona-authentic/broll-rio.webp'},
- {src:'/videos/bayona-authentic/movimiento-entorno.mp4',title:'EL ENTORNO',description:'Deporte · Grabación original',poster:'/images/bayona-authentic/movimiento-entorno.webp'},
- {src:'/videos/bayona-authentic/movimiento-pov.mp4',title:'EN PRIMERA PERSONA',description:'Movimiento · Archivo original',poster:'/images/bayona-authentic/movimiento-pov.webp'},
-]
-export default function BayonaRealArchive(){
- const ref=useRef(null)
- useEffect(()=>{
-  const root=ref.current
-  if(!root || !('IntersectionObserver' in window))return
-  // SPA home renders after native browser hash handling.
-  // Honor direct preview links without activating movement elsewhere.
-  if(window.location.hash==='#archivo-real'){
-   window.requestAnimationFrame(()=>window.scrollTo({
-    top:root.getBoundingClientRect().top+window.scrollY-105,
-    behavior:'instant',
-   }))
-  }
-  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)')
-  const videos=[...root.querySelectorAll('video')]
-  const observer=new IntersectionObserver(entries=>{
-   for(const item of entries){
-    const video=item.target
-    if(item.isIntersecting && !reduce.matches && !document.hidden){
-     video.play().catch(()=>{})
-    }else video.pause()
-   }
-  },{rootMargin:'80px 0px',threshold:.5})
-  videos.forEach(video=>observer.observe(video))
-  const hidden=()=>{if(document.hidden)videos.forEach(v=>v.pause())}
-  document.addEventListener('visibilitychange',hidden)
-  return ()=>{observer.disconnect();document.removeEventListener('visibilitychange',hidden);videos.forEach(v=>v.pause())}
- },[])
- return <section className="bayona-real-archive" id="archivo-real" aria-labelledby="archivo-real-title" ref={ref}>
-  <div className="bayona-real-archive__shell">
-   <div className="bayona-real-archive__intro">
-    <div className="bayona-real-archive__eyebrow"><span>ARCHIVO BAYONA</span><span>IMÁGENES Y VÍDEOS ORIGINALES</span></div>
-    <h2 id="archivo-real-title">VIDA REAL.<br/><em>MOVIMIENTO REAL.</em></h2>
-    <p>No es un avatar. Son fotografías y grabaciones del archivo personal de BAYONA.</p>
-   </div>
-   <div className="bayona-real-archive__photos">
-    <figure className="bayona-real-archive__photo bayona-real-archive__photo--portrait">
-      <img src="/images/bayona-authentic/selfie-exterior-2026-04-11.jpg" alt="Fotografía original del archivo personal de BAYONA en una calle de España" width="1152" height="2048" loading="lazy" decoding="async"/>
-      <figcaption><span>01 — SEBASTIÁN</span><span>11.04.2026</span></figcaption>
-    </figure>
-    <figure className="bayona-real-archive__photo bayona-real-archive__photo--rooftop">
-      <img src="/images/bayona-authentic/selfie-azotea-2026-01-07.webp" alt="Selfie original en una azotea, del archivo de BAYONA" width="900" height="1600" loading="lazy" decoding="async"/>
-      <figcaption><span>02 — ORIGEN</span><span>07.01.2026</span></figcaption>
-    </figure>
-    <figure className="bayona-real-archive__photo bayona-real-archive__photo--mountain">
-      <img src="/images/bayona-authentic/recorrido-montana-2026-02-23.jpg" alt="Fotografía original de un recorrido por un paisaje de montaña" width="900" height="1600" loading="lazy" decoding="async"/>
-      <figcaption><span>03 — CAMINO</span><span>23.02.2026</span></figcaption>
-    </figure>
-   </div>
-   <div className="bayona-real-archive__reel-heading"><span>REELS / DEL ARCHIVO</span><span>GRABACIÓN REAL · SIN AUDIO</span></div>
-   <div className="bayona-real-archive__reels">
-    {CLIPS.map((clip,i)=><article key={clip.src} className="bayona-real-archive__reel">
-      <video src={clip.src} poster={clip.poster} muted loop playsInline preload="none"
-        controls aria-label={clip.title+' — vídeo original del archivo BAYONA'}/>
-      <div className="bayona-real-archive__reel-caption">
-       <span>{String(i+1).padStart(2,'0')} / 03</span>
-       <strong>{clip.title}</strong>
-       <small>{clip.description}</small>
+const CLIPS = Object.freeze([
+  { src: '/videos/bayona-authentic/broll-rio.mp4', poster: '/images/bayona-authentic/broll-rio.webp', title: 'UN CAMINO', description: 'Paisaje · España', chapter: '01' },
+  { src: '/videos/bayona-authentic/movimiento-entorno.mp4', poster: '/images/bayona-authentic/movimiento-entorno.webp', title: 'EL ENTORNO', description: 'Deporte · Movimiento', chapter: '02' },
+  { src: '/videos/bayona-authentic/movimiento-pov.mp4', poster: '/images/bayona-authentic/movimiento-pov.webp', title: 'EN PRIMERA PERSONA', description: 'Recorrido · POV', chapter: '03' },
+])
+
+export default function BayonaRealArchive() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const sectionRef = useRef(null)
+  const active = CLIPS[activeIndex]
+
+  useEffect(() => {
+    if (window.location.hash !== '#archivo-real') return
+    const frame = window.requestAnimationFrame(() => sectionRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' }))
+    return () => window.cancelAnimationFrame(frame)
+  }, [])
+
+  return (
+    <section className="bayona-real-archive" id="archivo-real" ref={sectionRef} aria-labelledby="archivo-real-title">
+      <div className="bayona-real-archive__shell">
+        <header className="bayona-real-archive__intro">
+          <div className="bayona-real-archive__eyebrow">
+            <span>ARCHIVO BAYONA / 2026</span>
+            <span>03 FRAGMENTOS ORIGINALES</span>
+          </div>
+          <h2 id="archivo-real-title">VIDA REAL.<br /><em>MOVIMIENTO REAL.</em></h2>
+          <div className="bayona-real-archive__intro-bottom">
+            <p>El movimiento también se cuenta con imágenes. Explora tres fragmentos del archivo audiovisual de BAYONA, sin rostros atribuidos ni personajes inventados.</p>
+            <span aria-hidden="true">01 — 03 / FILM ARCHIVE</span>
+          </div>
+        </header>
+
+        <div className="bayona-real-archive__feature">
+          <div className="bayona-real-archive__player">
+            <div className="bayona-real-archive__screen">
+              <video
+                key={active.src}
+                src={active.src}
+                poster={active.poster}
+                controls
+                muted
+                playsInline
+                preload="none"
+                aria-label={active.title + ' — grabación original sin audio'}
+              />
+              <span className="bayona-real-archive__screen-label" aria-hidden="true">B / MOTION ARCHIVE</span>
+            </div>
+            <div className="bayona-real-archive__frame-data" aria-hidden="true">
+              <span>REC · BAYONA</span><span>ORIGINAL FOOTAGE</span><span>16:09 / EDITORIAL</span>
+            </div>
+          </div>
+
+          <aside className="bayona-real-archive__editorial" aria-live="polite">
+            <span className="bayona-real-archive__chapter">SECUENCIA {active.chapter} / 03</span>
+            <h3>{active.title}</h3>
+            <p>{active.description}. Grabación del archivo personal, presentada sin atribuir identidades.</p>
+            <div className="bayona-real-archive__editorial-rule" aria-hidden="true" />
+            <span className="bayona-real-archive__hint">SELECCIONA UN FRAGMENTO PARA VERLO</span>
+            <div className="bayona-real-archive__takes" role="group" aria-label="Seleccionar fragmento de vídeo">
+              {CLIPS.map((clip, index) => (
+                <button
+                  key={clip.src}
+                  type="button"
+                  className={'bayona-real-archive__take' + (index === activeIndex ? ' is-current' : '')}
+                  onClick={() => setActiveIndex(index)}
+                  aria-pressed={index === activeIndex}
+                  aria-label={'Seleccionar vídeo ' + clip.chapter + ': ' + clip.title}
+                >
+                  <img src={clip.poster} alt="" loading="lazy" decoding="async" width="122" height="152" />
+                  <span className="bayona-real-archive__take-info">
+                    <small>TAKE {clip.chapter}</small>
+                    <strong>{clip.title}</strong>
+                  </span>
+                  <span className="bayona-real-archive__take-arrow" aria-hidden="true">↗</span>
+                </button>
+              ))}
+            </div>
+          </aside>
+        </div>
+
+        <figure className="bayona-real-archive__landscape">
+          <img src="/images/bayona-authentic/recorrido-montana-2026-02-23.jpg" alt="Paisaje de montaña registrado en el archivo de BAYONA" width="900" height="1600" loading="lazy" decoding="async" />
+          <figcaption><span>EL CAMINO CONTINÚA</span><span>ARCHIVO DE PAISAJE · 23.02.2026</span></figcaption>
+        </figure>
+        <p className="bayona-real-archive__source">Material original seleccionado. Los retratos no identificados y las imágenes de terceros sin autorización quedan fuera. Reproducción manual para respetar tus datos y preferencias de movimiento.</p>
       </div>
-    </article>)}
-   </div>
-   <p className="bayona-real-archive__source">Archivo personal seleccionado · No se incluyen vídeos con consentimiento de terceros pendiente.</p>
-  </div>
- </section>
+    </section>
+  )
 }
