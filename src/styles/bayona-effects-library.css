@@ -1,0 +1,41 @@
+/* 21 procedural canvases distributed by editorial chapter.
+   Drawn only while intersecting; canvases never intercept mouse or touch. */
+#main-content .bayona-fx-host{position:relative;isolation:isolate;overflow:hidden}
+#main-content .bayona-fx-host>.bayona-fx-canvas{
+ position:absolute!important;
+ inset:0!important;
+ z-index:5!important;
+ display:block!important;
+ width:100%!important;
+ height:100%!important;
+ min-width:0!important;
+ min-height:0!important;
+ pointer-events:none!important;
+ user-select:none!important;
+ mix-blend-mode:screen;
+ opacity:.62;
+ filter:saturate(.88);
+ contain:strict;
+}
+/* Editorial papers use darker pigment rather than shining ink. */
+#main-content .bayona-fx-host:is(.bayona-cinema-chapter--light,.services-final,.shop-process)>.bayona-fx-canvas{
+ mix-blend-mode:multiply;
+ opacity:.26;
+}
+#main-content .bayona-fx-host[data-bayona-fx='mesh-gradient']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='aurora-flow']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='glow-orbs']>.bayona-fx-canvas{opacity:.76}
+#main-content .bayona-fx-host[data-bayona-fx='halftone']>.bayona-fx-canvas,
+#main-content .bayona-fx-host[data-bayona-fx='riso-dither']>.bayona-fx-canvas{opacity:.43}
+#main-content .bayona-fx-host[data-bayona-fx='liquid-glass']>.bayona-fx-canvas{opacity:.38}
+#main-content .bayona-fx-host[data-bayona-fx='light-rays']>.bayona-fx-canvas{opacity:.52}
+@media(max-width:680px){
+ #main-content .bayona-fx-host>.bayona-fx-canvas{opacity:.38;filter:saturate(.72)}
+ #main-content .bayona-fx-host:is(.bayona-cinema-chapter--light,.services-final,.shop-process)>.bayona-fx-canvas{opacity:.19}
+}
+@media(prefers-reduced-motion:reduce){
+ #main-content .bayona-fx-host>.bayona-fx-canvas{opacity:.20!important}
+}
+@media print{
+ #main-content .bayona-fx-canvas{display:none!important}
+}

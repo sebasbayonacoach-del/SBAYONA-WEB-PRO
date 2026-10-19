@@ -47,6 +47,8 @@ const Shop = lazy(() => import('./pages/Shop'))
  */
 // /app is the live product gateway, distinct from legacy conceptual mockups.
 const AppLaunch = lazy(() => import('./pages/AppLaunch.jsx'))
+// Load procedural visual gallery only for the public editorial experience.
+const AmbientEffects = lazy(() => import('./components/effects/AmbientEffects.jsx'))
 function AppEntry() {
   return <AppLaunch />
 }
@@ -271,6 +273,9 @@ function Site() {
             invita a seguir. Solo en las rutas del itinerario, igual que
             NextChapter, para no aparecer en el embudo ni en el 404.
           */}
+          {showEditorialChrome ? (
+            <Suspense fallback={null}><AmbientEffects /></Suspense>
+          ) : null}
           {showEditorialChrome ? <PremiumRouteChrome /> : null}
           {showEditorialChrome ? <JourneyGuide /> : null}
           {showEditorialChrome ? <AppBridgeCinematic /> : null}
