@@ -434,5 +434,10 @@ body.premium-route--about .about-page .about-timeline--stage.sticky-stage--stati
  body.premium-route--about .about-page .about-story-heading h2 { max-width:100% !important; font-size:clamp(2.7rem,4.2vw,5rem) !important; }
 }
 
-/* True founder portrait replaces the unrelated back-facing illustrative scene. */
-body.premium-route--about .about-founder__visual img[src*="bayona-authentic"]{object-position:center 26%;filter:contrast(1.06) saturate(.91)}
+
+/* WEB 3.0 · Neutral brand artwork until the founder portrait is identified. */
+body.premium-route--about .about-founder__visual--pending{display:grid;place-items:center;isolation:isolate;background:radial-gradient(ellipse at 72% 22%,rgba(216,145,94,.24),transparent 42%),linear-gradient(142deg,#192321 0%,#0b1110 68%,#2a221b 100%);}
+body.premium-route--about .about-founder__visual--pending::before{content:"";position:absolute;z-index:-1;width:72%;aspect-ratio:1;border:1px solid rgba(239,178,132,.25);border-radius:50%;box-shadow:0 0 0 35px rgba(220,159,111,.035),0 0 0 85px rgba(220,159,111,.025);transform:rotate(-18deg)}
+body.premium-route--about .about-founder__visual--pending::after{background:linear-gradient(180deg,transparent 65%,rgba(0,0,0,.4))}
+body.premium-route--about .about-founder__monogram{color:#efb98c;font:900 clamp(8.5rem,19vw,23rem)/1 Montserrat,Inter,sans-serif;letter-spacing:-.15em;transform:translateX(-.065em);text-shadow:0 14px 55px rgba(0,0,0,.35)}
+@media(max-width:720px){body.premium-route--about .about-founder__monogram{font-size:clamp(8rem,42vw,14rem)}}
