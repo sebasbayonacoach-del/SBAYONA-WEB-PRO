@@ -14,6 +14,7 @@ const choices = [
 ]
 async function intro(page){
  await page.goto('/')
+ await page.getByRole('button',{name:/O habla con Sebastián/i}).click()
  const dialog=page.getByRole('dialog')
  await expect(dialog.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
  return dialog
@@ -24,7 +25,7 @@ async function choose(page,label,path){
  await expect(page).toHaveURL(new RegExp(path.replaceAll('/','\\/')+'$'))
 }
 for(const [device,width,height] of [['desktop',1440,900],['mobile',390,844]]){
- test('Inicio automático y plan tras una respuesta por pantalla / '+device,async({page})=>{
+ test('Inicio voluntario y plan tras una respuesta por pantalla / '+device,async({page})=>{
   await page.setViewportSize({width,height})
   const dialog=await intro(page)
   await expect(dialog.getByRole('button',{name:'SIGUIENTE'})).toHaveCount(0)
@@ -71,15 +72,17 @@ test('Ni rueda, ni teclas ni el motor Lenis avanzan sin responder',async({page})
 test('En móvil el gesto táctil no puede saltar la pregunta',async({page})=>{
  await page.setViewportSize({width:390,height:844})
  await page.goto('/')
+ await page.getByRole('button',{name:/O habla con Sebastián/i}).click()
  const dialog=page.getByRole('dialog')
  await expect(dialog.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
+ const before=await page.evaluate(()=>scrollY)
  await page.evaluate(()=>{
   const a=document.querySelector('.bayona-coach__content')
   const touch=(type,y)=>a.dispatchEvent(new TouchEvent(type,{bubbles:true,cancelable:true,touches:[new Touch({identifier:1,target:a,clientX:130,clientY:y})]}))
   touch('touchstart',700);touch('touchmove',160)
  })
  await page.waitForTimeout(450)
- expect(await page.evaluate(()=>scrollY)).toBe(0)
+ expect(await page.evaluate(()=>scrollY)).toBe(before)
  await expect(dialog.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
 })
 
@@ -95,6 +98,7 @@ test('Nombre opcional, salida real y visita limpia al recargar',async({page})=>{
  await page.waitForTimeout(300)
  expect(await page.evaluate(()=>scrollY)).toBeGreaterThan(0)
  await page.reload()
+ await page.getByRole('button',{name:/O habla con Sebastián/i}).click()
  await expect(page.getByRole('dialog').getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
  await expect(page.getByLabel(/TU NOMBRE/)).toHaveValue('')
 })

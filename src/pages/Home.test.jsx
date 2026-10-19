@@ -26,7 +26,7 @@ describe('Home — recorrido continuo BAYONA', () => {
   it('mantiene un solo h1 y capítulos lineales en el recorrido', () => {
     const { container } = renderHome()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
-    expect(screen.getByRole('heading', { level: 1, name: /ENTRENA CON DIRECCIÓN/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: /MUÉVETE A TU MANERA/i })).toBeInTheDocument()
     expect(container.querySelectorAll('.gym-home > section')).toHaveLength(9)
     expect(container.querySelector('.community-immersive')).toBeNull()
     expect(container.querySelector('.calculator-section')).toBeNull()

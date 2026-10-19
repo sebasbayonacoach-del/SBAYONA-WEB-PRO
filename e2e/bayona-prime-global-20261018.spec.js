@@ -13,9 +13,11 @@ for(const path of routes){
   await expect(page.locator('.bayona-cinema-track.is-visible')).toBeVisible()
  })
 }
-test('La portada inicia la recepción automáticamente y no tapa el contenido al salir',async({page})=>{
+test('La portada es libre y la recepción solo se abre si se solicita',async({page})=>{
  await page.goto('/')
  const coach=page.getByRole('dialog')
+ await expect(coach).toHaveCount(0)
+ await page.getByRole('button',{name:/O habla con Sebastián/i}).click()
  await expect(coach.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
  await page.getByRole('button',{name:'Salir de la visita guiada'}).click()
  await expect(coach).toHaveCount(0)

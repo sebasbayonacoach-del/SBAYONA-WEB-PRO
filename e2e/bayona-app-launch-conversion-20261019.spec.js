@@ -53,8 +53,7 @@ for(const path of ['/about','/programs','/movimiento-adaptado','/parkour-academy
 }
 test('Inicio muestra BAYONA App antes de Servicios, sin duplicarla',async({page})=>{
  await page.goto('/')
- await expect(page.getByRole('dialog')).toBeVisible()
- await page.getByRole('button',{name:'Salir de la visita guiada'}).click()
+ await expect(page.getByRole('dialog')).toHaveCount(0)
  const position=await page.evaluate(()=>({
    app:document.querySelector('.bayona-live-app--home')?.getBoundingClientRect().top+scrollY,
    services:document.querySelector('#servicios')?.getBoundingClientRect().top+scrollY,

@@ -3012,3 +3012,217 @@ html body :is(.gym-home-hero .bayona-automatic-intro,.bayona-app-bridge__action,
  /* The mobile navigation owns the screen whenever its modal is open. */
  html body .navbar.is-open ~ .translate-offer{display:none!important}
 }
+
+
+/* BAYONA / QUIET CINEMA HOME — visitors see the work before being invited into a conversation.
+ * This intentionally supersedes the 2026-10-12 hero art direction only.
+ * No forced prompt, capture dialog, or automatic scroll is attached.
+ */
+html body.premium-route--home .gym-home-hero.bayona-home-quiet-hero,
+html body .ds-frame[data-experience-scope='brand'] .gym-home-hero.bayona-home-quiet-hero{
+  min-height:max(660px,100svh)!important;
+  background:#080c0c;
+}
+html body.premium-route--home .gym-home-hero.bayona-home-quiet-hero::before{
+  background:
+    linear-gradient(90deg,rgba(5,12,11,.94) 0%,rgba(5,12,11,.70) 37%,rgba(5,12,11,.12) 78%,rgba(5,12,11,.07)),
+    linear-gradient(0deg,rgba(4,9,8,.85),transparent 28%,transparent 68%,rgba(4,9,8,.24))!important;
+}
+html body .ds-frame[data-experience-scope='brand'] .gym-home-hero.bayona-home-quiet-hero .gym-home-hero__content.bayona-hero-prime{
+  min-height:max(660px,calc(100svh - 66px))!important;
+  gap:clamp(28px,4vw,65px)!important;
+  padding-top:clamp(35px,6vw,80px)!important;
+  padding-bottom:clamp(18px,3vw,44px)!important;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__masthead{
+  justify-content:space-between;
+  gap:16px;
+  font-size:.65rem;
+  letter-spacing:.16em;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__serial{
+  gap:10px;
+  font-size:.66rem;
+  letter-spacing:.17em;
+  color:#ffcfaa;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__chapter{
+  margin:0;
+  font-size:.63rem;
+  color:rgba(255,246,230,.70);
+  letter-spacing:.1em;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story{
+  max-width:min(830px,70%);
+  justify-content:center;
+  padding-block:0;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story .gym-home-kicker{
+  font-size:clamp(.68rem,.9vw,.83rem)!important;
+  letter-spacing:.2em!important;
+  color:#ffc08f!important;
+  margin:0 0 clamp(22px,3vw,42px)!important;
+}
+html body.premium-route--home .ds-frame[data-experience-scope='brand'] .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story h1{
+  font-size:clamp(4.3rem,7.1vw,9rem)!important;
+  max-width:100%!important;
+  line-height:.93!important;
+  letter-spacing:-.085em!important;
+  text-wrap:balance!important;
+  white-space:normal!important;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__line{
+  white-space:nowrap;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__line--direction{
+  font-size:.78em!important;
+  line-height:1.03!important;
+  letter-spacing:-.075em!important;
+  margin-top:.11em;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story .gym-home-hero__lead{
+  margin-top:clamp(23px,3vw,38px)!important;
+  max-width:35ch!important;
+  color:#f1e7db!important;
+  font-size:clamp(1.05rem,1.2vw,1.27rem)!important;
+  line-height:1.7!important;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__links{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:clamp(14px,3vw,34px);
+  margin-top:clamp(23px,3vw,43px);
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__explore{
+  display:inline-flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  padding:15px 0;
+  min-height:52px;
+  color:#ffd4ac!important;
+  background:transparent;
+  border-bottom:1px solid #e8a875;
+  text-decoration:none!important;
+  font:850 .71rem/1.35 "DM Mono",monospace;
+  letter-spacing:.10em;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__coach{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  min-height:48px;
+  border:0;
+  padding:10px 0;
+  margin:0;
+  color:#e9ded1;
+  background:none;
+  font:550 .92rem/1.4 Inter,sans-serif;
+  cursor:pointer;
+  text-decoration:none;
+  text-underline-offset:5px;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__coach svg{
+  color:#f5b17b;
+  transition:transform .2s ease;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__coach:is(:hover,:focus-visible){
+  text-decoration:underline;
+  color:white;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__coach:hover svg{
+  transform:translate(3px,-3px);
+}
+html body .gym-home-hero.bayona-home-quiet-hero :is(.bayona-home-quiet-hero__coach,.bayona-home-quiet-hero__explore):focus-visible{
+  outline:3px solid #ffc895;
+  outline-offset:5px;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__footer{
+  font-size:.6rem;
+  color:rgba(251,240,224,.73);
+  letter-spacing:.16em;
+}
+html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__discover{
+  min-height:48px;
+  color:#f4c49c!important;
+  font-size:.65rem;
+}
+@media(max-width:990px){
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story{max-width:85%}
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__chapter{display:none}
+ html body.premium-route--home .ds-frame[data-experience-scope='brand'] .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story h1{
+  font-size:clamp(3.8rem,8vw,6.4rem)!important;
+ }
+}
+@media(max-width:760px){
+ html body.premium-route--home .gym-home-hero.bayona-home-quiet-hero,
+ html body .ds-frame[data-experience-scope='brand'] .gym-home-hero.bayona-home-quiet-hero{
+   min-height:max(670px,100svh)!important;
+ }
+ html body.premium-route--home .gym-home-hero.bayona-home-quiet-hero::before{
+   background:
+    linear-gradient(90deg,rgba(5,11,10,.67),rgba(5,11,10,.24)),
+    linear-gradient(0deg,rgba(4,9,8,.92),rgba(4,9,8,.70) 31%,rgba(4,9,8,.08) 80%)!important;
+ }
+ html body .ds-frame[data-experience-scope='brand'] .gym-home-hero.bayona-home-quiet-hero .gym-home-hero__content.bayona-hero-prime{
+   min-height:max(670px,calc(100svh - 66px))!important;
+   padding-top:25px!important;
+   padding-bottom:24px!important;
+   gap:15px!important;
+ }
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__masthead{
+   font-size:.55rem;
+ }
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story{
+   max-width:100%;
+   justify-content:flex-end;
+   padding-bottom:clamp(50px,10svh,125px);
+ }
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story .gym-home-kicker{
+   font-size:.58rem!important;
+   letter-spacing:.115em!important;
+   margin-bottom:20px!important;
+ }
+ html body.premium-route--home .ds-frame[data-experience-scope='brand'] .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story h1{
+   font-size:clamp(3.25rem,11.8vw,5.5rem)!important;
+   line-height:.98!important;
+   letter-spacing:-.08em!important;
+ }
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__line--direction{
+   font-size:.77em!important;
+ }
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story .gym-home-hero__lead{
+   margin-top:22px!important;
+   font-size:clamp(.95rem,3.6vw,1.04rem)!important;
+   max-width:31ch!important;
+   line-height:1.62!important;
+ }
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__links{
+   gap:8px 23px;
+   margin-top:20px;
+   align-items:center;
+ }
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__explore{
+   min-height:47px;
+   font-size:.65rem;
+   padding:12px 0;
+ }
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__coach{
+   min-height:44px;
+   font-size:.83rem;
+ }
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__edition,
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__footline{display:none}
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__footer{
+   justify-content:flex-end;
+ }
+}
+@media(max-width:360px){
+ html body.premium-route--home .ds-frame[data-experience-scope='brand'] .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__story h1{
+   font-size:3.1rem!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__coach svg{transition:none}
+}

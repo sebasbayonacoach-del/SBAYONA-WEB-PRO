@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Download, Gift } from 'lucide-react'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps } from '../components/SceneBackground.jsx'
@@ -109,11 +108,7 @@ const GIFTS = Object.freeze([
 ])
 
 export default function Home() {
-  const { goal, preferences, autoStartCoach, startCoach } = useJourneyExperience()
-  useEffect(() => {
-    const timer = window.setTimeout(autoStartCoach, 450)
-    return () => window.clearTimeout(timer)
-  }, [autoStartCoach])
+  const { goal, preferences, startCoach } = useJourneyExperience()
   const relevantServiceId = goal?.serviceId || (preferences.servicio === 'Entrenamiento online' || preferences.formato === 'A mi propio ritmo' ? 'online' : preferences.servicio === 'Entrenamiento individual' || preferences.formato === 'Con acompañamiento cercano' ? 'personal' : null)
   const evaluationUrl = bookingLink(goal ? `Hola BAYONA. Me interesa conocer opciones para mi objetivo general: ${goal.label}. ¿Podemos hablar de una valoración inicial?` : 'Hola, soy una persona interesada en BAYONA. Me gustaría contarte mi objetivo y ver si podemos coordinar una valoración inicial.')
 
@@ -121,7 +116,7 @@ export default function Home() {
     <div className="gym-home">
       <section
         {...sceneBackgroundProps(siteMedia.home.hero, {
-          className: 'hero-module gym-home-hero',
+          className: 'hero-module gym-home-hero bayona-home-quiet-hero',
           variant: 'hero',
           pseudo: 'after',
           position: 'center 38%',
@@ -131,47 +126,36 @@ export default function Home() {
         id="inicio"
       >
         <div className="gym-home-shell gym-home-hero__content bayona-hero-prime">
-          <div className="bayona-hero-prime__masthead" aria-label="Presentación de BAYONA">
-            <span className="bayona-hero-prime__serial"><span aria-hidden="true" className="bayona-hero-prime__mark" /> B / 001</span>
-            <span className="bayona-hero-prime__mastline" aria-hidden="true" />
-            <span className="bayona-hero-prime__eyebrow">EL MOVIMIENTO EMPIEZA CONTIGO</span>
-            <span className="bayona-hero-prime__chapter">PERSONAL · ONLINE · PARKOUR</span>
+          <div className="bayona-hero-prime__masthead" aria-label="BAYONA entrenamiento">
+            <span className="bayona-hero-prime__serial"><span aria-hidden="true" className="bayona-hero-prime__mark" /> BAYONA / EST. 2026</span>
+            <span className="bayona-hero-prime__chapter">ENTRENAMIENTO · MOVIMIENTO · VIDA</span>
           </div>
 
           <div className="bayona-hero-prime__story">
-            <p className="gym-home-kicker">ENTRENAMIENTO CON PROPÓSITO <span aria-hidden="true">/</span> MÉTODO BAYONA</p>
-            <h1 id="home-hero-title" aria-label="Entrena con dirección">
-              <span className="bayona-hero-prime__line">ENTRENA</span>
-              <span className="bayona-hero-prime__line bayona-hero-prime__line--direction">CON <em>DIRECCIÓN.</em></span>
+            <p className="gym-home-kicker">EL MOVIMIENTO ES EL PRINCIPIO.</p>
+            <h1 id="home-hero-title" aria-label="Muévete a tu manera">
+              <span className="bayona-hero-prime__line">MUÉVETE.</span>
+              <span className="bayona-hero-prime__line bayona-hero-prime__line--direction">A <em>TU MANERA.</em></span>
             </h1>
             <p className="gym-home-hero__lead">
-              Entrenamiento pensado para tu cuerpo, tus objetivos y tu vida. Contigo desde el primer paso.
+              Fuerza, parkour y entrenamiento personal. Un camino que se adapta a ti.
             </p>
-            <div className="gym-home-hero__actions">
-              <button type="button" className="gym-primary-button bayona-automatic-intro"
-                onClick={startCoach} aria-label="Hablar con Sebastián, entrenador digital de BAYONA">
-                HABLAR CON SEBASTIÁN <ArrowRight size={18} aria-hidden="true" />
-              </button>
-              <a className="gym-secondary-button" href="#servicios">
-                VER CÓMO TE AYUDO <ArrowRight size={19} strokeWidth={1.7} aria-hidden="true" />
+            <div className="bayona-home-quiet-hero__links">
+              <a href="#servicios" className="bayona-home-quiet-hero__explore"
+                onClick={() => trackEvent('hero_discover_services', { source: 'home_hero' })}>
+                DESCUBRE BAYONA <ArrowDownRight size={19} aria-hidden="true" />
               </a>
+              <button type="button" className="bayona-home-quiet-hero__coach" onClick={startCoach}>
+                O habla con Sebastián <ArrowUpRight size={15} aria-hidden="true" />
+              </button>
             </div>
-            <a
-              className="gym-home-reward"
-              href="#regalos"
-              onClick={() => trackEvent('reward_preview_click', { source: 'home_hero' })}
-            >
-              <span className="bayona-hero-prime__gift-symbol"><Gift size={20} strokeWidth={1.5} aria-hidden="true" /></span>
-              <span><strong>Empieza gratis.</strong> Tres recursos para ti.</span>
-              <ArrowUpRight className="bayona-hero-prime__gift-arrow" size={17} aria-hidden="true" />
-            </a>
           </div>
 
           <div className="bayona-hero-prime__footer">
-            <span className="bayona-hero-prime__edition">BAYONA / CUERPO · MENTE · MOVIMIENTO</span>
+            <span className="bayona-hero-prime__edition">EXPLORA A TU RITMO · SIN REGISTRO</span>
             <span className="bayona-hero-prime__footline" aria-hidden="true" />
-            <a href="#servicios" className="bayona-hero-prime__discover" onClick={() => trackEvent('hero_discover_services', { source: 'home_hero' })}>
-              DESCUBRE TU CAMINO <ArrowDownRight size={20} strokeWidth={1.5} aria-hidden="true" />
+            <a href="#tu-ruta" className="bayona-hero-prime__discover" aria-label="Deslizar para descubrir el recorrido BAYONA">
+              DESLIZA PARA EXPLORAR <ArrowDownRight size={20} strokeWidth={1.5} aria-hidden="true" />
             </a>
           </div>
         </div>

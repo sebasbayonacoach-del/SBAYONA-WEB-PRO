@@ -35,9 +35,11 @@ test('Móvil: HUD compacto y no bloquea el contenido ni el contacto',async({page
  expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1)
 })
 
-test('Recepción de Sebastián continúa automática y la misión nunca se superpone',async({page})=>{
+test('Recepción voluntaria de Sebastián y misión sin superposición',async({page})=>{
  await page.goto('/')
  const guide=page.getByRole('dialog')
+ await expect(guide).toHaveCount(0)
+ await page.getByRole('button',{name:/O habla con Sebastián/i}).click()
  await expect(guide.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
  await expect(page.getByTestId('bayona-mission-hud')).not.toBeVisible()
  await expect(page.getByTestId('bayona-mission-toast')).toHaveCount(0)

@@ -19,10 +19,11 @@ function renderHome() {
 }
 
 describe('Home — contrato de una sola lectura', () => {
-  it('mantiene contacto voluntario y entrada automática sin botones de comienzo', () => {
+  it('mantiene contacto voluntario y entrenador opcional, sin recepción forzada', () => {
     const { container } = renderHome()
     expect(container.querySelectorAll('#empieza')).toHaveLength(1)
-    expect(screen.getByRole("button",{name:/Hablar con Sebastián, entrenador digital de BAYONA/i})).toBeInTheDocument()
+    expect(screen.getByRole("button",{name:/O habla con Sebastián/i})).toBeInTheDocument()
+    expect(homeSource).not.toContain("autoStartCoach")
     expect(homeSource).not.toMatch(/\/onboarding|JourneyRibbon|ArrivalBonusCard|UniverseScale|GuideCompanion/i)
   })
 

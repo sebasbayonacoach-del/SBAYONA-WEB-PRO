@@ -1,13 +1,11 @@
 import {test,expect} from '@playwright/test'
 
-test('La recepción se inicia sola y puede reabrirse desde un botón real',async({page})=>{
+test('La recepción es voluntaria y se abre solamente cuando el visitante lo decide',async({page})=>{
  await page.goto('/')
- await expect(page.getByRole('dialog')).toBeVisible()
- await page.getByRole('button',{name:'Salir de la visita guiada'}).click()
  await expect(page.getByRole('dialog')).toHaveCount(0)
- const reopen=page.getByRole('button',{name:/Hablar con Sebastián, entrenador digital de BAYONA/i})
- await expect(reopen).toBeVisible()
- await reopen.click()
+ const open=page.getByRole('button',{name:/O habla con Sebastián/i})
+ await expect(open).toBeVisible()
+ await open.click()
  await expect(page.getByRole('dialog')).toBeVisible()
  await page.keyboard.press('Escape')
  await expect(page.getByRole('dialog')).toHaveCount(0)

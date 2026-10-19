@@ -1,11 +1,9 @@
 import {test,expect} from '@playwright/test'
 
-test('Portada: entrada automática, guías sin formulario y consulta de venta real',async({page})=>{
+test('Portada: descubrimiento libre, guías sin formulario y consulta voluntaria',async({page})=>{
  const errors=[];page.on('pageerror',e=>errors.push(e.message))
  await page.goto('/')
- const coach=page.getByRole('dialog')
- await expect(coach.getByRole('heading',{name:'¿Cómo te llamas?'})).toBeVisible()
- await coach.getByRole('button',{name:'Salir de la visita guiada'}).click()
+ await expect(page.getByRole('dialog')).toHaveCount(0)
  await page.locator('.gym-home-lead').scrollIntoViewIfNeeded()
  await expect(page.getByRole('heading',{name:'Te escucho.',exact:true})).toBeVisible()
  await expect(page.locator('.bayona-direct-contact__download')).toHaveCount(3)
@@ -20,9 +18,7 @@ test('Portada: entrada automática, guías sin formulario y consulta de venta re
 test('Móvil: contacto completo y sin elementos que tapen la venta',async({page})=>{
  await page.setViewportSize({width:390,height:844})
  await page.goto('/')
- const coach=page.getByRole('dialog')
- await expect(coach).toBeVisible()
- await coach.getByRole('button',{name:'Salir de la visita guiada'}).click()
+ await expect(page.getByRole('dialog')).toHaveCount(0)
  await page.locator('.bayona-direct-contact__whatsapp').scrollIntoViewIfNeeded()
  await expect(page.locator('.bayona-direct-contact__whatsapp')).toBeVisible()
  await expect(page.locator('.bayona-cinema-track.is-visible')).toHaveCount(0)
