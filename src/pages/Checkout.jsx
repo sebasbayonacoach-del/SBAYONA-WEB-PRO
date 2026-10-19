@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowRight, Check, ShieldCheck } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { SectionLabel } from '../components/Layout'
@@ -15,6 +15,11 @@ import '../styles/checkout-handoff.css'
 // WhatsApp supplies the visitor's return channel. No need to demand email or
 // phone number and duplicate sensitive data already held by their WhatsApp.
 const INITIAL_CONTACT = { nombre: '' }
+
+// Never ship sandbox payment URLs in the commercial production bundle.
+const StripeSandboxPreview = import.meta.env.DEV
+  ? lazy(() => import('../components/commerce/StripeSandboxPreview.jsx'))
+  : null
 
 /**
  * Fase 4: el configurador acepta ?plan=<id> para llegar con el plan base ya
@@ -83,6 +88,9 @@ export default function Checkout() {
       <section className="checkout-hero section-shell">
         <SectionLabel>SERVICIOS BAYONA · TU MISIÓN</SectionLabel>
         <h1>PREPARA TU SOLICITUD.</h1>
+        {import.meta.env.DEV && searchParams.get('stripe_test_return') === '1' && (
+          <p role="status" className="checkout-stripe-return">Has regresado del entorno de prueba de Stripe. Esto no demuestra un cobro ni activa una membresía.</p>
+        )}
         <p className="checkout-subtitle">
           Elige una membresía, añade solo lo que necesitas y revisa el total antes de enviarnos tu solicitud.
         </p>
@@ -291,6 +299,14 @@ export default function Checkout() {
             </ul>
           </aside>
         </div>
+        {StripeSandboxPreview ? (
+          <Suspense fallback={null}>
+            <StripeSandboxPreview
+              plan={calculation.plan}
+              hasExtras={selectedSessions.length>0 || calculation.extras.length>0}
+            />
+          </Suspense>
+        ) : null}
       </section>
 
 

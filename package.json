@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "NODE_OPTIONS=--max-old-space-size=4096 vite build",
+    "postbuild": "node scripts/audit-stripe-prod.mjs && node scripts/audit-initial-chunks.mjs",
     "audit:bundle:3d": "node scripts/audit-initial-chunks.mjs",
+    "test:stripe:sandbox-api": "node --test api/stripe/create-checkout.test.mjs",
+    "audit:stripe:production": "node scripts/audit-stripe-prod.mjs",
     "preview": "vite preview",
     "test": "vitest --run",
     "test:visual": "playwright test",

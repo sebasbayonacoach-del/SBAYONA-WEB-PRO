@@ -1,0 +1,48 @@
+/* BAYONA · sandbox-only purchase rehearsal; never shown in production. */
+.bayona-stripe-test{
+ max-width:1020px;
+ margin:clamp(2rem,6vw,5rem) auto 0;
+ padding:clamp(1.4rem,3vw,3.4rem);
+ border:1px solid rgba(255,190,124,.46);
+ border-top:3px solid #ffbc83;
+ border-radius:13px;
+ color:#f6ebdc;
+ background:radial-gradient(ellipse at 95% 0%,rgba(233,150,82,.2),transparent 51%),
+   linear-gradient(115deg,rgba(18,31,29,.98),rgba(8,15,16,.99));
+ box-shadow:0 34px 74px rgba(0,0,0,.28);
+}
+.bayona-stripe-test__meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+ font:700 .64rem/1.5 'DM Mono',monospace;letter-spacing:.12em}
+.bayona-stripe-test__mark{color:#ffbd88}
+.bayona-stripe-test__status{color:#dfcbba}
+.bayona-stripe-test h2{font:900 clamp(2rem,4vw,3.4rem)/1.07 Montserrat,Inter,sans-serif;letter-spacing:-.07em;color:#fff1df;margin:1.4rem 0 .6rem}
+.bayona-stripe-test__desc{font-size:.92rem;line-height:1.55;color:#dacbbb;max-width:50ch}
+.bayona-stripe-test__modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin:1.6rem 0 1rem}
+.bayona-stripe-test__modes label{min-width:0;display:flex;gap:.75rem;align-items:center;border:1px solid rgba(237,189,137,.25);
+ border-radius:9px;padding:1rem;cursor:pointer;transition:border-color .2s,background-color .2s}
+.bayona-stripe-test__modes label.is-selected{border-color:#f9b67b;background:rgba(240,166,106,.12)}
+.bayona-stripe-test__modes input{width:20px;height:20px;accent-color:#ffb67d;flex-shrink:0}
+.bayona-stripe-test__modes strong{display:block;color:#fff3e5;font:.78rem/1.4 'DM Mono',monospace}
+.bayona-stripe-test__modes small{display:block;font-size:.73rem;color:#d9c9b9;line-height:1.4;margin-top:.35rem}
+.bayona-stripe-test__summary{display:flex;justify-content:space-between;gap:1rem;align-items:center;
+ margin:1.5rem 0;padding:1.1rem 0;border-block:1px solid rgba(255,213,164,.2)}
+.bayona-stripe-test__summary span{color:#ddd1c3;font-size:.88rem}
+.bayona-stripe-test__summary strong{white-space:nowrap;color:#fff1df;font-size:clamp(1.1rem,2vw,1.5rem)}
+.bayona-stripe-test__link{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.4rem;
+ background:#f1b07e;color:#18120d!important;border-radius:6px;min-height:61px;
+ font:800 .84rem/1.3 'DM Mono',monospace;text-decoration:none!important;
+ transition:background-color .2s,transform .2s}
+.bayona-stripe-test__link:is(:hover,:focus-visible){background:#ffd0a6;transform:translateY(-2px)}
+.bayona-stripe-test__link--disabled{cursor:not-allowed;opacity:.5;background:#a29a90;color:#111!important}
+.bayona-stripe-test__note{color:#ffddae;line-height:1.5;font-size:.85rem}
+.bayona-stripe-test__foot{display:flex;gap:.5rem;align-items:flex-start;font-size:.75rem;color:#d0bdac;line-height:1.5;margin:1rem 0 0}
+.bayona-stripe-test__foot svg{flex-shrink:0;color:#ffba7e}
+@media(max-width:650px){
+ .bayona-stripe-test__modes{gap:.5rem}
+ .bayona-stripe-test__modes label{padding:.75rem;gap:.45rem}
+ .bayona-stripe-test__modes strong{font-size:.65rem}
+ .bayona-stripe-test__modes small{font-size:.67rem}
+ .bayona-stripe-test__summary{align-items:flex-start;flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){.bayona-stripe-test__modes label,.bayona-stripe-test__link{transition:none!important}}
+\n.checkout-stripe-return{max-width:75ch;background:#1a312d;border-left:3px solid #ffc28e;padding:1rem 1.2rem;color:#ffe3c7;line-height:1.5}\n
