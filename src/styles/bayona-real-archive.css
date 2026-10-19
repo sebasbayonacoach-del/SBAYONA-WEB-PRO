@@ -1,30 +1,257 @@
-/* BAYONA archival imagery — originals, not synthetic representations. */
-.bayona-real-archive{background:#0b100f;color:#fff0df;position:relative;overflow:clip;padding:clamp(75px,8vw,145px) 0;}
-.bayona-real-archive:before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,#ce9b72,transparent);opacity:.6}
-.bayona-real-archive__shell{max-width:1550px;margin:0 auto;padding:0 clamp(21px,5.3vw,90px);}
-.bayona-real-archive__eyebrow,.bayona-real-archive__reel-heading{display:flex;justify-content:space-between;gap:15px;align-items:center;color:#f1ba8a;font:800 .65rem/1.4 "DM Mono",monospace;letter-spacing:.13em}
-.bayona-real-archive__eyebrow span:last-child,.bayona-real-archive__reel-heading span:last-child{color:#988b7d}
-.bayona-real-archive__intro h2{margin:29px 0 21px;font:900 clamp(3.5rem,7.3vw,9rem)/.98 "Montserrat",Inter,sans-serif;letter-spacing:-.085em;text-wrap:balance}
-.bayona-real-archive__intro h2 em{color:#f3b47f;font-style:normal}
-.bayona-real-archive__intro>p{max-width:46ch;margin:0 0 clamp(35px,4vw,70px);font:450 clamp(.94rem,1.1vw,1.13rem)/1.7 Inter,sans-serif;color:#dfcebd}
-.bayona-real-archive__photos{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:clamp(8px,1.3vw,18px)}
-.bayona-real-archive__photo{position:relative;isolation:isolate;min-width:0;aspect-ratio:4/5;margin:0;overflow:hidden;background:#161e1c}
-.bayona-real-archive__photo::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.77) 100%)}
-.bayona-real-archive__photo img{display:block;width:100%;height:100%;object-fit:cover;filter:contrast(1.06) saturate(.83);transition:transform .65s ease}
-.bayona-real-archive__photo:hover img{transform:scale(1.045)}
-.bayona-real-archive__photo--portrait img{object-position:center 32%}
-.bayona-real-archive__photo--rooftop img{object-position:center 60%}
-.bayona-real-archive__photo--mountain img{object-position:center}
-.bayona-real-archive__photo figcaption{position:absolute;z-index:1;left:clamp(13px,2vw,27px);bottom:clamp(14px,2vw,27px);right:clamp(13px,2vw,27px);display:flex;align-items:center;justify-content:space-between;gap:10px;font:800 .62rem/1.4 "DM Mono",monospace;color:#ffe0c1;letter-spacing:.08em}
-.bayona-real-archive__reel-heading{margin:clamp(60px,7vw,115px) 0 22px}
-.bayona-real-archive__reels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.4vw,19px)}
-.bayona-real-archive__reel{position:relative;aspect-ratio:4/5;background:#171d1c;overflow:hidden;border:1px solid rgba(255,208,173,.2)}
-.bayona-real-archive__reel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.86) contrast(1.07)}
-.bayona-real-archive__reel::after{position:absolute;inset:48% 0 0;content:"";pointer-events:none;background:linear-gradient(transparent,rgba(1,4,4,.89))}
-.bayona-real-archive__reel-caption{position:absolute;bottom:31px;left:24px;right:24px;z-index:1;display:flex;flex-direction:column;gap:7px;pointer-events:none}
-.bayona-real-archive__reel-caption span{font:800 .62rem "DM Mono",monospace;color:#e9b281;letter-spacing:.14em}
-.bayona-real-archive__reel-caption strong{font:900 clamp(1.35rem,2.35vw,2.7rem)/1 Montserrat,Inter,sans-serif;color:#fff2e4;letter-spacing:-.07em}
-.bayona-real-archive__reel-caption small{font-size:.76rem;color:#e0c6ac}
-.bayona-real-archive__source{margin:23px 0 0;font:.72rem/1.6 Inter,sans-serif;color:#b29f90}
-@media(max-width:700px){.bayona-real-archive__eyebrow span:last-child,.bayona-real-archive__reel-heading span:last-child{display:none}.bayona-real-archive__photos{grid-template-columns:1.15fr 1fr;gap:9px}.bayona-real-archive__photo--mountain{display:none}.bayona-real-archive__photo{aspect-ratio:3/5}.bayona-real-archive__photo figcaption{font-size:.5rem;flex-direction:column;align-items:flex-start}.bayona-real-archive__reels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding-bottom:15px;scrollbar-color:#8d7361 #0c1010}.bayona-real-archive__reel{min-width:min(75vw,330px);aspect-ratio:4/5;scroll-snap-align:start}.bayona-real-archive__reel-caption{left:17px;bottom:26px}.bayona-real-archive__intro h2{font-size:clamp(2.6rem,10vw,4.6rem)}}
-@media(prefers-reduced-motion:reduce){.bayona-real-archive__photo img{transition:none}}
+/* WEB 4.0 — Cinematic video library; UI overlays never obscure footage controls. */
+.bayona-real-archive {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(82px, 10vw, 164px) 0;
+  background: #090b0c;
+  color: #f4f4f0;
+}
+.bayona-real-archive::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -420px;
+  right: -180px;
+  width: min(970px, 100vw);
+  height: 950px;
+  pointer-events: none;
+  background: radial-gradient(ellipse, rgba(181, 193, 197, .095), transparent 69%);
+}
+.bayona-real-archive::after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #797f82, transparent);
+}
+.bayona-real-archive__shell {
+  width: min(100%, 1600px);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 86px);
+}
+.bayona-real-archive__topline,
+.bayona-real-archive__reel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  color: #b8bfc0;
+  font: 700 .65rem/1.5 'DM Mono', ui-monospace, monospace;
+  letter-spacing: .16em;
+}
+.bayona-real-archive__topline { padding-bottom: 15px; border-bottom: 1px solid #343838; }
+.bayona-real-archive__intro { margin: clamp(66px, 7vw, 120px) 0 clamp(52px, 6vw, 100px); }
+.bayona-real-archive__kicker {
+  margin: 0 0 26px;
+  color: #b3c5c8;
+  font: 700 .7rem/1.4 'DM Mono', monospace;
+  letter-spacing: .25em;
+}
+.bayona-real-archive__intro h2 {
+  margin: 0;
+  font: 900 clamp(3.3rem, 9.8vw, 11.5rem)/.9 'Montserrat', Inter, sans-serif;
+  letter-spacing: -.087em;
+  text-wrap: balance;
+}
+.bayona-real-archive__intro h2 em { color: #8e989a; font-style: normal; }
+.bayona-real-archive__lead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 35px;
+  margin-top: clamp(35px, 5vw, 70px);
+}
+.bayona-real-archive__lead p {
+  margin: 0;
+  max-width: 51ch;
+  color: #c4c9ca;
+  font: 400 clamp(.97rem, 1.22vw, 1.15rem)/1.7 Inter, sans-serif;
+}
+.bayona-real-archive__count { display: flex; align-items: flex-end; gap: 15px; flex: none; }
+.bayona-real-archive__count strong {
+  font: 900 clamp(3.7rem, 6vw, 7rem)/.85 'Montserrat', sans-serif;
+  letter-spacing: -.11em;
+}
+.bayona-real-archive__count small {
+  font: 700 .62rem/1.55 'DM Mono', monospace;
+  letter-spacing: .12em;
+  color: #aebabb;
+}
+.bayona-real-archive__reel-heading {
+  padding: 20px 0;
+  margin-bottom: 16px;
+  border-top: 1px solid #363b3c;
+  border-bottom: 1px solid #363b3c;
+}
+.bayona-real-archive__reels {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(11px, 1.3vw, 22px);
+}
+.bayona-real-archive__reel { min-width: 0; }
+.bayona-real-archive__frame {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 9/14;
+  background: #1e2223;
+  border: 1px solid #3c4547;
+}
+.bayona-real-archive__frame video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: grayscale(.26) saturate(.85) contrast(1.05);
+}
+.bayona-real-archive__serial,
+.bayona-real-archive__duration {
+  position: absolute;
+  z-index: 1;
+  top: 15px;
+  pointer-events: none;
+  font: 700 .6rem/1.3 'DM Mono', monospace;
+  color: #f5f7f7;
+  letter-spacing: .1em;
+  text-shadow: 0 1px 9px #000;
+}
+.bayona-real-archive__serial { left: 16px; }
+.bayona-real-archive__duration { right: 16px; }
+.bayona-real-archive__caption { padding: 16px 2px 26px; }
+.bayona-real-archive__chapter {
+  color: #8e9b9f;
+  font: 700 .63rem/1.5 'DM Mono', monospace;
+  letter-spacing: .15em;
+}
+.bayona-real-archive__caption h3 {
+  font: 900 clamp(1.22rem, 1.95vw, 2rem)/1.15 'Montserrat', Inter, sans-serif;
+  letter-spacing: -.05em;
+  margin: 9px 0 5px;
+  color: #f4f7f6;
+}
+.bayona-real-archive__caption p {
+  margin: 0;
+  color: #b7bfc0;
+  font: 400 .84rem/1.6 Inter, sans-serif;
+}
+.bayona-real-archive__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 35px;
+  padding-top: 24px;
+  margin-top: clamp(42px, 5vw, 70px);
+  border-top: 1px solid #393e3f;
+}
+.bayona-real-archive__footer span:first-child {
+  color: #e2e9ea;
+  font: 700 .65rem/1.7 'DM Mono', monospace;
+  letter-spacing: .12em;
+}
+.bayona-real-archive__footer span:last-child {
+  color: #9ca7aa;
+  font: 400 .8rem/1.6 Inter, sans-serif;
+  max-width: 42ch;
+  text-align: right;
+}
+@media (max-width: 1000px) {
+  .bayona-real-archive__reels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bayona-real-archive__frame { aspect-ratio: 9/13; }
+}
+@media (max-width: 640px) {
+  .bayona-real-archive { padding: 80px 0 95px; }
+  .bayona-real-archive__topline span:last-child,
+  .bayona-real-archive__reel-heading span:last-child { display: none; }
+  .bayona-real-archive__intro { margin: 70px 0 48px; }
+  .bayona-real-archive__intro h2 { font-size: clamp(2.9rem, 13vw, 5.4rem); }
+  .bayona-real-archive__lead { align-items: flex-start; flex-direction: column; gap: 25px; }
+  .bayona-real-archive__count strong { font-size: 4rem; }
+  .bayona-real-archive__reels {
+    grid-template-columns: none;
+    grid-auto-columns: min(74vw, 300px);
+    grid-auto-flow: column;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1px;
+    padding-bottom: 10px;
+    scrollbar-color: #616d70 #101516;
+  }
+  .bayona-real-archive__reel { scroll-snap-align: start; }
+  .bayona-real-archive__frame { aspect-ratio: 9/14; }
+  .bayona-real-archive__footer { flex-direction: column; gap: 14px; }
+  .bayona-real-archive__footer span:last-child { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bayona-real-archive__reels { scroll-behavior: auto; }
+}
+
+/* Poster-first: las ocho portadas no descargan los vídeos hasta una acción real. */
+.bayona-real-archive__launch {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: block;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  background: #1e2325;
+  overflow: hidden;
+}
+.bayona-real-archive__launch img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(.27) saturate(.85) contrast(1.08);
+  transition: transform .7s cubic-bezier(.2,.8,.2,1);
+}
+.bayona-real-archive__launch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,rgba(0,0,0,.18),transparent 40%,rgba(0,0,0,.55));
+}
+.bayona-real-archive__launch:hover img { transform: scale(1.05); }
+.bayona-real-archive__launch-content {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+  font: 700 .63rem/1.4 'DM Mono',monospace;
+  letter-spacing: .16em;
+  text-shadow: 0 1px 8px #0009;
+}
+.bayona-real-archive__play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: 50%;
+  background: rgba(6,11,12,.38);
+  backdrop-filter: blur(4px);
+  font: 700 1.15rem/1 Inter,sans-serif;
+  padding-left: 3px;
+}
+.bayona-real-archive__launch:hover .bayona-real-archive__play-icon { background: #f2f4f3; color: #111; }
+.bayona-real-archive__launch:focus-visible { outline: 3px solid #fff; outline-offset: -5px; }
+body.bayona-archive-focused .bayona-mission-hud {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bayona-real-archive__launch img { transition: none; }
+}
