@@ -11,6 +11,14 @@ export default function BayonaRealArchive(){
  useEffect(()=>{
   const root=ref.current
   if(!root || !('IntersectionObserver' in window))return
+  // SPA home renders after native browser hash handling.
+  // Honor direct preview links without activating movement elsewhere.
+  if(window.location.hash==='#archivo-real'){
+   window.requestAnimationFrame(()=>window.scrollTo({
+    top:root.getBoundingClientRect().top+window.scrollY-105,
+    behavior:'instant',
+   }))
+  }
   const reduce=window.matchMedia('(prefers-reduced-motion: reduce)')
   const videos=[...root.querySelectorAll('video')]
   const observer=new IntersectionObserver(entries=>{

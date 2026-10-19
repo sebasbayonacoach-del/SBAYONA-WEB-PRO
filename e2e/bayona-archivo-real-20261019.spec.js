@@ -43,3 +43,8 @@ test('Nosotros y el asistente enlazan a la misma foto original verificada',async
  await page.getByRole('button',{name:/O habla con Sebastián/i}).click()
  await expect(page.locator('.bayona-coach__portrait img')).toHaveAttribute('src','/images/bayona-authentic/selfie-exterior-2026-04-11.jpg')
 })
+test('El enlace directo salta a la galería auténtica, también con carga diferida',async({page})=>{
+ await page.goto('/#archivo-real')
+ await expect(page.locator('#archivo-real')).toBeVisible()
+ await expect.poll(async()=>page.locator('#archivo-real').evaluate(x=>x.getBoundingClientRect().top)).toBeLessThan(170)
+})
