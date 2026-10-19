@@ -1,23 +1,15 @@
 import {test,expect} from '@playwright/test'
 
-test('BAYONA muestra solo fotos del archivo original, no retratos ficticios',async({page})=>{
+test('BAYONA no atribuye retratos personales sin confirmar',async({page})=>{
  await page.goto('/')
  const block=page.locator('#archivo-real')
- await expect(block).toBeVisible()
- await expect(block.getByRole('heading',{name:/VIDA REAL.*MOVIMIENTO REAL/s})).toBeVisible()
- await expect(block.locator('figure img')).toHaveCount(3)
- for(const img of await block.locator('figure img').all()){
-  const loaded=await img.evaluate(el=>{
-   el.loading='eager'
-   return el.decode().then(()=>el.naturalWidth>0).catch(()=>false)
-  })
-  expect(loaded).toBe(true)
-  await expect(img).toHaveAttribute('src',/\/images\/bayona-authentic\//)
- }
+ await expect(block.getByRole('heading',{name:/IMÁGENES DEL.*ARCHIVO REAL/s})).toBeVisible()
+ await expect(block.locator('.bayona-real-archive__photo')).toHaveCount(0)
  await expect(block.locator('video')).toHaveCount(3)
  const sources=await block.locator('video').evaluateAll(nodes=>nodes.map(el=>el.getAttribute('src')))
  for(const source of sources)expect(source).toMatch(/^\/videos\/bayona-authentic\/.+\.mp4$/)
 })
+
 test('Los clips originales y sus portadas responden desde el sitio',async({request})=>{
  for(const name of ['broll-rio','movimiento-entorno','movimiento-pov']){
   const img=await request.get('/images/bayona-authentic/'+name+'.webp')
@@ -36,13 +28,16 @@ test('Móvil: archivo real sin desbordamiento horizontal ni videos sonoros autom
   expect(await vid.evaluate(x=>({muted:x.muted,defaultMuted:x.defaultMuted}))).toMatchObject({muted:true})
  }
 })
-test('Nosotros y el asistente enlazan a la misma foto original verificada',async({page})=>{
+test('Nosotros utiliza un paisaje y el asistente un monograma, nunca la persona cuestionada',async({page})=>{
  await page.goto('/about')
- await expect(page.locator('.about-founder__visual img')).toHaveAttribute('src','/images/bayona-authentic/selfie-exterior-2026-04-11.jpg')
+ await expect(page.locator('.about-founder__visual img')).toHaveAttribute('src','/images/bayona-authentic/broll-rio.webp')
+ await expect(page.locator('.about-founder__image-marker')).toContainText('DEL ARCHIVO AL MOVIMIENTO')
  await page.goto('/')
  await page.getByRole('button',{name:/O habla con Sebastián/i}).click()
- await expect(page.locator('.bayona-coach__portrait img')).toHaveAttribute('src','/images/bayona-authentic/selfie-exterior-2026-04-11.jpg')
+ await expect(page.locator('.bayona-coach__portrait img')).toHaveCount(0)
+ await expect(page.locator('.bayona-coach__portrait-brand')).toHaveText('SB')
 })
+
 test('El enlace directo salta a la galería auténtica, también con carga diferida',async({page})=>{
  await page.goto('/#archivo-real')
  await expect(page.locator('#archivo-real')).toBeVisible()

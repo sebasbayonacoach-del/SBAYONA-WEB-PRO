@@ -214,7 +214,7 @@ export default function CoachGuidedVisit(){
       className="bayona-coach bayona-coach--chat" ref={dialogRef}>
       <div className="bayona-coach__top">
         <div className={'bayona-coach__portrait'+(speaking?' is-speaking':'')} aria-hidden="true">
-          <img src="/images/bayona-authentic/selfie-exterior-2026-04-11.jpg" alt="" width="50" height="50" loading="lazy" decoding="async"/>
+          <span className="bayona-coach__portrait-brand">SB</span>
         </div>
         <div><strong>SEBASTIÁN · BAYONA</strong><small>ASISTENTE DIGITAL · GUÍA AUTOMATIZADA</small></div>
         {voiceAvailable&&<button type="button" onClick={voiceToggle} className="bayona-coach__voice"

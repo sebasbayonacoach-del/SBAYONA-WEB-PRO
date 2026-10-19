@@ -2,15 +2,13 @@
 
 ## No hay rostros generados en esta sección
 
-La página de Inicio incorpora `src/components/home/BayonaRealArchive.jsx`, con fotos y vídeo **extraídos del archivo personal en el ordenador**. Se ha descartado expresamente utilizar las maquetas generadas por IA que mostraban otra cara, cifras ficticias y supuestos reels con millones de visualizaciones.
+La página de Inicio incorpora `src/components/home/BayonaRealArchive.jsx`, con vídeos del archivo audiovisual localizado en el ordenador. Se ha descartado expresamente utilizar las maquetas generadas por IA que mostraban otra cara, cifras ficticias y supuestos reels con millones de visualizaciones.
 
-## Fotografías originales
+## Corrección de identidad — 19/10/2026
 
-- `selfie-exterior-2026-04-11.jpg` ← `CONTENIDO_BAYONA/SELECTED/04_LIFESTYLE/REVISION/2026-04-11_LIFESTYLE_12.jpg`, misma suma SHA256 `49cc46e8a860d9ea314e20f4e1567398feb08b2da77796fb5e35f55b44268371`; coincide con foto adjunta del archivo conversacional `selfie_exterior_2026-04-11.jpg`.
-- `selfie-azotea-2026-01-07.webp` ← `SELECTED/01_HISTORIA/REVISION/2026-01-07_HISTORIA_01.webp`, conserva texto sobrepuesto del original.
-- `recorrido-montana-2026-02-23.jpg` ← `SELECTED/03_MOVIMIENTO/REVISION/2026-02-23_MOVIMIENTO_06.jpg`.
+El propietario indicó explícitamente que las fotografías de las personas presentadas en la web **NO son suyas**. Se retiraron las fotografías y retratos no confirmados de los recursos públicos del proyecto. Su inclusión y descripción como retratos de Sebastián fue un error. No se borraron los originales de la biblioteca privada de trabajo.
 
-La selfie exterior se emplea además en `/about` y el avatar del asistente, en lugar de `retrato-frontal.webp` procedente de un proyecto anterior cuya identidad no estaba confirmada contra esta selfie.
+La sección /about ahora muestra exclusivamente un fotograma de paisaje del clip de archivo \`broll-rio.webp\`; el asistente vuelve a mostrar un monograma tipográfico «SB» y el Inicio presenta únicamente clips de lugares y movimiento sin rostro atribuido. Los retratos pendientes deben validarse con el propietario en un panel privado, jamás directamente en la web.
 
 ## Vídeos auténticos
 
@@ -30,6 +28,6 @@ Antes de desplegar públicamente conviene que el propietario confirme que los tr
 
 ## Verificación
 
-`e2e/bayona-archivo-real-20261019.spec.js`: fotos accesibles, tres vídeos originales, fuentes MP4, rendimiento responsive y retrato consistente entre Nosotros y el asistente.
+`e2e/bayona-archivo-real-20261019.spec.js`: ausencia de fotos sin identidad confirmada, tres vídeos originales, fuentes MP4, rendimiento responsive y asistente sin retrato.
 
 **Prohibición editorial:** ningún retrato generado por IA se presentará como una fotografía de Sebastián Bayona si no se ha demostrado la correspondencia facial con una referencia real.
