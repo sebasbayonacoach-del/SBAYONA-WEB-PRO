@@ -1146,26 +1146,26 @@ export default function Resources() {
               <header className="resources-subsection-heading">
                 <span>MATERIAL DESCARGABLE</span>
                 <h3 id="downloads-title">PARA GUARDAR, NO PARA VER UNA VEZ.</h3>
-                <p>Tres piezas gratuitas. Déjanos tu nombre y un contacto al final y se habilitan para descargar sin crear una cuenta.</p>
+                <p>Tres guías gratuitas, disponibles para descargar directamente. Sin formulario ni datos personales.</p>
               </header>
               <ol>
                 <li>
                   <span>01 · PDF</span>
-                  <strong>El Protocolo BAYONA de 7 días</strong>
-                  <p>Una acción concreta por día: movimiento, comida real y recuperación.</p>
-                  <a href="#resources-lead">RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
+                  <strong>Tu primera semana BAYONA</strong>
+                  <p>Siete días para comenzar con dirección, a tu ritmo.</p>
+                  <a href="/downloads/bayona-editorial/primera-semana.pdf" download>DESCARGAR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>
                 <li>
                   <span>02 · WORKBOOK</span>
-                  <strong>Cuaderno de ruta del Reto 30 días</strong>
-                  <p>Rutina diaria por nivel, check-ins y condiciones de la edición.</p>
-                  <a href="#resources-lead">RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
+                  <strong>Registro de 30 días</strong>
+                  <p>Un cuaderno para seguir hábitos y registrar avances.</p>
+                  <a href="/downloads/bayona-editorial/registro-30-dias.pdf" download>DESCARGAR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>
                 <li>
                   <span>03 · GUÍA</span>
-                  <strong>Guía nutricional general del reto</strong>
-                  <p>Estructura de platos simple y repetible. No sustituye un plan individual.</p>
-                  <a href="#resources-lead">RECIBIR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
+                  <strong>Tu punto de partida</strong>
+                  <p>Ordena tu objetivo y define tu próximo movimiento.</p>
+                  <a href="/downloads/bayona-editorial/dossier-punto-de-partida.pdf" download>DESCARGAR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>
               </ol>
             </section>

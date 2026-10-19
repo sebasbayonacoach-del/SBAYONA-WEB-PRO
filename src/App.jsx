@@ -9,6 +9,7 @@ import { PageTransition, CustomCursor } from './engine'
 import { MotionDebug } from './engine/debug/MotionDebug.jsx'
 import PremiumRouteChrome from './components/PremiumRouteChrome'
 import EditorialOutro from './components/EditorialOutro.jsx'
+import AppBridgeCinematic from './components/app/AppBridgeCinematic.jsx'
 import { useRecedeWhileScrolling } from './lib/ui/useRecedeWhileScrolling.js'
 import RouteSeo from './components/seo/RouteSeo.jsx'
 import RouteEffects from './components/RouteEffects.jsx'
@@ -44,12 +45,10 @@ const Shop = lazy(() => import('./pages/Shop'))
  *  - /entrar y /panel se conservan únicamente como rutas de compatibilidad.
  * La sesión web antigua nunca sustituye la presentación pública de /app.
  */
-const AppExperience = lazy(() => import('./pages/AppExperience'))
+// /app is the live product gateway, distinct from legacy conceptual mockups.
+const AppLaunch = lazy(() => import('./pages/AppLaunch.jsx'))
 function AppEntry() {
-  // /app is now the public product story. The real product lives at /mi-app/.
-  // publicOnly prevents an old browser-only WEB session from reopening the
-  // legacy members area and creating a second account experience.
-  return <AppExperience publicOnly />
+  return <AppLaunch />
 }
 
 function IntegratedAppRedirect() {
@@ -274,6 +273,7 @@ function Site() {
           */}
           {showEditorialChrome ? <PremiumRouteChrome /> : null}
           {showEditorialChrome ? <JourneyGuide /> : null}
+          {showEditorialChrome ? <AppBridgeCinematic /> : null}
           {showEditorialChrome ? <EditorialOutro /> : null}
         </main>
       </PageTransition>

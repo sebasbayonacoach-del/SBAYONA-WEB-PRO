@@ -1,0 +1,22 @@
+/* A real, visible bridge between every editorial route and the PWA. */
+.bayona-app-bridge{position:relative;isolation:isolate;overflow:hidden;background:#0b1615;color:#fff3e6;min-height:510px;border-block:1px solid rgba(251,198,137,.2)}
+.bayona-app-bridge::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,20,18,.96),rgba(8,20,18,.86) 58%,rgba(8,20,18,.3)),url('/images/bayona-generated/app-hero-1600.webp') center/cover;opacity:.78;z-index:-1}
+.bayona-app-bridge__glow{position:absolute;inset:0;background:radial-gradient(ellipse at 74% 50%,rgba(239,155,97,.15),transparent 57%);pointer-events:none}
+.bayona-app-bridge__shell{position:relative;max-width:1550px;margin:auto;padding:clamp(60px,8vw,115px) clamp(22px,5.3vw,90px);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);align-items:center;gap:clamp(30px,6vw,85px)}
+.bayona-app-bridge__copy{max-width:760px}
+.bayona-app-bridge__overline{font:850 .65rem/1.4 'DM Mono',monospace;letter-spacing:.17em;color:#f4b37c}
+.bayona-app-bridge h2{font:900 clamp(2.9rem,5.6vw,6.2rem)/.98 Montserrat,Inter,sans-serif;color:#fff1e3;letter-spacing:-.085em;margin:21px 0 20px;text-wrap:balance}
+.bayona-app-bridge__copy>p{max-width:45ch;font:450 clamp(.94rem,1.1vw,1.15rem)/1.7 Inter,sans-serif;color:#ded0bf}
+.bayona-app-bridge__action{display:inline-flex;justify-content:space-between;align-items:center;gap:30px;min-width:min(330px,100%);padding:20px 23px;margin-top:25px;background:#f3b17b;border-radius:5px;color:#18130f!important;text-decoration:none!important;font:850 .77rem 'DM Mono',monospace;letter-spacing:.09em;transition:background .2s,transform .2s}
+.bayona-app-bridge__action:hover{background:#ffcf9c;transform:translateY(-2px)}
+.bayona-app-bridge__action:focus-visible{outline:3px solid #ffdbaf;outline-offset:4px}
+.bayona-app-bridge__copy>small{display:block;max-width:48ch;color:#b6a598;font:.72rem/1.6 Inter,sans-serif;margin-top:17px}
+.bayona-app-bridge__visual{position:relative;max-width:400px;width:100%;margin-inline:auto;display:grid;place-items:center;min-height:375px}
+.bayona-app-bridge__ring{position:absolute;width:115%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(244,177,116,.2),transparent 60%);box-shadow:inset 0 0 0 1px rgba(255,211,167,.11),0 0 0 45px rgba(255,198,151,.025)}
+.bayona-app-bridge__phone{position:relative;width:min(245px,65%);padding:8px;border-radius:26px;background:#0e1517;border:1px solid rgba(251,207,165,.55);box-shadow:0 36px 75px rgba(0,0,0,.55);transform:rotate(7deg)}
+.bayona-app-bridge__phone-top{padding:8px;display:flex;align-items:center;justify-content:center;gap:7px;color:#f2bd95;font:650 .55rem 'DM Mono',monospace;letter-spacing:.05em}
+.bayona-app-bridge__phone img{display:block;width:100%;height:auto;border-radius:17px;aspect-ratio:390/480;object-fit:contain;background:#080d0d}
+.bayona-app-bridge__serial{position:absolute;right:0;bottom:0;color:#dfbb9b;font:750 .56rem 'DM Mono',monospace;letter-spacing:.15em}
+@media(max-width:750px){.bayona-app-bridge__shell{grid-template-columns:1fr;gap:10px}.bayona-app-bridge__visual{min-height:270px;max-width:310px}.bayona-app-bridge__phone{max-width:165px}.bayona-app-bridge h2{font-size:clamp(2.85rem,9.5vw,4.5rem)}}
+@media(max-width:500px){.bayona-app-bridge__shell{padding-block:75px}.bayona-app-bridge__action{width:100%}.bayona-app-bridge__visual{max-width:260px;min-height:260px}.bayona-app-bridge__phone{max-width:165px}}
+@media(prefers-reduced-motion:reduce){.bayona-app-bridge__action{transition:none}.bayona-app-bridge__action:hover{transform:none}}

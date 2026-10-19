@@ -71,11 +71,15 @@ describe('/resources — Empieza Gratis honesto', () => {
     expect(magazine.querySelector('#magazine-title')).not.toBeNull()
     expect(magazine.textContent).toContain('NO UN CALENDARIO RÍGIDO.')
 
-    // El material se presenta antes de la captura y los tres CTA llevan al mismo formulario.
+    // Los materiales son descargables sin contacto; no hay captación encubierta.
     expect(magazine.querySelector('#downloads-title')).not.toBeNull()
-    expect(magazine.querySelectorAll('a[download]')).toHaveLength(0)
-    const giftLinks = [...magazine.querySelectorAll('.resources-downloads a[href="#resources-lead"]')]
+    const giftLinks = [...magazine.querySelectorAll('.resources-downloads a[download]')]
     expect(giftLinks).toHaveLength(3)
+    expect(giftLinks.map(link=>link.getAttribute('href'))).toEqual([
+      '/downloads/bayona-editorial/primera-semana.pdf',
+      '/downloads/bayona-editorial/registro-30-dias.pdf',
+      '/downloads/bayona-editorial/dossier-punto-de-partida.pdf',
+    ])
     expect(document.querySelector('#resources-lead')).not.toBeNull()
   })
 

@@ -69,7 +69,7 @@ const STATIC_ROUTES = {
   '/app': {
     title: 'BAYONA App — Mi App y Coach Studio',
     description:
-      'Accede a la versión web de BAYONA App: espacio personal de entrenamiento y Coach Studio. Conoce qué funciones están publicadas y las integraciones que siguen en desarrollo.',
+      'Abre BAYONA App desde tu móvil u ordenador. Descubre Mi App, el espacio personal de entrenamiento, y cómo instalar la aplicación web en tu pantalla de inicio.',
     breadcrumb: [['BAYONA+', '/app']],
   },
   '/community': {

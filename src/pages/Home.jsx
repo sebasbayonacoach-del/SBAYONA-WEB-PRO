@@ -178,6 +178,8 @@ export default function Home() {
 
       <AdaptiveDiscovery />
 
+      <BayonaLiveAppShowcase placement="home" />
+
       <section className="gym-home-services bayona-services-prime" id="servicios" aria-labelledby="gym-services-title">
         <div className="gym-home-shell">
           <div className="gym-services-intro">
@@ -239,7 +241,7 @@ export default function Home() {
 
       <GuidedStartJourney steps={START_STEPS} />
 
-      <BayonaLiveAppShowcase placement="home" />
+
 
       <section className="gym-home-gifts" id="regalos" aria-labelledby="gym-gifts-title">
         <div className="gym-home-shell">

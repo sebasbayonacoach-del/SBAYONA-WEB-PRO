@@ -275,7 +275,7 @@ export function Navbar() {
                 ABRIR MI APP <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
               </a>
               <p>Tu primera decisión no cuesta nada.</p>
-              <span>Déjanos tus datos, recibe tus recursos de inicio y pide tu valoración.</span>
+              <span>Descarga tus recursos de inicio gratis, sin registrarte. Si quieres entrenar, escríbenos.</span>
               <a href="/#empieza" onClick={close}>
                 EMPIEZA GRATIS <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
               </a>
