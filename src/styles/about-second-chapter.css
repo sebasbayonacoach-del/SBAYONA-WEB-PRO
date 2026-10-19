@@ -433,3 +433,6 @@ body.premium-route--about .about-page .about-timeline--stage.sticky-stage--stati
 @media (min-width:761px) {
  body.premium-route--about .about-page .about-story-heading h2 { max-width:100% !important; font-size:clamp(2.7rem,4.2vw,5rem) !important; }
 }
+
+/* True founder portrait replaces the unrelated back-facing illustrative scene. */
+body.premium-route--about .about-founder__visual img[src*="bayona-authentic"]{object-position:center 26%;filter:contrast(1.06) saturate(.91)}

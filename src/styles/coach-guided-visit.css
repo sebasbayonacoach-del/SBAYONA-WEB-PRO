@@ -265,3 +265,6 @@ html.bayona-coach-visit-active body > #root{overscroll-behavior:none}
  display:grid;place-items:center;border:1px solid rgba(255,218,174,.85)!important}
 .bayona-coach__portrait-brand{font:850 1rem/.95 Montserrat,Inter,sans-serif;
  letter-spacing:-.06em;color:#201812;text-shadow:0 1px 0 rgba(255,255,255,.3)}
+
+/* Authentic BAYONA founder photo: do not replace with a generated face. */
+.bayona-coach--chat .bayona-coach__portrait img[src*="bayona-authentic"]{width:100%;height:100%;object-fit:cover;object-position:center 24%;filter:contrast(1.07) saturate(.92)}
