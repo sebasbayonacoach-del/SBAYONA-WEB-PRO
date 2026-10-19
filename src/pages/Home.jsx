@@ -8,6 +8,7 @@ import { useJourneyExperience } from '../components/experience/JourneyExperience
 import BayonaLiveAppShowcase from '../components/app/BayonaLiveAppShowcase.jsx'
 import GuidedStartJourney from '../components/home/GuidedStartJourney.jsx'
 import AdaptiveDiscovery from '../components/home/AdaptiveDiscovery.jsx'
+import BayonaRealArchive from '../components/home/BayonaRealArchive.jsx'
 import { membershipPlanEditorialProjection } from '../config/conversionContent.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { bookingLink, isBookingEnabled } from '../config/site.config.js'
@@ -162,6 +163,8 @@ export default function Home() {
       </section>
 
       <AdaptiveDiscovery />
+
+      <BayonaRealArchive />
 
       <BayonaLiveAppShowcase placement="home" />
 

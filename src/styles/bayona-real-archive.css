@@ -1,0 +1,30 @@
+/* BAYONA archival imagery — originals, not synthetic representations. */
+.bayona-real-archive{background:#0b100f;color:#fff0df;position:relative;overflow:clip;padding:clamp(75px,8vw,145px) 0;}
+.bayona-real-archive:before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,#ce9b72,transparent);opacity:.6}
+.bayona-real-archive__shell{max-width:1550px;margin:0 auto;padding:0 clamp(21px,5.3vw,90px);}
+.bayona-real-archive__eyebrow,.bayona-real-archive__reel-heading{display:flex;justify-content:space-between;gap:15px;align-items:center;color:#f1ba8a;font:800 .65rem/1.4 "DM Mono",monospace;letter-spacing:.13em}
+.bayona-real-archive__eyebrow span:last-child,.bayona-real-archive__reel-heading span:last-child{color:#988b7d}
+.bayona-real-archive__intro h2{margin:29px 0 21px;font:900 clamp(3.5rem,7.3vw,9rem)/.98 "Montserrat",Inter,sans-serif;letter-spacing:-.085em;text-wrap:balance}
+.bayona-real-archive__intro h2 em{color:#f3b47f;font-style:normal}
+.bayona-real-archive__intro>p{max-width:46ch;margin:0 0 clamp(35px,4vw,70px);font:450 clamp(.94rem,1.1vw,1.13rem)/1.7 Inter,sans-serif;color:#dfcebd}
+.bayona-real-archive__photos{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:clamp(8px,1.3vw,18px)}
+.bayona-real-archive__photo{position:relative;isolation:isolate;min-width:0;aspect-ratio:4/5;margin:0;overflow:hidden;background:#161e1c}
+.bayona-real-archive__photo::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.77) 100%)}
+.bayona-real-archive__photo img{display:block;width:100%;height:100%;object-fit:cover;filter:contrast(1.06) saturate(.83);transition:transform .65s ease}
+.bayona-real-archive__photo:hover img{transform:scale(1.045)}
+.bayona-real-archive__photo--portrait img{object-position:center 32%}
+.bayona-real-archive__photo--rooftop img{object-position:center 60%}
+.bayona-real-archive__photo--mountain img{object-position:center}
+.bayona-real-archive__photo figcaption{position:absolute;z-index:1;left:clamp(13px,2vw,27px);bottom:clamp(14px,2vw,27px);right:clamp(13px,2vw,27px);display:flex;align-items:center;justify-content:space-between;gap:10px;font:800 .62rem/1.4 "DM Mono",monospace;color:#ffe0c1;letter-spacing:.08em}
+.bayona-real-archive__reel-heading{margin:clamp(60px,7vw,115px) 0 22px}
+.bayona-real-archive__reels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.4vw,19px)}
+.bayona-real-archive__reel{position:relative;aspect-ratio:4/5;background:#171d1c;overflow:hidden;border:1px solid rgba(255,208,173,.2)}
+.bayona-real-archive__reel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.86) contrast(1.07)}
+.bayona-real-archive__reel::after{position:absolute;inset:48% 0 0;content:"";pointer-events:none;background:linear-gradient(transparent,rgba(1,4,4,.89))}
+.bayona-real-archive__reel-caption{position:absolute;bottom:31px;left:24px;right:24px;z-index:1;display:flex;flex-direction:column;gap:7px;pointer-events:none}
+.bayona-real-archive__reel-caption span{font:800 .62rem "DM Mono",monospace;color:#e9b281;letter-spacing:.14em}
+.bayona-real-archive__reel-caption strong{font:900 clamp(1.35rem,2.35vw,2.7rem)/1 Montserrat,Inter,sans-serif;color:#fff2e4;letter-spacing:-.07em}
+.bayona-real-archive__reel-caption small{font-size:.76rem;color:#e0c6ac}
+.bayona-real-archive__source{margin:23px 0 0;font:.72rem/1.6 Inter,sans-serif;color:#b29f90}
+@media(max-width:700px){.bayona-real-archive__eyebrow span:last-child,.bayona-real-archive__reel-heading span:last-child{display:none}.bayona-real-archive__photos{grid-template-columns:1.15fr 1fr;gap:9px}.bayona-real-archive__photo--mountain{display:none}.bayona-real-archive__photo{aspect-ratio:3/5}.bayona-real-archive__photo figcaption{font-size:.5rem;flex-direction:column;align-items:flex-start}.bayona-real-archive__reels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding-bottom:15px;scrollbar-color:#8d7361 #0c1010}.bayona-real-archive__reel{min-width:min(75vw,330px);aspect-ratio:4/5;scroll-snap-align:start}.bayona-real-archive__reel-caption{left:17px;bottom:26px}.bayona-real-archive__intro h2{font-size:clamp(2.6rem,10vw,4.6rem)}}
+@media(prefers-reduced-motion:reduce){.bayona-real-archive__photo img{transition:none}}

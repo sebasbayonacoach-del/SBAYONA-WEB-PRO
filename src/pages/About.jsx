@@ -163,7 +163,7 @@ export default function About() {
       <section className="about-founder" id="la-persona" aria-labelledby="about-founder-title">
         <div className="about-founder__layout section-shell">
           <div className="about-founder__visual">
-            <img src="/images/bayona-authentic/retrato-frontal.webp" alt="Retrato personal original del fundador de BAYONA" loading="lazy" decoding="async" width="915" height="1040" />
+            <img src="/images/bayona-authentic/selfie-exterior-2026-04-11.jpg" alt="Retrato personal original del fundador de BAYONA" loading="lazy" decoding="async" width="915" height="1040" />
             <span className="about-founder__image-marker">EL ROSTRO DETRÁS DE BAYONA</span>
             <span className="about-founder__image-number" aria-hidden="true">RETRATO REAL / ARCHIVO BAYONA</span>
           </div>
