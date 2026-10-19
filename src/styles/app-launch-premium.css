@@ -97,3 +97,10 @@
   scroll-margin-top:125px;
  }
 }
+
+/* At least 44px touch targets for every secondary route entry. */
+.bayona-launch__role-link,.bayona-launch__scroll,.bayona-launch__final-secondary{
+ min-height:44px;
+ display:inline-flex;
+ align-items:center;
+}

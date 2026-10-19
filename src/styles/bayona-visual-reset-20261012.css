@@ -2910,3 +2910,105 @@ html body .app-entry-loading .app-primary-cta {
     max-height: 520px !important;
   }
 }
+
+/* UI/UX review · 2026-10-19: polish only; does not change business logic.
+ * Mobile language shortcut shares the header's unused gap instead of
+ * obscuring the hero masthead (or falsely advertising English for everyone).
+ */
+@media (max-width: 950px){
+ html body .translate-offer{
+  position:fixed!important;
+  top:10px!important;
+  right:140px!important;
+  left:auto!important;
+  z-index:95!important;
+  width:44px!important;
+  min-width:44px!important;
+  height:44px!important;
+  min-height:44px!important;
+  max-width:44px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0!important;
+  gap:0!important;
+  margin:0!important;
+  border:1px solid rgba(255,201,148,.3)!important;
+  border-radius:5px!important;
+  background:rgba(13,21,20,.87)!important;
+  box-shadow:none!important;
+  opacity:1!important;
+ }
+ html body .translate-offer > svg,
+ html body .translate-offer-copy,
+ html body .translate-offer-close,
+ html body .translate-offer-label,
+ html body .translate-offer-action::after{display:none!important}
+ html body .translate-offer-action{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:44px!important;
+  min-width:44px!important;
+  height:44px!important;
+  min-height:44px!important;
+  border:0!important;
+  background:transparent!important;
+  text-decoration:none!important;
+  padding:0!important;
+  font-size:.77rem!important;
+  line-height:1!important;
+  border-radius:5px!important;
+  color:#f8c394!important;
+  letter-spacing:.12em!important;
+ }
+ html body .translate-offer-code{
+  display:inline!important;
+  font:800 .72rem/1 "DM Mono",monospace!important;
+  color:inherit!important;
+ }
+ html body .translate-offer-action:focus-visible{
+  outline:3px solid #ffca97!important;
+  outline-offset:3px!important;
+ }
+ /* Horizontal mobile layout still has room for brand, language, theme and menu. */
+ html body .gym-home-hero .bayona-hero-prime__story .bayona-automatic-intro{
+  min-height:52px!important;
+  cursor:pointer!important;
+ }
+ html body .services-page :is(.services-secondary-cta,.services-catalog-group a){
+  min-height:44px!important;
+  display:inline-flex;
+  align-items:center;
+ }
+ html body .bayona-journey-inline__guided{
+  min-height:44px!important;
+  padding:.7rem .85rem!important;
+ }
+ html body .footer-column a{
+  min-height:44px;
+  display:flex;
+  align-items:center;
+ }
+}
+/* Consistent keyboard focus and genuine button affordance on the welcome CTA. */
+html body .gym-home-hero .bayona-automatic-intro{
+ cursor:pointer;
+ appearance:none;
+ -webkit-appearance:none;
+}
+html body :is(.gym-home-hero .bayona-automatic-intro,.bayona-app-bridge__action,.bayona-launch__primary):focus-visible{
+ outline:3px solid #ffd2a5!important;
+ outline-offset:4px!important;
+}
+@media(prefers-reduced-motion:reduce){
+ html body .gym-home-hero .bayona-automatic-intro{transition:none!important}
+}
+
+@media (min-width:521px) and (max-width:950px){
+ html body .translate-offer{right:188px!important}
+}
+@media (max-width:950px){
+ /* The mobile navigation owns the screen whenever its modal is open. */
+ html body .navbar.is-open ~ .translate-offer{display:none!important}
+}

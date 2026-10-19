@@ -22,7 +22,7 @@ describe('Home — contrato de una sola lectura', () => {
   it('mantiene contacto voluntario y entrada automática sin botones de comienzo', () => {
     const { container } = renderHome()
     expect(container.querySelectorAll('#empieza')).toHaveLength(1)
-    expect(screen.getByText(/SEBASTIÁN TE RECIBE AUTOMÁTICAMENTE/i)).toBeInTheDocument()
+    expect(screen.getByRole("button",{name:/Hablar con Sebastián, entrenador digital de BAYONA/i})).toBeInTheDocument()
     expect(homeSource).not.toMatch(/\/onboarding|JourneyRibbon|ArrivalBonusCard|UniverseScale|GuideCompanion/i)
   })
 

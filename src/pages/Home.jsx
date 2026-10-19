@@ -109,7 +109,7 @@ const GIFTS = Object.freeze([
 ])
 
 export default function Home() {
-  const { goal, preferences, autoStartCoach } = useJourneyExperience()
+  const { goal, preferences, autoStartCoach, startCoach } = useJourneyExperience()
   useEffect(() => {
     const timer = window.setTimeout(autoStartCoach, 450)
     return () => window.clearTimeout(timer)
@@ -148,9 +148,10 @@ export default function Home() {
               Entrenamiento pensado para tu cuerpo, tus objetivos y tu vida. Contigo desde el primer paso.
             </p>
             <div className="gym-home-hero__actions">
-              <span className="gym-primary-button bayona-automatic-intro" role="status">
-                SEBASTIÁN TE RECIBE AUTOMÁTICAMENTE <ArrowRight size={18} aria-hidden="true" />
-              </span>
+              <button type="button" className="gym-primary-button bayona-automatic-intro"
+                onClick={startCoach} aria-label="Hablar con Sebastián, entrenador digital de BAYONA">
+                HABLAR CON SEBASTIÁN <ArrowRight size={18} aria-hidden="true" />
+              </button>
               <a className="gym-secondary-button" href="#servicios">
                 VER CÓMO TE AYUDO <ArrowRight size={19} strokeWidth={1.7} aria-hidden="true" />
               </a>

@@ -71,7 +71,8 @@ export default function TranslateOffer() {
         lang={offer.code}
         onClick={() => trackEvent('translate_open', { language: offer.code })}
       >
-        {offer.label}
+        <span className="translate-offer-label">{offer.label}</span>
+        <span className="translate-offer-code" aria-hidden="true">{offer.code.toUpperCase()}</span>
       </a>
 
       <button

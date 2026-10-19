@@ -154,3 +154,6 @@
     transition: none;
   }
 }
+
+/* Keep the actual visitor language code, never hard-code EN for everyone. */
+.translate-offer-code{display:none}
