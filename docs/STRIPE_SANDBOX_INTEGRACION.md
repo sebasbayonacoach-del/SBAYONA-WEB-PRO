@@ -57,3 +57,28 @@ Respuesta esperada: `{ "url": "https://checkout.stripe.com/...", "mode": "monthl
 6. Vincular Vercel/dominio de producción solo después de superar todo lo anterior y disponer de pruebas de aceptación.
 
 **No se ha habilitado ningún cobro ni suscripción live.**
+
+
+## Confirmación de pago verificada (nueva fase)
+
+- `GET /api/stripe/session-status?session_id=cs_test_...` consulta **directamente** el estado en Stripe con una clave exclusivamente de prueba (servidor).
+- Además de `payment_status=paid`, verifica `livemode=false`, metadatos de BAYONA, modalidad, COP, identificación real de la tarifa Stripe y el importe total publicado. No devuelve datos personales.
+- Solo devuelve `paid_test` cuando Stripe confirma `status=complete` y `payment_status=paid`; si no, `pending_test` o error. **Ningún estado crea ventas ni activa membresías**.
+- El retorno a `/checkout?stripe_test_return=1&session_id=...` consulta automáticamente ese endpoint en desarrollo, cuando está accesible. Un retorno a la web **nunca** se interpreta como pago por sí solo.
+- `api/stripe/webhook.js` usa el manejador Web Request de Vercel para leer el cuerpo sin transformarlo y verificar `Stripe-Signature` con HMAC SHA-256, tolerancia de 5 minutos y comparación en tiempo constante. Consulta documentación oficial de Vercel / Stripe sobre la importancia del cuerpo original.
+- Como no hay un almacenamiento transaccional conectado, los eventos de pago válidos devuelven `503 DURABLE_EVENT_STORAGE_REQUIRED` para evitar confirmar una entrega inexistente. **No registrar el webhook real hasta incorporar persistencia idempotente**.
+- Queda pendiente crear un registro duradero con `event.id` único, reconciliación con Checkout Session y transacción que actualice el estado de la membresía solamente después de validación de pagos y derechos de acceso. Los reintentos de Stripe no deben duplicar accesos.
+
+### Prueba real iniciada (sin cobro)
+
+Se creó una Checkout Session de FUERZA pago único en la cuenta Sandbox de Stripe, importe 299.000 COP, **livemode=false**. Se comprobó en Stripe que sigue `open` y `unpaid`. No se completó automáticamente la tarjeta de prueba y no se efectuó ninguna transacción ni ingreso. La verificación de `paid_test` se cubre con pruebas de servidor que simulan respuestas autenticadas de Stripe, no con una operación monetaria completada.
+
+### Comandos adicionales
+
+```bash
+node --test api/stripe/create-checkout.test.mjs api/stripe/session-status.test.mjs api/stripe/webhook.test.mjs
+npx playwright test e2e/bayona-stripe-return-security-20261019.spec.js
+npm run build
+```
+
+Para registrar un endpoint webhook, configurar `STRIPE_WEBHOOK_SECRET=whsec_...` exclusivamente como secreto del backend staging, sin copiar a `VITE_*`. Mantener `BAYONA_STRIPE_SANDBOX_ENABLED=false` hasta que existan dominio staging, secretos, base de datos y verificación de integración real.

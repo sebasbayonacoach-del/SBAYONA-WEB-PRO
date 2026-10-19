@@ -36,6 +36,9 @@ function resolveInitialPlanId(searchParams) {
 export default function Checkout() {
   const [searchParams] = useSearchParams()
   const [contact, setContact] = useState(INITIAL_CONTACT)
+  const [stripeSandboxStatus, setStripeSandboxStatus] = useState('idle')
+  const testReturn = import.meta.env.DEV && searchParams.get('stripe_test_return') === '1'
+  const testSessionId = searchParams.get('session_id')
   const [planId, setPlanId] = useState(() => resolveInitialPlanId(searchParams))
   const checkoutEntered=useRef(false)
   const initialPlan=useRef(resolveInitialPlanId(searchParams))
@@ -47,6 +50,33 @@ export default function Checkout() {
   )
   const calculation = useMemo(() => calculateExperience(selection), [selection])
   const selectedSessions = calculation.sessions.filter(({ quantity }) => quantity > 0)
+
+  useEffect(()=>{
+    if(!testReturn||!testSessionId){
+      setStripeSandboxStatus('idle')
+      return
+    }
+    const controller=new AbortController()
+    setStripeSandboxStatus('checking')
+    fetch('/api/stripe/session-status?session_id='+encodeURIComponent(testSessionId),
+      {headers:{Accept:'application/json'},signal:controller.signal})
+      .then(async response=>{
+        if(!response.ok||!response.headers.get('content-type')?.includes('application/json')){
+          throw new Error('Sandbox API is not connected')
+        }
+        const result=await response.json()
+        if(result?.livemode!==false||result.accessActivated!==false){
+          throw new Error('Invalid sandbox verification')
+        }
+        return result.paymentVerifiedInSandbox===true&&result.status==='paid_test'
+          ? 'verified_test' : result.status==='pending_test' ? 'pending_test' : 'unverified'
+      })
+      .then(setStripeSandboxStatus)
+      .catch(error=>{
+        if(error.name!=='AbortError')setStripeSandboxStatus('unverified')
+      })
+    return ()=>controller.abort()
+  },[testReturn,testSessionId])
   const handleContactChange = (event) => {
     const { name, value } = event.target
     setContact((current) => ({ ...current, [name]: value }))
@@ -88,8 +118,16 @@ export default function Checkout() {
       <section className="checkout-hero section-shell">
         <SectionLabel>SERVICIOS BAYONA · TU MISIÓN</SectionLabel>
         <h1>PREPARA TU SOLICITUD.</h1>
-        {import.meta.env.DEV && searchParams.get('stripe_test_return') === '1' && (
-          <p role="status" className="checkout-stripe-return">Has regresado del entorno de prueba de Stripe. Esto no demuestra un cobro ni activa una membresía.</p>
+        {testReturn && (
+          <p role="status" className="checkout-stripe-return" data-testid="stripe-return-status">
+            {stripeSandboxStatus==='checking'
+              ? 'Comprobando la sesión de prueba con Stripe. Aún no hay pago confirmado.'
+              : stripeSandboxStatus==='verified_test'
+                ? 'Stripe ha confirmado un pago de PRUEBA. No se ha cobrado dinero real ni activado una membresía.'
+                : stripeSandboxStatus==='pending_test'
+                  ? 'Stripe indica que la sesión de prueba sigue pendiente. No hay pago confirmado.'
+                  : 'Regresaste de Stripe Sandbox, pero no se pudo verificar ningún pago. No se ha activado una membresía.'}
+          </p>
         )}
         <p className="checkout-subtitle">
           Elige una membresía, añade solo lo que necesitas y revisa el total antes de enviarnos tu solicitud.

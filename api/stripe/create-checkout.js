@@ -1,5 +1,5 @@
 // BAYONA · sandbox-only Vercel function. Never activates paid access.
-const PRICES=Object.freeze({
+export const PRICES=Object.freeze({
  RAIZ:{monthly:'price_1US60NDe5lykCn8xydfpiiL5',once:'price_1US60iDe5lykCn8xEXQBsvj0'},
  FUERZA:{monthly:'price_1US60kDe5lykCn8x0hNgvYOa',once:'price_1US60nDe5lykCn8xJhWTTjUF'},
  RENDIMIENTO:{monthly:'price_1US60pDe5lykCn8x6KPYZaAt',once:'price_1US60rDe5lykCn8xJqsWKus1'},
