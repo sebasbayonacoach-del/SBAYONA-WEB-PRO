@@ -17,7 +17,7 @@ import ConsentBanner from './components/consent/ConsentBanner.jsx'
 import Breadcrumb from './components/navigation/Breadcrumb.jsx'
 import TranslateOffer from './components/TranslateOffer.jsx'
 import { BAYONA_APP_ENTRY_URL } from './config/bayonaAppIntegration.js'
-import Home from './pages/Home'
+import Home from './pages/HomeAtelier'
 import JourneyGuide from './components/journey/JourneyGuide.jsx'
 import CinematicGlobalChapters from './components/experience/CinematicGlobalChapters.jsx'
 import CoachGuidedVisit from './components/experience/CoachGuidedVisit.jsx'
@@ -151,6 +151,7 @@ function Site() {
   const isSystemRoute = routeStartsWith(pathname, SYSTEM_ROUTES)
   const isProductRoute = routeStartsWith(pathname, PRODUCT_ROUTES)
   const showEditorialChrome = !isProductRoute && !isSystemRoute
+  const showGuidedChrome = showEditorialChrome && pathname !== '/' // Atelier: editorial without intrusive mission overlays.
   const showSiteFooter = showEditorialChrome || routeStartsWith(pathname, FOOTER_ROUTES)
   const experienceScope = isSystemRoute || isProductRoute ? 'system' : 'brand'
 
@@ -209,7 +210,7 @@ function Site() {
       <MotionDebug />
       <CustomCursor />
       <Navbar />
-      {showEditorialChrome ? <CinematicGlobalChapters /> : null}
+      {showGuidedChrome ? <CinematicGlobalChapters /> : null}
       <PageTransition>
         {/*
           FASE 4 (4.2): el marco de la experiencia vive en el shell, no en cada
@@ -273,16 +274,16 @@ function Site() {
             invita a seguir. Solo en las rutas del itinerario, igual que
             NextChapter, para no aparecer en el embudo ni en el 404.
           */}
-          {showEditorialChrome ? (
+          {showGuidedChrome ? (
             <Suspense fallback={null}><AmbientEffects /></Suspense>
           ) : null}
-          {showEditorialChrome ? <PremiumRouteChrome /> : null}
-          {showEditorialChrome ? <JourneyGuide /> : null}
-          {showEditorialChrome ? <AppBridgeCinematic /> : null}
-          {showEditorialChrome ? <EditorialOutro /> : null}
+          {showGuidedChrome ? <PremiumRouteChrome /> : null}
+          {showGuidedChrome ? <JourneyGuide /> : null}
+          {showGuidedChrome ? <AppBridgeCinematic /> : null}
+          {showGuidedChrome ? <EditorialOutro /> : null}
         </main>
       </PageTransition>
-      {showEditorialChrome ? <WhatsAppButton /> : null}
+      {showGuidedChrome ? <WhatsAppButton /> : null}
       {showSiteFooter ? <Footer /> : null}
       {isEditMode() ? (
         <Suspense fallback={null}>
@@ -292,7 +293,7 @@ function Site() {
       {/* Traducción contextual solo cuando hace falta. */}
       <TranslateOffer />
       <ConsentBanner />
-      {showEditorialChrome ? <CoachGuidedVisit /> : null}
+      {showGuidedChrome ? <CoachGuidedVisit /> : null}
     </>
   )
 }

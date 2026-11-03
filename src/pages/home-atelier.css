@@ -1,0 +1,285 @@
+/*
+ * BAYONA / ATELIER 2026
+ * A restrained editorial system: deep carbon, paper ivory, quiet bronze.
+ * Conceptual fitness imagery is not presented as a likeness of Sebastián.
+ */
+.bayona-atelier {
+  --atelier-black: #0b0b0a;
+  --atelier-carbon: #151513;
+  --atelier-paper: #eee9e0;
+  --atelier-paper2: #e3ddd2;
+  --atelier-ink: #242421;
+  --atelier-bronze: #c39a6b;
+  --atelier-bronze-light: #e0bb8e;
+  --atelier-muted: #a7a49d;
+  --atelier-serif: Georgia, 'Times New Roman', serif;
+  --atelier-sans: 'Montserrat', Inter, system-ui, sans-serif;
+  background: var(--atelier-black);
+  color: #f3f0e8;
+  font-family: Inter, system-ui, sans-serif;
+  width: 100%;
+  overflow: clip;
+  isolation: isolate;
+}
+.bayona-atelier *, .bayona-atelier *::before, .bayona-atelier *::after { box-sizing: border-box; }
+.bayona-atelier a { text-decoration: none; }
+.bayona-atelier button, .bayona-atelier a { -webkit-tap-highlight-color: transparent; }
+.bayona-atelier :is(a,button):focus-visible { outline: 2px solid var(--atelier-bronze-light); outline-offset: 5px; }
+.bayona-atelier :is(h1,h2,h3,p) { overflow-wrap: normal; }
+.atelier-frame { width: min(100% - clamp(40px, 8.8vw, 168px), 1552px); margin-inline: auto; }
+.atelier-kicker, .atelier-section-index, .atelier-edition {
+  font: 650 .62rem/1.5 'DM Mono', ui-monospace, monospace;
+  letter-spacing: .20em;
+}
+.atelier-section-index { color: var(--atelier-bronze); }
+.atelier-hero {
+  min-height: min(940px, 100svh);
+  min-height: max(690px, 100svh);
+  position: relative; isolation: isolate; background: #100d09; overflow: hidden; color: #f5f1e9;
+}
+.atelier-hero__photo, .atelier-hero__shade { position: absolute; inset: 0; z-index: -2; }
+.atelier-hero__photo {
+  background-image: url('/images/bayona-generated/home-hero-1600.webp');
+  background-size: cover;
+  background-position: center 53%;
+  transform: scale(1.015);
+  animation: atelier-arrive 1.6s ease-out both;
+}
+.atelier-hero__shade {
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(8,8,7,.90) 0%, rgba(8,8,7,.79) 32%, rgba(8,8,7,.42) 61%, rgba(8,8,7,.08) 100%),
+    linear-gradient(180deg, rgba(9,9,8,.26) 0%, transparent 32%, rgba(7,7,6,.23) 77%, rgba(7,7,6,.86) 100%);
+}
+.atelier-hero__content { min-height: inherit; display: flex; flex-direction: column; justify-content: space-between; }
+.atelier-hero__prelude {
+  padding-top: clamp(122px, 12vw, 178px);
+  display: flex; justify-content: space-between; gap: 24px;
+  align-items: center; color: #e8d9c9;
+}
+.atelier-kicker i { display: inline-block; width: 19px; height: 1px; background: var(--atelier-bronze); vertical-align: middle; margin: 0 10px; }
+.atelier-edition { color: #d6c4af; }
+.atelier-hero__statement { padding: clamp(68px, 8.2vw, 142px) 0 65px; }
+.atelier-hero__eyebrow { margin: 0 0 24px; color: var(--atelier-bronze-light); letter-spacing: .23em; font: 700 .71rem/1.6 'DM Mono', monospace; }
+.atelier-hero h1 {
+  font-family: var(--atelier-sans);
+  font-size: clamp(4.4rem, 9.1vw, 10rem);
+  line-height: .91;
+  letter-spacing: -.093em;
+  font-weight: 800;
+  margin: 0;
+  max-width: 13ch;
+  color: #f5f2ed;
+  text-wrap: balance;
+}
+.atelier-hero h1 em, .atelier-manifesto h2 em,
+.atelier-experiences h2 em, .atelier-experience h3 em, .atelier-method h2 em,
+.atelier-digital h2 em, .atelier-resources h2 em, .atelier-contact h2 em {
+  font-family: var(--atelier-serif);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -.057em;
+}
+.atelier-hero h1 em { color: #e1bd94; }
+.atelier-hero__summary { margin: 35px 0 0; max-width: 470px; color: #e2ddd4; font-size: clamp(.99rem,1.2vw,1.12rem); line-height: 1.78; }
+.atelier-hero__actions, .atelier-contact__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 26px; margin-top: 34px; }
+.atelier-button {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 26px;
+  min-height: 54px; padding: 0 25px;
+  font: 750 .68rem/1 'DM Mono', ui-monospace, monospace;
+  letter-spacing: .12em;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
+  white-space: normal;
+}
+.atelier-button--light { background: var(--atelier-paper); color: #151512; }
+.atelier-button--light:hover { background: white; color: #0c0c0a; transform: translateY(-2px); }
+.atelier-button--bronze { background: var(--atelier-bronze-light); color: #0d0e0c; width: fit-content; }
+.atelier-button--bronze:hover { background: #f5d9b4; transform: translateY(-2px); }
+.atelier-text-link {
+  display: inline-flex; align-items: center; gap: 14px;
+  color: #ece4d9; border-bottom: 1px solid rgba(255,255,255,.46);
+  padding-bottom: 9px; font: 700 .64rem/1.6 'DM Mono',monospace; letter-spacing: .13em;
+}
+.atelier-text-link:hover { color: var(--atelier-bronze-light); border-color: var(--atelier-bronze-light); }
+.atelier-hero__foot {
+  display: flex; justify-content: space-between; align-items: center; gap: 25px;
+  border-top: 1px solid rgba(243,239,230,.31); padding: 22px 0 30px;
+  color: #d5ccc0; font: 700 .6rem/1.6 'DM Mono', monospace; letter-spacing: .16em;
+}
+.atelier-hero__hairline { flex: 1; height: 1px; max-width: 100px; background: var(--atelier-bronze); opacity: .62; }
+.atelier-hero__foot a { display: inline-flex; align-items: center; gap: 14px; color: inherit; }
+.atelier-hero__foot a:hover { color: white; }
+.atelier-manifesto { background: var(--atelier-paper); color: var(--atelier-ink); padding: clamp(110px, 12vw, 195px) 0; }
+.atelier-manifesto__grid { display: grid; grid-template-columns: 1fr 3.35fr; gap: clamp(28px, 7vw, 100px); }
+.atelier-manifesto__grid > .atelier-section-index { display: flex; flex-direction: column; gap: 12px; color: #8b7256; }
+.atelier-manifesto__grid > .atelier-section-index span:last-child { color: #77736e; font-size: .55rem; }
+.atelier-manifesto h2 { font: 760 clamp(2.7rem, 5.45vw, 6.4rem)/1.08 var(--atelier-sans); letter-spacing: -.083em; margin: 0; color: #262522; }
+.atelier-manifesto h2 em { color: #aa7e50; }
+.atelier-manifesto__below { display: flex; align-items: flex-start; justify-content: space-between; gap: 60px; margin-top: clamp(36px, 5.4vw, 82px); }
+.atelier-manifesto__below p { max-width: 530px; font-size: clamp(1rem, 1.16vw, 1.15rem); line-height: 1.85; color: #55534e; margin: 0; }
+.atelier-link-dark { display: inline-flex; align-items: center; justify-content: space-between; gap: 25px; flex: none; border-bottom: 1px solid #797168; padding: 0 0 10px; font: 700 .65rem/1.6 'DM Mono', monospace; color: #262522; letter-spacing: .09em; }
+.atelier-link-dark:hover { color: #986d42; border-color: #986d42; }
+.atelier-experiences { background: #111210; color: #f3efe7; padding: clamp(98px, 9.5vw, 160px) 0 clamp(105px, 10.5vw, 180px); }
+.atelier-section-top { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-bottom: 19px; border-bottom: 1px solid rgba(21,21,20,.28); color: #67625a; font: 700 .58rem/1.6 'DM Mono', monospace; letter-spacing: .15em; }
+.atelier-section-top--dark { color: #b8afa2; border-bottom-color: rgba(233,227,216,.24); }
+.atelier-experiences__head, .atelier-resources__head { display: flex; justify-content: space-between; gap: 35px; align-items: flex-end; margin: 75px 0 55px; }
+.atelier-experiences h2, .atelier-resources h2 { font: 760 clamp(3rem, 5.6vw, 6rem)/1.05 var(--atelier-sans); letter-spacing: -.08em; margin: 0; }
+.atelier-experiences h2 em { color: var(--atelier-bronze-light); }
+.atelier-experiences__head > p, .atelier-resources__head > p { max-width: 290px; font-size: .98rem; line-height: 1.8; color: #aaa7a0; margin: 0; }
+.atelier-experiences__grid { display: grid; grid-template-columns: 1.08fr .96fr .96fr; gap: clamp(12px,1.5vw,27px); }
+.atelier-experience { min-width: 0; display: block; color: #f1efeb; }
+.atelier-experience__image { position: relative; isolation: isolate; aspect-ratio: 3/4; overflow: hidden; background: #28251f; }
+.atelier-experience__image::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,.20), transparent 44%, rgba(0,0,0,.08)); }
+.atelier-experience__image img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(.66) contrast(1.06); transition: transform .75s cubic-bezier(.18,.8,.2,1), filter .75s ease; }
+.atelier-experience:hover .atelier-experience__image img { transform: scale(1.045); filter: saturate(.96) contrast(1.04); }
+.atelier-experience__number { position: absolute; top: 22px; left: 23px; z-index: 1; color: #fff7e8; font: 700 .65rem/1.5 'DM Mono',monospace; letter-spacing: .2em; text-shadow: 0 1px 6px #000; }
+.atelier-experience__action { position: absolute; bottom: 0; right: 0; z-index: 1; display: flex; align-items: center; justify-content: center; width: 61px; height: 61px; color: #181815; background: var(--atelier-paper); transition: background .2s, color .2s; }
+.atelier-experience:hover .atelier-experience__action { background: var(--atelier-bronze-light); }
+.atelier-experience__detail { padding: 27px 2px 0; }
+.atelier-experience__eyebrow { font: 700 .58rem/1.5 'DM Mono',monospace; letter-spacing: .13em; color: #bca786; }
+.atelier-experience h3 { margin: 17px 0 14px; font: 750 clamp(1.8rem, 2.7vw, 3rem)/1.11 var(--atelier-sans); letter-spacing: -.065em; }
+.atelier-experience h3 em { color: var(--atelier-bronze-light); }
+.atelier-experience__detail > p { font-size: .91rem; line-height: 1.73; color: #b7b5ac; max-width: 35ch; min-height: 75px; }
+.atelier-experience__explore { display: flex; align-items: center; gap: 15px; width: fit-content; margin-top: 26px; padding-bottom: 11px; border-bottom: 1px solid #817768; color: #f2ecdd; font: 700 .58rem/1.4 'DM Mono',monospace; letter-spacing: .14em; }
+.atelier-experience:hover .atelier-experience__explore { color: var(--atelier-bronze-light); }
+.atelier-method { background: var(--atelier-paper2); color: #292824; position: relative; overflow: hidden; padding: clamp(115px,11vw,190px) 0; isolation: isolate; }
+.atelier-method__photo { position: absolute; z-index: -1; inset: 0 0 0 55%; background: linear-gradient(90deg, var(--atelier-paper2),rgba(227,221,210,.15)), url('/images/bayona-generated/home-pillar-read-1600.webp') center / cover; opacity: .23; filter: grayscale(1); }
+.atelier-method__layout { display: grid; grid-template-columns: 1.22fr .85fr; gap: clamp(55px,9vw,160px); align-items: end; }
+.atelier-method h2 { margin: 35px 0 29px; font: 750 clamp(3.1rem,5.3vw,6.2rem)/1.07 var(--atelier-sans); letter-spacing: -.087em; }
+.atelier-method h2 em { color: #9b754d; }
+.atelier-method__intro > p { max-width: 390px; font-size: 1.06rem; line-height: 1.8; color: #615e57; margin: 0 0 35px; }
+.atelier-method__steps { border-top: 1px solid #aaa49b; }
+.atelier-method__step { display: grid; grid-template-columns: 39px 1fr 25px; gap: 16px; border-bottom: 1px solid #aaa49b; padding: 26px 0; align-items: start; }
+.atelier-method__step > span { color: #8e785d; font: 700 .66rem/1.6 'DM Mono',monospace; letter-spacing: .12em; }
+.atelier-method__step h3 { margin: 0 0 9px; font: 650 clamp(1.38rem,2.05vw,2.1rem)/1.18 var(--atelier-sans); letter-spacing: -.048em; color: #2c2a25; }
+.atelier-method__step p { margin: 0; color: #5f5c55; font-size: .88rem; line-height: 1.65; }
+.atelier-method__step svg { color: #9b754d; }
+.atelier-digital { background: #171815; color: #f1eee7; overflow: hidden; }
+.atelier-digital__layout { display: grid; grid-template-columns: 1.08fr .9fr; align-items: center; gap: clamp(40px, 7vw, 120px); min-height: 720px; padding-top: 100px; padding-bottom: 105px; }
+.atelier-digital__overline { display: block; margin: 75px 0 18px; font: 700 .62rem/1.6 'DM Mono',monospace; letter-spacing: .17em; color: #b9b2a4; }
+.atelier-digital h2 { margin: 0; font: 750 clamp(3.1rem, 5.35vw, 6.2rem)/1.04 var(--atelier-sans); letter-spacing: -.079em; }
+.atelier-digital h2 em { color: #d3b48e; }
+.atelier-digital__copy > p { max-width: 520px; margin: 27px 0 35px; color: #bcbeb8; line-height: 1.8; font-size: 1.01rem; }
+.atelier-digital__media { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 570px; }
+.atelier-digital__orbit { position: absolute; width: min(95%, 520px); aspect-ratio: 1; border: 1px solid #6e614e; border-radius: 50%; box-shadow: 0 0 0 75px rgba(175,139,97,.025), 0 0 0 150px rgba(175,139,97,.015); }
+.atelier-digital__device { position: relative; z-index: 1; width: min(64%, 290px); padding: 11px; border-radius: 27px; background: #070809; border: 1px solid #656258; box-shadow: 20px 40px 95px rgba(0,0,0,.55); transform: rotate(-7deg); }
+.atelier-digital__device img { display: block; width: 100%; border-radius: 17px; height: auto; max-height: 520px; object-fit: cover; object-position: top; }
+.atelier-digital__stamp { position: absolute; bottom: 4px; color: #a9a8a0; font: 600 .6rem/1.5 'DM Mono',monospace; letter-spacing: .2em; }
+.atelier-resources { background: var(--atelier-paper); color: #1f201e; padding: clamp(100px,10vw,170px) 0; }
+.atelier-resources__head { margin-bottom: 56px; }
+.atelier-resources h2 em { color: #a77947; }
+.atelier-resources__head > p { color: #66635d; }
+.atelier-resources__list { border-top: 1px solid #b9b1a5; }
+.atelier-resource { display: grid; grid-template-columns: 90px 1fr auto; gap: 25px; align-items: center; border-bottom: 1px solid #b9b1a5; padding: 30px 6px; color: #252420; transition: padding .3s ease, background .3s; }
+.atelier-resource:hover { padding-left: 17px; background: rgba(181,145,100,.08); }
+.atelier-resource__number { color: #a37c53; font: 400 1.55rem/1 var(--atelier-serif); font-style: italic; }
+.atelier-resource__name { font: 690 clamp(1.4rem,2.3vw,2.45rem)/1.2 var(--atelier-sans); letter-spacing: -.053em; }
+.atelier-resource__name small { display: block; margin-top: 9px; color: #77726a; font: 700 .55rem/1.5 'DM Mono',monospace; letter-spacing: .16em; }
+.atelier-resource__download { display: flex; align-items: center; gap: 18px; font: 700 .6rem/1.5 'DM Mono',monospace; letter-spacing: .13em; }
+.atelier-contact { position: relative; overflow: hidden; background: #100f0d; color: #f1ece2; text-align: center; }
+.atelier-contact::before { content:''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 50% at 50% 42%, rgba(154,116,75,.17), transparent 75%); pointer-events:none; }
+.atelier-contact__inner { position: relative; padding: clamp(135px,14vw,230px) 0 30px; }
+.atelier-contact .atelier-kicker { color: #c9b393; }
+.atelier-contact h2 { font: 760 clamp(3.4rem,7.6vw,9.5rem)/.98 var(--atelier-sans); letter-spacing: -.09em; margin: 38px auto 28px; text-wrap: balance; }
+.atelier-contact h2 em { color: #d0a97c; }
+.atelier-contact__inner > p:not(.atelier-kicker) { font-size: 1.06rem; color: #bdbab2; line-height: 1.7; margin: auto; max-width: 525px; }
+.atelier-contact__actions { justify-content: center; margin: 45px auto clamp(120px,13vw,190px); }
+.atelier-contact__foot { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 26px 0 0; border-top: 1px solid rgba(235,230,219,.25); font: 650 .57rem/1.5 'DM Mono',monospace; letter-spacing: .14em; color: #aaa29a; }
+/* The global shell stays useful, but the luxury opening takes priority over HUD clutter. */
+body.bayona-luxury-active .bayona-mission-hud, body.bayona-luxury-active .bayona-cinema-track { display: none !important; }
+body.bayona-luxury-active .navbar { background: rgba(13,13,12,.92) !important; border-bottom: 1px solid rgba(255,255,255,.11) !important; backdrop-filter: blur(17px); }
+body.bayona-luxury-active .navbar .brand { letter-spacing: .20em; }
+body.bayona-luxury-active .navbar .gym-primary-nav a { font-size: .64rem; font-weight: 600; letter-spacing: .13em; }
+body.bayona-luxury-active .navbar .gym-primary-nav a:hover { color: #dfb688; }
+body.bayona-luxury-active .ds-frame { padding-top: 0 !important; margin-top: 0 !important; }
+@keyframes atelier-arrive { from { opacity: .78; transform: scale(1.045); } to { opacity: 1; transform: scale(1.015); } }
+@media (min-width: 1600px) { .atelier-hero { min-height: 940px; } }
+@media (max-width: 1100px) {
+  .atelier-manifesto__grid { grid-template-columns: 1fr; gap: 25px; }
+  .atelier-manifesto__grid > .atelier-section-index { flex-direction: row; gap: 30px; }
+  .atelier-experiences__head, .atelier-resources__head { align-items: flex-start; flex-direction: column; }
+  .atelier-experiences__head > p, .atelier-resources__head > p { max-width: 500px; }
+  .atelier-method__layout { grid-template-columns: 1fr; gap: 70px; }
+  .atelier-digital__layout { grid-template-columns: 1fr .8fr; }
+}
+@media (max-width: 760px) {
+  .atelier-frame { width: calc(100% - 42px); }
+  .atelier-hero { min-height: 790px; min-height: 100svh; }
+  .atelier-hero__photo { background-position: 54% center; }
+  .atelier-hero__shade { background: linear-gradient(180deg,rgba(8,8,7,.55) 0%,rgba(8,8,7,.37) 22%,rgba(8,8,7,.54) 50%,rgba(8,8,7,.92) 100%),linear-gradient(90deg,rgba(8,8,7,.43),transparent); }
+  .atelier-hero__prelude { padding-top: 92px; }
+  .atelier-hero__prelude .atelier-edition { display: none; }
+  .atelier-kicker { font-size: .56rem; }
+  .atelier-hero__statement { padding: 120px 0 40px; margin-top: auto; }
+  .atelier-hero__eyebrow { font-size: .59rem; letter-spacing: .12em; max-width: 260px; }
+  .atelier-hero h1 { font-size: clamp(3.6rem, 14vw, 6.2rem); letter-spacing: -.087em; }
+  .atelier-hero__summary { font-size: .93rem; line-height: 1.66; margin-top: 25px; max-width: 350px; }
+  .atelier-hero__actions { gap: 24px; margin-top: 27px; }
+  .atelier-button { min-height: 51px; padding: 0 18px; font-size: .61rem; gap: 16px; }
+  .atelier-text-link { font-size: .58rem; }
+  .atelier-hero__foot { padding: 18px 0 22px; font-size: .53rem; }
+  .atelier-hero__foot span:first-child, .atelier-hero__hairline { display: none; }
+  .atelier-hero__foot a { margin-left: auto; }
+  .atelier-manifesto { padding: 105px 0; }
+  .atelier-manifesto h2 { font-size: clamp(2.4rem,9vw,4.4rem); }
+  .atelier-manifesto__below { flex-direction: column; gap: 28px; }
+  .atelier-experiences { padding: 94px 0 105px; }
+  .atelier-experiences__head { margin: 53px 0 38px; }
+  .atelier-experiences h2, .atelier-resources h2 { font-size: clamp(2.7rem, 9.5vw, 4.7rem); }
+  .atelier-experiences__grid { grid-template-columns: 1fr; gap: 56px; }
+  .atelier-experience__image { aspect-ratio: 4/4.5; }
+  .atelier-experience__detail > p { min-height: 0; }
+  .atelier-experience h3 { font-size: clamp(2rem,8vw,2.8rem); }
+  .atelier-method { padding: 105px 0; }
+  .atelier-method__photo { inset: 50% 0 0 0; opacity: .1; }
+  .atelier-method h2 { font-size: clamp(2.8rem,10vw,4.7rem); }
+  .atelier-digital__layout { grid-template-columns: 1fr; padding-top: 100px; padding-bottom: 75px; gap: 45px; }
+  .atelier-digital__overline { margin-top: 45px; }
+  .atelier-digital h2 { font-size: clamp(2.7rem,9.4vw,4.7rem); }
+  .atelier-digital__media { min-height: 460px; }
+  .atelier-digital__device { width: 53%; max-width: 275px; }
+  .atelier-digital__orbit { width: min(80%, 410px); }
+  .atelier-resources { padding: 100px 0; }
+  .atelier-resource { grid-template-columns: 35px 1fr 25px; gap: 15px; padding: 27px 0; }
+  .atelier-resource__name { font-size: clamp(1.25rem,5.8vw,2rem); }
+  .atelier-resource__download { font-size: 0; gap: 0; }
+  .atelier-resource__download svg { width: 19px; }
+  .atelier-contact__inner { padding-top: 115px; }
+  .atelier-contact h2 { font-size: clamp(3rem, 11vw, 5.8rem); }
+  .atelier-contact__actions { flex-direction: column; gap: 25px; margin-bottom: 100px; }
+  .atelier-contact__foot { flex-direction: column; gap: 12px; align-items: flex-start; text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atelier-hero__photo { animation: none; transform: none; }
+  .atelier-button, .atelier-experience__image img, .atelier-resource { transition: none; }
+}
+
+/* International visitors retain translation access without an oversized popup. */
+body.bayona-luxury-active .translate-offer {
+  top: 82px;
+  right: clamp(22px, 4.5vw, 76px);
+  padding: 5px;
+  gap: 5px;
+  max-width: 210px;
+  background: rgba(11,11,10,.86);
+  border-color: rgba(231,207,177,.24);
+  border-radius: 1px;
+}
+body.bayona-luxury-active .translate-offer > svg,
+body.bayona-luxury-active .translate-offer-copy { display: none; }
+body.bayona-luxury-active .translate-offer-action {
+  font: 650 .6rem/1.6 'DM Mono',monospace;
+  letter-spacing: .1em; color: #e9cfae;
+  padding: 6px 10px;
+  border: none; border-radius: 0;
+}
+body.bayona-luxury-active .translate-offer-close { color: #b7ac9f; }
+@media(max-width:950px) {
+  body.bayona-luxury-active .translate-offer {
+    top: 70px; right: 12px; padding: 0; border: 0; background: transparent;
+  }
+  body.bayona-luxury-active .translate-offer-action {
+    font-size: 0; padding: 0; min-height: 30px;
+    background: rgba(8,8,7,.9); border: 1px solid rgba(236,217,190,.3);
+  }
+}
