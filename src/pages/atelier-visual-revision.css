@@ -336,3 +336,17 @@ body.bayona-luxury-active .translate-offer-action .translate-offer-code {
   }
   body.bayona-luxury-active .translate-offer-action::after { content: none; }
 }
+/* Mobile grid safety: the editorial figure must never exceed the actual column. */
+.bayona-atelier .atelier-manifesto__figure {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+@media (max-width: 760px) {
+  .bayona-atelier .atelier-manifesto__figure {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    aspect-ratio: 4/3.9;
+  }
+}

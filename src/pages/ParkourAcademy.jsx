@@ -136,7 +136,7 @@ const faqs = [
   ['¿Cómo trabajamos la seguridad?', 'Preparación específica, progresión a tu nivel y permiso para parar. Queremos que aprendas con confianza, no por presión.'],
 ]
 
-const interestUrl = whatsAppLink('Hola BAYONA, quiero que empecemos juntos en la Academia de Parkour.')
+const interestUrl = whatsAppLink('Hola SEBASTIAN BAYONA, quiero que empecemos juntos en la Academia de Parkour.')
 
 export default function ParkourAcademy() {
   const media = siteMedia.parkourAcademy
@@ -151,8 +151,8 @@ export default function ParkourAcademy() {
       >
         <div className="academy-hero-inner">
           <div className="academy-hero-copy">
-            <SectionLabel>BAYONA / PARKOUR ACADEMY</SectionLabel>
-            <Reveal as="h1" id="academy-title">GANDÍA.<br /><span>LA CIUDAD</span><br />SE APRENDE EN MOVIMIENTO.</Reveal>
+            <SectionLabel>03 / PARKOUR LAB · MOVIMIENTO REAL</SectionLabel>
+            <Reveal as="h1" id="academy-title">LEE EL ESPACIO.<br /><span>ENTRENA EL CONTROL.</span><br />CREA TU CAMINO.</Reveal>
             <Reveal as="p" delay={0.18}>El parkour es aprender a confiar en tu cuerpo paso a paso. Entrenamos técnica, fuerza y lectura del entorno con cuidado, progresión y respeto por cada nivel.</Reveal>
             <div className="academy-actions">
               <a className="academy-action academy-action--primary" href={interestUrl} target="_blank" rel="noreferrer">
@@ -255,7 +255,7 @@ export default function ParkourAcademy() {
               <li key={number} className="academy-progression__card">
                 <div className="academy-progression__topline">
                   <span className="academy-progression__index">{number} / 03</span>
-                  <span className="academy-progression__seal">BAYONA / PARKOUR</span>
+                  <span className="academy-progression__seal">SEBASTIAN BAYONA / PARKOUR</span>
                 </div>
                 <div className="academy-progression__head">
                   <span className="academy-progression__eyebrow">{subtitle}</span>
@@ -281,7 +281,7 @@ export default function ParkourAcademy() {
           método en sí, con fotografía y detalle por escena. */}
       <section className="academy-section academy-method" id="academy-method" aria-labelledby="academy-method-title">
         <header className="academy-heading" data-immersive="clip">
-          <SectionLabel>EL MÉTODO BAYONA</SectionLabel>
+          <SectionLabel>EL MÉTODO SEBASTIAN BAYONA</SectionLabel>
           <h2 id="academy-method-title">EL MOVIMIENTO SE ENSEÑA.<br /><span>LA CONFIANZA SE GANA.</span></h2>
         </header>
         <div className="academy-method-scenes">

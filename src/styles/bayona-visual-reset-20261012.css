@@ -3226,3 +3226,228 @@ html body .gym-home-hero.bayona-home-quiet-hero .bayona-hero-prime__discover{
 @media(prefers-reduced-motion:reduce){
  html body .gym-home-hero.bayona-home-quiet-hero .bayona-home-quiet-hero__coach svg{transition:none}
 }
+
+/* ==========================================================================
+   SEBASTIAN BAYONA / PERSONAL STUDIO — GLOBAL EDITORIAL REBRAND
+   03.11.2026. Canonical routes and product/payment mechanics are unchanged.
+   ========================================================================= */
+:root {
+  --sb-ink: #10110f;
+  --sb-ivory: #f5f0e7;
+  --sb-gold: #d0a475;
+  --sb-gold-dark: #9c7047;
+  --sb-line: rgba(213,183,144,.34);
+  --bv-orange: #d0a475;
+  --bv-orange-dark: #9c7047;
+  --bv-paper: #f4f0e9;
+  --bv-paper-2: #e9e3d9;
+  --bv-max: 1410px;
+  --bv-gutter: clamp(1.35rem,4.25vw,5rem);
+}
+html body .navbar {
+  min-height: 76px;
+  padding-inline: clamp(16px,2.45vw,46px);
+  background: rgba(12,13,11,.95);
+  border-bottom: 1px solid rgba(229,210,184,.18);
+  backdrop-filter: blur(22px);
+}
+html body .navbar .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  flex: none;
+  font: 700 .81rem/1.2 'DM Mono', ui-monospace, monospace;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+html body .navbar .brand > span {
+  display: grid;
+  place-items: center;
+  width: 41px;
+  height: 41px;
+  flex: 0 0 41px;
+  border: 1px solid rgba(214,176,120,.65);
+  color: #eac49a;
+  background: rgba(213,169,112,.075);
+  font: 800 .85rem/1 'DM Mono', ui-monospace, monospace;
+  letter-spacing: -.11em;
+}
+html body .navbar .brand > strong {
+  display: block;
+  font: inherit;
+  color: #f5f0e7;
+  letter-spacing: .115em;
+  text-shadow: 0 1px 12px rgba(0,0,0,.35);
+}
+html body .desktop-nav.gym-primary-nav { gap: clamp(.58rem,.94vw,.95rem); }
+html body .desktop-nav.gym-primary-nav a {
+  font: 600 .62rem/1.45 'DM Mono', ui-monospace, monospace;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+html body .nav-app-entry { min-width: 74px; border-color: rgba(222,190,148,.55); color: #e7c49c; }
+html body .footer.gym-footer {
+  background: #111310;
+  border-top: 1px solid rgba(210,173,127,.35);
+  color: #f3ede3;
+}
+html body .footer.gym-footer .footer-mark {
+  display: inline-block;
+  max-width: 100%;
+  color: #efe6d9;
+  font: 710 clamp(1.7rem,3.7vw,3.9rem)/1.05 'Montserrat',Inter,sans-serif;
+  letter-spacing: -.07em;
+  text-wrap: balance;
+}
+html body .footer.gym-footer .footer-column a:hover,
+html body .footer.gym-footer .footer-social a:hover { color: #e4b57d; }
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .page-hero,.academy-hero,.community-hero,.shop-hero,.resources-hero,.bayona-launch__hero,.faq-hero
+) {
+  min-height: clamp(630px,82svh,910px) !important;
+  background-color: #151713;
+  border-bottom: 1px solid var(--sb-line);
+  isolation: isolate;
+}
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .page-hero-content,.academy-hero-inner,.community-hero-club-grid,
+  .shop-hero-content,.resources-hero-layout,.bayona-launch__hero-grid,.faq-hero
+) {
+  max-width: 1410px;
+  margin-inline: auto;
+}
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .page-hero-title,.academy-hero h1,.community-hero-title,
+  .shop-hero h1,.resources-hero h1,.bayona-launch__hero h1,.faq-hero h1
+) {
+  font-family: 'Montserrat',Inter,system-ui,sans-serif;
+  font-size: clamp(3.5rem,6.85vw,8.2rem) !important;
+  font-weight: 790 !important;
+  line-height: .99 !important;
+  letter-spacing: -.075em !important;
+  max-width: 15ch !important;
+  text-wrap: balance;
+  color: #f9f5ed;
+}
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .page-hero-title,.academy-hero h1,.community-hero-title,
+  .shop-hero h1,.resources-hero h1,.bayona-launch__hero h1,.faq-hero h1
+) :is(em,strong,span) { letter-spacing: inherit; }
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .page-hero-support p,.academy-hero-copy > p,
+  .community-hero-subtitle,.shop-hero-content > p,
+  .resources-hero-intro,.bayona-launch__hero-copy > p,.faq-hero > p
+) {
+  max-width: 600px;
+  color: rgba(246,238,226,.87);
+  font-size: clamp(1rem,1.2vw,1.22rem);
+  line-height: 1.78;
+}
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .page-hero,.academy-hero,.community-hero,.shop-hero,.resources-hero,.bayona-launch__hero
+)::before {
+  border-color: rgba(224,187,143,.12);
+}
+html body .ds-frame[data-experience-scope='brand'] .page-hero-backdrop {
+  filter: saturate(.82) contrast(1.06);
+}
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .services-primary-cta,.about-editorial-primary,.academy-action--primary,
+  .community-button-primary,.shop-add-to-cart,.resources-action--primary,.bayona-launch__primary
+) {
+  border-radius: 1px;
+  background: #d5aa78;
+  color: #141410;
+  border-color: #d5aa78;
+  box-shadow: none;
+  font-weight: 760;
+  letter-spacing: .08em;
+}
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .services-primary-cta,.about-editorial-primary,.academy-action--primary,
+  .community-button-primary,.shop-add-to-cart,.resources-action--primary,.bayona-launch__primary
+):is(:hover,:focus-visible) {
+  background: #f0cfaa;
+  color: #10110e;
+  border-color: #f0cfaa;
+}
+html body .ds-frame[data-experience-scope='brand'] :is(
+ .services-path-card,.shop-product-card,.resources-hero-library-card,
+ .faq-price-card,.academy-principles,.community-hero-pass
+) {
+  border-radius: 2px;
+  box-shadow: 0 15px 50px rgba(0,0,0,.11);
+}
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .services-path-card,.shop-product-card,.resources-hero-library-card,
+  .faq-price-card
+):is(:hover,:focus-within) {
+  border-color: rgba(212,167,107,.66);
+}
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .shop-product-price strong,.shop-product-card h3,
+  .resources-hero h1,.services-heading h2
+) { letter-spacing: -.054em; }
+html body .ds-frame[data-experience-scope='brand'] .resources-hero-copy { max-width: 770px; }
+html body .ds-frame[data-experience-scope='brand'] .community-hero-title { max-width: 16ch !important; }
+html body .ds-frame[data-experience-scope='brand'] .academy-hero h1 { max-width: 16ch !important; }
+html body .ds-frame[data-experience-scope='brand'] .shop-hero h1 { max-width: 17ch !important; }
+html body .ds-frame[data-experience-scope='brand'] .resources-hero h1 { max-width: 18ch !important; }
+html body .ds-frame[data-experience-scope='brand'] .bayona-launch__hero h1 { max-width: 12ch !important; }
+html body .ds-frame[data-experience-scope='brand'] .bayona-launch__hero-device { filter: saturate(.8) contrast(1.03); }
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .about-page,.services-page,.parkour-academy,.shop-page,
+  .bayona-launch,.resources-page,.faq-page
+) :is(h2,h3) { text-wrap: balance; }
+html body .ds-frame[data-experience-scope='brand'] :is(
+  .about-page,.services-page,.parkour-academy,.shop-page,.bayona-launch
+) :is(.section-label,.eyebrow) { letter-spacing: .16em; }
+html body .ds-frame[data-experience-scope='brand'] a:focus-visible,
+html body .navbar a:focus-visible,
+html body .navbar button:focus-visible {
+  outline: 2px solid #e4bb87;
+  outline-offset: 4px;
+}
+@media(max-width: 1250px) {
+  html body .desktop-nav.gym-primary-nav { gap: 8px; }
+  html body .navbar .brand { font-size: .69rem; letter-spacing: .09em; }
+  html body .desktop-nav.gym-primary-nav a { font-size: .56rem; letter-spacing: .045em; }
+}
+@media(max-width: 1090px) {
+  html body .desktop-nav.gym-primary-nav { display: none !important; }
+  html body .navbar .menu-button { display: inline-flex !important; align-items: center; justify-content: center; }
+}
+@media(max-width: 760px) {
+  html body .navbar { padding-inline: 15px; min-height: 68px; }
+  html body .navbar .brand { gap: 7px; font-size: .61rem; }
+  html body .navbar .brand > span { width: 33px; height: 33px; flex-basis: 33px; font-size: .69rem; }
+  html body .ds-frame[data-experience-scope='brand'] :is(
+    .page-hero,.academy-hero,.community-hero,.shop-hero,.resources-hero,.bayona-launch__hero,.faq-hero
+  ) { min-height: 620px !important; }
+  html body .ds-frame[data-experience-scope='brand'] :is(
+    .page-hero-title,.academy-hero h1,.community-hero-title,
+    .shop-hero h1,.resources-hero h1,.bayona-launch__hero h1,.faq-hero h1
+  ) { font-size: clamp(2.7rem,10.3vw,5.1rem) !important; line-height: 1.04 !important; max-width: 95% !important; }
+  html body .ds-frame[data-experience-scope='brand'] :is(
+    .page-hero-support p,.academy-hero-copy > p,.community-hero-subtitle,
+    .shop-hero-content > p,.resources-hero-intro,.bayona-launch__hero-copy > p
+  ) { font-size: .97rem; line-height: 1.67; }
+  html body .footer.gym-footer .footer-mark { font-size: clamp(1.85rem,6vw,3rem); }
+}
+/* The full personal name must wrap on small devices instead of widening the page. */
+html body .footer.gym-footer .footer-mark {
+  white-space: normal !important;
+  overflow-wrap: break-word;
+  word-break: normal;
+  max-width: 100%;
+}
+@media(max-width: 760px) {
+  html body .footer.gym-footer .footer-mark {
+    display: block;
+    font-size: clamp(1.8rem, 7vw, 3.1rem);
+    line-height: 1.04;
+  }
+  html body .footer.gym-footer .footer-top { min-width: 0; }
+}

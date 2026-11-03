@@ -101,9 +101,9 @@ function RouteFallback() {
   return (
     <div className="route-fallback" role="status" aria-live="polite">
       <div className="route-fallback__frame">
-        <span className="route-fallback__brand" aria-hidden="true">BAYONA</span>
+        <span className="route-fallback__brand" aria-hidden="true">SEBASTIAN BAYONA</span>
         <div className="route-fallback__copy">
-          <small>PREPARANDO BAYONA</small>
+          <small>SEBASTIAN BAYONA / PERSONAL STUDIO</small>
           <strong>CARGANDO.</strong>
         </div>
         <span className="route-fallback__track" aria-hidden="true">

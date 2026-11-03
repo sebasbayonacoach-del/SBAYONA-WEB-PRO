@@ -34,7 +34,7 @@ import VideoSection from '../components/VideoSection.jsx'
 import { siteMedia } from '../config/siteMedia.js'
 import '../styles/resources.css'
 
-const BRAND_TAGLINE = 'BAYONA · ENTRENA CON DIRECCIÓN · MUÉVETE CON PROPÓSITO'
+const BRAND_TAGLINE = 'SEBASTIAN BAYONA · ENTRENA CON DIRECCIÓN · MUÉVETE CON PROPÓSITO'
 const RESOURCES_EASE = [0.16, 1, 0.3, 1]
 
 const HERO_CONTAINER_VARIANTS = Object.freeze({
@@ -108,11 +108,11 @@ const CHALLENGE_EVIDENCE = Object.freeze([
 /**
  * La recompensa sin promesa vacía: se nombra lo que puede ser (un programa
  * personalizado construido con tus datos del reto) y se deja claro que solo
- * aplica el premio que BAYONA confirme por escrito antes de entrar.
+ * aplica el premio que SEBASTIAN BAYONA confirme por escrito antes de entrar.
  */
 const CHALLENGE_PRIZE = Object.freeze({
   heading: 'EL PREMIO PUEDE SER UN PLAN PERSONALIZADO.',
-  copy: 'Si completas las condiciones de tu edición, el premio vigente puede ser un plan BAYONA construido con lo que el propio reto reveló de ti: tu fuerza real, tu recuperación y tus hábitos. No se entrega una plantilla genérica ni se improvisa al final.',
+  copy: 'Si completas las condiciones de tu edición, el premio vigente puede ser un plan SEBASTIAN BAYONA construido con lo que el propio reto reveló de ti: tu fuerza real, tu recuperación y tus hábitos. No se entrega una plantilla genérica ni se improvisa al final.',
   guard: 'El premio se comunica por escrito antes de entrar. Si tu edición tiene otro premio vigente, aplica ese y solo ese.',
 })
 
@@ -125,7 +125,7 @@ const CHALLENGE_LEVELS = Object.freeze([
 ])
 
 const challengeWhatsAppUrl = buildWhatsAppUrl(
-  'Hola BAYONA, quiero conocer las reglas, el uso de las evidencias y el premio vigente del Reto 30 Días antes de decidir si entro.',
+  'Hola SEBASTIAN BAYONA, quiero conocer las reglas, el uso de las evidencias y el premio vigente del Reto 30 Días antes de decidir si entro.',
 )
 
 const MAGAZINE_PUBLICATIONS = Object.freeze([
@@ -134,7 +134,7 @@ const MAGAZINE_PUBLICATIONS = Object.freeze([
     number: '01',
     topic: 'ENTRENAMIENTO',
     kicker: 'REGALO DESTACADO',
-    title: 'El Protocolo BAYONA de 7 días',
+    title: 'El Protocolo SEBASTIAN BAYONA de 7 días',
     type: 'GUÍA / PDF',
     kind: 'pdf',
     readTime: '7 DÍAS',
@@ -402,7 +402,7 @@ function PublicationReader({ closeRef, interactiveEffects, onClose, publication,
           >
             <X aria-hidden="true" size={20} strokeWidth={1.2} />
           </button>
-          <p className="resources-eyebrow">BAYONA · REVISTA GRATIS</p>
+          <p className="resources-eyebrow">SEBASTIAN BAYONA · REVISTA GRATIS</p>
           <h2 id={`reader-title-${publication.id}`}>{publication.title}</h2>
           <p>{publication.summary}</p>
         </header>
@@ -611,7 +611,7 @@ export default function Resources() {
       ?? questionForm.category
     const safeFileName = questionFile?.name.replace(/[\r\n]+/g, ' ') ?? 'Sin archivo seleccionado'
     const message = [
-      'Hola BAYONA, quiero hacer una pregunta sobre los recursos gratuitos.',
+      'Hola SEBASTIAN BAYONA, quiero hacer una pregunta sobre los recursos gratuitos.',
       `Nombre: ${questionForm.name.trim()}`,
       `Email: ${questionForm.email.trim()}`,
       `WhatsApp: ${questionForm.whatsapp.trim()}`,
@@ -688,11 +688,11 @@ export default function Resources() {
             animate="visible"
           >
             <motion.p className="resources-eyebrow" variants={HERO_ITEM_VARIANTS}>
-              BAYONA · BIBLIOTECA PREMIUM
+              07 / LA BIBLIOTECA · EDICIÓN PRIVADA
             </motion.p>
             <motion.h1 id="resources-title" variants={HERO_ITEM_VARIANTS}>
-              <span>RECURSOS QUE</span>
-              <span>PARECEN DE PAGO.</span>
+              <span>EL CONOCIMIENTO</span>
+              <span>TAMBIÉN SE COMPARTE.</span>
             </motion.h1>
             <motion.p className="resources-hero-intro" variants={HERO_ITEM_VARIANTS}>
               Dossiers, revista, protocolo y consulta para empezar con dirección. Gratuito no significa básico: significa que puedes probar el método antes de comprar.
@@ -709,9 +709,9 @@ export default function Resources() {
               </div>
             </motion.div>
 
-            <motion.ul className="resources-hero-library" variants={HERO_ITEM_VARIANTS} aria-label="Piezas incluidas en la biblioteca BAYONA">
+            <motion.ul className="resources-hero-library" variants={HERO_ITEM_VARIANTS} aria-label="Piezas incluidas en la biblioteca SEBASTIAN BAYONA">
               <li data-presentation="protocol">
-                <a className="resources-hero-library-card" href="#revista" aria-label="Ver presentación del Protocolo BAYONA de 7 días">
+                <a className="resources-hero-library-card" href="#revista" aria-label="Ver presentación del Protocolo SEBASTIAN BAYONA de 7 días">
                   <span className="resources-hero-library-visual resources-hero-library-visual--protocol" aria-hidden="true">
                     <FileCheck2 size={20} strokeWidth={1.25} />
                     <b>07</b>
@@ -726,7 +726,7 @@ export default function Resources() {
                 </a>
               </li>
               <li data-presentation="workbook">
-                <a className="resources-hero-library-card" href="#reto" aria-label="Ver presentación del Workbook BAYONA de 30 días">
+                <a className="resources-hero-library-card" href="#reto" aria-label="Ver presentación del Workbook SEBASTIAN BAYONA de 30 días">
                   <span className="resources-hero-library-visual resources-hero-library-visual--workbook" aria-hidden="true">
                     <FileText size={20} strokeWidth={1.25} />
                     <b>30</b>
@@ -786,7 +786,7 @@ export default function Resources() {
               } : undefined,
               variant: 'hero',
             })}
-            aria-label="Portada de BAYONA Revista Gratis"
+            aria-label="Portada de SEBASTIAN BAYONA Revista Gratis"
             initial={reducedMotion ? false : { opacity: 0, y: 24, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.18, ease: RESOURCES_EASE }}
@@ -795,7 +795,7 @@ export default function Resources() {
               <span>EDICIÓN 01</span>
               <span>PREMIUM</span>
             </div>
-            <p>BAYONA</p>
+            <p>SEBASTIAN BAYONA</p>
             <div className="resources-cover-symbol" aria-hidden="true">
               <span />
               <BookOpen size={46} strokeWidth={0.8} />
@@ -842,7 +842,7 @@ export default function Resources() {
                 <KeyRound aria-hidden="true" size={28} strokeWidth={1.1} />
                 <span>ANTES DEL DÍA UNO</span>
                 <h3>TE LLEVAS UNA RUTA, NO UNA PROMESA.</h3>
-                <p>BAYONA aporta estructura, rutina, reglas y privacidad por escrito. Tú decides si entras cuando entiendes exactamente qué se pide.</p>
+                <p>SEBASTIAN BAYONA aporta estructura, rutina, reglas y privacidad por escrito. Tú decides si entras cuando entiendes exactamente qué se pide.</p>
               </aside>
             </div>
 
@@ -1039,7 +1039,7 @@ export default function Resources() {
         >
           <div className="resources-shell" data-immersive="clip">
             <header className="resources-section-header resources-reveal">
-              <p className="resources-eyebrow">02 · BIBLIOTECA BAYONA</p>
+              <p className="resources-eyebrow">02 · BIBLIOTECA SEBASTIAN BAYONA</p>
               <h2 id="magazine-title">LEE. GUARDA.<br /><span>VUELVE CUANDO QUIERAS.</span></h2>
               <p>Publicaciones, documentos y dossiers nacidos de preguntas reales. Una biblioteca premium para probar el método sin sentir que estás recibiendo sobras.</p>
             </header>
@@ -1052,7 +1052,7 @@ export default function Resources() {
                 })}
                 aria-hidden="true"
               >
-                <span>BAYONA / 01</span>
+                <span>SEBASTIAN BAYONA / 01</span>
                 <strong>7</strong>
                 <i />
                 <small>DÍAS PARA VOLVER A EMPEZAR</small>
@@ -1107,7 +1107,7 @@ export default function Resources() {
                         >
                           <span>{publication.number}</span>
                           <small className="resources-publication-cue">
-                            {PUBLICATION_PRESENTATIONS[publication.id]?.cue ?? 'BAYONA / NOTE'}
+                            {PUBLICATION_PRESENTATIONS[publication.id]?.cue ?? 'SEBASTIAN BAYONA / NOTE'}
                           </small>
                           <FileText size={30} strokeWidth={0.9} />
                           <i />
@@ -1151,7 +1151,7 @@ export default function Resources() {
               <ol>
                 <li>
                   <span>01 · PDF</span>
-                  <strong>Tu primera semana BAYONA</strong>
+                  <strong>Tu primera semana SEBASTIAN BAYONA</strong>
                   <p>Siete días para comenzar con dirección, a tu ritmo.</p>
                   <a href="/downloads/bayona-editorial/primera-semana.pdf" download>DESCARGAR GRATIS <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.2} /></a>
                 </li>

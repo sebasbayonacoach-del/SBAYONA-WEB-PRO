@@ -211,7 +211,12 @@ export function Loader() {
     return () => clearTimeout(timer)
   }, [])
 
+  // The public editorial routes already render meaningful HTML and image fallbacks.
+  // Avoid covering them with a blocking full-screen loader; reserve it for system flows.
+  const isSystemFlow = typeof window !== 'undefined' && /^\/(panel|checkout|design-system)(\/|$)/.test(window.location.pathname)
   const percent = toPercent(progress)
+
+  if (!isSystemFlow) return null
 
   // --- Reduced_Motion (R20.5): estatico, textual, sin salida animada ---
   if (reducedMotion) {
@@ -220,7 +225,7 @@ export function Loader() {
     }
     return (
       <div role="status" aria-live="polite" style={overlayBaseStyle}>
-        <p style={wordmarkStyle}>BAYONA</p>
+        <p style={wordmarkStyle}>SEBASTIAN BAYONA</p>
         <p style={subtitleStyle}>Cargando experiencia</p>
         <p style={percentStyle}>Cargando... {percent}%</p>
       </div>
@@ -255,7 +260,7 @@ export function Loader() {
               ease: motionTokens.ease.entrance,
             }}
           >
-            BAYONA
+            SEBASTIAN BAYONA
           </motion.p>
           <p style={subtitleStyle}>Cargando experiencia</p>
           <div

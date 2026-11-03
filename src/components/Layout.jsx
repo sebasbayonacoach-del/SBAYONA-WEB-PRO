@@ -39,7 +39,7 @@ const MotionLink = motion.create(Link)
  *
  * · RECORRIDO   — la casa se lee de izquierda a derecha.
  * · ENTRENAR    — programas y academia.
- * · ECOSISTEMA  — comunidad, BAYONA+ y tienda.
+ * · ECOSISTEMA  — comunidad, SB+ y tienda.
  * · DECIDIR     — recursos, FAQ y cuenta.
  *
  * Inicio no se repite como enlace de escritorio: la marca ya es el enlace al
@@ -48,13 +48,13 @@ const MotionLink = motion.create(Link)
 // Follow the same linear visitor journey as EditorialOutro and the home.
 // Home is always the brand link, while FAQ is a secondary menu destination.
 const NAV_ITEMS = Object.freeze([
-  { label: 'Nosotros', href: '/about' },
-  { label: 'Servicios', href: '/programs' },
-  { label: 'Parkour', href: '/parkour-academy' },
-  { label: 'Comunidad', href: '/community' },
-  { label: 'BAYONA+', href: '/app' },
-  { label: 'Tienda', href: '/shop' },
-  { label: 'Recursos', href: '/resources' },
+  { label: 'La Historia', href: '/about' },
+  { label: 'Experiencias', href: '/programs' },
+  { label: 'Parkour Lab', href: '/parkour-academy' },
+  { label: 'El Círculo', href: '/community' },
+  { label: 'SB+', href: '/app' },
+  { label: 'La Colección', href: '/shop' },
+  { label: 'La Biblioteca', href: '/resources' },
 ])
 
 const MOBILE_NAV_ITEMS = Object.freeze([
@@ -186,8 +186,8 @@ export function Navbar() {
 
   return (
     <header className={`navbar${scrolled ? ' is-scrolled' : ''}${open ? ' is-open' : ''}`}>
-      <Link className="brand" to="/" onClick={close} aria-label="BAYONA, ir al inicio">
-        <span aria-hidden="true">B.</span><strong>BAYONA</strong>
+      <Link className="brand" to="/" onClick={close} aria-label="SEBASTIAN BAYONA, ir al inicio">
+        <span aria-hidden="true">SB.</span><strong>SEBASTIAN BAYONA</strong>
       </Link>
       <nav className="desktop-nav gym-primary-nav" aria-label="Navegación principal">
         {NAV_ITEMS.map(({ label, href }) => (
@@ -196,8 +196,8 @@ export function Navbar() {
           </NavLink>
         ))}
       </nav>
-      <a className="nav-app-entry" href={BAYONA_APP_ENTRY_URL} aria-label="Abrir Mi App BAYONA">
-        MI APP <ArrowUpRight size={14} strokeWidth={1.4} aria-hidden="true" />
+      <a className="nav-app-entry" href={BAYONA_APP_ENTRY_URL} aria-label="Abrir SB+ Studio">
+        SB+ <ArrowUpRight size={14} strokeWidth={1.4} aria-hidden="true" />
       </a>
       <button
         className="site-theme-toggle"
@@ -226,7 +226,7 @@ export function Navbar() {
           <span className="nav-cart-count" aria-hidden="true">{cartCount}</span>
         </button>
       ) : null}
-      <a className="nav-cta gym-nav-cta" href="/#empieza" aria-label="Empieza gratis con BAYONA">
+      <a className="nav-cta gym-nav-cta" href="/#empieza" aria-label="Empieza gratis con SEBASTIAN BAYONA">
         Empieza gratis <ArrowUpRight size={15} strokeWidth={1} />
       </a>
       <button
@@ -272,7 +272,7 @@ export function Navbar() {
             </div>
             <div className="gym-mobile-nav-conversion">
               <a className="gym-mobile-nav-app" href={BAYONA_APP_ENTRY_URL} onClick={close}>
-                ABRIR MI APP <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
+                ABRIR SB+ <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
               </a>
               <p>Tu primera decisión no cuesta nada.</p>
               <span>Descarga tus recursos de inicio gratis, sin registrarte. Si quieres entrenar, escríbenos.</span>
@@ -281,7 +281,7 @@ export function Navbar() {
               </a>
               <a
                 className="gym-mobile-nav-whatsapp"
-                href={whatsAppLink('Hola BAYONA, quiero información sobre sus servicios de entrenamiento.')}
+                href={whatsAppLink('Hola SEBASTIAN BAYONA, quiero información sobre sus servicios de entrenamiento.')}
                 target="_blank"
                 rel="noreferrer"
                 onClick={close}
@@ -318,12 +318,12 @@ export function Footer() {
   return (
     <footer className="footer gym-footer">
       <div className="footer-top">
-        <Link className="footer-mark" to="/" aria-label="BAYONA, ir al inicio">BAYONA</Link>
+        <Link className="footer-mark" to="/" aria-label="SEBASTIAN BAYONA, ir al inicio">SEBASTIAN BAYONA</Link>
         <p>Entrenamiento personal, fuerza, movimiento y acompañamiento.</p>
       </div>
       <div className="footer-columns gym-footer-columns">
-        <nav className="footer-column" aria-label="Explorar BAYONA">
-          <p>EXPLORAR</p>
+        <nav className="footer-column" aria-label="Explorar SEBASTIAN BAYONA">
+          <p>DESCUBRIR</p>
           {NAV_ITEMS.map(({ label, href }) => <Link key={href} to={href}>{label}</Link>)}
         </nav>
         <nav className="footer-column" aria-label="Ayuda">
@@ -331,17 +331,17 @@ export function Footer() {
           <Link to="/movimiento-adaptado">Movimiento adaptado</Link>
           <Link to="/faq">Preguntas frecuentes</Link>
           <a href={BAYONA_APP_ENTRY_URL}>Mi App</a>
-          <a href={whatsAppLink('Hola BAYONA, quiero información sobre sus servicios de entrenamiento.')} target="_blank" rel="noreferrer">
+          <a href={whatsAppLink('Hola SEBASTIAN BAYONA, quiero información sobre sus servicios de entrenamiento.')} target="_blank" rel="noreferrer">
             WhatsApp
           </a>
         </nav>
         <div className="footer-column footer-entry">
           <p>EMPIEZA</p>
-          <a href="/#empieza">RECIBIR MIS RECURSOS</a>
+          <a href="/#empieza">EMPEZAR MI CAMINO</a>
         </div>
       </div>
       {profiles.length > 0 && (
-        <div className="footer-social" aria-label="Redes BAYONA">
+        <div className="footer-social" aria-label="Redes SEBASTIAN BAYONA">
           {profiles.map((profile) => (
             <a key={profile.id} href={profile.url} target="_blank" rel="noreferrer" aria-label={`${profile.verbo} en ${profile.label}`}>
               <Glyph name={profile.glyph} size={16} />
@@ -350,7 +350,7 @@ export function Footer() {
         </div>
       )}
       <div className="footer-bottom">
-        <small>© {new Date().getFullYear()} BAYONA</small>
+        <small>© {new Date().getFullYear()} SEBASTIAN BAYONA</small>
         <small>ENTRENA CON DIRECCIÓN</small>
       </div>
     </footer>
@@ -380,7 +380,7 @@ function WhatsAppGlyph() {
 }
 
 export function WhatsAppButton() {
-  const href = whatsAppLink('Hola BAYONA, quiero conocer el camino que mejor encaja conmigo.')
+  const href = whatsAppLink('Hola SEBASTIAN BAYONA, quiero conocer el camino que mejor encaja conmigo.')
   /*
     Medido con scripts/probe-overlays.mjs: este botón fijo se llevaba por
     delante cuatro preguntas del acordeón de /faq (03, 04, 08, 09) y texto de
@@ -423,7 +423,7 @@ export function WhatsAppButton() {
       href={href}
       target="_blank"
       rel="noreferrer"
-      aria-label="Hablar con BAYONA por WhatsApp"
+      aria-label="Hablar con SEBASTIAN BAYONA por WhatsApp"
     >
       <WhatsAppGlyph />
       <span>Hablar por WhatsApp</span>

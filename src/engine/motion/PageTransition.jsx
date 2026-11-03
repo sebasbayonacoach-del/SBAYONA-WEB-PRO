@@ -64,8 +64,10 @@ export function PageTransition({ children }) {
     window.scrollTo(0, 0)
   }, [location.pathname])
 
-  // Reduced-motion (R12.4): cambio de pagina sin cortina ni desplazamiento.
-  if (reducedMotion) {
+  // Editorial pages now render immediately. The curtain remains available only
+  // for the internal/system flows; no brand wipe may cover public content.
+  const isSystemFlow = /^\/(panel|checkout|order-confirmation|design-system)(\/|$)/.test(location.pathname)
+  if (reducedMotion || !isSystemFlow) {
     return <>{children}</>
   }
 

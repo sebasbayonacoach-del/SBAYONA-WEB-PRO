@@ -1,5 +1,5 @@
 /**
- * BAYONA · METADATOS POR RUTA
+ * SEBASTIAN BAYONA · METADATOS POR RUTA
  * ---------------------------------------------------------------------------
  * Cada ruta de la SPA declara su propio title, description y política de
  * indexación. Antes, las 17 rutas compartían el <head> estático de
@@ -19,7 +19,7 @@ import { BRAND } from '../../config/site.config.js'
 export const TITLE_SUFFIX = `${BRAND.name}`
 
 /** Título de la home: se usa tal cual, sin sufijo, porque ya contiene la marca. */
-const HOME_TITLE = 'BAYONA — Entrenamiento personal con dirección'
+const HOME_TITLE = 'SEBASTIAN BAYONA — Movimiento con dirección'
 
 const HOME_DESCRIPTION =
   'Entrenamiento personal y online con planes claros, seguimiento humano, parkour, movilidad, recuperación y recursos gratuitos para empezar.'
@@ -37,16 +37,16 @@ const STATIC_ROUTES = {
     breadcrumb: [],
   },
   '/about': {
-    title: 'Nosotros — Por qué existe BAYONA',
+    title: 'La Historia — Conoce a Sebastián Bayona',
     description:
-      'Quién está detrás de BAYONA y por qué el método pone el acompañamiento humano por delante de la promesa rápida. Movimiento, ciencia y propósito.',
-    breadcrumb: [['Nosotros', '/about']],
+      'Quién está detrás de SEBASTIAN BAYONA y por qué el método pone el acompañamiento humano por delante de la promesa rápida. Movimiento, ciencia y propósito.',
+    breadcrumb: [['La Historia', '/about']],
   },
   '/programs': {
-    title: 'Servicios BAYONA — entrenamiento personal y online',
+    title: 'Experiencias — Entrenamiento personal y online',
     description:
-      'Servicios BAYONA: entrenamiento personal, online, membresías, recuperación, movilidad, parkour y rendimiento con precios y alcance visibles.',
-    breadcrumb: [['Servicios', '/programs']],
+      'Servicios SEBASTIAN BAYONA: entrenamiento personal, online, membresías, recuperación, movilidad, parkour y rendimiento con precios y alcance visibles.',
+    breadcrumb: [['Experiencias', '/programs']],
   },
   '/movimiento-adaptado': {
     title: 'Movimiento adaptado — actividad física con criterio',
@@ -55,52 +55,52 @@ const STATIC_ROUTES = {
     breadcrumb: [['Movimiento adaptado', '/movimiento-adaptado']],
   },
   '/parkour-academy': {
-    title: 'Academia de Parkour',
+    title: 'Parkour Lab — Técnica y adaptación',
     description:
       'Formación en parkour con progresiones técnicas y fuerza aplicada. Para quien quiere aprender a moverse con control, desde iniciación hasta nivel avanzado.',
-    breadcrumb: [['Academia Parkour', '/parkour-academy']],
+    breadcrumb: [['Parkour Lab', '/parkour-academy']],
   },
   '/shop': {
-    title: 'Tienda BAYONA — ropa, calzado y equipamiento fitness',
+    title: 'La Colección — Equipamiento y estilo de movimiento',
     description:
-      'Tienda BAYONA de ropa, calzado, equipamiento, máquinas y nutrición. Explora por categoría, revisa precios en COP y confirma disponibilidad por WhatsApp.',
-    breadcrumb: [['Tienda', '/shop']],
+      'Tienda SEBASTIAN BAYONA de ropa, calzado, equipamiento, máquinas y nutrición. Explora por categoría, revisa precios en COP y confirma disponibilidad por WhatsApp.',
+    breadcrumb: [['La Colección', '/shop']],
   },
   '/app': {
-    title: 'BAYONA App — Mi App y Coach Studio',
+    title: 'SB+ — Tu estudio de entrenamiento digital',
     description:
-      'Abre BAYONA App desde tu móvil u ordenador. Descubre Mi App, el espacio personal de entrenamiento, y cómo instalar la aplicación web en tu pantalla de inicio.',
-    breadcrumb: [['BAYONA+', '/app']],
+      'Abre SB+ App desde tu móvil u ordenador. Descubre Mi App, el espacio personal de entrenamiento, y cómo instalar la aplicación web en tu pantalla de inicio.',
+    breadcrumb: [['SB+', '/app']],
   },
   '/community': {
-    title: 'Comunidad — Club abierto BAYONA',
+    title: 'El Círculo — Comunidad de movimiento',
     description:
       'Club abierto por WhatsApp para entrenar con contexto: preguntas reales, recursos vivos y ritmo semanal. Puedes entrar sin contratar un plan.',
-    breadcrumb: [['Comunidad', '/community']],
+    breadcrumb: [['El Círculo', '/community']],
   },
   '/resources': {
-    title: 'Biblioteca premium de recursos BAYONA',
+    title: 'La Biblioteca — Guías y herramientas gratuitas',
     description:
-      'Dossiers, revista, protocolo 7 días, workbook 30 días y consulta experta para probar el método BAYONA antes de contratar nada.',
-    breadcrumb: [['Recursos', '/resources']],
+      'Dossiers, revista, protocolo 7 días, workbook 30 días y consulta experta para probar el método SEBASTIAN BAYONA antes de contratar nada.',
+    breadcrumb: [['La Biblioteca', '/resources']],
   },
   '/faq': {
     title: 'Preguntas frecuentes',
     description:
-      'Servicios, precios, formas de contacto, entrenamiento presencial, online y BAYONA+. Respuestas directas antes de decidir.',
+      'Servicios, precios, formas de contacto, entrenamiento presencial, online y SB+. Respuestas directas antes de decidir.',
     breadcrumb: [['Preguntas frecuentes', '/faq']],
   },
   '/onboarding': {
     title: 'Empieza gratis',
     description:
-      'Ruta antigua redirigida al inicio gratuito de BAYONA.',
+      'Ruta antigua redirigida al inicio gratuito de SEBASTIAN BAYONA.',
     noindex: true,
     breadcrumb: [],
   },
   '/entrar': {
-    title: 'Entrar — Tu centro de mando BAYONA',
+    title: 'Entrar — Tu centro de mando SEBASTIAN BAYONA',
     description:
-      'Acceso privado BAYONA para clientes y miembros. La navegación pública no requiere crear una cuenta.',
+      'Acceso privado SEBASTIAN BAYONA para clientes y miembros. La navegación pública no requiere crear una cuenta.',
     noindex: true,
     breadcrumb: [['Entrar', '/entrar']],
   },
@@ -124,7 +124,7 @@ const STATIC_ROUTES = {
    */
   '/design-system': {
     title: 'Design System — uso interno',
-    description: 'Página interna de validación del sistema visual de BAYONA. No forma parte del sitio público.',
+    description: 'Página interna de validación del sistema visual de SEBASTIAN BAYONA. No forma parte del sitio público.',
     noindex: true,
     breadcrumb: [['Design System', '/design-system']],
   },
@@ -143,7 +143,7 @@ export const ROUTE_ALIASES = {}
 export const NOT_FOUND_META = {
   path: '/404',
   title: 'Página no encontrada',
-  description: 'La ruta que buscas no existe o cambió de sitio. Te dejamos los accesos principales de BAYONA.',
+  description: 'La ruta que buscas no existe o cambió de sitio. Te dejamos los accesos principales de SEBASTIAN BAYONA.',
   noindex: true,
   breadcrumb: [],
 }

@@ -42,8 +42,8 @@ export const WHATSAPP_NUMBER = '34641698332'
 export const WHATSAPP_DISPLAY = '+34 641 69 83 32'
 
 export const BRAND = {
-  name: 'BAYONA',
-  legalName: 'BAYONA',
+  name: 'SEBASTIAN BAYONA',
+  legalName: '',
   founder: 'Sebastián Bayona',
   tagline: 'Movimiento, ciencia y propósito humano.',
   locale: 'es_ES',
@@ -68,7 +68,7 @@ export const DEFAULT_OG_IMAGE = {
   width: 1200,
   height: 630,
   type: 'image/jpeg',
-  alt: 'BAYONA — Movimiento, ciencia y propósito humano.',
+  alt: 'SEBASTIAN BAYONA — Movimiento, ciencia y propósito humano.',
 }
 
 /**

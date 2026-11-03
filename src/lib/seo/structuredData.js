@@ -39,7 +39,7 @@ export function organizationNode() {
     '@type': 'Organization',
     '@id': ORGANIZATION_ID,
     name: BRAND.name,
-    legalName: BRAND.legalName,
+    ...(BRAND.legalName ? { legalName: BRAND.legalName } : {}),
     url: `${SITE_URL}/`,
     slogan: BRAND.tagline,
     description: BRAND.tagline,

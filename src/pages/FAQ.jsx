@@ -22,12 +22,12 @@ const pricingPlans = membershipPlans.map((plan) => ({
 }))
 
 const videoCallUrl = buildWhatsAppUrl([
-  'Hola BAYONA, quiero coordinar una videollamada informativa de 15 minutos con Sebastián.',
+  'Hola SEBASTIAN BAYONA, quiero coordinar una videollamada informativa de 15 minutos con Sebastián.',
   '¿Qué disponibilidad tenéis?',
 ].join('\n'))
 
 const quickQuestionUrl = buildWhatsAppUrl([
-  'Hola BAYONA, tengo una pregunta concreta sobre sus servicios y membresías.',
+  'Hola SEBASTIAN BAYONA, tengo una pregunta concreta sobre sus servicios y membresías.',
   '¿Podéis ayudarme?',
 ].join('\n'))
 
@@ -42,7 +42,7 @@ const journeyExits = [
   {
     number: '01',
     title: 'AÚN NO HAS ENTRENADO CON NOSOTROS',
-    copy: 'Empieza por lo gratis: protocolo de 7 días, reto y consulta con contexto. Así compruebas cómo piensa BAYONA antes de pagar nada.',
+    copy: 'Empieza por lo gratis: protocolo de 7 días, reto y consulta con contexto. Así compruebas cómo piensa SEBASTIAN BAYONA antes de pagar nada.',
     to: '/resources',
     action: 'EMPEZAR POR LOS RECURSOS',
   },
@@ -64,7 +64,7 @@ const journeyExits = [
 
 function PricingBlock() {
   return (
-    <div className="faq-pricing" aria-label="Opciones y precios mensuales BAYONA">
+    <div className="faq-pricing" aria-label="Opciones y precios mensuales SEBASTIAN BAYONA">
       <header className="faq-pricing-heading">
         <span>TUS OPCIONES · PRECIOS CLAROS</span>
         <h4>ELIGE TU NIVEL</h4>
@@ -121,7 +121,7 @@ export default function FAQ() {
           motion: true,
         })}
       >
-        <SectionLabel>BAYONA / FAQ · PREGUNTAS FRECUENTES</SectionLabel>
+        <SectionLabel>08 / RESPUESTAS · LO ESENCIAL</SectionLabel>
         {/*
           El `Reveal` envuelve el h1 sin tocar lo que hay dentro: este titular
           mezcla `<span>`, `<br>` y un nodo de texto suelto, y se llama por
@@ -268,7 +268,7 @@ export default function FAQ() {
             <span className="faq-free-mark" aria-hidden="true">00</span>
             <span className="faq-contact-meta">RETO + GUÍAS GRATUITAS</span>
             <h3>EMPIEZA POR LOS RECURSOS</h3>
-            <p>Lee las condiciones del reto o abre las guías si primero quieres comprobar cómo piensa BAYONA.</p>
+            <p>Lee las condiciones del reto o abre las guías si primero quieres comprobar cómo piensa SEBASTIAN BAYONA.</p>
             <Link to="/resources">
               VER RECURSOS <ArrowUpRight aria-hidden="true" />
             </Link>

@@ -54,8 +54,8 @@ const stages = [
   {
     number: '04',
     year: '2026',
-    title: 'NACE BAYONA',
-    copy: 'BAYONA nace de una convicción: el conocimiento vale más cuando se convierte en atención, respeto y acompañamiento real.',
+    title: 'NACE EL ESTUDIO',
+    copy: 'SEBASTIAN BAYONA nace de una convicción: el conocimiento vale más cuando se convierte en atención, respeto y acompañamiento real.',
   },
 ]
 
@@ -84,7 +84,7 @@ const methodSteps = [
   },
 ]
 
-const sebastianWhatsAppUrl = whatsAppLink('Hola Sebastián, quiero que empecemos juntos con BAYONA.')
+const sebastianWhatsAppUrl = whatsAppLink('Hola Sebastián, quiero que empecemos juntos con SEBASTIAN BAYONA.')
 
 /** Capa WebGL del globo — carga diferida para proteger el LCP (Fase 11.2). */
 // El globo cartográfico interactivo se monta desde GlobeTestimonials.
@@ -102,11 +102,11 @@ export default function About() {
     <div className="about-page">
       <AboutJourneyRail reducedMotion={reducedMotion} />
       <PageHero
-        title="DETRÁS DEL MOVIMIENTO."
-        kicker="CAPÍTULO 02 · NOSOTROS"
+        title="UNA VIDA EN MOVIMIENTO."
+        kicker="01 / LA HISTORIA"
         media={siteMedia.about.hero}
       >
-        <p className="hero-subtitle">Detrás de BAYONA hay una forma de mirar el entrenamiento: primero escucharte, después entender tu punto de partida y construir un camino contigo.</p>
+        <p className="hero-subtitle">Soy Sebastián Bayona. Mi historia comienza con el parkour y continúa con una idea: comprender a la persona antes de diseñar su entrenamiento.</p>
         <div className="about-editorial-hero-actions">
           <a href="#la-persona" className="about-editorial-primary">CONOCE QUIÉN ESTÁ DETRÁS <ArrowUpRight size={18} aria-hidden="true" /></a>
           <a href="#about-purpose-title" className="about-editorial-secondary">DESCUBRE EL PORQUÉ <span aria-hidden="true">↘</span></a>
@@ -123,7 +123,7 @@ export default function About() {
           afirma. Se genera de FUNDAMENTOS, así que no puede descolgarse de la
           lista.
         */}
-        <div className="about-reason-strip ds-reveal ds-reveal--mask" aria-label="Los tres fundamentos de BAYONA, en orden">
+        <div className="about-reason-strip ds-reveal ds-reveal--mask" aria-label="Los tres fundamentos de SEBASTIAN BAYONA, en orden">
           <svg
             className="about-figure about-figure--antes"
             viewBox="0 0 640 44"
@@ -151,7 +151,7 @@ export default function About() {
         <div className="about-problem section-shell ds-reveal ds-reveal--shift">
           <span className="about-vertical-word" aria-hidden="true">PROPÓSITO</span>
           <div className="about-problem-heading">
-            <SectionLabel>POR QUÉ BAYONA</SectionLabel>
+            <SectionLabel>EL PORQUÉ DEL ESTUDIO</SectionLabel>
             <h2 id="about-purpose-title">UN PLAN SIRVE<br aria-hidden="true" /> <span>CUANDO ENCAJA CONTIGO.</span></h2>
           </div>
           <p className="about-problem-copy">
@@ -163,18 +163,18 @@ export default function About() {
       <section className="about-founder" id="la-persona" aria-labelledby="about-founder-title">
         <div className="about-founder__layout section-shell">
           <div className="about-founder__visual">
-            <img src="/images/bayona-authentic/broll-rio.webp" alt="Paisaje urbano procedente de una grabación del archivo BAYONA" loading="lazy" decoding="async" width="480" height="852" />
+            <img src="/images/bayona-authentic/broll-rio.webp" alt="Paisaje urbano procedente de una grabación del archivo SEBASTIAN BAYONA" loading="lazy" decoding="async" width="480" height="852" />
             <span className="about-founder__image-marker">DEL ARCHIVO AL MOVIMIENTO</span>
-            <span className="about-founder__image-number" aria-hidden="true">ESCENA DOCUMENTAL / ARCHIVO BAYONA</span>
+            <span className="about-founder__image-number" aria-hidden="true">ESCENA DOCUMENTAL / ARCHIVO SEBASTIAN BAYONA</span>
           </div>
           <div className="about-founder__editorial">
-            <span className="about-founder__eyebrow">LA PERSONA DETRÁS DE BAYONA</span>
-            <h2 id="about-founder-title">UNA MARCA.<br /><em>UNA PERSONA REAL.</em></h2>
+            <span className="about-founder__eyebrow">EL ENTRENADOR DETRÁS DEL MÉTODO</span>
+            <h2 id="about-founder-title">UNA HISTORIA.<br /><em>UN PROPÓSITO REAL.</em></h2>
             <p className="about-founder__lead">Soy Sebastián Bayona. El movimiento fue mi primera forma de aprender, y hoy es la base del trabajo que comparto con quienes entrenan conmigo.</p>
             <p className="about-founder__copy">El parkour me enseñó a observar antes de actuar. El entrenamiento y el estudio me llevaron a transformar esa experiencia en algo más útil: una estructura que pueda adaptarse a distintas personas, capacidades y momentos de la vida.</p>
             <div className="about-founder__signature">
               <span className="about-founder__signature-mark" aria-hidden="true">SB.</span>
-              <span><strong>SEBASTIÁN BAYONA</strong><small>CREADOR DE BAYONA · ENTRENAMIENTO Y MOVIMIENTO</small></span>
+              <span><strong>SEBASTIÁN SEBASTIAN BAYONA</strong><small>CREADOR DEL ESTUDIO · ENTRENAMIENTO Y MOVIMIENTO</small></span>
             </div>
             <Link to="/programs" className="about-founder__link">CONOCE CÓMO TRABAJAMOS <ArrowUpRight size={18} aria-hidden="true" /></Link>
           </div>
@@ -219,7 +219,7 @@ export default function About() {
           estática legible por diseño del componente.
         */}
         {/* Los cuatro hitos se muestran juntos: una historia se compara mejor cuando no obliga al usuario a pagar una pantalla por cada fecha. */}
-        <ol className="about-chronicle-mobile section-shell" aria-label="Los cuatro hitos del recorrido BAYONA">
+        <ol className="about-chronicle-mobile section-shell" aria-label="Los cuatro hitos del recorrido SEBASTIAN BAYONA">
           {stages.map((stage) => (
             <li key={stage.number} className="about-chronicle-mobile__item">
               <div className="about-chronicle-mobile__index"><span>{stage.number}</span><time>{stage.year}</time></div>
@@ -280,7 +280,7 @@ export default function About() {
           </div>
 
           {/* Fuente semántica compartida para lectura accesible del método. */}
-          <MethodSequence items={methodSteps} className="sr-only" label="Las tres fases del método BAYONA" />
+          <MethodSequence items={methodSteps} className="sr-only" label="Las tres fases del método SEBASTIAN BAYONA" />
           <AboutMethodStage items={methodSteps} />
 
           <blockquote>

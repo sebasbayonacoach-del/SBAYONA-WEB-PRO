@@ -53,7 +53,7 @@ const resources = [
 ]
 
 export default function HomeAtelier() {
-  const contactUrl = bookingLink('Hola Sebastián. He visto la nueva web de BAYONA y me gustaría conocer las opciones de entrenamiento según mi objetivo.')
+  const contactUrl = bookingLink('Hola Sebastián. He visto la nueva web de SEBASTIAN BAYONA y me gustaría conocer las opciones de entrenamiento según mi objetivo.')
 
   useEffect(() => {
     document.body.classList.add('bayona-luxury-active')
@@ -72,7 +72,7 @@ export default function HomeAtelier() {
         </div>
         <div className="atelier-frame atelier-hero__content">
           <div className="atelier-hero__prelude">
-            <span className="atelier-kicker">BAYONA <i aria-hidden="true" /> HUMAN MOVEMENT STUDIO</span>
+            <span className="atelier-kicker">SEBASTIAN BAYONA <i aria-hidden="true" /> HUMAN MOVEMENT STUDIO</span>
             <span className="atelier-edition">EST. 2026 / ESPAÑA</span>
           </div>
           <div className="atelier-hero__statement">
@@ -100,7 +100,7 @@ export default function HomeAtelier() {
           <div className="atelier-manifesto__body">
             <h2 id="atelier-manifesto-heading">NINGÚN CAMINO<br />ES IGUAL.<br /><em>EL TUYO, TAMPOCO.</em></h2>
             <div className="atelier-manifesto__below">
-              <p>Cada cuerpo tiene su historia. Cada persona, su propio ritmo. En BAYONA combinamos ciencia del entrenamiento, exploración del movimiento y atención individual para construir un camino con sentido.</p>
+              <p>Cada cuerpo tiene su historia. Cada persona, su propio ritmo. En este estudio combinamos ciencia del entrenamiento, exploración del movimiento y atención individual para construir un camino con sentido.</p>
               <Link to="/about" className="atelier-link-dark">DESCUBRE NUESTRA FILOSOFÍA <ArrowUpRight size={18} aria-hidden="true" /></Link>
             </div>
           </div>
@@ -173,13 +173,13 @@ export default function HomeAtelier() {
             <span className="atelier-section-index">04 / EL ECOSISTEMA DIGITAL</span>
             <span className="atelier-digital__overline">ENTRENA DONDE ESTÉS</span>
             <h2 id="atelier-digital-heading">TU EVOLUCIÓN.<br /><em>TAMBIÉN EN DIGITAL.</em></h2>
-            <p>BAYONA+ reúne herramientas para organizar tus sesiones y acompañar tu progreso. Una experiencia que conecta tu entrenamiento con tu día a día.</p>
-            <Link to="/app" className="atelier-button atelier-button--bronze">DESCUBRIR BAYONA+ <ArrowUpRight size={17} aria-hidden="true" /></Link>
+            <p>SB+ reúne herramientas para organizar tus sesiones y acompañar tu progreso. Una experiencia que conecta tu entrenamiento con tu día a día.</p>
+            <Link to="/app" className="atelier-button atelier-button--bronze">EXPLORAR SB+ <ArrowUpRight size={17} aria-hidden="true" /></Link>
           </div>
-          <div className="atelier-digital__media" aria-label="Vista real de la selección de roles de BAYONA+">
+          <div className="atelier-digital__media" aria-label="Vista real de la selección de roles de SB+">
             <div className="atelier-digital__orbit" aria-hidden="true" />
-            <div className="atelier-digital__device"><img src="/images/bayona-live-app/role-picker-mobile-crop-20261009.png" alt="Interfaz de BAYONA+ con opciones para elegir tu perfil" loading="eager" decoding="async" /></div>
-            <span className="atelier-digital__stamp">BAYONA+ / DIGITAL EXPERIENCE</span>
+            <div className="atelier-digital__device"><img src="/images/bayona-live-app/role-picker-mobile-crop-20261009.png" alt="Interfaz de SB+ con opciones para elegir tu perfil" loading="eager" decoding="async" /></div>
+            <span className="atelier-digital__stamp">SB+ / DIGITAL EXPERIENCE</span>
           </div>
         </div>
       </section>
@@ -210,12 +210,12 @@ export default function HomeAtelier() {
         <div className="atelier-frame atelier-contact__inner">
           <p className="atelier-kicker">TU SIGUIENTE CAPÍTULO</p>
           <h2 id="atelier-contact-heading">TODO EMPIEZA<br />CON <em>UN MOVIMIENTO.</em></h2>
-          <p>Cuéntame qué buscas. Descubriremos si BAYONA es el lugar adecuado para empezar.</p>
+          <p>Cuéntame qué buscas. Descubriremos si podemos construir juntos tu próximo paso.</p>
           <div className="atelier-contact__actions">
             <a href={contactUrl} target="_blank" rel="noopener noreferrer" className="atelier-button atelier-button--light" onClick={() => trackEvent('luxury_contact_click', { source: 'home_contact' })}>HABLEMOS DE TU OBJETIVO <ArrowUpRight size={17} aria-hidden="true" /></a>
             <Link to="/programs" className="atelier-text-link">EXPLORAR LOS SERVICIOS <ArrowRight size={17} aria-hidden="true" /></Link>
           </div>
-          <div className="atelier-contact__foot"><span>GANDÍA · ESPAÑA</span><span>ENTRENAMIENTO PRESENCIAL Y ONLINE</span><span>BY SEBASTIÁN BAYONA</span></div>
+          <div className="atelier-contact__foot"><span>GANDÍA · ESPAÑA</span><span>ENTRENAMIENTO PRESENCIAL Y ONLINE</span><span>SEBASTIAN BAYONA / PERSONAL STUDIO</span></div>
         </div>
       </section>
     </div>

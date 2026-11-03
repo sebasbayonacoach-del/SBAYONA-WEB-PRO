@@ -42,7 +42,7 @@ import '../styles/shop-art-direction-2026.css'
 import '../styles/shop-unified-catalog.css'
 import '../styles/shop-gym-funnel-v2.css'
 
-const HERO_LINES = ['EQUIPAMOS', 'TU MOVIMIENTO.']
+const HERO_LINES = ['PIEZAS PARA', 'TU CAMINO.']
 const PRODUCT_COUNT = shopProducts.length
 const SHOP_ICONS = Object.freeze({
   cpu: Cpu,
@@ -71,7 +71,7 @@ function ShopIcon({ name, size = 28, className = '' }) {
 
 function HeroTitle() {
   return (
-    <h1 aria-label="Equipamos tu movimiento.">
+    <h1 aria-label="Piezas para tu camino.">
       {HERO_LINES.map((line) => (
         <span className="shop-hero-line" key={line} aria-hidden="true">
           {line}
@@ -202,7 +202,7 @@ function ProductCard({ product, reducedMotion }) {
             <ShopIcon name={product.icon} size={46} className="shop-product-icon" />
           )}
           <span className="shop-product-image-shade" aria-hidden="true" />
-          <span className="shop-product-mark">BAYONA / {product.collectionTitle}</span>
+          <span className="shop-product-mark">SEBASTIAN BAYONA / {product.collectionTitle}</span>
           <span className="shop-product-chip">{product.category}</span>
         </div>
         <h3>{product.name}</h3>
@@ -290,7 +290,7 @@ function FeatureVisual({ product, reducedMotion }) {
     >
       <span className="shop-feature-aura" aria-hidden="true" />
       <ShopIcon className="shop-feature-icon" name={product.icon} size={70} />
-      <span className="shop-feature-wordmark" aria-hidden="true">BAYONA</span>
+      <span className="shop-feature-wordmark" aria-hidden="true">SEBASTIAN BAYONA</span>
       <span className="shop-feature-shadow" aria-hidden="true" />
     </div>
   )
@@ -440,10 +440,10 @@ export default function Shop() {
             initial={reducedMotion ? false : { y: 9 }}
             animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.58, delay: reducedMotion ? 0 : 0.22 }}
-            aria-label="Resumen de compra BAYONA"
+            aria-label="Resumen de compra SEBASTIAN BAYONA"
           >
             <div className="shop-hero-ticket">
-              <span>TIENDA BAYONA</span>
+              <span>06 / LA COLECCIÓN</span>
               <strong>Elige con confianza.</strong>
               <small>Disponibilidad, talla y entrega se confirman antes de pagar.</small>
             </div>
@@ -470,9 +470,9 @@ export default function Shop() {
           </motion.a>
         </div>
 
-        <div className="shop-hero-marquee" aria-label="BAYONA, hecho para moverte">
+        <div className="shop-hero-marquee" aria-label="SEBASTIAN BAYONA, hecho para moverte">
           <Marquee autoFill gradient={false} speed={32} pauseOnHover play={!reducedMotion}>
-            <span>BAYONA</span><i>•</i><span>HECHO PARA MOVERTE</span><i>•</i>
+            <span>SEBASTIAN BAYONA</span><i>•</i><span>HECHO PARA MOVERTE</span><i>•</i>
           </Marquee>
         </div>
       </section>
@@ -485,7 +485,7 @@ export default function Shop() {
         <header className="shop-categories-head">
           <SectionLabel>COMPRA POR CATEGORÍA</SectionLabel>
           <h2 id="shop-categories-title">ENCUENTRA LO QUE NECESITAS.</h2>
-          <p>Empieza por el tipo de producto. Las colecciones BAYONA quedan como filtro secundario dentro del catálogo.</p>
+          <p>Empieza por el tipo de producto. Las colecciones SEBASTIAN BAYONA quedan como filtro secundario dentro del catálogo.</p>
         </header>
         <div className="shop-category-shortcuts" role="group" aria-label="Categorías principales de tienda">
           {shopCategoryFilters.filter((item) => item !== 'Todo').map((item) => (
@@ -547,7 +547,7 @@ export default function Shop() {
       <section id="shop-catalog" className="shop-catalog section-shell" aria-labelledby="shop-catalog-title">
         <header className="shop-catalog-intro ds-reveal ds-reveal--mask">
           <div>
-            <SectionLabel>CATÁLOGO BAYONA</SectionLabel>
+            <SectionLabel>CATÁLOGO SEBASTIAN BAYONA</SectionLabel>
             <h2 id="shop-catalog-title">TODO PARA<br /><span>ENTRENAR.</span></h2>
           </div>
           <p>{PRODUCT_COUNT} referencias de ropa, calzado, equipamiento y recuperación.</p>

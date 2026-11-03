@@ -30,7 +30,7 @@ import { buildWeekPulse, pulsePanelId } from '../lib/schedule/clubPulse.js'
 import '../styles/community.css'
 import '../styles/community-cinematic-override.css'
 
-const whatsappUrl = whatsAppLink('Hola BAYONA, quiero entrar a la comunidad. ¿Empezamos juntos?')
+const whatsappUrl = whatsAppLink('Hola SEBASTIAN BAYONA, quiero entrar a la comunidad. ¿Empezamos juntos?')
 
 const profiles = resolveProfiles(socialLinks).map((profile) => ({
   ...profile,
@@ -115,7 +115,7 @@ const accessLevels = [
     description: 'Acceso al grupo, normas, conversaciones abiertas y recursos compartidos.',
     condition: 'GRATIS · SIN PLAN · SIN TARJETA',
     scope: ['Grupo y normas', 'Conversaciones abiertas', 'Ritmo semanal y recursos'],
-    feeling: 'Ideal para conocer la cultura BAYONA antes de elegir plan.',
+    feeling: 'Ideal para conocer la cultura SEBASTIAN BAYONA antes de elegir plan.',
     icon: Users,
   },
   {
@@ -258,7 +258,7 @@ function CommunityLiveFeed() {
     >
       <div className="community-shell container community-section-content community-number-layer">
         <header className="community-section-header community-header" data-immersive="clip">
-          <p className="community-overline community-eyebrow">BAYONA EN MOVIMIENTO</p>
+          <p className="community-overline community-eyebrow">SEBASTIAN BAYONA EN MOVIMIENTO</p>
           <h2 id="community-live-title" className="community-title">LO ÚLTIMO.<br /><span>EN MOVIMIENTO.</span></h2>
           <p className="community-section-subtitle community-subtitle">Compartimos lo que aprendemos, lo que practicamos y lo que nos inspira. Puedes descubrirlo a tu ritmo.</p>
         </header>
@@ -271,7 +271,7 @@ function CommunityLiveFeed() {
         hacia la derecha, que es además lo que significa «en movimiento».
         Las tarjetas conservan su CSS interno; solo cambia cómo se ordenan.
       */}
-      <ul className="community-rail" tabIndex={0} aria-label="Contenido público de BAYONA. Se recorre hacia la derecha.">
+      <ul className="community-rail" tabIndex={0} aria-label="Contenido público de SEBASTIAN BAYONA. Se recorre hacia la derecha.">
         <li className="community-rail-item">
           <article className="community-live-card community-social-card">
             <div className="community-live-media community-social-thumb is-video">
@@ -387,10 +387,10 @@ export default function Community() {
       >
         <div className="community-hero-club-grid">
           <div className="community-hero-copy">
-            <p className="community-kicker">BAYONA COMMUNITY · CLUB ABIERTO</p>
+            <p className="community-kicker">04 / EL CÍRCULO · COMUNIDAD ABIERTA</p>
             <h1 id="community-title" className="community-hero-title">
-              <span>ENTRENAMOS JUNTOS.</span>
-              <strong>COMPARTIMOS EL PROCESO.</strong>
+              <span>UN CÍRCULO.</span>
+              <strong>UN MISMO MOVIMIENTO.</strong>
             </h1>
             <p className="community-hero-subtitle">
               Un lugar para compartir el camino: preguntar sin miedo, aprender de otras personas y encontrar motivación para seguir moviéndote. Puedes conocer la comunidad sin comprar nada.
@@ -412,9 +412,9 @@ export default function Community() {
           </div>
 
           <aside className="community-hero-side">
-            <div className="community-pass" aria-label="Pase de entrada a la comunidad BAYONA">
+            <div className="community-pass" aria-label="Pase de entrada a la comunidad SEBASTIAN BAYONA">
               <div className="community-pass-top">
-                <span>BAYONA · PASE DE SOCIO</span>
+                <span>SEBASTIAN BAYONA · PASE DE SOCIO</span>
                 <span aria-hidden="true">Nº 001</span>
               </div>
               <div className="community-pass-body">
@@ -437,7 +437,7 @@ export default function Community() {
             </ul>
           </aside>
         </div>
-        <a className="community-scroll-indicator" href="#por-que" aria-label="Ir a la comunidad BAYONA">
+        <a className="community-scroll-indicator" href="#por-que" aria-label="Ir a la comunidad SEBASTIAN BAYONA">
           <span aria-hidden="true" />
           <ChevronDown aria-hidden="true" size={15} strokeWidth={1} />
         </a>
@@ -524,10 +524,10 @@ export default function Community() {
             Los días con agenda son piezas navegables (botón → su panel); los que
             no la tienen se quedan como texto, porque no hay a dónde llevarlos.
           */}
-          <div className="community-pulse" aria-label="Calendario semanal de la comunidad BAYONA">
+          <div className="community-pulse" aria-label="Calendario semanal de la comunidad SEBASTIAN BAYONA">
             <div className="community-calendar-week">
               <div className="community-calendar-week-head">
-                <span>SEMANA BAYONA</span>
+                <span>SEMANA SEBASTIAN BAYONA</span>
                 <strong>3 DÍAS CON CITA · 7 DÍAS DE GRUPO</strong>
               </div>
               <ol>
@@ -749,7 +749,7 @@ export default function Community() {
               <div className="community-chat-header">
                 <span className="community-chat-avatar">B</span>
                 <div className="community-chat-headinfo">
-                  <span className="community-chat-name">BAYONA · COMUNIDAD</span>
+                  <span className="community-chat-name">SEBASTIAN BAYONA · COMUNIDAD</span>
                   <span className="community-chat-status">● ACTIVO AHORA</span>
                 </div>
               </div>
@@ -771,7 +771,7 @@ export default function Community() {
             </div>
             <p className="community-chat-caption">Así hablamos dentro.</p>
           </details>
-          <aside className="community-mid-join community-reveal" aria-label="Unirse a la comunidad BAYONA">
+          <aside className="community-mid-join community-reveal" aria-label="Unirse a la comunidad SEBASTIAN BAYONA">
             <p className="community-mid-join-label">¿ENTRAMOS?</p>
             <a className="community-button community-button-primary community-mid-join-button" href={whatsappUrl} target="_blank" rel="noreferrer">
               <MessageCircle aria-hidden="true" size={20} />
@@ -818,9 +818,9 @@ export default function Community() {
         </div>
       </section>
 
-      <footer className="community-footer-note" aria-label="Nota sobre la comunidad BAYONA">
-        <p className="community-shell">BAYONA Comunidad es un espacio para escucharnos, aprender y entrenar con respeto, sin necesidad de tenerlo todo claro desde el principio.</p>
-        <p className="community-shell community-final-signature">ENTRENAMOS CON CRITERIO. COMPARTIMOS CON RESPETO. — BAYONA</p>
+      <footer className="community-footer-note" aria-label="Nota sobre la comunidad SEBASTIAN BAYONA">
+        <p className="community-shell">SEBASTIAN BAYONA Comunidad es un espacio para escucharnos, aprender y entrenar con respeto, sin necesidad de tenerlo todo claro desde el principio.</p>
+        <p className="community-shell community-final-signature">ENTRENAMOS CON CRITERIO. COMPARTIMOS CON RESPETO. — SEBASTIAN BAYONA</p>
       </footer>
 
       <div

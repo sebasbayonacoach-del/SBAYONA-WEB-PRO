@@ -47,23 +47,23 @@ export default function AppLaunch(){
       <div className="bayona-launch__grid" aria-hidden="true"/>
       <div className="bayona-launch__shell bayona-launch__hero-grid">
         <div className="bayona-launch__hero-copy">
-          <div className="bayona-launch__micro"><span className="bayona-launch__live-dot" aria-hidden="true"/> BAYONA / TU ESPACIO DIGITAL <span>001 — APP</span></div>
-          <h1 id="bayona-launch-title">TU VIDA.<br/><em>TU RITMO.</em><br/>TU APP.</h1>
+          <div className="bayona-launch__micro"><span className="bayona-launch__live-dot" aria-hidden="true"/> SB+ / TU ESPACIO DIGITAL <span>05 — STUDIO</span></div>
+          <h1 id="bayona-launch-title">TU CUERPO.<br/><em>TU PROGRESO.</em><br/>TU ESPACIO.</h1>
           <p>Tu entrenamiento continúa donde estés. Un espacio digital para volver a tu proceso, todos los días.</p>
           <TrackedAppLink source="app_launch_hero" className="bayona-launch__primary">
-            ABRIR BAYONA APP <ArrowUpRight size={20} aria-hidden="true"/>
+            ABRIR SB+ <ArrowUpRight size={20} aria-hidden="true"/>
           </TrackedAppLink>
           <div className="bayona-launch__hero-proof"><ShieldCheck size={16} aria-hidden="true"/> Aplicación web disponible · Sin APK obligatoria</div>
         </div>
-        <div className="bayona-launch__hero-device" aria-label="Vista real de BAYONA App">
+        <div className="bayona-launch__hero-device" aria-label="Vista real de SB+ App">
           <div className="bayona-launch__device-glow" aria-hidden="true"/>
           <div className="bayona-launch__device">
-            <div className="bayona-launch__device-top"><span><i/><i/><i/></span><span>BAYONA / APP</span><MonitorSmartphone size={16}/></div>
-            <picture><source media="(max-width: 640px)" srcSet={BAYONA_APP_MOBILE_IMAGE}/><img src={BAYONA_APP_ROLE_IMAGE} alt="Captura real de BAYONA App con las entradas a Mi App y Coach Studio" width="1365" height="900" decoding="async" fetchPriority="high"/></picture>
+            <div className="bayona-launch__device-top"><span><i/><i/><i/></span><span>SB+ / APP</span><MonitorSmartphone size={16}/></div>
+            <picture><source media="(max-width: 640px)" srcSet={BAYONA_APP_MOBILE_IMAGE}/><img src={BAYONA_APP_ROLE_IMAGE} alt="Captura real de SB+ App con las entradas a Mi App y Coach Studio" width="1365" height="900" decoding="async" fetchPriority="high"/></picture>
           </div>
           <div className="bayona-launch__device-label"><span>01 / PRODUCTO REAL</span><span>MI APP · COACH STUDIO</span></div>
         </div>
-        <a href="#bayona-launch-tour" className="bayona-launch__scroll" aria-label="Seguir descubriendo BAYONA App"><span>DESCUBRE LA EXPERIENCIA</span><ArrowDownRight size={19}/></a>
+        <a href="#bayona-launch-tour" className="bayona-launch__scroll" aria-label="Seguir descubriendo SB+ App"><span>DESCUBRE LA EXPERIENCIA</span><ArrowDownRight size={19}/></a>
       </div>
     </section>
 
@@ -93,7 +93,7 @@ export default function AppLaunch(){
           </article>
           <article className="bayona-launch__role bayona-launch__role--coach">
             <span>02 / ENTRENADOR AUTORIZADO</span><Sparkles size={29} aria-hidden="true"/><h3>COACH STUDIO.</h3>
-            <p>El espacio de gestión profesional de BAYONA. Acceso restringido a la cuenta autorizada.</p>
+            <p>El espacio de gestión profesional de SEBASTIAN BAYONA. Acceso restringido a la cuenta autorizada.</p>
             <TrackedAppLink source="app_launch_coach" className="bayona-launch__role-link">VER PANTALLA DE ACCESO <ArrowUpRight size={18}/></TrackedAppLink>
           </article>
         </div>
@@ -103,9 +103,9 @@ export default function AppLaunch(){
     <section className="bayona-launch__install" id="instalar-app" aria-labelledby="bayona-launch-install-title">
       <div className="bayona-launch__shell bayona-launch__install-grid">
         <div className="bayona-launch__install-copy">
-          <span className="bayona-launch__eyebrow">04 / LLEVA BAYONA CONTIGO</span>
+          <span className="bayona-launch__eyebrow">04 / LLEVA SEBASTIAN BAYONA CONTIGO</span>
           <h2 id="bayona-launch-install-title">TODA LA EXPERIENCIA.<br/><em>EN TU MÓVIL.</em></h2>
-          <p>BAYONA funciona como aplicación web. Puedes abrirla en el navegador y, si tu dispositivo lo admite, instalarla en la pantalla de inicio.</p>
+          <p>SEBASTIAN BAYONA funciona como aplicación web. Puedes abrirla en el navegador y, si tu dispositivo lo admite, instalarla en la pantalla de inicio.</p>
           <div className="bayona-launch__device-hint"><span><Smartphone size={20} aria-hidden="true"/>{instructions.label}</span><strong>{instructions.step}</strong><small>{instructions.detail}</small></div>
           <TrackedAppLink source="app_launch_install" className="bayona-launch__primary">ABRIR PARA INSTALAR <ExternalLink size={19}/></TrackedAppLink>
           <small className="bayona-launch__honesty">La instalación depende del navegador. No anunciamos una APK ni una publicación en Google Play o App Store que aún no se haya verificado.</small>
@@ -114,7 +114,7 @@ export default function AppLaunch(){
           <div className="bayona-launch__install-halo"/>
           <div className="bayona-launch__install-number">B/</div>
           <div className="bayona-launch__install-device"><img src={BAYONA_APP_MOBILE_IMAGE} width="390" height="480" loading="lazy" decoding="async" alt=""/></div>
-          <span className="bayona-launch__install-serial">BAYONA / WEB APP / 2026</span>
+          <span className="bayona-launch__install-serial">SEBASTIAN BAYONA / WEB APP / 2026</span>
         </div>
       </div>
     </section>

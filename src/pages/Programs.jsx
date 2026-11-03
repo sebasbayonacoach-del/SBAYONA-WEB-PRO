@@ -109,7 +109,7 @@ const SERVICE_GROUPS = serviceCategoryDefinitions.map((category) => ({
 function serviceConsultationLink(service) {
   const label = SERVICE_NAMES[service.id] || service.label
   return buildWhatsAppUrl([
-    `Hola BAYONA, quiero consultar por ${label}.`,
+    `Hola SEBASTIAN BAYONA, quiero consultar por ${label}.`,
     `Precio de referencia publicado: ${service.priceDisplay} COP.`,
     '¿Está disponible para mi ubicación y qué incluye exactamente?',
   ].join('\n'))
@@ -131,8 +131,8 @@ export default function Programs() {
   return (
     <div className="services-page">
       <PageHero
-        title="NUESTROS SERVICIOS."
-        kicker="BAYONA · ENTRENAMIENTO Y ACOMPAÑAMIENTO"
+        title="TU SIGUIENTE EVOLUCIÓN."
+        kicker="02 / EXPERIENCIAS A TU MEDIDA"
         media={siteMedia.programs.hero}
       >
         <p>
@@ -151,7 +151,7 @@ export default function Programs() {
       <section className="services-overview" id="elige-servicio" aria-labelledby="services-overview-title">
         <div className="services-shell">
           <div className="services-heading services-paths-heading">
-            <SectionLabel>ELIGE TU CAMINO</SectionLabel>
+            <SectionLabel>DESCUBRE TU EXPERIENCIA</SectionLabel>
             <h2 id="services-overview-title">UN CAMINO QUE <span>SE ADAPTE A TI.</span></h2>
             <p>Explora sin prisa: te explicamos cada opción para que puedas elegir la que más sentido tenga para ti.</p>
           </div>
