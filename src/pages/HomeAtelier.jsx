@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowDownRight, ArrowRight, ArrowUpRight, MoveUpRight } from 'lucide-react'
 import BayonaRealArchive from '../components/home/BayonaRealArchive.jsx'
+import SBFlagship from '../components/home/SBFlagship.jsx'
 import { bookingLink } from '../config/site.config.js'
 import { trackEvent } from '../lib/analytics/analytics.js'
 import './home-atelier.css'
@@ -167,22 +168,7 @@ export default function HomeAtelier() {
 
       <BayonaRealArchive />
 
-      <section className="atelier-digital" id="bayona-plus" aria-labelledby="atelier-digital-heading">
-        <div className="atelier-frame atelier-digital__layout">
-          <div className="atelier-digital__copy">
-            <span className="atelier-section-index">04 / EL ECOSISTEMA DIGITAL</span>
-            <span className="atelier-digital__overline">ENTRENA DONDE ESTÉS</span>
-            <h2 id="atelier-digital-heading">TU EVOLUCIÓN.<br /><em>TAMBIÉN EN DIGITAL.</em></h2>
-            <p>SB+ reúne herramientas para organizar tus sesiones y acompañar tu progreso. Una experiencia que conecta tu entrenamiento con tu día a día.</p>
-            <Link to="/app" className="atelier-button atelier-button--bronze">EXPLORAR SB+ <ArrowUpRight size={17} aria-hidden="true" /></Link>
-          </div>
-          <div className="atelier-digital__media" aria-label="Vista real de la selección de roles de SB+">
-            <div className="atelier-digital__orbit" aria-hidden="true" />
-            <div className="atelier-digital__device"><img src="/images/bayona-live-app/role-picker-mobile-crop-20261009.png" alt="Interfaz de SB+ con opciones para elegir tu perfil" loading="eager" decoding="async" /></div>
-            <span className="atelier-digital__stamp">SB+ / DIGITAL EXPERIENCE</span>
-          </div>
-        </div>
-      </section>
+      <SBFlagship />
 
       <section className="atelier-resources" id="recursos" aria-labelledby="atelier-resources-heading">
         <div className="atelier-frame">

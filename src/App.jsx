@@ -151,7 +151,7 @@ function Site() {
   const isSystemRoute = routeStartsWith(pathname, SYSTEM_ROUTES)
   const isProductRoute = routeStartsWith(pathname, PRODUCT_ROUTES)
   const showEditorialChrome = !isProductRoute && !isSystemRoute
-  const showGuidedChrome = showEditorialChrome && pathname !== '/' // Atelier: editorial without intrusive mission overlays.
+  const showGuidedChrome = false // Public editorial pages are content-first: no mission/HUD/game overlays.
   const showSiteFooter = showEditorialChrome || routeStartsWith(pathname, FOOTER_ROUTES)
   const experienceScope = isSystemRoute || isProductRoute ? 'system' : 'brand'
 
@@ -202,13 +202,13 @@ function Site() {
       <a href="#main-content" className="skip-link">Saltar al contenido</a>
       <RouteSeo />
       <RouteEffects />
-      <ScrollProgress />
+      {isProductRoute ? <ScrollProgress /> : null}
       {/*
         Debug del Motion Engine (Fase 5): solo existe en desarrollo y con el
         flag ?motionDebug=1. En produccion la rama se elimina del bundle.
       */}
       <MotionDebug />
-      <CustomCursor />
+      {isProductRoute ? <CustomCursor /> : null}
       <Navbar />
       {showGuidedChrome ? <CinematicGlobalChapters /> : null}
       <PageTransition>

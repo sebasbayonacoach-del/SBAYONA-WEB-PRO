@@ -3451,3 +3451,64 @@ html body .footer.gym-footer .footer-mark {
   }
   html body .footer.gym-footer .footer-top { min-width: 0; }
 }
+
+/* 2026-11-03 / Editorial QA — correct real contrast failures in Experiencias.
+   On the cream overview, legacy global white copy was functionally invisible;
+   on the dark plan cards, an inherited black heading was unreadable. */
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-overview .services-heading :is(p,small),
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-catalog .services-heading :is(p,small) {
+  color: #574f47 !important;
+  opacity: 1 !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-overview .services-heading :is(h2,h3),
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-catalog .services-heading :is(h2,h3) {
+  color: #24211e !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-overview .services-heading h2 span {
+  color: #98643d !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-overview :is(.section-label,.section-label p,.services-path-footnote > span) {
+  color: #826344 !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(h2,h3),
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .home-visible-plans :is(h2,h3),
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .bayona-plan-open__card h3 {
+  color: #f6f1e7 !important;
+  opacity: 1 !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .services-heading p {
+  color: #c8c5bc !important;
+  opacity: 1 !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships :is(h4,.plan-card-eyebrow,.plan-eyebrow) {
+  color: #e3b785 !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-memberships .bayona-plan-open__card {
+  border-color: rgba(224,187,143,.36);
+  box-shadow: 0 18px 62px rgba(0,0,0,.18);
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-path-card {
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(122,90,59,.25);
+  box-shadow: 0 16px 45px rgba(29,24,19,.12);
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-path-card__shade {
+  background: linear-gradient(180deg, rgba(11,12,10,.32), rgba(8,10,9,.13) 32%, rgba(7,9,8,.78) 100%) !important;
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-path-card__body :is(h3,p) {
+  color: #fffaf0 !important;
+  text-shadow: 0 1px 5px rgba(0,0,0,.4);
+}
+html body .ds-frame[data-experience-scope='brand'] .services-page .services-catalog .services-card {
+  box-shadow: 0 12px 42px rgba(27,24,20,.09);
+}
+@media (max-width: 760px) {
+  html body .ds-frame[data-experience-scope='brand'] .services-page .services-heading :is(h2,h3) {
+    line-height: 1.1 !important;
+    overflow-wrap: break-word;
+  }
+  html body .ds-frame[data-experience-scope='brand'] .services-page .services-path-card {
+    min-height: 280px;
+  }
+}

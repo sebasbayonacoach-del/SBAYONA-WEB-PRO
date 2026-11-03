@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test('BAYONA Atelier: inicio editorial accesible y sin estadísticas inventadas', async ({ page }) => {
+test('SEBASTIAN BAYONA Atelier: inicio editorial accesible y sin estadísticas inventadas', async ({ page }) => {
   const errors = []
   page.on('pageerror', (error) => errors.push(error.message))
   await page.goto('/')
@@ -12,7 +12,7 @@ test('BAYONA Atelier: inicio editorial accesible y sin estadísticas inventadas'
   await expect(page.locator('body')).toHaveClass(/bayona-luxury-active/)
   await expect(page.locator('.atelier-experience').nth(0)).toHaveAttribute('href', '/programs')
   await expect(page.locator('.atelier-experience').nth(1)).toHaveAttribute('href', '/parkour-academy')
-  await expect(page.locator('.atelier-digital__copy a')).toHaveAttribute('href', '/app')
+  await expect(page.locator('.sb-flagship__primary')).toHaveAttribute('href', '/app')
   await expect(page.locator('.atelier-contact__actions a').first()).toHaveAttribute('href', /wa\.me\/34\d{9}/)
   expect((await page.locator('body').innerText()).includes('2.814')).toBe(false)
   expect(errors).toEqual([])
@@ -43,8 +43,8 @@ for (const width of [320, 360, 390, 768, 1440]) {
     await page.locator('#experiencias').scrollIntoViewIfNeeded()
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1)
     await page.locator('#bayona-plus').scrollIntoViewIfNeeded()
-    await expect(page.locator('.atelier-digital__device img')).toHaveJSProperty('complete', true)
-    expect(await page.locator('.atelier-digital__device img').evaluate((img) => img.naturalWidth)).toBeGreaterThan(0)
+    await expect(page.locator('.sb-flagship__device-screen img')).toHaveJSProperty('complete', true)
+    expect(await page.locator('.sb-flagship__device-screen img').evaluate((img) => img.naturalWidth)).toBeGreaterThan(0)
   })
 }
 
