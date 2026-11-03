@@ -34,7 +34,7 @@ test('BAYONA Atelier: recursos reales y galería documental funcionan', async ({
   expect(await page.locator('#archivo-real video').evaluate((video) => video.muted)).toBe(true)
 })
 
-for (const width of [360, 390, 768, 1440]) {
+for (const width of [320, 360, 390, 768, 1440]) {
   test(`BAYONA Atelier responsive: ${width}px sin desbordamiento`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 })
     await page.goto('/')

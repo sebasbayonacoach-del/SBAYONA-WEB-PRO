@@ -5,6 +5,7 @@ import BayonaRealArchive from '../components/home/BayonaRealArchive.jsx'
 import { bookingLink } from '../config/site.config.js'
 import { trackEvent } from '../lib/analytics/analytics.js'
 import './home-atelier.css'
+import './atelier-visual-revision.css'
 
 const experiences = [
   {
@@ -62,17 +63,22 @@ export default function HomeAtelier() {
   return (
     <div className="bayona-atelier" id="contenido-principal">
       <section className="atelier-hero" aria-labelledby="atelier-hero-title">
-        <div className="atelier-hero__photo" role="img" aria-label="Escena editorial conceptual de entrenamiento en la costa al atardecer" />
+        <div className="atelier-hero__photo" role="img" aria-label="Escena editorial conceptual de entrenamiento de velocidad junto al mar" />
         <div className="atelier-hero__shade" aria-hidden="true" />
+        <div className="atelier-hero__signature" aria-hidden="true">
+          <span>01 / HUMAN MOTION</span>
+          <strong>ADAPTACIÓN.<br />CONTROL.<br />LIBERTAD.</strong>
+          <span>SCIENCE × MOVEMENT</span>
+        </div>
         <div className="atelier-frame atelier-hero__content">
           <div className="atelier-hero__prelude">
             <span className="atelier-kicker">BAYONA <i aria-hidden="true" /> HUMAN MOVEMENT STUDIO</span>
             <span className="atelier-edition">EST. 2026 / ESPAÑA</span>
           </div>
           <div className="atelier-hero__statement">
-            <p className="atelier-hero__eyebrow">LA CIENCIA SE ENCUENTRA CON EL MOVIMIENTO</p>
-            <h1 id="atelier-hero-title">EL ARTE<br />DE <em>MOVERTE.</em></h1>
-            <p className="atelier-hero__summary">Entrenamiento personal, parkour y una manera más consciente de desarrollar tu potencial.</p>
+            <p className="atelier-hero__eyebrow">DONDE LA CIENCIA SE ENCUENTRA CON EL MOVIMIENTO</p>
+            <h1 id="atelier-hero-title">EL ARTE<br /><em>DE MOVERTE.</em></h1>
+            <p className="atelier-hero__summary">Fuerza. Técnica. Libertad. Entrenamiento personalizado para convertir cada movimiento en una nueva posibilidad.</p>
             <div className="atelier-hero__actions">
               <a className="atelier-button atelier-button--light" href="#experiencias" onClick={() => trackEvent('luxury_discover_click', { source: 'home_hero' })}>
                 DESCUBRE TU CAMINO <ArrowUpRight size={17} strokeWidth={1.6} aria-hidden="true" />
@@ -92,12 +98,16 @@ export default function HomeAtelier() {
         <div className="atelier-frame atelier-manifesto__grid">
           <div className="atelier-section-index"><span>01 / FILOSOFÍA</span><span>DONDE COMIENZA EL CAMBIO</span></div>
           <div className="atelier-manifesto__body">
-            <h2 id="atelier-manifesto-heading">NO SE TRATA DE SER MÁS.<br /><em>SE TRATA DE SER TÚ,</em><br />EN MOVIMIENTO.</h2>
+            <h2 id="atelier-manifesto-heading">NINGÚN CAMINO<br />ES IGUAL.<br /><em>EL TUYO, TAMPOCO.</em></h2>
             <div className="atelier-manifesto__below">
               <p>Cada cuerpo tiene su historia. Cada persona, su propio ritmo. En BAYONA combinamos ciencia del entrenamiento, exploración del movimiento y atención individual para construir un camino con sentido.</p>
               <Link to="/about" className="atelier-link-dark">DESCUBRE NUESTRA FILOSOFÍA <ArrowUpRight size={18} aria-hidden="true" /></Link>
             </div>
           </div>
+          <figure className="atelier-manifesto__figure">
+            <img src="/images/bayona-generated/about-story-1600.webp" alt="Escena conceptual de una conversación durante una sesión de entrenamiento" width="1600" height="1000" loading="eager" decoding="async" />
+            <figcaption><span>ENFOQUE PERSONAL</span><span>FÍSICO · MENTAL · HUMANO</span></figcaption>
+          </figure>
         </div>
       </section>
 
@@ -114,8 +124,11 @@ export default function HomeAtelier() {
           <div className="atelier-experiences__grid">
             {experiences.map((item) => (
               <Link to={item.href} className="atelier-experience" key={item.index} onClick={() => trackEvent('luxury_experience_click', { experience: item.index })}>
-                <div className="atelier-experience__image">
-                  <img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" width="1600" height="1000" />
+                <div
+                  className="atelier-experience__image"
+                  style={{ backgroundImage: `url(${item.image})`, backgroundPosition: 'center', backgroundSize: 'cover' }}
+                >
+                  <img src={item.image} alt={item.imageAlt} loading="eager" decoding="async" width="1600" height="1000" />
                   <span className="atelier-experience__number">{item.index} / 03</span>
                   <span className="atelier-experience__action" aria-hidden="true"><MoveUpRight size={22} strokeWidth={1.5} /></span>
                 </div>
@@ -165,7 +178,7 @@ export default function HomeAtelier() {
           </div>
           <div className="atelier-digital__media" aria-label="Vista real de la selección de roles de BAYONA+">
             <div className="atelier-digital__orbit" aria-hidden="true" />
-            <div className="atelier-digital__device"><img src="/images/bayona-live-app/role-picker-mobile-crop-20261009.png" alt="Interfaz de BAYONA+ con opciones para elegir tu perfil" loading="lazy" decoding="async" /></div>
+            <div className="atelier-digital__device"><img src="/images/bayona-live-app/role-picker-mobile-crop-20261009.png" alt="Interfaz de BAYONA+ con opciones para elegir tu perfil" loading="eager" decoding="async" /></div>
             <span className="atelier-digital__stamp">BAYONA+ / DIGITAL EXPERIENCE</span>
           </div>
         </div>

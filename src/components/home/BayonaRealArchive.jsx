@@ -76,10 +76,10 @@ export default function BayonaRealArchive() {
         </div>
 
         <header className="bayona-real-archive__intro">
-          <p className="bayona-real-archive__kicker">EL MOVIMIENTO ES REAL</p>
+          <p className="bayona-real-archive__kicker">UN ARCHIVO EN MOVIMIENTO</p>
           <h2 id="archivo-real-title">VIDA REAL.<br /><em>EN MOVIMIENTO.</em></h2>
           <div className="bayona-real-archive__lead">
-            <p>Ocho fragmentos de lugares, rutas y espacios deportivos del archivo BAYONA. Sin imágenes de rostros generados ni cifras inventadas.</p>
+            <p>Ocho escenas del universo BAYONA. Ciudad, altura y movimiento: el recorrido que hay detrás de cada nuevo comienzo.</p>
             <span className="bayona-real-archive__count"><strong>08</strong><small>CAPÍTULOS<br />VISUALES</small></span>
           </div>
         </header>
@@ -92,7 +92,10 @@ export default function BayonaRealArchive() {
         <div className="bayona-real-archive__reels">
           {CLIPS.map((clip, index) => (
             <article className="bayona-real-archive__reel" key={clip.id}>
-              <div className="bayona-real-archive__frame">
+              <div
+                className="bayona-real-archive__frame"
+                style={{ backgroundImage: `url(/images/bayona-authentic/${clip.id}.webp)`, backgroundPosition: 'center', backgroundSize: 'cover' }}
+              >
                 {playingId === clip.id ? (
                   <video
                     src={`/videos/bayona-authentic/${clip.id}.mp4`}
@@ -136,7 +139,7 @@ export default function BayonaRealArchive() {
         </div>
 
         <footer className="bayona-real-archive__footer">
-          <span>UNA COLECCIÓN DOCUMENTAL. NO UN ROSTRO INVENTADO.</span>
+          <span>OCHO ESCENAS ORIGINALES DEL ARCHIVO BAYONA.</span>
           <span>Las escenas con personas identificables pendientes de autorización quedan fuera de esta selección.</span>
         </footer>
       </div>

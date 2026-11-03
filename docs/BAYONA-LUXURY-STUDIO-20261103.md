@@ -30,7 +30,7 @@ Antes del despliegue público, comprobar derechos de imagen, consentimientos de 
 - La página ha pasado comprobaciones a 360, 390, 768 y 1440 px sin desbordamiento horizontal.
 
 ## Verificación (3 nov 2026)
-- **7/7 tests Playwright superados** en `e2e/bayona-atelier-luxury.spec.js`.
+- **8/8 tests Playwright superados (revisión visual)** en `e2e/bayona-atelier-luxury.spec.js`.
 - **Build Vite aprobado** (22,26 s).
 - **Lint:** 0 errores y 6 avisos del analizador por referencias JSX (la configuración actual no marca esos imports como usados).
 - Se mantiene la advertencia existente del chunk `vendor-three` de 909 KB. Es un objetivo posterior de optimización.
@@ -52,3 +52,27 @@ Antes del despliegue público, comprobar derechos de imagen, consentimientos de 
 2. Hacer una revisión de consistencia visual de `/about`, `/programs`, `/parkour-academy` y demás interiores para que respondan al mismo lenguaje editorial.
 3. Revisar contenido visual y permisos antes de publicar.
 4. Optimizar módulos de Three.js y verificar métricas de campo (LCP, INP y CLS) en un despliegue de prueba.
+
+
+## Revisión visual 02 — tras comprobar el navegador (3 de noviembre de 2026)
+
+La primera portada no transmitía suficiente presencia de movimiento y la captura de página completa podía mostrar fotografías o portadas de vídeo negras. Se aplicó una segunda dirección de arte sin alterar la web de producción:
+
+1. Hero con una imagen conceptual de entrenamiento de velocidad visible en escritorio y móvil; el encuadre oscuro anterior ocultaba demasiado al sujeto.
+2. Nueva jerarquía editorial con titulares grandes, bronce cálido, marfil y un bloque de firma visual.
+3. Filosofía con fotografía editorial a la derecha y texto de lectura clara a la izquierda.
+4. Sección de método con imagen contextual y tarjetas de pasos con contraste reforzado.
+5. Archivo audiovisual con una imagen de fondo de respaldo por clip para evitar portadas negras en capturas de página completa. Los vídeos siguen sin descargarse hasta pulsar reproducir.
+6. Tarjetas de las tres experiencias con respaldo de imagen de fondo; los recursos pequeños se cargan pronto para no aparecer vacíos en desplazamientos rápidos.
+7. BAYONA+ mejor iluminado y visor de idiomas discreto.
+8. Pruebas responsive ampliadas a **320, 360, 390, 768 y 1440 px**, con navegación, recursos y reproducción del archivo verificadas.
+
+**Previsualización local:** `http://127.0.0.1:4292/` (servidor temporal de usuario con reinicio por fallo). **No desplegado en producción.**
+
+**Capturas de revisión:**
+
+![Nueva portada en escritorio](assets/luxury-studio-20261103/hero-v2-desktop.jpg)
+
+![Nueva portada en móvil](assets/luxury-studio-20261103/hero-v2-mobile.jpg)
+
+![Vista completa del sitio, revisión visual](assets/luxury-studio-20261103/site-v4-desktop.jpg)

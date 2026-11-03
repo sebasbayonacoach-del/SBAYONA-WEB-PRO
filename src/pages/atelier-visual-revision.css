@@ -1,0 +1,338 @@
+/*
+ * BAYONA — Dirección de arte 02 / noviembre 2026
+ * Corrige hero vacío, tarjetas que tardan en pintarse, jerarquía plana
+ * y la discontinuidad entre imágenes conceptuales y archivo documental.
+ */
+.bayona-atelier {
+  --atelier-black: #10110e;
+  --atelier-paper: #f5f1e9;
+  --atelier-paper2: #eee9df;
+  --atelier-bronze: #bd8e56;
+  --atelier-bronze-light: #e0b982;
+  background: #10110e;
+}
+.bayona-atelier .atelier-frame { width: min(calc(100% - clamp(44px, 9vw, 180px)), 1512px); }
+.bayona-atelier .atelier-hero {
+  min-height: max(730px, 94svh);
+  max-height: 1030px;
+  background: #0e100e;
+  isolation: isolate;
+}
+.bayona-atelier .atelier-hero__photo {
+  inset: 0 0 0 35%;
+  background-image: url('/images/bayona-generated/plan-rendimiento-hero-1600.webp');
+  background-position: 48% 48%;
+  background-size: cover;
+  filter: saturate(.82) contrast(1.06);
+  opacity: 1;
+}
+.bayona-atelier .atelier-hero__shade {
+  background:
+    linear-gradient(90deg,
+      #0e100e 0%,
+      rgba(14,16,14,.99) 26%,
+      rgba(14,16,14,.92) 38%,
+      rgba(14,16,14,.65) 52%,
+      rgba(14,16,14,.19) 74%,
+      rgba(14,16,14,.03) 100%),
+    linear-gradient(180deg,rgba(8,9,8,.18),transparent 33%,transparent 74%,rgba(8,10,8,.72));
+}
+.bayona-atelier .atelier-hero__content { position: relative; z-index: 2; }
+.bayona-atelier .atelier-hero__prelude { padding-top: 132px; }
+.bayona-atelier .atelier-hero__prelude .atelier-kicker { font-size: .7rem; letter-spacing: .19em; }
+.bayona-atelier .atelier-hero__statement { display: flex; flex-direction: column; justify-content: center; flex: 1; padding: 55px 0 65px; max-width: 930px; }
+.bayona-atelier .atelier-hero__eyebrow {
+  margin-bottom: 26px;
+  color: #e3b582;
+  font-size: .76rem;
+  letter-spacing: .15em;
+  font-weight: 650;
+}
+.bayona-atelier .atelier-hero h1 {
+  max-width: none;
+  margin: 0;
+  font-size: clamp(5.7rem, 8.6vw, 9.5rem);
+  line-height: .95;
+  font-weight: 780;
+  letter-spacing: -.084em;
+  color: #f7f3eb;
+}
+.bayona-atelier .atelier-hero h1 em {
+  font-size: .93em;
+  color: #e9cda7;
+  font-weight: 400;
+  letter-spacing: -.066em;
+  white-space: nowrap;
+}
+.bayona-atelier .atelier-hero__summary {
+  font-size: clamp(1.06rem, 1.3vw, 1.25rem);
+  line-height: 1.78;
+  font-weight: 430;
+  max-width: 485px;
+  color: #e4e0d6;
+  margin-top: 34px;
+}
+.bayona-atelier .atelier-button {
+  border-radius: 1px;
+  min-height: 59px;
+  font-size: .73rem;
+  letter-spacing: .12em;
+}
+.bayona-atelier .atelier-hero__actions { margin-top: 35px; }
+.bayona-atelier .atelier-hero__foot { border-color: rgba(250,243,231,.38); }
+.bayona-atelier .atelier-hero__signature {
+  position: absolute;
+  z-index: 3;
+  right: clamp(28px, 5vw, 88px);
+  bottom: clamp(100px, 13vh, 160px);
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 17px 0 17px 23px;
+  border-left: 2px solid rgba(230,192,145,.85);
+  background: linear-gradient(90deg,rgba(18,20,17,.46),transparent);
+  color: #faf4e9;
+  text-shadow: 0 2px 10px #0c0d0b;
+  pointer-events: none;
+}
+.bayona-atelier .atelier-hero__signature span {
+  font: 650 .62rem/1.45 'DM Mono',ui-monospace,monospace;
+  letter-spacing: .17em;
+  color: #e3c8a6;
+}
+.bayona-atelier .atelier-hero__signature strong {
+  font: 680 clamp(1.4rem, 2.1vw, 2.25rem)/1.15 var(--atelier-sans);
+  letter-spacing: -.045em;
+}
+body.bayona-luxury-active .navbar .gym-primary-nav a { font-size: .72rem; letter-spacing: .10em; }
+body.bayona-luxury-active .nav-app-entry { border-color: rgba(229,187,132,.54); }
+body.bayona-luxury-active .site-theme-toggle { opacity: .84; }
+
+/* Philosophy: replace an oversized empty cream area with an editorial image. */
+.bayona-atelier .atelier-manifesto {
+  background: #f4f0e8;
+  padding: clamp(96px, 10vw, 158px) 0;
+}
+.bayona-atelier .atelier-manifesto__grid {
+  display: grid;
+  grid-template-columns: minmax(115px,.44fr) minmax(0,1.75fr) minmax(285px,1.12fr);
+  align-items: start;
+  gap: clamp(25px, 3.7vw, 70px);
+}
+.bayona-atelier .atelier-manifesto__grid > .atelier-section-index { padding-top: 18px; }
+.bayona-atelier .atelier-manifesto h2 {
+  font-size: clamp(3.1rem,4.75vw,5.75rem);
+  line-height: 1.07;
+  letter-spacing: -.073em;
+}
+.bayona-atelier .atelier-manifesto h2 em { color: #b17e4f; }
+.bayona-atelier .atelier-manifesto__below { flex-direction: column; gap: 38px; margin-top: 42px; }
+.bayona-atelier .atelier-manifesto__below p { font-size: 1.02rem; line-height: 1.9; color: #5f5c56; max-width: 480px; }
+.bayona-atelier .atelier-manifesto__figure {
+  margin: 0;
+  min-height: 585px;
+  align-self: stretch;
+  position: relative;
+  border-top: 3px solid #c79a68;
+  overflow: hidden;
+  background: #837461;
+  box-shadow: 0 18px 42px rgba(34,27,22,.08);
+}
+.bayona-atelier .atelier-manifesto__figure::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg,transparent 66%,rgba(12,13,11,.73) 100%);
+  pointer-events: none;
+}
+.bayona-atelier .atelier-manifesto__figure img {
+  width: 100%; height: 100%; position: absolute; inset: 0;
+  object-fit: cover; object-position: 48% center;
+  filter: saturate(.72) contrast(1.035);
+  display: block;
+}
+.bayona-atelier .atelier-manifesto__figure figcaption {
+  position: absolute; bottom: 23px; left: 23px; right: 23px; z-index: 1;
+  color: #fff9ef; display: flex; flex-direction: column; gap: 6px;
+  font: 640 .6rem/1.4 'DM Mono',monospace; letter-spacing: .17em;
+}
+.bayona-atelier .atelier-manifesto__figure figcaption span:last-child { color: #e3c6a2; font-size: .55rem; }
+
+/* Wider cards, immediately fetched images, readable captions. */
+.bayona-atelier .atelier-experiences { padding: clamp(94px, 9vw, 140px) 0 clamp(110px, 10vw, 160px); background: #131512; }
+.bayona-atelier .atelier-experiences__head { margin: 67px 0 48px; }
+.bayona-atelier .atelier-experiences h2 { font-size: clamp(3.2rem, 5.5vw, 6.5rem); line-height: 1; }
+.bayona-atelier .atelier-experiences__grid { gap: clamp(15px, 2.1vw, 33px); }
+.bayona-atelier .atelier-experience__image {
+  aspect-ratio: 4/4.9; background: #3c3932;
+  border: 1px solid rgba(221,196,166,.17);
+}
+.bayona-atelier .atelier-experience__image img { filter: saturate(.82) contrast(1.035); }
+.bayona-atelier .atelier-experience h3 { font-size: clamp(2rem, 2.7vw, 3.2rem); }
+.bayona-atelier .atelier-experience__detail { padding-top: 30px; }
+.bayona-atelier .atelier-experience__detail > p {
+  font-size: .97rem; line-height: 1.75; color: #c5c5bb;
+}
+.bayona-atelier .atelier-experience__eyebrow { color: #d7aa79; }
+
+/* Method: warmer, more legible, credible coach imagery. */
+.bayona-atelier .atelier-method { background: #e8e2d8; }
+.bayona-atelier .atelier-method__photo {
+  inset: 0 0 0 51%;
+  background:
+    linear-gradient(90deg,#e8e2d8 0%,rgba(232,226,216,.76) 9%,rgba(232,226,216,.2) 60%,rgba(232,226,216,.06)),
+    url('/images/bayona-generated/programs-hero-1600.webp') center / cover no-repeat;
+  opacity: .72;
+  filter: saturate(.7);
+}
+.bayona-atelier .atelier-method__steps {
+  padding: 5px 31px 10px;
+  background: rgba(242,237,229,.87);
+  border: 1px solid rgba(175,154,131,.4);
+  box-shadow: 0 26px 76px rgba(40,32,24,.09);
+  backdrop-filter: blur(13px);
+}
+.bayona-atelier .atelier-method__step h3 { font-weight: 730; }
+
+/* Recolor the film archive to the same warm visual identity. */
+.bayona-atelier .bayona-real-archive { background: #101310; padding-block: clamp(94px, 9vw, 145px); }
+.bayona-atelier .bayona-real-archive::before { background: radial-gradient(ellipse, rgba(180,129,66,.11),transparent 70%); }
+.bayona-atelier .bayona-real-archive__intro h2 { font-size: clamp(3.2rem, 8.1vw, 8.8rem); }
+.bayona-atelier .bayona-real-archive__intro h2 em { color: #c0a485; font: 400 italic 1em/.9 Georgia,serif; letter-spacing: -.057em; }
+.bayona-atelier .bayona-real-archive__kicker, .bayona-atelier .bayona-real-archive__chapter { color: #c7a779; }
+.bayona-atelier .bayona-real-archive__frame { border-color: rgba(221,196,166,.3); }
+.bayona-atelier .bayona-real-archive__reels { gap: clamp(13px,1.7vw,29px); }
+.bayona-atelier .bayona-real-archive__frame img { filter: saturate(.78) contrast(1.05); }
+.bayona-atelier .bayona-real-archive__caption h3 { font-size: clamp(1.18rem,1.7vw,1.75rem); }
+
+/* Digital: make the app readable instead of a tiny dark tilted stamp. */
+.bayona-atelier .atelier-digital {
+  background: radial-gradient(ellipse at 77% 50%,rgba(145,109,68,.15),transparent 54%),#1b201c;
+}
+.bayona-atelier .atelier-digital__layout { min-height: 705px; }
+.bayona-atelier .atelier-digital__media { min-height: 590px; }
+.bayona-atelier .atelier-digital__orbit { border-color: rgba(212,176,128,.37); }
+.bayona-atelier .atelier-digital__device {
+  transform: rotate(-3deg);
+  width: min(69%, 345px);
+  border: 1px solid rgba(231,193,144,.52);
+  box-shadow: 0 38px 75px rgba(0,0,0,.46),0 0 55px rgba(212,158,91,.1);
+  padding: 9px;
+}
+.bayona-atelier .atelier-digital__device img {
+  filter: brightness(1.16) contrast(1.08);
+}
+.bayona-atelier .atelier-resources { background: #f3eee5; }
+.bayona-atelier .atelier-contact { background: radial-gradient(ellipse at 50% 35%,#25241e 0%,#12140f 56%,#0d0e0c); }
+.bayona-atelier .atelier-contact h2 { font-size: clamp(3.6rem,7vw,8.5rem); }
+
+@media (max-width: 1150px) {
+  .bayona-atelier .atelier-manifesto__grid {
+    grid-template-columns: minmax(0,1.35fr) minmax(0,1fr);
+    gap: clamp(30px, 4.3vw, 70px);
+  }
+  .bayona-atelier .atelier-manifesto__grid > .atelier-section-index { grid-column: 1/-1; flex-direction: row; padding: 0; }
+  .bayona-atelier .atelier-manifesto h2 { font-size: clamp(3rem, 5.2vw, 5.25rem); }
+  .bayona-atelier .atelier-manifesto__figure { min-height: 570px; }
+  .bayona-atelier .atelier-hero__signature { right: 3vw; }
+  .bayona-atelier .atelier-hero h1 { font-size: clamp(5rem,8vw,7.7rem); }
+}
+@media (max-width: 760px) {
+  .bayona-atelier .atelier-frame { width: calc(100% - 46px); }
+  .bayona-atelier .atelier-hero {
+    min-height: 795px;
+    min-height: max(770px, 100svh);
+    max-height: none;
+  }
+  .bayona-atelier .atelier-hero__photo {
+    inset: 65px 0 35% 0;
+    background-position: 64% 43%;
+    background-size: cover;
+    filter: saturate(.9) contrast(1.04);
+  }
+  .bayona-atelier .atelier-hero__shade {
+    background:
+      linear-gradient(180deg,
+        rgba(12,15,12,.20) 0%,
+        rgba(12,15,12,.06) 19%,
+        rgba(12,15,12,.21) 37%,
+        rgba(12,15,12,.81) 55%,
+        #0e100e 75%,
+        #0e100e 100%),
+      linear-gradient(90deg,rgba(12,15,12,.23),transparent 76%);
+  }
+  .bayona-atelier .atelier-hero__prelude { padding-top: 98px; }
+  .bayona-atelier .atelier-hero__prelude .atelier-kicker { font-size: .56rem; letter-spacing: .115em; }
+  .bayona-atelier .atelier-hero__statement { flex: 1; justify-content: flex-end; padding: 190px 0 28px; max-width: none; }
+  .bayona-atelier .atelier-hero__eyebrow { font-size: .58rem; line-height: 1.6; margin: 0 0 19px; max-width: 290px; letter-spacing: .12em; }
+  .bayona-atelier .atelier-hero h1 { font-size: clamp(3.7rem, 12.65vw, 6.5rem); line-height: .98; letter-spacing: -.087em; }
+  .bayona-atelier .atelier-hero h1 em { white-space: normal; }
+  .bayona-atelier .atelier-hero__summary { font-size: 1.02rem; line-height: 1.68; margin-top: 25px; max-width: 365px; color: #efe8db; }
+  .bayona-atelier .atelier-hero__actions { margin-top: 29px; gap: 19px; align-items: flex-start; }
+  .bayona-atelier .atelier-hero__actions .atelier-button { min-height: 54px; }
+  .bayona-atelier .atelier-hero__signature { display: none; }
+  .bayona-atelier .atelier-hero__foot { padding: 17px 0 25px; }
+  .bayona-atelier .atelier-manifesto { padding: 98px 0; }
+  .bayona-atelier .atelier-manifesto__grid { grid-template-columns: minmax(0,1fr); gap: 35px; }
+  .bayona-atelier .atelier-manifesto__grid > .atelier-section-index { grid-column: 1; }
+  .bayona-atelier .atelier-manifesto h2 { font-size: clamp(2.7rem, 10.1vw, 5rem); line-height: 1.08; }
+  .bayona-atelier .atelier-manifesto__below { margin-top: 31px; }
+  .bayona-atelier .atelier-manifesto__figure { min-height: 390px; aspect-ratio: 4/3.9; }
+  .bayona-atelier .atelier-experiences { padding: 94px 0 110px; }
+  .bayona-atelier .atelier-experiences h2 { font-size: clamp(2.75rem, 9vw, 4.7rem); }
+  .bayona-atelier .atelier-experiences__grid { grid-template-columns: 1fr; gap: 48px; }
+  .bayona-atelier .atelier-experience__image { aspect-ratio: 4/4.4; }
+  .bayona-atelier .atelier-experience h3 { font-size: clamp(2.18rem,8vw,3rem); }
+  .bayona-atelier .atelier-method__photo { inset: 0; background-position: center 48%; opacity: .24; }
+  .bayona-atelier .atelier-method__steps { padding: 0 22px 10px; }
+  .bayona-atelier .bayona-real-archive__intro h2 { font-size: clamp(3rem, 11vw, 5.5rem); }
+  .bayona-atelier .bayona-real-archive__reels { gap: 12px; }
+  .bayona-atelier .atelier-digital__device { width: min(67%, 305px); }
+  .bayona-atelier .atelier-contact h2 { font-size: clamp(3.1rem,10.8vw,5.7rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bayona-atelier .atelier-hero__photo,
+  .bayona-atelier .atelier-experience__image img { animation: none; transition: none; }
+}
+
+/* Language switch: small international edition marker, not a banner. */
+body.bayona-luxury-active .translate-offer {
+  top: 87px;
+  right: clamp(22px, 4.5vw, 76px);
+  border: 1px solid rgba(227,191,143,.24);
+  border-radius: 1px;
+  background: rgba(17,19,16,.78);
+  backdrop-filter: blur(9px);
+  max-width: 105px;
+}
+body.bayona-luxury-active .translate-offer-action {
+  background: transparent;
+  padding: 4px 8px;
+  line-height: 1.6;
+}
+body.bayona-luxury-active .translate-offer-action .translate-offer-label {
+  position: absolute;
+  width: 1px; height: 1px; padding: 0;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+body.bayona-luxury-active .translate-offer-action .translate-offer-code {
+  display: inline;
+  color: #e7bf8b;
+  font: 700 .72rem/1.4 'DM Mono',monospace;
+  letter-spacing: .12em;
+}
+@media(max-width:950px) {
+  body.bayona-luxury-active .translate-offer {
+    top: 73px;
+    right: 8px;
+    padding: 0;
+    border: 0;
+    background: rgba(17,19,16,.86);
+  }
+  body.bayona-luxury-active .translate-offer-action {
+    border: 1px solid rgba(227,191,143,.25);
+    min-width: 36px;
+    min-height: 29px;
+  }
+  body.bayona-luxury-active .translate-offer-action::after { content: none; }
+}
