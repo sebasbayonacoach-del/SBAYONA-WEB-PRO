@@ -19,6 +19,7 @@ import TranslateOffer from './components/TranslateOffer.jsx'
 import { BAYONA_APP_ENTRY_URL } from './config/bayonaAppIntegration.js'
 import Home from './pages/HomeAtelier'
 import JourneyGuide from './components/journey/JourneyGuide.jsx'
+import { StudioJourneyHeader, StudioJourneyOutro } from './components/journey/StudioJourney.jsx'
 import CinematicGlobalChapters from './components/experience/CinematicGlobalChapters.jsx'
 import CoachGuidedVisit from './components/experience/CoachGuidedVisit.jsx'
 import { JourneyExperienceProvider } from './components/experience/JourneyExperienceContext.jsx'
@@ -231,6 +232,7 @@ function Site() {
             en home, recepción ni internas. Ver Breadcrumb.jsx.
           */}
           <Breadcrumb />
+          {showEditorialChrome ? <StudioJourneyHeader /> : null}
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -263,6 +265,7 @@ function Site() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
+          {showEditorialChrome ? <StudioJourneyOutro /> : null}
           {/*
             Cierre del recorrido: anuncia la siguiente parada. Montado aquí una
             sola vez, así las 9 páginas del itinerario lo reciben sin tocar su

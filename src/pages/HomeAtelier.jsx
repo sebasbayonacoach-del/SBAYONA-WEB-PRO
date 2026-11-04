@@ -81,10 +81,10 @@ export default function HomeAtelier() {
             <h1 id="atelier-hero-title">EL ARTE<br /><em>DE MOVERTE.</em></h1>
             <p className="atelier-hero__summary">Fuerza. Técnica. Libertad. Entrenamiento personalizado para convertir cada movimiento en una nueva posibilidad.</p>
             <div className="atelier-hero__actions">
-              <a className="atelier-button atelier-button--light" href="#experiencias" onClick={() => trackEvent('luxury_discover_click', { source: 'home_hero' })}>
-                DESCUBRE TU CAMINO <ArrowUpRight size={17} strokeWidth={1.6} aria-hidden="true" />
-              </a>
-              <a className="atelier-text-link" href="#metodo">CONOCE EL MÉTODO <ArrowDownRight size={17} strokeWidth={1.5} aria-hidden="true" /></a>
+              <Link className="atelier-button atelier-button--light" to="/about" onClick={() => trackEvent('studio_journey_start', { source: 'home_hero' })}>
+                EMPIEZA EL RECORRIDO <ArrowUpRight size={17} strokeWidth={1.6} aria-hidden="true" />
+              </Link>
+              <a className="atelier-text-link" href="#empieza">QUIERO EMPEZAR A ENTRENAR <ArrowDownRight size={17} strokeWidth={1.5} aria-hidden="true" /></a>
             </div>
           </div>
           <div className="atelier-hero__foot">
