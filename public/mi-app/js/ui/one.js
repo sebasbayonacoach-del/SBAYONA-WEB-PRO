@@ -75,7 +75,7 @@ function ensureEditionMark() {
   const brand = document.querySelector("#topbar .brand");
   if (!brand || brand.querySelector(".one-edition")) return;
   const mark = n("span", "one-edition", "ONE");
-  mark.title = "BAYONA ONE · sistema integrado";
+  mark.title = "SB+ · sistema integrado";
   brand.append(mark);
 }
 
@@ -259,7 +259,7 @@ function renderCloudCoachState(body) {
   head.append(title, stateTag);
   box.append(head);
 
-  const status = n("p", "one-panel-copy", "Comprobando el servicio BAYONA…");
+  const status = n("p", "one-panel-copy", "Comprobando el servicio SB+…");
   box.append(status);
 
   const manage = btn("GESTIONAR CUENTA Y VÍNCULOS →", "one-action", () => openSection("account"));

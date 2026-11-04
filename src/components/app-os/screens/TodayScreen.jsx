@@ -219,7 +219,7 @@ export function TodayScreen({ data, dateLabel }) {
             <small>Gratuita: no necesita plan ni cuenta.</small>
           </article>
           <article>
-            <span>BAYONA+</span>
+            <span>SB+</span>
             <strong>{plusLabel}</strong>
             <small>La app está en preparación: aquí verás tu acceso cuando exista.</small>
           </article>
@@ -254,7 +254,7 @@ export function TodayScreen({ data, dateLabel }) {
           ))}
         </ul>
         <p className="os-locked__foot">
-          El acceso anticipado a BAYONA+ está publicado como beneficio de RENDIMIENTO y, por
+          El acceso anticipado a SB+ está publicado como beneficio de RENDIMIENTO y, por
           herencia, de ELITE. Ninguna de estas funciones se ha entregado todavía.
         </p>
         <Link className="os-cta os-cta--ghost" to="/programs">COMPARAR PLANES</Link>

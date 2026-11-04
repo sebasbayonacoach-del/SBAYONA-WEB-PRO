@@ -73,7 +73,7 @@ function renderCartera(body) {
   const head = el("div", "card shine");
   head.innerHTML = `
     <div class="card-row">
-      <h4>BAYONA COACH OS</h4>
+      <h4>SB+ COACH STUDIO</h4>
       <span class="pill gold">CENTRO DE MANDO</span>
     </div>
     <div class="mc-title" style="margin-top:8px">${esc(kpi.activos)} CLIENTES ACTIVOS</div>

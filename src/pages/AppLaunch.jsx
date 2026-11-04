@@ -113,7 +113,7 @@ export default function AppLaunch(){
         <div className="bayona-launch__install-art" aria-hidden="true">
           <div className="bayona-launch__install-halo"/>
           <div className="bayona-launch__install-number">B/</div>
-          <div className="bayona-launch__install-device"><img src={BAYONA_APP_MOBILE_IMAGE} width="390" height="480" loading="lazy" decoding="async" alt=""/></div>
+          <div className="bayona-launch__install-device"><img src={BAYONA_APP_MOBILE_IMAGE} width="390" height="539" loading="lazy" decoding="async" alt=""/></div>
           <span className="bayona-launch__install-serial">SEBASTIAN BAYONA / WEB APP / 2026</span>
         </div>
       </div>

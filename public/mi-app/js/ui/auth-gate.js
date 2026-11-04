@@ -415,10 +415,10 @@ function messageHtml() {
 function authForm() {
   const signup = state.mode === "signup";
   return `
-    <section class="auth-card" aria-label="${signup ? "Crear cuenta BAYONA" : "Entrar a BAYONA"}">
+    <section class="auth-card" aria-label="${signup ? "Crear cuenta SB+" : "Entrar a SB+"}">
       ${authHeader(
         signup ? "NUEVA CUENTA" : "BIENVENIDO DE VUELTA",
-        signup ? "Crea tu BAYONA." : "Continúa donde lo dejaste.",
+        signup ? "Crea tu espacio en SB+." : "Continúa donde lo dejaste.",
         signup
           ? "Tu cuenta guarda tu identidad. El perfil se completa después, en menos de un minuto."
           : "Tu progreso, rutinas y espacio vuelven contigo."
@@ -431,7 +431,7 @@ function authForm() {
       <form id="auth-form" novalidate>
         ${signup ? `
           <label class="auth-field"><span>Nombre</span><input id="auth-name" name="name" autocomplete="name" maxlength="40" value="${esc(state.pendingName)}" placeholder="Cómo quieres que te llamemos"></label>
-          <p class="auth-entry-note">Tu espacio personal. Coach Studio está reservado al propietario de BAYONA.</p>
+          <p class="auth-entry-note">Tu espacio personal. Coach Studio está reservado al entrenador responsable de SEBASTIAN BAYONA.</p>
         ` : ""}
         <label class="auth-field"><span>Email</span><input id="auth-email" name="email" type="email" autocomplete="email" inputmode="email" value="${esc(state.pendingEmail)}" placeholder="tu@email.com"></label>
         <label class="auth-field"><span>Contraseña</span><input id="auth-password" name="password" type="password" autocomplete="${signup ? "new-password" : "current-password"}" minlength="8" placeholder="Mínimo 8 caracteres"></label>
@@ -512,7 +512,7 @@ function profileView() {
   return `
     <section class="auth-card auth-profile-card">
       ${profileProgress(step, total)}
-      ${authHeader("TU SEMANA", "Haz que BAYONA quepa en tu vida.", "Elige una frecuencia y una duración realistas. El sistema podrá adaptarlas después.")}
+      ${authHeader("TU SEMANA", "Construye tu semana con SB+.", "Elige una frecuencia y una duración realistas. El sistema podrá adaptarlas después.")}
       <div class="auth-section-label">DÍAS POR SEMANA</div>
       <div class="auth-number-grid">
         ${FREQUENCIES.map(([value]) => `<button type="button" data-profile-frequency="${value}" class="${Number(p.frequency) === value ? "is-active" : ""}"><b>${value}</b><span>días</span></button>`).join("")}
@@ -526,7 +526,7 @@ function profileView() {
         <span><small>RITMO</small><strong>${esc(String(p.frequency))} días · ${esc(String(p.minutes))} min</strong></span>
       </div>
       ${messageHtml()}
-      <div class="auth-step-actions"><button class="auth-secondary" type="button" data-profile-back>ATRÁS</button><button class="auth-primary" type="button" data-profile-finish ${state.busy ? "disabled" : ""}>${state.busy ? "CREANDO TU ESPACIO…" : "ENTRAR A BAYONA"}</button></div>
+      <div class="auth-step-actions"><button class="auth-secondary" type="button" data-profile-back>ATRÁS</button><button class="auth-primary" type="button" data-profile-finish ${state.busy ? "disabled" : ""}>${state.busy ? "CREANDO TU ESPACIO…" : "ENTRAR A SB+"}</button></div>
       <p class="auth-progressive-note">Después te pediremos seguridad, permisos o datos de salud solo cuando una función realmente los necesite.</p>
     </section>`;
 }
@@ -549,7 +549,7 @@ function migrateView() {
   return `
     <section class="auth-card auth-center">
       <div class="auth-big-mark">↗</div>
-      ${authHeader("PROGRESO ENCONTRADO", "¿Este progreso es tuyo?", "Encontramos una versión de BAYONA usada antes de crear esta cuenta. No la vincularemos sin tu permiso.")}
+      ${authHeader("PROGRESO ENCONTRADO", "¿Este progreso es tuyo?", "Encontramos una versión anterior de SB+ usada antes de crear esta cuenta. No la vincularemos sin tu permiso.")}
       <div class="auth-legacy-summary">
         <span><small>PERFIL</small><strong>${esc(name)}</strong></span>
         <span><small>ENTRENOS</small><strong>${esc(String(workouts))}</strong></span>
@@ -595,7 +595,7 @@ function offlineView() {
   return `
     <section class="auth-card auth-center">
       <div class="auth-big-mark">⌁</div>
-      ${authHeader("SIN CONEXIÓN", "BAYONA sigue aquí.", "No pudimos contactar con la nube. Si ya tienes progreso en este teléfono puedes continuar; para crear una cuenta necesitamos conexión.")}
+      ${authHeader("SIN CONEXIÓN", "SB+ sigue aquí.", "No pudimos contactar con la nube. Si ya tienes progreso en este teléfono puedes continuar; para crear una cuenta necesitamos conexión.")}
       ${legacyProgress() ? '<button class="auth-primary" type="button" data-auth-action="local">CONTINUAR EN ESTE DISPOSITIVO</button>' : ""}
       <button class="auth-secondary" type="button" data-auth-action="retry">REINTENTAR</button>
     </section>`;
@@ -603,9 +603,9 @@ function offlineView() {
 
 function splashView() {
   return `
-    <div class="auth-splash" aria-label="BAYONA">
+    <div class="auth-splash" aria-label="SEBASTIAN BAYONA">
       <div class="auth-splash-mark"><i></i><span>◈</span></div>
-      <strong>BAYONA</strong>
+      <strong>SEBASTIAN BAYONA</strong>
       <small>DONDE LA CIENCIA SE ENCUENTRA CON EL MOVIMIENTO</small>
     </div>`;
 }
@@ -613,7 +613,7 @@ function splashView() {
 function shell(content) {
   return `
     <div class="auth-shell">
-      <div class="auth-brand"><span>◈</span><strong>BAYONA</strong><small>${esc(surface)}</small></div>
+      <div class="auth-brand"><span>◈</span><strong>SEBASTIAN BAYONA</strong><small>${esc(surface)}</small></div>
       <main class="auth-stage">${content}</main>
       <footer class="auth-footer"><span>UNA CUENTA · TU PROGRESO</span><span>PRIVACIDAD POR DISEÑO</span></footer>
     </div>`;
@@ -929,7 +929,7 @@ export async function launchAuthGate({ platform = "APP" } = {}) {
     root.id = "bayona-auth-gate";
     root.setAttribute("role", "dialog");
     root.setAttribute("aria-modal", "true");
-    root.setAttribute("aria-label", "Acceso a BAYONA");
+    root.setAttribute("aria-label", "Acceso a SB+");
     document.body.appendChild(root);
   }
 

@@ -216,7 +216,7 @@ export function montarLanding({ t, esc, onEntrar } = {}) {
     <nav id="luxe-nav" aria-label="${t("luxe.nav.aria")}">
       <a class="luxe-brand" href="#luxe-landing">
         <span class="luxe-brand-mark">◈</span>
-        <span class="luxe-brand-name">BAYONA</span>
+        <span class="luxe-brand-name">SEBASTIAN BAYONA</span>
       </a>
       <div class="luxe-nav-links">
         ${c.nav.map((n) => `<a href="${e(n.href)}">${e(n.label)}</a>`).join("")}
@@ -285,7 +285,7 @@ export function demoHTML(plan = "free") {
     <section class="luxe-demo-shell" id="luxe-demo-shell" aria-label="${t("demo.aria")}">
       <div class="luxe-demo-copy">
         <div class="luxe-label">VER CÓMO FUNCIONA</div>
-        <h2>Prueba BAYONA antes de entrar.</h2>
+        <h2>Descubre SB+ antes de entrar.</h2>
         <p>Cambia de plan, luz y zona. El teléfono te enseña qué puedes usar y qué puedes desbloquear.</p>
         <div class="luxe-demo-plan-tabs" role="group" aria-label="${t("demo.plan.aria")}">
           ${PLANS.map((id)=>`<button type="button" data-demo-plan="${id}" class="${id===plan?"on":""}">${PLAN_META[id].label}</button>`).join("")}
@@ -299,7 +299,7 @@ export function demoHTML(plan = "free") {
       </div>
       <div class="luxe-device-stage">
         <div class="luxe-device">
-          <div class="luxe-device-top"><i></i><span>9:41</span><b>BAYONA</b><em>●●●</em></div>
+          <div class="luxe-device-top"><i></i><span>9:41</span><b>SB+</b><em>●●●</em></div>
           <div class="luxe-device-screen" data-demo-surface="home"></div>
           <nav class="luxe-device-nav" aria-label="${t("demo.surfaces.aria")}">
             ${DEMO_SURFACES.map(([id,label])=>`<button type="button" data-demo-surface-btn="${id}" class="${id==="home"?"on":""}">${label}</button>`).join("")}

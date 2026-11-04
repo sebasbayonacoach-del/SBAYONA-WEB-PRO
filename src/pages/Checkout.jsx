@@ -116,7 +116,7 @@ export default function Checkout() {
   return (
     <>
       <section className="checkout-hero section-shell">
-        <SectionLabel>SERVICIOS BAYONA · TU MISIÓN</SectionLabel>
+        <SectionLabel>SEBASTIAN BAYONA · SOLICITUD PERSONAL</SectionLabel>
         <h1>PREPARA TU SOLICITUD.</h1>
         {testReturn && (
           <p role="status" className="checkout-stripe-return" data-testid="stripe-return-status">

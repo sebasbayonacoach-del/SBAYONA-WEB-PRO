@@ -3,7 +3,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useCartStore } from '../store/cartStore.js'
-import { shopCategoryFilters, shopProducts } from '../config/shopProducts.js'
+import { shopCategoryFilters, shopCollections, shopProducts } from '../config/shopProducts.js'
 import Shop from './Shop.jsx'
 
 vi.mock('framer-motion', () => {
@@ -70,38 +70,51 @@ describe('/shop — tienda de producto Gym Funnel V2', () => {
     expect(screen.getByRole('group', { name: 'Por colección' })).toBeInTheDocument()
   })
 
-  it('muestra fotografía de producto en todas las fichas que tienen media', () => {
-    const { container } = renderShop()
-    const cards = [...container.querySelectorAll('[data-product-id]')]
+  // La portada muestra una selección editorial (hasta 8 por colección).
+  // Verificamos que cada colección permite acceder a su catálogo COMPLETO.
+  function visitFullCollection(verify) {
+    renderShop()
+    const found = new Set()
+    for (const collection of shopCollections) {
+      const group = document.querySelector(`#collection-${collection.id}-title`)?.closest('.shop-product-collection')
+      expect(group, collection.id).not.toBeNull()
+      fireEvent.click(within(group).getByRole('button', { name: /VER TODO/i }))
+      const cards = [...document.querySelectorAll('[data-product-id]')]
+      const expected = shopProducts.filter((product) => product.collectionId === collection.id)
+      expect(cards, collection.id).toHaveLength(expected.length)
+      expected.forEach((product) => {
+        const card = cards.find((node) => node.dataset.productId === product.id)
+        expect(card, product.id).toBeDefined()
+        verify(card, product)
+        found.add(product.id)
+      })
+      fireEvent.click(screen.getByRole('button', { name: /Limpiar filtros/i }))
+    }
+    expect(found.size).toBe(shopProducts.length)
+  }
 
-    expect(cards).toHaveLength(shopProducts.length)
-
-    for (const product of shopProducts) {
-      const card = cards.find((node) => node.dataset.productId === product.id)
-      expect(card).toBeDefined()
+  it('muestra fotografía de producto en todas las colecciones completas', () => {
+    visitFullCollection((card, product) => {
       expect(card).toHaveTextContent(product.name)
       expect(card).toHaveTextContent(/COP/)
-
       if (product.media) {
         const image = card.querySelector('.shop-product-image')
         expect(image).not.toBeNull()
         expect(image).toHaveAttribute('src', product.media.src)
       }
-    }
+    })
   })
 
-  it('expone un WhatsApp propio por producto con el número oficial', () => {
-    renderShop()
-
-    const productLinks = [...document.querySelectorAll('a[data-shop-product]')]
-    expect(new Set(productLinks.map((link) => link.dataset.shopProduct)).size).toBe(shopProducts.length)
-
-    for (const link of productLinks) {
+  it('expone un WhatsApp oficial para cada producto de todas las colecciones', () => {
+    visitFullCollection((card, product) => {
+      const link = card.querySelector('a[data-shop-product]')
+      expect(link, product.id).not.toBeNull()
+      expect(link.dataset.shopProduct).toBe(product.id)
       const url = new URL(link.getAttribute('href'))
       expect(url.origin).toBe('https://wa.me')
       expect(url.pathname).toBe('/34641698332')
       expect(url.searchParams.get('text').length).toBeGreaterThan(0)
-    }
+    })
   })
 
   it('permite filtrar y buscar productos', () => {

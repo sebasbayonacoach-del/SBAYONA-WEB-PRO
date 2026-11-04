@@ -14,7 +14,7 @@ const canonicalById = new Map(shopProducts.map((item) => [item.id, item]))
 
 export function buildCatalogItemWhatsAppUrl(item) {
   return buildWhatsAppUrl([
-    `Hola BAYONA, quiero consultar el artículo ${item.name} (${item.code}).`,
+    `Hola, equipo de SEBASTIAN BAYONA. Quisiera consultar el artículo ${item.name} (${item.code}).`,
     '¿Podéis confirmarme el precio, la disponibilidad, los detalles y las condiciones vigentes?',
   ].join('\n'))
 }

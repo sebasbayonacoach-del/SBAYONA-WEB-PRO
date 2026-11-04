@@ -8,7 +8,7 @@ const previews = {
   desktop: {
     label: 'Vista escritorio',
     caption: 'ACCESO / VISTA ESCRITORIO',
-    image: '/images/bayona-live-app/role-selection-20261009.png',
+    image: '/images/sb-plus/role-selection-desktop-20261104.png',
     alt: 'Captura real de la pantalla de acceso de SB+ con perfiles de atleta y Coach Studio, vista escritorio.',
     width: 1365,
     height: 900,
@@ -18,10 +18,10 @@ const previews = {
   mobile: {
     label: 'Vista móvil',
     caption: 'ACCESO / VISTA MÓVIL',
-    image: '/images/bayona-live-app/role-picker-mobile-crop-20261009.png',
+    image: '/images/sb-plus/role-picker-mobile-20261104.png',
     alt: 'Captura real del selector de perfil de SB+ en formato móvil.',
     width: 390,
-    height: 480,
+    height: 539,
     heading: 'Tu espacio, también en móvil.',
     summary: 'El acceso a tu espacio se adapta a una pantalla compacta.',
   },

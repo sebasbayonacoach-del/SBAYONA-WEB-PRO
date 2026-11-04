@@ -68,7 +68,7 @@ export const shopCollections = Object.freeze([
 const collectionById = new Map(shopCollections.map((collection) => [collection.id, collection]))
 
 function buildShopWhatsAppUrl(product) {
-  const message = `Hola BAYONA, quiero ${product.name} (${product.priceDisplay})`
+  const message = `Hola, equipo de SEBASTIAN BAYONA. Quisiera consultar ${product.name} (${product.priceDisplay})`
   return whatsAppLink(message)
 }
 

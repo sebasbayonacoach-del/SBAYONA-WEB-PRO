@@ -48,10 +48,10 @@ describe('BAYONA OS · arranque y shell', () => {
 
   it('ofrece el acceso a BAYONA App real sin confundir las dos sesiones', async () => {
     await renderReady()
-    const link = screen.getByRole('link', { name: /Abrir BAYONA App · Mi App \/ Coach Studio/i })
-    expect(link).toHaveAttribute('href', 'https://bayona-app-one.vercel.app/?source=pwa')
-    expect(link).toHaveAttribute('target', '_blank')
-    expect(screen.getByText(/los datos de este panel no se transfieren automáticamente/i)).toBeInTheDocument()
+    const link = screen.getByRole('link', { name: /Abrir SB\+ · Mi App \/ Coach Studio/i })
+    expect(link).toHaveAttribute('href', '/mi-app/index.html?source=pwa')
+    expect(link).not.toHaveAttribute('target', '_blank')
+    expect(screen.getByText(/La aplicación completa está integrada en SEBASTIAN BAYONA/i)).toBeInTheDocument()
   })
 
   it('declara el estado del producto en todo el panel', async () => {

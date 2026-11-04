@@ -752,3 +752,27 @@ body.fitness-app #bayona-auth-gate .auth-text-button {
   align-items: center;
   padding: 0 2px;
 }
+
+/* 2026-11-04 / SEBASTIAN BAYONA — unify the real sign-in with the public studio. */
+#bayona-auth-gate { background: radial-gradient(circle at 77% 13%, rgba(208,164,117,.115), transparent 29rem), radial-gradient(circle at 12% 85%, rgba(82,104,84,.11), transparent 28rem), #101310; }
+#bayona-auth-gate .auth-brand > span { color: #dcb48a; }
+#bayona-auth-gate .auth-brand > strong { color: #f3ebde; letter-spacing:.1em; font-size: clamp(12px,1.45vw,17px); white-space:normal; line-height:1.15; }
+#bayona-auth-gate .auth-primary { background: #e4bd8e; border-color:#e4bd8e; color:#141713; }
+#bayona-auth-gate .auth-primary:hover { background: #f3d5ac; border-color:#f3d5ac; }
+#bayona-auth-gate .auth-card { border-color: rgba(228,189,142,.2); background:linear-gradient(150deg,rgba(225,195,154,.035),rgba(255,255,255,.005)),#111511; }
+
+/* 2026-11-04 / SB+ real role selector — editorial palette continuity */
+body.fitness-app #entry .e-title em { color: #dcb58a !important; text-decoration-color:#dcb58a !important; }
+body.fitness-app #entry .e-kicker,
+body.fitness-app #entry .e-role-topline small,
+body.fitness-app #entry .e-app-status > i,
+body.fitness-app #entry .e-entry-proof b,
+body.fitness-app #entry .brand-mark { color:#dcb58a !important; }
+body.fitness-app #entry .e-role-card { border-color:rgba(220,181,138,.23) !important; }
+body.fitness-app #entry .e-role-card:hover,
+body.fitness-app #entry .e-role-card:focus-visible { border-color:rgba(220,181,138,.72) !important; box-shadow:0 14px 38px rgba(0,0,0,.26); }
+body.fitness-app #entry .brand-name { letter-spacing:.12em; font-size: clamp(11px, 1.1vw, 15px); }
+body.fitness-app #entry .e-role-body > b { color:#dcb58a !important; }
+body.fitness-app #entry .e-app-shell { border-color:rgba(220,181,138,.17); }
+@media(max-width:600px) { body.fitness-app #entry .brand-name { font-size:11px; letter-spacing:.11em; } }
+@media(prefers-reduced-motion:reduce) { body.fitness-app #entry .e-app-shell * { animation-duration: .01ms !important; } }

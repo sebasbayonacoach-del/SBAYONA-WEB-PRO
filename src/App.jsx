@@ -59,9 +59,9 @@ function IntegratedAppRedirect() {
   }, [])
 
   return (
-    <section className="app-entry-loading" role="status" aria-live="polite" aria-label="Abriendo BAYONA App">
+    <section className="app-entry-loading" role="status" aria-live="polite" aria-label="Abriendo SB+">
       <div className="app-entry-loading__panel">
-        <p className="app-entry-loading__eyebrow">BAYONA APP · UNA SOLA CUENTA</p>
+        <p className="app-entry-loading__eyebrow">SB+ · UNA SOLA CUENTA</p>
         <h1>Abriendo Mi App.</h1>
         <p>Entrenamiento, progreso y Coach Studio viven ahora en el producto integrado.</p>
         <a className="app-primary-cta" href={BAYONA_APP_ENTRY_URL}>CONTINUAR A MI APP</a>

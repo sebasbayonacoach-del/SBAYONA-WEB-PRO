@@ -35,7 +35,7 @@ export default function AppBridgeCinematic(){
    <div className="bayona-app-bridge__visual" aria-hidden="true">
     <div className="bayona-app-bridge__ring"/>
     <div className="bayona-app-bridge__phone"><div className="bayona-app-bridge__phone-top"><MonitorSmartphone size={15}/> BAYONA / TU ESPACIO</div>
-     <img src={BAYONA_APP_MOBILE_IMAGE} width="390" height="480" loading="lazy" decoding="async" alt=""/>
+     <img src={BAYONA_APP_MOBILE_IMAGE} width="390" height="539" loading="lazy" decoding="async" alt=""/>
     </div>
     <span className="bayona-app-bridge__serial">B/ PRIME · CONTINÚA</span>
    </div>

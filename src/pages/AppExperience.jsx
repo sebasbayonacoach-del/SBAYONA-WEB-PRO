@@ -433,7 +433,7 @@ function AppSectionNumber({ children }) {
  * Área de miembros (Fase 2 SaaS).
  *
  * Sin proveedor de auth (tests del concepto, render directo) devuelve invitado
- * y la página muestra el concepto BAYONA+ como antes: el contrato honesto de
+ * y la página muestra el concepto SB+ como antes: el contrato honesto de
  * abajo no cambia. Con sesión (ruta /app protegida por RequireAuth) muestra
  * el panel del miembro: saludo, insignia del plan y los tres bloques.
  */
@@ -653,7 +653,7 @@ export default function AppExperience({ publicOnly = false }) {
           <AppShowcaseLayer />
         </Suspense>
         <div className="app-hero-content">
-          <p className="app-eyebrow">BAYONA APP <span aria-hidden="true">•</span> DOS ESPACIOS DE ACCESO</p>
+          <p className="app-eyebrow">SB+ / APP <span aria-hidden="true">•</span> DOS ESPACIOS DE ACCESO</p>
           <h1 id="app-hero-title" className="app-hero-title">
             <span className="app-hero-line">ENTRENAMIENTO.</span>
             {' '}
@@ -662,7 +662,7 @@ export default function AppExperience({ publicOnly = false }) {
             <span className="app-hero-line">UN MISMO LUGAR.</span>
           </h1>
           <p className="app-hero-subtitle">
-            BAYONA App ya vive dentro de este mismo ecosistema. Entra en Mi App para entrenar y seguir tu proceso; Coach Studio queda reservado a la cuenta autorizada de entrenador.
+            SB+ App ya vive dentro de este mismo ecosistema. Entra en Mi App para entrenar y seguir tu proceso; Coach Studio queda reservado a la cuenta autorizada de entrenador.
           </p>
           <div className="app-hero-cta">
             <a
@@ -678,7 +678,7 @@ export default function AppExperience({ publicOnly = false }) {
             </a>
           </div>
         </div>
-        <a className="app-scroll-indicator" href="#vision" aria-label="Ir al concepto de BAYONA+">
+        <a className="app-scroll-indicator" href="#vision" aria-label="Ir al concepto de SB+">
           <span className="app-scroll-line" />
           <ChevronDown size={14} strokeWidth={1} aria-hidden="true" />
         </a>
@@ -699,7 +699,7 @@ export default function AppExperience({ publicOnly = false }) {
             </p>
           </header>
           <VideoSection
-            title="BAYONA+: CONCEPTO EN 90 SEGUNDOS"
+            title="SB+: CONCEPTO EN 90 SEGUNDOS"
             subtitle="Sebastián presenta la dirección del producto, las funciones que se exploran y lo que aún está por definir."
             poster={siteMedia.app.hero.src}
             duration="90 SEG"
@@ -736,7 +736,7 @@ export default function AppExperience({ publicOnly = false }) {
             <SectionLabel>02 / FUNCIONES EN EXPLORACIÓN</SectionLabel>
             <h2 id="app-features-title" className="app-section-title">POSIBLES MÓDULOS.<br /> <span>NO FUNCIONES CONFIRMADAS.</span></h2>
           </header>
-          <div className="app-features-grid app-reveal-stagger" role="list" aria-label="Funciones conceptuales en evaluación para BAYONA+">
+          <div className="app-features-grid app-reveal-stagger" role="list" aria-label="Funciones conceptuales en evaluación para SB+">
             {APP_FEATURES.map((feature, index) => (
               <article
                 {...sceneBackgroundProps(
@@ -786,7 +786,7 @@ export default function AppExperience({ publicOnly = false }) {
             <p className="app-section-subtitle">Teléfono, escritorio, tablet y reloj ilustran una posible experiencia. No confirman dispositivos compatibles, integraciones ni funciones finales.</p>
           </header>
 
-          <div className="app-device-stage app-mockup-container" role="group" aria-label="Mockups conceptuales de BAYONA+ en teléfono, tablet y reloj">
+          <div className="app-device-stage app-mockup-container" role="group" aria-label="Mockups conceptuales de SB+ en teléfono, tablet y reloj">
             <figure className="app-device app-device-phone" aria-labelledby="app-phone-caption">
               <figcaption id="app-phone-caption">
                 <Smartphone size={16} strokeWidth={1} aria-hidden="true" /> TU DÍA A DÍA
@@ -801,7 +801,7 @@ export default function AppExperience({ publicOnly = false }) {
                 <div className="app-phone-side-controls app-phone-side-controls-right" data-phone-part="side-controls" aria-hidden="true">
                   <span data-phone-control="power" />
                 </div>
-                <div className="app-phone-shell" data-phone-part="frame" aria-label="BAYONA+ para teléfono">
+                <div className="app-phone-shell" data-phone-part="frame" aria-label="SB+ para teléfono">
                   <div className="app-phone-bezel" data-phone-part="bezel">
                     <div className="app-phone-sensor" data-phone-part="camera-sensor" aria-hidden="true">
                       <span className="app-phone-camera" />
@@ -809,7 +809,7 @@ export default function AppExperience({ publicOnly = false }) {
                     </div>
                     <div className="app-device-screen app-phone-screen" data-phone-part="screen">
                       <header className="app-phone-status">
-                        <p className="app-screen-brand">BAYONA+</p>
+                        <p className="app-screen-brand">SB+</p>
                         <span>HOY / TU PLAN</span>
                       </header>
                       <section className="app-phone-dashboard" aria-labelledby="app-phone-dashboard-title">
@@ -817,7 +817,7 @@ export default function AppExperience({ publicOnly = false }) {
                           <span>TU DÍA A DÍA</span>
                           <h3 id="app-phone-dashboard-title">Tu cuerpo. Tu dirección.</h3>
                         </div>
-                        <div className="app-phone-modules" role="list" aria-label="Módulos de tu día con BAYONA+">
+                        <div className="app-phone-modules" role="list" aria-label="Módulos de tu día con SB+">
                           {PHONE_MODULES.map((module) => (
                             <article className="app-phone-module" role="listitem" key={module.title}>
                               <h4>{module.title}</h4>
@@ -837,10 +837,10 @@ export default function AppExperience({ publicOnly = false }) {
               <figcaption id="app-tablet-caption">
                 <Tablet size={16} strokeWidth={1} aria-hidden="true" /> TU SEMANA COMPLETA
               </figcaption>
-              <div className="app-device-frame" aria-label="BAYONA+ para tablet">
+              <div className="app-device-frame" aria-label="SB+ para tablet">
                 <div className="app-device-screen">
                   <div className="app-tablet-header">
-                    <p className="app-screen-brand">BAYONA+</p>
+                    <p className="app-screen-brand">SB+</p>
                     <span className="app-screen-meta">SEMANA 08</span>
                   </div>
                   <h3>Todo tu progreso,<br /><em>en perspectiva.</em></h3>
@@ -857,9 +857,9 @@ export default function AppExperience({ publicOnly = false }) {
                 <Watch size={16} strokeWidth={1} aria-hidden="true" /> CONCEPTO PARA RELOJ
               </figcaption>
               <div className="app-watch-strap" aria-hidden="true" />
-              <div className="app-device-frame" aria-label="Mockup conceptual de BAYONA+ para reloj">
+              <div className="app-device-frame" aria-label="Mockup conceptual de SB+ para reloj">
                 <div className="app-device-screen">
-                  <p className="app-screen-brand">BAYONA+</p>
+                  <p className="app-screen-brand">SB+</p>
                   <span className="app-watch-pulse" aria-hidden="true" />
                   <strong>ESTADO —</strong>
                   <small>MÉTRICA POR DEFINIR</small>
@@ -875,15 +875,15 @@ export default function AppExperience({ publicOnly = false }) {
             arriba porque el collage se posiciona en absoluto a partir de 760 px
             y meter un cuarto dispositivo dentro desordenaba el conjunto.
           */}
-          <div className="app-device-flat" role="group" aria-label="Maqueta de escritorio y pase de acceso prioritario de BAYONA+">
+          <div className="app-device-flat" role="group" aria-label="Maqueta de escritorio y pase de acceso prioritario de SB+">
             <figure className="app-device app-device-desktop" aria-labelledby="app-desktop-caption">
               <figcaption id="app-desktop-caption">
                 <Monitor size={16} strokeWidth={1} aria-hidden="true" /> TU CABINA DE MANDO
               </figcaption>
-              <div className="app-device-frame" aria-label="Mockup conceptual de BAYONA+ en escritorio">
+              <div className="app-device-frame" aria-label="Mockup conceptual de SB+ en escritorio">
                 <div className="app-device-screen app-desktop-screen">
                   <div className="app-desktop-rail" aria-hidden="true">
-                    <span className="app-screen-brand">BAYONA+</span>
+                    <span className="app-screen-brand">SB+</span>
                     <i /><i /><i /><i />
                   </div>
                   <div className="app-desktop-body">
@@ -902,7 +902,7 @@ export default function AppExperience({ publicOnly = false }) {
             </figure>
 
             <div className="app-pass" aria-label="Pase conceptual de acceso prioritario">
-              <p className="app-pass__kind">BAYONA+ · ACCESO PRIORITARIO</p>
+              <p className="app-pass__kind">SB+ · ACCESO PRIORITARIO</p>
               <p className="app-pass__holder">NOMBRE</p>
               <div className="app-pass__row">
                 <span>ESTADO</span>
@@ -953,7 +953,7 @@ export default function AppExperience({ publicOnly = false }) {
             <p className="app-founding-scarcity">Apuntarse no cuesta nada y no compromete a nada: no hay precio fundador, cupos ni fecha de lanzamiento confirmados.</p>
             <Bridge
               compact
-              hook="Mientras BAYONA+ toma forma, la comunidad abierta y la tienda sí están funcionando ahora mismo."
+              hook="Mientras SB+ evoluciona, puedes explorar la comunidad y consultar artículos de la colección. La disponibilidad y la compra se confirman antes de cualquier pago."
               free
               ctaLabel="ENTRAR A LA COMUNIDAD"
               ctaHref="/community"
@@ -1006,11 +1006,11 @@ export default function AppExperience({ publicOnly = false }) {
             La captura de la pantalla de acceso corresponde a la aplicación web publicada. Las maquetas de teléfono, tablet, reloj y las funciones futuras siguen siendo representaciones de diseño: no significan acceso a todas las prestaciones.
           </p>
 
-          <ol className="app-status-roadmap" aria-label="Estado de las capas de BAYONA+">
+          <ol className="app-status-roadmap" aria-label="Estado de las capas de SB+">
             <li>
               <span className="app-status-dot is-live" aria-hidden="true" />
               <strong>EN MARCHA</strong>
-              <small>BAYONA App integrada en el mismo sitio con acceso Mi App / Coach Studio.</small>
+              <small>SB+ App integrada en el mismo sitio con acceso Mi App / Coach Studio.</small>
             </li>
             <li>
               <span className="app-status-dot is-near" aria-hidden="true" />

@@ -13,7 +13,7 @@ const es = {
   "one.entry.resumeAthlete": "SEGUIR EN MI APP",
   "one.entry.resumeCoach": "SEGUIR EN COACH STUDIO",
   "one.entry.session": "Volver a mi sesión",
-  "one.entry.experience": "Entrar a BAYONA",
+  "one.entry.experience": "Entrar a SB+",
   "tour.day.title": "Este es tu día.",
   "tour.day.body": "Aquí empieza todo: fecha, objetivo y tu siguiente acción.",
   "tour.mood.title": "Dime cómo llegas.",

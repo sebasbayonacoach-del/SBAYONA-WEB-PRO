@@ -5,8 +5,8 @@
  */
 export const BAYONA_APP_PUBLIC_URL = '/mi-app/index.html'
 export const BAYONA_APP_ENTRY_URL = '/mi-app/index.html?source=pwa'
-export const BAYONA_APP_ROLE_IMAGE = '/images/bayona-live-app/role-selection-20261009.png'
-export const BAYONA_APP_MOBILE_IMAGE = '/images/bayona-live-app/role-picker-mobile-crop-20261009.png'
+export const BAYONA_APP_ROLE_IMAGE = '/images/sb-plus/role-selection-desktop-20261104.png'
+export const BAYONA_APP_MOBILE_IMAGE = '/images/sb-plus/role-picker-mobile-20261104.png'
 
 export const BAYONA_APP_SPACES = Object.freeze([
   {
