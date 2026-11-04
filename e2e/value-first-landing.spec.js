@@ -1,0 +1,116 @@
+import { test, expect } from '@playwright/test'
+import { readFile } from 'node:fs/promises'
+
+test('Valor inmediato: portada, ebooks accesibles y enlaces reales',async({page,request})=>{
+  const errors=[]
+  page.on('pageerror',error=>errors.push(error.message))
+  await page.goto('/')
+  const hero=page.locator('.atelier-hero')
+  await expect(hero.getByRole('link',{name:/LLÉVATE LOS EBOOKS GRATIS/})).toHaveAttribute('href','#regalos-gratis')
+  await expect(hero.getByRole('link',{name:/CREAR MI PLAN DE 30 DÍAS/})).toHaveAttribute('href','#plan-30-dias')
+  await expect(page.locator('.lv-book__cta')).toHaveCount(2)
+  for(const href of await page.locator('.lv-book__cta,.lv-free__extra').evaluateAll(links=>links.map(a=>a.getAttribute('href')))){
+    const response=await request.get(href)
+    expect(response.status(),href).toBe(200)
+    expect(response.headers()['content-type'],href).toContain('application/pdf')
+    expect((await response.body()).length,href).toBeGreaterThan(2000)
+  }
+  await expect(page.locator('input[type="email"]')).toHaveCount(0)
+  expect(errors).toEqual([])
+})
+test('Plan de 30 días: variante inicial segura y cuatro semanas',async({page})=>{
+  await page.goto('/')
+  await page.getByLabel('¿Qué quieres conseguir?').selectOption('parkour')
+  await page.getByLabel('¿Desde dónde empiezas?').selectOption('new')
+  await page.getByLabel('¿Con qué cuentas?').selectOption('none')
+  await page.getByLabel('¿Cuántos días puedes dedicarle?').selectOption('5')
+  await page.getByLabel('¿Cuánto tiempo tienes por sesión?').selectOption('20')
+  await page.getByRole('button',{name:/CREAR MI PLAN GRATUITO/}).click()
+  const plan=page.locator('#lv-mi-plan')
+  await expect(plan).toBeVisible()
+  await expect(plan).toContainText('5 días por semana · 20 minutos')
+  await expect(plan.locator('.lv-plan-output__tabs button')).toHaveCount(4)
+  await expect(plan.locator('.lv-week-panel.is-active .lv-week-panel__session')).toHaveCount(5)
+  await expect(plan.locator('.lv-week-panel.is-active')).toContainText('Balance sobre línea en el suelo')
+  await expect(plan.locator('.lv-week-panel.is-active')).toContainText('1 serie(s) por ejercicio')
+  await expect(plan).toContainText('DÍAS 29 Y 30')
+  await expect(plan).toContainText('borrador')
+  await plan.getByRole('tab',{name:'SEMANA 03'}).click()
+  await expect(plan.locator('.lv-week-panel.is-active')).toContainText('2 serie(s) por ejercicio')
+  await plan.getByRole('tab',{name:'SEMANA 04'}).press('Home')
+  await expect(plan.getByRole('tab',{name:'SEMANA 01'})).toHaveAttribute('aria-selected','true')
+  await plan.getByRole('tab',{name:'SEMANA 01'}).press('End')
+  await expect(plan.getByRole('tab',{name:'SEMANA 04'})).toHaveAttribute('aria-selected','true')
+})
+test('Plan ajustable según material y objetivo, con texto descargable real',async({page})=>{
+  await page.goto('/')
+  await page.getByLabel('¿Qué quieres conseguir?').selectOption('strength')
+  await page.getByLabel('¿Desde dónde empiezas?').selectOption('regular')
+  await page.getByLabel('¿Con qué cuentas?').selectOption('gym')
+  await page.getByLabel('¿Cuántos días puedes dedicarle?').selectOption('2')
+  await page.getByLabel('¿Cuánto tiempo tienes por sesión?').selectOption('35')
+  await page.getByRole('button',{name:/CREAR MI PLAN GRATUITO/}).click()
+  const plan=page.locator('#lv-mi-plan')
+  await expect(plan.locator('.lv-week-panel.is-active .lv-week-panel__session')).toHaveCount(2)
+  await expect(plan.locator('.lv-week-panel.is-active')).toContainText('Prensa o sentadilla ligera')
+  const downloadPromise=page.waitForEvent('download')
+  await plan.getByRole('button',{name:/GUARDAR PLAN/}).click()
+  const download=await downloadPromise
+  expect(download.suggestedFilename()).toBe('SEBASTIAN-BAYONA-mi-primer-mes.txt')
+  const bytes=await readFile(await download.path(),'utf8')
+  expect(bytes).toContain('OBJETIVO: Ganar fuerza y condición')
+  expect(bytes).toContain('MATERIAL: Gimnasio')
+  expect(bytes).toContain('SEMANA 4')
+  expect(bytes).toContain('DÍAS 29 Y 30')
+  await page.evaluate(()=>{window.__sbPrintCalled=false;window.print=()=>{window.__sbPrintCalled=true}})
+  await plan.getByRole('button',{name:/IMPRIMIR \/ PDF/}).click()
+  expect(await page.evaluate(()=>window.__sbPrintCalled)).toBe(true)
+})
+test('Todas las áreas solicitadas aparecen y son navegables',async({page,request})=>{
+  await page.goto('/')
+  for(const path of ['/about','/programs','/parkour-academy','/community','/app','/shop','/resources','/movimiento-adaptado','/faq']){
+    const response=await request.get(path)
+    expect(response.ok(),path).toBe(true)
+    await expect(page.locator('a[href="'+path+'"]').first()).toBeAttached()
+  }
+  await expect(page.locator('.lw-world__entry-link')).toHaveAttribute('href',/\/mi-app\/index.html/)
+  await expect(page.locator('.lw-decision__secondary')).toHaveAttribute('href',/^https:\/\/wa.me\//)
+  await expect(page.locator('#empieza')).toHaveCount(1)
+  await expect(page.locator('#agenda')).toHaveCount(1)
+})
+test('Preguntas son desplegables y la solicitud final no simula un pago',async({page})=>{
+  await page.goto('/')
+  const faqs=page.locator('.lw-faq__item')
+  await expect(faqs).toHaveCount(6)
+  await faqs.nth(0).locator('summary').click()
+  await expect(faqs.nth(0)).toContainText('No. Los ebooks')
+  await faqs.nth(1).locator('summary').click()
+  await expect(faqs.nth(1)).toContainText('borrador educativo')
+  await expect(page.locator('.lw-decision__primary')).toHaveAttribute('href',/^https:\/\//)
+  await expect(page.locator('.lw-decision__card')).toContainText('no equivale a una cita confirmada')
+  await expect(page.locator('.sj-outro__primary')).toHaveAttribute('href','/about')
+})
+for(const width of [320,360,390,768,1440]){
+  test('Lectura responsive sin desplazamiento horizontal a '+width+'px',async({page})=>{
+    await page.setViewportSize({width,height:844})
+    await page.goto('/')
+    for(const id of ['regalos-gratis','plan-30-dias','primeras-lecciones','ruta-completa','preguntas-inicio','agenda']){
+      const el=page.locator('#'+id)
+      await el.scrollIntoViewIfNeeded()
+      expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),id).toBeLessThanOrEqual(1)
+    }
+    await page.getByRole('button',{name:/CREAR MI PLAN GRATUITO/}).click()
+    await expect(page.locator('#lv-mi-plan')).toBeVisible()
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1)
+  })
+}
+test('Tabla de contenidos y confianza visibles durante el recorrido largo',async({page})=>{
+  await page.setViewportSize({width:390,height:844})
+  await page.goto('/')
+  const index=page.getByRole('navigation',{name:'Ir directamente a un apartado de la portada'})
+  await expect(index.locator('a')).toHaveCount(6)
+  for(const href of await index.locator('a').evaluateAll(xs=>xs.map(x=>x.getAttribute('href')))){
+    expect(await page.locator(href).count(),href).toBeGreaterThan(0)
+  }
+  await expect(page.getByText('Sin registro, sin pagar')).toBeVisible()
+})

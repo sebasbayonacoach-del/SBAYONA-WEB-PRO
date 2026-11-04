@@ -1,0 +1,34 @@
+
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#f4eee4;color:#28352c;font-family:Arial,Helvetica,sans-serif}
+body{counter-reset:pageNo}
+.pdf-page{width:210mm;height:297mm;padding:45mm 21mm 30mm;position:relative;background:#f4eee4;break-after:page;overflow:hidden;counter-increment:pageNo}
+.pdf-page:last-child{break-after:auto}
+.pdf-page:before{content:'SEBASTIAN BAYONA   /   PERSONAL MOVEMENT STUDIO';position:absolute;left:21mm;right:21mm;top:20mm;padding-bottom:5mm;border-bottom:1px solid #c4b49d;font:700 7.8pt/1.5 'Courier New',monospace;letter-spacing:.12em;color:#926d49}
+.pdf-page:after{content:'DONDE LA CIENCIA SE ENCUENTRA CON EL MOVIMIENTO       ' counter(pageNo,'decimal-leading-zero');position:absolute;left:21mm;right:21mm;bottom:14mm;border-top:1px solid #c4b49d;padding-top:5mm;font:700 7.2pt/1.5 'Courier New',monospace;letter-spacing:.07em;color:#816e56}
+.pdf-page h1{font:790 29pt/1.07 Arial,Helvetica,sans-serif;letter-spacing:-.065em;color:#233129;margin:0 0 10mm;max-width:165mm}
+.pdf-page h2{font:760 13pt/1.3 Arial,sans-serif;letter-spacing:-.03em;color:#334736;margin:7mm 0 3.5mm}
+.pdf-page p{font:400 10.25pt/1.68 Arial,Helvetica,sans-serif;color:#4b564c;margin:0 0 5mm;max-width:166mm}
+.pdf-page strong{color:#25372a;font-weight:750}
+.pdf-page li{font:400 9.7pt/1.57 Arial,sans-serif;color:#485348;margin-bottom:2.4mm;padding-left:1mm}
+.pdf-page ul,.pdf-page ol{padding-left:7mm;margin:4mm 0 8mm}
+.pdf-page blockquote{border-left:3px solid #c49966;background:#e6dac8;padding:5mm 6mm;margin:8mm 0 8mm}
+.pdf-page blockquote p{font:600 11.3pt/1.55 Georgia,serif;color:#435044;margin:0}
+.pdf-page table{border-collapse:collapse;width:100%;font-size:9pt;margin:6mm 0 8mm;page-break-inside:avoid}
+.pdf-page th{padding:3.7mm 3mm;background:#253a2d;color:#f1e8d9;text-align:left;font:700 8.5pt/1.35 Arial,sans-serif}
+.pdf-page td{border-bottom:1px solid #d6cbb9;padding:3.3mm 3mm;color:#414e43;font:400 8.9pt/1.42 Arial,sans-serif}
+.pdf-page tr:nth-child(even) td{background:#e9e3d8}
+.pdf-page hr{border:0;height:1px;background:#c9bda9;margin:12mm 0}
+.pdf-page a{color:#8e633a;text-decoration:none;overflow-wrap:anywhere}
+.pdf-page.pdf-cover{background:radial-gradient(circle at 100% 30%,rgba(232,191,134,.15),transparent 42%),#142119;color:#f4eee4;padding-top:75mm}
+.pdf-page.pdf-cover:before,.pdf-page.pdf-cover:after{color:#deb891;border-color:rgba(223,183,138,.35)}
+.pdf-page.pdf-cover h1{font-size:49pt;line-height:.98;max-width:165mm;letter-spacing:-.09em;color:#f7efe3;margin-bottom:17mm}
+.pdf-page.pdf-cover p{font-size:13pt;color:#d8ddcf;line-height:1.6;max-width:145mm}
+.pdf-page.pdf-cover strong{color:#e8c59b}
+.pdf-page.pdf-cover hr{background:rgba(231,196,149,.35);margin-top:28mm}
+
+.pdf-page{display:flex;flex-direction:column;}
+.pdf-page .pdf-notes{margin-top:auto;margin-bottom:8mm;min-height:43mm;padding:6mm 0 0;border-top:1px solid #d3c3ae;display:flex;flex-direction:column;gap:6mm;}
+.pdf-page .pdf-notes strong{font:700 7.9pt/1.6 'Courier New',monospace;color:#a07850;letter-spacing:.12em;}
+.pdf-page .pdf-notes span{height:6mm;border-bottom:1px solid rgba(147,138,119,.37);}

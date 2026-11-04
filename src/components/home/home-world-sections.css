@@ -1,0 +1,154 @@
+/* SEBASTIAN BAYONA — Editorial depth across the full visitor universe. */
+.bayona-atelier :is(.lw-world,.lw-faq,.lw-decision),.bayona-atelier :is(.lw-world,.lw-faq,.lw-decision) * {box-sizing:border-box;}
+.bayona-atelier .lw-container{width:min(calc(100% - 76px),1450px);margin-inline:auto;}
+.bayona-atelier .lw-section-rule{padding:26px 0;border-bottom:1px solid rgba(63,68,60,.28);display:flex;align-items:center;justify-content:space-between;gap:18px;font:740 .61rem/1.5 'DM Mono',ui-monospace,monospace;letter-spacing:.12em;color:#86623f;text-transform:uppercase;}
+.bayona-atelier .lw-section-rule--dark{border-bottom-color:rgba(230,195,154,.22);color:#dcb88d;}
+.bayona-atelier .lw-eyebrow{font:750 .65rem/1.5 'DM Mono',ui-monospace,monospace;letter-spacing:.17em;color:#b08758;margin:0 0 25px;}
+.bayona-atelier :is(.lw-world,.lw-faq,.lw-decision) :is(h2,h3,h4){margin:0;font-family:'Montserrat',Inter,system-ui,sans-serif;letter-spacing:-.071em;line-height:1.05;word-break:normal;text-wrap:balance;}
+.bayona-atelier :is(.lw-world,.lw-faq,.lw-decision) :is(h2,h3,h4) em{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.066em;font-style:italic;font-weight:400;}
+.bayona-atelier :is(.lw-world,.lw-faq,.lw-decision) p{font-size:clamp(.98rem,1.18vw,1.17rem);line-height:1.76;text-wrap:pretty;max-width:59ch;}
+.bayona-atelier :is(.lw-world,.lw-faq,.lw-decision) :is(a,summary):focus-visible{outline:2px solid #d4a16b;outline-offset:4px;}
+.bayona-atelier .lw-world__top{background:#f4eee4;color:#242b22;}
+.bayona-atelier .lw-world__hero{display:grid;grid-template-columns:1.2fr .6fr;gap:clamp(40px,7vw,100px);align-items:end;padding:clamp(75px,9vw,136px) 0 clamp(80px,8vw,122px);}
+.bayona-atelier .lw-world__hero h2{font-size:clamp(3.3rem,6vw,7.5rem);color:#212a22;max-width:14ch;}
+.bayona-atelier .lw-world__hero h2 em{color:#a17147;}
+.bayona-atelier .lw-world__hero > div:last-child{padding-bottom:7px;}
+.bayona-atelier .lw-world__hero > div:last-child > p{color:#62675a;margin:0 0 26px;}
+.bayona-atelier .lw-world__hero > div:last-child > span{display:block;font:720 .65rem/1.5 'DM Mono',monospace;letter-spacing:.1em;color:#997449;}
+.bayona-atelier .lw-spot{display:grid;grid-template-columns:1fr 1fr;min-height:clamp(610px,72svh,900px);background:#f6f1e9;color:#232d24;}
+.bayona-atelier .lw-spot--ink{background:#17221a;color:#f5f1e8;}
+.bayona-atelier .lw-spot--reverse .lw-spot__image{order:2;}
+.bayona-atelier .lw-spot__image{position:relative;min-width:0;min-height:570px;overflow:hidden;background:#26312a;}
+.bayona-atelier .lw-spot__image:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,11,9,.46),transparent 33%);}
+.bayona-atelier .lw-spot__image img{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:cover;filter:saturate(.79) contrast(1.08);transition:transform .85s cubic-bezier(.22,.61,.36,1);}
+.bayona-atelier .lw-spot:hover .lw-spot__image img{transform:scale(1.035);}
+.bayona-atelier .lw-spot__stamp{position:absolute;z-index:1;bottom:32px;left:clamp(25px,4vw,74px);font:750 .59rem/1.5 'DM Mono',monospace;letter-spacing:.15em;color:#f7ead8;}
+.bayona-atelier .lw-spot__text{display:flex;flex-direction:column;justify-content:space-between;gap:42px;min-width:0;padding:clamp(43px,5.5vw,94px);}
+.bayona-atelier .lw-spot__metadata{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(72,79,68,.24);padding-bottom:17px;font:730 .61rem/1.5 'DM Mono',monospace;letter-spacing:.12em;color:#966e47;}
+.bayona-atelier .lw-spot--ink .lw-spot__metadata{color:#d9b18b;border-color:rgba(228,189,142,.25);}
+.bayona-atelier .lw-spot__text h3{font-size:clamp(3rem,4.5vw,6.4rem);color:inherit;margin:0 0 29px;}
+.bayona-atelier .lw-spot__text h3 em{color:#a67a53;}
+.bayona-atelier .lw-spot--ink .lw-spot__text h3 em{color:#e1bb91;}
+.bayona-atelier .lw-spot__text > div:nth-child(2)>p{color:#5d6559;margin:0 0 22px;}
+.bayona-atelier .lw-spot--ink .lw-spot__text > div:nth-child(2)>p{color:#c0c8bb;}
+.bayona-atelier .lw-spot__text .lw-spot__value{display:flex;align-items:flex-start;gap:14px;font-size:.87rem!important;line-height:1.65!important;color:#697060!important;padding-top:14px;border-top:1px solid rgba(83,84,75,.19);}
+.bayona-atelier .lw-spot--ink .lw-spot__text .lw-spot__value{color:#c6c3b7!important;border-top-color:rgba(232,193,148,.17);}
+.bayona-atelier .lw-spot__value svg{flex:none;color:#a57b52;margin-top:3px;}
+.bayona-atelier .lw-spot__cta{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;align-self:flex-start;padding:17px 23px;min-height:58px;background:#263529;color:#f7ede0!important;text-decoration:none;font:760 .67rem/1.5 'DM Mono',monospace;letter-spacing:.10em;transition:transform .25s,background .25s;}
+.bayona-atelier .lw-spot--ink .lw-spot__cta{background:#e1bd94;color:#1c271e!important;}
+.bayona-atelier .lw-spot__cta:hover{transform:translateY(-3px);background:#3e5142;}
+.bayona-atelier .lw-spot--ink .lw-spot__cta:hover{background:#f5d8b3;}
+.bayona-atelier .lw-world__collection{background:#101a14;color:#f2eee4;padding-bottom:clamp(95px,9vw,155px);}
+.bayona-atelier .lw-world__collection-intro{display:flex;justify-content:space-between;gap:50px;align-items:end;padding:clamp(76px,8vw,126px) 0 60px;}
+.bayona-atelier .lw-world__collection-intro h3{font-size:clamp(3rem,5vw,6rem);max-width:16ch;}
+.bayona-atelier .lw-world__collection-intro h3 em{color:#dfb68a;}
+.bayona-atelier .lw-world__collection-intro > p{max-width:37ch;color:#bfc7bb;margin:0;}
+.bayona-atelier .lw-universe{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.bayona-atelier .lw-universe__item{background:#1c2920;border:1px solid rgba(214,186,143,.18);min-width:0;overflow:hidden;}
+.bayona-atelier .lw-universe__image{height:clamp(240px,26vw,395px);display:block;position:relative;overflow:hidden;background:#29352a;}
+.bayona-atelier .lw-universe__image:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(14,19,15,.49),transparent 55%);pointer-events:none;}
+.bayona-atelier .lw-universe__image img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.04);transition:transform .6s;}
+.bayona-atelier .lw-universe__image:hover img{transform:scale(1.035);}
+.bayona-atelier .lw-universe__image > span{position:absolute;z-index:1;top:26px;left:31px;color:#f1d6b5;font:740 .66rem/1.5 'DM Mono',monospace;letter-spacing:.1em;}
+.bayona-atelier .lw-universe__content{padding:clamp(28px,3.5vw,49px);min-height:270px;display:flex;flex-direction:column;align-items:flex-start;}
+.bayona-atelier .lw-universe__content > span{font:730 .61rem/1.5 'DM Mono',monospace;color:#d9b38a;letter-spacing:.12em;}
+.bayona-atelier .lw-universe__content h4{font-size:clamp(2.15rem,3.2vw,3.4rem);color:#f5f0e6;margin:16px 0;}
+.bayona-atelier .lw-universe__content > p{font-size:.98rem;color:#c3cabe;margin:0 0 26px;}
+.bayona-atelier .lw-universe__content > a{display:flex;gap:13px;align-items:center;margin-top:auto;border-bottom:1px solid rgba(228,182,128,.55);padding-bottom:8px;color:#efd1ac;text-decoration:none;font:720 .64rem/1.5 'DM Mono',monospace;letter-spacing:.08em;}
+.bayona-atelier .lw-world__entry{display:grid;grid-template-columns:1fr auto;align-items:center;gap:30px;margin-top:36px;padding:clamp(31px,5vw,66px);border:1px solid rgba(229,194,148,.33);background:radial-gradient(ellipse at 70% 10%,rgba(205,164,115,.13),transparent 68%),#1c291f;}
+.bayona-atelier .lw-world__entry h3{font-size:clamp(2rem,3.4vw,4.2rem);color:#f4eadf;max-width:18ch;}
+.bayona-atelier .lw-world__entry h3 em{color:#e2bb92;}
+.bayona-atelier .lw-world__entry p:not(.lw-eyebrow){margin:18px 0 0;color:#c0c7bd;}
+.bayona-atelier .lw-world__entry-link{display:flex;align-items:center;justify-content:space-between;gap:25px;background:#e7c498;color:#20281e!important;text-decoration:none;padding:20px 23px;min-height:64px;min-width:250px;font:780 .69rem/1.5 'DM Mono',monospace;letter-spacing:.09em;transition:background .2s;}
+.bayona-atelier .lw-world__entry-link:hover{background:#f4dcbb;}
+.bayona-atelier .lw-faq{background:#eee8dc;color:#242b23;padding-bottom:clamp(90px,8vw,140px);}
+.bayona-atelier .lw-faq__layout{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(35px,7vw,130px);padding-top:clamp(70px,8vw,120px);}
+.bayona-atelier .lw-faq__lead h2{font-size:clamp(3rem,4.6vw,6.4rem);max-width:15ch;color:#222e24;}
+.bayona-atelier .lw-faq__lead h2 em{color:#a57647;}
+.bayona-atelier .lw-faq__lead > p:not(.lw-eyebrow){color:#62665b;margin:28px 0;}
+.bayona-atelier .lw-faq__more{display:inline-flex;align-items:center;gap:12px;color:#443b2f;text-decoration:none;border-bottom:1px solid #9c7750;padding-bottom:7px;font:740 .66rem/1.5 'DM Mono',monospace;letter-spacing:.07em;}
+.bayona-atelier .lw-faq__list{border-top:1px solid #bdb2a1;}
+.bayona-atelier .lw-faq__item{border-bottom:1px solid #bdb2a1;}
+.bayona-atelier .lw-faq__item summary{list-style:none;display:grid;grid-template-columns:36px 1fr 22px;gap:14px;align-items:center;padding:25px 0;cursor:pointer;}
+.bayona-atelier .lw-faq__item summary::-webkit-details-marker{display:none;}
+.bayona-atelier .lw-faq__item summary > span:first-child{font:730 .61rem/1.5 'DM Mono',monospace;letter-spacing:.08em;color:#9a714a;}
+.bayona-atelier .lw-faq__item summary > strong{font-size:clamp(1.03rem,1.3vw,1.2rem);line-height:1.45;letter-spacing:-.028em;font-weight:710;color:#30382e;}
+.bayona-atelier .lw-faq__symbol{font:400 1.45rem/1 monospace;color:#9c774c;transition:transform .23s;}
+.bayona-atelier .lw-faq__item[open] .lw-faq__symbol{transform:rotate(45deg);}
+.bayona-atelier .lw-faq__answer{padding:0 23px 28px 50px;}
+.bayona-atelier .lw-faq__answer p{margin:0;font-size:.97rem;color:#5b6559;line-height:1.8;}
+.bayona-atelier .lw-decision{position:relative;isolation:isolate;background:#111b15;color:#f4ede2;padding-bottom:80px;overflow:clip;}
+.bayona-atelier .lw-decision:before{content:'';position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 85% 34%,rgba(183,133,81,.14),transparent 52%),radial-gradient(ellipse at 8% 85%,rgba(42,87,62,.18),transparent 57%);}
+.bayona-atelier .lw-decision__jump-target{position:absolute;top:0;left:0;width:1px;height:1px;scroll-margin-top:180px;}
+.bayona-atelier .lw-decision__layout{padding:clamp(90px,10vw,155px) 0 80px;display:grid;grid-template-columns:1.1fr .78fr;gap:clamp(40px,8vw,135px);align-items:center;}
+.bayona-atelier .lw-decision__story h2{font-size:clamp(3.5rem,6vw,8.2rem);line-height:.99;color:#f9f1e6;max-width:13ch;}
+.bayona-atelier .lw-decision__story h2 em{color:#e2b990;}
+.bayona-atelier .lw-decision__story > p:not(.lw-eyebrow){color:#c3c9be;margin:32px 0;max-width:48ch;}
+.bayona-atelier .lw-decision__facts{border-top:1px solid rgba(224,186,145,.3);padding-top:22px;display:grid;gap:13px;}
+.bayona-atelier .lw-decision__facts span{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;line-height:1.55;color:#d6d8ce;}
+.bayona-atelier .lw-decision__facts svg{flex:none;color:#e0b78b;margin-top:2px;}
+.bayona-atelier .lw-decision__card{padding:clamp(28px,3.4vw,53px);border:1px solid rgba(225,187,145,.46);background:linear-gradient(141deg,rgba(233,191,142,.07),rgba(255,255,255,.01)),#1b291f;}
+.bayona-atelier .lw-decision__card-top{display:flex;align-items:center;justify-content:space-between;gap:16px;color:#d8b18a;padding-bottom:32px;border-bottom:1px solid rgba(224,186,145,.27);font:740 .6rem/1.5 'DM Mono',monospace;letter-spacing:.10em;}
+.bayona-atelier .lw-decision__card h3{font-size:clamp(2.25rem,3vw,3.8rem);color:#f4ede4;margin:29px 0 19px;}
+.bayona-atelier .lw-decision__card > p{color:#c1c8bb;margin:0 0 33px;}
+.bayona-atelier .lw-decision__card .atelier-contact__actions{margin:0!important;display:block!important;padding:0!important;}
+.bayona-atelier .lw-decision__primary{display:flex;align-items:center;justify-content:space-between;gap:22px;min-height:68px;padding:20px 23px;background:#e8c59e;color:#1b261c!important;font:760 .68rem/1.4 'DM Mono',monospace;letter-spacing:.07em;text-decoration:none;box-shadow:none!important;border:0!important;transition:background .2s;}
+.bayona-atelier .lw-decision__primary:hover{background:#f2ddbd;}
+.bayona-atelier .lw-decision__secondary{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:13px;padding:17px 11px;border:1px solid rgba(235,197,149,.39);background:transparent!important;box-shadow:none!important;color:#f0e4d4!important;font:730 .60rem/1.45 'DM Mono',monospace;letter-spacing:.07em;text-decoration:none;min-height:57px;}
+.bayona-atelier .lw-decision__card > small{display:block;font-size:.77rem;line-height:1.7;color:#aab4a8;margin-top:25px;}
+.bayona-atelier .lw-decision__final-links{border-top:1px solid rgba(230,189,143,.23);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;padding-top:32px;}
+.bayona-atelier .lw-decision__final-links a{display:flex;gap:12px;align-items:center;color:#e4d3bf;text-decoration:none;font-size:.87rem;line-height:1.6;}
+.bayona-atelier .lw-decision__final-links a:hover{color:#f2c99d;}
+.bayona-atelier .lw-decision__final-links svg{color:#d8b187;flex:none;}
+@media(max-width:1040px){
+ .bayona-atelier .lw-world__hero{grid-template-columns:1fr 1fr;gap:34px;}
+ .bayona-atelier .lw-spot__text{padding:40px;}
+ .bayona-atelier .lw-spot__text h3{font-size:clamp(2.7rem,4.5vw,4.5rem);}
+ .bayona-atelier .lw-world__entry{grid-template-columns:1fr;}
+ .bayona-atelier .lw-world__entry-link{justify-self:start;}
+ .bayona-atelier .lw-decision__layout{grid-template-columns:1fr 1fr;gap:31px;}
+}
+@media(max-width:760px){
+ .bayona-atelier .lw-container{width:calc(100% - 38px);}
+ .bayona-atelier .lw-section-rule{padding:20px 0;font-size:.51rem;letter-spacing:.075em;}
+ .bayona-atelier .lw-section-rule span:last-child{max-width:50%;text-align:right;}
+ .bayona-atelier .lw-world__hero{grid-template-columns:1fr;gap:26px;padding:67px 0 72px;}
+ .bayona-atelier .lw-world__hero h2{font-size:clamp(2.85rem,10vw,4.6rem);}
+ .bayona-atelier .lw-world__hero > div:last-child > p{margin-bottom:17px;}
+ .bayona-atelier .lw-spot{grid-template-columns:1fr;min-height:0;}
+ .bayona-atelier .lw-spot--reverse .lw-spot__image{order:0;}
+ .bayona-atelier .lw-spot__image{min-height:300px;max-height:430px;aspect-ratio:1.25;order:0;}
+ .bayona-atelier .lw-spot__text{order:1;padding:35px 23px 46px;gap:38px;}
+ .bayona-atelier .lw-spot__stamp{left:23px;bottom:23px;font-size:.54rem;}
+ .bayona-atelier .lw-spot__text h3{font-size:clamp(3rem,9.5vw,4.5rem);margin-bottom:20px;}
+ .bayona-atelier .lw-spot__text > div:nth-child(2)>p{font-size:.98rem;}
+ .bayona-atelier .lw-spot__cta{max-width:100%;font-size:.62rem;padding:17px;}
+ .bayona-atelier .lw-world__collection-intro{flex-direction:column;align-items:stretch;gap:22px;padding:62px 0 34px;}
+ .bayona-atelier .lw-world__collection-intro h3{font-size:clamp(2.8rem,9vw,4.3rem);}
+ .bayona-atelier .lw-universe{grid-template-columns:1fr;gap:12px;}
+ .bayona-atelier .lw-universe__image{height:240px;}
+ .bayona-atelier .lw-universe__content{padding:24px;min-height:0;}
+ .bayona-atelier .lw-universe__content h4{font-size:2.5rem;}
+ .bayona-atelier .lw-universe__content > p{margin:0 0 22px;}
+ .bayona-atelier .lw-world__entry{padding:27px 23px;gap:28px;}
+ .bayona-atelier .lw-world__entry h3{font-size:clamp(2.25rem,9vw,3.7rem);}
+ .bayona-atelier .lw-world__entry-link{min-width:0;width:100%;font-size:.63rem;}
+ .bayona-atelier .lw-faq__layout{grid-template-columns:1fr;gap:39px;padding-top:68px;}
+ .bayona-atelier .lw-faq__lead h2{font-size:clamp(2.9rem,9.5vw,4.7rem);}
+ .bayona-atelier .lw-faq__item summary{grid-template-columns:24px 1fr 20px;gap:10px;padding:20px 0;}
+ .bayona-atelier .lw-faq__item summary > strong{font-size:1rem;}
+ .bayona-atelier .lw-faq__answer{padding:0 15px 23px 34px;}
+ .bayona-atelier .lw-decision__layout{grid-template-columns:1fr;gap:39px;padding:66px 0 48px;}
+ .bayona-atelier .lw-decision__story h2{font-size:clamp(3.15rem,11vw,5.5rem);}
+ .bayona-atelier .lw-decision__story > p:not(.lw-eyebrow){margin:23px 0;}
+ .bayona-atelier .lw-decision__card{padding:27px 22px;}
+ .bayona-atelier .lw-decision__card h3{font-size:2.6rem;}
+ .bayona-atelier .lw-decision__primary{padding:17px;font-size:.6rem;}
+ .bayona-atelier .lw-decision__secondary{font-size:.56rem;}
+ .bayona-atelier .lw-decision__final-links{grid-template-columns:1fr 1fr;gap:18px 12px;}
+ .bayona-atelier .lw-decision__final-links a{font-size:.77rem;align-items:flex-start;}
+}
+/* Preserve the copper/ivory CTA despite legacy global contact styles. */
+html body .bayona-atelier .lw-decision .lw-decision__card .atelier-contact__actions .lw-decision__primary,
+html body .bayona-atelier .lw-decision .lw-decision__card .atelier-contact__actions .lw-decision__primary:visited {background:#e8c59e !important;color:#1b261c!important;border:0!important;border-radius:0!important;box-shadow:none!important;}
+html body .bayona-atelier .lw-decision .lw-decision__card .atelier-contact__actions .lw-decision__primary:hover {background:#f2ddbd!important;}

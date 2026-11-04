@@ -1,0 +1,215 @@
+
+/* SEBASTIAN BAYONA / value-first landing · 4 November 2026 */
+.bayona-atelier .lv-container{width:min(calc(100% - 76px),1450px);margin-inline:auto}
+.bayona-atelier :is(.lv-free,.lv-plan,.lv-lessons,.lv-index){position:relative;isolation:isolate;}
+.bayona-atelier :is(.lv-free,.lv-plan,.lv-lessons) *{box-sizing:border-box}
+.bayona-atelier .lv-section-top{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:27px 0 24px;border-bottom:1px solid rgba(70,68,57,.25);font:730 .61rem/1.5 'DM Mono',ui-monospace,monospace;letter-spacing:.13em;color:#806143;text-transform:uppercase}
+.bayona-atelier .lv-section-top--dark{color:#e2c09a;border-color:rgba(231,193,148,.22)}
+.bayona-atelier .lv-kicker{font:750 .64rem/1.5 'DM Mono',ui-monospace,monospace;letter-spacing:.16em;color:#aa7549;margin:0 0 25px;text-transform:uppercase}
+.bayona-atelier :is(.lv-free,.lv-plan,.lv-lessons) h2{font:790 clamp(3rem,5vw,6.5rem)/1.02 'Montserrat',Inter,system-ui,sans-serif;letter-spacing:-.08em;margin:0;text-wrap:balance}
+.bayona-atelier :is(.lv-free,.lv-plan,.lv-lessons) h2 em{font:400 italic .96em/1.01 Georgia,'Times New Roman',serif;letter-spacing:-.066em}
+.bayona-atelier :is(.lv-free,.lv-plan,.lv-lessons) p{font-size:clamp(1rem,1.18vw,1.18rem);line-height:1.75;max-width:62ch;text-wrap:pretty}
+.bayona-atelier :is(.lv-free,.lv-plan,.lv-lessons) :is(a,button,select):focus-visible{outline:2px solid #c38b55;outline-offset:4px}
+.bayona-atelier :is(#regalos-gratis,#plan-30-dias,#primeras-lecciones,#ruta-completa,#preguntas-inicio,#agenda,#lv-mi-plan){scroll-margin-top:170px}
+.bayona-atelier .lv-index{background:#ece3d6;color:#342d26;position:sticky;top:76px;z-index:13;box-shadow:0 12px 30px rgba(14,16,13,.075);border-block:1px solid rgba(100,88,69,.2)}
+.bayona-atelier .lv-index__inner{display:flex;align-items:center;gap:28px;min-height:61px}
+.bayona-atelier .lv-index__intro{display:flex;align-items:center;gap:8px;flex:none;white-space:nowrap;font:740 .57rem/1.5 'DM Mono',monospace;letter-spacing:.09em;color:#695136}
+.bayona-atelier .lv-index__links{display:flex;align-items:center;gap:clamp(14px,1.8vw,28px);overflow-x:auto;min-width:0;scrollbar-width:thin;overscroll-behavior-x:contain}
+.bayona-atelier .lv-index__links a{text-decoration:none;color:#514b40;white-space:nowrap;display:inline-flex;align-items:center;padding:20px 0;border-bottom:2px solid transparent;font:700 .68rem/1.4 'DM Mono',monospace;letter-spacing:.035em;transition:color .2s,border-color .2s}
+.bayona-atelier .lv-index__links a:hover{color:#171e19;border-bottom-color:#a16e43}
+.bayona-atelier .atelier-hero__value-proof{font:730 .61rem/1.65 'DM Mono',monospace;letter-spacing:.065em;color:#e1bf94;margin:14px 0 0;max-width:55ch}
+.bayona-atelier .atelier-hero__value-proof span{color:#f5efe4;padding:0 4px}
+.bayona-atelier .lv-free{background:#f4eee4;color:#243027;overflow:clip;padding-bottom:clamp(77px,8vw,138px)}
+.bayona-atelier .lv-free__intro{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(250px,.66fr);gap:clamp(35px,7vw,120px);align-items:end;padding:clamp(78px,8vw,132px) 0 65px}
+.bayona-atelier .lv-free h2{color:#1e2b22;max-width:17ch}
+.bayona-atelier .lv-free h2 em{color:#986a45}
+.bayona-atelier .lv-free__intro-text p{color:#5b6055;margin:0 0 25px}
+.bayona-atelier .lv-text-link{display:inline-flex;align-items:center;gap:11px;color:#31382d;text-decoration:none;padding-bottom:9px;border-bottom:1px solid #ad875d;font:750 .68rem/1.5 'DM Mono',monospace;letter-spacing:.065em}
+.bayona-atelier .lv-books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.bayona-atelier .lv-book{display:grid;grid-template-columns:49px minmax(0,1fr);min-height:480px;overflow:hidden;box-shadow:0 17px 55px rgba(28,30,24,.15)}
+.bayona-atelier .lv-book--dark{background:#132019;color:#f8f1e6}
+.bayona-atelier .lv-book--clay{background:#cba580;color:#26221d}
+.bayona-atelier .lv-book__spine{display:flex;flex-direction:column;justify-content:space-between;padding:29px 13px;border-right:1px solid currentColor;opacity:.72;writing-mode:vertical-rl;letter-spacing:.13em;font:710 .58rem/1.4 'DM Mono',monospace}
+.bayona-atelier .lv-book__spine span:first-child{writing-mode:horizontal-tb;font-size:1rem}
+.bayona-atelier .lv-book__content{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:clamp(32px,4vw,65px) clamp(25px,4vw,65px) 42px}
+.bayona-atelier .lv-book__content>p{color:inherit;font:730 .6rem/1.4 'DM Mono',monospace;letter-spacing:.11em;opacity:.85;margin:0 0 30px}
+.bayona-atelier .lv-book__num{font:750 .65rem/1.4 'DM Mono',monospace;letter-spacing:.07em;opacity:.62}
+.bayona-atelier .lv-book h3{font:750 clamp(2.45rem,3.8vw,5.2rem)/1.03 'Montserrat',Inter,sans-serif;letter-spacing:-.076em;color:inherit;max-width:14ch;text-wrap:balance;margin:18px 0 18px}
+.bayona-atelier .lv-book__caption{font-size:1.03rem;line-height:1.7;max-width:32ch;opacity:.86;margin:0 0 26px}
+.bayona-atelier .lv-book__cta{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:58px;width:min(100%,320px);padding:18px 21px;background:#eac9a3;color:#1d271e!important;text-decoration:none;font:770 .67rem/1.4 'DM Mono',monospace;letter-spacing:.08em;transition:transform .2s,background .2s}
+.bayona-atelier .lv-book__cta:hover{transform:translateY(-2px);background:#f6e0c0}
+.bayona-atelier .lv-book--clay .lv-book__cta{background:#19291f;color:#f3e9da!important}
+.bayona-atelier .lv-free__extras{padding-top:62px}
+.bayona-atelier .lv-free__extras-title{display:flex;justify-content:space-between;gap:18px;padding:0 0 20px;color:#98714b;font:740 .6rem/1.4 'DM Mono',monospace;letter-spacing:.09em}
+.bayona-atelier .lv-free__extra{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:20px;align-items:center;padding:27px 5px;border-top:1px solid #c9bcac;color:#303a2d;text-decoration:none;transition:padding .2s,background .2s}
+.bayona-atelier .lv-free__extra:last-child{border-bottom:1px solid #c9bcac}
+.bayona-atelier .lv-free__extra:hover{padding-left:17px;background:rgba(149,104,63,.045)}
+.bayona-atelier .lv-free__extra>span:first-child{font:750 .68rem/1.5 'DM Mono',monospace;color:#a07750}
+.bayona-atelier .lv-free__extra strong{display:block;font:730 clamp(1.17rem,1.65vw,1.58rem)/1.3 'Montserrat',Inter,sans-serif;letter-spacing:-.04em}
+.bayona-atelier .lv-free__extra small{display:block;color:#6c6f64;font-size:.86rem;line-height:1.55;margin-top:7px}
+.bayona-atelier .lv-free__extra-action{display:flex;align-items:center;gap:10px;white-space:nowrap;font:730 .61rem/1.5 'DM Mono',monospace}
+.bayona-atelier .lv-free__note{display:flex;align-items:flex-start;gap:11px;margin:30px 0 0;color:#6a675d;font-size:.8rem!important;max-width:100%!important;line-height:1.65!important}
+.bayona-atelier .lv-free__note svg{flex:none;color:#a37b50;margin-top:3px}
+.bayona-atelier .lv-plan{background:#101b14;color:#f3eee5;overflow:clip;padding-bottom:clamp(80px,9vw,140px)}
+.bayona-atelier .lv-plan h2{color:#f7f1e7;max-width:15ch}
+.bayona-atelier .lv-plan h2 em{color:#e3ba8b}
+.bayona-atelier .lv-plan .lv-kicker{color:#dcb489}
+.bayona-atelier .lv-plan__intro{display:grid;grid-template-columns:1.1fr .65fr;gap:clamp(30px,7vw,105px);align-items:end;padding:clamp(75px,8vw,125px) 0 58px}
+.bayona-atelier .lv-plan__intro>p{color:#c4cbc0;margin:0 0 5px}
+.bayona-atelier .lv-plan__layout{display:grid;grid-template-columns:1.02fr .98fr;border:1px solid rgba(228,195,156,.3)}
+.bayona-atelier .lv-plan__questionnaire{background:#f5f0e7;color:#242e25;padding:clamp(30px,4.6vw,63px);min-width:0}
+.bayona-atelier .lv-plan__form-head{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#987249;border-bottom:1px solid #d9cbb9;padding-bottom:19px;margin-bottom:24px;font:730 .59rem/1.4 'DM Mono',monospace;letter-spacing:.09em}
+.bayona-atelier .lv-plan__field{margin-bottom:23px}
+.bayona-atelier .lv-plan__field label{display:flex;align-items:center;gap:13px;font-weight:690;font-size:1.04rem;line-height:1.45;color:#283226;margin-bottom:10px}
+.bayona-atelier .lv-plan__field label b{font:750 .65rem/1.5 'DM Mono',monospace;color:#ad7850}
+.bayona-atelier .lv-plan__field select{appearance:none;background:#fffaf2 url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m3 6 5 5 5-5' stroke='%23664e35' fill='none' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 16px center;display:block;width:100%;min-height:57px;border:1px solid #cabba7;border-radius:0;padding:15px 48px 15px 16px;font-size:1rem;color:#202920;cursor:pointer}
+.bayona-atelier .lv-plan__generate{display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%;min-height:65px;background:#213226;color:#fbf2e5;border:0;cursor:pointer;padding:19px 21px;font:780 .69rem/1.5 'DM Mono',monospace;letter-spacing:.08em;transition:background .2s}
+.bayona-atelier .lv-plan__generate:hover{background:#39503c}
+.bayona-atelier .lv-plan__privacy{display:flex;align-items:flex-start;gap:10px;color:#6c7468!important;font-size:.76rem!important;line-height:1.55!important;margin:18px 0 0!important}
+.bayona-atelier .lv-plan__privacy svg{flex:none;margin-top:3px}
+.bayona-atelier .lv-plan__preview{display:flex;flex-direction:column;min-width:0;position:relative;padding:clamp(32px,4.8vw,70px);background:radial-gradient(ellipse at 72% 12%,rgba(217,180,136,.13),transparent 57%),#1c2a20;border-left:1px solid rgba(232,195,154,.3)}
+.bayona-atelier .lv-plan__preview-label{font:750 .61rem/1.4 'DM Mono',monospace;letter-spacing:.1em;color:#d5b489}
+.bayona-atelier .lv-plan__circle{margin:42px 12px 15px auto;display:flex;flex-direction:column;align-items:center;justify-content:center;width:clamp(128px,14vw,220px);aspect-ratio:1;border:1px solid rgba(223,187,143,.5);border-radius:50%;box-shadow:0 0 0 16px rgba(221,188,145,.04),0 0 0 30px rgba(221,188,145,.03);color:#e1bf96}
+.bayona-atelier .lv-plan__circle>span{font:780 clamp(3.25rem,6.2vw,7rem)/1 'Montserrat',Inter,sans-serif;letter-spacing:-.1em}
+.bayona-atelier .lv-plan__circle small{font:740 .59rem/1.4 'DM Mono',monospace;letter-spacing:.12em}
+.bayona-atelier .lv-plan__preview h3{font:780 clamp(2.3rem,3.4vw,4.4rem)/1.05 'Montserrat',Inter,sans-serif;letter-spacing:-.074em;margin:43px 0 21px;color:#f7f2e9}
+.bayona-atelier .lv-plan__preview h3 em{font:italic 400 .95em Georgia,'Times New Roman',serif;color:#e3bd94}
+.bayona-atelier .lv-plan__preview>p{color:#c4c8be;max-width:38ch;margin:0 0 38px}
+.bayona-atelier .lv-plan__timeline{border-top:1px solid rgba(228,194,149,.27);margin-top:auto}
+.bayona-atelier .lv-plan__timeline>div{display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid rgba(228,194,149,.17)}
+.bayona-atelier .lv-plan__timeline span{font:750 .59rem/1.4 'DM Mono',monospace;color:#d5aa7b}
+.bayona-atelier .lv-plan__timeline strong{font-weight:610;font-size:.94rem;color:#f0ece2}
+.bayona-atelier .lv-plan__preview-foot{display:flex;gap:12px;align-items:center;margin-top:30px;font:740 .59rem/1.5 'DM Mono',monospace;letter-spacing:.08em;color:#d6b18b}
+.bayona-atelier .lv-plan-output{margin-top:62px;background:#f4efe6;color:#253128;padding:clamp(24px,4.5vw,65px)}
+.bayona-atelier .lv-plan-output__head{display:flex;align-items:flex-end;justify-content:space-between;gap:26px;border-bottom:1px solid #d0c4b5;padding-bottom:31px}
+.bayona-atelier .lv-plan-output__head h3{font:770 clamp(2.1rem,3.7vw,4.4rem)/1.1 'Montserrat',Inter,sans-serif;letter-spacing:-.07em;color:#263228;margin:0 0 15px}
+.bayona-atelier .lv-plan-output__head h3 em{font:italic 400 .95em Georgia,serif;color:#9c6b42}
+.bayona-atelier .lv-plan-output__head p{font-size:.95rem!important;color:#5e645a;margin:0!important}
+.bayona-atelier .lv-plan-output__head .lv-kicker{color:#9c704a;margin:0 0 15px}
+.bayona-atelier .lv-plan-output__tools{display:flex;gap:9px;flex-wrap:wrap}
+.bayona-atelier .lv-plan-output__tools button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:47px;padding:12px 15px;border:1px solid #ada08d;background:transparent;color:#354237;font:750 .59rem/1.4 'DM Mono',monospace;cursor:pointer;letter-spacing:.05em}
+.bayona-atelier .lv-plan-output__tools button:hover{background:#e8dece}
+.bayona-atelier .lv-plan-output__tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:27px 0}
+.bayona-atelier .lv-plan-output__tabs button{min-width:0;background:#e5ded2;color:#556051;font:740 .61rem/1.4 'DM Mono',monospace;letter-spacing:.075em;padding:16px 8px;border:0;cursor:pointer}
+.bayona-atelier .lv-plan-output__tabs button[aria-selected="true"]{background:#273b2d;color:#f5e9da}
+.bayona-atelier .lv-week-panel[hidden]{display:none!important}
+.bayona-atelier .lv-week-panel__intro{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:29px}
+.bayona-atelier .lv-week-panel__intro>div:first-child>span{font:750 .61rem/1.5 'DM Mono',monospace;letter-spacing:.07em;color:#97714b}
+.bayona-atelier .lv-week-panel__intro h4{font:760 clamp(1.65rem,2.7vw,3rem)/1.12 'Montserrat',Inter,sans-serif;letter-spacing:-.06em;color:#263529;margin:11px 0 10px}
+.bayona-atelier .lv-week-panel__intro p{font-size:.97rem!important;color:#646b5d;margin:0}
+.bayona-atelier .lv-week-panel__effort{min-width:118px;text-align:right;display:flex;flex-direction:column;gap:4px;color:#92754f;font:730 .58rem/1.4 'DM Mono',monospace}
+.bayona-atelier .lv-week-panel__effort strong{font:780 2.5rem/1 'Montserrat',Inter,sans-serif;color:#2b402e;letter-spacing:-.06em}
+.bayona-atelier .lv-week-panel__effort small{font-size:.52rem;color:#787e71}
+.bayona-atelier .lv-week-panel__sessions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.bayona-atelier .lv-week-panel__session{min-width:0;padding:25px 24px 20px;border:1px solid #d6c7b5;background:#fffaf3}
+.bayona-atelier .lv-week-panel__session header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.bayona-atelier .lv-week-panel__session header span{font:730 .59rem/1.5 'DM Mono',monospace;letter-spacing:.10em;color:#9c7650}
+.bayona-atelier .lv-week-panel__session header strong{font-size:.94rem;font-weight:740;line-height:1.4;color:#29372c}
+.bayona-atelier .lv-week-panel__session ul{padding-left:18px;margin:0 0 17px}
+.bayona-atelier .lv-week-panel__session li{color:#4b5349;font-size:.92rem;line-height:1.58;margin:4px 0}
+.bayona-atelier .lv-week-panel__session>p{font-size:.78rem!important;line-height:1.62!important;margin:0!important;padding-top:13px;border-top:1px solid #e0d6c7;color:#777366}
+.bayona-atelier .lv-week-panel__footnote{color:#656b60!important;font-size:.85rem!important;max-width:100%!important;border-top:1px solid #d4c8b9;padding-top:20px;margin:22px 0 0!important}
+.bayona-atelier .lv-plan-output__finish{display:grid;grid-template-columns:.4fr 1fr;gap:21px;align-items:center;margin-top:32px;padding:22px;background:#e6d5be}
+.bayona-atelier .lv-plan-output__finish strong{font:740 .64rem/1.4 'DM Mono',monospace;letter-spacing:.07em;color:#8b6644}
+.bayona-atelier .lv-plan-output__finish span{font-size:.93rem;line-height:1.7;color:#4f554b}
+.bayona-atelier .lv-plan-output__bottom{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-top:32px;padding:30px;background:#203227}
+.bayona-atelier .lv-plan-output__bottom h4{font:730 1.3rem/1.25 'Montserrat',Inter,sans-serif;letter-spacing:-.05em;color:#f6ede0;margin:0 0 12px}
+.bayona-atelier .lv-plan-output__bottom p{font-size:.87rem!important;line-height:1.66!important;color:#c4cbc0!important;margin:0!important}
+.bayona-atelier .lv-plan-output__bottom a{flex:0 0 245px;display:flex;align-items:center;justify-content:space-between;gap:14px;background:#e5c59e;color:#1a281f!important;padding:17px;min-height:58px;text-decoration:none;font:740 .62rem/1.5 'DM Mono',monospace;letter-spacing:.06em}
+.bayona-atelier .lv-plan-output__safety{font-size:.77rem!important;line-height:1.7!important;margin:20px 0 0!important;max-width:100%!important;color:#746f62!important}
+.bayona-atelier .lv-plan-output__safety a{color:#815831}
+.bayona-atelier .lv-lessons{background:#f4efe5;color:#253029;padding-bottom:clamp(85px,9vw,140px);overflow:clip}
+.bayona-atelier .lv-lessons__intro{padding:clamp(72px,7.5vw,116px) 0 53px}
+.bayona-atelier .lv-lessons h2{font-size:clamp(2.7rem,4.65vw,5.7rem);max-width:22ch;color:#1f2c23}
+.bayona-atelier .lv-lessons h2 em{color:#a7784c}
+.bayona-atelier .lv-lessons__intro>p:last-child{margin:26px 0 0;color:#5c655b;max-width:57ch}
+.bayona-atelier .lv-lessons__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.bayona-atelier .lv-lessons__item{display:flex;flex-direction:column;min-height:433px;padding:clamp(24px,3vw,43px);background:#fffaf2;border:1px solid #d6cab8}
+.bayona-atelier .lv-lessons__item-top{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#a17d56;padding:0 0 32px;font:730 .56rem/1.5 'DM Mono',monospace;letter-spacing:.12em}
+.bayona-atelier .lv-lessons__item-top>span:last-child{display:grid;place-items:center;width:42px;height:42px;border:1px solid #d4b995;border-radius:50%;font-size:1.18rem}
+.bayona-atelier .lv-lessons__item h3{font:770 clamp(1.75rem,2.4vw,2.9rem)/1.12 'Montserrat',Inter,sans-serif;letter-spacing:-.068em;color:#29382b;max-width:15ch;margin:0 0 18px}
+.bayona-atelier .lv-lessons__item>p{font-size:.95rem!important;color:#646b60;margin:0 0 27px}
+.bayona-atelier .lv-lessons__try{margin-top:auto;border-top:1px solid #d5c9b9;padding-top:19px}
+.bayona-atelier .lv-lessons__try strong{font:730 .59rem/1.5 'DM Mono',monospace;color:#a77c53;letter-spacing:.10em}
+.bayona-atelier .lv-lessons__try>p{font-size:.9rem!important;color:#505b4d;margin:9px 0 0!important}
+.bayona-atelier .lv-lessons__aside{display:flex;align-items:center;gap:18px;margin-top:29px;padding:22px;background:#e8ddca;border-left:3px solid #b78d61}
+.bayona-atelier .lv-lessons__aside>svg{flex:none;color:#9a744a}
+.bayona-atelier .lv-lessons__aside p{font-size:.82rem!important;color:#586055;line-height:1.65!important;flex:1;margin:0!important}
+.bayona-atelier .lv-lessons__aside a{display:inline-flex;align-items:center;gap:10px;font:740 .55rem/1.5 'DM Mono',monospace;letter-spacing:.05em;color:#765438;text-decoration:none;max-width:185px}
+@media(max-width:1030px){
+ .bayona-atelier .lv-free__intro,.bayona-atelier .lv-plan__intro{grid-template-columns:1fr 1fr;gap:28px}
+ .bayona-atelier .lv-book{grid-template-columns:35px 1fr;min-height:423px}
+ .bayona-atelier .lv-book__spine{padding-inline:9px}
+ .bayona-atelier .lv-book__content{padding:34px 28px}
+ .bayona-atelier .lv-plan__questionnaire,.bayona-atelier .lv-plan__preview{padding:32px}
+ .bayona-atelier .lv-plan__circle{width:132px}
+ .bayona-atelier .lv-lessons__grid{gap:13px}
+ .bayona-atelier .lv-lessons__item{padding:25px}
+ .bayona-atelier .lv-lessons__aside{flex-wrap:wrap}
+ .bayona-atelier .lv-lessons__aside a{max-width:none}
+}
+@media(max-width:760px){
+ .bayona-atelier .lv-container{width:calc(100% - 38px)}
+ .bayona-atelier .lv-index{top:68px}
+ .bayona-atelier .lv-index__inner{min-height:53px;gap:14px}
+ .bayona-atelier .lv-index__intro{display:none}
+ .bayona-atelier .lv-index__links{gap:21px}
+ .bayona-atelier .lv-index__links a{font-size:.62rem;padding:17px 0}
+ .bayona-atelier .lv-section-top{padding:22px 0;font-size:.52rem;letter-spacing:.06em}
+ .bayona-atelier .lv-section-top span:last-child{max-width:49%;text-align:right}
+ .bayona-atelier :is(.lv-free,.lv-plan,.lv-lessons) h2{font-size:clamp(2.75rem,9.5vw,4.75rem);line-height:1.06}
+ .bayona-atelier .lv-free__intro,.bayona-atelier .lv-plan__intro{grid-template-columns:1fr;gap:26px;padding:65px 0 39px}
+ .bayona-atelier .lv-free__intro-text p{margin:0 0 17px}
+ .bayona-atelier .lv-books{grid-template-columns:1fr;gap:14px}
+ .bayona-atelier .lv-book{grid-template-columns:34px 1fr;min-height:356px}
+ .bayona-atelier .lv-book__content{padding:30px 25px}
+ .bayona-atelier .lv-book__content>p{font-size:.54rem;margin-bottom:19px}
+ .bayona-atelier .lv-book h3{font-size:clamp(2.35rem,8.2vw,4rem);margin:17px 0}
+ .bayona-atelier .lv-book__caption{font-size:.97rem}
+ .bayona-atelier .lv-book__cta{min-height:53px;padding:15px;font-size:.6rem}
+ .bayona-atelier .lv-free__extras{padding-top:44px}
+ .bayona-atelier .lv-free__extra{grid-template-columns:27px 1fr;gap:12px;padding:19px 4px}
+ .bayona-atelier .lv-free__extra-action{grid-column:2;justify-self:start}
+ .bayona-atelier .lv-free__extra strong{font-size:1.12rem}
+ .bayona-atelier .lv-free__extra small{font-size:.82rem}
+ .bayona-atelier .lv-plan__layout{grid-template-columns:1fr}
+ .bayona-atelier .lv-plan__questionnaire,.bayona-atelier .lv-plan__preview{padding:29px 22px}
+ .bayona-atelier .lv-plan__preview{border-left:0;border-top:1px solid rgba(225,184,141,.34)}
+ .bayona-atelier .lv-plan__circle{width:130px;margin:22px 16px 0 auto}
+ .bayona-atelier .lv-plan__preview h3{font-size:2.65rem;margin:47px 0 17px}
+ .bayona-atelier .lv-plan-output{margin-top:34px;padding:24px 17px}
+ .bayona-atelier .lv-plan-output__head{flex-direction:column;align-items:stretch}
+ .bayona-atelier .lv-plan-output__head h3{font-size:2.25rem}
+ .bayona-atelier .lv-plan-output__tools{flex-wrap:wrap}
+ .bayona-atelier .lv-plan-output__tabs{gap:3px}
+ .bayona-atelier .lv-plan-output__tabs button{font-size:.51rem;letter-spacing:0;padding:12px 2px}
+ .bayona-atelier .lv-week-panel__intro{gap:12px}
+ .bayona-atelier .lv-week-panel__intro h4{font-size:1.7rem}
+ .bayona-atelier .lv-week-panel__effort{min-width:73px;font-size:.46rem}
+ .bayona-atelier .lv-week-panel__effort strong{font-size:1.7rem}
+ .bayona-atelier .lv-week-panel__sessions{grid-template-columns:1fr;gap:10px}
+ .bayona-atelier .lv-week-panel__session{padding:20px 16px}
+ .bayona-atelier .lv-plan-output__finish{grid-template-columns:1fr;gap:10px;padding:19px}
+ .bayona-atelier .lv-plan-output__bottom{flex-direction:column;align-items:stretch;gap:22px;padding:23px 17px}
+ .bayona-atelier .lv-plan-output__bottom a{flex:auto}
+ .bayona-atelier .lv-lessons__intro{padding:62px 0 38px}
+ .bayona-atelier .lv-lessons__grid{grid-template-columns:1fr}
+ .bayona-atelier .lv-lessons__item{min-height:330px}
+ .bayona-atelier .lv-lessons__item h3{font-size:2rem;max-width:18ch}
+ .bayona-atelier .lv-lessons__item-top{padding-bottom:20px}
+ .bayona-atelier .lv-lessons__aside{align-items:flex-start}
+}
+@media print{
+ @page{size:A4;margin:13mm}
+ body *{visibility:hidden!important}
+ .bayona-atelier #lv-mi-plan,.bayona-atelier #lv-mi-plan *{visibility:visible!important}
+ .bayona-atelier #lv-mi-plan{position:absolute!important;top:0!important;left:0!important;width:100%!important;height:auto!important;background:white!important;color:black!important;margin:0!important;padding:0!important}
+ .bayona-atelier #lv-mi-plan .lv-plan-output__tools,.bayona-atelier #lv-mi-plan .lv-plan-output__tabs,.bayona-atelier #lv-mi-plan .lv-plan-output__bottom,.bayona-atelier #lv-mi-plan .lv-plan-output__safety{display:none!important}
+ .bayona-atelier #lv-mi-plan .lv-week-panel,.bayona-atelier #lv-mi-plan .lv-week-panel[hidden]{display:block!important;height:auto!important;margin:12mm 0!important;break-inside:avoid-page}
+ .bayona-atelier #lv-mi-plan .lv-week-panel__session{break-inside:avoid}
+}
+/* Correct the existing site's aggressive flex-link constraints in the in-page index. */
+html body .bayona-atelier .lv-index__links a {flex:0 0 auto !important;flex-shrink:0!important;min-width:max-content!important;overflow:visible;white-space:nowrap!important;}
+html body .bayona-atelier .lv-index__links {width:100%;overflow-x:auto!important;scroll-snap-type:x proximity;}
+html body .bayona-atelier .lv-index__links a {scroll-snap-align:start;}
+@media(max-width:760px) {html body .bayona-atelier .lv-index__inner {width:calc(100% - 34px);}html body .bayona-atelier .lv-index__links {gap:24px;}}

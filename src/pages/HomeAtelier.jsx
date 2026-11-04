@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { ArrowDownRight, ArrowRight, ArrowUpRight, MoveUpRight } from 'lucide-react'
 import BayonaRealArchive from '../components/home/BayonaRealArchive.jsx'
 import SBFlagship from '../components/home/SBFlagship.jsx'
-import { bookingLink } from '../config/site.config.js'
+import { LandingQuickNav, LandingFreeLibrary, LandingMonthBuilder, LandingMicroLessons } from '../components/home/HomeValueLead.jsx'
+import { LandingWorldSections, LandingFAQAndBooking } from '../components/home/HomeWorldSections.jsx'
 import { trackEvent } from '../lib/analytics/analytics.js'
 import './home-atelier.css'
 import './atelier-visual-revision.css'
@@ -54,7 +55,6 @@ const resources = [
 ]
 
 export default function HomeAtelier() {
-  const contactUrl = bookingLink('Hola Sebastián. He visto la nueva web de SEBASTIAN BAYONA y me gustaría conocer las opciones de entrenamiento según mi objetivo.')
 
   useEffect(() => {
     document.body.classList.add('bayona-luxury-active')
@@ -79,13 +79,14 @@ export default function HomeAtelier() {
           <div className="atelier-hero__statement">
             <p className="atelier-hero__eyebrow">DONDE LA CIENCIA SE ENCUENTRA CON EL MOVIMIENTO</p>
             <h1 id="atelier-hero-title">EL ARTE<br /><em>DE MOVERTE.</em></h1>
-            <p className="atelier-hero__summary">Fuerza. Técnica. Libertad. Entrenamiento personalizado para convertir cada movimiento en una nueva posibilidad.</p>
+            <p className="atelier-hero__summary">Entrena con criterio. Descarga dos ebooks gratis, descubre tu primer plan de 30 días y encuentra la forma de moverte que mejor encaja contigo.</p>
             <div className="atelier-hero__actions">
-              <Link className="atelier-button atelier-button--light" to="/about" onClick={() => trackEvent('studio_journey_start', { source: 'home_hero' })}>
-                EMPIEZA EL RECORRIDO <ArrowUpRight size={17} strokeWidth={1.6} aria-hidden="true" />
-              </Link>
-              <a className="atelier-text-link" href="#empieza">QUIERO EMPEZAR A ENTRENAR <ArrowDownRight size={17} strokeWidth={1.5} aria-hidden="true" /></a>
+              <a className="atelier-button atelier-button--light" href="#regalos-gratis" onClick={() => trackEvent('studio_home_free_hero', { source: 'home_hero' })}>
+                LLÉVATE LOS EBOOKS GRATIS <ArrowUpRight size={17} strokeWidth={1.6} aria-hidden="true" />
+              </a>
+              <a className="atelier-text-link" href="#plan-30-dias" onClick={() => trackEvent('studio_home_plan_hero', { source: 'home_hero' })}>CREAR MI PLAN DE 30 DÍAS <ArrowDownRight size={17} strokeWidth={1.5} aria-hidden="true" /></a>
             </div>
+            <p className="atelier-hero__value-proof">2 EBOOKS ORIGINALES <span>·</span> PLAN INICIAL DE 4 SEMANAS <span>·</span> SIN REGISTRO</p>
           </div>
           <div className="atelier-hero__foot">
             <span>PERSONAL / ONLINE / PARKOUR</span>
@@ -94,6 +95,11 @@ export default function HomeAtelier() {
           </div>
         </div>
       </section>
+
+      <LandingQuickNav />
+      <LandingFreeLibrary />
+      <LandingMonthBuilder />
+      <LandingMicroLessons />
 
       <section className="atelier-manifesto" id="manifiesto" aria-labelledby="atelier-manifesto-heading">
         <div className="atelier-frame atelier-manifesto__grid">
@@ -170,6 +176,8 @@ export default function HomeAtelier() {
 
       <SBFlagship />
 
+      <LandingWorldSections />
+
       <section className="atelier-resources" id="recursos" aria-labelledby="atelier-resources-heading">
         <div className="atelier-frame">
           <div className="atelier-section-top">
@@ -192,18 +200,7 @@ export default function HomeAtelier() {
         </div>
       </section>
 
-      <section className="atelier-contact" id="empieza" aria-labelledby="atelier-contact-heading">
-        <div className="atelier-frame atelier-contact__inner">
-          <p className="atelier-kicker">TU SIGUIENTE CAPÍTULO</p>
-          <h2 id="atelier-contact-heading">TODO EMPIEZA<br />CON <em>UN MOVIMIENTO.</em></h2>
-          <p>Cuéntame qué buscas. Descubriremos si podemos construir juntos tu próximo paso.</p>
-          <div className="atelier-contact__actions">
-            <a href={contactUrl} target="_blank" rel="noopener noreferrer" className="atelier-button atelier-button--light" onClick={() => trackEvent('luxury_contact_click', { source: 'home_contact' })}>HABLEMOS DE TU OBJETIVO <ArrowUpRight size={17} aria-hidden="true" /></a>
-            <Link to="/programs" className="atelier-text-link">EXPLORAR LOS SERVICIOS <ArrowRight size={17} aria-hidden="true" /></Link>
-          </div>
-          <div className="atelier-contact__foot"><span>GANDÍA · ESPAÑA</span><span>ENTRENAMIENTO PRESENCIAL Y ONLINE</span><span>SEBASTIAN BAYONA / PERSONAL STUDIO</span></div>
-        </div>
-      </section>
+      <LandingFAQAndBooking />
     </div>
   )
 }

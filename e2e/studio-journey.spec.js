@@ -28,13 +28,16 @@ test('Los nueve capítulos presentan un siguiente paso concreto', async ({ page 
   expect(errors).toEqual([])
 })
 
-test('Inicio guía hacia La Historia y mantiene visible un acceso comercial', async ({ page }) => {
+test('Inicio ofrece recursos gratuitos y mantiene el recorrido entre capítulos', async ({ page }) => {
   await page.goto('/')
   const home = page.locator('.atelier-hero')
-  const primary = home.getByRole('link', { name: /EMPIEZA EL RECORRIDO/ })
-  await expect(primary).toHaveAttribute('href', '/about')
-  await expect(home.getByRole('link', { name: /QUIERO EMPEZAR A ENTRENAR/ })).toHaveAttribute('href', '#empieza')
+  const primary = home.getByRole('link', { name: /LLÉVATE LOS EBOOKS GRATIS/ })
+  await expect(primary).toHaveAttribute('href', '#regalos-gratis')
+  await expect(home.getByRole('link', { name: /CREAR MI PLAN DE 30 DÍAS/ })).toHaveAttribute('href', '#plan-30-dias')
   await primary.click()
+  await expect(page).toHaveURL(/#regalos-gratis$/)
+  await expect(page.locator('.lv-book__cta')).toHaveCount(2)
+  await page.locator('.sj-outro__primary').click()
   await expect(page).toHaveURL(/\/about$/)
   await expect(page.locator('.sj-header__chapter')).toContainText('ETAPA 02')
   await expect(page.locator('.sj-outro__primary')).toHaveAttribute('href', '/programs')
