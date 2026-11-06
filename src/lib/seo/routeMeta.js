@@ -66,6 +66,12 @@ const STATIC_ROUTES = {
       'Tienda SEBASTIAN BAYONA de ropa, calzado, equipamiento, máquinas y nutrición. Explora por categoría, revisa precios en COP y confirma disponibilidad por WhatsApp.',
     breadcrumb: [['La Colección', '/shop']],
   },
+  '/academia': {
+    title: 'Academia — Movimiento, Parkour e IA',
+    description:
+      'Formaciones digitales de SEBASTIAN BAYONA: fuerza, movilidad, parkour, tecnología para entrenadores e IA para pequeños negocios. Consulta el prelan­zamiento.',
+    breadcrumb: [['Academia', '/academia']],
+  },
   '/app': {
     title: 'SB+ — Tu estudio de entrenamiento digital',
     description:

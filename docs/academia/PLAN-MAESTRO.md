@@ -104,3 +104,23 @@ Visitas → descarga real → interés opt-in → conversación cualificada → 
 - World Economic Forum, Future of Jobs 2025: https://www.weforum.org/publications/the-future-of-jobs-report-2025/
 - Comunidad de Madrid, formación no reglada y derechos: https://www.comunidad.madrid/consumo/recomendaciones-tener-cuenta-antes-contratar-curso-formacion-online-no-reglada
 - Ministerio de Consumo, regulación por comunidades autónomas: https://www.dsca.gob.es/es/consumo/preguntas-frecuentes/que-administracion-es-competente-regular-ensenanza-no-reglada
+
+## 11. Estado de desarrollo y pruebas verificadas
+
+- Catálogo, seis temarios, página pública, acceso desde tienda y SB+ PWA implementados en rama de desarrollo.
+- Guiones completos de las primeras clases de Coach Studio IA, Movimiento 360° y Parkour Lab redactados y guardados en este repositorio.
+- Compilación Vite de producción finalizada correctamente; controles de enlaces Stripe de pruebas y carga inicial aprobados.
+- **9/9 pruebas E2E de la academia aprobadas**: rutas, filtros, temario, app, responsividad a 320/390/768/1440 píxeles, SEO y contraste.
+- **10/10 pruebas E2E del recorrido editorial anterior aprobadas** en la regresión conjunta.
+- Corrección aplicada a reglas de CSS heredadas que reducían el contraste del cierre editorial y cambiaban los CTA de la academia.
+- Canonical único gestionado por ruta desde RouteSeo; el canonical estático anterior duplicaba la etiqueta en las páginas de la SPA.
+- Se conserva la versión anterior de la web en el servidor local de previsualización 4292; la Academia funciona en la previsualización aislada 4311.
+
+### Capturas de revisión
+
+![Cabecera de Academia en escritorio](../../docs/assets/academia-20261106/desktop-hero.jpg)
+![Cabecera de Academia en móvil](../../docs/assets/academia-20261106/mobile-hero.jpg)
+![Catálogo de Academia en móvil](../../docs/assets/academia-20261106/mobile-catalog.jpg)
+![Cierre contrastado en móvil](../../docs/assets/academia-20261106/mobile-cierre.jpg)
+
+**Pendiente antes de aceptar dinero:** completar producción real del contenido anunciado, definir entregas/soporte/fechas, comprobar obligaciones legales y conectar una tienda Shopify autorizada. No existe activación de cobros, acceso LMS basado en compra ni matrícula confirmada.

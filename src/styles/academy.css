@@ -164,3 +164,32 @@
 .academy .academy-finish h2{font-size:clamp(2.7rem,9vw,4.5rem)}
 }
 @media(prefers-reduced-motion:reduce){.academy *{scroll-behavior:auto!important;transition:none!important}}
+
+/* Neutralise older flagship section/card CTA rules that unintentionally
+   turn the Academy closing chapter black and its cards into orange buttons. */
+html body .academy .academy-finish {
+  background:#f1ece2!important;
+  background-image:none!important;
+  color:#273329!important;
+}
+html body .academy .academy-finish h2 {color:#25352a!important;}
+html body .academy .academy-finish h2 em {color:#af8051!important;}
+html body .academy .academy-finish > p {color:#60665a!important;}
+html body .academy .academy-finish > div:last-child a {
+  color:#253929!important;background:transparent!important;background-image:none!important;
+  border:1px solid #938267!important;box-shadow:none!important;
+}
+html body .academy .academy-course__tagline {
+  font-family:Inter,Arial,sans-serif!important;
+  text-transform:none!important;
+  letter-spacing:-.012em!important;
+  font-size:1.05rem!important;
+  line-height:1.72!important;
+}
+html body .academy .academy-course__action,
+html body .academy .academy-course__action:visited {
+  background:#233a2a!important;background-image:none!important;
+  color:#fff0dc!important;border:0!important;border-radius:0!important;
+  box-shadow:none!important;
+}
+html body .academy .academy-course__action:hover {background:#3b5440!important;}
