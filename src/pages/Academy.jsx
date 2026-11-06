@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ArrowDownRight, ArrowRight, ArrowUpRight, BookOpen, Check, GraduationCap, Layers3, PlayCircle, ShieldCheck } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, ArrowUpRight, BookOpen, Check, GraduationCap, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { whatsAppLink } from '../config/site.config.js'
 import { academyCourses, academyPilot } from '../config/academyCourses.js'
@@ -66,7 +66,7 @@ export default function Academy() {
   const filtered = useMemo(() => category === 'TODAS'
     ? academyCourses : academyCourses.filter(x => x.category === category), [category])
   return (
-    <main className="academy" id="academy-top">
+    <div className="academy" id="academy-top">
       <section className="academy-hero">
         <div className="academy-shell">
           <div className="academy-hero__bar"><span>SEBASTIAN BAYONA / EDUCACIÓN</span><span>01 — APRENDER PARA ACTUAR</span></div>
@@ -144,6 +144,6 @@ export default function Academy() {
         <p>{academyPilot.disclaimer} El acompañamiento, la certificación privada de participación, el temario definitivo y las condiciones se detallarán antes de cualquier venta.</p>
         <div><a href="#formaciones">VER LAS FORMACIONES <ArrowRight size={18} aria-hidden="true"/></a><Link to="/app">DESCUBRIR SB+ <ArrowUpRight size={18} aria-hidden="true"/></Link></div>
       </section>
-    </main>
+    </div>
   )
 }
