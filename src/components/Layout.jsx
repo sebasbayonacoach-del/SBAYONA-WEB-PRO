@@ -50,6 +50,7 @@ const MotionLink = motion.create(Link)
 const NAV_ITEMS = Object.freeze([
   { label: 'La Historia', href: '/about' },
   { label: 'Experiencias', href: '/programs' },
+  { label: 'Academia', href: '/academia' },
   { label: 'Parkour Lab', href: '/parkour-academy' },
   { label: 'El Círculo', href: '/community' },
   { label: 'SB+', href: '/app' },
