@@ -12,6 +12,8 @@ const NAV_ICONS = {
   centro:"M4 21h16 M6 21V9 M10 21V9 M14 21V9 M18 21V9 M3 9l9-5 9 5",
   agenda:"M5 4h14v16H5z M8 2v4 M16 2v4 M5 9h14",
   informes:"M4 20h16 M7 16v-5 M12 16V7 M17 16v-9",
+  academia:"M4 19V5l8-3 8 3v14l-8 3-8-3",
+  recursos:"M5 4h14v16H5z M8 9h8 M8 13h8",
 };
 const svg = (path) => '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
   path.split(" M").map((d,i)=>'<path d="'+(i?'M':'')+d+'"/>').join("") + '</svg>';
@@ -25,6 +27,8 @@ function installRoleNavigation() {
   nav.querySelectorAll(".one-coach-launch").forEach((n)=>n.remove());
   const specs=[
     ["coachos","Studio","studio"],
+    ["academy","Academia","academia"],
+    ["resources","Recursos","recursos"],
     ["centro","Centro","centro"],
     ["agenda","Agenda","agenda"],
     ["informes","Informes","informes"],

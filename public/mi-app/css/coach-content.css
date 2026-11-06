@@ -1,0 +1,225 @@
+/* SEBASTIAN BAYONA / COACH OS · Academia y Mi Centro de Recursos
+   Dentro del panel privado de entrenador; no cambia el entorno de atletas. */
+body.fitness-app #drawer-body .co-learning,
+body.fitness-app #drawer-body .co-learning * { box-sizing:border-box; }
+body.fitness-app #drawer-body .co-learning {
+  --co-green:#243629;--co-cream:#f2e9d8;--co-copper:#d6ad7d;
+  color:var(--co-cream);font-family:Inter,system-ui,sans-serif;max-width:100%;padding:0 2px 32px;
+}
+body.fitness-app #drawer-body .co-learning :is(a,button,input,summary):focus-visible{
+  outline:2px solid #f3c592;outline-offset:3px;
+}
+body.fitness-app #drawer-body .co-learning__hero{
+  padding:25px 21px 27px;background:linear-gradient(133deg,#26392a,#16251c 75%);
+  border:1px solid rgba(225,179,123,.32);position:relative;overflow:hidden;
+}
+body.fitness-app #drawer-body .co-learning__hero:after {
+  content:'SB.';position:absolute;right:-9px;bottom:-33px;
+  color:rgba(228,185,133,.08);font:italic 400 112px/1 Georgia,serif;pointer-events:none;
+}
+body.fitness-app #drawer-body .co-learning__eyebrow{
+  color:var(--co-copper);font:740 10px/1.5 'DM Mono',monospace;letter-spacing:.12em;
+}
+body.fitness-app #drawer-body .co-learning__hero h3 {
+  color:#f7f0e3!important;max-width:14ch;
+  font:790 clamp(28px,3vw,39px)/1.04 Montserrat,Inter,sans-serif!important;
+  letter-spacing:-.07em!important;margin:17px 0 15px!important;text-wrap:balance;
+}
+body.fitness-app #drawer-body .co-learning__hero p{
+  font-size:13px;line-height:1.75;color:#c6cebf;margin:0;max-width:55ch;
+}
+body.fitness-app #drawer-body .co-learning__switch{
+  display:grid;grid-template-columns:1fr 1.28fr 0.8fr;gap:5px;
+  margin:11px 0 21px;padding:5px;background:rgba(34,47,38,.75);
+  border:1px solid rgba(221,189,147,.17);border-radius:8px;
+}
+body.fitness-app #drawer-body .co-learning__switch button {
+  min-width:0;min-height:46px;padding:9px 6px;background:transparent!important;
+  border:0!important;border-radius:5px;color:#b9c4b9!important;
+  font:740 clamp(9px,1vw,11px)/1.45 'DM Mono',monospace;
+  letter-spacing:0;cursor:pointer;white-space:normal;box-shadow:none!important;
+}
+body.fitness-app #drawer-body .co-learning__switch button.is-active {
+  background:rgba(225,184,136,.18)!important;color:#f5d0a4!important;
+}
+body.fitness-app #drawer-body .co-learning__intro {
+  display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;
+}
+body.fitness-app #drawer-body .co-learning__intro>div {
+  min-height:82px;display:flex;flex-direction:column;justify-content:center;gap:8px;
+  background:#1a2a1f;border:1px solid rgba(219,181,135,.20);padding:15px;
+}
+body.fitness-app #drawer-body .co-learning__intro strong{
+  font:750 clamp(15px,1.6vw,19px)/1.2 Montserrat,Inter,sans-serif;color:#e9cb9f;
+  letter-spacing:-.04em;
+}
+body.fitness-app #drawer-body .co-learning__intro span {
+  color:#b0bdb1;font-size:11px;line-height:1.35;
+}
+body.fitness-app #drawer-body .co-learning__note {
+  background:rgba(226,184,131,.07);border-left:2px solid #c89a66;
+  padding:14px 16px;margin:0 0 19px;font-size:12px;line-height:1.75;color:#cad1c3;
+}
+body.fitness-app #drawer-body .co-learning__search {
+  display:flex;flex-direction:column;gap:9px;margin:19px 0 12px;
+}
+body.fitness-app #drawer-body .co-learning__search span {
+  color:#e0b68a;font:720 10px/1.5 'DM Mono',monospace;letter-spacing:.1em;
+}
+body.fitness-app #drawer-body .co-learning__search input {
+  width:100%;min-height:50px;padding:14px 15px;
+  background:#f5f0e8!important;color:#203124!important;
+  border:1px solid #ddbe97!important;border-radius:5px!important;
+  font:500 13px/1.45 Inter,system-ui,sans-serif;box-shadow:none!important;
+}
+body.fitness-app #drawer-body .co-learning__search input::placeholder { color:#687568;opacity:1; }
+body.fitness-app #drawer-body .co-learning__chips {
+  display:flex;overflow-x:auto;gap:7px;padding:4px 0 13px;scrollbar-width:thin;
+}
+body.fitness-app #drawer-body .co-learning__chips button {
+  flex:0 0 auto;padding:10px 13px;min-height:36px;cursor:pointer;
+  background:transparent!important;border:1px solid rgba(217,181,134,.29)!important;
+  color:#c0cbbd!important;border-radius:3px!important;box-shadow:none!important;
+  font:740 10px/1.2 'DM Mono',monospace;letter-spacing:.035em;
+}
+body.fitness-app #drawer-body .co-learning__chips button[aria-pressed="true"] {
+  background:#d6b185!important;border-color:#d6b185!important;color:#182b1e!important;
+}
+body.fitness-app #drawer-body .co-learning__count{
+  margin:0 0 15px;font:720 10px/1.45 'DM Mono',monospace;color:#b9c4b9;
+  letter-spacing:.06em;
+}
+body.fitness-app #drawer-body .co-learning__cards{
+  display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:20px;
+}
+body.fitness-app #drawer-body .co-course,
+body.fitness-app #drawer-body .co-resource {
+  padding:20px 19px 19px;background:#202e23!important;
+  border:1px solid rgba(226,186,134,.27)!important;border-radius:6px!important;
+  box-shadow:none!important;min-width:0;overflow-wrap:anywhere;
+}
+body.fitness-app #drawer-body .co-course__head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+  font:730 9px/1.5 'DM Mono',monospace;color:#d8af7e;letter-spacing:.08em;
+}
+body.fitness-app #drawer-body :is(.co-course,.co-resource) h4 {
+  color:#f7f2e8!important;font:760 clamp(20px,2.3vw,26px)/1.15 Montserrat,Inter,sans-serif!important;
+  letter-spacing:-.05em!important;margin:18px 0 12px!important;
+}
+body.fitness-app #drawer-body :is(.co-course,.co-resource)>p {
+  color:#bdc9ba;font-size:12px;line-height:1.7;margin:0 0 15px;
+}
+body.fitness-app #drawer-body .co-course .co-course__outcome {
+  background:rgba(214,169,113,.07);padding:13px;
+  color:#c9d1c2;border-left:2px solid #d5ab76;font-size:12px;line-height:1.7;
+}
+body.fitness-app #drawer-body .co-course__outcome strong {color:#e3be8d;}
+body.fitness-app #drawer-body .co-course__syllabus {
+  border-block:1px solid rgba(223,187,145,.27);margin:20px 0 17px;
+}
+body.fitness-app #drawer-body .co-course__syllabus summary {
+  cursor:pointer;padding:17px 0;list-style:none;font:750 11px/1.45 'DM Mono',monospace;
+  color:#e4bd8c;letter-spacing:.035em;
+}
+body.fitness-app #drawer-body .co-course__syllabus summary::-webkit-details-marker{display:none;}
+body.fitness-app #drawer-body .co-course__syllabus ol{
+  padding:0;margin:0 0 12px;list-style:none;
+}
+body.fitness-app #drawer-body .co-course__syllabus li {
+  display:grid;grid-template-columns:28px 1fr;gap:8px;
+  border-top:1px solid rgba(235,195,142,.14);padding:13px 0;
+}
+body.fitness-app #drawer-body .co-course__syllabus li>span {
+  color:#d6af83;font:730 10px/1.5 'DM Mono',monospace;
+}
+body.fitness-app #drawer-body .co-course__syllabus li strong {
+  color:#f1ebdc;font-size:12px;line-height:1.55;
+}
+body.fitness-app #drawer-body .co-course__syllabus li p {
+  margin:5px 0 0;color:#b8c5ba;font-size:11px;line-height:1.7;
+}
+body.fitness-app #drawer-body .co-course__project{
+  color:#e1d9c7;font-size:12px;line-height:1.65;
+}
+body.fitness-app #drawer-body .co-course__buttons,
+body.fitness-app #drawer-body .co-resource__actions {
+  display:flex;flex-wrap:wrap;gap:9px;margin:14px 0;
+}
+body.fitness-app #drawer-body .co-learning__primary,
+body.fitness-app #drawer-body .co-learning__ghost,
+body.fitness-app #drawer-body .co-learning__secondary,
+body.fitness-app #drawer-body .co-reader__back,
+body.fitness-app #drawer-body .co-reader__mark {
+  display:inline-flex;align-items:center;justify-content:center;text-align:center;
+  min-height:44px;padding:11px 15px;cursor:pointer;
+  font:750 10px/1.4 'DM Mono',monospace;letter-spacing:.04em;
+  text-decoration:none!important;border-radius:3px!important;box-shadow:none!important;
+}
+body.fitness-app #drawer-body .co-learning__primary {
+  background:#e1be91!important;color:#15271b!important;border:1px solid #e1be91!important;
+}
+body.fitness-app #drawer-body .co-learning__ghost,
+body.fitness-app #drawer-body .co-learning__secondary,
+body.fitness-app #drawer-body .co-reader__back {
+  background:transparent!important;color:#e5c498!important;
+  border:1px solid rgba(231,192,139,.47)!important;
+}
+body.fitness-app #drawer-body .co-learning__secondary{width:100%;margin-top:7px;}
+body.fitness-app #drawer-body .co-course>small{
+  display:block;font:700 9px/1.5 'DM Mono',monospace;color:#abb7a9;
+}
+body.fitness-app #drawer-body .co-learning__shortcut{
+  background:linear-gradient(136deg,#233b2a,#17261d);border:1px solid rgba(231,187,126,.34);
+  padding:21px 18px;margin:20px 0;
+}
+body.fitness-app #drawer-body .co-learning__shortcut strong {font-size:13px;color:#f0dec3;}
+body.fitness-app #drawer-body .co-learning__shortcut p {font-size:12px;line-height:1.65;color:#bac6b9;margin:12px 0;}
+body.fitness-app #drawer-body .co-learning__end small {
+  display:block;margin-top:16px;font-size:10px;line-height:1.6;color:#abb7aa;
+}
+body.fitness-app #drawer-body .co-learning__loading,
+body.fitness-app #drawer-body .co-learning__error {
+  padding:25px;font-size:13px;line-height:1.7;color:#d7c2a7;
+}
+body.fitness-app #drawer-body .co-reader__title{
+  color:#f6e9d7!important;font:780 24px/1.15 Montserrat,Inter,sans-serif!important;
+  letter-spacing:-.055em;margin:24px 0 13px!important;
+}
+body.fitness-app #drawer-body .co-reader__frame {
+  display:block;width:100%;height:clamp(420px,66vh,750px);margin:18px 0;
+  border:1px solid #c19c6d;border-radius:4px;background:#f3eee6;
+}
+body.fitness-app #drawer-body .co-reader__mark {
+  width:100%;background:#243d2b!important;color:#f1ddc3!important;
+  border:1px solid #b48a58!important;
+}
+body.fitness-app #drawer-body .co-reader__back{width:100%;margin-bottom:21px;}
+body.fitness-app #drawer-body .co-os-modules{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 22px;
+}
+body.fitness-app #drawer-body .co-os-modules__tile{
+  min-width:0;text-align:left;padding:18px 15px;cursor:pointer;
+  background:linear-gradient(135deg,#253c2c,#18291e)!important;
+  border:1px solid rgba(231,191,136,.43)!important;color:#e5d8c5!important;
+  border-radius:6px!important;box-shadow:none!important;
+}
+body.fitness-app #drawer-body .co-os-modules__tile span{
+  display:block;color:#cda879;font:750 10px/1.5 'DM Mono',monospace;letter-spacing:.08em;
+}
+body.fitness-app #drawer-body .co-os-modules__tile strong{
+  display:block;color:#f3eade;font:750 16px/1.2 Montserrat,Inter,sans-serif;
+  letter-spacing:-.04em;margin:11px 0 8px;
+}
+body.fitness-app #drawer-body .co-os-modules__tile small{
+  display:block;color:#b8c7b8;font-size:11px;line-height:1.5;
+}
+@media(max-width:430px) {
+  body.fitness-app #drawer-body .co-learning__switch{
+    grid-template-columns:1fr 1.25fr .83fr;gap:2px;padding:3px;
+  }
+  body.fitness-app #drawer-body .co-learning__switch button{font-size:8.5px;padding:9px 3px;}
+  body.fitness-app #drawer-body .co-os-modules{grid-template-columns:1fr;}
+}
+@media(prefers-reduced-motion:reduce) {
+  body.fitness-app #drawer-body .co-learning * {scroll-behavior:auto!important;transition:none!important}
+}

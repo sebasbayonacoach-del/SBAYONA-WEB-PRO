@@ -178,6 +178,7 @@ const GO_ALIASES = {
   armario: "armory", vestidor: "armory", progreso: "progress", core: "core",
   mas: "more", apariencia: "appearance", atelier: "appearance", diseno: "appearance",
   coachos: "coachos", "coach-os": "coachos", entrenador: "coachos", "centro-de-mando": "coachos",
+  academia: "academy", academy: "academy", recursos: "resources", "mi-centro-de-recursos": "resources",
 };
 function openFromUrl() {
   const q = new URLSearchParams(location.search).get("go");

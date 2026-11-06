@@ -25,6 +25,7 @@ import "./ui/recovery.js";
 import "./ui/mind.js";
 import "./ui/plan.js";
 import "./ui/coachos.js";
+import "./ui/coach-content.js";
 import "./ui/armory.js";
 import "./ui/progress.js";
 import "./ui/core.js";

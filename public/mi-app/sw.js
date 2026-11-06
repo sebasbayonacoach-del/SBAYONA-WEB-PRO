@@ -4,12 +4,12 @@
 // Con esto la app abre sin red y el registro de series funciona offline
 // (los datos viven en el dispositivo y se sincronizan después).
 // ============================================================
-const CACHE = "bayona-shell-v45";
+const CACHE = "bayona-shell-v46";
 const SHELL = [
   "./css/pro.css",
   "./css/luxe.css",
   // Marca unificada con la web: capa de tipografía y paleta + sus .woff2.
-  "./css/bayona-brand.css", "./css/auth.css", "./css/academy-entry.css",
+  "./css/bayona-brand.css", "./css/auth.css", "./css/academy-entry.css", "./css/coach-content.css",
   "./fonts/montserrat-normal-400-latin.woff2", "./fonts/montserrat-normal-700-latin.woff2",
   "./fonts/montserrat-normal-800-latin.woff2", "./fonts/montserrat-normal-900-latin.woff2",
   "./fonts/montserrat-normal-400-latin-ext.woff2",
@@ -47,7 +47,8 @@ const SHELL = [
   "./js/ui/shared.js", "./js/ui/one.js", "./js/ui/affiliate-v12.js", "./js/ui/cinematics.js", "./js/ui/training.js", "./js/ui/proplayer-library.js", "./trainingym/catalog.json", "./js/ui/nutrition.js",
   "./js/ui/recovery.js", "./js/ui/mind.js", "./js/ui/plan.js", "./js/ui/armory.js",
   "./js/ui/progress.js", "./js/ui/core.js", "./js/ui/more.js",
-  "./js/ui/hoy.js", "./js/ui/trabajo.js", "./js/ui/coachos.js", "./js/ui/appearance.js", "./js/ui/first-run-tour.js", "./js/ui/motion.js",
+  "./js/ui/hoy.js", "./js/ui/trabajo.js", "./js/ui/coachos.js", "./js/ui/coach-content.js", "./js/ui/appearance.js", "./js/ui/first-run-tour.js", "./js/ui/motion.js",
+  "./academy/catalog.json", "./academy/lessons/coach-studio-ai.html", "./academy/lessons/movimiento-360.html", "./academy/lessons/parkour-lab.html",
   "./js/sync/account.js", "./js/hoy.js", "./js/contexto.js", "./js/coachos.js", "./js/medidas.js",
   "./js/timeline.js", "./js/nutricion.js", "./js/sync/mirror.js",
   "./js/coach/coachStub.js", "./js/coach/replies.js", "./js/seguridad-guion.js", "./js/data/offlineQueue.js",

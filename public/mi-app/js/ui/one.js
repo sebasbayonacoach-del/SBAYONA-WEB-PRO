@@ -14,7 +14,7 @@ import { currentSession, accountRole, probeBackend } from "../sync/supabase.js";
 import { linkedClients } from "../sync/coaching.js";
 
 const COACH_SECTIONS = new Set([
-  "coachos","centro","socios","cuotas","agenda","acceso","portal","informes"
+  "coachos","academy","resources","centro","socios","cuotas","agenda","acceso","portal","informes"
 ]);
 const NEUTRAL_SECTIONS = new Set(["library"]);
 
@@ -87,6 +87,8 @@ function ensureCoachRailButton() {
   const specs = [
     ["coachos", "Studio", "M5 20h14M7 20V9l5-3 5 3v11M9 13h6"],
     ["library", "Rutinas", "M4 5h16v14H4z M8 9h8 M8 13h8"],
+    ["academy", "Academia", "M4 19V5l8-3 8 3v14l-8 3-8-3z M8 9h8 M8 12h8"],
+    ["resources", "Recursos", "M5 4h14v16H5z M8 9h8 M8 13h8"],
     ["agenda", "Agenda", "M5 4h14v16H5z M8 2v4 M16 2v4 M5 9h14"],
     ["account", "Cuenta", "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M4 21a8 8 0 0 1 16 0"],
   ];

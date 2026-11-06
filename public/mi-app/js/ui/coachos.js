@@ -84,6 +84,22 @@ function renderCartera(body) {
   body.appendChild(head);
   body.appendChild(el("div", "media-caption",
     "Tu ficha usa datos reales de este dispositivo. Los clientes vinculados en la nube son reales; la cartera de ejemplo sigue marcada como DEMO."));
+
+  // Herramientas educativas internas. No redirigen fuera de la app.
+  body.appendChild(el("div", "sec-label", "TU ESPACIO DE APRENDIZAJE Y MATERIALES"));
+  const education = el("div", "co-os-modules");
+  for (const [section, number, label, description] of [
+    ["academy", "01 / APRENDER", "Academia", "6 formaciones · 3 clases abiertas"],
+    ["resources", "02 / DOCUMENTAR", "Mi Centro de Recursos", "10 PDFs · búsqueda y favoritos"],
+  ]) {
+    const tile = el("button", "co-os-modules__tile");
+    tile.type = "button";
+    tile.setAttribute("aria-label", `Abrir ${label} dentro de Coach OS`);
+    tile.append(elT("span", "", number), elT("strong", "", label), elT("small", "", description));
+    tile.addEventListener("click", () => openSection(section));
+    education.appendChild(tile);
+  }
+  body.appendChild(education);
   renderCloudClients(body);
 
   // ---------- CORE COACH ----------

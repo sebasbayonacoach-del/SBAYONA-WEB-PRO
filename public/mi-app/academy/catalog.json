@@ -1,0 +1,468 @@
+{
+  "schemaVersion": 1,
+  "title": "ACADEMIA · Mi Centro de Recursos",
+  "notice": "Catálogo de contenidos públicos y materiales de la app. El repositorio personal privado no está conectado ni sincronizado.",
+  "courses": [
+    {
+      "id": "movimiento-360",
+      "title": "MOVIMIENTO 360°",
+      "category": "ENTRENAMIENTO",
+      "audience": "Adultos que quieren recuperar hábitos, fuerza y libertad de movimiento.",
+      "weeks": 12,
+      "summary": "Una metodología progresiva para entrenar sin improvisar y entender qué hacer cada semana.",
+      "promise": "Al terminar tendrás un plan de actividad de 12 semanas, criterios para adaptarlo y un registro de tu progreso.",
+      "modules": [
+        {
+          "number": "01",
+          "title": "Punto de partida",
+          "detail": "Objetivos, disponibilidad, historial, límites de una autoevaluación."
+        },
+        {
+          "number": "02",
+          "title": "Movimiento con criterio",
+          "detail": "Patrones de fuerza, locomoción, equilibrio y recuperación."
+        },
+        {
+          "number": "03",
+          "title": "Técnica que se puede explicar",
+          "detail": "Control y regresiones para piernas, empuje, tirón y cadera."
+        },
+        {
+          "number": "04",
+          "title": "Fuerza funcional",
+          "detail": "Series, repeticiones, descanso, dificultad y progresión."
+        },
+        {
+          "number": "05",
+          "title": "Movilidad y estabilidad",
+          "detail": "Rangos cómodos, coordinación, base de apoyo."
+        },
+        {
+          "number": "06",
+          "title": "Resistencia sostenible",
+          "detail": "Intensidad percibida, caminar, trabajo continuo y recuperación."
+        },
+        {
+          "number": "07",
+          "title": "Construye tu calendario",
+          "detail": "Microciclos, semanas realistas, adaptación del volumen."
+        },
+        {
+          "number": "08",
+          "title": "Entrena donde estés",
+          "detail": "Casa, bandas y gimnasio; soluciones a los días difíciles."
+        },
+        {
+          "number": "09",
+          "title": "Registra para aprender",
+          "detail": "Tiempo, sensaciones, técnica, adherencia y revisión."
+        },
+        {
+          "number": "10",
+          "title": "Revisión y autonomía",
+          "detail": "Diseña el siguiente bloque sin metas falsas ni extremo físico."
+        }
+      ],
+      "deliverables": [
+        "Libro del alumno",
+        "Plantillas de semanas",
+        "Registro de cargas y tiempos",
+        "Vídeos demostrativos originales pendientes de grabación",
+        "Cuestionarios de cada módulo"
+      ],
+      "project": "Presentar un programa propio de cuatro semanas y explicar tres decisiones técnicas.",
+      "status": "En preparación",
+      "sampleLesson": "/mi-app/academy/lessons/movimiento-360.html",
+      "pageUrl": "/academia#curso-movimiento-360"
+    },
+    {
+      "id": "parkour-lab",
+      "title": "PARKOUR LAB · BASES",
+      "category": "MOVIMIENTO",
+      "audience": "Personas que quieren iniciarse en parkour mediante progresiones seguras.",
+      "weeks": 8,
+      "summary": "Aprende a observar el entorno y construir equilibrio, precisión, apoyos y desplazamiento.",
+      "promise": "Al terminar tendrás una progresión documentada de movimientos básicos de bajo riesgo y criterios para entrenar acompañado.",
+      "modules": [
+        {
+          "number": "01",
+          "title": "Moverse antes de saltar",
+          "detail": "Entorno, calentamiento y evaluación del riesgo."
+        },
+        {
+          "number": "02",
+          "title": "Balance",
+          "detail": "Líneas al nivel del suelo, centros de masa y apoyo."
+        },
+        {
+          "number": "03",
+          "title": "Recepción conceptual",
+          "detail": "Mecánica básica y límites: no practicar caídas desde altura sin supervisión."
+        },
+        {
+          "number": "04",
+          "title": "Cuadrupedia y apoyos",
+          "detail": "Manos, hombros, transición y reparto de cargas."
+        },
+        {
+          "number": "05",
+          "title": "Precisión de pasos",
+          "detail": "Orientación visual y coordinación a ras de suelo."
+        },
+        {
+          "number": "06",
+          "title": "Fuerza para el parkour",
+          "detail": "Control de cadera, tobillo y tronco."
+        },
+        {
+          "number": "07",
+          "title": "Diseño de circuitos seguros",
+          "detail": "Secuencias al nivel del suelo y descansos."
+        },
+        {
+          "number": "08",
+          "title": "Tu recorrido técnico",
+          "detail": "Portafolio propio y siguiente paso supervisado."
+        }
+      ],
+      "deliverables": [
+        "Mapa de progresiones",
+        "Ficha de seguridad de la sesión",
+        "Registro de técnicas",
+        "Vídeos propios de nivel suelo pendientes de grabación",
+        "Rúbrica de control"
+      ],
+      "project": "Grabar o describir una secuencia a ras de suelo y su evaluación de riesgos.",
+      "status": "En preparación",
+      "sampleLesson": "/mi-app/academy/lessons/parkour-lab.html",
+      "pageUrl": "/academia#curso-parkour-lab"
+    },
+    {
+      "id": "coach-studio-ai",
+      "title": "COACH STUDIO IA",
+      "category": "PROFESIONALES",
+      "audience": "Entrenadores y pequeños estudios que desean organizar clientes y procesos con tecnología.",
+      "weeks": 10,
+      "summary": "De hojas dispersas a un sistema profesional de planificación, seguimiento y comunicación con ayuda responsable de IA.",
+      "promise": "Al terminar tendrás un sistema mínimo funcional de organización para tu práctica de entrenador.",
+      "modules": [
+        {
+          "number": "01",
+          "title": "Mapa del negocio real",
+          "detail": "Auditar oferta, alumnos, tareas y cuellos de botella."
+        },
+        {
+          "number": "02",
+          "title": "Experiencia del cliente",
+          "detail": "Onboarding, consentimiento, objetivos, seguimiento."
+        },
+        {
+          "number": "03",
+          "title": "Planificar sin improvisar",
+          "detail": "Sesión, microciclo, mesociclo y objetivos medibles."
+        },
+        {
+          "number": "04",
+          "title": "Biblioteca de ejercicios propia",
+          "detail": "Metadatos, licencias, variantes y vídeos autorizados."
+        },
+        {
+          "number": "05",
+          "title": "Datos útiles sin invadir",
+          "detail": "Registro mínimo, privacidad y acceso por rol."
+        },
+        {
+          "number": "06",
+          "title": "IA como asistente",
+          "detail": "Instrucciones, revisiones humanas, errores y límites."
+        },
+        {
+          "number": "07",
+          "title": "Tablero de seguimiento",
+          "detail": "Adherencia, cargas, tareas y avisos que sí sirven."
+        },
+        {
+          "number": "08",
+          "title": "Comunicación y retención",
+          "detail": "Mensajes de progreso, límites de frecuencia, renovación."
+        },
+        {
+          "number": "09",
+          "title": "Oferta y comercialización",
+          "detail": "Paquetes, página de servicios, CTA, cobro responsable."
+        },
+        {
+          "number": "10",
+          "title": "Tu Coach Studio",
+          "detail": "Implementación guiada y auditoría final de datos y experiencia."
+        }
+      ],
+      "deliverables": [
+        "Mapa de procesos",
+        "Plantilla de onboarding",
+        "Modelo de microciclos",
+        "Inventario de ejercicios",
+        "Guías de prompts seguros",
+        "Checklist de privacidad",
+        "Tablero demostrativo sin datos reales"
+      ],
+      "project": "Diseñar y demostrar un sistema de acompañamiento de un cliente ficticio, con revisión humana.",
+      "status": "En preparación",
+      "sampleLesson": "/mi-app/academy/lessons/coach-studio-ai.html",
+      "pageUrl": "/academia#curso-coach-studio-ai"
+    },
+    {
+      "id": "ia-negocio",
+      "title": "IA PARA NEGOCIOS REALES",
+      "category": "TECNOLOGÍA",
+      "audience": "Autónomos y microempresas que quieren reducir tareas y responder mejor a clientes.",
+      "weeks": 8,
+      "summary": "Sistemas simples de IA, contenidos, seguimiento comercial y automatizaciones autorizadas.",
+      "promise": "Al finalizar tendrás un flujo de captación, respuesta y seguimiento documentado y medible.",
+      "modules": [
+        {
+          "number": "01",
+          "title": "Diagnóstico antes de automatizar",
+          "detail": "Elegir problema, cliente y métrica de resultado."
+        },
+        {
+          "number": "02",
+          "title": "Página que convierte",
+          "detail": "Propuesta clara, prueba útil y solicitud de contacto."
+        },
+        {
+          "number": "03",
+          "title": "Organiza contactos con permiso",
+          "detail": "CRM mínimo, etiquetas, consentimiento, etapas."
+        },
+        {
+          "number": "04",
+          "title": "IA para redactar y revisar",
+          "detail": "Casos de uso, errores, corrección humana."
+        },
+        {
+          "number": "05",
+          "title": "Automatizaciones reversibles",
+          "detail": "Triggers, límites, auditoría, fallos seguros."
+        },
+        {
+          "number": "06",
+          "title": "Contenido que resuelve dudas",
+          "detail": "Investigación y calendario de piezas útiles."
+        },
+        {
+          "number": "07",
+          "title": "Ofertas y cierre responsable",
+          "detail": "Presupuesto, objeciones, seguimiento sin spam."
+        },
+        {
+          "number": "08",
+          "title": "Sistema probado",
+          "detail": "Prototipo, métricas y plan de mejora."
+        }
+      ],
+      "deliverables": [
+        "Mapa de procesos",
+        "Plantilla de CRM",
+        "Biblioteca de mensajes",
+        "Checklist de consentimientos",
+        "Panel de métricas ejemplo",
+        "Modelo de automatización reversible"
+      ],
+      "project": "Mostrar un flujo de servicio que reduzca una tarea medible sin enviar mensajes no solicitados.",
+      "status": "En preparación",
+      "sampleLesson": null,
+      "pageUrl": "/academia#curso-ia-negocio"
+    },
+    {
+      "id": "marca-movimiento",
+      "title": "MARCA EN MOVIMIENTO",
+      "category": "CREACIÓN",
+      "audience": "Entrenadores, creadores y profesionales que desean expresar mejor su experiencia.",
+      "weeks": 6,
+      "summary": "Una identidad editorial, contenido útil y un catálogo coherente sin depender de trucos virales.",
+      "promise": "Al finalizar tendrás una narrativa de marca, 12 piezas planificadas y una propuesta comercial.",
+      "modules": [
+        {
+          "number": "01",
+          "title": "Tu punto de vista",
+          "detail": "Valores, especialidad, historia y límites."
+        },
+        {
+          "number": "02",
+          "title": "El cliente y su problema",
+          "detail": "Escucha, preguntas, contexto y objeciones."
+        },
+        {
+          "number": "03",
+          "title": "Estilo editorial",
+          "detail": "Sistema visual, paleta, tipografía y consistencia."
+        },
+        {
+          "number": "04",
+          "title": "Contenido con sustancia",
+          "detail": "Guion, demostración, explicación y llamada a la acción."
+        },
+        {
+          "number": "05",
+          "title": "Landing y oferta",
+          "detail": "Portfolio, claridad del servicio y contacto."
+        },
+        {
+          "number": "06",
+          "title": "Producción sostenible",
+          "detail": "Calendario, medición y mejoras por evidencia."
+        }
+      ],
+      "deliverables": [
+        "Guía de marca",
+        "Matriz de 12 contenidos",
+        "Guiones de vídeo",
+        "Plantilla de landing",
+        "Calendario editable"
+      ],
+      "project": "Entregar una mini campaña de 12 contenidos y una página de oferta.",
+      "status": "En preparación",
+      "sampleLesson": null,
+      "pageUrl": "/academia#curso-marca-movimiento"
+    },
+    {
+      "id": "disciplina-adaptacion",
+      "title": "DISCIPLINA Y ADAPTACIÓN",
+      "category": "HÁBITOS",
+      "audience": "Personas que desean recuperar estructura, actividad y objetivos realistas.",
+      "weeks": 6,
+      "summary": "Herramientas cotidianas de planificación, hábitos y movimiento inspiradas en experiencias reales de adaptación.",
+      "promise": "Al terminar tendrás un calendario semanal, un sistema de revisión y un conjunto de hábitos elegidos.",
+      "modules": [
+        {
+          "number": "01",
+          "title": "El punto de partida",
+          "detail": "Inventario de tiempo, energía y recursos."
+        },
+        {
+          "number": "02",
+          "title": "Decidir qué importa",
+          "detail": "Prioridades, límites, objetivos semanales."
+        },
+        {
+          "number": "03",
+          "title": "Movimiento como hábito",
+          "detail": "Plan mínimo, práctica flexible y recuperación."
+        },
+        {
+          "number": "04",
+          "title": "Aprender mientras haces",
+          "detail": "Microproyectos y mejora gradual."
+        },
+        {
+          "number": "05",
+          "title": "Red de apoyo",
+          "detail": "Pedir ayuda, relaciones y comunidad."
+        },
+        {
+          "number": "06",
+          "title": "Mantener el sistema",
+          "detail": "Revisión semanal, obstáculos y plan de continuidad."
+        }
+      ],
+      "deliverables": [
+        "Agenda semanal",
+        "Hoja de prioridades",
+        "Plantilla de hábitos",
+        "Cuaderno de revisión"
+      ],
+      "project": "Crear y aplicar un plan semanal durante 14 días, registrando ajustes.",
+      "status": "En preparación",
+      "sampleLesson": null,
+      "pageUrl": "/academia#curso-disciplina-adaptacion"
+    }
+  ],
+  "resources": [
+    {
+      "id": "mes-movimiento",
+      "title": "Tu primer mes de movimiento",
+      "category": "Guías",
+      "summary": "Ebook original · 12 páginas · cuatro semanas y registro.",
+      "type": "PDF",
+      "href": "/downloads/sebastian-bayona/tu-primer-mes-de-movimiento.pdf"
+    },
+    {
+      "id": "movimiento-cotidiano",
+      "title": "Moverte cada día",
+      "category": "Guías",
+      "summary": "Ebook original · 8 páginas · hábitos y movilidad.",
+      "type": "PDF",
+      "href": "/downloads/sebastian-bayona/moverte-cada-dia.pdf"
+    },
+    {
+      "id": "primera-semana",
+      "title": "Tu primera semana",
+      "category": "Plantillas",
+      "summary": "Guía editorial de incorporación al movimiento.",
+      "type": "PDF",
+      "href": "/downloads/bayona-editorial/primera-semana.pdf"
+    },
+    {
+      "id": "registro",
+      "title": "Registro de 30 días",
+      "category": "Plantillas",
+      "summary": "Cuaderno para llevar seguimiento y revisar avances.",
+      "type": "PDF",
+      "href": "/downloads/bayona-editorial/registro-30-dias.pdf"
+    },
+    {
+      "id": "punto-partida",
+      "title": "Dossier: punto de partida",
+      "category": "Plantillas",
+      "summary": "Cuestionario y criterios generales de preparación.",
+      "type": "PDF",
+      "href": "/downloads/bayona-editorial/dossier-punto-de-partida.pdf"
+    },
+    {
+      "id": "movilidad-habitos",
+      "title": "Movilidad y hábitos",
+      "category": "Guías",
+      "summary": "Lectura complementaria de práctica cotidiana.",
+      "type": "PDF",
+      "href": "/downloads/bayona-editorial/movilidad-y-habitos.pdf"
+    },
+    {
+      "id": "plan-fuerza",
+      "title": "Plan de fuerza",
+      "category": "Planificación",
+      "summary": "Material de referencia de programación.",
+      "type": "PDF",
+      "href": "/downloads/bayona-editorial/plan-fuerza.pdf"
+    },
+    {
+      "id": "plan-raiz",
+      "title": "Plan RAÍZ",
+      "category": "Planificación",
+      "summary": "Material editorial de la línea RAÍZ.",
+      "type": "PDF",
+      "href": "/downloads/bayona-editorial/plan-raiz.pdf"
+    },
+    {
+      "id": "plan-rendimiento",
+      "title": "Plan de rendimiento",
+      "category": "Planificación",
+      "summary": "Material de referencia de rendimiento.",
+      "type": "PDF",
+      "href": "/downloads/bayona-editorial/plan-rendimiento.pdf"
+    },
+    {
+      "id": "plan-elite",
+      "title": "Plan ELITE",
+      "category": "Planificación",
+      "summary": "Material editorial de la línea ELITE.",
+      "type": "PDF",
+      "href": "/downloads/bayona-editorial/plan-elite.pdf"
+    }
+  ],
+  "exerciseLibrary": {
+    "label": "PROPLAYER · Biblioteca de ejercicios",
+    "internalSection": "library",
+    "note": "Ya integrada en SB+; las licencias de vídeo se respetan."
+  }
+}

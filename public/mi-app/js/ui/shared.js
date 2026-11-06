@@ -57,6 +57,8 @@ export const PLACES = {
   mind:      { env: "mind",     action: "meditate", cam: [0, 1.0, 2.9],    tgt: [0, 0.7, 0] },
   plan:      { env: "lab",      action: "idle",     cam: [-0.6, 1.4, 3.8], tgt: [0, 1.1, -1] },
   coachos:   { env: "lab",      action: "idle",     cam: [0.2, 1.35, 3.6], tgt: [0, 1.0, -0.5] },
+  academy:   { env: "lab",      action: "idle",     cam: [0.2, 1.35, 3.6], tgt: [0, 1.0, -0.5] },
+  resources: { env: "lab",      action: "idle",     cam: [0.2, 1.35, 3.6], tgt: [0, 1.0, -0.5] },
   centro:    { env: "home",     action: "idle",     cam: [0, 1.15, 3.3],   tgt: [0, 0.95, 0] },
   socios:    { env: "home",     action: "idle",     cam: [0, 1.15, 3.3],   tgt: [0, 0.95, 0] },
   cuotas:    { env: "home",     action: "idle",     cam: [0, 1.15, 3.3],   tgt: [0, 0.95, 0] },
@@ -157,7 +159,7 @@ function renderLockedSection(body, feature) {
 }
 
 export function openSection(name) {
-  const coachOnly = new Set(["coachos","centro","socios","cuotas","agenda","acceso","portal","informes"]);
+  const coachOnly = new Set(["coachos","academy","resources","centro","socios","cuotas","agenda","acceso","portal","informes"]);
   if (coachOnly.has(name) && accountRole() !== "coach") name = "hoy";
   if (document.body.classList.contains("fitness-app") && name === "home") name = "hoy";
   document.body.classList.toggle("avatar-view", name === "armory");
@@ -189,7 +191,7 @@ export function openSection(name) {
   else if (build) build(body);
   body.scrollTop = 0;
   const coachAccount = document.body.dataset.entryRole === "coach";
-  const group = coachAccount && ["coachos","library","agenda","account"].includes(name)
+  const group = coachAccount && ["coachos","academy","resources","library","agenda","account"].includes(name)
     ? name
     : name === "library"
       ? "training"
@@ -221,6 +223,8 @@ export const TITLES = {
   plan:      ["PLAN", "MACROCICLO"],
   planner:   [t("planner.title"), t("planner.kicker")],
   coachos:   ["COACH OS", "CENTRO DE MANDO"],
+  academy:   ["ACADEMIA", "FORMACIONES · LECCIONES ABIERTAS"],
+  resources: ["MI CENTRO DE RECURSOS", "GUÍAS · PDF · PLANIFICACIÓN"],
   centro:    ["Centro", "TU GIMNASIO, DE UN VISTAZO"],
   socios:    ["Socios", "FICHAS · ACTIVIDAD · MEMBRESÍA"],
   cuotas:    ["Cuotas", "PLANES · COBROS · DEUDA"],
