@@ -1,0 +1,26 @@
+/* ACADEMIA SEBASTIAN BAYONA · PWA bridge to the public course catalog */
+.e-role-panel .sb-academy-app-link {
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  width:100%; min-height:52px; padding:15px 17px; margin-top:15px;
+  border:1px solid rgba(218,178,130,.38); border-radius:8px;
+  background:linear-gradient(90deg,rgba(201,142,79,.1),rgba(201,142,79,.03));
+  color:#e6c198; text-decoration:none;
+  font:700 11px/1.5 'DM Mono',ui-monospace,monospace;
+  letter-spacing:.07em; box-shadow:none;
+}
+.e-role-panel .sb-academy-app-link:hover { border-color:#e1b88b; background:rgba(201,142,79,.14); color:#f8daba; }
+.e-role-panel .sb-academy-app-link:focus-visible,
+#panel-foot .sb-academy-dashboard-link:focus-visible {
+  outline:2px solid #e6be91; outline-offset:4px;
+}
+#panel-foot .sb-academy-dashboard-link {
+  display:inline-flex;align-items:center;gap:7px;
+  margin-inline:9px;color:#dabb96;text-decoration:none;
+  font:700 10px/1.5 'DM Mono',ui-monospace,monospace;
+  letter-spacing:.045em;
+}
+#panel-foot .sb-academy-dashboard-link:hover {text-decoration:underline;color:#ffe0ba;}
+@media(max-width:700px){
+  .e-role-panel .sb-academy-app-link{min-height:50px;font-size:10px;padding:13px}
+  #panel-foot .sb-academy-dashboard-link{font-size:10px;margin-inline:4px}
+}
