@@ -696,6 +696,7 @@ export default function Shop() {
         <p>¿Buscas entrenamiento además de equipamiento?</p>
         <div className="shop-training-bridge-actions">
           <Link to="/programs">VER SERVICIOS <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></Link>
+          <Link to="/academia">FORMACIONES DIGITALES <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></Link>
           <a href="/#empieza">EMPIEZA GRATIS <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" /></a>
         </div>
       </aside>
