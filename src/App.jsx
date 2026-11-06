@@ -39,6 +39,7 @@ const AdaptedMovement = lazy(() => import('./pages/AdaptedMovement.jsx'))
 const ParkourAcademy = lazy(() => import('./pages/ParkourAcademy'))
 const PlanPresentation = lazy(() => import('./pages/PlanPresentation'))
 const Shop = lazy(() => import('./pages/Shop'))
+const Academy = lazy(() => import('./pages/Academy.jsx'))
 /*
  * BAYONA App · integración 2026-10-12:
  *  - /app es la presentación pública del producto.
@@ -245,6 +246,7 @@ function Site() {
               <Route path="/plan/rendimiento" element={<PlanPresentation planId="rendimiento" />} />
               <Route path="/plan/elite" element={<PlanPresentation planId="elite" />} />
               <Route path="/shop" element={<Shop />} />
+              <Route path="/academia" element={<Academy />} />
               <Route path="/app" element={<AppEntry />} />
               {/* Compatibilidad histórica: el panel antiguo converge en Mi App. */}
               <Route path="/panel" element={<IntegratedAppRedirect />} />
