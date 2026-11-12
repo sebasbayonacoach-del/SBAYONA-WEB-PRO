@@ -23,6 +23,7 @@ import {
 import Tilt from 'react-parallax-tilt'
 import Marquee from 'react-fast-marquee'
 import { toast } from 'sonner'
+import ApparelLaunch from '../components/shop/ApparelLaunch.jsx'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps, StockImage } from '../components/SceneBackground.jsx'
 import {
@@ -504,6 +505,8 @@ export default function Shop() {
           ))}
         </div>
       </section>
+
+      <ApparelLaunch />
 
       <section
         className="shop-feature"
