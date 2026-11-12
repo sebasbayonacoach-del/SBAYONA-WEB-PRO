@@ -1,0 +1,207 @@
+/* BAYONA / clothing drop preview — self-contained, no product-photo misrepresentation. */
+.bayona-clothing {
+  --bcl-ink: #f4f1eb;
+  --bcl-gold: #c6a77b;
+  --bcl-muted: #b8b8b1;
+  position: relative;
+  padding: clamp(68px, 9vw, 150px) clamp(19px, 4.5vw, 76px);
+  color: var(--bcl-ink);
+  background: #121313;
+  isolation: isolate;
+  scroll-margin-top: 96px;
+}
+.bayona-clothing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 75% 0%, rgba(198,167,123,.10), transparent 45%);
+}
+.bayona-clothing__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(270px, .7fr);
+  align-items: end;
+  max-width: 1500px;
+  margin: 0 auto clamp(36px, 5vw, 68px);
+  gap: 24px;
+}
+.bayona-clothing__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 25px;
+  font: 700 .70rem/1.5 ui-monospace, monospace;
+  letter-spacing: .17em;
+  color: var(--bcl-gold);
+}
+.bayona-clothing__header h2 {
+  margin: 0;
+  font: 850 clamp(2.75rem, 7.7vw, 8.9rem)/.94 Inter, 'Montserrat', sans-serif;
+  letter-spacing: -.08em;
+}
+.bayona-clothing__header h2 em {
+  color: var(--bcl-gold);
+  font-style: normal;
+}
+.bayona-clothing__intro {
+  padding: 0 0 10px;
+}
+.bayona-clothing__intro > span {
+  color: var(--bcl-gold);
+  font: 650 .65rem/1.6 ui-monospace, monospace;
+  letter-spacing: .16em;
+}
+.bayona-clothing__intro p {
+  max-width: 35ch;
+  color: #d1d2ce;
+  font: 400 1rem/1.7 Inter, sans-serif;
+  margin: 17px 0 22px;
+}
+.bayona-clothing a {
+  color: inherit;
+  text-decoration: none;
+}
+.bayona-clothing__intro a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  font: 700 .72rem/1.5 ui-monospace, monospace;
+  letter-spacing: .10em;
+  border-bottom: 1px solid var(--bcl-gold);
+}
+.bayona-clothing a:focus-visible { outline: 2px solid var(--bcl-gold); outline-offset: 4px; }
+.bayona-clothing__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1500px;
+  margin: 0 auto;
+  gap: clamp(10px, 1.4vw, 22px);
+}
+.bayona-clothing__piece {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #43433e;
+  background: #1b1c1b;
+}
+.bayona-clothing__piece-index {
+  padding: 18px 21px 13px;
+  color: var(--bcl-gold);
+  font: 700 .63rem/1.5 ui-monospace, monospace;
+  letter-spacing: .18em;
+}
+.bayona-clothing__piece-art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1.46;
+  margin: 0 13px;
+  overflow: hidden;
+  border: 1px solid #333b3a;
+  background: linear-gradient(135deg, #30322f 0%, #222724 50%, #0d1210 100%);
+}
+.bayona-clothing__piece:nth-child(2n) .bayona-clothing__piece-art {
+  background: linear-gradient(132deg, #444037 0%, #292723 45%, #111313 100%);
+}
+.bayona-clothing__piece-art > span {
+  font: 900 clamp(5.5rem, 13vw, 13rem)/1 Inter, sans-serif;
+  letter-spacing: -.14em;
+  padding-right: 14%;
+  color: rgba(255,255,255,.16);
+  user-select: none;
+}
+.bayona-clothing__piece-art > small {
+  position: absolute;
+  bottom: 16px;
+  left: 17px;
+  color: #d9ccba;
+  font: 700 .63rem/1.4 ui-monospace, monospace;
+  letter-spacing: .17em;
+}
+.bayona-clothing__piece-info {
+  padding: 22px 21px 20px;
+  flex: 1;
+}
+.bayona-clothing__piece-info p {
+  margin: 0 0 9px;
+  font: 650 .63rem/1.5 ui-monospace, monospace;
+  letter-spacing: .10em;
+  color: var(--bcl-gold);
+}
+.bayona-clothing__piece-info h3 {
+  margin: 0 0 12px;
+  font: 800 clamp(1.1rem, 2vw, 1.65rem)/1.2 Inter, sans-serif;
+  letter-spacing: -.04em;
+}
+.bayona-clothing__piece-info > span {
+  color: var(--bcl-muted);
+  font: 400 .82rem/1.6 Inter, sans-serif;
+}
+.bayona-clothing__piece > a {
+  display: flex;
+  min-height: 53px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  padding: 12px 21px;
+  border-top: 1px solid #45443e;
+  font: 700 .68rem/1.4 ui-monospace, monospace;
+  letter-spacing: .08em;
+  transition: background .2s ease;
+}
+.bayona-clothing__piece > a:hover { background: #313027; }
+.bayona-clothing__journey {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 45px);
+  max-width: 1500px;
+  margin: clamp(60px, 7vw, 105px) auto 0;
+  padding-top: 25px;
+  border-top: 1px solid #5b5951;
+}
+.bayona-clothing__journey > div > span {
+  display: block;
+  color: var(--bcl-gold);
+  font: 700 .72rem/1.5 ui-monospace, monospace;
+  margin-bottom: 10px;
+}
+.bayona-clothing__journey strong {
+  display: block;
+  font: 800 1.08rem/1.4 Inter, sans-serif;
+}
+.bayona-clothing__journey p {
+  color: var(--bcl-muted);
+  font: 400 .9rem/1.6 Inter, sans-serif;
+  margin: 8px 0 0;
+}
+.bayona-clothing__honesty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 1500px;
+  margin: 38px auto 0;
+  font: 400 .75rem/1.6 Inter, sans-serif;
+  color: #d1c8b9;
+}
+.bayona-clothing__honesty svg { flex: none; }
+@media (max-width: 1000px) {
+  .bayona-clothing__header { grid-template-columns: 1fr; }
+  .bayona-clothing__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bayona-clothing__header h2 { font-size: clamp(3.2rem, 11vw, 7.3rem); }
+}
+@media (max-width: 640px) {
+  .bayona-clothing { padding: 66px 18px 74px; }
+  .bayona-clothing__header h2 { font-size: clamp(2.8rem, 12.5vw, 4.7rem); }
+  .bayona-clothing__grid { grid-template-columns: 1fr; }
+  .bayona-clothing__piece-art { aspect-ratio: 1.7; }
+  .bayona-clothing__journey { grid-template-columns: 1fr; gap: 24px; }
+  .bayona-clothing__intro { padding: 0; }
+  .bayona-clothing__honesty { align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bayona-clothing__piece > a { transition: none; }
+}
