@@ -67,6 +67,8 @@ La web actual en esta rama incluye 14 referencias textiles (6 de entrenamiento +
 
 - Sourcing de los 18 SKU preparado en `src/config/apparelSourcing.js`.
 - Seis productos de lanzamiento mostrados como **prelanzamiento**, dentro de `Shop.jsx`, gracias a `ApparelLaunch.jsx` + `shop-clothing-drop.css`.
+- Los 18 productos textiles y de calzado del catálogo anterior se han protegido en `src/pages/Shop.jsx`: se ocultan los precios estáticos en COP, se deshabilita su botón para añadir al carrito y se sustituye la compra por una consulta de prelanzamiento. También se bloquea el producto destacado (hoodie Origins) si pertenece al grupo aún no validado.
+- Se añade `src/config/apparelSourcing.test.js` con cuatro pruebas automáticas para comprobar cobertura de los 18 SKU, selección de seis, exclusión de cinco claims no verificados y ausencia de stock/precios inventados. **Las pruebas están escritas, pero no ejecutadas**: el ordenador remoto sigue desconectado y GitHub no ha publicado resultados CI.
 - Se han creado **dos borradores en Gmail** (sin enviar) para Muchacho Studio y 8Merch para cotización inicial.
 - El Excel de proveedores y márgenes fue entregado como anexo en el chat.
 - **NO** hay proveedor aceptado, muestra aprobada, checkout de ropa operativo ni despliegue público. El próximo paso que depende de terceros es su respuesta de costes y la conexión de Shopify/Printful.
