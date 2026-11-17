@@ -10,6 +10,15 @@ on:
       - 'src/components/shop/ApparelLaunch.jsx'
       - 'src/styles/shop-clothing-drop.css'
       - '.github/workflows/bayona-apparel-check.yml'
+  pull_request:
+    branches:
+      - feature/coachos-academy-library-20261106
+    paths:
+      - 'src/pages/Shop.jsx'
+      - 'src/config/apparel*.js'
+      - 'src/components/shop/ApparelLaunch.jsx'
+      - 'src/styles/shop-clothing-drop.css'
+      - '.github/workflows/bayona-apparel-check.yml'
   workflow_dispatch:
 
 permissions:
