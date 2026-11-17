@@ -25,6 +25,7 @@ import Marquee from 'react-fast-marquee'
 import { toast } from 'sonner'
 import ApparelLaunch from '../components/shop/ApparelLaunch.jsx'
 import { apparelSourcing } from '../config/apparelSourcing.js'
+import { storefrontProducts } from '../config/apparelCatalog.js'
 import { whatsAppLink } from '../config/site.config.js'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps, StockImage } from '../components/SceneBackground.jsx'
@@ -46,7 +47,7 @@ import '../styles/shop-unified-catalog.css'
 import '../styles/shop-gym-funnel-v2.css'
 
 const HERO_LINES = ['PIEZAS PARA', 'TU CAMINO.']
-const PRODUCT_COUNT = shopProducts.length
+const PRODUCT_COUNT = storefrontProducts.length
 const SHOP_ICONS = Object.freeze({
   cpu: Cpu,
   download: Download,
@@ -199,7 +200,12 @@ function ProductCard({ product, reducedMotion }) {
         onPointerLeave={pointerEffects ? resetCardSpotlight : undefined}
       >
         <div className="shop-product-visual">
-          {product.media ? (
+          {isApparelUnderReview ? (
+            <div className="bayona-clothing__unverified-art" role="img" aria-label="Gráfico editorial de BAYONA; todavía no es una fotografía de la prenda">
+              <strong aria-hidden="true">B.</strong>
+              <small>DISEÑO EN PREPARACIÓN</small>
+            </div>
+          ) : product.media ? (
             <StockImage
               media={product.media}
               className="shop-product-image stock-media-image"
@@ -339,7 +345,7 @@ export default function Shop() {
   const [searchParams] = useSearchParams()
   const requestedProduct = useMemo(() => {
     const requestedId = searchParams.get('product')
-    return requestedId ? shopProducts.find((product) => product.id === requestedId) ?? null : null
+    return requestedId ? storefrontProducts.find((product) => product.id === requestedId) ?? null : null
   }, [searchParams])
   const [collectionId, setCollectionId] = useState('all')
   const [category, setCategory] = useState('Todo')
@@ -350,9 +356,9 @@ export default function Shop() {
   const cartCount = useCartStore(selectCartCount)
   const cartTotalCOP = useCartStore(selectCartTotalCOP)
   const { reducedMotion, mode } = useCapabilities()
-  const featuredProduct = shopProducts.find(({ featured }) => featured) ?? shopProducts[0]
+  const featuredProduct = storefrontProducts.find(({ featured }) => featured) ?? storefrontProducts[0]
   const featuredApparelUnderReview = Boolean(apparelSourcing[featuredProduct.id])
-  const fuse = useMemo(() => new Fuse(shopProducts, {
+  const fuse = useMemo(() => new Fuse(storefrontProducts, {
     keys: ['name', 'description', 'category', 'collection', 'collectionTitle'],
     threshold: 0.34,
     distance: 100,
@@ -360,7 +366,7 @@ export default function Shop() {
     minMatchCharLength: 2,
   }), [])
   const searchedProducts = useMemo(
-    () => query.trim() ? fuse.search(query.trim()).map(({ item }) => item) : shopProducts,
+    () => query.trim() ? fuse.search(query.trim()).map(({ item }) => item) : storefrontProducts,
     [fuse, query],
   )
   const visibleProducts = useMemo(
