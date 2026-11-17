@@ -34,7 +34,6 @@ import {
   shopCategoryFilters,
   shopCollectionFilters,
   shopCollections,
-  shopProducts,
 } from '../config/shopProducts.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { motionTokens } from '../engine/config/motionTokens.js'
