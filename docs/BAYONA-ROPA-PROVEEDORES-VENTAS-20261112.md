@@ -78,3 +78,31 @@ La web actual en esta rama incluye 14 referencias textiles (6 de entrenamiento +
 - Cart checkout URL: https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/cart/manage
 - Vincular Printful y Shopify: https://help.printful.com/hc/es/articles/50262260641297--C%C3%B3mo-conecto-mi-tienda-de-Shopify-con-Printful
 - Sincronización de stock: https://help.printful.com/hc/es/articles/50263482677009--Qu%C3%A9-es-la-sincronizaci%C3%B3n-del-stock-de-productos-y-c%C3%B3mo-afecta-a-mi-tienda
+
+## Ampliación ejecutada el 17 de noviembre de 2026
+
+### Solicitudes comerciales enviadas desde Gmail
+1. Muchacho Studio, `hola@muchachostudio.com` — prendas Stanley/Stella, bordados, gorras, muestras y 10/25/50 uds.
+2. 8Merch, `services@8merch.com` — equivalentes con producción, empaquetado y preparación de pedidos internacionales.
+3. Gor Factory / Roly, `info@gorfactory.es` — shorts técnicos, tirantes, cortavientos, comercial en la Comunidad Valenciana.
+4. Protex, `contacto@protex.es` — prototipos de leggings, tops y ropa técnica con marca propia en España.
+5. MLS Textiles 1992, `mls@mls1992.com` — calcetines técnicos y prendas de compresión a valorar en Ontinyent; pedir acreditación de cualquier alegación técnica.
+6. Bullfeet, `customer@bullfeet.com` — zapatillas personalizadas casuales y confirmación del uso recomendado; **no equivalen a zapatillas aprobadas para parkour**.
+
+Los seis correos constan enviados, pero ninguno acredita todavía un contrato, suministro aceptado, stock ni presupuesto final.
+
+### Seguridad comercial adicional
+- Se creó `src/config/apparelCatalog.js` para filtrar del escaparate 5 referencias con claims sin verificar: camiseta de compresión, chaqueta "Windstopper", calcetines de compresión y dos zapatillas técnicas. Los IDs y sus candidatos permanecen documentados internamente.
+- En `src/pages/Shop.jsx`, los demás textiles del grupo de 18 no se añaden al carrito y no muestran los precios anteriores en COP como precios de venta: solo admiten consulta de prelanzamiento.
+- La imagen del producto aún no fabricado se sustituye por un gráfico editorial con texto "DISEÑO EN PREPARACIÓN", para no fingir que existe una fotografía del producto acabado.
+- Se añadieron pruebas de catálogo `src/config/apparelCatalog.test.js` y un workflow `.github/workflows/bayona-apparel-check.yml` de test, lint y `npm run build`. **Pendiente de resultados de ejecución en GitHub Actions**.
+- Solicitud de integración [PR 12](https://github.com/sebasbayonacoach-del/SBAYONA-WEB-PRO/pull/12) abierta en modo borrador, sin fusionar ni desplegar.
+- Automatización diaria creada para revisar respuestas comerciales nuevas; sin respuestas nuevas, no envía avisos; no acepta cotizaciones ni compras.
+
+### Siguientes pasos que dependen de terceros
+- Obtener **oferta por escrito**, muestras y fichas técnicas de al menos las tres prendas prioritarias antes de establecer PVP final.
+- Verificar facturación de la actividad y el alcance de obligaciones fiscales/consumidor aplicables.
+- Conectar/crear una tienda Shopify real (el acceso mediante ChatGPT no está conectado), asignar proveedor y SKU/variante, configurar impuestos, entrega y devoluciones y ejecutar un pedido de prueba.
+- No fusionar PR 12 ni activar la venta de prendas con promesas técnicas sin garantía y validación.
+
+Referencias proveedor: https://protex.es/tu-marca/ , https://mls1992.com/fabricante-de-calcetines-tecnicos/ , https://bullfeet.com/es/pages/personalizar-zapatillas .
