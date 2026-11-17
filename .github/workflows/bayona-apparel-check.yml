@@ -9,6 +9,7 @@ on:
       - 'src/config/apparel*.js'
       - 'src/components/shop/ApparelLaunch.jsx'
       - 'src/styles/shop-clothing-drop.css'
+      - 'e2e/bayona-apparel-20261117.spec.js'
       - '.github/workflows/bayona-apparel-check.yml'
   pull_request:
     branches:
@@ -18,6 +19,7 @@ on:
       - 'src/config/apparel*.js'
       - 'src/components/shop/ApparelLaunch.jsx'
       - 'src/styles/shop-clothing-drop.css'
+      - 'e2e/bayona-apparel-20261117.spec.js'
       - '.github/workflows/bayona-apparel-check.yml'
   workflow_dispatch:
 
@@ -46,3 +48,7 @@ jobs:
         run: npx vitest --run src/config/apparelSourcing.test.js src/config/apparelCatalog.test.js
       - name: Compilar sitio y ejecutar auditorías de producción
         run: npm run build
+      - name: Instalar Chromium para prueba funcional del escaparate
+        run: npx playwright install --with-deps chromium
+      - name: Verificar la tienda de ropa en navegador de escritorio y móvil
+        run: npx playwright test e2e/bayona-apparel-20261117.spec.js --reporter=list
