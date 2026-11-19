@@ -73,12 +73,13 @@ export default function HomeAtelier() {
         </div>
         <div className="atelier-frame atelier-hero__content">
           <div className="atelier-hero__prelude">
-            <span className="atelier-kicker">SEBASTIAN BAYONA <i aria-hidden="true" /> HUMAN MOVEMENT STUDIO</span>
+            <span className="atelier-kicker">SEBASTIÁN BAYONA <i aria-hidden="true" /> HUMAN MOVEMENT STUDIO</span>
             <span className="atelier-edition">EST. 2026 / ESPAÑA</span>
           </div>
           <div className="atelier-hero__statement">
             <p className="atelier-hero__eyebrow">DONDE LA CIENCIA SE ENCUENTRA CON EL MOVIMIENTO</p>
-            <h1 id="atelier-hero-title">EL ARTE<br /><em>DE MOVERTE.</em></h1>
+            <h1 id="atelier-hero-title"><span className="atelier-hero__person">SEBASTIÁN</span><em>BAYONA.</em></h1>
+            <p className="atelier-hero__subhead">EL ARTE DE MOVERTE</p>
             <p className="atelier-hero__summary">Entrena con criterio. Descarga dos ebooks gratis, descubre tu primer plan de 30 días y encuentra la forma de moverte que mejor encaja contigo.</p>
             <div className="atelier-hero__actions">
               <a className="atelier-button atelier-button--light" href="#regalos-gratis" onClick={() => trackEvent('studio_home_free_hero', { source: 'home_hero' })}>
@@ -112,7 +113,7 @@ export default function HomeAtelier() {
             </div>
           </div>
           <figure className="atelier-manifesto__figure">
-            <img src="/images/bayona-generated/about-story-1600.webp" alt="Escena conceptual de una conversación durante una sesión de entrenamiento" width="1600" height="1000" loading="eager" decoding="async" />
+            <img src="/images/bayona-generated/about-story-1600.webp" alt="Escena conceptual de una conversación durante una sesión de entrenamiento" width="1600" height="1000" loading="lazy" decoding="async" />
             <figcaption><span>ENFOQUE PERSONAL</span><span>FÍSICO · MENTAL · HUMANO</span></figcaption>
           </figure>
         </div>
@@ -135,7 +136,7 @@ export default function HomeAtelier() {
                   className="atelier-experience__image"
                   style={{ backgroundImage: `url(${item.image})`, backgroundPosition: 'center', backgroundSize: 'cover' }}
                 >
-                  <img src={item.image} alt={item.imageAlt} loading="eager" decoding="async" width="1600" height="1000" />
+                  <img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" width="1600" height="1000" />
                   <span className="atelier-experience__number">{item.index} / 03</span>
                   <span className="atelier-experience__action" aria-hidden="true"><MoveUpRight size={22} strokeWidth={1.5} /></span>
                 </div>
