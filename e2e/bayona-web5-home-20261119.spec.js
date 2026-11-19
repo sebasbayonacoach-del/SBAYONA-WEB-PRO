@@ -29,7 +29,10 @@ test('navegación principal: etiquetas oficiales y dos destinos digitales difere
   }
   await expect(page.locator('a.nav-app-entry')).toHaveAttribute('href', '/mi-app/index.html?source=pwa')
   await expect(page.locator('a.nav-app-entry')).toContainText('MI APP')
-  await page.locator('a.nav-cta').click()
+  // En escritorio la barra compacta oculta su CTA secundario por diseño.
+  // La invitación visible del hero debe llegar al mismo contenido gratuito.
+  await expect(page.locator('a.nav-cta')).toHaveAttribute('href', '/#regalos-gratis')
+  await page.locator('.atelier-hero__actions a[href="#regalos-gratis"]').click()
   await expect(page).toHaveURL(/#regalos-gratis$/)
   await expect(page.locator('#regalos-gratis')).toBeVisible()
 })
