@@ -80,3 +80,11 @@ Los tres PDF incluyen **dos opciones de camiseta simultáneamente** (bordada y D
 
 **Próximos pasos:** solicitar por escrito una única proforma definitiva **sin camiseta DTF**, con 1 muestra por SKU, tabla de tallas/gramajes/composición, coste de reposición de 10 unidades después de haber pagado el picaje en muestras, plazos de envío y política de defectos; no volver a pedir información ya respondida. Comparar con 8Merch y Roly cuando contesten. Primer seguimiento a no respondientes del 17/11 **no antes del 24/11/2026** (cinco días hábiles completos: 18, 19, 20, 23 y 24; prudencialmente desde el 25/11).
 
+
+## 21/11/2026 — negociación de muestras y reposición
+
+Gmail revisado: no hay respuestas posteriores a la cotización del 19/11 entre los seis dominios consultados. Gor Factory derivó el 18/11 a PUBLIKA GESTION PUBLICITARIA, SL (tel. 962912009); no es una cotización. Protex espera diseños desarrollados. No se envían seguimientos a proveedores silenciosos antes del 25/11.
+
+Enviado correo a Lidia en hilo P263705, Gmail ID `1a1fd50fc48e10b5`, solicitando cotización exclusiva de tres muestras negras bordadas, confirmación de 301,44 € IVA incluido, reposición de 10 por SKU sin repetir picajes/archivos, posibilidad de compartir picaje, fichas de composición/gramaje/tallas, plazo y procedimiento de defectos. Sin pedido ni pago.
+
+Escenario de caja condicionado a que se descuenten los tres picajes y preparaciones completos: 817,88 − 158,70 = 659,18 € sin IVA, 797,61 € con IVA para reposición de 30 prendas; junto con muestras, 1.099,05 € de caja total. Diferencia frente a compra directa de 30: 109,42 €. No incluye logística al consumidor, comisiones, devoluciones ni publicidad. No es oferta definitiva ni margen confirmado. No autorizar producción. Próximo paso: comparar respuesta y alternativa POD; mantener PR en borrador.
