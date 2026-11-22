@@ -48,19 +48,19 @@ const MotionLink = motion.create(Link)
 // Follow the same linear visitor journey as EditorialOutro and the home.
 // Home is always the brand link, while FAQ is a secondary menu destination.
 const NAV_ITEMS = Object.freeze([
-  { label: 'La Historia', href: '/about' },
+  { label: 'Nosotros', href: '/about' },
   { label: 'Experiencias', href: '/programs' },
-  { label: 'Academia', href: '/academia' },
   { label: 'Parkour Lab', href: '/parkour-academy' },
   { label: 'El Círculo', href: '/community' },
-  { label: 'SB+', href: '/app' },
-  { label: 'La Colección', href: '/shop' },
-  { label: 'La Biblioteca', href: '/resources' },
+  { label: 'BAYONA+', href: '/app' },
+  { label: 'Tienda', href: '/shop' },
+  { label: 'Recursos', href: '/resources' },
 ])
 
 const MOBILE_NAV_ITEMS = Object.freeze([
   { label: 'Inicio', href: '/' },
   ...NAV_ITEMS,
+  { label: 'Academia', href: '/academia' },
   { label: 'Preguntas', href: '/faq' },
 ])
 
@@ -197,8 +197,8 @@ export function Navbar() {
           </NavLink>
         ))}
       </nav>
-      <a className="nav-app-entry" href={BAYONA_APP_ENTRY_URL} aria-label="Abrir SB+ Studio">
-        SB+ <ArrowUpRight size={14} strokeWidth={1.4} aria-hidden="true" />
+      <a className="nav-app-entry" href={BAYONA_APP_ENTRY_URL} aria-label="Abrir Mi App BAYONA para atletas y entrenadores">
+        MI APP <ArrowUpRight size={14} strokeWidth={1.4} aria-hidden="true" />
       </a>
       <button
         className="site-theme-toggle"
@@ -227,7 +227,7 @@ export function Navbar() {
           <span className="nav-cart-count" aria-hidden="true">{cartCount}</span>
         </button>
       ) : null}
-      <a className="nav-cta gym-nav-cta" href="/#empieza" aria-label="Empieza gratis con SEBASTIAN BAYONA">
+      <a className="nav-cta gym-nav-cta" href="/#regalos-gratis" aria-label="Descargar recursos gratuitos de SEBASTIÁN BAYONA">
         Empieza gratis <ArrowUpRight size={15} strokeWidth={1} />
       </a>
       <button
@@ -273,11 +273,11 @@ export function Navbar() {
             </div>
             <div className="gym-mobile-nav-conversion">
               <a className="gym-mobile-nav-app" href={BAYONA_APP_ENTRY_URL} onClick={close}>
-                ABRIR SB+ <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
+                ABRIR MI APP <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
               </a>
               <p>Tu primera decisión no cuesta nada.</p>
               <span>Descarga tus recursos de inicio gratis, sin registrarte. Si quieres entrenar, escríbenos.</span>
-              <a href="/#empieza" onClick={close}>
+              <a href="/#regalos-gratis" onClick={close}>
                 EMPIEZA GRATIS <ArrowUpRight size={20} strokeWidth={1.2} aria-hidden="true" />
               </a>
               <a

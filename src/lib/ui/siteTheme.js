@@ -1,15 +1,15 @@
 /**
  * Preferencia visual explícita de BAYONA.
- * Noche es el estado inicial de marca; día solo se activa por decisión
- * del visitante y se conserva entre rutas y sesiones en este navegador.
+ * Día es el estado inicial editorial; la elección del visitante
+ * se conserva entre rutas y sesiones en este navegador.
  */
 export const SITE_THEME_KEY = 'bayona-site-theme'
 
 export function readSiteTheme() {
   try {
-    return window.localStorage.getItem(SITE_THEME_KEY) === 'day' ? 'day' : 'night'
+    return window.localStorage.getItem(SITE_THEME_KEY) === 'night' ? 'night' : 'day'
   } catch {
-    return 'night'
+    return 'day'
   }
 }
 

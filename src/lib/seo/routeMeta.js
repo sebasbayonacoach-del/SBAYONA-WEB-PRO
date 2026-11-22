@@ -19,10 +19,10 @@ import { BRAND } from '../../config/site.config.js'
 export const TITLE_SUFFIX = `${BRAND.name}`
 
 /** Título de la home: se usa tal cual, sin sufijo, porque ya contiene la marca. */
-const HOME_TITLE = 'SEBASTIAN BAYONA — Movimiento con dirección'
+const HOME_TITLE = 'SEBASTIÁN BAYONA — Movimiento sin fronteras'
 
 const HOME_DESCRIPTION =
-  'Entrenamiento personal y online con planes claros, seguimiento humano, parkour, movilidad, recuperación y recursos gratuitos para empezar.'
+  'Entrenamiento online, parkour y recursos gratuitos de Sebastián Bayona para Colombia y España. Descubre experiencias y consulta opciones de acompañamiento.'
 
 /**
  * Rutas con contenido propio. La clave es el pathname exacto.
@@ -45,7 +45,7 @@ const STATIC_ROUTES = {
   '/programs': {
     title: 'Experiencias — Entrenamiento personal y online',
     description:
-      'Servicios SEBASTIAN BAYONA: entrenamiento personal, online, membresías, recuperación, movilidad, parkour y rendimiento con precios y alcance visibles.',
+      'Explora entrenamiento online, movimiento y parkour con Sebastián Bayona. Consulta modalidades, precios, cobertura y requisitos según tu país.',
     breadcrumb: [['Experiencias', '/programs']],
   },
   '/movimiento-adaptado': {
@@ -63,7 +63,7 @@ const STATIC_ROUTES = {
   '/shop': {
     title: 'La Colección — Equipamiento y estilo de movimiento',
     description:
-      'Tienda SEBASTIAN BAYONA de ropa, calzado, equipamiento, máquinas y nutrición. Explora por categoría, revisa precios en COP y confirma disponibilidad por WhatsApp.',
+      'Colección BAYONA de ropa y artículos de movimiento. Consulta disponibilidad, precios finales y condiciones de envío para Colombia o España antes de comprar.',
     breadcrumb: [['La Colección', '/shop']],
   },
   '/academia': {

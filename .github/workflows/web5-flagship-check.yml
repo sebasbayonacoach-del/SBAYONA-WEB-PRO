@@ -1,0 +1,47 @@
+name: BAYONA WEB 5.0 · portada y navegación
+
+on:
+  push:
+    branches:
+      - feature/web5-flagship-home-navigation-20261119
+  pull_request:
+    branches:
+      - feature/coachos-academy-library-20261106
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-build-visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      CI: 'true'
+    steps:
+      - name: Código de WEB 5.0
+        uses: actions/checkout@v4
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Instalar con versiones bloqueadas
+        run: npm ci --no-audit --no-fund
+      - name: Lint de componentes editados
+        run: npx eslint src/components/Layout.jsx src/pages/HomeAtelier.jsx e2e/bayona-web5-home-20261119.spec.js
+      - name: Build público y auditorías
+        run: npm run build
+      - name: Preparar navegador de pruebas
+        run: npx playwright install --with-deps chromium
+      - name: Validar portada, CTA, PDF y vista móvil
+        run: npx playwright test e2e/bayona-web5-home-20261119.spec.js --reporter=list
+      - name: Recopilar evidencias cuando falle
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bayona-web5-playwright
+          path: |
+            test-results/playwright/
+            playwright-report/
+          retention-days: 7
