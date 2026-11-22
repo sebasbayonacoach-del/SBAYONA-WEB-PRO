@@ -7,6 +7,8 @@ test('la portada identifica a Sebastián Bayona y ofrece dos recursos de valor i
   await expect(page.getByRole('heading', { level: 1, name: 'SEBASTIÁN BAYONA.' })).toBeVisible()
   await expect(page.locator('.atelier-hero__subhead')).toHaveText('EL ARTE DE MOVERTE')
   await expect(page.locator('#regalos-gratis')).toHaveCount(1)
+  await expect(page.locator('#ediciones')).toHaveCount(1)
+  await expect(page.locator('.atelier-edition')).toHaveText('COLOMBIA × ESPAÑA')
   await expect(page.locator('#plan-30-dias')).toHaveCount(1)
   await expect(page.locator('.atelier-experience img').first()).toHaveAttribute('loading', 'lazy')
   expect(errors).toEqual([])
@@ -70,4 +72,18 @@ test('portada legible sin desbordamiento horizontal en móviles', async ({ page 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
     expect(overflow, `desbordamiento a ${width}px`).toBeLessThanOrEqual(1)
   }
+})
+
+test('ediciones Colombia y España permiten contacto dirigido sin inventar reservas', async ({ page }) => {
+  await page.goto('/#ediciones')
+  const section = page.locator('#ediciones')
+  await expect(section.getByRole('heading', { name: /DOS PAÍSES/ })).toBeVisible()
+  await expect(section.getByRole('link', { name: /CONSULTAR DESDE ESPAÑA/ })).toHaveAttribute('href', /wa\.me\/34641698332\?text=.*Espa/)
+  await expect(section.getByRole('link', { name: /CONSULTAR DESDE COLOMBIA/ })).toHaveAttribute('href', /wa\.me\/34641698332\?text=.*Colombia/)
+  await expect(section).toContainText('Consultar no supone una reserva confirmada')
+})
+
+test('modo día inicial, con opción de preferencia nocturna', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'day')
 })
