@@ -88,3 +88,32 @@ Gmail revisado: no hay respuestas posteriores a la cotización del 19/11 entre l
 Enviado correo a Lidia en hilo P263705, Gmail ID `1a1fd50fc48e10b5`, solicitando cotización exclusiva de tres muestras negras bordadas, confirmación de 301,44 € IVA incluido, reposición de 10 por SKU sin repetir picajes/archivos, posibilidad de compartir picaje, fichas de composición/gramaje/tallas, plazo y procedimiento de defectos. Sin pedido ni pago.
 
 Escenario de caja condicionado a que se descuenten los tres picajes y preparaciones completos: 817,88 − 158,70 = 659,18 € sin IVA, 797,61 € con IVA para reposición de 30 prendas; junto con muestras, 1.099,05 € de caja total. Diferencia frente a compra directa de 30: 109,42 €. No incluye logística al consumidor, comisiones, devoluciones ni publicidad. No es oferta definitiva ni margen confirmado. No autorizar producción. Próximo paso: comparar respuesta y alternativa POD; mantener PR en borrador.
+
+
+## 22/11/2026 — revisión dominical, puerta de decisión y costes comerciales
+
+**Bandeja revisada** el 22/11/2026: búsqueda por los seis remitentes iniciales desde el 19/11. No hay respuesta nueva posterior al mensaje de Muchacho Studio del 19/11 con P263705/P263706/P263707. El correo de negociación enviado el 21/11 sigue sin respuesta verificada. **No enviar recordatorio hoy**: es domingo y no se han cumplido cinco días hábiles desde la solicitud inicial para proveedores silenciosos.
+
+### Puertas de lanzamiento (no confundir fabricación con venta)
+
+| Puerta | Evidencia necesaria | Estado 22/11 | Acción |
+|---|---|---|---|
+| Artes y titularidad | Archivos vectoriales originales, permiso de uso y prueba de bordado | Pendiente | No comprar muestras hasta cerrar artes |
+| Muestras | Proforma definitiva con solo camiseta bordada, hoodie y gorra, negro; picajes y envío | Cotización simulada 301,44 € IVA incl.; falta confirmación de la revisión solicitada el 21/11 | Esperar confirmación |
+| Coste unitario | Coste prenda + personalización + etiqueta + embolsado + cuota de fijos + transporte | Solo cotización B2B y simulaciones | No fijar margen |
+| Calidad y etiquetado | Composición, talla, cuidados, trazabilidad e identificación de operador económico | Pendiente | Pedir fichas antes de fichas públicas |
+| Fulfilment | Almacén, picking, embalaje, envío a consumidor, incidencias y devoluciones | Muchacho no realiza envíos unitarios | Comparar operador externo o POD |
+| Venta Shopify | PVP con IVA, coste de cobro, política de entrega/devoluciones, inventario y checkout probado | Pendiente | Mantener checkout/cobros desactivados |
+
+### Coste mínimo conocido y riesgo de margen
+
+Para **10 unidades de cada SKU**, las partidas prenda + bordado del presupuesto suman **583,00 € sin IVA** (114,00 € camiseta, 342,00 € hoodie, 127,00 € gorra), pero **no** son coste puesto en casa del cliente. El escenario de pedido directo con fijos y embalaje suma **817,88 € sin IVA / 989,63 € con IVA**, equivalente a **27,26 € sin IVA por prenda como media mezclada**; no utilizar esa media para fijar el PVP de una gorra o hoodie. El escenario secuencial muestras + 30 unidades de 1.099,05 € IVA incluido depende de que el proveedor confirme que los 158,70 € de picajes y preparación no se repiten. **No se ha confirmado ahorro ni precio final**.
+
+Para evaluar cada producto antes de vender, registrar: `PVP con IVA / 1,21` como ingreso neto de IVA; restar coste unitario real de fabricación sin IVA, logística de entrada asignada, preparación de pedidos, envío al cliente asumido por BAYONA, comisiones de cobro, reserva de incidencias/devoluciones y adquisición de cliente. Si el resultado es negativo, bloquear SKU. Si faltan costes, marcar **MARGEN NO CALCULABLE**, nunca estimar beneficio como precio menos coste de prenda.
+
+### Próximas acciones
+
+1. Esperar respuesta a la negociación enviada a Muchacho el 21/11; **no duplicar correo**.
+2. Desde el **25/11** (prudencialmente), comprobar respuestas antes de hacer **como máximo un primer seguimiento individual** a cada proveedor sin respuesta del 17/11; no escribir a Protex, que espera diseños, ni a Gor Factory, que ya derivó a distribuidor.
+3. Solicitar al operador POD o logístico alternativo una oferta **separada** para impresión/bordado, producción por pedido, integración Shopify, entrega a Gandía y envíos nacionales, devoluciones y coste de muestra. No inferir capacidades por marketing.
+4. Mantener PR #12 en borrador; no comprar, publicar catálogo como disponible ni activar cobros.
