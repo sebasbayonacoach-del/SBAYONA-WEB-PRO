@@ -87,3 +87,16 @@ test('modo día inicial, con opción de preferencia nocturna', async ({ page }) 
   await page.goto('/')
   await expect(page.locator('html')).toHaveAttribute('data-bayona-theme', 'day')
 })
+
+test('rutas principales del sitio siguen siendo accesibles tras la actualización', async ({ page }) => {
+  const routes = ['/about', '/programs', '/parkour-academy', '/community', '/app', '/shop', '/resources', '/faq']
+  const errors = []
+  page.on('pageerror', error => errors.push(error.message))
+  for (const route of routes) {
+    const response = await page.goto(route)
+    expect(response?.status(), route).toBe(200)
+    await expect(page.getByRole('navigation', { name: 'Navegación principal' }), route).toBeAttached()
+    await expect(page.locator('body'), route).not.toContainText('Página no encontrada')
+    expect(errors, route).toEqual([])
+  }
+})
