@@ -6,6 +6,7 @@ import SBFlagship from '../components/home/SBFlagship.jsx'
 import { LandingQuickNav, LandingFreeLibrary, LandingMonthBuilder, LandingMicroLessons } from '../components/home/HomeValueLead.jsx'
 import { LandingWorldSections, LandingFAQAndBooking } from '../components/home/HomeWorldSections.jsx'
 import { trackEvent } from '../lib/analytics/analytics.js'
+import { whatsAppLink } from '../config/site.config.js'
 import './home-atelier.css'
 import './atelier-visual-revision.css'
 
@@ -14,8 +15,8 @@ const experiences = [
     index: '01',
     label: 'MOVIMIENTO CON DIRECCIÓN',
     title: 'Entrenamiento',
-    italic: 'personal.',
-    description: 'Fuerza, técnica y acompañamiento adaptados a tu punto de partida.',
+    italic: 'online.',
+    description: 'Fuerza, técnica y planificación a distancia adaptadas a tu punto de partida.',
     image: '/images/bayona-generated/home-pillar-build-1600.webp',
     href: '/programs',
     imageAlt: 'Escena editorial de entrenamiento funcional guiado junto al mar',
@@ -66,6 +67,7 @@ export default function HomeAtelier() {
       <section className="atelier-hero" aria-labelledby="atelier-hero-title">
         <div className="atelier-hero__photo" role="img" aria-label="Escena editorial conceptual de entrenamiento de velocidad junto al mar" />
         <div className="atelier-hero__shade" aria-hidden="true" />
+        <span className="atelier-hero__visual-note">VISUAL EDITORIAL CONCEPTUAL</span>
         <div className="atelier-hero__signature" aria-hidden="true">
           <span>01 / HUMAN MOTION</span>
           <strong>ADAPTACIÓN.<br />CONTROL.<br />LIBERTAD.</strong>
@@ -74,26 +76,54 @@ export default function HomeAtelier() {
         <div className="atelier-frame atelier-hero__content">
           <div className="atelier-hero__prelude">
             <span className="atelier-kicker">SEBASTIÁN BAYONA <i aria-hidden="true" /> HUMAN MOVEMENT STUDIO</span>
-            <span className="atelier-edition">EST. 2026 / ESPAÑA</span>
+            <span className="atelier-edition">COLOMBIA × ESPAÑA</span>
           </div>
           <div className="atelier-hero__statement">
             <p className="atelier-hero__eyebrow">DONDE LA CIENCIA SE ENCUENTRA CON EL MOVIMIENTO</p>
             <h1 id="atelier-hero-title"><span className="atelier-hero__person">SEBASTIÁN</span><em>BAYONA.</em></h1>
             <p className="atelier-hero__subhead">EL ARTE DE MOVERTE</p>
-            <p className="atelier-hero__summary">Entrena con criterio. Descarga dos ebooks gratis, descubre tu primer plan de 30 días y encuentra la forma de moverte que mejor encaja contigo.</p>
+            <p className="atelier-hero__summary">De Colombia a España: entrenamiento online, parkour y recursos para avanzar con criterio. Una forma de moverte que empieza contigo.</p>
             <div className="atelier-hero__actions">
-              <a className="atelier-button atelier-button--light" href="#regalos-gratis" onClick={() => trackEvent('studio_home_free_hero', { source: 'home_hero' })}>
-                LLÉVATE LOS EBOOKS GRATIS <ArrowUpRight size={17} strokeWidth={1.6} aria-hidden="true" />
+              <a className="atelier-button atelier-button--light" href="#ediciones" onClick={() => trackEvent('studio_home_market_hero', { source: 'home_hero' })}>
+                EXPLORA TU EXPERIENCIA <ArrowUpRight size={17} strokeWidth={1.6} aria-hidden="true" />
               </a>
-              <a className="atelier-text-link" href="#plan-30-dias" onClick={() => trackEvent('studio_home_plan_hero', { source: 'home_hero' })}>CREAR MI PLAN DE 30 DÍAS <ArrowDownRight size={17} strokeWidth={1.5} aria-hidden="true" /></a>
+              <a className="atelier-text-link" href="#regalos-gratis" onClick={() => trackEvent('studio_home_free_hero', { source: 'home_hero' })}>RECURSOS GRATIS <ArrowDownRight size={17} strokeWidth={1.5} aria-hidden="true" /></a>
             </div>
-            <p className="atelier-hero__value-proof">2 EBOOKS ORIGINALES <span>·</span> PLAN INICIAL DE 4 SEMANAS <span>·</span> SIN REGISTRO</p>
+            <p className="atelier-hero__value-proof">GUÍAS GRATUITAS <span>·</span> PLAN INICIAL DE 4 SEMANAS <span>·</span> SIN REGISTRO</p>
           </div>
           <div className="atelier-hero__foot">
-            <span>PERSONAL / ONLINE / PARKOUR</span>
+            <span>COLOMBIA / ESPAÑA / ONLINE / PARKOUR</span>
             <span className="atelier-hero__hairline" aria-hidden="true" />
             <a href="#manifiesto">DESLIZA PARA DESCUBRIR <ArrowDownRight size={17} strokeWidth={1.4} aria-hidden="true" /></a>
           </div>
+        </div>
+      </section>
+
+
+      <section className="bayona-markets" id="ediciones" aria-labelledby="bayona-markets-title">
+        <div className="atelier-frame">
+          <div className="bayona-markets__intro">
+            <span className="bayona-markets__eyebrow">02 / COLOMBIA × ESPAÑA</span>
+            <div className="bayona-markets__heading">
+              <h2 id="bayona-markets-title">DOS PAÍSES.<br /><em>UN SOLO MOVIMIENTO.</em></h2>
+              <p>Mis raíces están en Colombia y construyo mi camino profesional desde España. Puedes consultar las opciones de acompañamiento online y descubrir por dónde empezar, estés donde estés.</p>
+            </div>
+          </div>
+          <div className="bayona-markets__grid">
+            <article className="bayona-markets__card">
+              <span className="bayona-markets__code">ES / 01</span>
+              <h3>España.</h3>
+              <p>Entrenamiento online, planificación y recursos para avanzar con un método claro. Las modalidades presenciales se confirman por separado según disponibilidad y requisitos aplicables.</p>
+              <a href={whatsAppLink('Hola, Sebastián. Te escribo desde España. Quiero conocer las opciones de acompañamiento online BAYONA y sus condiciones.')} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('studio_home_market_contact', { market: 'ES' })}>CONSULTAR DESDE ESPAÑA <ArrowUpRight size={18} aria-hidden="true" /></a>
+            </article>
+            <article className="bayona-markets__card bayona-markets__card--co">
+              <span className="bayona-markets__code">CO / 02</span>
+              <h3>Colombia.</h3>
+              <p>Una conexión con mis raíces: entrenamiento online, seguimiento y materiales digitales que puedes explorar desde cualquier ciudad de Colombia.</p>
+              <a href={whatsAppLink('Hola, Sebastián. Te escribo desde Colombia. Quiero conocer las opciones de acompañamiento online BAYONA y sus condiciones.')} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('studio_home_market_contact', { market: 'CO' })}>CONSULTAR DESDE COLOMBIA <ArrowUpRight size={18} aria-hidden="true" /></a>
+            </article>
+          </div>
+          <p className="bayona-markets__note">Consultar no supone una reserva confirmada. Cobertura, disponibilidad, requisitos y precios se informan antes de contratar.</p>
         </div>
       </section>
 
