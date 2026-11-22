@@ -7,11 +7,11 @@
     <!-- Aplica la preferencia antes del CSS para evitar el destello nocturno. -->
     <script>
       (() => {
-        let theme = 'night'
+        let theme = 'day'
         try {
-          if (localStorage.getItem('bayona-site-theme') === 'day') theme = 'day'
+          if (localStorage.getItem('bayona-site-theme') === 'night') theme = 'night'
         } catch {
-          // El almacenamiento puede estar bloqueado; noche sigue disponible.
+          // El almacenamiento puede estar bloqueado; el modo día sigue disponible.
         }
         document.documentElement.dataset.bayonaTheme = theme
         document.documentElement.style.colorScheme = theme === 'day' ? 'light' : 'dark'
@@ -23,7 +23,7 @@
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
 
-    <meta name="theme-color" content="#050505" />
+    <meta name="theme-color" content="#f7f3eb" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
