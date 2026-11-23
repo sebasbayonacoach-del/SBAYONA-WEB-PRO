@@ -117,3 +117,33 @@ Para evaluar cada producto antes de vender, registrar: `PVP con IVA / 1,21` como
 2. Desde el **25/11** (prudencialmente), comprobar respuestas antes de hacer **como máximo un primer seguimiento individual** a cada proveedor sin respuesta del 17/11; no escribir a Protex, que espera diseños, ni a Gor Factory, que ya derivó a distribuidor.
 3. Solicitar al operador POD o logístico alternativo una oferta **separada** para impresión/bordado, producción por pedido, integración Shopify, entrega a Gandía y envíos nacionales, devoluciones y coste de muestra. No inferir capacidades por marketing.
 4. Mantener PR #12 en borrador; no comprar, publicar catálogo como disponible ni activar cobros.
+
+
+## 23/11/2026 — control de bandeja, calendario de seguimientos y umbral de contribución
+
+**Verificación Gmail (23/11, mañana):** búsquedas individuales por los seis remitentes desde 17–19/11. Muchacho Studio: última propuesta recibida 19/11 (P263705/P263706/P263707); respuesta enviada 21/11 pendiente. Protex: última respuesta 18/11, espera diseños definitivos. 8Merch, MLS y Bullfeet: sin respuesta localizada. Gor Factory ya derivó a Publika, sin oferta. **No se envía hoy un seguimiento duplicado:** para los silenciosos del 17/11 se cuentan cinco días laborables completos 18, 19, 20, 23 y 24/11; primer seguimiento prudente desde el miércoles 25/11. No perseguir Protex mientras no haya artes, ni Gor Factory después de su derivación.
+
+### Desglose de costes directos conocidos, antes de gastos fijos (escenario 10 unidades/SKU)
+
+| SKU | Blank + bordado (sin IVA) | Etiqueta interior (sin IVA) | Plegado/bolsa (sin IVA) | Subtotal variable sin IVA/ud | Falta para margen neto |
+|---|---:|---:|---:|---:|---|
+| Camiseta Origins | 11,40 € | 1,80 € | 1,60 € | **14,80 €** | Picaje, archivo, transporte, picking, envío cliente, comisiones, incidencias, marketing |
+| Hoodie Origins | 34,20 € | 1,80 € | 1,60 € | **37,60 €** | Ídem |
+| Gorra BAYONA | 12,70 € | No cotizada | No cotizado | **12,70 €** | Picaje, archivo, transporte, embalaje final, picking, envío cliente, comisiones, incidencias, marketing |
+
+**Conciliación:** (14,80 + 37,60 + 12,70) × 10 = **651,00 €** sin IVA de partidas variables descritas. Tres picajes (114,00 €) + tres preparaciones (44,70 €) + envío presupuestado (8,18 €) = **166,88 €**. Total **817,88 €** sin IVA, consistente con escenario P263705 de 989,63 € con IVA. Esto **no** demuestra que los tres gastos fijos se repitan en una reposición; está pendiente la respuesta de Lidia. La gorra carece de partida cotizada de bolsa/etiqueta: no inferir que esté incluida gratuitamente.
+
+### Regla operativa para fijar PVP sin inventar margen
+
+Para cada SKU, una vez confirmado el coste final, usar en euros sin IVA:
+
+`contribución = PVP_con_IVA / 1,21 − coste_fabricación_y_personalización − embalaje_y_etiqueta − fijos_asignados − transporte_entrada_asignado − preparación_y_envío_al_cliente_asumidos − comisión_cobro − reserva_incidencias − adquisición_cliente`.
+
+No anunciar PVP ni margen hasta completar todos los campos con datos verificables. Si el cliente paga el envío por separado, registrar también el ingreso neto y su coste real; no ocultar cargos obligatorios. El IVA soportado y deducibilidad dependen de la situación fiscal real; la fórmula es una comparación operativa y no asesoría fiscal. Para muestras de 1 unidad, no repartir automáticamente los gastos fijos entre 10 unidades futuras. **La oferta de muestras de 301,44 € sigue siendo simulación, no orden.**
+
+### Próximo lote autónomo
+
+1. Comprobar respuesta de Lidia al correo del 21/11 antes de negociar otra vez; si llega, actualizar el escenario muestra + reposición y los costes no duplicados.
+2. El 25/11, comprobar primero si 8Merch, MLS o Bullfeet respondieron; enviar **solo un** seguimiento individual por contacto silencioso y registrar ID del correo. No repetir el mensaje original.
+3. Conseguir costes reales de logística nacional y alternativa POD para la comparación con Shopify; no activar catálogo vendible ni checkout.
+4. Mantener PR #12 en borrador. Sin compras, contratos, pagos ni promesas de stock.
