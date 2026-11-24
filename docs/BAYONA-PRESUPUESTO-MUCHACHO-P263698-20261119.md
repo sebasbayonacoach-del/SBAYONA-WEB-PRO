@@ -147,3 +147,15 @@ No anunciar PVP ni margen hasta completar todos los campos con datos verificable
 2. El 25/11, comprobar primero si 8Merch, MLS o Bullfeet respondieron; enviar **solo un** seguimiento individual por contacto silencioso y registrar ID del correo. No repetir el mensaje original.
 3. Conseguir costes reales de logística nacional y alternativa POD para la comparación con Shopify; no activar catálogo vendible ni checkout.
 4. Mantener PR #12 en borrador. Sin compras, contratos, pagos ni promesas de stock.
+
+
+## 2026-11-24 — Oferta revisada recibida el 23/11
+
+Fuente: correo Muchacho Studio del 23/11, asunto P263812, Gmail ID 1a2081bae687b8b3; PDFs P263706 y P263812.
+
+- P263706: tres muestras, base 249,12 €, IVA 52,32 €, total 301,44 €, vence 19/12.
+- P263812: 10 Creator 2.0 negras M (148 €), 10 Cruiser 2.0 negras M (376 €), 10 Atlantis Dad Hat-S negras (127 €), envío peninsular 8,18 €; base 659,18 €, IVA 138,43 €, total 797,61 €, vence 23/12. Preparación de repetición a 0 € y sin nuevo picaje. No asumir surtido de tallas confirmado.
+- Ahorro frente al escenario anterior de producción 989,63 €: 192,02 €. Muestras + producción: 1.099,05 €; si camiseta y sudadera llevan diseño exactamente idéntico, proveedor confirma ahorro adicional de 38 € + IVA (45,98 €), total acumulado estimado 1.053,07 €. Solicitar oferta corregida antes de contratar.
+- Plazo 2–3 semanas según carga del taller; devoluciones B2B de prendas personalizadas solo por error de impresión atribuible al proveedor que haya escapado al control de calidad. No trasladar automáticamente esta restricción al consumidor.
+- Fichas y guías de tallas: https://muchachostudio.com/camisetas/STTU169-Creator2.0.html ; https://muchachostudio.com/sudaderas/STSU177-Cruiser2.0.html ; https://muchachostudio.com/gorras/atlantis-dad-hat-s.html .
+- Sin otras nuevas respuestas localizadas en la revisión de Gmail. Próximo paso: comprobar arte idéntico y surtido de tallas, logística individual y condiciones de venta. No comprar ni activar cobros. No enviar seguimiento duplicado.
