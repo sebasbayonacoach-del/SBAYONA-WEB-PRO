@@ -159,3 +159,16 @@ Fuente: correo Muchacho Studio del 23/11, asunto P263812, Gmail ID 1a2081bae687b
 - Plazo 2–3 semanas según carga del taller; devoluciones B2B de prendas personalizadas solo por error de impresión atribuible al proveedor que haya escapado al control de calidad. No trasladar automáticamente esta restricción al consumidor.
 - Fichas y guías de tallas: https://muchachostudio.com/camisetas/STTU169-Creator2.0.html ; https://muchachostudio.com/sudaderas/STSU177-Cruiser2.0.html ; https://muchachostudio.com/gorras/atlantis-dad-hat-s.html .
 - Sin otras nuevas respuestas localizadas en la revisión de Gmail. Próximo paso: comprobar arte idéntico y surtido de tallas, logística individual y condiciones de venta. No comprar ni activar cobros. No enviar seguimiento duplicado.
+
+
+## 25/11/2026 — Primer seguimiento de proveedores silenciosos
+
+Revisión individual Gmail de los seis proveedores desde el 17/11: no se localizaron respuestas nuevas posteriores a P263812 del 23/11. Cinco días hábiles completos transcurridos (18, 19, 20, 23 y 24). Primer seguimiento enviado el 25/11, sin compromiso de compra:
+
+| Proveedor | Solicitud | Gmail ID de salida | Seguimientos |
+|---|---|---|---|
+| 8Merch | Bordado por pedido, Shopify, muestras y envío a España | 1a211d484616c080 | 1/2 |
+| MLS | MOQ y muestra de calcetín técnico | 1a211d48b653a6ee | 1/2 |
+| Bullfeet | Muestra individual, personalización y envío a Gandía | 1a211d491e0b1213 | 1/2 |
+
+No insistir antes del 03/12 (cinco días hábiles completos posteriores al 25/11: 26, 27, 30, 1 y 2). No contactar nuevamente a Gor Factory ni Protex sin información nueva. Muchacho mantiene la oferta registrada, sin aceptación. Prioridad: comparar coste por pedido de 8Merch con fabricación por lotes y logística externa; no confundir coste de fabricación con margen. No comprar ni activar checkout.
