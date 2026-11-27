@@ -1,0 +1,54 @@
+name: BAYONA · revisión de tienda textil
+
+on:
+  push:
+    branches:
+      - feature/bayona-apparel-sourcing-20261112
+    paths:
+      - 'src/pages/Shop.jsx'
+      - 'src/config/apparel*.js'
+      - 'src/components/shop/ApparelLaunch.jsx'
+      - 'src/styles/shop-clothing-drop.css'
+      - 'e2e/bayona-apparel-20261117.spec.js'
+      - '.github/workflows/bayona-apparel-check.yml'
+  pull_request:
+    branches:
+      - feature/coachos-academy-library-20261106
+    paths:
+      - 'src/pages/Shop.jsx'
+      - 'src/config/apparel*.js'
+      - 'src/components/shop/ApparelLaunch.jsx'
+      - 'src/styles/shop-clothing-drop.css'
+      - 'e2e/bayona-apparel-20261117.spec.js'
+      - '.github/workflows/bayona-apparel-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: 'true'
+    steps:
+      - name: Obtener proyecto
+        uses: actions/checkout@v4
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Instalar dependencias con lockfile
+        run: npm ci --no-audit --no-fund
+      - name: Verificar componentes y lógica textil
+        run: npx eslint src/pages/Shop.jsx src/components/shop/ApparelLaunch.jsx src/config/apparelCatalog.js src/config/apparelSourcing.js src/config/apparelCatalog.test.js src/config/apparelSourcing.test.js
+      - name: Comprobar selección, bloqueos de venta y proveedores
+        run: npx vitest --run src/config/apparelSourcing.test.js src/config/apparelCatalog.test.js
+      - name: Compilar sitio y ejecutar auditorías de producción
+        run: npm run build
+      - name: Instalar Chromium para prueba funcional del escaparate
+        run: npx playwright install --with-deps chromium
+      - name: Verificar la tienda de ropa en navegador de escritorio y móvil
+        run: npx playwright test e2e/bayona-apparel-20261117.spec.js --reporter=list

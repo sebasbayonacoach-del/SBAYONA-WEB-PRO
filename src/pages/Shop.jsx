@@ -23,6 +23,10 @@ import {
 import Tilt from 'react-parallax-tilt'
 import Marquee from 'react-fast-marquee'
 import { toast } from 'sonner'
+import ApparelLaunch from '../components/shop/ApparelLaunch.jsx'
+import { apparelSourcing } from '../config/apparelSourcing.js'
+import { storefrontProducts } from '../config/apparelCatalog.js'
+import { whatsAppLink } from '../config/site.config.js'
 import { SectionLabel } from '../components/Layout'
 import { sceneBackgroundProps, StockImage } from '../components/SceneBackground.jsx'
 import {
@@ -30,7 +34,6 @@ import {
   shopCategoryFilters,
   shopCollectionFilters,
   shopCollections,
-  shopProducts,
 } from '../config/shopProducts.js'
 import { siteMedia } from '../config/siteMedia.js'
 import { motionTokens } from '../engine/config/motionTokens.js'
@@ -43,7 +46,7 @@ import '../styles/shop-unified-catalog.css'
 import '../styles/shop-gym-funnel-v2.css'
 
 const HERO_LINES = ['PIEZAS PARA', 'TU CAMINO.']
-const PRODUCT_COUNT = shopProducts.length
+const PRODUCT_COUNT = storefrontProducts.length
 const SHOP_ICONS = Object.freeze({
   cpu: Cpu,
   download: Download,
@@ -154,7 +157,11 @@ function ProductCard({ product, reducedMotion }) {
   const cartPriceCOP = product.priceCop ?? selectedVariant?.priceCOP
   const baseProductName = product.name.replace(/\s*\([^)]*\)\s*$/, '')
   const cartItemName = selectedVariant ? `${baseProductName} — ${selectedVariant.label}` : product.name
-  const canAddToCart = Number.isFinite(cartPriceCOP)
+  const isApparelUnderReview = Boolean(apparelSourcing[product.id])
+  const canAddToCart = Number.isFinite(cartPriceCOP) && !isApparelUnderReview
+  const apparelInquiryUrl = isApparelUnderReview
+    ? whatsAppLink(`Hola BAYONA. Me interesa ${product.name}. ¿Podéis confirmarme si hay proveedor, tallas, precio final en euros y entrega antes de comprar?`)
+    : product.whatsappUrl
   const cartHelpId = `shop-cart-help-${product.id}`
 
   const handleAddToCart = () => {
@@ -192,7 +199,12 @@ function ProductCard({ product, reducedMotion }) {
         onPointerLeave={pointerEffects ? resetCardSpotlight : undefined}
       >
         <div className="shop-product-visual">
-          {product.media ? (
+          {isApparelUnderReview ? (
+            <div className="bayona-clothing__unverified-art" role="img" aria-label="Gráfico editorial de BAYONA; todavía no es una fotografía de la prenda">
+              <strong aria-hidden="true">B.</strong>
+              <small>DISEÑO EN PREPARACIÓN</small>
+            </div>
+          ) : product.media ? (
             <StockImage
               media={product.media}
               className="shop-product-image stock-media-image"
@@ -208,8 +220,17 @@ function ProductCard({ product, reducedMotion }) {
         <h3>{product.name}</h3>
         <p>{product.description}</p>
         <div className="shop-product-price">
-          <strong>{product.priceDisplay}</strong>
-          <small>{product.eurDisplay} · {product.usdDisplay}</small>
+          {isApparelUnderReview ? (
+            <>
+              <strong>PRECIO EN PREPARACIÓN</strong>
+              <small>Proveedor y talla pendientes de confirmar</small>
+            </>
+          ) : (
+            <>
+              <strong>{product.priceDisplay}</strong>
+              <small>{product.eurDisplay} · {product.usdDisplay}</small>
+            </>
+          )}
         </div>
         {variantDefinitions.length > 0 && (
           <label className="shop-product-variant" htmlFor={`shop-cart-variant-${product.id}`}>
@@ -233,27 +254,29 @@ function ProductCard({ product, reducedMotion }) {
             className="shop-add-to-cart"
             type="button"
             disabled={!canAddToCart}
-            aria-label={`Añadir ${cartItemName} al carrito`}
+            aria-label={isApparelUnderReview ? `Venta en preparación de ${product.name}` : `Añadir ${cartItemName} al carrito`}
             aria-describedby={!canAddToCart ? cartHelpId : undefined}
             onClick={handleAddToCart}
           >
             <ShoppingCart size={15} strokeWidth={1} aria-hidden="true" />
-            AÑADIR AL CARRITO
+            {isApparelUnderReview ? 'VENTA EN PREPARACIÓN' : 'AÑADIR AL CARRITO'}
           </button>
           <a
-            href={product.whatsappUrl}
+            href={apparelInquiryUrl}
             target="_blank"
             rel="noreferrer"
             data-shop-product={product.id}
-            aria-label={`Lo quiero: ${product.name}, ${product.priceDisplay}`}
+            aria-label={isApparelUnderReview ? `Consultar disponibilidad de ${product.name}` : `Lo quiero: ${product.name}, ${product.priceDisplay}`}
             onClick={() => toast.success(`${product.name}: abrimos WhatsApp para ti.`)}
           >
-            LO QUIERO <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" />
+            {isApparelUnderReview ? 'CONSULTAR LANZAMIENTO' : 'LO QUIERO'} <ArrowUpRight size={16} strokeWidth={1} aria-hidden="true" />
           </a>
         </div>
         {!canAddToCart && (
           <small className="shop-product-cart-note" id={cartHelpId}>
-            Elige el peso y confirma el precio publicado por WhatsApp antes de añadirlo.
+            {isApparelUnderReview
+              ? 'Prelanzamiento: sin precio, stock ni fecha de entrega confirmados. No se admiten pagos.'
+              : 'Elige el peso y confirma el precio publicado por WhatsApp antes de añadirlo.'}
           </small>
         )}
       </article>
@@ -321,7 +344,7 @@ export default function Shop() {
   const [searchParams] = useSearchParams()
   const requestedProduct = useMemo(() => {
     const requestedId = searchParams.get('product')
-    return requestedId ? shopProducts.find((product) => product.id === requestedId) ?? null : null
+    return requestedId ? storefrontProducts.find((product) => product.id === requestedId) ?? null : null
   }, [searchParams])
   const [collectionId, setCollectionId] = useState('all')
   const [category, setCategory] = useState('Todo')
@@ -332,8 +355,9 @@ export default function Shop() {
   const cartCount = useCartStore(selectCartCount)
   const cartTotalCOP = useCartStore(selectCartTotalCOP)
   const { reducedMotion, mode } = useCapabilities()
-  const featuredProduct = shopProducts.find(({ featured }) => featured) ?? shopProducts[0]
-  const fuse = useMemo(() => new Fuse(shopProducts, {
+  const featuredProduct = storefrontProducts.find(({ featured }) => featured) ?? storefrontProducts[0]
+  const featuredApparelUnderReview = Boolean(apparelSourcing[featuredProduct.id])
+  const fuse = useMemo(() => new Fuse(storefrontProducts, {
     keys: ['name', 'description', 'category', 'collection', 'collectionTitle'],
     threshold: 0.34,
     distance: 100,
@@ -341,7 +365,7 @@ export default function Shop() {
     minMatchCharLength: 2,
   }), [])
   const searchedProducts = useMemo(
-    () => query.trim() ? fuse.search(query.trim()).map(({ item }) => item) : shopProducts,
+    () => query.trim() ? fuse.search(query.trim()).map(({ item }) => item) : storefrontProducts,
     [fuse, query],
   )
   const visibleProducts = useMemo(
@@ -402,7 +426,7 @@ export default function Shop() {
   }
 
   const addFeaturedProductToCart = () => {
-    if (!Number.isFinite(featuredProduct.priceCop)) return
+    if (featuredApparelUnderReview || !Number.isFinite(featuredProduct.priceCop)) return
 
     addItem({
       type: 'producto',
@@ -505,6 +529,8 @@ export default function Shop() {
         </div>
       </section>
 
+      <ApparelLaunch />
+
       <section
         className="shop-feature"
         aria-labelledby="shop-feature-title"
@@ -521,26 +547,37 @@ export default function Shop() {
           <h2 id="shop-feature-title">{featuredProduct.name}</h2>
           <p>{featuredProduct.description}</p>
           <div className="shop-feature-price">
-            <strong>{featuredProduct.priceDisplay}</strong>
-            <small>{featuredProduct.eurDisplay} · {featuredProduct.usdDisplay}</small>
+            {featuredApparelUnderReview ? (
+              <>
+                <strong>PRELANZAMIENTO</strong>
+                <small>Precio final en euros pendiente de confirmar</small>
+              </>
+            ) : (
+              <>
+                <strong>{featuredProduct.priceDisplay}</strong>
+                <small>{featuredProduct.eurDisplay} · {featuredProduct.usdDisplay}</small>
+              </>
+            )}
           </div>
           <div className="shop-feature-actions">
-            <button className="shop-add-to-cart" type="button" onClick={addFeaturedProductToCart}>
+            <button className="shop-add-to-cart" type="button" onClick={addFeaturedProductToCart} disabled={featuredApparelUnderReview}>
               <ShoppingCart size={17} strokeWidth={1} aria-hidden="true" />
-              AÑADIR AL CARRITO
+              {featuredApparelUnderReview ? 'VENTA EN PREPARACIÓN' : 'AÑADIR AL CARRITO'}
             </button>
             <motion.a
-              href={featuredProduct.whatsappUrl}
+              href={featuredApparelUnderReview
+                ? whatsAppLink(`Hola BAYONA. Me interesa ${featuredProduct.name}. ¿Cuál será su disponibilidad, talla y precio final en euros?`)
+                : featuredProduct.whatsappUrl}
               target="_blank"
               rel="noreferrer"
               data-shop-product={featuredProduct.id}
               whileHover={reducedMotion ? undefined : { x: 5 }}
               onClick={() => toast.success(`${featuredProduct.name}: abrimos WhatsApp para ti.`)}
             >
-              LO QUIERO <ArrowUpRight size={18} strokeWidth={1} aria-hidden="true" />
+              {featuredApparelUnderReview ? 'CONSULTAR LANZAMIENTO' : 'LO QUIERO'} <ArrowUpRight size={18} strokeWidth={1} aria-hidden="true" />
             </motion.a>
           </div>
-          <small className="shop-feature-note">Pieza destacada del catálogo.</small>
+          <small className="shop-feature-note">{featuredApparelUnderReview ? 'Esta prenda aún no admite pedidos ni cobros.' : 'Pieza destacada del catálogo.'}</small>
         </motion.div>
       </section>
 
