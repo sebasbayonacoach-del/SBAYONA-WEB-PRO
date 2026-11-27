@@ -172,3 +172,20 @@ Revisión individual Gmail de los seis proveedores desde el 17/11: no se localiz
 | Bullfeet | Muestra individual, personalización y envío a Gandía | 1a211d491e0b1213 | 1/2 |
 
 No insistir antes del 03/12 (cinco días hábiles completos posteriores al 25/11: 26, 27, 30, 1 y 2). No contactar nuevamente a Gor Factory ni Protex sin información nueva. Muchacho mantiene la oferta registrada, sin aceptación. Prioridad: comparar coste por pedido de 8Merch con fabricación por lotes y logística externa; no confundir coste de fabricación con margen. No comprar ni activar checkout.
+
+
+## 27/11/2026 — Cierre MLS y control de inversión por SKU
+
+Gmail: revisión individual de los seis dominios desde 24/11. Única respuesta localizada: MLS, 25/11 11:55 CET, ID 1a21258d149b25d3: sin capacidad interna para nuevos proyectos. Cerrar seguimiento MLS (1/2 utilizado, no enviar segundo); posponer calcetines. Sin nueva respuesta de los otros cinco. 8Merch y Bullfeet: esperar hasta 03/12 como mínimo. No reenviar hoy.
+
+### Umbrales de recuperación de inversión (no son PVP ni márgenes)
+
+P263812: 30 prendas, 659,18 EUR sin IVA. Asignación provisional del transporte de entrada por unidad: 8,18 / 30 = 0,2727 EUR. P263706: muestras 249,12 EUR sin IVA; si se decide recuperar toda esa inversión con las primeras 30 ventas, asignación contable uniforme 8,304 EUR/ud. No implica que todas las unidades se vendan.
+
+| SKU | Coste directo sin IVA | Umbral bruto con IVA, sin recuperar muestras | Umbral bruto con IVA, recuperando muestras |
+|---|---:|---:|---:|
+| Camiseta Origins | 14,80 | 18,24 | 28,29 |
+| Hoodie Origins | 37,60 | 45,83 | 55,88 |
+| Gorra BAYONA | 12,70 | 15,70 | 25,75 |
+
+Fórmula: (coste directo + transporte asignado + recuperación opcional de muestras) × 1,21; redondeo al céntimo superior. Estos son suelos parciales, excluyen comisiones, embalaje adicional, logística de salida, devoluciones, marketing y beneficio; no publicar como precios. La deducibilidad del IVA requiere validación fiscal. El ahorro potencial de picaje compartido no se incorpora hasta recibir oferta corregida. Mantener caja protegida y no aceptar pedidos ni cobrar. Próximo paso: comparar oferta POD completa por SKU con estos suelos, validar tallas y artes antes de solicitar muestras definitivas.
